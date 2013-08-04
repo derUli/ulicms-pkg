@@ -9,6 +9,10 @@ if len(sys.argv) < 2:
    print("Usage: build.py [target]")
    sys.exit()
 
+if sys.argv[1] == "update":
+   os.system("git pull")
+   sys.exit()
+
 if sys.argv[1] == "src-folder-create":
    if len(sys.argv) > 2:
       target = sys.argv[2]
