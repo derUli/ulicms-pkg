@@ -1,0 +1,4 @@
+Copyright (C) 2008 by Fabian Schlieper
+Schnee v1.2
+http://www.fabi.me/
+Ohne dieses Copyright darf dieser Code nicht verwendet werden!
