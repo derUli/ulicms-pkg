@@ -82,6 +82,7 @@ if sys.argv[1] == "build" and len(packagesToBuild) > 0:
       else:
          tarGzFile = tarGzFile + extension
       pkgsrcFolder = "sources/" + package + "/" + "src/"
+      pkgDescFile = "sources/" + package + "/description.txt"
       os.chdir(pkgsrcFolder)
       rootPath = "."
       pkgContent = []
@@ -123,5 +124,14 @@ if sys.argv[1] == "build" and len(packagesToBuild) > 0:
          else:
             print("Already in list.")
             print("Nothing to do.")
+      descFile = os.path.join(rootCWD, "packages", "descriptions", npackage + ".txt")
       os.chdir(rootCWD)
+      if os.path.exists(pkgDescFile):
+         if os.path.exists(descFile):
+            os.remove(descFile)
+         print("copy description...")
+         shutil.copy(pkgDescFile, descFile)
+         print("done.")
+         
+
       
