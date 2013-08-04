@@ -176,6 +176,3 @@ if sys.argv[1] == "build" and len(packagesToBuild) > 0:
          print("copy description...")
          shutil.copy(pkgDescFile, descFile)
          print("done.")
-         
-
-      
