@@ -19,14 +19,19 @@ if sys.argv[1] == "clean":
       print("finisihed")
       sys.exit()
    else:
-      if os.path.exists("packages/" + target):
-         print("clean " + target + "...")
-         shutil.rmtree('packages/' + target)
-         os.makedirs('packages/' + target)
-         sys.exit(0)
-      else:
-         print("Nothing to do")
-         sys.exit(0)
+      print("clean " + target + "...")
+      tarGzFile = "packages/" + target
+      extension = ".tar.gz"
+      if os.path.exists(tarGzFile + extension):
+         print("remove "+ tarGzFile + extension + "...")
+         os.remove(tarGzFile + extension)
+      for i in range(2, 99):
+         rfile = tarGzFile + "r" + str(i) + extension
+         if(os.path.exists(rfile)):
+            print("remove " + rfile + "...")
+            os.remove(rfile)
+      print("Finished")
+      sys.exit(0)
          
 if sys.argv[1] == "build":
    if len(sys.argv) > 2:
