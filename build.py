@@ -95,7 +95,25 @@ if sys.argv[1] == "build" and len(packagesToBuild) > 0:
          print("Adding" + f + "...")
          tar.add(f)
       tar.close()
-      print("Package build successfully")
-         
+      print("Package build successfully...")
+      print("Add to package list...")
+      listFile = os.path.join(rootCWD, "packages", "list.txt")
+      if not os.path.exists(listFile):
+         h = open(listFile, "w")
+         h.write(package)
+         h.close()
+         print("ready.")
+      else:
+         h = open(listFile, "r")
+         pkg = h.readlines()
+         h.close()
+         if not package in pkg:
+            h = open(listFile, "a")
+            h.write(package)
+            h.close()
+            print("ready.")
+         else:
+            print("Already in list.")
+            print("Nothing to do.")
       os.chdir(rootCWD)
       
