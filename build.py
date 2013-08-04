@@ -8,7 +8,22 @@ descDir = os.path.join(rootCWD, "packages", "descriptions")
 if len(sys.argv) < 2:
    print("Usage: build.py [target]")
    sys.exit()
-   
+
+if sys.argv[1] == "src-folder-create":
+   if len(sys.argv) > 2:
+      target = sys.argv[2]
+      print "making src folder for " + target
+      targetDir = os.path.join("sources", target)
+      if os.path.exists(targetDir):
+         print("Folder exists")
+         sys.exit()
+      srcDir = os.path.join(targetDir, "src")
+      licenseFile = os.path.join(targetDir, "license.txt")
+      os.makedirs(targetDir)
+      os.makedirs(srcDir)
+      shutil.copyfile("license.txt", licenseFile)
+      print("Done.")
+      sys.exit()
 
 if sys.argv[1] == "clean":
    if len(sys.argv) > 2:
