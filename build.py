@@ -2,10 +2,12 @@
 import os, sys, tarfile, shutil, fnmatch
 
 rootCWD = os.getcwd()
+listFile = os.path.join(rootCWD, "packages", "list.txt")
 
 if len(sys.argv) < 2:
    print("Usage: build.py [target]")
    sys.exit()
+   
 
 if sys.argv[1] == "clean":
    if len(sys.argv) > 2:
@@ -27,14 +29,28 @@ if sys.argv[1] == "clean":
       print("clean " + target + "...")
       tarGzFile = "packages/archives/" + target
       extension = ".tar.gz"
+      h = open(listFile, "r")
+      pkg = h.readlines()
+      h.close()
       if os.path.exists(tarGzFile + extension):
          print("remove "+ tarGzFile + extension + "...")
          os.remove(tarGzFile + extension)
+         if target + "\n" in pkg:
+            pkg.remove(target + "\n")
+            
       for i in range(2, 99):
+         s = target + "r" + str(i)
+         if s + "\n" in pkg:
+            pkg.remove(s + "\n")
          rfile = tarGzFile + "r" + str(i) + extension
          if(os.path.exists(rfile)):
             print("remove " + rfile + "...")
             os.remove(rfile)
+      print("rebuild list.txt")
+      h = open(listFile, "w")
+      for p in pkg:
+         h.write(p)
+      h.close()
       print("Finished")
       sys.exit(0)
          
@@ -101,7 +117,6 @@ if sys.argv[1] == "build" and len(packagesToBuild) > 0:
       tar.close()
       print("Package build successfully...")
       print("Add to package list...")
-      listFile = os.path.join(rootCWD, "packages", "list.txt")
       npackage = package
       if rev:
          npackage = npackage + "r" + rev
