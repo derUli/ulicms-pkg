@@ -16,11 +16,15 @@ if sys.argv[1] == "clean":
       print("clean all...")
       shutil.rmtree('packages/')
       os.makedirs("packages/")
+      os.makedirs("packages/archives")
+      os.makedirs("packages/descriptions")
+      h = open("packages/list.txt", "w")
+      h.close()
       print("finisihed")
       sys.exit()
    else:
       print("clean " + target + "...")
-      tarGzFile = "packages/" + target
+      tarGzFile = "packages/archives/" + target
       extension = ".tar.gz"
       if os.path.exists(tarGzFile + extension):
          print("remove "+ tarGzFile + extension + "...")
@@ -65,7 +69,7 @@ if sys.argv[1] == "build":
 if sys.argv[1] == "build" and len(packagesToBuild) > 0:
    for package in packagesToBuild:
       extension = ".tar.gz"
-      tarGzFile = "packages/" + package
+      tarGzFile = "packages/archives/" + package
       if os.path.exists(tarGzFile + extension):
          for i in range(2, 99):
             tfile = tarGzFile + "r" + str(i)
