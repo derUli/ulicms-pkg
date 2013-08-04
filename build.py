@@ -106,11 +106,12 @@ if sys.argv[1] == "build" and len(packagesToBuild) > 0:
       else:
          tarGzFile = tarGzFile + extension
       pkgsrcFolder = "sources/" + package + "/" + "src/"
+      licenseFile = "license.txt"
       pkgDescFile = "sources/" + package + "/description.txt"
       os.chdir(pkgsrcFolder)
       rootPath = "."
       pkgContent = []
-      print("get content list of " + package +"...")
+      print("get content list of " + package + "...")
       for root, dirs, files in os.walk(rootPath):
           for filename in files:
               p = os.path.join(root, filename)
@@ -122,6 +123,7 @@ if sys.argv[1] == "build" and len(packagesToBuild) > 0:
       for f in pkgContent:
          print("Adding " + f + "...")
          tar.add(f)
+      os.chdir("..")
       tar.close()
       print("Package build successfully...")
       print("Add to package list...")
