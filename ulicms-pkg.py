@@ -6,7 +6,7 @@ listFile = os.path.join(rootCWD, "packages", "list.txt")
 descDir = os.path.join(rootCWD, "packages", "descriptions")
 
 if len(sys.argv) < 2:
-   print("Usage: build.py [target]")
+   print("Usage: ./ulicms-pkg.py [target]")
    sys.exit()
 
 if sys.argv[1] == "update":
