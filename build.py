@@ -3,6 +3,7 @@ import os, sys, tarfile, shutil, fnmatch
 
 rootCWD = os.getcwd()
 listFile = os.path.join(rootCWD, "packages", "list.txt")
+descDir = os.path.join(rootCWD, "packages", "descriptions")
 
 if len(sys.argv) < 2:
    print("Usage: build.py [target]")
@@ -37,6 +38,10 @@ if sys.argv[1] == "clean":
          os.remove(tarGzFile + extension)
       if target + "\n" in pkg:
          pkg.remove(target + "\n")
+
+      dfile = os.path.join(descDir, target +".txt")
+      if os.path.exists(dfile):
+         os.remove(dfile)
             
       for i in range(2, 99):
          s = target + "r" + str(i)
@@ -46,6 +51,9 @@ if sys.argv[1] == "clean":
          if(os.path.exists(rfile)):
             print("remove " + rfile + "...")
             os.remove(rfile)
+         dfile = os.path.join(descDir, target + "r" + str(i) +".txt")
+         if os.path.exists(dfile):
+            os.remove(dfile)
       print("rebuild list.txt")
       h = open(listFile, "w")
       for p in pkg:
@@ -75,11 +83,11 @@ if sys.argv[1] == "build":
       else:
          print("Packages to build: " + str(len(packagesToBuild)))
    else:
-      pkgsrcFolder = "files/" + target + "/" + "src/"
-      print("Checking package " + target + "...")
+      pkgsrcFolder = "sources/" + target + "/" + "src/"
+      print("Checking sources " + target + "...")
       packagesToBuild = []
       if os.path.exists(pkgsrcFolder):
-         packagesToBuild.append(f)
+         packagesToBuild.append(target)
       else:
          print("Fatal: Package " + target + " doesn't exists.")
 
