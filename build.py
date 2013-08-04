@@ -81,7 +81,10 @@ if sys.argv[1] == "build" and len(packagesToBuild) > 0:
       print("get content list of " + package +"...")
       for root, dirs, files in os.walk(rootPath):
           for filename in files:
-              pkgContent.append(os.path.join(root, filename))
+              p = os.path.join(root, filename)
+              p = p.replace(".\\", "")
+              p = p.replace("./", "")
+              pkgContent.append(p)
               tarGzFilePath = os.path.join(rootCWD, tarGzFile)
       tar = tarfile.open(tarGzFilePath, 'w:gz')
       for f in pkgContent:
