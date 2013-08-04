@@ -35,8 +35,8 @@ if sys.argv[1] == "clean":
       if os.path.exists(tarGzFile + extension):
          print("remove "+ tarGzFile + extension + "...")
          os.remove(tarGzFile + extension)
-         if target + "\n" in pkg:
-            pkg.remove(target + "\n")
+      if target + "\n" in pkg:
+         pkg.remove(target + "\n")
             
       for i in range(2, 99):
          s = target + "r" + str(i)
