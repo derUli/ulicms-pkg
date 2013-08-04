@@ -65,6 +65,5 @@ if sys.argv[1] == "build" and len(packagesToBuild) > 1:
             if not os.path.exists(tfile + extension):
                tarGzFile = tfile + extension
                break
-              
-         
-         
+      else:
+         tarGzFile = tarGzFile + extension
