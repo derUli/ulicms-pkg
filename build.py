@@ -54,4 +54,17 @@ if sys.argv[1] == "build":
          packagesToBuild.Append(f)
       else:
          print("Fatal: Package " + target + " doesn't exists.")
-     
+
+if sys.argv[1] == "build" and len(packagesToBuild) > 1:
+   for package in packagesToBuild:
+      extension = ".tar.gz"
+      tarGzFile = "packages/" + package
+      if os.path.exists(tarGzFile + extension):
+         for i in range(2, 99):
+            tfile = tarGzFile + "r" + str(i)
+            if not os.path.exists(tfile + extension):
+               tarGzFile = tfile + extension
+               break
+              
+         
+         
