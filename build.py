@@ -14,7 +14,8 @@ if sys.argv[1] == "clean":
       target = "all"
    if target == "all":
       print("clean all...")
-      shutil.rmtree('packages/')
+      if os.path.exists('packages/'):
+         shutil.rmtree('packages/')
       os.makedirs("packages/")
       os.makedirs("packages/archives")
       os.makedirs("packages/descriptions")
@@ -69,12 +70,14 @@ if sys.argv[1] == "build":
 if sys.argv[1] == "build" and len(packagesToBuild) > 0:
    for package in packagesToBuild:
       extension = ".tar.gz"
+      rev = None
       tarGzFile = "packages/archives/" + package
       if os.path.exists(tarGzFile + extension):
          for i in range(2, 99):
             tfile = tarGzFile + "r" + str(i)
             if not os.path.exists(tfile + extension):
                tarGzFile = tfile + extension
+               rev = str(i)
                break
       else:
          tarGzFile = tarGzFile + extension
@@ -92,24 +95,29 @@ if sys.argv[1] == "build" and len(packagesToBuild) > 0:
               tarGzFilePath = os.path.join(rootCWD, tarGzFile)
       tar = tarfile.open(tarGzFilePath, 'w:gz')
       for f in pkgContent:
-         print("Adding" + f + "...")
+         print("Adding " + f + "...")
          tar.add(f)
       tar.close()
       print("Package build successfully...")
       print("Add to package list...")
       listFile = os.path.join(rootCWD, "packages", "list.txt")
+      npackage = package
+      if rev:
+         npackage = npackage + "r" + rev
       if not os.path.exists(listFile):
          h = open(listFile, "w")
-         h.write(package)
+         h.write(npackage)
+         h.write("\n")
          h.close()
          print("ready.")
       else:
          h = open(listFile, "r")
          pkg = h.readlines()
          h.close()
-         if not package in pkg:
+         if not npackage in pkg:
             h = open(listFile, "a")
-            h.write(package)
+            h.write(npackage)
+            h.write("\n")
             h.close()
             print("ready.")
          else:
