@@ -13,3 +13,7 @@ $ ./ulicms-pkg.py build fortune-0.0.1
 Und wieder aufräumen:
 $ ./ulicms-pkg.py clean fortune-0.0.1
 
+Wenn man die Paketquelle auf den neuesten Stand bringen möchte:
+$ ./ulicms-pkg.py update
+
+Dafür wird eine Installation von git benötigt.
