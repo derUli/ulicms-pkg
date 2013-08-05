@@ -6,3 +6,10 @@ $ ./ulicms-pkg.py build
 
 Die Pakete werden in das Standardformat (*.tar.gz) gepackt, die Beschreibungen
 werden kopiert und die Paketnamen werden automatisch in die list.txt geschrieben.
+
+Es ist auch möglich, nur einzelne Pakete zu bauen:
+$ ./ulicms-pkg.py build fortune-0.0.1
+
+Und wieder aufräumen:
+$ ./ulicms-pkg.py clean fortune-0.0.1
+
