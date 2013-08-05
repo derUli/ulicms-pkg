@@ -14,6 +14,23 @@ if sys.argv[1] == "update":
    os.system("git pull")
    sys.exit()
 
+if sys.argv[1] == "init":
+   if not os.path.exists("packages/"):
+      os.makedirs("packages/")
+      print("creating packages/")
+   if not os.path.exists("packages/archives"):
+      os.makedirs("packages/archives")
+      print("creating packages/archives")
+   if not os.path.exists("packages/descriptions"):
+      os.makedirs("packages/descriptions")
+      print("creating packages/descriptions")
+   if not os.path.exists("packages/list.txt"):
+      f = open("packages/list.txt", "a")
+      f.close()
+      print("creating packages/list.txt")
+   print("Done.")
+   sys.exit()
+
 if sys.argv[1] == "reformat-src":
    execfile("reformat_code.py")
    sys.exit()
