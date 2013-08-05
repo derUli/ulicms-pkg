@@ -111,6 +111,7 @@ if sys.argv[1] == "build":
    if target == "all":
       packagesToBuild = []
       files = os.listdir("sources/")
+      files = sorted(files)
       for f in files:
          print("Checking package " + f + "...")
          pkgsrcFolder = "sources/" + f + "/" + "src/"
