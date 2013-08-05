@@ -29,7 +29,6 @@ class Twitter
      */
     
     /**
-     * *
      * 
      * @var int 
      */
@@ -37,14 +36,12 @@ class Twitter
     
     
     /**
-     * *
      * 
      * @var string 
      */
      public static $cacheDir;
     
     /**
-     * *
      * 
      * @var array 
      */
@@ -56,21 +53,18 @@ class Twitter
         );
     
     /**
-     * *
      * 
      * @var Twitter_OAuthSignatureMethod 
      */
      private $signatureMethod;
     
     /**
-     * *
      * 
      * @var Twitter_OAuthConsumer 
      */
      private $consumer;
     
     /**
-     * *
      * 
      * @var Twitter_OAuthConsumer 
      */
@@ -113,7 +107,7 @@ class Twitter
              return !empty($res -> id);
             
              }
-        catch (TwitterException $e){
+         catch (TwitterException $e){
              if ($e -> getCode() === 401){
                  return FALSE;
                  }
@@ -294,7 +288,7 @@ class Twitter
              return $payload;
             
              }
-        catch (TwitterException $e){
+         catch (TwitterException $e){
              if ($cache){
                  return $cache;
                  }
@@ -367,7 +361,7 @@ class Twitter
              }
          }
     
-    }
+     }
 
 
 
@@ -376,4 +370,4 @@ class Twitter
  */
 class TwitterException extends Exception
 {
-    }
+     }

@@ -5,7 +5,7 @@ if(defined(MODULE_ADMIN_REQUIRED_PERMISSION)){
          die("Fuck you!");
     
     
-    }
+     }
 
 
 if(isset($_POST["submit"])){
@@ -56,7 +56,7 @@ if(isset($_POST["submit"])){
      $_SESSION["newsletter_data"]["newsletter_receivers"] = $subscribers;
      $_SESSION["newsletter_data"]["newsletter_remaining"] = count($subscribers);
     
-    }
+     }
 
 
 $user = getUserById($_SESSION["login_id"]);
@@ -66,7 +66,7 @@ $email = $user["email"];
 <h3>Newsletter vorbereiten</h3>
 <?php
 if(isset($_POST["submit"])){
-    ?>
+     ?>
 <script type="text/javascript">
 url = window.location.href.toString()
 window.location.replace(url);
@@ -95,12 +95,12 @@ var editor = CKEDITOR.replace( 'newsletter_text',
 <input name="send_to" type="radio" checked value="<?php echo getconfig("email")?>"> Testmail an <?php echo getconfig("email")?><br/>
 <?php
 if($email != getconfig("email")){
-    ?>
+     ?>
 <input name="send_to" type="radio" value="<?php
     
-    echo $email;
-    ?>"> Testmail an <?php echo $email;
-    ?><br/>
+     echo $email;
+     ?>"> Testmail an <?php echo $email;
+     ?><br/>
 <?php }
 ?>
 

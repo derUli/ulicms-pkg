@@ -1,18 +1,18 @@
 <?php
 include_once "../lib/string_functions.php";
 if(in_array("fullcalendar", getAllModules())){
-    ?>
+     ?>
 
 <h2 class="accordion-header">Anstehende Termine</h2>
 <div class="accordion-content">
 <?php
-    $query = mysql_query("SELECT * FROM " . tbname("events") . " WHERE `start` >= " . (time() - (60 * 60) * 23) . " ORDER by `start` ASC LIMIT 5");
+     $query = mysql_query("SELECT * FROM " . tbname("events") . " WHERE `start` >= " . (time() - (60 * 60) * 23) . " ORDER by `start` ASC LIMIT 5");
     
-    if(mysql_num_rows($query) === 0){
+     if(mysql_num_rows($query) === 0){
          echo "<p>Es stehen derzeit keine Termine an.</p>";
-        }else{
+         }else{
         
-        echo "<table style=\"outline:4px solid #d4d4d4; background-color:#f0f0f0;width:96%; margin:auto;\">";
+         echo "<table style=\"outline:4px solid #d4d4d4; background-color:#f0f0f0;width:96%; margin:auto;\">";
          echo "<tr style=\"background-color:#f0f0f0;font-weight:bold;\">";
          echo "<td>";
          echo "Start";
@@ -28,7 +28,7 @@ if(in_array("fullcalendar", getAllModules())){
         
         
         
-        while($row = mysql_fetch_object($query)){
+         while($row = mysql_fetch_object($query)){
              echo "<tr>";
              echo "<td style=\"width:120px;\">" . date("d.m.Y", $row -> start) . "</td>";
              echo "<td style=\"width:120px;\">" . date("d.m.Y", $row -> end) . "</td>";
@@ -42,17 +42,17 @@ if(in_array("fullcalendar", getAllModules())){
              echo "</tr>";
             
             
-            }
+             }
         
-        echo "</table>";
-        ?>
+         echo "</table>";
+         ?>
 
 
 <?php }
-    ?>
+     ?>
 </div>
 
 <?php
-    }
+     }
 
 ?>

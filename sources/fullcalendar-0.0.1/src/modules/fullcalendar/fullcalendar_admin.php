@@ -5,7 +5,7 @@ $required_permission = getconfig("calendar_required_permission");
 
 if($required_permission === false){
      $required_permission = 20;
-    }
+     }
 
 define(MODULE_ADMIN_REQUIRED_PERMISSION, $required_permission);
 
@@ -45,19 +45,19 @@ function fullcalendar_list(){
         
          }
     
-    }
+     }
 
 function fullcalendar_admin(){
     
-    if(isset($_GET["calendar_action"]))
+     if(isset($_GET["calendar_action"]))
          $action = $_GET["calendar_action"];
     
-    if($action == "delete"){
+     if($action == "delete"){
          $id = intval($_GET["id"]);
          db_query("DELETE FROM `" . tbname(events) . "` WHERE id = $id");
          unset($action);
-        }
-    if(isset($_POST["save"])){
+         }
+     if(isset($_POST["save"])){
         
          $title = mysql_real_escape_string(trim($_POST["title"]));
          $url = mysql_real_escape_string(trim($_POST["url"]));
@@ -98,23 +98,23 @@ function fullcalendar_admin(){
         
         
         
-        }
-    ?>
+         }
+     ?>
 <?php if(!isset($action)){
-        ?>
+         ?>
 <a href="?action=module_settings&module=fullcalendar&calendar_action=add">Termin eintragen</a>
 <br/><br/>
 <?php fullcalendar_list();
-        ?>
+         ?>
 
 <?php }
     
     else if($action == "add" or $action == "edit"){
          include getModulePath("fullcalendar") . "fullcalendar_add.php";
         
-        }
+         }
     
     
-    }
+     }
 
 ?>

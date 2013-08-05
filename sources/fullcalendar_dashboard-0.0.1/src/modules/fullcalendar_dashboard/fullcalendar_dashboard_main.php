@@ -7,5 +7,5 @@ function fullcalendar_dashboard_render(){
          }
     
      return "<p class=\"ulicms_error\">$mainFile fehlt!</p>";
-    }
+     }
 ?>

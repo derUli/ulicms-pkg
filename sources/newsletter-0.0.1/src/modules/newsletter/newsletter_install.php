@@ -9,7 +9,7 @@ function newsletter_check_install(){
     
     
     
-    }
+     }
 
 function newsletter_do_install(){
      db_query("CREATE TABLE IF NOT EXISTS " . tbname("newsletter_subscribers") . " (
@@ -22,6 +22,6 @@ function newsletter_do_install(){
      setconfig("newsletter_template_content", "<p>Fügen Sie hier Ihren Text ein.</p>");
      setconfig("newsletter_id", "1");
     
-    }
+     }
 
 ?>

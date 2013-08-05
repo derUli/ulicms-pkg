@@ -5,7 +5,7 @@ $required_permission = getconfig("link_checker_required_permission");
 
 if($required_permission === false){
      $required_permission = 20;
-    }
+     }
 
 define(MODULE_ADMIN_REQUIRED_PERMISSION, $required_permission);
 
@@ -15,13 +15,13 @@ function get_http_response_code($theURL){
      if(!$headers)
          return false;
      return substr($headers[0], 9);
-    }
+     }
 
 include_once "../templating.php";
 
 
 function link_checker_admin(){
-    ?>
+     ?>
 
 <p><a href="index.php?action=module_settings&module=link_checker&show=all">Alle</a> | 
 <a href="index.php?action=module_settings&module=link_checker">Nur Fehler</a>  | 
@@ -73,13 +73,13 @@ function link_checker_admin(){
         
         
         
-        }
+         }
     
      if(!$hasLinks){
          echo "<p>Keine Links vorhanden.</p>";
          }
     
-    }
+     }
 
 
 

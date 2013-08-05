@@ -4,7 +4,7 @@
 define("PRINT_ICON_URL", "/content/images/drucksymbol.gif");
 
 if(in_array("print_version", getAllModules())){
-    // Diese Funktion hier muss in einem Template aufgerufen werden,
+     // Diese Funktion hier muss in einem Template aufgerufen werden,
     // um den Drucklink für die aktuelle Seite auszugeben.
     function printVersionLink(){
          $url = getCurrentURL();
@@ -18,12 +18,12 @@ if(in_array("print_version", getAllModules())){
          $html = "<a href=\"$url\" rel=\"nofollow\" target=\"_blank\"><img src=\"" . PRINT_ICON_URL . "\" alt=\"Drucken\" title=\"Drucken\"></a>";
         
          echo $html;
-        }
+         }
     
-    }else{
+     }else{
      // dummy function
     function printVersionLink(){
-    }
-    }
+         }
+     }
 
 ?>

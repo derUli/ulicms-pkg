@@ -26,7 +26,7 @@ function cancel_newsletter($mail){
     
     
      return "<p>$translation_newsletter_canceled</p>";
-    }
+     }
 
 function subscribe_newsletter($mail){
     
@@ -73,14 +73,14 @@ function subscribe_newsletter($mail){
     
     
      return $html_output;
-    }
+     }
 
 
 function checkIfSubscribed($mail){
      $mail = mysql_real_escape_string($mail);
      $query = db_query("SELECT email FROM " . tbname("newsletter_subscribers") . " WHERE email = '$mail'");
      return mysql_num_rows($query) > 0;
-    }
+     }
 
 
 
@@ -88,7 +88,7 @@ function check_email_address($email){
      $at_array = explode("@", $email);
      $dot_array = explode(".", $email);
      return count($at_array) == 2 and count($dot_array) >= 2;
-    }
+     }
 
 
 
@@ -177,7 +177,7 @@ function newsletter_render(){
      $html_output .= "</form>";
     
      return $html_output;
-    }
+     }
 
 
 

@@ -19,7 +19,7 @@ background-color:<?php echo getconfig("header-background-color")?>;
 }
 
 <?php if(isset($_GET["blog_admin"]) and containsModule(get_requested_pagename(), "blog")){
-    ?>
+     ?>
 #menu-left-container{
 display:none;
 }
@@ -44,7 +44,7 @@ if(getconfig("logo_disabled") == "no"){
      echo '<a href="./">';
      logo();
      echo '</a>';
-    }
+     }
 else
     {
      echo "<h1>";
@@ -52,13 +52,13 @@ else
      homepage_title();
      echo '</a>';
      echo "</h1>";
-    }
+     }
 
 if(getconfig("motto")){
      echo "<h2>";
      motto();
      echo "</h2>";
-    }
+     }
 ?>
 <hr/>
 </div>

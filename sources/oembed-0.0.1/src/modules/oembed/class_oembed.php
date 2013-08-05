@@ -210,5 +210,5 @@ class OEmbed{
      function autoEmbedCallback($match){
          return $this -> getHTML($match[0], $this -> autoEmbedArgs);
          }
-    }
+     }
 ?>

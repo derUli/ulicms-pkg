@@ -12,5 +12,5 @@ function phpinfo_render(){
      $html_output = str_replace('</font>', '</span>', $html_output);
      return $html_output;
     
-    }
+     }
 ?>

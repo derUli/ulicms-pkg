@@ -7,5 +7,5 @@ function blog_disable_comments_permanently_render(){
          }
     
      return "<p class=\"ulicms_error\">$mainFile fehlt!</p>";
-    }
+     }
 ?>

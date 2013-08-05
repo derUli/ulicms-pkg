@@ -20,7 +20,7 @@ function intramail_render(){
     
      return $html_output;
     
-    }
+     }
 
 
 function intramail_generate_page(){
@@ -45,7 +45,7 @@ function intramail_generate_page(){
          break;
         
          }
-    }
+     }
 
 
 function intramail_view_message(){
@@ -96,13 +96,13 @@ function intramail_view_message(){
         
          }
     
-    }
+     }
 
 function intramail_delete_mail($delete){
      db_query("DELETE FROM `" . tbname("messages") .
          "` WHERE id = $delete and (mail_from='" .
          $_SESSION["ulicms_login"] . "' or mail_to = '" . $_SESSION["ulicms_login"] . "')");
-    }
+     }
 
 function intramail_post_inbox(){
     
@@ -319,7 +319,7 @@ function intramail_new_mail($mail_to = '', $subject = '', $message = ''){
      echo '
   <input type="submit" name="submit" value="Senden">
   </form>';
-    }
+     }
 
 function check_installation(){
      $test = db_query("SELECT * FROM " . tbname("messages"));

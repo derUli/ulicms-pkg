@@ -13,6 +13,6 @@ if(in_array("blog", getAllModules())){
 if(in_array("fullcalendar", getAllModules())){
      db_query("ALTER TABLE " . tbname("events") . " ENGINE=MyISAM;");
      db_query("ALTER TABLE " . tbname("events") . " ADD fulltext(title, url)");
-    }
+     }
 
 ?>

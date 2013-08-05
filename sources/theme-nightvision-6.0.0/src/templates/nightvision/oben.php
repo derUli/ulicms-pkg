@@ -55,7 +55,7 @@ font-family:<?php echo getconfig("default-font");
 			<div class="title">
 				<h2><a href="#"><?php title()?></a></h2>
 				<?php if(!is_404() and !is_403){
-    ?>
+     ?>
 				<p><small>
 				
 				<?php autor()?></small></p>

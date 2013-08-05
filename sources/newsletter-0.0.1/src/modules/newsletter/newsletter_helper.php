@@ -15,13 +15,12 @@ function getSubscribers(){
     
      return $adresses;
     
-    }
+     }
 
 
 if(!function_exists("send_html_mail")){
     
-    // HTML-Mail senden
-    
+     // HTML-Mail senden
     function send_html_mail($mail_from, $mail_to,
          $subject, $text){
          $newsletter_id = getconfig("newsletter_id");
@@ -65,10 +64,10 @@ if(!function_exists("send_html_mail")){
         
         
         
-        }
+         }
     
     
-    }
+     }
 
 
 function send_loop(){
@@ -124,7 +123,7 @@ function send_loop(){
          }
     
     
-    }
+     }
 
 
 ?>

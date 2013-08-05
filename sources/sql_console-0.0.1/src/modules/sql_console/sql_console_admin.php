@@ -5,7 +5,7 @@ $required_permission = getconfig("sql_console_required_permission");
 
 if($required_permission === false){
      $required_permission = 50;
-    }
+     }
 
 define(MODULE_ADMIN_REQUIRED_PERMISSION, $required_permission);
 
@@ -17,19 +17,19 @@ if(!isset($_SESSION["sql_code"]))
      $_SESSION["sql_code"] = "";
 
 function sql_console_admin(){
-    include getModulePath("sql_console") . "sql_console_functions.php";
+     include getModulePath("sql_console") . "sql_console_functions.php";
     
-    include getModulePath("sql_console") . "sql_console_styles.php";
-    if(isset($_POST["sql_code"])){
+     include getModulePath("sql_console") . "sql_console_styles.php";
+     if(isset($_POST["sql_code"])){
          sqlQueryFromString($_POST["sql_code"]);
          $_SESSION["sql_code"] = $_POST["sql_code"];
-        }
+         }
     
     
-    include getModulePath("sql_console") . "sql_console_form.php";
-    $config = new config();
-    mysql_select_db($config -> mysql_database);
-    }
+     include getModulePath("sql_console") . "sql_console_form.php";
+     $config = new config();
+     mysql_select_db($config -> mysql_database);
+     }
 
 
 ?>

@@ -2,24 +2,24 @@
 include_once "../lib/string_functions.php";
 if(in_array("limit_login_attempts", getAllModules()) && is_admin()){
     
-    $alreadyDisplayed = Array();
+     $alreadyDisplayed = Array();
     
-    $max_login_attempts = getconfig("max_login_attempts");
-    if(!$max_login_attempts)
+     $max_login_attempts = getconfig("max_login_attempts");
+     if(!$max_login_attempts)
          $max_login_attempts = 5;
     
-    ?>
+     ?>
 
 <h2 class="accordion-header">Fehlgeschlagene Anmeldeversuche</h2>
 <div class="accordion-content">
 <?php
-    $query = mysql_query("SELECT *  FROM " . tbname("failed_logins") . " ORDER by time DESC");
+     $query = mysql_query("SELECT *  FROM " . tbname("failed_logins") . " ORDER by time DESC");
     
-    if(mysql_num_rows($query) === 0){
+     if(mysql_num_rows($query) === 0){
          echo "<p>Es gab keine fehlerhaften Loginversuche</p>";
-        }else{
+         }else{
         
-        echo "<table style=\"outline:4px solid #d4d4d4; background-color:#f0f0f0;width:96%; margin:auto;\">";
+         echo "<table style=\"outline:4px solid #d4d4d4; background-color:#f0f0f0;width:96%; margin:auto;\">";
          echo "<tr style=\"background-color:#f0f0f0;font-weight:bold;\">";
          echo "<td>";
          echo "Anzahl";
@@ -34,9 +34,9 @@ if(in_array("limit_login_attempts", getAllModules()) && is_admin()){
         
         
         
-        while($row = mysql_fetch_object($query)){
+         while($row = mysql_fetch_object($query)){
              $query2 = mysql_query("SELECT * FROM " . tbname("failed_logins") .
-                " WHERE ip='" . $row -> ip . "' ORDER by time DESC");
+                 " WHERE ip='" . $row -> ip . "' ORDER by time DESC");
             
             
              $result = mysql_fetch_assoc($query2);
@@ -59,17 +59,17 @@ if(in_array("limit_login_attempts", getAllModules()) && is_admin()){
                  }
             
             
-            }
+             }
         
-        echo "</table>";
-        ?>
+         echo "</table>";
+         ?>
 
 
 <?php }
-    ?>
+     ?>
 </div>
 
 <?php
-    }
+     }
 
 ?>

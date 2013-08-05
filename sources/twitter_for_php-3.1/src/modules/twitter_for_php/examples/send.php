@@ -8,7 +8,7 @@ $twitter = new Twitter($consumerKey, $consumerSecret, $accessToken, $accessToken
 try{
      $tweet = $twitter -> send('I am fine3');
     
-    }
+     }
 catch (TwitterException $e){
      echo 'Error: ' . $e -> getMessage();
-    }
+     }

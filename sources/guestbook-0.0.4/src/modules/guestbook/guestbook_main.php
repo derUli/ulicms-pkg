@@ -3,7 +3,7 @@
 include "antispam-features.php";
 
 if(!function_exists("stringcontainsbadwords")){
-    function stringcontainsbadwords($str){
+     function stringcontainsbadwords($str){
          $words_blacklist = getconfig("spamfilter_words_blacklist");
          $str = strtolower($str);
         
@@ -22,9 +22,9 @@ if(!function_exists("stringcontainsbadwords")){
         
         
          return false;
-        }
+         }
     
-    }
+     }
 
 
 function guestbook_render(){
@@ -194,7 +194,7 @@ function guestbook_render(){
      $html_output .= "<br/><br/><br/><center><small>Powered by Guestbook Module for UliCMS</small></center>";
     
      return $html_output;
-    }
+     }
 
 function guestbook_get_add_entry_link(){
      if($_SESSION["language"] == "de"){
@@ -218,7 +218,7 @@ function get_add_entry_form(){
      $add_entry_form_template = str_replace("{form_action_url}",
          "" . get_requested_pagename() . ".html?action=add", $add_entry_form_template);
      return $add_entry_form_template;
-    }
+     }
 
 function guestbook_list(){
     
@@ -294,6 +294,6 @@ function check_installation(){
          require_once getModulePath("guestbook") . "guestbook_install.php";
          guestbook_install();
          }
-    }
+     }
 
 ?>

@@ -14,7 +14,7 @@ foreach($http_headers as $h){
          $_SERVER['REMOTE_ADDR'] = $_SERVER[$h];
          break;
          }
-    }
+     }
 
 // Set Server variables so that is_ssl() reports correctly.
 // If HTTPS server variable is not set and the HTTP_X_FORWARDED_PROTO is set, then
@@ -24,8 +24,8 @@ if (!isset($_SERVER['HTTPS'])){
              $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https'){
          $_SERVER['HTTPS'] = 1;
          }
-    }
+     }
 
 if (! empty($_SERVER['HTTP_X_FORWARDED_HOST'])){
      $_SERVER['HTTP_HOST'] = $_SERVER['HTTP_X_FORWARDED_HOST'];
-    }
+     }

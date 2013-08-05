@@ -6,7 +6,7 @@
 
 <?php
 if(in_array("search", getAllModules())){
-    ?>
+     ?>
 <script type="text/javascript">
 window.onload = function(){
   var qHead = document.getElementById("qHead")
@@ -44,37 +44,37 @@ background-color:<?php echo getconfig("header-background-color");
 <div id="logo">
 <?php
 if(getconfig("logo_disabled") != "yes"){
-    echo '<a href="./">';
+     echo '<a href="./">';
      logo();
      echo "</a>";
-    }else{
+     }else{
      echo "<h1 class=\"website_name\">";
      echo '<a href="./">';
      homepage_title();
      echo "</a>";
      echo "</h1>";
-    }
+     }
 ?>
 <p class="motto"><?php motto();
 ?></p>
 </div>
 <?php
 if(in_array("search", getAllModules())){
-    ?>
+     ?>
 <div id="searchFormHeader">
 <form action="suche.html" method="get">
 <input type="text" id="qHead" name="q" value="">
 <?php
-    if(in_array("blog", getAllModules())){
+     if(in_array("blog", getAllModules())){
         
-        ?>
+         ?>
 <input type="hidden" name="type" value="blog">
 <?php }else{
-        ?>
+         ?>
 <input type="hidden" name="type" value="pages">
 
 <?php }
-    ?>
+     ?>
 
 </form>
 </div>

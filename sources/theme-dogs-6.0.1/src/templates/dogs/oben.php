@@ -23,12 +23,12 @@ font-family:<?php echo getconfig("default-font");
 <div class="clear"></div>
 <div id="nav_left">
 <?php if(getconfig("logo_disabled") == "no"){
-    logo();
-    }else{
+     logo();
+     }else{
      echo "<h1 class='homepage_title'>";
      homepage_title();
      echo "</h1>";
-    }
+     }
 ?>
 <?php menu("left");
 ?>

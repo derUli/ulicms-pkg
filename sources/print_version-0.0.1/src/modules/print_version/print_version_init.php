@@ -1,21 +1,21 @@
 <?php
 if(isset($_REQUEST["print"])){
-    include_once "templating.php";
-    session_start();
-    $_COOKIE[session_name()] = session_id();
+     include_once "templating.php";
+     session_start();
+     $_COOKIE[session_name()] = session_id();
     
-    if(!empty($_GET["language"])){
+     if(!empty($_GET["language"])){
          $_SESSION["language"] = basename($_GET["language"]);
-        }
+         }
     
-    if(!isset($_SESSION["language"])){
+     if(!isset($_SESSION["language"])){
          $_SESSION["language"] = getconfig("default_language");
-        }
+         }
     
     
-    $cached_page_path = buildCacheFilePath($_SERVER['REQUEST_URI']);
+     $cached_page_path = buildCacheFilePath($_SERVER['REQUEST_URI']);
     
-    if(file_exists($cached_page_path) and !getconfig("cache_disabled")
+     if(file_exists($cached_page_path) and !getconfig("cache_disabled")
              and getenv('REQUEST_METHOD') == "GET"){
          $cached_content = file_get_contents($cached_page_path);
          $last_modified = filemtime($cached_page_path);
@@ -26,20 +26,20 @@ if(isset($_REQUEST["print"])){
              die();
             
              }
-        }
+         }
     
-    if(!getconfig("cache_disabled" and getenv('REQUEST_METHOD') == "GET")
+     if(!getconfig("cache_disabled" and getenv('REQUEST_METHOD') == "GET")
              and !file_exists($cached_page_path)){
          ob_start();
-        }
+         }
     else if(file_exists($cached_page_path)){
          $last_modified = filemtime($cached_page_path);
          if(time() - $last_modified < CACHE_PERIOD){
              ob_start();
              }
-        }
+         }
     
-    ?>
+     ?>
 <html>
 <head>
 <script type="text/javascript">
@@ -54,26 +54,26 @@ text-decoration:none;
 }
 </style>
 <title><?php title();
-    ?></title>
+     ?></title>
 <?php
-    base_metas();
-    ?>
+     base_metas();
+     ?>
 </head>
 <body>
 <?php
      content();
     
-    ?>
+     ?>
 </body>
 </html>
 <?php
     
-    if(file_exists($cached_page_path) and !getconfig("cache_disabled")
+     if(file_exists($cached_page_path) and !getconfig("cache_disabled")
              and getenv('REQUEST_METHOD') == "GET"){
          $cache_content = ob_get_clean();
-        }
+         }
     
-    if(!getconfig("cache_disabled") and !$hasModul and
+     if(!getconfig("cache_disabled") and !$hasModul and
              getenv('REQUEST_METHOD') == "GET"){
          $generated_html = ob_get_clean();
          $handle = fopen($cached_page_path, "wb");
@@ -83,10 +83,10 @@ text-decoration:none;
          @include 'cron.php';
          die();
         
-        }else{
+         }else{
          @include 'cron.php';
          die();
-        }
+         }
     
-    }
+     }
 ?>

@@ -68,7 +68,7 @@ function single_profile(){
          }
     
     
-    }
+     }
 
 
 // output icq status
@@ -110,7 +110,7 @@ function icqStatus ($icq, $imagetext, $image = 1, $todo){
     
      return $connect;
     
-    }
+     }
 
 
 
@@ -121,6 +121,6 @@ function profile_list(){
          $data = getUserByName($users[$i]);
          echo "<li>" . '<a href="' . get_requested_pagename() . ".html?profile=" . $data["username"] . '">' . $data["username"] . "</a></li>";
          }
-    }
+     }
 
 ?>

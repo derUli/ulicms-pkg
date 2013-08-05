@@ -22,7 +22,7 @@ if(!function_exists("func_enabled")){
          return $it_is_disabled;
          }
     
-    }
+     }
 
 
 $current_time = time();
@@ -44,11 +44,11 @@ $allowed = $allowed["s"] === 1 && !ini_get('safe_mode');
 
 $tmpfile = path_to_backup_dir() . uniqid();
 $writable = @file_put_contents($tmpfile,
-    "test") !== false;
+     "test") !== false;
 
 if($writable){
      @unlink($tmpfile);
-    }
+     }
 
 
 
@@ -62,7 +62,7 @@ if($difference >= $backup_interval and $allowed and $writable){
     shell_exec("mysqldump -u $mysql_user -p$mysql_password --add-drop-table $mysql_database > $backup_file.sql");
      shell_exec("gzip " . $backup_file . ".sql");
     
-    }
+     }
  // Backup schlägt fehl.
 else if($difference >= $backup_interval){
      setconfig("mysql_backup_last_time", time());
@@ -85,7 +85,7 @@ else if($difference >= $backup_interval){
      @mail($email_adress, $subject, $text, $headers);
     
     
-    }
+     }
 
 
 

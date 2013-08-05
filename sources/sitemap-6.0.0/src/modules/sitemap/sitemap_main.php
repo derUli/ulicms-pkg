@@ -7,7 +7,7 @@ function sitemap_render(){
      $html_output .= sitemap_menu("bottom");
      $html_output .= sitemap_menu("hidden");
      return $html_output;
-    }
+     }
 
 function sitemap_menu($name){
      $html_output = "";

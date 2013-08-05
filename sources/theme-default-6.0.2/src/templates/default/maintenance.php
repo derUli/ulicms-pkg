@@ -12,12 +12,12 @@
 if(getconfig("logo_disabled") == "no")
     {
      logo();
-    ?>
+     ?>
 <br/>  
 <?php
-    }
+     }
 else{
-    ?><h1><?php homepage_title()?></h1>
+     ?><h1><?php homepage_title()?></h1>
 <?php }
 ?>
 <span><?php motto()?></span>

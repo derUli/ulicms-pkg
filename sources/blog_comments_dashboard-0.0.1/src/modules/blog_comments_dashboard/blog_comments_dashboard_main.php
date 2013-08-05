@@ -7,5 +7,5 @@ function blog_comments_dashboard_render(){
          }
     
      return "<p class=\"ulicms_error\">$mainFile fehlt!</p>";
-    }
+     }
 ?>

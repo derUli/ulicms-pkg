@@ -4,11 +4,11 @@ if(!function_exists("get_requested_pagename") and !is_admin_dir())
      include_once "templating.php";
 
 if(!function_exists("rootDirectory")){
-    function rootDirectory(){
+     function rootDirectory(){
          $pageURL = 'http';
          if ($_SERVER["HTTPS"] == "on"){
-            $pageURL .= "s";
-        }
+             $pageURL .= "s";
+             }
          $pageURL .= "://";
          $dirname = dirname($_SERVER["REQUEST_URI"]);
          $dirname = str_replace("\\", "/", $dirname);
@@ -24,15 +24,15 @@ if(!function_exists("rootDirectory")){
              $pageURL .= $_SERVER["SERVER_NAME"] . $dirname;
              }
          return $pageURL;
-        }
+         }
     
-    }
+     }
 
 
 include_once getModulePath("twitter_for_php") . "twitter.class.php";
 
 if($_GET["blog_admin"] == "submit"){
-    if(!empty($_POST["title"]) and isset($_POST["seo_shortname"])){
+     if(!empty($_POST["title"]) and isset($_POST["seo_shortname"])){
         
          $title = $_POST["title"];
          $seo_shortname = $_POST["seo_shortname"];
@@ -58,7 +58,7 @@ if($_GET["blog_admin"] == "submit"){
                      setconfig("blog2twitter_status", "Funktioniert!");
                     
                      }
-                catch (TwitterException $e){
+                 catch (TwitterException $e){
                      setconfig("blog2twitter_status", $e -> getMessage());
                      }
                 
@@ -69,9 +69,9 @@ if($_GET["blog_admin"] == "submit"){
             
              }
         
-        }
+         }
     
-    }
+     }
 
 
 

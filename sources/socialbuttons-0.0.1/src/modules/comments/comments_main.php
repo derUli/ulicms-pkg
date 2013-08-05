@@ -4,5 +4,5 @@ function comments_render(){
      if(function_exists("blog"))
          blog();
      return ob_clean();
-    }
+     }
 ?>

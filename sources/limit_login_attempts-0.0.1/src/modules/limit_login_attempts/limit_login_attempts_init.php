@@ -17,9 +17,9 @@ $ip_blocking_duration = $ip_blocking_duration * (60 * 60);
 db_query("DELETE FROM " . tbname("failed_logins") . " WHERE " . time() . " -  `time` > $ip_blocking_duration");
 
 $query = db_query("SELECT * FROM " . tbname("failed_logins") .
-    " WHERE ip='$ip'");
+     " WHERE ip='$ip'");
 
 if(mysql_num_rows($query) >= $max_login_attempts){
      die("<p>Sie haben die maximale Anzahl an erfolglosen Login-Versuchen &uuml;berschritten.<br/>Ihre IP-Adresse wurde gesperrt!</p>");
-    }
+     }
 ?>

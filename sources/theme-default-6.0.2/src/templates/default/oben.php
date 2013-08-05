@@ -8,16 +8,16 @@
 <?php
 if(!getconfig("header-background-color")){
      setconfig("header-background-color", "rgb(35, 148, 96)");
-    }
+     }
 
 if(!getconfig("body-background-color")){
      setconfig("body-background-color", "rgb(255,255,255)");
-    }
+     }
 
 
 if(!getconfig("body-text-color")){
      setconfig("body-text-color", "rgb(0,0,0)");
-    }
+     }
 
 
 ?>
@@ -35,12 +35,12 @@ background-color:<?php echo getconfig("header-background-color");
 if(getconfig("logo_disabled") == "no")
     {
      logo();
-    ?>
+     ?>
 <br/>  
 <?php
-    }
+     }
 else{
-    ?><h1><?php homepage_title()?></h1>
+     ?><h1><?php homepage_title()?></h1>
 <?php }
 ?>
 <span><?php motto()?></span>

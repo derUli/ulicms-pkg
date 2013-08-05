@@ -46,7 +46,7 @@ class Twitter_OAuthConsumer
      function __toString(){
          return "OAuthConsumer[key=$this->key,secret=$this->secret]";
          }
-    }
+     }
 
 class Twitter_OAuthToken
 {
@@ -77,7 +77,7 @@ class Twitter_OAuthToken
      function __toString(){
          return $this -> to_string();
          }
-    }
+     }
 
 /**
  * A class for implementing a Signature Method
@@ -118,14 +118,14 @@ abstract class Twitter_OAuthSignatureMethod
          $built = $this -> build_signature($request, $consumer, $token);
          return $built == $signature;
          }
-    }
+     }
 
 /**
  * The HMAC-SHA1 signature method uses the HMAC-SHA1 signature algorithm as defined in [RFC2104]
  * where the Signature Base String is the text and the key is the concatenated values (each first
  * encoded per Parameter Encoding) of the Consumer Secret and Token Secret, separated by an '&'
  * character (ASCII code 38) even if empty.
- *    - Chapter 9.2 ("HMAC-SHA1")
+ *      - Chapter 9.2 ("HMAC-SHA1")
  */
 class Twitter_OAuthSignatureMethod_HMAC_SHA1 extends Twitter_OAuthSignatureMethod
 {
@@ -147,12 +147,12 @@ class Twitter_OAuthSignatureMethod_HMAC_SHA1 extends Twitter_OAuthSignatureMetho
         
          return base64_encode(hash_hmac('sha1', $base_string, $key, true));
          }
-    }
+     }
 
 /**
  * The PLAINTEXT method does not provide any security protection and SHOULD only be used
  * over a secure channel such as HTTPS. It does not use the Signature Base String.
- *    - Chapter 9.4 ("PLAINTEXT")
+ *      - Chapter 9.4 ("PLAINTEXT")
  */
 class Twitter_OAuthSignatureMethod_PLAINTEXT extends Twitter_OAuthSignatureMethod
 {
@@ -164,7 +164,7 @@ class Twitter_OAuthSignatureMethod_PLAINTEXT extends Twitter_OAuthSignatureMetho
      * oauth_signature is set to the concatenated encoded values of the Consumer Secret and
      * Token Secret, separated by a '&' character (ASCII code 38), even if either secret is
      * empty. The result MUST be encoded again.
-     *    - Chapter 9.4.1 ("Generating Signatures")
+     *      - Chapter 9.4.1 ("Generating Signatures")
      * 
      * Please note that the second encoding MUST NOT happen in the SignatureMethod, as
      * OAuthRequest handles this!
@@ -181,7 +181,7 @@ class Twitter_OAuthSignatureMethod_PLAINTEXT extends Twitter_OAuthSignatureMetho
         
          return $key;
          }
-    }
+     }
 
 /**
  * The RSA-SHA1 signature method uses the RSASSA-PKCS1-v1_5 signature algorithm as defined in
@@ -189,7 +189,7 @@ class Twitter_OAuthSignatureMethod_PLAINTEXT extends Twitter_OAuthSignatureMetho
  * EMSA-PKCS1-v1_5. It is assumed that the Consumer has provided its RSA public key in a
  * verified way to the Service Provider, in a manner which is beyond the scope of this
  * specification.
- *    - Chapter 9.3 ("RSA-SHA1")
+ *      - Chapter 9.3 ("RSA-SHA1")
  */
 abstract class Twitter_OAuthSignatureMethod_RSA_SHA1 extends Twitter_OAuthSignatureMethod
 {
@@ -201,13 +201,11 @@ abstract class Twitter_OAuthSignatureMethod_RSA_SHA1 extends Twitter_OAuthSignat
     // (1) do a lookup in a table of trusted certs keyed off of consumer
     // (2) fetch via http using a url provided by the requester
     // (3) some sort of specific discovery code based on request
-    
     // Either way should return a string representation of the certificate
     protected abstract function fetch_public_cert(& $request);
     
      // Up to the SP to implement this lookup of keys. Possible ideas are:
     // (1) do a lookup in a table of trusted certs keyed off of consumer
-    
     // Either way should return a string representation of the certificate
     protected abstract function fetch_private_cert(& $request);
     
@@ -249,7 +247,7 @@ abstract class Twitter_OAuthSignatureMethod_RSA_SHA1 extends Twitter_OAuthSignat
         
          return $ok == 1;
          }
-    }
+     }
 
 class Twitter_OAuthRequest
 {
@@ -511,7 +509,7 @@ class Twitter_OAuthRequest
         
          return md5($mt . $rand); // md5s look nicer than numbers
          }
-    }
+     }
 
 class Twitter_OAuthServer
 {
@@ -733,7 +731,7 @@ class Twitter_OAuthServer
              }
          }
     
-    }
+     }
 
 class Twitter_OAuthDataStore
 {
@@ -760,7 +758,7 @@ class Twitter_OAuthDataStore
         // should also invalidate the request token
     }
     
-    }
+     }
 
 class Twitter_OAuthUtil
 {
@@ -911,4 +909,4 @@ class Twitter_OAuthUtil
         // Each name-value pair is separated by an '&' character (ASCII code 38)
         return implode('&', $pairs);
          }
-    }
+     }

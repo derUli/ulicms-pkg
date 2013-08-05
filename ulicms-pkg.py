@@ -8,9 +8,14 @@ descDir = os.path.join(rootCWD, "packages", "descriptions")
 if len(sys.argv) < 2:
    print("Usage: ./ulicms-pkg.py [target]")
    sys.exit()
+   
 
 if sys.argv[1] == "update":
    os.system("git pull")
+   sys.exit()
+
+if sys.argv[1] == "reformat-src":
+   execfile("reformat_code.py")
    sys.exit()
 
 if sys.argv[1] == "src-folder-create":

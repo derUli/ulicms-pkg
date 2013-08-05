@@ -5,7 +5,7 @@ if(defined(MODULE_ADMIN_REQUIRED_PERMISSION)){
          die("Fuck you!");
          }
     
-    }
+     }
 
 if(isset($_POST["submit"])){
      $unencoded = $_POST["template_content"];
@@ -30,7 +30,7 @@ if(isset($_POST["submit"])){
   window.location.replace(url);
   </script>";
     
-    }
+     }
 
 define("NEWSLETTER_TEMPLATE_TITLE", getconfig("newsletter_template_title"));
 define("NEWSLETTER_TEMPLATE_CONTENT", getconfig("newsletter_template_content"));

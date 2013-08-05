@@ -1,22 +1,22 @@
 <?php if(containsModule(get_requested_pagename(), "fullcalendar")){
-    $scriptPath = getModulePath("fullcalendar") . "script/";
-    ?>
+     $scriptPath = getModulePath("fullcalendar") . "script/";
+     ?>
 <link href='<?php echo $scriptPath;
-    ?>fullcalendar/fullcalendar.css' rel='stylesheet' />
+     ?>fullcalendar/fullcalendar.css' rel='stylesheet' />
 <link href='<?php echo $scriptPath;
-    ?>fullcalendar/fullcalendar.print.css' rel='stylesheet' media='print' />
+     ?>fullcalendar/fullcalendar.print.css' rel='stylesheet' media='print' />
 <script src='<?php echo $scriptPath;
-    ?>jquery/jquery-1.9.1.min.js'></script>
+     ?>jquery/jquery-1.9.1.min.js'></script>
 <script src='<?php echo $scriptPath;
-    ?>jquery/jquery-ui-1.10.2.custom.min.js'></script>
+     ?>jquery/jquery-ui-1.10.2.custom.min.js'></script>
 <script src='<?php echo $scriptPath;
-    ?>fullcalendar/fullcalendar.js'></script>
+     ?>fullcalendar/fullcalendar.js'></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('#fullcalendar').fullCalendar({
 			editable: true,
                         <?php if($_SESSION["language"] === "de"){
-        ?>
+         ?>
                         buttonText: {
                         today: 'Heute',
                         month: 'Monat',
@@ -30,7 +30,7 @@
 
 
 <?php }
-    ?>
+     ?>
 			events: "json-events.php",
                         disableDragging: true,
 			loading: function(bool) {

@@ -17,12 +17,12 @@
 <div class="clear"></div>
 <div id="nav_left">
 <?php if(getconfig("logo_disabled") == "no"){
-    logo();
-    }else{
+     logo();
+     }else{
      echo "<h1 class='website_logo'>";
      homepage_title();
      echo "</h1>";
-    }
+     }
 ?>
 <?php menu("left");
 ?>

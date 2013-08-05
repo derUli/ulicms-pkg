@@ -18,7 +18,7 @@ function intramail_install(){
      db_query("ALTER TABLE `" . tbname("messages") .
          "` ADD `read` BOOL NOT NULL AFTER `date` ");
     
-    }
+     }
 
 
 

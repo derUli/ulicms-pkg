@@ -16,7 +16,7 @@ function get_mime($file){
          }else{
          return false;
          }
-    }
+     }
 
 
 function code_highlighting_content_filter($html){
@@ -55,5 +55,5 @@ function code_highlighting_content_filter($html){
              }
          }
      return $html;
-    }
+     }
 ?>

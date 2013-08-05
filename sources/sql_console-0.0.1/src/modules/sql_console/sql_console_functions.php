@@ -3,26 +3,26 @@ ini_set('memory_limit', '5120M');
 set_time_limit (0);
 /**
  * sql_parse.php
- *                               -------------------
- *      begin                : Thu May 31, 2001
- *      copyright            : (C) 2001 The phpBB Group
- *      email                : support@phpbb.com
+ *                                 -------------------
+ *        begin                : Thu May 31, 2001
+ *        copyright            : (C) 2001 The phpBB Group
+ *        email                : support@phpbb.com
  * 
- *      $Id: sql_parse.php,v 1.8 2002/03/18 23:53:12 psotfx Exp $
+ *        $Id: sql_parse.php,v 1.8 2002/03/18 23:53:12 psotfx Exp $
  */
 
 /**
  * This program is free software; you can redistribute it and/or modify
- *    it under the terms of the GNU General Public License as published by
- *    the Free Software Foundation; either version 2 of the License, or
- *    (at your option) any later version.
+ *      it under the terms of the GNU General Public License as published by
+ *      the Free Software Foundation; either version 2 of the License, or
+ *      (at your option) any later version.
  */
 
 /**
  * These functions are mainly for use in the db_utilities under the admin
- *    however in order to make these functions available elsewhere, specifically
- *    in the installation phase of phpBB I have seperated out a couple of
- *    functions into this file.  JLH
+ *      however in order to make these functions available elsewhere, specifically
+ *      in the installation phase of phpBB I have seperated out a couple of
+ *      functions into this file.  JLH
  * 
  * \**************************************************************************
  */
@@ -30,7 +30,6 @@ set_time_limit (0);
 
 // remove_comments will strip the sql comment lines out of an uploaded sql file
 // specifically for mssql and postgres type files in the install....
-
 function remove_comments(& $output)
 {
      $lines = explode("
@@ -62,11 +61,10 @@ function remove_comments(& $output)
     
      unset($lines);
      return $output;
-    }
+     }
 
 
 // remove_remarks will strip the sql comment lines out of an uploaded sql file
-
 function remove_remarks($sql)
 {
      $lines = explode("
@@ -99,12 +97,11 @@ function remove_remarks($sql)
     
      return $output;
     
-    }
+     }
 
 
 // split_sql_file will split an uploaded sql file into single sql statements.
 // Note: expects trim() to have already been run on $sql.
-
 function split_sql_file($sql, $delimiter)
 {
      // Split up our string into "possible" SQL statements.
@@ -191,11 +188,11 @@ function split_sql_file($sql, $delimiter)
          }
     
      return $output;
-    }
+     }
 
 function display_error(){
      echo "<p class=\"sql_error\">" . mysql_error() . "</p>";
-    }
+     }
 
 
 
@@ -228,9 +225,9 @@ function sqlQueryFromString($sql_query){
                      $field = mysql_fetch_field($query);
                      echo "<td style=\"font-weight:bold;\">{$field->name}</td>";
                      }
-                echo "</tr>
+                 echo "</tr>
 ";
-                // printing table rows
+                 // printing table rows
                 while($row = mysql_fetch_row($query))
                 {
                      echo "<tr>";
@@ -246,20 +243,20 @@ function sqlQueryFromString($sql_query){
                     
                      echo "</tr>
 ";
-                    }
+                     }
                 
-                echo "</table></div>
+                 echo "</table></div>
 <br/>";
                 
-                }
+                 }
             
-            }
+             }
         
-        }
+         }
     
-    return true;
+     return true;
     
-    }
+     }
 
 
 
