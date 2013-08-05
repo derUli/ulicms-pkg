@@ -1,0 +1,22 @@
+Die grundlegende Ordnerstruktur für ein neues Paket können Sie folgendermaßen anlegen:
+$ ./ulicms-pkg.py src-folder-create meinpaket-1.0.1
+
+Bitte beachten Sie, dass die license.txt per Standard die UliCMS Lizenz (BSD-ähnlich)
+enthält. Wenn Sie Ihr Paket unter einer anderen Lizenz veröffentlichen möchten,
+ersetzen Sie bitte den Lizenztext.
+
+Die Datei description.txt ist nicht zwingend notwendig, aber es ist sinnvoll
+diese anzulegen. Die Datei muss einen kurzen Beschreibungstext des Paketes enthalten.
+
+Der Ordner src/ muss die Quelldateien des Pakets enthalten.
+
+Wenn Sie ein Modul hinzufügen möchten, kontaktieren Sie bitte den Entwickler von ulicms-pkg.
+Ich werde Ihnen dann die Berechtigungen auf GitHub zuweisen.
+
+Legen Sie einen neuen Branch an, den Sie nach dem Namensschema meinpaket-[versionsnummer] benennen.
+Übertragen Sie den neuen Branch nach GitHub und benachrichtigen Sie den Entwickler von ulicms-pkg,
+damit dieser nach einem Funktionstest Ihr neues Paket mit dem Master und den Release-Branches mergt.
+Mit Release-Branches sind die Branches gemeint, die alle für eine bestimmte UliCMS-Version kompatible
+Pakete enthalten. Diese sind nach der entsprechenden internen Versionsnummer benannt.
+
+z. B.: 6.3, 6.4, 7.0, 7.1, usw...
