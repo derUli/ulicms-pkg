@@ -205,4 +205,4 @@ if sys.argv[1] == "build" and len(packagesToBuild) > 0:
       end_time = time.time()
       print("Duration of build process: ")
       duration = time.gmtime(end_time - start_time)
-      print(time.strftime("'%H:%M:%S'", duration))
+      print(time.strftime("%H:%M:%S", duration))
