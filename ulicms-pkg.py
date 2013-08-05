@@ -25,7 +25,7 @@ if sys.argv[1] == "src-folder-create":
       licenseFile = os.path.join(targetDir, "license.txt")
       os.makedirs(targetDir)
       os.makedirs(srcDir)
-      shutil.copyfile("license.txt", licenseFile)
+      shutil.copyfile("doc/license.txt", licenseFile)
       print("Done.")
       sys.exit()
 
