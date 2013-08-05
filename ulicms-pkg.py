@@ -1,5 +1,5 @@
 #!/usr/bin/python
-import os, sys, tarfile, shutil, fnmatch
+import os, sys, tarfile, shutil, fnmatch, time
 
 rootCWD = os.getcwd()
 listFile = os.path.join(rootCWD, "packages", "list.txt")
@@ -104,6 +104,7 @@ if sys.argv[1] == "clean":
       sys.exit(0)
          
 if sys.argv[1] == "build":
+   start_time = time.time()
    if len(sys.argv) > 2:
       target = sys.argv[2]
    else:
@@ -200,3 +201,8 @@ if sys.argv[1] == "build" and len(packagesToBuild) > 0:
          print("copy description...")
          shutil.copy(pkgDescFile, descFile)
          print("done.")
+   if len(packagesToBuild) > 0:
+      end_time = time.time()
+      print("Duration of build process: ")
+      duration = time.gmtime(end_time - start_time)
+      print(time.strftime("'%H:%M:%S'", duration))
