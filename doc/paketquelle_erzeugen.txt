@@ -1,0 +1,8 @@
+Vor dem erzeugen einer Paketquelle sollte aufgeräumt werden:
+$ ./ulicms-pkg.py clean
+
+Dann wird die Paketquelle erzeugt:
+$ ./ulicms-pkg.py build
+
+Die Pakete werden in das Standardformat (*.tar.gz) gepackt, die Beschreibungen
+werden kopiert und die Paketnamen werden automatisch in die list.txt geschrieben.
