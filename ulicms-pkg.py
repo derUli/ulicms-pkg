@@ -111,6 +111,7 @@ if sys.argv[1] == "build":
          print("Fatal: Package " + target + " doesn't exists.")
 
 if sys.argv[1] == "build" and len(packagesToBuild) > 0:
+   packagesToBuild = sorted(packagesToBuild)
    for package in packagesToBuild:
       extension = ".tar.gz"
       rev = None
