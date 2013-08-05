@@ -1,0 +1,4 @@
+ulicms-pkg ist ein Framework zur Erstellung von Paketquellen für UliCMS.
+Die Quellcodes, Paketbeschreibungen und Lizenzinfos werden in einer vordefinierten
+Ordnerstruktur abgelegt. Daraus kann dann eine Paketquelle die für die Installation
+von Modulen und Themes in UliCMS genutzt werden kann generiert werden.
