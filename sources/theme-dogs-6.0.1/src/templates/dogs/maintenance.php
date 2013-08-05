@@ -3,7 +3,8 @@
 <head>
 <title><?php homepage_title()?> &gt; <?php title()?></title>
 <?php base_metas()?>
-<link rel="stylesheet" media="screen" type="text/css" href="<?php echo getTemplateDirPath("dogs");?>style.css"/>
+<link rel="stylesheet" media="screen" type="text/css" href="<?php echo getTemplateDirPath("dogs");
+?>style.css"/>
 <meta name="viewport" content="width=1280, initial-scale=1"/>
 
 </head>
@@ -16,13 +17,15 @@
 <div class="clear"></div>
 <div id="nav_left">
 <?php if(getconfig("logo_disabled") == "no"){
-logo();
-}else{
-   echo "<h1 class='website_logo'>";
-   homepage_title();
-   echo "</h1>";
-}?>
-<?php menu("left");?>
+    logo();
+    }else{
+     echo "<h1 class='website_logo'>";
+     homepage_title();
+     echo "</h1>";
+    }
+?>
+<?php menu("left");
+?>
 </div>
 <div id="content">
 <h1>Wartungsmodus</h1>

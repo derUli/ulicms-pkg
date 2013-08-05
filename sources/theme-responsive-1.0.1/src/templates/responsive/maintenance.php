@@ -3,10 +3,12 @@
 <head>
 <title><?php homepage_title()?> | <?php title()?></title>
 <?php base_metas()?>
-<link rel="stylesheet" type="text/css" href="<?php echo getTemplateDirPath("responsive");?>style.css"/>
+<link rel="stylesheet" type="text/css" href="<?php echo getTemplateDirPath("responsive");
+?>style.css"/>
 <style type="text/css">
 body{
-color:<?php echo getconfig("body-text-color");?>;
+color:<?php echo getconfig("body-text-color");
+?>;
 background-color:<?php echo getconfig("body-background-color")?>;
 font-family:<?php echo getconfig("default-font")?>;
 }
@@ -20,16 +22,17 @@ background-color:<?php echo getconfig("header-background-color")?>;
 <div class="header">
 <div class="logo">
 <?php
-if(getconfig("logo_disabled")=="no")
-{
-  logo();
-?>
+if(getconfig("logo_disabled") == "no")
+    {
+     logo();
+    ?>
 <br/>  
 <?php
-}
+    }
 else{
-?><h1><?php homepage_title()?></h1>
-<?php }?>
+    ?><h1><?php homepage_title()?></h1>
+<?php }
+?>
 <span><?php motto()?></span>
 </div>
 <div class="navbar_top">

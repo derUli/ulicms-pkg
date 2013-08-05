@@ -5,7 +5,7 @@ $required_permission = getconfig("search_subjects_required_permission");
 
 if($required_permission === false){
      $required_permission = 20;
-    }
+     }
 
 define(MODULE_ADMIN_REQUIRED_PERMISSION, $required_permission);
 
@@ -32,5 +32,5 @@ function search_subjects_admin(){
     
     
     
-    }
+     }
  

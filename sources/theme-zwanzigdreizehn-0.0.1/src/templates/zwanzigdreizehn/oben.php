@@ -1,15 +1,19 @@
 <!doctype html>
-<html lang="<?php echo getCurrentLanguage(true);?>">
+<html lang="<?php echo getCurrentLanguage(true);
+?>">
 <head>
 <?php base_metas()?>
-<link rel="stylesheet" type="text/css" href="<?php echo getTemplateDirPath("zwanzigdreizehn");?>style.css"/>
+<link rel="stylesheet" type="text/css" href="<?php echo getTemplateDirPath("zwanzigdreizehn");
+?>style.css"/>
 <style type="text/css">
 .copyright{
-border-color:<?php echo getconfig("body-background-color");?>
+border-color:<?php echo getconfig("body-background-color");
+?>
 }
 
 .header{
-background-color:<?php echo getconfig("header-background-color");?>;
+background-color:<?php echo getconfig("header-background-color");
+?>;
 }
 </style>
 </head>
@@ -20,7 +24,8 @@ background-color:<?php echo getconfig("header-background-color");?>;
 <span><?php motto()?></span>
 </div>
 <div class="menu">
-<?php menu("top");?>
+<?php menu("top");
+?>
 </div>
 <div class="container">
 <div class="content">

@@ -11,16 +11,19 @@ Released   : 20080119
 Description: Three-column blog design with the third column allocated for ads. Features Web 2.0 design ideal for 1024x768 resolutions.
 
 -->
-<html lang="<?php echo getCurrentLanguage();?>">
+<html lang="<?php echo getCurrentLanguage();
+?>">
 <head>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <?php base_metas()?>
 
-<link href="<?php echo getTemplateDirPath("nightvision");?>style.css" rel="stylesheet" type="text/css" media="screen" />
+<link href="<?php echo getTemplateDirPath("nightvision");
+?>style.css" rel="stylesheet" type="text/css" media="screen" />
 </head>
 <style type="text/css">
 body{
-font-family:<?php echo getconfig("default-font");?>;
+font-family:<?php echo getconfig("default-font");
+?>;
 }
 </style>
 <body>
@@ -51,9 +54,11 @@ font-family:<?php echo getconfig("default-font");?>;
 		<div class="post">
 			<div class="title">
 				<h2><a href="#"><?php title()?></a></h2>
-				<?php if(!is_404() and !is_403){?>
+				<?php if(!is_404() and !is_403){
+    ?>
 				<p><small>
 				
 				<?php autor()?></small></p>
-				<?php }?>
+				<?php }
+?>
 			</div>

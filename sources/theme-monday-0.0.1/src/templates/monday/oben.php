@@ -4,9 +4,9 @@
 <head>
 <?php base_metas()?>
 
-<?php 
+<?php
 if(in_array("search", getAllModules())){
-?>
+    ?>
 <script type="text/javascript">
 window.onload = function(){
   var qHead = document.getElementById("qHead")
@@ -25,7 +25,8 @@ window.onload = function(){
 }
 </script>
 
-<?php } ?>
+<?php }
+?>
 <link rel="stylesheet" media="screen" type="text/css" href="<?php echo getTemplateDirPath("monday");
 ?>style.css"/>
 <style type="text/css">
@@ -41,40 +42,46 @@ background-color:<?php echo getconfig("header-background-color");
 <div id="rootContainer">
 <div id="header">
 <div id="logo">
-<?php 
+<?php
 if(getconfig("logo_disabled") != "yes"){
-echo '<a href="./">';
-  logo();
-  echo "</a>";
-} else{
-  echo "<h1 class=\"website_name\">";
-  echo '<a href="./">';
-  homepage_title();
-  echo "</a>";
-  echo "</h1>";
-}?>
-<p class="motto"><?php motto();?></p>
-</div>
-<?php 
-if(in_array("search", getAllModules())){
+    echo '<a href="./">';
+     logo();
+     echo "</a>";
+    }else{
+     echo "<h1 class=\"website_name\">";
+     echo '<a href="./">';
+     homepage_title();
+     echo "</a>";
+     echo "</h1>";
+    }
 ?>
+<p class="motto"><?php motto();
+?></p>
+</div>
+<?php
+if(in_array("search", getAllModules())){
+    ?>
 <div id="searchFormHeader">
 <form action="suche.html" method="get">
 <input type="text" id="qHead" name="q" value="">
 <?php
-if(in_array("blog", getAllModules())){
-
-?>
+    if(in_array("blog", getAllModules())){
+        
+        ?>
 <input type="hidden" name="type" value="blog">
-<?php } else {?>
+<?php }else{
+        ?>
 <input type="hidden" name="type" value="pages">
 
-<?php } ?>
+<?php }
+    ?>
 
 </form>
 </div>
-<?php }?>
-<?php menu("top");?>
+<?php }
+?>
+<?php menu("top");
+?>
 </div>
 
 <div id="content">

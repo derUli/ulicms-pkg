@@ -1,7 +1,7 @@
 <?php
 if(!function_exists("crawlerDetect")){
     
-    function crawlerDetect()
+     function crawlerDetect()
     {
          if (isset($_SERVER['HTTP_USER_AGENT']) && preg_match('/bot|crawl|slurp|spider/i', $_SERVER['HTTP_USER_AGENT'])){
              return TRUE;
@@ -9,10 +9,10 @@ if(!function_exists("crawlerDetect")){
         else{
              return FALSE;
              }
-        }
+         }
     
     
-    }
+     }
 
 if(!is_admin_dir() and !crawlerDetect() and isset($_GET["q"])){
     
@@ -28,6 +28,6 @@ if(!is_admin_dir() and !crawlerDetect() and isset($_GET["q"])){
          db_query("INSERT INTO " . tbname("search_subjects") . " (`subject`, `amount`) VALUES ('$subject', 1)");
          }
     
-    }
+     }
 
 ?>
