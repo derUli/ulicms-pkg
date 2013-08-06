@@ -1,0 +1,2 @@
+Bindet Google Analytics in die Website ein.
+Die Konfigurationsvariable google_analytics_id muss von ihnen nach der Installation des Plugins noch gesetzt werden. Das Format der ID lautet "UA-XXXXX-Y" bzw "UA-XXXXX-YY".
