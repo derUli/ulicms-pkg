@@ -1,4 +1,4 @@
 Eine PHP-Klasse zur Generierung von Blindtexten.
 
 Weitere Infos unter:
-<a href="http://tinsology.net/2009/07/php-lorem-ipsum-generator/" target="_blank">http://tinsology.net/2009/07/php-lorem-ipsum-generator/</a>
+<a style="font-weight:normal;"  href="http://tinsology.net/2009/07/php-lorem-ipsum-generator/" target="_blank">http://tinsology.net/2009/07/php-lorem-ipsum-generator/</a>
