@@ -109,7 +109,7 @@ function comment_form($post_id){
     
      $html .= "<table style=\"border:0px;\">
      <tr>
-     <td><strong>Name: *</strong>&nbsp;&nbsp;</td><td><input name='name' size=50 maxlength=255 type='text' value='" . $_SESSION["name"] . "'>
+     <td><strong>Name: *</strong>&nbsp;&nbsp;</td><td><input name='name' required='true' size=50 maxlength=255 type='text' value='" . $_SESSION["name"] . "'>
      </td>
      </tr>";
     
@@ -120,7 +120,7 @@ function comment_form($post_id){
      </tr>";
     
      $html .= "<tr>
-     <td><strong>Email: *</strong>&nbsp;&nbsp;</td><td><input size=50 maxlength=255 name='email' type='email' value='" . $_SESSION["email"] . "'>
+     <td><strong>Email: *</strong>&nbsp;&nbsp;</td><td><input size=50 maxlength=255 name='email' type='email' required='true' value='" . $_SESSION["email"] . "'>
      </td>
      </tr>";
     
