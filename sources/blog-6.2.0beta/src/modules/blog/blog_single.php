@@ -127,7 +127,7 @@ function comment_form($post_id){
     
      $html .= "</table>";
     
-     $html .= "<br/><textarea name='comment' rows=15 cols=60></textarea>";
+     $html .= "<br/><textarea name='comment' rows=15 cols=60 required='true'></textarea>";
      $html .= "<input type='text' name='phone' class='antispam_honeypot' value=''>";
      $html .= "<input type='hidden' name='post_comment_to' value='" . $post_id . "'>";
      $html .= "<br/><br/><div class=\"ulicms_publish_comment\"><input type='submit' value='" . $submit . "'></div>";
