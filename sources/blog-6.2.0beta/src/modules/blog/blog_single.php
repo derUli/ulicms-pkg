@@ -115,12 +115,12 @@ function comment_form($post_id){
     
     
      $html .= "<tr>
-     <td><strong>Homepage:</strong>&nbsp;&nbsp;</td><td><input size=50 maxlength=255 name='url' type='text' value='" . $_SESSION["url"] . "'>
+     <td><strong>Homepage:</strong>&nbsp;&nbsp;</td><td><input size=50 maxlength=255 name='url' type='url' value='" . $_SESSION["url"] . "'>
      </td>
      </tr>";
     
      $html .= "<tr>
-     <td><strong>Email: *</strong>&nbsp;&nbsp;</td><td><input size=50 maxlength=255 name='email' type='text' value='" . $_SESSION["email"] . "'>
+     <td><strong>Email: *</strong>&nbsp;&nbsp;</td><td><input size=50 maxlength=255 name='email' type='email' value='" . $_SESSION["email"] . "'>
      </td>
      </tr>";
     
@@ -164,7 +164,7 @@ function post_comments(){
     
     
      if(!isset($_SESSION["url"])){
-         $_SESSION["url"] = "http://";
+         $_SESSION["url"] = "";
          }
     
     
