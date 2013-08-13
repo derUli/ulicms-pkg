@@ -35,7 +35,7 @@ background-color:<?php echo getconfig("header-background-color");
 ?>;
 }
 </style>
-<meta name="viewport" content="width=1024"/>
+<meta name="viewport" content="width=1280"/>
 </head>
 <body>
 
