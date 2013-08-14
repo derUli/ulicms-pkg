@@ -33,7 +33,7 @@ function search_render(){
          }
     
      $html_output .= "<form class='search-form' action='" . get_requested_pagename() . ".html' method='get'>
-	<div class=\"search_subject\">Suchbegriff: <input type='text' name='q' value='" . $search_subject . "'> <input type='submit' value='Suchen'></div>";
+	<div class=\"search_subject\">Suchbegriff: <input type='search' results=10 autosave='".md5($_SERVER["SERVER_NAME"])."' name='q'  value='" . $search_subject . "'> <input type='submit' value='Suchen'></div>";
     
      $html_output .= '<br/><div class="search-content-type">';
      $html_output .= "<strong>Bereich:</strong><br/><input type='radio' value='pages' name='type' ";
