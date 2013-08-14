@@ -207,6 +207,7 @@ input[type="submit"]:active{
 
 input[type="search"]{
 -webkit-appearance: none;
+-moz-appearance:none;
 }
 
 input[type="text"], textarea, input[type="password"], input[type="email"], 
