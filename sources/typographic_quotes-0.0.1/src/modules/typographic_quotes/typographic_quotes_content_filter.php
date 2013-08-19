@@ -34,11 +34,13 @@ function typographic_quotes_content_filter($input){
       }
       
       if(endsWith(strtolower($returnval), "<code>") or 
-         endsWith(strtolower($returnval), "<pre>"))
+         endsWith(strtolower($returnval), "<pre>") or
+         endsWith(strtolower($returnval), "<textarea"))
          $code_or_pre = true;
          
      if(endsWith(strtolower($returnval), "</code>") or 
-        endsWith(strtolower($returnval), "</pre>"))
+        endsWith(strtolower($returnval), "</pre>") or 
+        endsWith(strtolower($returnval), "</textarea>"))
          $code_or_pre = false;
       
    }
