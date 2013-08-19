@@ -43,7 +43,7 @@ function typographic_quotes_content_filter($input){
      if(endsWith(strtolower($returnval), "</code>") or 
         endsWith(strtolower($returnval), "</pre>") or 
         endsWith(strtolower($returnval), "</script>")or
-         endsWith(strtolower($returnval), "</style"))
+         endsWith(strtolower($returnval), "</style>"))
          $code_or_pre = false;
       
    }
