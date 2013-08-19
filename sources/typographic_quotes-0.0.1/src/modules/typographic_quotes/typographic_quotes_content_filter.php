@@ -2,13 +2,14 @@
 // Ersetze doppelte Anführungszeichen durch Typographische
 function typographic_quotes_content_filter($input){
    $returnval = "";
+   $input = str_replace("&quot;", "\"", $input);
    $quote = false;
    $tag_open = false;
    $code_or_pre = false;
    for($i=0; $i<strlen($input); $i++){
    
       switch($input[$i]){
-         case "\"": case "&quot;":
+         case "\"":
          if($quote and !$tag_open and !$code_or_pre){
             $returnval .= "“";
             $quote = false;
@@ -18,7 +19,7 @@ function typographic_quotes_content_filter($input){
          } else{
            $returnval .= $input[$i];
          }
-         break; break;
+         break;
          case "<":
          $tag_open = true;
          $returnval .= $input[$i];
