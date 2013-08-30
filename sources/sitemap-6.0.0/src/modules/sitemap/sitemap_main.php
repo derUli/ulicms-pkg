@@ -1,11 +1,9 @@
 ﻿<?php
 function sitemap_render(){
      $html_output = "";
-     $html_output .= sitemap_menu("top");
-     $html_output .= sitemap_menu("left");
-     $html_output .= sitemap_menu("right");
-     $html_output .= sitemap_menu("bottom");
-     $html_output .= sitemap_menu("hidden");
+     foreach(getAllMenus() as $menu){
+        $html_output .= sitemap_menu($menu);
+     }
      return $html_output;
      }
 
@@ -31,6 +29,9 @@ function sitemap_menu($name){
          break;
      case "hidden":
          $menu_in_german = "Nicht im Menü";
+         break;
+     default:
+         $menu_in_german = $name;
          break;
          }
     
