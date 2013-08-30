@@ -1,13 +1,14 @@
-<?php 
+<?php
 $ga_id = getconfig("google_analytics_id");
 
 if($ga_id){
-$ga_id = trim($ga_id);
-?>
+    $ga_id = trim($ga_id);
+    ?>
 <script type="text/javascript">
 
   var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', '<?php echo $ga_id;?>']);
+  _gaq.push(['_setAccount', '<?php echo $ga_id;
+    ?>']);
   _gaq.push(['_trackPageview']);
 
   (function() {
@@ -18,4 +19,5 @@ $ga_id = trim($ga_id);
 
 </script>
 
-<?php }?>
+<?php }
+?>

@@ -1,6 +1,6 @@
-<?php 
+<?php
 
 function timthumb_render(){
-   return "";
-}
+     return "";
+    }
 ?>
