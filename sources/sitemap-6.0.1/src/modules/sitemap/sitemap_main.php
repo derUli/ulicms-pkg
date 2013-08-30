@@ -27,9 +27,9 @@ function sitemap_menu($name){
      case "bottom":
          $menu_in_german = "Unteres Menü";
          break;
-     case "hidden":
+     case "hidden": case "none":
          $menu_in_german = "Nicht im Menü";
-         break;
+         break; break;
      default:
          $menu_in_german = $name;
          break;
