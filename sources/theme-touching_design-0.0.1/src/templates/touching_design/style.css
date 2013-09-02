@@ -2,8 +2,8 @@
 /* css released under Creative Commons License -  http://creativecommons.org/licenses/by/2.0/deed.en  */
 
 body {
- background: #E7E7E7 url('body.jpg') top left;
-color:#564b47;
+ background: url('body.jpg') top left;
+
 padding:0px;
 margin:0px;
 }
@@ -54,7 +54,6 @@ margin: 0px;
 
 /* -----------------content--------------------- */
 #content {
-
 background:#ffffff  url('content.jpg') no-repeat top right;
 padding: 0px;
 margin-left: 200px;
@@ -77,7 +76,7 @@ width: 200px;
 margin: 0px;
 padding: 0px;
 background:#E8E8E8;
- height:90%;
+height:90%;
 }
 
 /* -----------footer--------------------------- */
