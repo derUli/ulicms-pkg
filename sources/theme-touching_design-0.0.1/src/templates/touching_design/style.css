@@ -64,9 +64,6 @@ min-height:600px;
 /*height:expression(this.scrollHeight > 600 ? "auto":"600px"); */
 }
 
-div#content a{
-display:inline
-}
 
 p, pre{
 padding: 5px 10px;
@@ -113,7 +110,7 @@ background:  url('footer.gif') repeat-x ;
 float: right;
 }
 
- .verticalmenu li, a:link, .verticalmenu a:visited, .verticalmenu a:hover {
+ .verticalmenu li a:link, .verticalmenu a:visited .verticalmenu a:hover {
    display: block;
    font-weight: bold;
    font-size:1.1em;
