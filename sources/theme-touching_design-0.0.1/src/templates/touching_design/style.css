@@ -64,6 +64,10 @@ min-height:600px;
 /*height:expression(this.scrollHeight > 600 ? "auto":"600px"); */
 }
 
+div#content a{
+display:inline
+}
+
 p, pre{
 padding: 5px 10px;
 margin:0px;
