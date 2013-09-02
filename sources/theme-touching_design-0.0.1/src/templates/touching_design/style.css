@@ -105,9 +105,14 @@ background:  url('footer.gif') repeat-x ;
  margin: 0px;
 }
 
+.blog_pagination_older {
+float: right;
+}
+
  .verticalmenu li, a:link, .verticalmenu a:visited, .verticalmenu a:hover {
    display: block;
-   font: bold 1.1em Verdana, Arial, Helvetica, sans-serif;
+   font-weight: bold;
+   font-size:1.1em;
    color: #9A1212;
    text-decoration: none;
    text-align: left;
