@@ -13,20 +13,14 @@ a:hover {color: #c43300;}
 a:active { color:#000000;}
 
 h1 {
-font-size: 11px;
 text-transform:uppercase;
-
-/*border-top:1px solid #564b47;
-border-bottom:1px solid #564b47;*/
-/*padding:5px 15px;*/
-margin:0px }
+}
 
 h2 {
 color: #9A1212;
-font-size:20px;
+font-size:1.2em;
 font-weight: normal;
-padding: 5px 10px;
-margin:0px;}
+}
 
 img.download {vertical-align:middle;}
 
@@ -55,7 +49,7 @@ margin: 0px;
 /* -----------------content--------------------- */
 #content {
 background:#ffffff  url('content.jpg') no-repeat top right;
-padding: 0px;
+padding: 10px;
 margin-left: 200px;
 margin-right: 0px;
 }
@@ -64,11 +58,6 @@ min-height:600px;
 /*height:expression(this.scrollHeight > 600 ? "auto":"600px"); */
 }
 
-
-p, pre{
-padding: 5px 10px;
-margin:0px;
-}
 
 /* --------------left navi------------- */
 #left {
@@ -90,12 +79,15 @@ height:35px;
 text-align: right; 
 background:  url('footer.gif') repeat-x ;
 }
- #footer h1 a{
+
+ #footer h2 a{
  color:#FFFFFF;
  }
   #footer h1{
   padding:5px 5px 0px 0px;
+  font-size:0.8em;
   }
+  
  /**********vertical menu***************/
 .verticalmenu ul{
  list-style:none;
