@@ -3,8 +3,6 @@
 
 body {
  background: #E7E7E7 url('body.jpg') top left;
-font-size: 11px;
-font-family: Verdana, Arial, SunSans-Regular, Sans-Serif;
 color:#564b47;
 padding:0px;
 margin:0px;
@@ -47,9 +45,7 @@ border:1px solid #8D8D8D;
 #banner {
 height:114px;
 text-align: center;
-background:  url('header.jpg') no-repeat bottom center;
-background-color: #e1ddd9;
-
+background: url('header.jpg') no-repeat bottom center;
 padding: 0px;
 margin: 0px;
 }

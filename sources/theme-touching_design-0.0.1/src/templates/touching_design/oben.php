@@ -4,7 +4,12 @@
 <?php base_metas()?>
 <link rel="stylesheet" media="screen" type="text/css" href="<?php echo getTemplateDirPath("touching_design");
 ?>style.css"/>
-
+<style type="text/css">
+#banner{
+background-color:<?php echo getconfig("header-background-color");
+?>;
+}
+</style>
 </head>
 <body>
  <!-- Generated at www.csscreator.com -->
