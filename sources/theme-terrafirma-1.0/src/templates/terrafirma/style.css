@@ -11,6 +11,10 @@ padding: 0px;
 margin: 0px;
 }
 
+.menu_right{
+list-style-type: none;
+}
+
 body
 {
 background: url('images/a1.gif') repeat-x;
