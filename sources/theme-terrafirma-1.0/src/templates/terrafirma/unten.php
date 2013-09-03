@@ -1,3 +1,4 @@
+<p style="text-align:center;"><?php random_banner()?></p>
 </div>			
 </div>	
 		
