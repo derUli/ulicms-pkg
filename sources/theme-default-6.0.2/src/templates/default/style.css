@@ -104,6 +104,7 @@ clear:both;
 margin-left:20px;
 margin-right:20px;
 width:98%;
+word-wrap: break-word;
 float:left;
 }
 

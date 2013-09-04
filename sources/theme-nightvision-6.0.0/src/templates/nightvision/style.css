@@ -237,6 +237,7 @@ img.left {
 #content {
 	float: left;
 	width: 430px;
+	word-wrap: break-word;
 }
 
 .post {

@@ -248,6 +248,7 @@ margin-bottom: 20px;
 position: relative;
 width: 480px;
 float: left;
+word-wrap: break-word;
 }
 
 #primarycontent h3

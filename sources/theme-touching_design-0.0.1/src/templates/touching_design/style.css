@@ -52,6 +52,7 @@ background:#ffffff  url('content.jpg') no-repeat top right;
 padding: 10px;
 margin-left: 200px;
 margin-right: 0px;
+word-wrap: break-word;
 }
 div#content { 
 min-height:600px;
