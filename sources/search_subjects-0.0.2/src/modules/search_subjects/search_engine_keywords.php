@@ -7,6 +7,10 @@ function get_search_query()
  
     // Get the referrer to the page
     $referrer = $_SERVER['HTTP_REFERER'];
+    
+    if(strpos($referrer, php_uname('n')) !== false)
+       return $ref_keywords;
+
     if (!empty($referrer))
     {
         //Parse the referrer URL
