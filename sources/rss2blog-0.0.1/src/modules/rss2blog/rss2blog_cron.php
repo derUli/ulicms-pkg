@@ -59,7 +59,7 @@ if(!is_file($srclist))
      die();
 
 if(!class_exists("lastRSS")){
-     @include_once getModulePath("rss2blog") . "lib/lastRSS.php";
+     @include_once getModulePath("lastRSS") . "lib/lastRSS.php";
      }
 
 $srclist = file_get_contents($srclist);
