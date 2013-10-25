@@ -1,0 +1,1 @@
+phpMyAdmin ist eine freie PHP-Applikation zur Administration von MySQL-Datenbanken.
