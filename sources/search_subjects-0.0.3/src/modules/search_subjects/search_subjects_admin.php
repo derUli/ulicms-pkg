@@ -13,12 +13,12 @@ define(MODULE_ADMIN_REQUIRED_PERMISSION, $required_permission);
 
 
 function search_subjects_admin(){
-      $ss_limits = getconfig("search_subjects_limit");
+      $search_subjects_limit = getconfig("search_subjects_limit");
 
-      if($ss_limits === false)
-         $ss_limits = 10;
+      if($search_subjects_limit === false)
+         $search_subjects_limit = 10;
 
-     $data = db_query("SELECT * FROM " . tbname("search_subjects") . " ORDER by `amount` DESC LIMIT $ss_limits");
+     $data = db_query("SELECT * FROM " . tbname("search_subjects") . " ORDER by `amount` DESC LIMIT $search_subjects_limit");
     
      if(mysql_num_rows($data) > 0){
          echo "<table>";
