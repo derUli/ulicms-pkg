@@ -5,14 +5,20 @@ $required_permission = getconfig("search_subjects_required_permission");
 
 if($required_permission === false){
      $required_permission = 20;
-     }
+}
 
 define(MODULE_ADMIN_REQUIRED_PERMISSION, $required_permission);
 
 
 
+
 function search_subjects_admin(){
-     $data = db_query("SELECT * FROM " . tbname("search_subjects") . " ORDER by `amount` DESC LIMIT 10");
+      $ss_limits = getconfig("search_subjects_limit");
+
+      if($ss_limits === false)
+         $ss_limits = 10;
+
+     $data = db_query("SELECT * FROM " . tbname("search_subjects") . " ORDER by `amount` DESC LIMIT $ss_limits");
     
      if(mysql_num_rows($data) > 0){
          echo "<table>";
@@ -33,4 +39,3 @@ function search_subjects_admin(){
     
     
      }
- 

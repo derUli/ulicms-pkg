@@ -6,4 +6,7 @@ db_query("CREATE TABLE IF NOT EXISTS `" . tbname("search_subjects") . "` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;");
 
+if(getconfig("search_subjects_limit") === false)
+   setconfig("search_subjects_limit", "10");
+
 ?>
