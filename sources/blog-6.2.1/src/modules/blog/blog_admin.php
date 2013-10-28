@@ -22,6 +22,11 @@ function blog_admin(){
          if(intval($_POST["blog_feed_max_items"]) > 0){
              setconfig("blog_feed_max_items", intval($_POST["blog_feed_max_items"]));
              }
+             
+             if(intval($_POST["blog_posts_per_page"]) > 0){
+                setconfig("blog_posts_per_page", intval($_POST["blog_posts_per_page"]));
+             }
+            
         
          }
     
@@ -33,6 +38,8 @@ function blog_admin(){
          setconfig("blog_feed_max_items", "10");
          $blog_feed_max_items = "10";
          }
+         
+    $posts_per_page = getconfig("blog_posts_per_page");
     
      ?>
 
@@ -42,8 +49,10 @@ function blog_admin(){
          echo " checked";
          }
      ?>/> Über neue Kommentare per E-Mail benachrichtigen</p>
-<p>maximale Anzahl der Einträge im Newsfeed <input type="number" name="blog_feed_max_items" size=3 maxlength=3 min="5" max="100" value="<?php echo $blog_feed_max_items;
+     <p>Artikel pro Seite <input type="number" name="blog_feed_max_items" size=3 maxlength=3 min="5" max="100" value="<?php echo $blog_feed_max_items;
      ?>"/></p>
+<p>maximale Anzahl der Einträge im Newsfeed <input type="number" name=posts_per_page " size=3 maxlength=3 min="5" max="100" value="<?php echo $posts_per_page; ?>"/></p>
+     
 
 <p><input type="submit" name="submit" value="Einstellungen speichern"/></p>
 </form>
