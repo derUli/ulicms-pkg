@@ -1,3 +1,10 @@
+Lizenz für das jQuery Plugin:
+
+Dual licensed (just pick!)under MIT or GPL licenses.
+____________________________
+
+Lizenz für die UliCMS Integration:
+
 Copyright (c) 2013, Der Uli im Netz 
  All rights reserved. 
 
