@@ -37,7 +37,7 @@ $pages = getAllSystemNames();
 for ($i=0; $i < count($pages); $i++) {
 $p = htmlspecialchars($pages[$i], ENT_QUOTES, "UTF-8");
 ?>
-<option value="<?php echo $p;?>"<?php if($kontaktformular_thankyou_page == $pages[$i]) echo " selected=\"selected\""?>>[<?php echo $p;?>]</option>
+<option value="<?php echo $p;?>"<?php if($kontaktformular_thankyou_page == $pages[$i]) echo " selected=\"selected\""?>><?php echo $p;?></option>
 <?php }?>
 </select>
 </p>
