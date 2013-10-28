@@ -27,6 +27,10 @@ function blog_admin(){
                 setconfig("blog_posts_per_page", intval($_POST["blog_posts_per_page"]));
              }
             
+            if(isset($_POST["blog_autor_and_date_text"])){
+                setconfig("blog_autor_and_date_text", 
+                mysql_real_escape_string($_POST["blog_autor_and_date_text"]));
+             }
         
          }
     
@@ -41,6 +45,9 @@ function blog_admin(){
          
     $posts_per_page = getconfig("blog_posts_per_page");
     
+    $blog_autor_and_date_text = getconfig("blog_autor_and_date_text");
+    
+    
      ?>
 
 <form action="<?php echo getModuleAdminSelfPath()?>" method="post">
@@ -52,6 +59,10 @@ function blog_admin(){
      <p>Artikel pro Seite <input type="number" name="blog_feed_max_items" size=3 maxlength=3 min="5" max="100" value="<?php echo $blog_feed_max_items;
      ?>"/></p>
 <p>maximale Anzahl der Einträge im Newsfeed <input type="number" name=posts_per_page " size=3 maxlength=3 min="5" max="100" value="<?php echo $posts_per_page; ?>"/></p>
+
+<p>Autor-Text<br/>
+<textarea name="blog_autor_and_date_text" rows=3 cols=50><?php echo htmlspecialchars($blog_autor_and_date_text, ENT_QUOTES, "UTF-8");?></textarea>
+</p>
      
 
 <p><input type="submit" name="submit" value="Einstellungen speichern"/></p>
