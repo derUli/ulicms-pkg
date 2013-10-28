@@ -13,7 +13,10 @@ define(MODULE_ADMIN_REQUIRED_PERMISSION, $required_permission);
 function kontaktformular_admin(){
     
      if(isset($_POST["submit"])){
-     if(empty($_POST["kontaktformular_thankyou_page"]))
+     setconfig("email", 
+        mysql_real_escape_string($_POST["email"]));
+     
+          if(empty($_POST["kontaktformular_thankyou_page"]))
         deleteconfig("kontaktformular_thankyou_page");
      else
         setconfig("kontaktformular_thankyou_page", 
@@ -24,13 +27,17 @@ function kontaktformular_admin(){
 
 
 $kontaktformular_thankyou_page = getconfig("kontaktformular_thankyou_page");
+$email = getconfig("email");
 
 $pages = getAllSystemNames();
 
 ?>
 
 <form action="<?php echo getModuleAdminSelfPath()?>" method="post">
-<p>Zielseite:<br/>
+<p>Mails senden an<br/>
+<input type="email" name="email" value="<?php echo htmlspecialchars($email, ENT_QUOTES, "UTF-8");?>">
+</p>
+<p>Zielseite<br/>
 <select name="kontaktformular_thankyou_page" size=1>
 <option value=""<?php if(!$kontaktformular_thankyou_page) echo " selected=\"selected\""?>>[Standard]</option>
 <?php 
