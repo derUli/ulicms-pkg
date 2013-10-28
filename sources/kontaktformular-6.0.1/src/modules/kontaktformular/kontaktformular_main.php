@@ -153,6 +153,7 @@ function kontaktformular_render(){
             
             
              if(@mail(getconfig("email"), $betreff, $mailtext, $headers)){
+             
                  if($_SESSION["language"] == "de"){
                      return "<p class='contactform-success'>Vielen Dank für Ihre Email.<br/>Wir werden diese schnellstmöglich beantworten.</p>";
                      }
