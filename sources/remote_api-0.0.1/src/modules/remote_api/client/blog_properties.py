@@ -3,7 +3,7 @@ import xmlrpclib
 import datetime
 import getpass
 
-proxy = xmlrpclib.ServerProxy("http://uhost.kilu.de/ulicms/ulicms/?remote")
+proxy = xmlrpclib.ServerProxy("http://uhost.kilu.de/?remote")
 
 try:
     name = raw_input("Name: ")
