@@ -8,7 +8,8 @@ if(isModuleInstalled("IXR_Library") and getconfig("remote_api_enabled")
 class SimpleServer extends IXR_Server {
     function SimpleServer() {
         $this->user = null;
-        $this->IXR_Server(array(
+        global $xmlrpc_calls;
+        $xmlrpc_calls = array(
             'demo.sayHello' => 'this:sayHello',
             'demo.addTwoNumbers' => 'this:addTwoNumbers',
             'demo.fortune' => 'this:fortune',
@@ -20,7 +21,12 @@ class SimpleServer extends IXR_Server {
             'users.onlinenow' => 'this:onlineUsers',
             'modules.list' => 'this:listModules',
             'properties.list' => 'this:propertyList'
-        ));
+        );
+        
+        // Hook fürs hinzufügen weiter API Calls
+        add_hook("xmlrpc_calls");
+        
+        $this->IXR_Server($xmlrpc_calls);
     }
     
     function fortune(){
@@ -133,5 +139,6 @@ $server = new SimpleServer();
    header("Content-Type: text/plain;");
    die("Remote API is disabled.");
 }
+
    
 ?>
