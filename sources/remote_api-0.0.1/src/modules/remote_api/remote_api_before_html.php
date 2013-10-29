@@ -17,6 +17,7 @@ class SimpleServer extends IXR_Server {
             'version.development' => 'this:isDevelopmentVersion',
             'auth.login' => 'this:checkLogin',
             'cache.clear' => 'this:clear_cache',
+            'users.onlinenow' => 'this:onlineUsers',
             'modules.list' => 'this:listModules'
         ));
     }
@@ -34,6 +35,13 @@ class SimpleServer extends IXR_Server {
     
     function sayHello($args) {
         return 'Hello World!';
+    }
+    
+    function onlineUsers($args){
+           if(!$this->checkLogin(array($args[0], $args[1])))
+          return null;
+       
+          return array_values(getOnlineUsers());
     }
     
     function listModules($args){
