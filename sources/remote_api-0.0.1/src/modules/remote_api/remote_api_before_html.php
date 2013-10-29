@@ -11,6 +11,7 @@ class SimpleServer extends IXR_Server {
         $this->IXR_Server(array(
             'demo.sayHello' => 'this:sayHello',
             'demo.addTwoNumbers' => 'this:addTwoNumbers',
+            'demo.fortune' => 'this:fortune',
             'version.release' => 'this:getRelease',
             'version.internal' => 'this:getInternalVersion',
             'version.development' => 'this:isDevelopmentVersion',
@@ -18,6 +19,18 @@ class SimpleServer extends IXR_Server {
             'cache.clear' => 'this:clear_cache'
         ));
     }
+    
+    function fortune(){
+      if(!isModuleInstalled("fortune"))    
+          return null;
+          
+      if(!function_exists("getRandomFortune"))
+          include_once getModulePath("fortune")."fortune_lib.php";
+      
+      return getRandomFortune();        
+    
+    }    
+    
     function sayHello($args) {
         return 'Hello World!';
     }
