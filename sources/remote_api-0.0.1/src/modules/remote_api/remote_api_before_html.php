@@ -1,12 +1,5 @@
 <?php
-// Kompatiblität mit älteren UliCMS Versionen
 
-if(!function_exists("isModuleInstalled")){
-   function isModuleInstalled($name){
-      return in_array($name, getAllModules());
-   }
-
-}
 
 if(isModuleInstalled("IXR_Library") and getconfig("remote_api_enabled")
    and isset($_GET["remote"])){
@@ -21,11 +14,20 @@ class SimpleServer extends IXR_Server {
             'version.release' => 'this:getRelease',
             'version.internal' => 'this:getInternalVersion',
             'version.development' => 'this:isDevelopmentVersion',
-            'auth.login' => 'this:checkLogin'
+            'auth.login' => 'this:checkLogin',
+            'cache.clear' => 'this:clear_cache'
         ));
     }
     function sayHello($args) {
         return 'Hello World!';
+    }
+    
+    function clear_cache($args){
+       if(!$this->checkLogin(array($args[0], $args[1])))
+          return false;
+          
+       clearCache();    
+       return true;
     }
 
     function getRelease(){
