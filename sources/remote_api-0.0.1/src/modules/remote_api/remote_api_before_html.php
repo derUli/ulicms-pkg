@@ -144,6 +144,7 @@ $server = new SimpleServer();
    
 } else if(isModuleInstalled("IXR_Library") and !getconfig("remote_api_enabled")
    and isset($_GET["remote"])){
+   header("HTTP/1.0 503 Service Temporarily Unavailable");
    header("Content-Type: text/plain;");
    die("Remote API is disabled.");
 }
