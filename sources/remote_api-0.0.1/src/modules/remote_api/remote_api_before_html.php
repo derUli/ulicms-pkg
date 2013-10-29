@@ -1,9 +1,17 @@
 <?php
 
 
+
 if(isModuleInstalled("IXR_Library") and getconfig("remote_api_enabled")
    and isset($_GET["remote"])){
    include_once(getModulePath("IXR_Library").'IXR_Library.php');
+
+function register_xmlrpc_call($name, $callback){
+
+        global $xmlrpc_calls;
+        $xmlrpc_calls[$name] = $callback;
+}
+
 
 class SimpleServer extends IXR_Server {
     function SimpleServer() {
