@@ -97,6 +97,10 @@ class SimpleServer extends IXR_Server {
 $server = new SimpleServer();
    
    
-   }
+} else if(isModuleInstalled("IXR_Library") and !getconfig("remote_api_enabled")
+   and isset($_GET["remote"])){
+   header("Content-Type: text/plain;");
+   die("Remote API is disabled.");
+}
    
 ?>
