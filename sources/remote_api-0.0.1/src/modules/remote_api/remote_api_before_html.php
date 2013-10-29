@@ -18,7 +18,8 @@ class SimpleServer extends IXR_Server {
             'auth.login' => 'this:checkLogin',
             'cache.clear' => 'this:clear_cache',
             'users.onlinenow' => 'this:onlineUsers',
-            'modules.list' => 'this:listModules'
+            'modules.list' => 'this:listModules',
+            'properties.list' => 'this:propertyList'
         ));
     }
     
@@ -62,6 +63,36 @@ class SimpleServer extends IXR_Server {
     function getRelease(){
        $version = new ulicms_version();
        return $version->getVersion();    
+    }
+    
+    function propertyList($args){
+           if(!$this->checkLogin(array($args[0], $args[1])))
+              return null;
+
+          
+          $stat = array();
+          $stat["page_count"] = count(getAllSystemNames());
+          $stat["user_count"] = count(getUsers());
+          $stat["homepage_title"] = getconfig("homepage_title");
+          $stat["motto"] = getconfig("motto");
+          $stat["owner"] = getconfig("homepage_owner");
+          $stat["email"] = getconfig("email");
+          $stat["meta_keywords"] = getconfig("meta_keywords");
+          $stat["meta_description"] = getconfig("meta_description");
+          $stat["timezone"] = getconfig("timezone");
+          $stat["frontpage"] = getconfig("frontpage");
+          
+          
+          if(isModuleInstalled("blog")){
+             $query_articles = mysql_query("select * from ".tbname("blog"));
+             $stat["blog_entry_count"] = mysql_num_rows($query_articles);
+             
+             $query_comments = mysql_query("select * from ".tbname("blog_comments"));
+             $stat["blog_comment_count"] = mysql_num_rows($query_comments);
+          }
+          
+          ksort($stat);
+          return $stat;
     }
     
     
