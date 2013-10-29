@@ -29,7 +29,8 @@ class SimpleServer extends IXR_Server {
             'users.onlinenow' => 'this:onlineUsers',
             'modules.list' => 'this:listModules',
             'properties.list' => 'this:propertyList',
-            'languages.list' => 'this:languagesList'
+            'languages.list' => 'this:languagesList',
+            'pages.list' => "this:listPages"
         );
         
         // Hook fürs hinzufügen weiter API Calls
@@ -65,6 +66,13 @@ class SimpleServer extends IXR_Server {
           return null;
        
           return array_values(getAllModules());
+    }
+    
+   function listPages($args){
+       if(!$this->checkLogin(array($args[0], $args[1])))
+          return null;
+       
+          return array_values(getAllSystemNames());
     }
     
     function languagesList($args){
