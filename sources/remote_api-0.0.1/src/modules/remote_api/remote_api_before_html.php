@@ -7,19 +7,30 @@ class SimpleServer extends IXR_Server {
     function SimpleServer() {
         $this->IXR_Server(array(
             'demo.sayHello' => 'this:sayHello',
-            'demo.addTwoNumbers' => 'this:addTwoNumbers'
+            'demo.addTwoNumbers' => 'this:addTwoNumbers',
+            'version.release' => 'this:getRelease',
+            'version.internal' => 'this:getInternalVersion',
+            'version.development' => 'this:isDevelopmentVersion'
         ));
     }
     function sayHello($args) {
         return 'Hello World!';
     }
 
-    function getVersion($args){
+    function getRelease(){
        $version = new ulicms_version();
-       if($args[0])
-          return $version->getInternalVersion();
-       else
-          return $version->getVersion();
+       return $version->getVersion();    
+    }
+    
+     function isDevelopmentVersion(){
+       $version = new ulicms_version();
+       return $version->getDevelopmentVersion();   
+    }
+
+    function getInternalVersion(){
+       $version = new ulicms_version();
+       return $version->getInternalVersion();
+
     }    
     
     function addTwoNumbers($args) {
