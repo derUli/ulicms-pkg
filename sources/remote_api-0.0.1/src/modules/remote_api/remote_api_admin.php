@@ -22,7 +22,7 @@ function remote_api_admin(){
 
 $remote_api_enabled = getconfig("remote_api_enabled");
 
-$remote_url = "http://".php_uname('n')."/?remote";
+$remote_url = "http://".$_SERVER["SERVER_NAME"]."/?remote";
 
 ?>
 
