@@ -16,7 +16,8 @@ class SimpleServer extends IXR_Server {
             'version.internal' => 'this:getInternalVersion',
             'version.development' => 'this:isDevelopmentVersion',
             'auth.login' => 'this:checkLogin',
-            'cache.clear' => 'this:clear_cache'
+            'cache.clear' => 'this:clear_cache',
+            'modules.list' => 'this:listModules'
         ));
     }
     
@@ -33,6 +34,13 @@ class SimpleServer extends IXR_Server {
     
     function sayHello($args) {
         return 'Hello World!';
+    }
+    
+    function listModules($args){
+       if(!$this->checkLogin(array($args[0], $args[1])))
+          return null;
+       
+          return array_values(getAllModules());
     }
     
     function clear_cache($args){
