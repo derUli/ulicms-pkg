@@ -1,4 +1,13 @@
 <?php
+// Kompatiblität mit älteren UliCMS Versionen
+
+if(!function_exists("isModuleInstalled")){
+   function isModuleInstalled($name){
+      return in_array($name, getAllModules());
+   }
+
+}
+
 if(isModuleInstalled("IXR_Library") and getconfig("remote_api_enabled")
    and isset($_GET["remote"])){
    include_once(getModulePath("IXR_Library").'IXR_Library.php');
