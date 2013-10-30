@@ -122,7 +122,7 @@
          $kontaktformular_thankyou_page = getconfig("kontaktformular_thankyou_page");
         
          if(!$fehler and $kontaktformular_thankyou_page){
-            header("Location: $kontaktformular_thankyou_page.html");
+            header("Location: ".$kontaktformular_thankyou_page.".html");
             exit();
             
          
