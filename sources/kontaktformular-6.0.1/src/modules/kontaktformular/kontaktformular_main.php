@@ -1,14 +1,14 @@
 <?php
 
 if(file_exists("antispam-features.php")){
-     include "antispam-features.php";
-     }
+     include_once "antispam-features.php";
+}
 
 function kontaktformular_render(){
     
      // check for Spam Protection Variable
     if(!getconfig("contact_form_refused_spam_mails")){
-         setconfig("contact_form_refused_spam_mails", 0);
+         setconfig("contact_form_refused_spam_mails", "0");
          }
     
     
@@ -277,29 +277,7 @@ function kontaktformular_render(){
 
 
 
-if(!function_exists("stringcontainsbadwords")){
-     function stringcontainsbadwords($str){
-         $words_blacklist = getconfig("spamfilter_words_blacklist");
-         $str = strtolower($str);
-        
-         if($words_blacklist !== false){
-             $words_blacklist = explode("||", $words_blacklist);
-             }
-        else{
-             return false;
-             }
-        
-         for($i = 0; $i < count($words_blacklist); $i++){
-             $word = strtolower($words_blacklist[$i]);
-             if(strpos($str, $word) !== false)
-                 return true;
-             }
-        
-        
-         return false;
-         }
-    
-     }
+
 
 
 ?>
