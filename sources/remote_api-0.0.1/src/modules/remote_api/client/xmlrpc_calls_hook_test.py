@@ -2,7 +2,7 @@
 import xmlrpclib
 import datetime
 
-proxy = xmlrpclib.ServerProxy("http://pc-uli-bs:80/ulicms/ulicms/?remote")
+proxy = xmlrpclib.ServerProxy("http://uhost.kilu.de/?remote")
 
 
 print(proxy.demo.xmlrpc_calls_hook())
