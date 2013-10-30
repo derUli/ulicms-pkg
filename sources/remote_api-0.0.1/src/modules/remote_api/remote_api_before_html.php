@@ -30,6 +30,7 @@ class SimpleServer extends IXR_Server {
             'modules.list' => 'this:listModules',
             'properties.list' => 'this:propertyList',
             'languages.list' => 'this:languagesList',
+            'menus.list' => 'this:menusList',
             'pages.list' => "this:listPages"
         );
         
@@ -77,9 +78,16 @@ class SimpleServer extends IXR_Server {
     
     function languagesList($args){
            if(!$this->checkLogin(array($args[0], $args[1])))
-          return null;
+             return null;
        
           return array_values(getAllLanguages());
+    }
+    
+    function menusList($args){
+         if(!$this->checkLogin(array($args[0], $args[1])))
+            return null;
+          return array_values(getAllMenus);
+    
     }
     
     function clear_cache($args){
