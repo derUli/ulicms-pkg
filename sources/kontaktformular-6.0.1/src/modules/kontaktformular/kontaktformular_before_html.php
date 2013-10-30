@@ -63,8 +63,7 @@
                 else{
                      $fehler = "Please don't fill the spam-protection field.";
                      }
-                 setconfig("contact_form_refused_spam_mails",
-                     getconfig("contact_form_refused_spam_mails") + 1);
+
                  }
             
             
@@ -74,10 +73,6 @@
                      stringcontainsbadwords($_POST["betreff"]) or
                      stringcontainsbadwords($_POST["nachricht"])){
                 
-                 if(!$fehler){
-                     setconfig("contact_form_refused_spam_mails",
-                         getconfig("contact_form_refused_spam_mails") + 1);
-                     }
                 
                  if($_SESSION["language"] == "de"){
                      $fehler = "<p class='ulicms_error'>" .
@@ -96,11 +91,6 @@
             if(function_exists("isCountryBlocked")){
                  if(isCountryBlocked()){
                     
-                    
-                     if(!$fehler){
-                         setconfig("contact_form_refused_spam_mails",
-                             getconfig("contact_form_refused_spam_mails") + 1);
-                         }
                     
                      if($_SESSION["language"] == "de"){
                         
