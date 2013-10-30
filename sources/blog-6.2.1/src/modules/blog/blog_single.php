@@ -232,6 +232,7 @@ function post_comments(){
      }
 
 
+if(!function_exists("stringcontainsbadwords")){
 function stringcontainsbadwords($str){
      $words_blacklist = getconfig("spamfilter_words_blacklist");
      $str = strtolower($str);
@@ -252,6 +253,8 @@ function stringcontainsbadwords($str){
     
      return false;
      }
+     
+}
 
 function blog_display_comments($post_id){
      $html = "";
