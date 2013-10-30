@@ -86,7 +86,7 @@ class SimpleServer extends IXR_Server {
     function menusList($args){
          if(!$this->checkLogin(array($args[0], $args[1])))
             return null;
-          return array_values(getAllMenus);
+          return array_values(getAllMenus());
     
     }
     
