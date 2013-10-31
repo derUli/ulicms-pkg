@@ -108,6 +108,40 @@ if sys.argv[1] == "clean":
       print("Finished")
       sys.exit(0)
 
+
+def exclude_file(filename):
+    splitted_filename = os.path.split(filename)
+    for f in splitted_filename:
+        if f == "packages" or f == "releases":
+            print(filename + " [Skip]")
+            return True
+    print("addding " + filename + "...")
+    return False
+
+
+# make an ulicms-pkg release
+if sys.argv[1] == "release":
+   if len(sys.argv) <= 2:
+      print("usage:")
+      print("./ulicms-pkg.py pkg-archive [branch]")
+      sys.exit()
+   os.system("git pull")
+   os.system("git checkout " + sys.argv[2])
+   os.system("git pull")
+   os.system("./ulicms-pkg.py clean")
+   if not os.path.exists("releases/"):
+      os.makedirs("releases/")
+   targzFile = "releases/ulicms-pkg-" + sys.argv[2] + "-" + str(int(time.time())) + ".tar.gz"
+   tar = tarfile.open(targzFile, 'w:gz')
+   wdir = os.getcwd()
+   os.chdir("..")
+
+   tar.add(os.path.basename(wdir), exclude = exclude_file)
+   os.chdir(wdir)
+   tar.close()
+   sys.exit()
+
+
 # make a tar.gz packages archive-folder from a branch
 if sys.argv[1] == "pkg-archive":
    if len(sys.argv) <= 2:
@@ -121,7 +155,7 @@ if sys.argv[1] == "pkg-archive":
    os.system("./ulicms-pkg.py build")
    if not os.path.exists("releases/"):
       os.makedirs("releases/")
-   targzFile = "releases/ulicms-pkg-" + sys.argv[2] + "-" + str(int(time.time())) + ".tar.gz"
+   targzFile = "releases/ulicms-packages-" + sys.argv[2] + "-" + str(int(time.time())) + ".tar.gz"
    tar = tarfile.open(targzFile, 'w:gz')
    tar.add("packages/")
    tar.close()
