@@ -112,7 +112,7 @@ if sys.argv[1] == "clean":
 def exclude_file(filename):
     splitted_filename = os.path.split(filename)
     for f in splitted_filename:
-        if f == "packages" or f == "releases":
+        if f == "packages" or f == "releases" or f.endswith("~") or f.endswith(".bak"):
             print(filename + " [Skip]")
             return True
     print("addding " + filename + "...")
