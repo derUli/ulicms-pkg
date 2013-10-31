@@ -1,6 +1,16 @@
 #!/usr/bin/python
 import os, sys, tarfile, shutil, fnmatch, time
 
+def exclude_file(filename):
+    splitted_filename = os.path.split(filename)
+    for f in splitted_filename:
+        if f == "packages" or f == "releases" or f.endswith("~") or f.endswith(".bak"):
+            print(filename + " [Skip]")
+            return True
+    print("addding " + filename + "...")
+    return False
+
+
 rootCWD = os.getcwd()
 listFile = os.path.join(rootCWD, "packages", "list.txt")
 descDir = os.path.join(rootCWD, "packages", "descriptions")
@@ -11,7 +21,7 @@ if len(sys.argv) < 2:
    sys.exit()
 
 # Update GIT
-if sys.argv[1] == "update":
+elif sys.argv[1] == "update":
    os.system("git pull")
    sys.exit()
 
@@ -34,12 +44,12 @@ if sys.argv[1] == "init":
    sys.exit()
 
 # reformat / tidy source code
-if sys.argv[1] == "reformat-src":
+elif sys.argv[1] == "reformat-src":
    execfile("reformat_code.py")
    sys.exit()
 
 # create new source folder
-if sys.argv[1] == "src-folder-create":
+elif sys.argv[1] == "src-folder-create":
    if len(sys.argv) > 2:
       target = sys.argv[2]
       print "making src folder for " + target
@@ -56,7 +66,7 @@ if sys.argv[1] == "src-folder-create":
       sys.exit()
 
 # clean packages folder
-if sys.argv[1] == "clean":
+elif sys.argv[1] == "clean":
    if len(sys.argv) > 2:
       target = sys.argv[2]
    else:
@@ -108,19 +118,8 @@ if sys.argv[1] == "clean":
       print("Finished")
       sys.exit(0)
 
-
-def exclude_file(filename):
-    splitted_filename = os.path.split(filename)
-    for f in splitted_filename:
-        if f == "packages" or f == "releases" or f.endswith("~") or f.endswith(".bak"):
-            print(filename + " [Skip]")
-            return True
-    print("addding " + filename + "...")
-    return False
-
-
 # make an ulicms-pkg release
-if sys.argv[1] == "release":
+elif sys.argv[1] == "release":
    if len(sys.argv) <= 2:
       print("usage:")
       print("./ulicms-pkg.py pkg-archive [branch]")
@@ -143,7 +142,7 @@ if sys.argv[1] == "release":
 
 
 # make a tar.gz packages archive-folder from a branch
-if sys.argv[1] == "pkg-archive":
+elif sys.argv[1] == "pkg-archive":
    if len(sys.argv) <= 2:
       print("usage:")
       print("./ulicms-pkg.py pkg-archive [branch]")
@@ -162,7 +161,7 @@ if sys.argv[1] == "pkg-archive":
    sys.exit()
    
 # build  a single or all packages
-if sys.argv[1] == "build":
+elif sys.argv[1] == "build":
    start_time = time.time()
    if len(sys.argv) > 2:
       target = sys.argv[2]
@@ -193,7 +192,7 @@ if sys.argv[1] == "build":
       else:
          print("Fatal: Package " + target + " doesn't exists.")
 
-if sys.argv[1] == "build" and len(packagesToBuild) > 0:
+elif sys.argv[1] == "build" and len(packagesToBuild) > 0:
    packagesToBuild = sorted(packagesToBuild)
    for package in packagesToBuild:
       extension = ".tar.gz"
@@ -265,3 +264,8 @@ if sys.argv[1] == "build" and len(packagesToBuild) > 0:
       print("Duration of build process: ")
       duration = time.gmtime(end_time - start_time)
       print(time.strftime("%H:%M:%S", duration))
+
+else:
+   print("No such target")
+   sys.exit()
+   
