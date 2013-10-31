@@ -192,79 +192,79 @@ elif sys.argv[1] == "build":
       else:
          print("Fatal: Package " + target + " doesn't exists.")
 
-elif sys.argv[1] == "build" and len(packagesToBuild) > 0:
-   packagesToBuild = sorted(packagesToBuild)
-   for package in packagesToBuild:
-      extension = ".tar.gz"
-      rev = None
-      tarGzFile = "packages/archives/" + package
-      if os.path.exists(tarGzFile + extension):
-         for i in range(2, 99):
-            tfile = tarGzFile + "r" + str(i)
-            if not os.path.exists(tfile + extension):
-               tarGzFile = tfile + extension
-               rev = str(i)
-               break
-      else:
-         tarGzFile = tarGzFile + extension
-      pkgsrcFolder = "sources/" + package + "/" + "src/"
-      licenseFile = "license.txt"
-      pkgDescFile = "sources/" + package + "/description.txt"
-      os.chdir(pkgsrcFolder)
-      rootPath = "."
-      pkgContent = []
-      print("get content list of " + package + "...")
-      for root, dirs, files in os.walk(rootPath):
-          for filename in files:
-              p = os.path.join(root, filename)
-              p = p.replace(".\\", "")
-              p = p.replace("./", "")
-              pkgContent.append(p)
-              tarGzFilePath = os.path.join(rootCWD, tarGzFile)
-      tar = tarfile.open(tarGzFilePath, 'w:gz')
-      for f in pkgContent:
-         print("Adding " + f + "...")
-         tar.add(f)
-      os.chdir("..")
-      tar.close()
-      print("Package build successfully...")
-      print("Add to package list...")
-      npackage = package
-      if rev:
-         npackage = npackage + "r" + rev
-      if not os.path.exists(listFile):
-         h = open(listFile, "w")
-         h.write(npackage)
-         h.write("\n")
-         h.close()
-         print("ready.")
-      else:
-         h = open(listFile, "r")
-         pkg = h.readlines()
-         h.close()
-         if not npackage in pkg:
-            h = open(listFile, "a")
+   if len(packagesToBuild) > 0:
+      packagesToBuild = sorted(packagesToBuild)
+      for package in packagesToBuild:
+         extension = ".tar.gz"
+         rev = None
+         tarGzFile = "packages/archives/" + package
+         if os.path.exists(tarGzFile + extension):
+            for i in range(2, 99):
+               tfile = tarGzFile + "r" + str(i)
+               if not os.path.exists(tfile + extension):
+                  tarGzFile = tfile + extension
+                  rev = str(i)
+                  break
+         else:
+            tarGzFile = tarGzFile + extension
+         pkgsrcFolder = "sources/" + package + "/" + "src/"
+         licenseFile = "license.txt"
+         pkgDescFile = "sources/" + package + "/description.txt"
+         os.chdir(pkgsrcFolder)
+         rootPath = "."
+         pkgContent = []
+         print("get content list of " + package + "...")
+         for root, dirs, files in os.walk(rootPath):
+             for filename in files:
+                 p = os.path.join(root, filename)
+                 p = p.replace(".\\", "")
+                 p = p.replace("./", "")
+                 pkgContent.append(p)
+                 tarGzFilePath = os.path.join(rootCWD, tarGzFile)
+         tar = tarfile.open(tarGzFilePath, 'w:gz')
+         for f in pkgContent:
+            print("Adding " + f + "...")
+            tar.add(f)
+         os.chdir("..")
+         tar.close()
+         print("Package build successfully...")
+         print("Add to package list...")
+         npackage = package
+         if rev:
+            npackage = npackage + "r" + rev
+         if not os.path.exists(listFile):
+            h = open(listFile, "w")
             h.write(npackage)
             h.write("\n")
             h.close()
             print("ready.")
          else:
-            print("Already in list.")
-            print("Nothing to do.")
-      descFile = os.path.join(rootCWD, "packages", "descriptions", npackage + ".txt")
-      os.chdir(rootCWD)
-      if os.path.exists(pkgDescFile):
-         if os.path.exists(descFile):
-            os.remove(descFile)
-         print("copy description...")
-         shutil.copy(pkgDescFile, descFile)
-         print("done.")
-   if len(packagesToBuild) > 0:
-      end_time = time.time()
-      print("Duration of build process: ")
-      duration = time.gmtime(end_time - start_time)
-      print(time.strftime("%H:%M:%S", duration))
-
+            h = open(listFile, "r")
+            pkg = h.readlines()
+            h.close()
+            if not npackage in pkg:
+               h = open(listFile, "a")
+               h.write(npackage)
+               h.write("\n")
+               h.close()
+               print("ready.")
+            else:
+               print("Already in list.")
+               print("Nothing to do.")
+         descFile = os.path.join(rootCWD, "packages", "descriptions", npackage + ".txt")
+         os.chdir(rootCWD)
+         if os.path.exists(pkgDescFile):
+            if os.path.exists(descFile):
+               os.remove(descFile)
+            print("copy description...")
+            shutil.copy(pkgDescFile, descFile)
+            print("done.")
+      if len(packagesToBuild) > 0:
+         end_time = time.time()
+         print("Duration of build process: ")
+         duration = time.gmtime(end_time - start_time)
+         print(time.strftime("%H:%M:%S", duration))
+   
 else:
    print("No such target")
    sys.exit()
