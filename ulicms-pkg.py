@@ -5,15 +5,17 @@ rootCWD = os.getcwd()
 listFile = os.path.join(rootCWD, "packages", "list.txt")
 descDir = os.path.join(rootCWD, "packages", "descriptions")
 
+# Usage
 if len(sys.argv) < 2:
    print("Usage: ./ulicms-pkg.py [target]")
    sys.exit()
-   
 
+# Update GIT
 if sys.argv[1] == "update":
    os.system("git pull")
    sys.exit()
 
+# Init package folder
 if sys.argv[1] == "init":
    if not os.path.exists("packages/"):
       os.makedirs("packages/")
@@ -31,10 +33,12 @@ if sys.argv[1] == "init":
    print("Done.")
    sys.exit()
 
+# reformat / tidy source code
 if sys.argv[1] == "reformat-src":
    execfile("reformat_code.py")
    sys.exit()
 
+# create new source folder
 if sys.argv[1] == "src-folder-create":
    if len(sys.argv) > 2:
       target = sys.argv[2]
@@ -51,6 +55,7 @@ if sys.argv[1] == "src-folder-create":
       print("Done.")
       sys.exit()
 
+# clean packages folder
 if sys.argv[1] == "clean":
    if len(sys.argv) > 2:
       target = sys.argv[2]
@@ -102,7 +107,27 @@ if sys.argv[1] == "clean":
       h.close()
       print("Finished")
       sys.exit(0)
-         
+
+# make a tar.gz packages archive-folder from a branch
+if sys.argv[1] == "pkg-archive":
+   if len(sys.argv) <= 2:
+      print("usage:")
+      print("./ulicms-pkg.py pkg-archive [branch]")
+      sys.exit()
+   os.system("git pull")
+   os.system("git checkout -f " + sys.argv[2])
+   os.system("git pull")
+   os.system("./ulicms-pkg.py clean")
+   os.system("./ulicms-pkg.py build")
+   if not os.path.exists("releases/"):
+      os.makedirs("releases/")
+   targzFile = "releases/ulicms-pkg-" + sys.argv[2] + "-" + str(int(time.time())) + ".tar.gz"
+   tar = tarfile.open(targzFile, 'w:gz')
+   tar.add("packages/")
+   tar.close()
+   sys.exit()
+   
+# build  a single or all packages
 if sys.argv[1] == "build":
    start_time = time.time()
    if len(sys.argv) > 2:
