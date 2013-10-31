@@ -264,7 +264,15 @@ elif sys.argv[1] == "build":
          print("Duration of build process: ")
          duration = time.gmtime(end_time - start_time)
          print(time.strftime("%H:%M:%S", duration))
-   
+elif sys.argv[1] == "moo":
+   print("         (__) ")
+   print("         (oo) ")
+   print("   /------\/ ")
+   print("  / |    ||   ")
+   print(" *  /\---/\ ")
+   print("    ~~   ~~   ")
+   print("....\"Have you mooed today?\"...")
+   sys.exit()
 else:
    print("No such target")
    sys.exit()
