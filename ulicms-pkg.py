@@ -65,6 +65,11 @@ if sys.argv[1] == "clean":
       print("clean all...")
       if os.path.exists('packages/'):
          shutil.rmtree('packages/')
+      
+      if os.path.exists("releases/"):
+         shutil.rmtree('releases/')
+
+      os.makedirs("releases/")
       os.makedirs("packages/")
       os.makedirs("packages/archives")
       os.makedirs("packages/descriptions")
