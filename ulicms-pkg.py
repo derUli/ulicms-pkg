@@ -1,6 +1,16 @@
 #!/usr/bin/python
 import os, sys, tarfile, shutil, fnmatch, time
 
+def exclude_file(filename):
+    splitted_filename = os.path.split(filename)
+    for f in splitted_filename:
+        if f == "packages" or f == "releases" or f.endswith("~") or f.endswith(".bak"):
+            print(filename + " [Skip]")
+            return True
+    print("addding " + filename + "...")
+    return False
+
+
 rootCWD = os.getcwd()
 listFile = os.path.join(rootCWD, "packages", "list.txt")
 descDir = os.path.join(rootCWD, "packages", "descriptions")
@@ -11,7 +21,7 @@ if len(sys.argv) < 2:
    sys.exit()
 
 # Update GIT
-if sys.argv[1] == "update":
+elif sys.argv[1] == "update":
    os.system("git pull")
    sys.exit()
 
@@ -34,12 +44,12 @@ if sys.argv[1] == "init":
    sys.exit()
 
 # reformat / tidy source code
-if sys.argv[1] == "reformat-src":
+elif sys.argv[1] == "reformat-src":
    execfile("reformat_code.py")
    sys.exit()
 
 # create new source folder
-if sys.argv[1] == "src-folder-create":
+elif sys.argv[1] == "src-folder-create":
    if len(sys.argv) > 2:
       target = sys.argv[2]
       print "making src folder for " + target
@@ -56,7 +66,7 @@ if sys.argv[1] == "src-folder-create":
       sys.exit()
 
 # clean packages folder
-if sys.argv[1] == "clean":
+elif sys.argv[1] == "clean":
    if len(sys.argv) > 2:
       target = sys.argv[2]
    else:
@@ -108,8 +118,31 @@ if sys.argv[1] == "clean":
       print("Finished")
       sys.exit(0)
 
+# make an ulicms-pkg release
+elif sys.argv[1] == "release":
+   if len(sys.argv) <= 2:
+      print("usage:")
+      print("./ulicms-pkg.py pkg-archive [branch]")
+      sys.exit()
+   os.system("git pull")
+   os.system("git checkout " + sys.argv[2])
+   os.system("git pull")
+   os.system("./ulicms-pkg.py clean")
+   if not os.path.exists("releases/"):
+      os.makedirs("releases/")
+   targzFile = "releases/ulicms-pkg-" + sys.argv[2] + "-" + str(int(time.time())) + ".tar.gz"
+   tar = tarfile.open(targzFile, 'w:gz')
+   wdir = os.getcwd()
+   os.chdir("..")
+
+   tar.add(os.path.basename(wdir), exclude = exclude_file)
+   os.chdir(wdir)
+   tar.close()
+   sys.exit()
+
+
 # make a tar.gz packages archive-folder from a branch
-if sys.argv[1] == "pkg-archive":
+elif sys.argv[1] == "pkg-archive":
    if len(sys.argv) <= 2:
       print("usage:")
       print("./ulicms-pkg.py pkg-archive [branch]")
@@ -121,14 +154,14 @@ if sys.argv[1] == "pkg-archive":
    os.system("./ulicms-pkg.py build")
    if not os.path.exists("releases/"):
       os.makedirs("releases/")
-   targzFile = "releases/ulicms-pkg-" + sys.argv[2] + "-" + str(int(time.time())) + ".tar.gz"
+   targzFile = "releases/ulicms-packages-" + sys.argv[2] + "-" + str(int(time.time())) + ".tar.gz"
    tar = tarfile.open(targzFile, 'w:gz')
    tar.add("packages/")
    tar.close()
    sys.exit()
    
 # build  a single or all packages
-if sys.argv[1] == "build":
+elif sys.argv[1] == "build":
    start_time = time.time()
    if len(sys.argv) > 2:
       target = sys.argv[2]
@@ -159,75 +192,88 @@ if sys.argv[1] == "build":
       else:
          print("Fatal: Package " + target + " doesn't exists.")
 
-if sys.argv[1] == "build" and len(packagesToBuild) > 0:
-   packagesToBuild = sorted(packagesToBuild)
-   for package in packagesToBuild:
-      extension = ".tar.gz"
-      rev = None
-      tarGzFile = "packages/archives/" + package
-      if os.path.exists(tarGzFile + extension):
-         for i in range(2, 99):
-            tfile = tarGzFile + "r" + str(i)
-            if not os.path.exists(tfile + extension):
-               tarGzFile = tfile + extension
-               rev = str(i)
-               break
-      else:
-         tarGzFile = tarGzFile + extension
-      pkgsrcFolder = "sources/" + package + "/" + "src/"
-      licenseFile = "license.txt"
-      pkgDescFile = "sources/" + package + "/description.txt"
-      os.chdir(pkgsrcFolder)
-      rootPath = "."
-      pkgContent = []
-      print("get content list of " + package + "...")
-      for root, dirs, files in os.walk(rootPath):
-          for filename in files:
-              p = os.path.join(root, filename)
-              p = p.replace(".\\", "")
-              p = p.replace("./", "")
-              pkgContent.append(p)
-              tarGzFilePath = os.path.join(rootCWD, tarGzFile)
-      tar = tarfile.open(tarGzFilePath, 'w:gz')
-      for f in pkgContent:
-         print("Adding " + f + "...")
-         tar.add(f)
-      os.chdir("..")
-      tar.close()
-      print("Package build successfully...")
-      print("Add to package list...")
-      npackage = package
-      if rev:
-         npackage = npackage + "r" + rev
-      if not os.path.exists(listFile):
-         h = open(listFile, "w")
-         h.write(npackage)
-         h.write("\n")
-         h.close()
-         print("ready.")
-      else:
-         h = open(listFile, "r")
-         pkg = h.readlines()
-         h.close()
-         if not npackage in pkg:
-            h = open(listFile, "a")
+   if len(packagesToBuild) > 0:
+      packagesToBuild = sorted(packagesToBuild)
+      for package in packagesToBuild:
+         extension = ".tar.gz"
+         rev = None
+         tarGzFile = "packages/archives/" + package
+         if os.path.exists(tarGzFile + extension):
+            for i in range(2, 99):
+               tfile = tarGzFile + "r" + str(i)
+               if not os.path.exists(tfile + extension):
+                  tarGzFile = tfile + extension
+                  rev = str(i)
+                  break
+         else:
+            tarGzFile = tarGzFile + extension
+         pkgsrcFolder = "sources/" + package + "/" + "src/"
+         licenseFile = "license.txt"
+         pkgDescFile = "sources/" + package + "/description.txt"
+         os.chdir(pkgsrcFolder)
+         rootPath = "."
+         pkgContent = []
+         print("get content list of " + package + "...")
+         for root, dirs, files in os.walk(rootPath):
+             for filename in files:
+                 p = os.path.join(root, filename)
+                 p = p.replace(".\\", "")
+                 p = p.replace("./", "")
+                 pkgContent.append(p)
+                 tarGzFilePath = os.path.join(rootCWD, tarGzFile)
+         tar = tarfile.open(tarGzFilePath, 'w:gz')
+         for f in pkgContent:
+            print("Adding " + f + "...")
+            tar.add(f)
+         os.chdir("..")
+         tar.close()
+         print("Package build successfully...")
+         print("Add to package list...")
+         npackage = package
+         if rev:
+            npackage = npackage + "r" + rev
+         if not os.path.exists(listFile):
+            h = open(listFile, "w")
             h.write(npackage)
             h.write("\n")
             h.close()
             print("ready.")
          else:
-            print("Already in list.")
-            print("Nothing to do.")
-      descFile = os.path.join(rootCWD, "packages", "descriptions", npackage + ".txt")
-      os.chdir(rootCWD)
-      if os.path.exists(pkgDescFile):
-         if os.path.exists(descFile):
-            os.remove(descFile)
-         print("copy description...")
-         shutil.copy(pkgDescFile, descFile)
-         print("done.")
-   if len(packagesToBuild) > 0:
-      end_time = time.time()
-      print("Duration of build process: ")
-      duration = time.gmtime(end_time - start_time)
-      print(time.strftime("%H:%M:%S", duration))
+            h = open(listFile, "r")
+            pkg = h.readlines()
+            h.close()
+            if not npackage in pkg:
+               h = open(listFile, "a")
+               h.write(npackage)
+               h.write("\n")
+               h.close()
+               print("ready.")
+            else:
+               print("Already in list.")
+               print("Nothing to do.")
+         descFile = os.path.join(rootCWD, "packages", "descriptions", npackage + ".txt")
+         os.chdir(rootCWD)
+         if os.path.exists(pkgDescFile):
+            if os.path.exists(descFile):
+               os.remove(descFile)
+            print("copy description...")
+            shutil.copy(pkgDescFile, descFile)
+            print("done.")
+      if len(packagesToBuild) > 0:
+         end_time = time.time()
+         print("Duration of build process: ")
+         duration = time.gmtime(end_time - start_time)
+         print(time.strftime("%H:%M:%S", duration))
+elif sys.argv[1] == "moo":
+   print("         (__) ")
+   print("         (oo) ")
+   print("   /------\/ ")
+   print("  / |    ||   ")
+   print(" *  /\---/\ ")
+   print("    ~~   ~~   ")
+   print("....\"Have you mooed today?\"...")
+   sys.exit()
+else:
+   print("No such target")
+   sys.exit()
+   
