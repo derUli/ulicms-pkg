@@ -33,6 +33,7 @@ nosetests.xml
 .pydevproject
 
 packages/*
+releases/*
 *.*~
 
 releases/*
