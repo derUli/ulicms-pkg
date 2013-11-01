@@ -43,10 +43,10 @@ function blog_admin(){
          $blog_feed_max_items = 10;
          }
          
-    $posts_per_page = getconfig("blog_posts_per_page");
+    $blog_posts_per_page = getconfig("blog_posts_per_page");
     
-    if(!$posts_per_page){
-    $posts_per_page = 5;
+    if(!$blog_posts_per_page){
+       $blog_posts_per_page = 5;
     }
     
     $blog_autor_and_date_text = getconfig("blog_autor_and_date_text");
@@ -60,7 +60,7 @@ function blog_admin(){
          echo " checked";
          }
      ?>/> Über neue Kommentare per E-Mail benachrichtigen</p>
-     <p>Artikel pro Seite <input type="number" name="posts_per_page" size=3 maxlength=3 min="5" max="100" value="<?php echo $posts_per_page;
+     <p>Artikel pro Seite <input type="number" name="blog_posts_per_page" size=3 maxlength=3 min="5" max="100" value="<?php echo $blog_posts_per_page;
      ?>"/></p>
 <p>maximale Anzahl der Einträge im Newsfeed <input type="number" name="blog_feed_max_items" size=3 maxlength=3 min="5" max="100" value="<?php echo $blog_feed_max_items; ?>"/></p>
 
