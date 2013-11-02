@@ -8,7 +8,7 @@ function blog_prev_next_render(){
     
     
     
-     $single = db_real_escape_string($_GET["single"]);
+     $single = db_escape($_GET["single"]);
     
      if(empty($single))
          return "";

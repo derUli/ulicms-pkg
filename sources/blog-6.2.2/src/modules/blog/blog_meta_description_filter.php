@@ -1,6 +1,6 @@
 <?php
 function blog_meta_description_filter($txt){
-     $single = db_real_escape_string($_GET["single"]);
+     $single = db_escape($_GET["single"]);
      $query = db_query("SELECT content_preview FROM `" . tbname("blog") . "` WHERE seo_shortname='$single'");
      $content_preview = false;
     

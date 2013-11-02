@@ -59,8 +59,8 @@ function fullcalendar_admin(){
          }
      if(isset($_POST["save"])){
         
-         $title = db_real_escape_string(trim($_POST["title"]));
-         $url = db_real_escape_string(trim($_POST["url"]));
+         $title = db_escape(trim($_POST["title"]));
+         $url = db_escape(trim($_POST["url"]));
         
          $start = $_POST["start"];
          $end = $_POST["end"];

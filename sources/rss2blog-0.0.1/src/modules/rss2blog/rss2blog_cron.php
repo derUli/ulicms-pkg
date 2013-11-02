@@ -117,16 +117,16 @@ for($n = 0; $n < count($srclist); $n++){
              for($a = 0; $a < count($items); $a++){
                 
                  $article = $items[$a];
-                 $title = db_real_escape_string($article["title"]);
+                 $title = db_escape($article["title"]);
                  $link = $article["link"];
                  $article["description"] = html_entity_decode($article["description"], ENT_QUOTES, "UTF-8");
                  $src_text = $rss2blog_src_link_format;
                  $src_text = str_ireplace("%title%", $page_title, $src_text);
                 
                  $article["description"] .= "<p class=\"src_link_p\"><a href=\"" . real_htmlspecialchars($link) . "\" class=\"src_link\">$src_text</a></p>";
-                 $description = db_real_escape_string($article["description"]);
+                 $description = db_escape($article["description"]);
                 
-                 $link = db_real_escape_string($link);
+                 $link = db_escape($link);
                  $pubDate = intval(rsstotime($article["pubDate"]));
                 
                  $seo_shortname = cleanString($title) . "-" . uniqid();

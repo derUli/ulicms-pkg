@@ -8,7 +8,7 @@ function comments(){
      $connection = MYSQL_CONNECTION;
     
     
-     $ipage = db_real_escape_string($_GET["seite"]);
+     $ipage = db_escape($_GET["seite"]);
      $query = db_query("SELECT * FROM " . tbname("content") . " WHERE systemname='$ipage'", $connection);
      $dataset = db_fetch_array($query);
     

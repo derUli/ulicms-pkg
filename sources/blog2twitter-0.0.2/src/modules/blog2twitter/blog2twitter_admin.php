@@ -14,16 +14,16 @@ function blog2twitter_admin(){
     
      if(isset($_POST["submit"])){
         setconfig("blog2twitter_consumer_key", 
-        db_real_escape_string($_POST["blog2twitter_consumer_key"]));
+        db_escape($_POST["blog2twitter_consumer_key"]));
         
         setconfig("blog2twitter_consumer_secret", 
-        db_real_escape_string($_POST["blog2twitter_consumer_secret"]));
+        db_escape($_POST["blog2twitter_consumer_secret"]));
         
         setconfig("blog2twitter_access_token", 
-        db_real_escape_string($_POST["blog2twitter_access_token"]));
+        db_escape($_POST["blog2twitter_access_token"]));
         
         setconfig("blog2twitter_access_token_secret", 
-        db_real_escape_string($_POST["blog2twitter_access_token_secret"]));
+        db_escape($_POST["blog2twitter_access_token_secret"]));
             
       }
 

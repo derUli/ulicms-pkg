@@ -14,7 +14,7 @@ function jquery_tablesorter_admin(){
     
      if(isset($_POST["submit"])){
         setconfig("jquery_tablesorter_theme", 
-        db_real_escape_string($_POST["jquery_tablesorter_theme"]));
+        db_escape($_POST["jquery_tablesorter_theme"]));
       }
 
 $jquery_tablesorter_theme = getconfig("jquery_tablesorter_theme");

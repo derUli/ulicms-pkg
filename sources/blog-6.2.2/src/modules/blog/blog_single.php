@@ -172,13 +172,13 @@ function post_comments(){
     
      if(isset($_POST["post_comment_to"])){
          $post_id = intval($_POST["post_comment_to"]);
-         $name = db_real_escape_string(htmlspecialchars($_POST["name"]));
-         $url = db_real_escape_string(htmlspecialchars($_POST["url"]));
-         $email = db_real_escape_string(htmlspecialchars(
+         $name = db_escape(htmlspecialchars($_POST["name"]));
+         $url = db_escape(htmlspecialchars($_POST["url"]));
+         $email = db_escape(htmlspecialchars(
                 $_POST["email"]));
          $date = time();
          $comment_unescaped = $_POST["comment"];
-         $comment = db_real_escape_string($_POST["comment"]);
+         $comment = db_escape($_POST["comment"]);
         
          $_SESSION["name"] = $name;
          $_SESSION["url"] = $url;

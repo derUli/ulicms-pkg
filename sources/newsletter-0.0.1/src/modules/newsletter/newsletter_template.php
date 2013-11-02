@@ -11,16 +11,16 @@ if(isset($_POST["submit"])){
      $unencoded = $_POST["template_content"];
     
      setconfig("newsletter_template_title",
-         db_real_escape_string($_POST["template_title"]));
+         db_escape($_POST["template_title"]));
     
      setconfig("newsletter_template_content",
-         db_real_escape_string($_POST["template_content"]));
+         db_escape($_POST["template_content"]));
      unset($_SESSION["newsletter_data"]);
     
      if(strlen(getconfig("newsletter_template_content")) < strlen($unencoded)){
          db_query("alter table " . tbname("settings") . " change value value TEXT;");
          setconfig("newsletter_template_content",
-             db_real_escape_string($_POST["template_content"]));
+             db_escape($_POST["template_content"]));
         
          }
     

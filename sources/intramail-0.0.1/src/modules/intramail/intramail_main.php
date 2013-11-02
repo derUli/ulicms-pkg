@@ -222,11 +222,11 @@ function intramail_new_mail($mail_to = '', $subject = '', $message = ''){
         
          $date = time();
          $mail_from = $_SESSION["ulicms_login"];
-         $mail_to = db_real_escape_string($_POST["mail_to"]);
+         $mail_to = db_escape($_POST["mail_to"]);
          $subject = htmlspecialchars($_POST["subject"]);
-         $subject = db_real_escape_string($subject);
+         $subject = db_escape($subject);
          $message = strip_tags($_POST["message"], getconfig("allowed_html"));
-         $message = db_real_escape_string($message);
+         $message = db_escape($message);
         
          $message = str_replace("\\r\\n", "\n", $message);
         

@@ -89,8 +89,8 @@ function search_render(){
          $search_request = str_replace("ä", "&auml;", $search_request);
          $search_request = str_replace("Ä", "&Auml;", $search_request);
          $search_request = str_replace("ß", "&szlig;", $search_request);
-         $search_request = db_real_escape_string($search_request);
-         $search_request_unencoded = db_real_escape_string($search_request_unencoded);
+         $search_request = db_escape($search_request);
+         $search_request_unencoded = db_escape($search_request_unencoded);
         
         
          if($type == "pages"){

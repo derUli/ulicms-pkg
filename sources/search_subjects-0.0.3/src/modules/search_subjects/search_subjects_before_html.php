@@ -28,7 +28,7 @@ if((!is_admin_dir() and !crawlerDetect() and isset($_GET["q"])) or
      }
 
      
-     $subject = db_real_escape_string($subject);
+     $subject = db_escape($subject);
     
      $query = db_query("SELECT * FROM " . tbname("search_subjects") . " WHERE `subject` = '$subject'");
     

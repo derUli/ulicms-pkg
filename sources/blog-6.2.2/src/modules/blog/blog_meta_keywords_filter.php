@@ -1,7 +1,7 @@
 <?php
 function blog_meta_keywords_filter($txt){
      include "lib/string_functions.php";
-     $single = db_real_escape_string($_GET["single"]);
+     $single = db_escape($_GET["single"]);
      $query = db_query("SELECT content_full FROM `" . tbname("blog") . "` WHERE seo_shortname='$single'");
     
      if(!$query)

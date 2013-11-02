@@ -6,7 +6,7 @@ newsletter_check_install();
 
 function cancel_newsletter($mail){
     
-     $mail = db_real_escape_string($mail);
+     $mail = db_escape($mail);
      if($_SESSION["language"] == "de"){
          $translation_newsletter_canceled = "Ihre E-Mail Adresse wurde aus der Liste entfernt.";
          $translation_email_not_subscribed = "Diese E-Mail Adresse befindet sich nicht in der Liste";
@@ -55,7 +55,7 @@ function subscribe_newsletter($mail){
         else
             {
             
-             $mail = db_real_escape_string($mail);
+             $mail = db_escape($mail);
              $subscribe_date = time();
              db_query("INSERT INTO " . tbname("newsletter_subscribers") .
                  "(email, subscribe_date) VALUES('$mail', " . $subscribe_date . ")");
@@ -77,7 +77,7 @@ function subscribe_newsletter($mail){
 
 
 function checkIfSubscribed($mail){
-     $mail = db_real_escape_string($mail);
+     $mail = db_escape($mail);
      $query = db_query("SELECT email FROM " . tbname("newsletter_subscribers") . " WHERE email = '$mail'");
      return db_num_rows($query) > 0;
      }
