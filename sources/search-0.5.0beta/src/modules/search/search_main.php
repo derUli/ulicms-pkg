@@ -89,8 +89,8 @@ function search_render(){
          $search_request = str_replace("ä", "&auml;", $search_request);
          $search_request = str_replace("Ä", "&Auml;", $search_request);
          $search_request = str_replace("ß", "&szlig;", $search_request);
-         $search_request = mysql_real_escape_string($search_request);
-         $search_request_unencoded = mysql_real_escape_string($search_request_unencoded);
+         $search_request = db_real_escape_string($search_request);
+         $search_request_unencoded = db_real_escape_string($search_request_unencoded);
         
         
          if($type == "pages"){
@@ -99,13 +99,13 @@ function search_render(){
              "AGAINST ('" . $search_request_unencoded . "') " .
              "";
              $results = db_query($search_sql_query);
-             $result_count = mysql_num_rows($results);
+             $result_count = db_num_rows($results);
              $html_output .= "<p class='search-results'><strong>$result_count</strong> Suchergebnisse gefunden</p>";
              if($result_count > 0){
                 
                  $html_output .= "<hr/>
 		<ol class='result-list'>";
-                 while($row = mysql_fetch_assoc($results)){
+                 while($row = db_fetch_assoc($results)){
                      $html_output .= "<li><a href='" . htmlspecialchars($row["systemname"], ENT_QUOTES, "UTF-8") . ".html'>" . htmlspecialchars($row["title"], ENT_QUOTES, "UTF-8") . "</a></li>";
                     
                      }
@@ -124,13 +124,13 @@ function search_render(){
              "AGAINST ('" . $search_request_unencoded . "') ORDER by datum DESC" .
              "";
              $results = db_query($search_sql_query);
-             $result_count = mysql_num_rows($results);
+             $result_count = db_num_rows($results);
              $html_output .= "<p class='search-results'><strong>$result_count</strong> Suchergebnisse gefunden</p>";
              if($result_count > 0){
                 
                  $html_output .= "<hr/>
 		<ol class='result-list'>";
-                 while($row = mysql_fetch_assoc($results)){
+                 while($row = db_fetch_assoc($results)){
                      $html_output .= "<li><a href='" . $blog_page . ".html?single=" . htmlspecialchars($row["seo_shortname"], ENT_QUOTES, "UTF-8") . "'>" . htmlspecialchars($row["title"], ENT_QUOTES, "UTF-8") . "</a></li>";
                     
                      }
@@ -149,16 +149,16 @@ function search_render(){
              " WHERE MATCH (comment, name, url) " .
              "AGAINST ('" . $search_request_unencoded . "')";
              $results = db_query($search_sql_query);
-             $result_count = mysql_num_rows($results);
+             $result_count = db_num_rows($results);
              $html_output .= "<p class='search-results'><strong>$result_count</strong> Suchergebnisse gefunden</p>";
              if($result_count > 0){
                 
                  $html_output .= "<hr/>
 		<ol class='result-list'>";
-                 while($row = mysql_fetch_assoc($results)){
-                     $query2 = mysql_query("SELECT * FROM " . tbname("blog") . " WHERE id=" . $row["post_id"]);
-                     if(mysql_num_rows($query2) > 0){
-                         $row2 = mysql_fetch_assoc($query2);
+                 while($row = db_fetch_assoc($results)){
+                     $query2 = db_query("SELECT * FROM " . tbname("blog") . " WHERE id=" . $row["post_id"]);
+                     if(db_num_rows($query2) > 0){
+                         $row2 = db_fetch_assoc($query2);
                          $html_output .= "<li><a href='" . $blog_page . ".html?single=" . htmlspecialchars($row2["seo_shortname"], ENT_QUOTES, "UTF-8") . "#comment" . $row["id"] . "'>" . "Kommentar #" . $row["id"] . " von " . htmlspecialchars($row["name"], ENT_QUOTES, "UTF-8") . " zu \"" . htmlspecialchars($row2["title"], ENT_QUOTES, "UTF-8") .
                          "\"" . "</a></li>";
                         
@@ -177,13 +177,13 @@ function search_render(){
              "AGAINST ('" . $search_request_unencoded . "') AND `start` > " . (time() - 60 * 60 * 23) . " ORDER by `start` ASC";
             
              $results = db_query($search_sql_query);
-             $result_count = mysql_num_rows($results);
+             $result_count = db_num_rows($results);
              $html_output .= "<p class='search-results'><strong>$result_count</strong> Suchergebnisse gefunden</p>";
              if($result_count > 0){
                 
                  $html_output .= "<hr/>
 		<ol class='result-list'>";
-                 while($row = mysql_fetch_assoc($results)){
+                 while($row = db_fetch_assoc($results)){
                      $dateString = date("d.m.Y", $row["start"]);
                      if($row["start"] != $row["end"]){
                          $dateString .= " - " . date("d.m.Y", $row["end"]);

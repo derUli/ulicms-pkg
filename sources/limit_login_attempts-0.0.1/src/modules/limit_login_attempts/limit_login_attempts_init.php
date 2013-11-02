@@ -19,7 +19,7 @@ db_query("DELETE FROM " . tbname("failed_logins") . " WHERE " . time() . " -  `t
 $query = db_query("SELECT * FROM " . tbname("failed_logins") .
      " WHERE ip='$ip'");
 
-if(mysql_num_rows($query) >= $max_login_attempts){
+if(db_num_rows($query) >= $max_login_attempts){
      die("<p>Sie haben die maximale Anzahl an erfolglosen Login-Versuchen &uuml;berschritten.<br/>Ihre IP-Adresse wurde gesperrt!</p>");
      }
 ?>

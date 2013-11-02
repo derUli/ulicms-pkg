@@ -14,7 +14,7 @@ function google_analytics_admin(){
     
      if(isset($_POST["submit"])){
         setconfig("google_analytics_id", 
-        mysql_real_escape_string($_POST["google_analytics_id"]));
+        db_real_escape_string($_POST["google_analytics_id"]));
       
       }
 

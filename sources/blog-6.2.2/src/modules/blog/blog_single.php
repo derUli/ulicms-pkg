@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 if(file_exists("antispam-features.php")){
      include "antispam-features.php";
      }else{
@@ -24,8 +24,8 @@ function blog_single($seo_shortname){
     
     
     
-     if(mysql_num_rows($query) > 0){
-         $post = mysql_fetch_object($query);
+     if(db_num_rows($query) > 0){
+         $post = db_fetch_object($query);
          $user = getUserById($post -> author);
         
          $html = "";
@@ -172,13 +172,13 @@ function post_comments(){
     
      if(isset($_POST["post_comment_to"])){
          $post_id = intval($_POST["post_comment_to"]);
-         $name = mysql_real_escape_string(htmlspecialchars($_POST["name"]));
-         $url = mysql_real_escape_string(htmlspecialchars($_POST["url"]));
-         $email = mysql_real_escape_string(htmlspecialchars(
+         $name = db_real_escape_string(htmlspecialchars($_POST["name"]));
+         $url = db_real_escape_string(htmlspecialchars($_POST["url"]));
+         $email = db_real_escape_string(htmlspecialchars(
                 $_POST["email"]));
          $date = time();
          $comment_unescaped = $_POST["comment"];
-         $comment = mysql_real_escape_string($_POST["comment"]);
+         $comment = db_real_escape_string($_POST["comment"]);
         
          $_SESSION["name"] = $name;
          $_SESSION["url"] = $url;
@@ -209,11 +209,11 @@ function post_comments(){
              db_query("INSERT INTO `" . tbname("blog_comments") . "` 
 	(name, url, email, date, comment, post_id)
 	VALUES ( '$name', '$url', '$email', $date, '$comment', $post_id);");
-             $comment_id = mysql_insert_id();
+             $comment_id = db_insert_id();
             
              if(getconfig("blog_send_comments_via_email") == "yes"){
                  $query = db_query("SELECT * FROM " . tbname("blog") . " WHERE id = $post_id");
-                 $post = mysql_fetch_object($query);
+                 $post = db_fetch_object($query);
                  $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
                  $domainName = $_SERVER['HTTP_HOST'];
                  $article_url = $protocol . $domainName . getModuleAdminSelfPath() .
@@ -311,21 +311,21 @@ function blog_display_comments($post_id){
          }
      $html .= comment_form($post_id);
     
-     if(mysql_num_rows($query) > 0){
+     if(db_num_rows($query) > 0){
         
          $count = 0;
         
          if($_SESSION["language"] == "de"){
-             $html .= "<p>Es sind bisher " . mysql_num_rows($query) .
+             $html .= "<p>Es sind bisher " . db_num_rows($query) .
              " Kommentare zu diesem Artikel vorhanden.</p>";
              }else{
-             $html .= "<p>There are " . mysql_num_rows($query) . " Comments
+             $html .= "<p>There are " . db_num_rows($query) . " Comments
 	 until now.</p>";
              }
         
          $html .= "<hr/>";
         
-         while($comment = mysql_fetch_object($query)){
+         while($comment = db_fetch_object($query)){
              $count++;
             
              $html .= "<div class='a_comment'>
@@ -373,7 +373,7 @@ function blog_display_comments($post_id){
             
              $html .= "<br/><br/>";
             
-             if($count != mysql_num_rows($query)){
+             if($count != db_num_rows($query)){
                  $html .= "<hr/>";
                  }
             

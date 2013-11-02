@@ -20,7 +20,7 @@ function statistics_admin(){
     
      $data = db_query("SELECT * FROM " . tbname("statistics") . " ORDER by date ASC");
     
-     $visitor_total = mysql_num_rows($data);
+     $visitor_total = db_num_rows($data);
     
      $views_total = 0;
     
@@ -35,7 +35,7 @@ function statistics_admin(){
      $firstYear = false;
      $firstMonth = false;
     
-     while($row = mysql_fetch_object($data)){
+     while($row = db_fetch_object($data)){
          $views_total += $row -> views;
          if(!$firstYear){
              $firstYear = date("Y", $row -> date);
@@ -105,10 +105,10 @@ function statistics_admin(){
                  $monatsletzter = mktime(0, 0, 0, $m + 1, 0, $j);
                  $data = db_query("SELECT * FROM " . tbname("statistics") . " WHERE date >= $monatserster
 	and date < $monatsletzter ORDER by date ASC");
-                 if(mysql_num_rows($data) > 0){
+                 if(db_num_rows($data) > 0){
                      echo "<tr>";
                      echo "<td>" . strftime("%B", $monatserster) . "</td>";
-                     echo "<td style=\"text-align:right\">" . mysql_num_rows($data) . "</td>";
+                     echo "<td style=\"text-align:right\">" . db_num_rows($data) . "</td>";
                      echo "</tr>";
                      }
                 

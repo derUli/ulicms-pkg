@@ -1,10 +1,10 @@
-﻿<?php
+<?php
 function blog_edit_form($post_id){
      $query = db_query("SELECT * FROM `" . tbname("blog") . "` WHERE id = $post_id");
-     if(mysql_num_rows($query) == 0){
+     if(db_num_rows($query) == 0){
          return "<p>Dieser Blogpost ist nicht mehr vorhanden</p>";
          }else{
-         $post = mysql_fetch_object($query);
+         $post = db_fetch_object($query);
         
          $html_output = "";
          $all_languages = getAllLanguages();

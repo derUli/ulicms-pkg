@@ -20,9 +20,9 @@ function search_subjects_admin(){
 
      $data = db_query("SELECT * FROM " . tbname("search_subjects") . " ORDER by `amount` DESC LIMIT $search_subjects_limit");
     
-     if(mysql_num_rows($data) > 0){
+     if(db_num_rows($data) > 0){
          echo "<table>";
-         while($row = mysql_fetch_object($data)){
+         while($row = db_fetch_object($data)){
              echo "<tr>";
              echo "<td style=\"font-weight:bold; min-width:100px;\">" . htmlspecialchars($row -> subject, ENT_QUOTES, "UTF-8") . "</td>";
              echo "<td style=\"text-align:right\">" . intval($row -> amount) . "</td>";

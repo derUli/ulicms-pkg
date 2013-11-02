@@ -29,7 +29,7 @@ function blog_admin(){
             
             if(isset($_POST["blog_autor_and_date_text"])){
                 setconfig("blog_autor_and_date_text", 
-                mysql_real_escape_string($_POST["blog_autor_and_date_text"]));
+                db_real_escape_string($_POST["blog_autor_and_date_text"]));
              }
         
          }

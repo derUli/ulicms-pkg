@@ -2,7 +2,7 @@
  include "init.php";
  $events = array();
  $query = db_query("SELECT * FROM `" . tbname("events") . "` ORDER BY id");
- while($row = mysql_fetch_object($query)){
+ while($row = db_fetch_object($query)){
      $obj = array();
      $obj["id"] = $row -> id;
     

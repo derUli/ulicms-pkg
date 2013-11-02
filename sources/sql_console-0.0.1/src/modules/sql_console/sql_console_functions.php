@@ -191,7 +191,7 @@ function split_sql_file($sql, $delimiter)
      }
 
 function display_error(){
-     echo "<p class=\"sql_error\">" . mysql_error() . "</p>";
+     echo "<p class=\"sql_error\">" . db_error() . "</p>";
      }
 
 
@@ -212,23 +212,23 @@ function sqlQueryFromString($sql_query){
              return false;
              }
         
-         echo "<p>" . mysql_affected_rows() . " rows affected" . "</p>";
+         echo "<p>" . db_affected_rows() . " rows affected" . "</p>";
         
          if($query !== false and $query !== true){
-             $fields_num = mysql_num_fields($query);
+             $fields_num = db_num_fields($query);
              if($fields_num){
                  echo "<div style=\"overflow:auto; width: 98%; height:400px; margin:auto;\">";
                  echo "<table border='1' width='100%'><tr>";
                  // printing table headers
                 for($i = 0; $i < $fields_num; $i++)
                 {
-                     $field = mysql_fetch_field($query);
+                     $field = db_fetch_field($query);
                      echo "<td style=\"font-weight:bold;\">{$field->name}</td>";
                      }
                  echo "</tr>
 ";
                  // printing table rows
-                while($row = mysql_fetch_row($query))
+                while($row = db_fetch_row($query))
                 {
                      echo "<tr>";
                     

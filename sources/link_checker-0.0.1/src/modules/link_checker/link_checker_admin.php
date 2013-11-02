@@ -29,9 +29,9 @@ function link_checker_admin(){
 <a href="index.php?action=module_settings&module=link_checker&show=redirection">Umleitungen</a></p>
 <?php
      flush();
-     $query = mysql_query("SELECT content FROM " . tbname("content"));
+     $query = db_query("SELECT content FROM " . tbname("content"));
      $hasLinks = false;
-     while($row = mysql_fetch_object($query)){
+     while($row = db_fetch_object($query)){
          $htmldatei = $row -> content;
          $htmldatei = apply_filter($htmldatei, "content");
         

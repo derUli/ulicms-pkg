@@ -51,9 +51,9 @@ function blog_list(){
      $count_query = db_query("SELECT * FROM `" .
          tbname("blog") . "` WHERE language='" .
          $_SESSION["language"] . "' ORDER by id ASC");
-     $first_post = mysql_fetch_object($count_query);
+     $first_post = db_fetch_object($count_query);
      $oldest_post_id = $first_post -> id;
-     $total_entries = mysql_num_rows($count_query);
+     $total_entries = db_num_rows($count_query);
     
     
      if($limit1 < 0)
@@ -69,8 +69,8 @@ function blog_list(){
     
      $html .= "";
     
-     if(mysql_num_rows($query) > 0){
-         while($post = mysql_fetch_object($query)){
+     if(db_num_rows($query) > 0){
+         while($post = db_fetch_object($query)){
              $user = getUserById($post -> author);
             
             

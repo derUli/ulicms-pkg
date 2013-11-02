@@ -8,7 +8,7 @@ function blog_render(){
     
      if(!empty($_GET["single"])){
          require_once getModulePath("blog") . "blog_single.php";
-         return blog_single(mysql_real_escape_string($_GET["single"]));
+         return blog_single(db_real_escape_string($_GET["single"]));
          }
     else if(!empty($_GET["blog_admin"])){
          if($_GET["blog_admin"] == "add"){
@@ -58,9 +58,9 @@ function blog_update(){
      if($doSpellCheck)
          $title = autocorrect_common_typos($title);
     
-     $title = mysql_real_escape_string($title);
+     $title = db_real_escape_string($title);
     
-     $seo_shortname = mysql_real_escape_string($_POST["seo_shortname"]);
+     $seo_shortname = db_real_escape_string($_POST["seo_shortname"]);
     
      if(empty($title) or empty($seo_shortname)){
          $html_output .= "<script type='text/javascript'>
@@ -71,9 +71,9 @@ function blog_update(){
         
          }
     
-     $language = mysql_real_escape_string($_POST["language"]);
-     $comments_enabled = mysql_real_escape_string($_POST["comments_enabled"]);
-     $entry_enabled = mysql_real_escape_string($_POST["entry_enabled"]);
+     $language = db_real_escape_string($_POST["language"]);
+     $comments_enabled = db_real_escape_string($_POST["comments_enabled"]);
+     $entry_enabled = db_real_escape_string($_POST["entry_enabled"]);
     
      $content_full = $_POST["content_full"];
      $content_preview = $_POST["content_preview"];
@@ -85,8 +85,8 @@ function blog_update(){
          }
     
     
-     $content_full = mysql_real_escape_string($content_full);
-     $content_preview = mysql_real_escape_string($content_preview);
+     $content_full = db_real_escape_string($content_full);
+     $content_preview = db_real_escape_string($content_preview);
     
     
      $date = time();
@@ -136,9 +136,9 @@ function blog_submit(){
      if($doSpellCheck)
          $title = autocorrect_common_typos($title);
     
-     $title = mysql_real_escape_string($title);
+     $title = db_real_escape_string($title);
     
-     $seo_shortname = mysql_real_escape_string($_POST["seo_shortname"]);
+     $seo_shortname = db_real_escape_string($_POST["seo_shortname"]);
     
      if(empty($title) or empty($seo_shortname)){
          $html_output .= "<script type='text/javascript'>
@@ -149,9 +149,9 @@ function blog_submit(){
         
          }
     
-     $language = mysql_real_escape_string($_POST["language"]);
-     $comments_enabled = mysql_real_escape_string($_POST["comments_enabled"]);
-     $entry_enabled = mysql_real_escape_string($_POST["entry_enabled"]);
+     $language = db_real_escape_string($_POST["language"]);
+     $comments_enabled = db_real_escape_string($_POST["comments_enabled"]);
+     $entry_enabled = db_real_escape_string($_POST["entry_enabled"]);
     
      $content_full = $_POST["content_full"];
      $content_preview = $_POST["content_preview"];
@@ -162,8 +162,8 @@ function blog_submit(){
          }
     
     
-     $content_full = mysql_real_escape_string($content_full);
-     $content_preview = mysql_real_escape_string($content_preview);
+     $content_full = db_real_escape_string($content_full);
+     $content_preview = db_real_escape_string($content_preview);
     
      $author = $_SESSION["login_id"];
      $datum = strtotime($_POST["datum"]);
@@ -203,7 +203,7 @@ function blog_check_installation(){
          require_once getModulePath("blog") . "blog_install.php";
          blog_do_install();
          }else{
-         $fetch = mysql_fetch_assoc($test);
+         $fetch = db_fetch_assoc($test);
          if(!isset($fetch["views"])){
              db_query("ALTER TABLE `" . tbname("blog") . "` ADD views int DEFAULT 0");
              }

@@ -1,14 +1,14 @@
 <?php
 function blog_meta_description_filter($txt){
-     $single = mysql_real_escape_string($_GET["single"]);
+     $single = db_real_escape_string($_GET["single"]);
      $query = db_query("SELECT content_preview FROM `" . tbname("blog") . "` WHERE seo_shortname='$single'");
      $content_preview = false;
     
      if(!$query)
          return $txt;
     
-     if(mysql_num_rows($query) > 0){
-         $result = mysql_fetch_assoc($query);
+     if(db_num_rows($query) > 0){
+         $result = db_fetch_assoc($query);
          $content_preview = $result["content_preview"];
          }
     

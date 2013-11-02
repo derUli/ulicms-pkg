@@ -4,7 +4,7 @@ if(has_permissions(MODULE_ADMIN_REQUIRED_PERMISSION)){
      if(isset($_REQUEST["id"])){
          $event_id = intval($_REQUEST["id"]);
          $query = db_query("SELECT * FROM `" . tbname("events") . "` WHERE id = $event_id");
-         $result = mysql_fetch_object($query);
+         $result = db_fetch_object($query);
          $startzeit = date("d.m.Y", $result -> start);
          $endzeit = date("d.m.Y", $result -> end);
          $title = $result -> title;

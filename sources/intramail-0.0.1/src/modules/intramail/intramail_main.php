@@ -55,7 +55,7 @@ function intramail_view_message(){
          "` WHERE id = $message_id and (mail_from='" .
          $_SESSION["ulicms_login"] . "' or mail_to = '" . $_SESSION["ulicms_login"] . "') LIMIT 1");
     
-     while($row = mysql_fetch_object($message_query)){
+     while($row = db_fetch_object($message_query)){
          echo '<table style="border:0px;">
    <tr>
    <td><strong>Von:</strong></td>
@@ -115,7 +115,7 @@ function intramail_post_inbox(){
     
      // get all unread messages
     $new_mails_query = db_query("SELECT * FROM `" . tbname("messages") . "` WHERE mail_to='" . $_SESSION["ulicms_login"] . "' AND `read` = 0");
-     $new_mails_count = mysql_num_rows($new_mails_query);
+     $new_mails_count = db_num_rows($new_mails_query);
      if(isset($_GET["message"])){
          intramail_view_message();
          return;
@@ -131,9 +131,9 @@ function intramail_post_inbox(){
          }
     
      $all_mails = db_query("SELECT * FROM `" . tbname("messages") . "` WHERE mail_to='" . $_SESSION["ulicms_login"] . "' ORDER by date DESC");
-     if(mysql_num_rows($all_mails) > 0){
+     if(db_num_rows($all_mails) > 0){
          echo "<ol>";
-         while($row = mysql_fetch_object($all_mails)){
+         while($row = db_fetch_object($all_mails)){
              echo "<li>";
              if(!$row -> read){
                  echo "<strong style='color:red;'>Neu</strong> ";
@@ -161,9 +161,9 @@ function intramail_post_outbox(){
     
      $all_mails = db_query("SELECT * FROM `" . tbname("messages") . "` WHERE mail_from='" . $_SESSION["ulicms_login"] . "' AND `read` = 0 ORDER by date DESC");
     
-     if(mysql_num_rows($all_mails) > 0){
+     if(db_num_rows($all_mails) > 0){
          echo "<ol>";
-         while($row = mysql_fetch_object($all_mails)){
+         while($row = db_fetch_object($all_mails)){
              echo "<li>";
              if(!$row -> read){
                  echo "<strong style='color:red;'>Neu</strong> ";
@@ -190,7 +190,7 @@ function intramail_post_outbox(){
          "` WHERE id = $message_id and (mail_from='" .
          $_SESSION["ulicms_login"] . "' or mail_to = '" . $_SESSION["ulicms_login"] . "') LIMIT 1");
     
-     while($row = mysql_fetch_object($message_query)){
+     while($row = db_fetch_object($message_query)){
          $new_subject = $row -> subject;
          if(!StartsWith($row -> subject, "RE: ")){
              $new_subject = "RE: " . $row -> subject;
@@ -222,11 +222,11 @@ function intramail_new_mail($mail_to = '', $subject = '', $message = ''){
         
          $date = time();
          $mail_from = $_SESSION["ulicms_login"];
-         $mail_to = mysql_real_escape_string($_POST["mail_to"]);
+         $mail_to = db_real_escape_string($_POST["mail_to"]);
          $subject = htmlspecialchars($_POST["subject"]);
-         $subject = mysql_real_escape_string($subject);
+         $subject = db_real_escape_string($subject);
          $message = strip_tags($_POST["message"], getconfig("allowed_html"));
-         $message = mysql_real_escape_string($message);
+         $message = db_real_escape_string($message);
         
          $message = str_replace("\\r\\n", "\n", $message);
         
