@@ -13,7 +13,7 @@ define(MODULE_ADMIN_REQUIRED_PERMISSION, $required_permission);
 function fullcalendar_list(){
      $query = db_query("SELECT * FROM `" . tbname("events") . "` ORDER by `start` DESC");
     
-     if(mysql_num_rows($query) > 0){
+     if(db_num_rows($query) > 0){
          echo "<table style=\"outline:4px solid #d4d4d4; background-color:#f0f0f0;width:96%; margin:auto;\">";
          echo "<tr style=\"background-color:#f0f0f0;font-weight:bold;\">";
          echo "<td>";
@@ -30,7 +30,7 @@ function fullcalendar_list(){
          echo "</tr>";
         
         
-         while($row = mysql_fetch_object($query)){
+         while($row = db_fetch_object($query)){
              echo "<tr>";
              echo "<td>" . date("d.m.Y", $row -> start) . "</strong></td>";
              echo "<td>" . date("d.m.Y", $row -> end) . "</strong></td>";
@@ -59,8 +59,8 @@ function fullcalendar_admin(){
          }
      if(isset($_POST["save"])){
         
-         $title = mysql_real_escape_string(trim($_POST["title"]));
-         $url = mysql_real_escape_string(trim($_POST["url"]));
+         $title = db_escape(trim($_POST["title"]));
+         $url = db_escape(trim($_POST["url"]));
         
          $start = $_POST["start"];
          $end = $_POST["end"];
@@ -89,7 +89,7 @@ function fullcalendar_admin(){
          $id = intval($_POST["id"]);
         
          if($id == 0){
-             db_query("INSERT INTO `" . tbname("events") . "` (title, url, start, end) VALUES ('$title', '$url', $start, $end)")or die(mysql_error());
+             db_query("INSERT INTO `" . tbname("events") . "` (title, url, start, end) VALUES ('$title', '$url', $start, $end)")or die(db_error());
             
              }else{
              db_query("UPDATE `" . tbname("events") . "` SET title='$title', url='$url', start='$start', end='$end' WHERE id=$id");

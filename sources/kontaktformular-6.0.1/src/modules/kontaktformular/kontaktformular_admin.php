@@ -14,13 +14,13 @@ function kontaktformular_admin(){
     
      if(isset($_POST["submit"])){
      setconfig("email", 
-        mysql_real_escape_string($_POST["email"]));
+        db_escape($_POST["email"]));
      
           if(empty($_POST["kontaktformular_thankyou_page"]))
         deleteconfig("kontaktformular_thankyou_page");
      else
         setconfig("kontaktformular_thankyou_page", 
-        mysql_real_escape_string($_POST["kontaktformular_thankyou_page"]));
+        db_escape($_POST["kontaktformular_thankyou_page"]));
       
       }
       

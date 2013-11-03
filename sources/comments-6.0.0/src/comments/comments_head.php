@@ -8,9 +8,9 @@ function comments(){
      $connection = MYSQL_CONNECTION;
     
     
-     $ipage = mysql_real_escape_string($_GET["seite"]);
+     $ipage = db_escape($_GET["seite"]);
      $query = db_query("SELECT * FROM " . tbname("content") . " WHERE systemname='$ipage'", $connection);
-     $dataset = mysql_fetch_array($query);
+     $dataset = db_fetch_array($query);
     
     
      if($dataset["systemname"] == "impressum" || $dataset["systemname"] == "kontakt"){

@@ -23,7 +23,7 @@ if(!logged_in() and !is_admin_dir() and !crawlerDetect()){
      $query = db_query("SELECT * FROM " . tbname("statistics") . " WHERE hash='$visitorHash' AND `date` >= $heute");
     
     
-     if(mysql_num_rows($query) > 0){
+     if(db_num_rows($query) > 0){
          db_query("UPDATE " . tbname("statistics") . " SET `date` = " . time() . ", `views` = `views` + 1 WHERE hash ='$visitorHash' AND `date` >= $heute");
          }else{
          db_query("INSERT INTO " . tbname("statistics") . " (hash, date, `views`) VALUES ('$visitorHash',

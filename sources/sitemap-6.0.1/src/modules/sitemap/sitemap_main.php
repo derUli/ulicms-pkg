@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 function sitemap_render(){
      $html_output = "";
      foreach(getAllMenus() as $menu){
@@ -11,7 +11,7 @@ function sitemap_menu($name){
      $html_output = "";
      $query = db_query("SELECT * FROM " . tbname("content") . " WHERE menu ='$name' AND active = 1 AND `deleted_at` IS NULL AND parent IS NULL ORDER by position");
     
-     if(mysql_num_rows($query) < 1){
+     if(db_num_rows($query) < 1){
          return "";
          }
      switch($name){
@@ -43,7 +43,7 @@ function sitemap_menu($name){
      $language = $_SESSION["language"];
      $query = db_query("SELECT * FROM " . tbname("content") . " WHERE menu ='$name' AND language = '$language' AND active = 1 AND `deleted_at` IS NULL AND parent IS NULL ORDER by position");
      $html_output .= "<ul>\n";
-     while($row = mysql_fetch_object($query)){
+     while($row = db_fetch_object($query)){
      $html_output .= "  <li>" ;
      if(get_requested_pagename() != $row -> systemname){
      $html_output .= "<a href='" . $row -> systemname . ".html' target='" .
@@ -60,9 +60,9 @@ function sitemap_menu($name){
 
  // Unterebene 1
 $query2 = db_query("SELECT * FROM " . tbname("content") . " WHERE active = 1 AND `deleted_at` IS NULL AND language = '$language' AND parent=" . $row -> id . " ORDER by position");
- if(mysql_num_rows($query2) > 0){
+ if(db_num_rows($query2) > 0){
      $html_output .= "<ul>\n";
-     while($row2 = mysql_fetch_object($query2)){
+     while($row2 = db_fetch_object($query2)){
          $html_output .= "      <li>";
          if(get_requested_pagename() != $row2 -> systemname){
              $html_output .= "<a href='" . $row2 -> systemname . ".html' target='" .
@@ -93,9 +93,9 @@ $query2 = db_query("SELECT * FROM " . tbname("content") . " WHERE active = 1 AND
         
          // Unterebene 2
         $query3 = db_query("SELECT * FROM " . tbname("content") . " WHERE active = 1 AND `deleted_at` IS NULL AND language = '$language' AND parent=" . $row2 -> id . " ORDER by position");
-         if(mysql_num_rows($query3) > 0){
+         if(db_num_rows($query3) > 0){
              $html_output .= "  <ul>\n";
-             while($row3 = mysql_fetch_object($query3)){
+             while($row3 = db_fetch_object($query3)){
                  $html_output .= "      <li>";
                  if(get_requested_pagename() != $row3 -> systemname){
                      $html_output .= "<a href='" . $row3 -> systemname . ".html' target='" .
@@ -122,9 +122,9 @@ $query2 = db_query("SELECT * FROM " . tbname("content") . " WHERE active = 1 AND
                 
                  // Unterebene 3
                 $query4 = db_query("SELECT * FROM " . tbname("content") . " WHERE active = 1 AND `deleted_at` IS NULL AND language = '$language' AND parent=" . $row3 -> id . " ORDER by position");
-                 if(mysql_num_rows($query4) > 0){
+                 if(db_num_rows($query4) > 0){
                      $html_output .= "  <ul>\n";
-                     while($row4 = mysql_fetch_object($query4)){
+                     while($row4 = db_fetch_object($query4)){
                          $html_output .= "<li>";
                          if(get_requested_pagename() != $row4 -> systemname){
                              $html_output .= "<a href='" . $row4 -> systemname . ".html' target='" .

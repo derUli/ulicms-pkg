@@ -6,19 +6,19 @@ if(in_array("blog", getAllModules()) and has_permissions(40)){
 <div class="accordion-content">
 <?php
      if(isset($_GET["delete_comment"]) and $_SESSION["group"] >= 40){
-         mysql_query("DELETE FROM " . tbname("blog_comments") . " WHERE id=" . intval($_GET["delete_comment"]));
+         db_query("DELETE FROM " . tbname("blog_comments") . " WHERE id=" . intval($_GET["delete_comment"]));
          }
     
     
-     $query = mysql_query("SELECT * FROM " . tbname("blog_comments") . " ORDER by `date` DESC LIMIT 5");
+     $query = db_query("SELECT * FROM " . tbname("blog_comments") . " ORDER by `date` DESC LIMIT 5");
     
-     if(mysql_num_rows($query) === 0){
+     if(db_num_rows($query) === 0){
          echo "<p>Es sind noch keine Kommentare vorhanden.</p>";
          }else{
         
          $html = "";
         
-         while($comment = mysql_fetch_object($query)){
+         while($comment = db_fetch_object($query)){
              $count++;
             
              $html .= "<div class='a_comment'>
@@ -66,7 +66,7 @@ if(in_array("blog", getAllModules()) and has_permissions(40)){
             
              $html .= "<br/><br/>";
             
-             if($count != mysql_num_rows($query)){
+             if($count != db_num_rows($query)){
                  $html .= "<hr/>";
                  }
             

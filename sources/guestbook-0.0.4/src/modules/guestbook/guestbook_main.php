@@ -165,19 +165,19 @@ function guestbook_render(){
             
             
              if(!$errors){
-                 $gb_name = mysql_real_escape_string(
+                 $gb_name = db_escape(
                     htmlspecialchars($_POST["gb_name"]));
-                 $gb_city = mysql_real_escape_string(htmlspecialchars(
+                 $gb_city = db_escape(htmlspecialchars(
                         $_POST["gb_city"]));
-                 $gb_mail = mysql_real_escape_string(htmlspecialchars(
+                 $gb_mail = db_escape(htmlspecialchars(
                         $_POST["gb_mail"]));
-                 $gb_homepage = mysql_real_escape_string(htmlspecialchars(
+                 $gb_homepage = db_escape(htmlspecialchars(
                         $_POST["gb_homepage"]));
-                 $gb_content = mysql_real_escape_string(nl2br(htmlspecialchars($_POST["gb_content"])));
+                 $gb_content = db_escape(nl2br(htmlspecialchars($_POST["gb_content"])));
                  $date = date("Y-m-d H:i:s");
                  $sql = "INSERT INTO " . tbname("guestbook_entries") . " (name, ort, email, date, homepage, content)
 					VALUES ('$gb_name', '$gb_city', '$gb_mail', '$date', '$gb_homepage', '$gb_content');";
-                 db_query($sql)or die(mysql_error()) ;
+                 db_query($sql)or die(db_error()) ;
                 
                  $html_output .= guestbook_list();
                  return $html_output;
@@ -234,7 +234,7 @@ function guestbook_list(){
      $html_output .= "";
      $entries_query = db_query("SELECT * FROM " . tbname("guestbook_entries") . " ORDER by date DESC LIMIT $limit");
     
-     while($row = mysql_fetch_object($entries_query)){
+     while($row = db_fetch_object($entries_query)){
         
         
          if(!empty($row -> homepage)){

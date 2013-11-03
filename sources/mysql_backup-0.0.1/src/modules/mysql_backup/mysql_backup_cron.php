@@ -1,6 +1,6 @@
 <?php
 
-error_reporting(E_ALL ^ E_NOTICE ^ E_STRICT);
+error_reporting(0);
 
 include_once getModulePath("mysql_backup") . "mysql_backup_install.php";
 mysql_backup_check_install();
@@ -32,9 +32,9 @@ $backup_interval = 60 * 60 * 24 * getconfig("mysql_backup_every_days");
 
 $config = new config();
 
-$mysql_user = $config -> mysql_user;
-$mysql_password = $config -> mysql_password;
-$mysql_database = $config -> mysql_database;
+$mysql_user = $config -> db_user;
+$mysql_password = $config -> db_password;
+$mysql_database = $config -> db_database;
 $backup_file = path_to_backup_dir() . "dump-" . date('Y-m-d');
 
 
@@ -86,10 +86,5 @@ else if($difference >= $backup_interval){
     
     
      }
-
-
-
-
-error_reporting(getconfig("error_reporting"));
 
 ?>

@@ -28,12 +28,12 @@ if((!is_admin_dir() and !crawlerDetect() and isset($_GET["q"])) or
      }
 
      
-     $subject = mysql_real_escape_string($subject);
+     $subject = db_escape($subject);
     
      $query = db_query("SELECT * FROM " . tbname("search_subjects") . " WHERE `subject` = '$subject'");
     
     
-     if(mysql_num_rows($query) > 0 and !empty($subject)){
+     if(db_num_rows($query) > 0 and !empty($subject)){
          db_query("UPDATE " . tbname("search_subjects") . " SET `amount` = `amount` + 1 WHERE `subject` = '$subject'");
          }else if(!empty($subject)){
          db_query("INSERT INTO " . tbname("search_subjects") . " (`subject`, `amount`) VALUES ('$subject', 1)");

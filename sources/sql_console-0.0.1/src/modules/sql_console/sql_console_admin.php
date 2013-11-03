@@ -28,7 +28,7 @@ function sql_console_admin(){
     
      include getModulePath("sql_console") . "sql_console_form.php";
      $config = new config();
-     mysql_select_db($config -> mysql_database);
+     db_select_db($config -> db_database);
      }
 
 

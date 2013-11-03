@@ -122,11 +122,11 @@ class SimpleServer extends IXR_Server {
           
           
           if(isModuleInstalled("blog")){
-             $query_articles = mysql_query("select * from ".tbname("blog"));
-             $stat["blog_entry_count"] = mysql_num_rows($query_articles);
+             $query_articles = db_query("select * from ".tbname("blog"));
+             $stat["blog_entry_count"] = db_num_rows($query_articles);
              
-             $query_comments = mysql_query("select * from ".tbname("blog_comments"));
-             $stat["blog_comment_count"] = mysql_num_rows($query_comments);
+             $query_comments = db_query("select * from ".tbname("blog_comments"));
+             $stat["blog_comment_count"] = db_num_rows($query_comments);
           }
           
           ksort($stat);

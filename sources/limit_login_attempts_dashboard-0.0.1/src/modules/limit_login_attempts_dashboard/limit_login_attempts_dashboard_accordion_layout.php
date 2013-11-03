@@ -13,9 +13,9 @@ if(in_array("limit_login_attempts", getAllModules()) && is_admin()){
 <h2 class="accordion-header">Fehlgeschlagene Anmeldeversuche</h2>
 <div class="accordion-content">
 <?php
-     $query = mysql_query("SELECT *  FROM " . tbname("failed_logins") . " ORDER by time DESC");
+     $query = db_query("SELECT *  FROM " . tbname("failed_logins") . " ORDER by time DESC");
     
-     if(mysql_num_rows($query) === 0){
+     if(db_num_rows($query) === 0){
          echo "<p>Es gab keine fehlerhaften Loginversuche</p>";
          }else{
         
@@ -34,19 +34,19 @@ if(in_array("limit_login_attempts", getAllModules()) && is_admin()){
         
         
         
-         while($row = mysql_fetch_object($query)){
-             $query2 = mysql_query("SELECT * FROM " . tbname("failed_logins") .
+         while($row = db_fetch_object($query)){
+             $query2 = db_query("SELECT * FROM " . tbname("failed_logins") .
                  " WHERE ip='" . $row -> ip . "' ORDER by time DESC");
             
             
-             $result = mysql_fetch_assoc($query2);
+             $result = db_fetch_assoc($query2);
             
              if(!in_array($row -> ip, $alreadyDisplayed)){
-                 if(mysql_num_rows($query2) >= $max_login_attempts)
+                 if(db_num_rows($query2) >= $max_login_attempts)
                      echo "<tr style=\"color:red;\">";
                  else
                      echo "<tr>";
-                 echo "<td style=\"width:200px;\">" . mysql_num_rows($query2) . "</td>";
+                 echo "<td style=\"width:200px;\">" . db_num_rows($query2) . "</td>";
                  echo "<td style=\"width:300px;\">" . $result["ip"] . "</td>";
                  echo "<td>";
                  echo "Vor ";

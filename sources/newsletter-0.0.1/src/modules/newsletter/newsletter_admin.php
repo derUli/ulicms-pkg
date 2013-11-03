@@ -50,8 +50,8 @@ function newsletter_admin(){
 <?php
      if($_GET["newsletter_action"] == "show_subscribers"){
          $query = db_query("SELECT * FROM " . tbname("newsletter_subscribers") . " ORDER by email");
-         echo "<p>Dieser Newsletter wurde " . mysql_num_rows($query) . "x abonniert.";
-         if(mysql_num_rows($query) > 0){
+         echo "<p>Dieser Newsletter wurde " . db_num_rows($query) . "x abonniert.";
+         if(db_num_rows($query) > 0){
             
              @set_time_limit(0); // run script forever 
              echo "<table border=1>";
@@ -59,7 +59,7 @@ function newsletter_admin(){
              echo "<td>Abonnent seit:</td>";
              echo "</tr>";
             
-             while($row = mysql_fetch_assoc($query)){
+             while($row = db_fetch_assoc($query)){
                  echo "<tr>" .
                  "<td>" .
                  $row["email"] .

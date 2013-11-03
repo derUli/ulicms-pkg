@@ -4,14 +4,14 @@ if(in_array("blog", getAllModules())){
 
 <?php
      $query = db_query("SELECT * FROM " . tbname("blog"));
-     $blog_post_count = mysql_num_rows($query);
+     $blog_post_count = db_num_rows($query);
     
     
      $query = db_query("SELECT * FROM " . tbname("blog_comments"));
-     $comment_count = mysql_num_rows($query);
+     $comment_count = db_num_rows($query);
     
     
-     $query = mysql_query("SELECT * FROM " . tbname("blog") . " ORDER by `views` DESC LIMIT 5");
+     $query = db_query("SELECT * FROM " . tbname("blog") . " ORDER by `views` DESC LIMIT 5");
     
     
      ?>
@@ -42,7 +42,7 @@ if(in_array("blog", getAllModules())){
 <td><strong>Views</strong></td>
 </tr>
 <?php
-         while($row = mysql_fetch_object($query)){
+         while($row = db_fetch_object($query)){
          ?>
 <tr>
 <td style="padding-right:50px;"><?php echo htmlspecialchars($row -> title, ENT_QUOTES, "UTF-8");

@@ -7,8 +7,8 @@ function getSubscribers(){
          return $adresses;
          }
     
-     if(mysql_num_rows($query) > 0){
-         while($row = mysql_fetch_assoc($query)){
+     if(db_num_rows($query) > 0){
+         while($row = db_fetch_assoc($query)){
              array_push($adresses, $row["email"]);
              }
          }
