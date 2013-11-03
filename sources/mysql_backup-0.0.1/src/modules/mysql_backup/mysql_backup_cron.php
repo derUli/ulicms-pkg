@@ -1,6 +1,6 @@
 <?php
 
-error_reporting(E_ALL ^ E_NOTICE ^ E_STRICT);
+error_reporting(0);
 
 include_once getModulePath("mysql_backup") . "mysql_backup_install.php";
 mysql_backup_check_install();
@@ -86,10 +86,5 @@ else if($difference >= $backup_interval){
     
     
      }
-
-
-
-
-error_reporting(getconfig("error_reporting"));
 
 ?>
