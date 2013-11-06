@@ -258,7 +258,7 @@ function guestbook_list(){
         
          $html_output .= "
 		<br/><br/>
-		" . $row -> content .
+		" . make_links_clickable($row -> content) .
          "<br/><br/><em>von " . $row -> name . " aus " . $row -> ort;
         
         

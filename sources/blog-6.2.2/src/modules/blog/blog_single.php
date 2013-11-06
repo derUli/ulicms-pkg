@@ -369,7 +369,7 @@ function blog_display_comments($post_id){
                  $html .= "<strong>Homepage:</strong> " . "<a href='" . $comment -> url . "' target='_blank' rel='nofollow'>" . $comment -> url . "</a>";
                  }
              $html .= "<br/><br/>";
-             $html .= nl2br(htmlspecialchars($comment -> comment));
+             $html .= make_links_clickable(nl2br(htmlspecialchars($comment -> comment)));
             
              $html .= "<br/><br/>";
             

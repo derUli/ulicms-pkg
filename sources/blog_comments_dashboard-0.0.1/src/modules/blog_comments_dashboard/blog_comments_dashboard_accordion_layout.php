@@ -62,7 +62,7 @@ if(in_array("blog", getAllModules()) and has_permissions(40)){
                  $html .= "<strong>Homepage:</strong> " . "<a href='" . $comment -> url . "' target='_blank' rel='nofollow'>" . $comment -> url . "</a>";
                  }
              $html .= "<br/><br/>";
-             $html .= nl2br(htmlspecialchars($comment -> comment));
+             $html .= make_links_clickable(nl2br(htmlspecialchars($comment -> comment)));
             
              $html .= "<br/><br/>";
             
