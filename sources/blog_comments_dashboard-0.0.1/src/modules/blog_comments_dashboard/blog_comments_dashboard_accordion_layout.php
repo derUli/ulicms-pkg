@@ -1,5 +1,6 @@
 <?php
-if(in_array("blog", getAllModules()) and has_permissions(40)){
+$acl = new ACL();
+if(in_array("blog", getAllModules()) and $acl->hasPermission("blog_comments_dashboard")){
      ?>
 
 <h2 class="accordion-header">Neueste Kommentare</h2>
