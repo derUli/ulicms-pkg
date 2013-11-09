@@ -22,11 +22,12 @@ function blog_list(){
     
     
      $html = "";
+     $acl = new ACL();
     
      // Wenn der Nutzer mindestens die Berechtigungen
     // eines Mitarbeiters hat, bekommt er den Link zum
     // Anlegen eines neuen Blogbeitrag angezeigt
-    if($_SESSION["group"] >= 20){
+    if($acl->hasPermission("blog")){
          $html .= "<p><a class='add_blog_entry_link' href='" .
          get_requested_pagename() .
          ".html?blog_admin=add'>Blogeintrag anlegen</a></p>";
@@ -58,8 +59,10 @@ function blog_list(){
     
      if($limit1 < 0)
          $limit1 = 0;
+         
+     $acl = new ACL();
     
-     if($_SESSION["group"] >= 20){
+     if($acl->hasPermission("blog")){
          $query = db_query("SELECT * FROM `" . tbname("blog") . "` WHERE language='" . $_SESSION["language"] . "' ORDER by datum DESC LIMIT $limit1, " . ($posts_per_page));
          }
     else{
@@ -109,21 +112,16 @@ function blog_list(){
 			";
                  }
              $html .= "<br/><br/>";
+             
+             $acl = new ACL();
             
-             if(($_SESSION["group"] >= 20 and $_SESSION["login_id"] == $post -> author)
-                     or ($_SESSION["group"] >= 40)){
+             if($acl->hasPermission("blog")){
                  $html .= "<a href='" . get_requested_pagename() . ".html?blog_admin=edit_post&id=" . $post -> id . "'>[Bearbeiten]</a> ";
                 
                  $html .= "<a href='" . get_requested_pagename() . ".html?blog_admin=delete_post&id=" . $post -> id . "' onclick='return confirm(\"Diesen Post wirklich löschen?\")'>[Löschen]</a>";
                 
                  $html .= "<br/><br/>";
                 
-                 }else if($_SESSION["group"] >= 20){
-                 $html .= "
-		   <div class='disabled_link'>[Bearbeiten]</div>
-		   <div class='disabled_link'>[Löschen]</div>";
-                
-                 $html .= "<br/><br/>";
                  }
             
             

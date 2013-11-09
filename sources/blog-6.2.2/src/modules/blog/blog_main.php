@@ -1,5 +1,8 @@
 <?php
 
+
+$acl = new ACL();
+
 function blog_render(){
     
      // Prüfen, ob Blog schon installiert
@@ -99,9 +102,10 @@ function blog_update(){
      if($datum === false){
          $datum = "datum";
          }
+         
     
      // Rechte prüfen
-    if($_SESSION["group"] >= 20){
+    if($acl->hasPermission("blog")){
          $insert_query = "UPDATE `" . tbname("blog") . "` SET title = '$title',
 	 seo_shortname = '$seo_shortname', comments_enabled = $comments_enabled,
 	 entry_enabled = $entry_enabled, language = '$language', content_full = '$content_full',
@@ -173,7 +177,7 @@ function blog_submit(){
          }
     
      // Rechte prüfen
-    if($_SESSION["group"] >= 20){
+    if($acl->hasPermission("blog")){
          $insert_query = "INSERT INTO `" . tbname("blog") . "` (datum, " .
          "title, seo_shortname, comments_enabled, language, 
   entry_enabled, author, 
