@@ -1,6 +1,7 @@
 <?php
 include_once "../lib/string_functions.php";
-if(in_array("limit_login_attempts", getAllModules()) && is_admin()){
+$acl = new ACL();
+if(in_array("limit_login_attempts", getAllModules()) and $acl->hasPermission("limit_login_attempts")){
     
      $alreadyDisplayed = Array();
     
