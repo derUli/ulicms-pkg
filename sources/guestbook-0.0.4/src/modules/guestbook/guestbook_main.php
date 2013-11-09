@@ -43,8 +43,8 @@ function guestbook_render(){
          $html_output = guestbook_list();
          break;
      case "delete":
-        
-         if($_SESSION["group"] >= 40 and isset($_GET["delete"])){
+         $acl = new ACL();
+         if($acl->hasPermission("guestbook") and isset($_GET["delete"])){
             
              $delete = $_GET["delete"];
              $delete = intval($delete);
@@ -261,8 +261,9 @@ function guestbook_list(){
 		" . make_links_clickable($row -> content) .
          "<br/><br/><em>von " . $row -> name . " aus " . $row -> ort;
         
+         $acl = new ACL();        
         
-         if($_SESSION["group"] >= 30){
+         if($acl->hasPermission("guestbook")){
              $html_output .= " (<a href='mailto:" . $row -> email . "'>" . $row -> email . "</a>)";
              }
         
