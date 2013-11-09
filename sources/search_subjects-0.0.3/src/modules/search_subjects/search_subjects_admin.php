@@ -1,13 +1,6 @@
 <?php
 define("MODULE_ADMIN_HEADLINE", "Häufige Suchbegriffe");
-
-$required_permission = getconfig("search_subjects_required_permission");
-
-if($required_permission === false){
-     $required_permission = 20;
-}
-
-define(MODULE_ADMIN_REQUIRED_PERMISSION, $required_permission);
+define(MODULE_ADMIN_REQUIRED_PERMISSION, "search_subjects");
 
 
 

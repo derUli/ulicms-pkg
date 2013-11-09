@@ -1,13 +1,6 @@
 <?php
 define("MODULE_ADMIN_HEADLINE", "SQL Console");
-
-$required_permission = getconfig("sql_console_required_permission");
-
-if($required_permission === false){
-     $required_permission = 50;
-     }
-
-define(MODULE_ADMIN_REQUIRED_PERMISSION, $required_permission);
+define(MODULE_ADMIN_REQUIRED_PERMISSION, "sql_console");
 
 // Konfiguration checken
 $send_comments_via_email = getconfig("blog_send_comments_via_email") == "yes";

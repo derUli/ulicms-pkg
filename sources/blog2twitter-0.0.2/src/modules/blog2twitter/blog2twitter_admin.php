@@ -1,13 +1,6 @@
 <?php
 define("MODULE_ADMIN_HEADLINE", "Einstellungen von blog2twitter");
-
-$required_permission = getconfig("blog2twitter_required_permission");
-
-if($required_permission === false){
-     $required_permission = 50;
-     }
-
-define(MODULE_ADMIN_REQUIRED_PERMISSION, $required_permission);
+define(MODULE_ADMIN_REQUIRED_PERMISSION, "blog2twitter_settings");
 
 
 function blog2twitter_admin(){

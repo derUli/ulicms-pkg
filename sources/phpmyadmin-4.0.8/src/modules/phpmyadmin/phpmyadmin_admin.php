@@ -1,13 +1,6 @@
 <?php
 define("MODULE_ADMIN_HEADLINE", "phpMyAdmin");
-
-$required_permission = getconfig("phpmyadmin_required_permission");
-
-if($required_permission === false){
-     $required_permission = 50;
-     }
-
-define(MODULE_ADMIN_REQUIRED_PERMISSION, $required_permission);
+define(MODULE_ADMIN_REQUIRED_PERMISSION, "phpmyadmin");
 
 
 function phpmyadmin_admin(){

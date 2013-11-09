@@ -1,13 +1,6 @@
 <?php
 define("MODULE_ADMIN_HEADLINE", "Einstellungen des Kontaktformulars");
-
-$required_permission = getconfig("kontaktformular_required_permission");
-
-if($required_permission === false){
-     $required_permission = 50;
-     }
-
-define(MODULE_ADMIN_REQUIRED_PERMISSION, $required_permission);
+define(MODULE_ADMIN_REQUIRED_PERMISSION, "kontaktfomular_settings");
 
 
 function kontaktformular_admin(){
