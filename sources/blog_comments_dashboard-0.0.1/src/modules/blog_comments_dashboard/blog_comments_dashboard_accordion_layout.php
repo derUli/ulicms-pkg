@@ -6,7 +6,7 @@ if(in_array("blog", getAllModules()) and $acl->hasPermission("blog_comments_dash
 <h2 class="accordion-header">Neueste Kommentare</h2>
 <div class="accordion-content">
 <?php
-     if(isset($_GET["delete_comment"]) and $_SESSION["group"] >= 40){
+     if(isset($_GET["delete_comment"])){
          db_query("DELETE FROM " . tbname("blog_comments") . " WHERE id=" . intval($_GET["delete_comment"]));
          }
     
@@ -31,7 +31,7 @@ if(in_array("blog", getAllModules()) and $acl->hasPermission("blog_comments_dash
             
              $html .= "</a>";
             
-             if($_SESSION["group"] >= 40){
+             if($acl->hasPermission("blog")){
                  $html .= " <a href='index.php?delete_comment=" . $comment -> id . "' onclick='return confirm(\"Diesen Kommentar wirklich löschen?\")'>[Löschen]</a>";
                  }
             
@@ -41,7 +41,7 @@ if(in_array("blog", getAllModules()) and $acl->hasPermission("blog_comments_dash
              $html .= $comment -> name;
              $html .= "<br/>";
             
-             if($_SESSION["group"] >= 20){
+             if($acl->hasPermission("blog")){
                  $html .= "<strong>Email: </strong>" . $comment -> email . "<br/>";
                  }
             
