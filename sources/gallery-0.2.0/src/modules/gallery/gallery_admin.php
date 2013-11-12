@@ -1,11 +1,7 @@
 <?php
 define("MODULE_ADMIN_HEADLINE", "Einstellungen der einfachen Bildergalerie");
 
-$required_permission = getconfig("blog_required_permission");
-
-if($required_permission === false){
-     $required_permission = 40;
-     }
+$required_permission = "gallery_settings";
 
 define(MODULE_ADMIN_REQUIRED_PERMISSION, $required_permission);
 

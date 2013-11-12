@@ -1,14 +1,6 @@
 <?php
 define("MODULE_ADMIN_HEADLINE", "Remote API");
-
-$required_permission = getconfig("remote_api_required_permission");
-
-if($required_permission === false){
-     $required_permission = 50;
-     }
-
-define(MODULE_ADMIN_REQUIRED_PERMISSION, $required_permission);
-
+define(MODULE_ADMIN_REQUIRED_PERMISSION, "remote_api_settings");
 
 function remote_api_admin(){
     

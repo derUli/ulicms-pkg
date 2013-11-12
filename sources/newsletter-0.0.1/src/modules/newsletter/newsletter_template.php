@@ -1,11 +1,7 @@
 <?php
 
-if(defined(MODULE_ADMIN_REQUIRED_PERMISSION)){
-     if($_SESSION["group"] < MODULE_ADMIN_REQUIRED_PERMISSION){
-         die("Fuck you!");
-         }
-    
-     }
+if(!defined(ULICMS_ROOT))
+   die("Fuck you!");
 
 if(isset($_POST["submit"])){
      $unencoded = $_POST["template_content"];

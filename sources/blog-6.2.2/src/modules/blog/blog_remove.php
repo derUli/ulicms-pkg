@@ -1,6 +1,7 @@
 <?php
-function blog_remove_post($post_id){
-     if($_SESSION["group"] >= 20){
+function blog_remove_post($post_id){ 
+     $acl = new ACL();
+     if($acl->hasPermission("blog")){
          db_query("DELETE FROM `" . tbname("blog") . "` WHERE id = $post_id");
          return "<p>Der Blogpost wurde erfolgreich gelöscht!</p>";
          }else{
@@ -10,7 +11,8 @@ function blog_remove_post($post_id){
 
 
 function blog_remove_comment($post_id){
-     if($_SESSION["group"] >= 40){
+      $acl = new ACL();
+     if($acl->hasPermission("blog")){
          db_query("DELETE FROM `" . tbname("blog_comments") . "` WHERE id = $post_id");
          return "<script type='text/javascript'>
 	   history.back();

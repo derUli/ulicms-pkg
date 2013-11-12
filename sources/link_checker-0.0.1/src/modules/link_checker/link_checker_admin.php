@@ -1,14 +1,6 @@
 <?php
 define("MODULE_ADMIN_HEADLINE", "Link Checker");
-
-$required_permission = getconfig("link_checker_required_permission");
-
-if($required_permission === false){
-     $required_permission = 20;
-     }
-
-define(MODULE_ADMIN_REQUIRED_PERMISSION, $required_permission);
-
+define(MODULE_ADMIN_REQUIRED_PERMISSION, "link_checker");
 
 function get_http_response_code($theURL){
      @$headers = get_headers($theURL);

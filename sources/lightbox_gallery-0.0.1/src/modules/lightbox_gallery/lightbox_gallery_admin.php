@@ -1,13 +1,6 @@
 <?php
 define("MODULE_ADMIN_HEADLINE", "Lightbox Bildergalerie");
-
-$required_permission = getconfig("blog_required_permission");
-
-if($required_permission === false){
-     $required_permission = 40;
-    }
-
-define(MODULE_ADMIN_REQUIRED_PERMISSION, $required_permission);
+define(MODULE_ADMIN_REQUIRED_PERMISSION, "gallery_settings");
 
 
 if(!empty($_POST["image_gallery_images_per_row"])){

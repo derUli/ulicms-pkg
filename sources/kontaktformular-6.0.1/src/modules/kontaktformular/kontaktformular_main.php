@@ -179,7 +179,9 @@ function kontaktformular_render(){
     else{
         
          $spam_counter = "";
-         if($_SESSION["group"] >= 20){
+         
+         $acl = new ACL();
+         if($acl->hasPermission("kontaktformular")){
              $spam_counter = "<p class='ulicms_success'>Bisher <strong>" . getconfig("contact_form_refused_spam_mails") . "</strong> Spam Mails 
    blockiert</p><hr/>";
              }

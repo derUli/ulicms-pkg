@@ -1,12 +1,6 @@
 <?php
 define("MODULE_ADMIN_HEADLINE", "XML Sitemap");
 
-$required_permission = getconfig("xml_sitemap_required_permission");
-
-if($required_permission === false){
-     $required_permission = 40;
-     }
-
 function xmlspecialchars($text){
      return str_replace('&#039;', '&apos;', htmlspecialchars($text, ENT_QUOTES));
      }
@@ -34,7 +28,7 @@ function getBaseURL(){
      }
 
 
-define(MODULE_ADMIN_REQUIRED_PERMISSION, $required_permission);
+define(MODULE_ADMIN_REQUIRED_PERMISSION, "xml_sitemap");
 
 
 function generate_sitemap(){

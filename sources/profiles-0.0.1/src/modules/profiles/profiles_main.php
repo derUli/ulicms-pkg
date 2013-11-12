@@ -1,6 +1,4 @@
 <?php
-
-
 function profiles_render(){
      ob_start();
     
