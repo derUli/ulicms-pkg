@@ -4,7 +4,7 @@ function intramail_render(){
     
      ob_start();
     
-     if(!isset($_SESSION["group"])){
+     if(!logged_in()){
          echo "<p class='ulicms_error'>Um das interne Mailsystem nutzen zu können, 
       müssen Sie sich erst registrieren.</p>";
          }
@@ -12,12 +12,7 @@ function intramail_render(){
          intramail_generate_page();
          }
     
-    
-    
-    
-    
      $html_output = ob_get_clean();
-    
      return $html_output;
     
      }

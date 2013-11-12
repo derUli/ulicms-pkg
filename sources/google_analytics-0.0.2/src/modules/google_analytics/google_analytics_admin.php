@@ -1,6 +1,6 @@
 <?php
 define("MODULE_ADMIN_HEADLINE", "Google Analytics");
-define(MODULE_ADMIN_REQUIRED_PERMISSION, "google_analytics");
+define("MODULE_ADMIN_REQUIRED_PERMISSION", "google_analytics");
 
 function google_analytics_admin(){
     

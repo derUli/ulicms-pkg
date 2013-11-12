@@ -1,6 +1,6 @@
 <?php
 define("MODULE_ADMIN_HEADLINE", "Häufige Suchbegriffe");
-define(MODULE_ADMIN_REQUIRED_PERMISSION, "search_subjects");
+define("MODULE_ADMIN_REQUIRED_PERMISSION", "search_subjects");
 
 function search_subjects_admin(){
       $search_subjects_limit = getconfig("search_subjects_limit");

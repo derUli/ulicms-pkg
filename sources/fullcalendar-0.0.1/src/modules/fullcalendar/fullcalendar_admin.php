@@ -1,12 +1,7 @@
 <?php
 define("MODULE_ADMIN_HEADLINE", "Kalender");
-
-
 $required_permission = "fullcalendar_edit";
-
-
-define(MODULE_ADMIN_REQUIRED_PERMISSION, $required_permission);
-
+define("MODULE_ADMIN_REQUIRED_PERMISSION", $required_permission);
 
 function fullcalendar_list(){
      $query = db_query("SELECT * FROM `" . tbname("events") . "` ORDER by `start` DESC");
