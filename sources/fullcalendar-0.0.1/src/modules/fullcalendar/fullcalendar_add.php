@@ -1,5 +1,6 @@
 <?php
-if(has_permissions(MODULE_ADMIN_REQUIRED_PERMISSION)){
+$acl = new ACL();
+if($acl->hasPermission(MODULE_ADMIN_REQUIRED_PERMISSION)){
     
      if(isset($_REQUEST["id"])){
          $event_id = intval($_REQUEST["id"]);
