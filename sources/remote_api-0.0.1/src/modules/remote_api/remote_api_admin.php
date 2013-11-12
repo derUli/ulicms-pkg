@@ -1,6 +1,6 @@
 <?php
 define("MODULE_ADMIN_HEADLINE", "Remote API");
-define(MODULE_ADMIN_REQUIRED_PERMISSION, "remote_api_settings");
+define("MODULE_ADMIN_REQUIRED_PERMISSION", "remote_api_settings");
 
 function remote_api_admin(){
     

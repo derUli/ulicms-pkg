@@ -27,9 +27,7 @@ function getBaseURL(){
      return $pageURL;
      }
 
-
-define(MODULE_ADMIN_REQUIRED_PERMISSION, "xml_sitemap");
-
+define("MODULE_ADMIN_REQUIRED_PERMISSION", "xml_sitemap");
 
 function generate_sitemap(){
     

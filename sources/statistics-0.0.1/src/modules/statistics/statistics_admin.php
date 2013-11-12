@@ -1,6 +1,6 @@
 <?php
 define("MODULE_ADMIN_HEADLINE", "Besucherstatistiken");
-define(MODULE_ADMIN_REQUIRED_PERMISSION, "statistics");
+define("MODULE_ADMIN_REQUIRED_PERMISSION", "statistics");
 
 
 

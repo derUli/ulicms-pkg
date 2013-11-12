@@ -1,9 +1,6 @@
 <?php
 define("MODULE_ADMIN_HEADLINE", "Einstellungen des Blogmoduls");
-
-
-define(MODULE_ADMIN_REQUIRED_PERMISSION, "blog_settings");
-
+define("MODULE_ADMIN_REQUIRED_PERMISSION", "blog_settings");
 
 function blog_admin(){
     

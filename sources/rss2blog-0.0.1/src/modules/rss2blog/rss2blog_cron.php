@@ -3,7 +3,6 @@ flush();
 
 $beginn = microtime(true);
 
-
 if(is_admin_dir())
      die();
 
@@ -18,7 +17,6 @@ $rss2blog_src_link_format = getconfig("rss2blog_src_link_format");
 
 if(!$rss2blog_src_link_format)
      $rss2blog_src_link_format = "Quelle: %title%";
-
 
 if(!function_exists("rsstotime")){
     

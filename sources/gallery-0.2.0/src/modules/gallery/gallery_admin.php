@@ -1,10 +1,7 @@
 <?php
 define("MODULE_ADMIN_HEADLINE", "Einstellungen der einfachen Bildergalerie");
-
 $required_permission = "gallery_settings";
-
-define(MODULE_ADMIN_REQUIRED_PERMISSION, $required_permission);
-
+define("MODULE_ADMIN_REQUIRED_PERMISSION", $required_permission);
 
 if(!empty($_POST["image_gallery_images_per_row"])){
      setconfig("image_gallery_images_per_row",

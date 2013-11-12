@@ -1,14 +1,6 @@
 <?php
 define("MODULE_ADMIN_HEADLINE", "Einstellungen von jQuery tablesorter");
-
-$required_permission = getconfig("jquery_tablesorter_required_permission");
-
-if($required_permission === false){
-     $required_permission = 50;
-     }
-
-define(MODULE_ADMIN_REQUIRED_PERMISSION, $required_permission);
-
+define("MODULE_ADMIN_REQUIRED_PERMISSION", "jquery_tablesorter_settings");
 
 function jquery_tablesorter_admin(){
     

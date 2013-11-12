@@ -1,6 +1,6 @@
 <?php
 define("MODULE_ADMIN_HEADLINE", "Einstellungen von blog2twitter");
-define(MODULE_ADMIN_REQUIRED_PERMISSION, "blog2twitter_settings");
+define("MODULE_ADMIN_REQUIRED_PERMISSION", "blog2twitter_settings");
 
 
 function blog2twitter_admin(){
