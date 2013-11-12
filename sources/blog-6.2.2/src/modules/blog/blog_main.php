@@ -99,17 +99,9 @@ function blog_render(){
 
 
 function blog_update(){
-
-    
-
+     $acl = new ACL();
      include_once "spellcheck.php";
-
-    
-
      $html_output = "";
-
-    
-
      $doSpellCheck = isset($_POST["spellcheck"]);
 
     
