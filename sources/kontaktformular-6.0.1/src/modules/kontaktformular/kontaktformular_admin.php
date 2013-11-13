@@ -1,6 +1,6 @@
 <?php
 define("MODULE_ADMIN_HEADLINE", "Einstellungen des Kontaktformulars");
-define(MODULE_ADMIN_REQUIRED_PERMISSION, "kontaktfomular_settings");
+define(MODULE_ADMIN_REQUIRED_PERMISSION, "kontaktformular_settings");
 
 
 function kontaktformular_admin(){
