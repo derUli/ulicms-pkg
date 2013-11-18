@@ -18,6 +18,8 @@ switch($c){
  
  $id = md5($_SERVER['REQUEST_URI']);
 
+ header('Content-Type: application/json; charset=utf8');
+
 
  $cached_page_path = buildCacheFilePath($_SERVER['REQUEST_URI']);
  
