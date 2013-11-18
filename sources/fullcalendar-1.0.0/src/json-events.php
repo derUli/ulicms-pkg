@@ -5,11 +5,11 @@
 
  
  if(!isset($_REQUEST["start"])){
-   $_REQUEST["start"] = mktime(0, 0, 0, date("m",$time), +1, date("y",$time)); 
+   $_REQUEST["start"] = mktime(0, 0, 0, date("m"), 1, date("y")); 
  }
 
  if(!isset($_REQUEST["end"])){
-  $_REQUEST["end"] = mktime(0, 0, 0, date("m",$time)+1, 0, date("y",$time));
+  $_REQUEST["end"] = mktime(0, 0, 0, date("m")+1, 0, date("y"));
 }
  
  $query = db_query("SELECT * FROM `" . tbname("events") . "` WHERE `start` >= ".intval($_REQUEST["start"]). " AND `end` <=". intval($_REQUEST["end"]). " ORDER BY id");
