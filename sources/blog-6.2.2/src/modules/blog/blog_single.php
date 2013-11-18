@@ -12,13 +12,14 @@ if(file_exists("antispam-features.php")){
 
 
 function blog_single($seo_shortname){
+     $acl = new ACL();
     
      $autor_and_date = getconfig("blog_autor_and_date_text");
     
      $query = db_query("SELECT * FROM `" . tbname("blog") . "` WHERE seo_shortname='$seo_shortname'");
     
      // count views is user not logged in
-    if(!is_logged_in())
+    if(!logged_in())
          db_query("UPDATE `" . tbname("blog") . "` SET views = views + 1
        WHERE seo_shortname='$seo_shortname'");
     
@@ -30,7 +31,7 @@ function blog_single($seo_shortname){
         
          $html = "";
         
-         if(logged_in() or $post -> entry_enabled){
+         if($acl->hasPermission("blog") or $post -> entry_enabled){
             
              $html .= "<h1 class='blog_headline'>" . $post -> title . "</h1>";
              $html .= "<hr class='blog_hr'/>";
@@ -61,12 +62,11 @@ function blog_single($seo_shortname){
             
              $html .= "<br/>";
             
-             if(($_SESSION["group"] >= 20 and $_SESSION["login_id"] == $post -> author)
-                     or ($_SESSION["group"] >= 40)){
+             if($acl->hasPermission("blog")){
                  $html .= "<a href='" . get_requested_pagename() . ".html?blog_admin=edit_post&id=" . $post -> id . "'>[Bearbeiten]</a> ";
                 
                  $html .= "<a href='" . get_requested_pagename() . ".html?blog_admin=delete_post&id=" . $post -> id . "' onclick='return confirm(\"Diesen Post wirklich löschen?\")'>[Löschen]</a>";
-                 }else if($_SESSION["group"] >= 20){
+                 }else if(logged_in()){
                  $html .= "
 		   <div class='disabled_link'>[Bearbeiten]</div>
 		   <div class='disabled_link'>[Löschen]</div>";
@@ -258,7 +258,7 @@ function stringcontainsbadwords($str){
 
 function blog_display_comments($post_id){
      $html = "";
-    
+     $acl = new ACL();
     
      $spamfilter_enabled = getconfig("spamfilter_enabled") == "yes";
     
@@ -337,7 +337,7 @@ function blog_display_comments($post_id){
             
              $html .= "</a>";
             
-             if($_SESSION["group"] >= 40){
+             if($acl->hasPermission("blog")){
                  $html .= " <a href='" . get_requested_pagename() . ".html?blog_admin=delete_comment&id=" . $comment -> id . "' onclick='return confirm(\"Diesen Kommentar wirklich löschen?\")'>[Löschen]</a>";
                  }
             
@@ -347,7 +347,7 @@ function blog_display_comments($post_id){
              $html .= $comment -> name;
              $html .= "<br/>";
             
-             if($_SESSION["group"] >= 20){
+             if($acl->hasPermission("blog")){
                  $html .= "<strong>Email: </strong>" . $comment -> email . "<br/>";
                  }
             
