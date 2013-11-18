@@ -30,7 +30,7 @@ function blog_single($seo_shortname){
         
          $html = "";
         
-         if($_SESSION["group"] >= 20 or $post -> entry_enabled){
+         if(logged_in() or $post -> entry_enabled){
             
              $html .= "<h1 class='blog_headline'>" . $post -> title . "</h1>";
              $html .= "<hr class='blog_hr'/>";
