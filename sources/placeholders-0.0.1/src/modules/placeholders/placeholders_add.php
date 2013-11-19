@@ -1,4 +1,5 @@
 <?php
+include_once ULICMS_ROOT.DIRECTORY_SEPERATOR."lib".DIRECTORY_SEPERATOR."string_functions.php"
 $acl = new ACL();
 if($acl->hasPermission(MODULE_ADMIN_REQUIRED_PERMISSION)){
     
@@ -6,7 +7,7 @@ if($acl->hasPermission(MODULE_ADMIN_REQUIRED_PERMISSION)){
          $placeholder_id = intval($_REQUEST["id"]);
          $query = db_query("SELECT * FROM `" . tbname("placeholders") . "` WHERE id = $placeholder_id");
          $result = db_fetch_object($query);
-         $name = $result->name;
+         $name = $result -> name;
          $value = $result -> value;
          }
     else{
@@ -14,8 +15,8 @@ if($acl->hasPermission(MODULE_ADMIN_REQUIRED_PERMISSION)){
          $value = "";
          }
     
-     $name = htmlspecialchars($name);
-     $value = htmlspecialchars($value);
+     $name = real_htmlspecialchars($name);
+     $value = real_htmlspecialchars($value);
     
      ?>
 <style type="text/css">
