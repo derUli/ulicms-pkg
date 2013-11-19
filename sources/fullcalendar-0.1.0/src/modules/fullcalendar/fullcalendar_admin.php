@@ -17,7 +17,7 @@ function fullcalendar_list(){
          echo "</td>";
          echo "<td>";
          echo "Titel";
-         echo "</td>";
+         echo "</td>";t
          echo "<td></td>";
          echo "<td></td>";
          echo "</tr>";
@@ -47,7 +47,7 @@ function fullcalendar_admin(){
     
      if($action == "delete"){
          $id = intval($_GET["id"]);
-         db_query("DELETE FROM `" . tbname(events) . "` WHERE id = $id");
+         db_query("DELETE FROM `" . tbname("events") . "` WHERE id = $id");
          unset($action);
          }
      if(isset($_POST["save"])){
