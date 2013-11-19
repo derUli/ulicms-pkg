@@ -1,5 +1,5 @@
 <?php
-include_once ULICMS_ROOT.DIRECTORY_SEPERATOR."lib".DIRECTORY_SEPERATOR."string_functions.php"
+include_once ULICMS_ROOT.DIRECTORY_SEPERATOR."lib".DIRECTORY_SEPERATOR."string_functions.php";
 $acl = new ACL();
 if($acl->hasPermission(MODULE_ADMIN_REQUIRED_PERMISSION)){
     
