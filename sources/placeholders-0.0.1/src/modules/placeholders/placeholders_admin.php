@@ -64,7 +64,7 @@ function placeholders_admin(){
              db_query("INSERT INTO `" . tbname("placeholders") . "` (name, value) VALUES ('$name', '$value')");
             
              }else{
-             db_query("UPDATE `" . tbname("placeholders") . "` SET name='$name', url='$value' WHERE id=$id");
+             db_query("UPDATE `" . tbname("placeholders") . "` SET name='$name', value='$value' WHERE id=$id");
              }
         
         
