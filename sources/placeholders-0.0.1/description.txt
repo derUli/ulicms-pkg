@@ -1,1 +1,1 @@
-Bietet die Möglichkeit Platzhalter zu definieren, die dann per Content-Filter mit festlegbaren Zeichenketten ersetzt werden.
+Bietet die Möglichkeit Platzhalter zu definieren, die dann per Content-Filter durch festlegbare Zeichenketten ersetzt werden.
