@@ -25,22 +25,20 @@ if($acl->hasPermission(MODULE_ADMIN_REQUIRED_PERMISSION)){
 <style type="text/css">
 form input[type="text"],
 form input[type="url"]{
-width:200px;
+min-width:200px;
 }
 
-table tr td:first-child{
-width:80px;
-}
+
 </style>
 <form action="index.php?action=module_settings&module=placeholders" method="post">
 <table>
 <tr>
-<td>Ersetze:</td>
+<td>Ersetze</td>
 <td><input type="text" name="name" value="<?php echo $name;
      ?>"></td>
 </tr>
 <tr>
-<td>Durch:</td>
+<td>Durch</td>
 <td><input type="text" name="value" value="<?php echo $value;
      ?>"></td>
 </tr>

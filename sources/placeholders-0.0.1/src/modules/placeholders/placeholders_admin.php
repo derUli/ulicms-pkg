@@ -4,7 +4,7 @@ $required_permission = "placeholders";
 define("MODULE_ADMIN_REQUIRED_PERMISSION", $required_permission);
 
 function placeholders_list(){
-     $query = db_query("SELECT * FROM `" . tbname("placeholders") . "` ORDER by `name` ASC");
+     $query = db_query("SELECT * FROM `" . tbname("placeholders") . "` ORDER by `id` ASC");
     
      if(db_num_rows($query) > 0){
          echo "<table style=\"outline:4px solid #d4d4d4; background-color:#f0f0f0;width:96%; margin:auto;\">";
