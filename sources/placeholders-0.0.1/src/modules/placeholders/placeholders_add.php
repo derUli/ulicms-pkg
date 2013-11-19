@@ -24,7 +24,7 @@ if($acl->hasPermission(MODULE_ADMIN_REQUIRED_PERMISSION)){
      ?>
 <style type="text/css">
 form input[type="text"],
-form input[type="url"]{
+textarea{
 min-width:200px;
 }
 
@@ -39,8 +39,7 @@ min-width:200px;
 </tr>
 <tr>
 <td>Durch</td>
-<td><input type="text" name="value" value="<?php echo $value;
-     ?>"></td>
+<td><textarea name="value" rows=5><?php echo $value;?></textarea></td>
 </tr>
 <tr>
 <td>Zwischen Groß- und Kleinschreibung unterscheiden</td>
