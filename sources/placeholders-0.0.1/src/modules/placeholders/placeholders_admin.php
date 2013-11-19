@@ -25,9 +25,9 @@ function placeholders_list(){
         
          while($row = db_fetch_object($query)){
              echo "<tr>";
-             echo "<td>" . row -> id . "</strong></td>";
-             echo "<td>" .  row -> name . "</strong></td>";
-             echo "<td>" .  row -> value . "</strong></td>";
+             echo "<td>" . $row -> id . "</strong></td>";
+             echo "<td>" .  $row -> name . "</strong></td>";
+             echo "<td>" .  $row -> value . "</strong></td>";
              echo "<td><a href=\"?action=module_settings&module=placeholders&placeholders_action=edit&id=" . $row -> id . "\">Bearbeiten</a></td>";
              echo "<td><a href=\"?action=module_settings&module=placeholders&placeholders_action=delete&id=" . $row -> id . "\" onclick=\"return confirm('Diesen Termin wirklich löschen?');\">Löschen</a></td>";
              echo "</tr>";
