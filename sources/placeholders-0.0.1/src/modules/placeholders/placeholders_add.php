@@ -9,14 +9,17 @@ if($acl->hasPermission(MODULE_ADMIN_REQUIRED_PERMISSION)){
          $result = db_fetch_object($query);
          $name = $result -> name;
          $value = $result -> value;
+         $match_case = $result-> match_case;
          }
     else{
          $name = "";
          $value = "";
+         $match_case = 0;
          }
     
      $name = real_htmlspecialchars($name);
      $value = real_htmlspecialchars($value);
+     $match_case = intval($match_case);
     
      ?>
 <style type="text/css">
@@ -53,6 +56,13 @@ width:80px;
          }
      ?>
 <input type="submit" name="save" value="Eintragen"/></td>
+</tr>
+<tr>
+<td>Zwischen Groß- und Kleinschreibung unterscheiden</td>
+<td><input type="checkbox" name="match_case" value="1"<?php
+ if($match_case) 
+echo " checked=\"checked\"";
+?>>
 </tr>
 </table>
 

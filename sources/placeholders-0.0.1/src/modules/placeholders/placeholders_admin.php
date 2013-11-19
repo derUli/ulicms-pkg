@@ -53,14 +53,15 @@ function placeholders_admin(){
      if(isset($_POST["save"])){
         
          $name = db_escape(trim($_POST["name"]));
-         $value = db_escape(trim($_POST["value"]));        
+         $value = db_escape(trim($_POST["value"]));    
+         $match_case = intval(isset($_POST["match_case"]));
          $id = intval($_POST["id"]);
         
          if($id == 0){
-             db_query("INSERT INTO `" . tbname("placeholders") . "` (name, value) VALUES ('$name', '$value')");
+             db_query("INSERT INTO `" . tbname("placeholders") . "` (name, value, `match_case`) VALUES ('$name', '$value', '$match_case')");
             
              }else{
-             db_query("UPDATE `" . tbname("placeholders") . "` SET name='$name', value='$value' WHERE id=$id");
+             db_query("UPDATE `" . tbname("placeholders") . "` SET name='$name', value='$value', `match_case`='$match_case' WHERE id=$id");
              }
         
         
