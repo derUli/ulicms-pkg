@@ -43,6 +43,13 @@ min-width:200px;
      ?>"></td>
 </tr>
 <tr>
+<td>Zwischen Groß- und Kleinschreibung unterscheiden</td>
+<td><input type="checkbox" name="match_case" value="1"<?php
+ if($match_case) 
+echo " checked=\"checked\"";
+?>></td>
+</tr>
+<tr>
 <td>
 </td>
 <td align="center">
@@ -54,13 +61,6 @@ min-width:200px;
          }
      ?>
 <input type="submit" name="save" value="Eintragen"/></td>
-</tr>
-<tr>
-<td>Zwischen Groß- und Kleinschreibung unterscheiden</td>
-<td><input type="checkbox" name="match_case" value="1"<?php
- if($match_case) 
-echo " checked=\"checked\"";
-?>>
 </tr>
 </table>
 
