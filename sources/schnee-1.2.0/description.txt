@@ -1,0 +1,2 @@
+Lässt es au der Internetseite schneien.
+Lässt sich durch Konfigurationsvariablen in der Datei "schnee.js" leicht konfigurieren.
