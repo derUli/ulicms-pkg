@@ -53,11 +53,7 @@ function placeholders_admin(){
      if(isset($_POST["save"])){
         
          $name = db_escape(trim($_POST["name"]));
-         $value = db_escape(trim($_POST["value"]));
-        
-        
-        
-        
+         $value = db_escape(trim($_POST["value"]));        
          $id = intval($_POST["id"]);
         
          if($id == 0){
@@ -74,7 +70,7 @@ function placeholders_admin(){
      ?>
 <?php if(!isset($action)){
          ?>
-<a href="?action=module_settings&module=placeholders&placeholders_action=add">Termin eintragen</a>
+<a href="?action=module_settings&module=placeholders&placeholders_action=add">Platzhalter erstellen</a>
 <br/><br/>
 <?php placeholders_list();
          ?>
