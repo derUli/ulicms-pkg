@@ -14,6 +14,8 @@ function isIPBlocked($ip){
         if(endsWith($blocked_ips[$i], ".")){
            if(startsWith($ip, $blocked_ips[$i]))
               return true;
+        } else if($ip == $blocked_ips[$i]){
+             return true;
         }
      }
      
