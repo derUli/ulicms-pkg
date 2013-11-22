@@ -1,7 +1,7 @@
 <?php
 /**
  * Theme based generator for SVG gradient.
- *
+ * 
  * @package PhpMyAdmin-theme
  */
 header('Content-Type: image/svg+xml');
@@ -9,14 +9,14 @@ header('Expires: ' . gmdate('D, d M Y H:i:s', time() + 3600) . ' GMT');
 
 function get_color($get_name, $default)
 {
-    // get color from GET args, only alphanumeric chcracters
+     // get color from GET args, only alphanumeric chcracters
     $opts = array('options' => array('regexp' => '/^[a-z0-9]+$/i'));
-    $color = filter_input(INPUT_GET, $get_name, FILTER_VALIDATE_REGEXP, $opts);
-    if (preg_match('/^[a-f0-9]{6}$/', $color)) {
-        return '#' . $color;
+     $color = filter_input(INPUT_GET, $get_name, FILTER_VALIDATE_REGEXP, $opts);
+     if (preg_match('/^[a-f0-9]{6}$/', $color)){
+         return '#' . $color;
+         }
+     return $color ? $color : $default;
     }
-    return $color ? $color : $default;
-}
 ?>
 <?php echo '<?xml version="1.0" ?>' ?>
 <svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" version="1.0" width="100%" height="100%">

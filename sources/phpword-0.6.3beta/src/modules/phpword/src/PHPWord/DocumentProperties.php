@@ -326,5 +326,5 @@ class PHPWord_DocumentProperties{
          $this -> _company = $pValue;
          return $this;
          }
-    }
+     }
 ?>

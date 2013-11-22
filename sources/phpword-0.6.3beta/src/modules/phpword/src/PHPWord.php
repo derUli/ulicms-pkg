@@ -32,7 +32,7 @@ if(!defined('PHPWORD_BASE_PATH')){
      define('PHPWORD_BASE_PATH', dirname(__FILE__) . '/');
      require PHPWORD_BASE_PATH . 'PHPWord/Autoloader.php';
      PHPWord_Autoloader :: Register();
-    }
+     }
 
 
 /**
@@ -235,5 +235,5 @@ class PHPWord{
              trigger_error('Template file ' . $strFilename . ' not found.', E_ERROR);
              }
          }
-    }
+     }
 ?>

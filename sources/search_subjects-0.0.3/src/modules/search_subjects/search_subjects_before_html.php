@@ -1,5 +1,5 @@
 <?php
-include_once getModulePath("search_subjects")."search_engine_keywords.php";
+include_once getModulePath("search_subjects") . "search_engine_keywords.php";
 
 
 if(!function_exists("crawlerDetect")){
@@ -20,14 +20,14 @@ if(!function_exists("crawlerDetect")){
 $search_query = get_search_query();
 
 if((!is_admin_dir() and !crawlerDetect() and isset($_GET["q"])) or
-    (!is_admin_dir() and !crawlerDetect() and !empty($search_query))){
+         (!is_admin_dir() and !crawlerDetect() and !empty($search_query))){
      $subject = trim($_GET["q"]);
-
+    
      if(!empty($search_query)){
-        $subject = $search_query;
-     }
-
-     
+         $subject = $search_query;
+         }
+    
+    
      $subject = db_escape($subject);
     
      $query = db_query("SELECT * FROM " . tbname("search_subjects") . " WHERE `subject` = '$subject'");

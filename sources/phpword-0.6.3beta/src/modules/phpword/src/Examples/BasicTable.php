@@ -18,7 +18,7 @@ for($r = 1; $r <= 10; $r++){ // Loop through rows
          // Add Cell
         $table -> addCell(1750) -> addText("Row $r, Cell $c");
          }
-    }
+     }
 
 // Save File
 $objWriter = PHPWord_IOFactory :: createWriter($PHPWord, 'Word2007');

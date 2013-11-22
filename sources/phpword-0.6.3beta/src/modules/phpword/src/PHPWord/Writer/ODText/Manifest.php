@@ -128,4 +128,4 @@ class PHPWord_Writer_ODText_Manifest extends PHPWord_Writer_ODText_WriterPart
              throw new Exception("File $pFile does not exist");
              }
          }
-    }
+     }

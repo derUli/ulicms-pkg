@@ -3,11 +3,11 @@ define("MODULE_ADMIN_HEADLINE", "Häufige Suchbegriffe");
 define("MODULE_ADMIN_REQUIRED_PERMISSION", "search_subjects");
 
 function search_subjects_admin(){
-      $search_subjects_limit = getconfig("search_subjects_limit");
-
-      if($search_subjects_limit === false)
+     $search_subjects_limit = getconfig("search_subjects_limit");
+    
+     if($search_subjects_limit === false)
          $search_subjects_limit = 10;
-
+    
      $data = db_query("SELECT * FROM " . tbname("search_subjects") . " ORDER by `amount` DESC LIMIT $search_subjects_limit");
     
      if(db_num_rows($data) > 0){

@@ -1,5 +1,5 @@
-<?php 
+<?php
 function phpmyadmin_render(){
-   return "Only for Admins!";
-}
+     return "Only for Admins!";
+    }
 ?>

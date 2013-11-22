@@ -348,4 +348,4 @@ class PHPWord_Writer_ODText_Content extends PHPWord_Writer_ODText_WriterPart
          }
      private function _writeEndSection(PHPWord_Shared_XMLWriter $objWriter = null, PHPWord_Section $section){
          }
-    }
+     }

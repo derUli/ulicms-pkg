@@ -1,17 +1,19 @@
 <?php
-/* vim: set expandtab sw=4 ts=4 sts=4: */
+/**
+ * vim: set expandtab sw=4 ts=4 sts=4:
+ */
 /**
  * Styles for CodeMirror editor
  * for the pmahomme theme
- *
- * @package    PhpMyAdmin-theme
+ * 
+ * @package PhpMyAdmin-theme
  * @subpackage PMAHomme
  */
 
 // unplanned execution path
-if (! defined('PMA_MINIMUM_COMMON') && ! defined('TESTSUITE')) {
-    exit();
-}
+if (! defined('PMA_MINIMUM_COMMON') && ! defined('TESTSUITE')){
+     exit();
+    }
 ?>
 .CodeMirror {
   line-height: 1em;
@@ -26,7 +28,8 @@ if (! defined('PMA_MINIMUM_COMMON') && ! defined('TESTSUITE')) {
 
 .CodeMirror-scroll {
   overflow: auto;
-  height: <?php echo ceil($GLOBALS['cfg']['TextareaRows'] * 1.2); ?>em;
+  height: <?php echo ceil($GLOBALS['cfg']['TextareaRows'] * 1.2);
+?>em;
   /* This is needed to prevent an IE[67] bug where the scrolled content
      is visible outside of the scrolling box. */
   position: relative;
@@ -118,8 +121,10 @@ if (! defined('PMA_MINIMUM_COMMON') && ! defined('TESTSUITE')) {
   z-index: 10;
   position: absolute;
   visibility: hidden;
-  border-<?php echo $left; ?>: 1px solid black !important;
-  border-<?php echo $right; ?>: none;
+  border-<?php echo $left;
+?>: 1px solid black !important;
+  border-<?php echo $right;
+?>: none;
   width: 0;
 }
 .cm-keymap-fat-cursor pre.CodeMirror-cursor {
@@ -159,4 +164,5 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #f22;}
 
 }
 
-<?php echo $_SESSION['PMA_Theme']->getCssCodeMirror(); ?>
+<?php echo $_SESSION['PMA_Theme'] -> getCssCodeMirror();
+?>

@@ -1,6 +1,6 @@
 <?php
 $acl = new ACL();
-if(in_array("blog", getAllModules()) and $acl->hasPermission("blog")){
+if(in_array("blog", getAllModules()) and $acl -> hasPermission("blog")){
      ?>
 
 <?php

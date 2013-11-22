@@ -322,5 +322,5 @@ class PHPWord_Media{
      public static function getFooterMediaElements(){
          return self :: $_footerMedia;
          }
-    }
+     }
 ?>

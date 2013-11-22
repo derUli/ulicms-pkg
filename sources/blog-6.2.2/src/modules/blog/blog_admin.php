@@ -14,14 +14,14 @@ function blog_admin(){
          if(intval($_POST["blog_feed_max_items"]) > 0){
              setconfig("blog_feed_max_items", intval($_POST["blog_feed_max_items"]));
              }
-             
-             if(intval($_POST["blog_posts_per_page"]) > 0){
-                setconfig("blog_posts_per_page", intval($_POST["blog_posts_per_page"]));
+        
+         if(intval($_POST["blog_posts_per_page"]) > 0){
+             setconfig("blog_posts_per_page", intval($_POST["blog_posts_per_page"]));
              }
-            
-            if(isset($_POST["blog_autor_and_date_text"])){
-                setconfig("blog_autor_and_date_text", 
-                db_escape($_POST["blog_autor_and_date_text"]));
+        
+         if(isset($_POST["blog_autor_and_date_text"])){
+             setconfig("blog_autor_and_date_text",
+                 db_escape($_POST["blog_autor_and_date_text"]));
              }
         
          }
@@ -34,14 +34,14 @@ function blog_admin(){
          setconfig("blog_feed_max_items", "10");
          $blog_feed_max_items = 10;
          }
-         
-    $blog_posts_per_page = getconfig("blog_posts_per_page");
     
-    if(!$blog_posts_per_page){
-       $blog_posts_per_page = 5;
-    }
+     $blog_posts_per_page = getconfig("blog_posts_per_page");
     
-    $blog_autor_and_date_text = getconfig("blog_autor_and_date_text");
+     if(!$blog_posts_per_page){
+         $blog_posts_per_page = 5;
+         }
+    
+     $blog_autor_and_date_text = getconfig("blog_autor_and_date_text");
     
     
      ?>
@@ -54,10 +54,12 @@ function blog_admin(){
      ?>/> Über neue Kommentare per E-Mail benachrichtigen</p>
      <p>Artikel pro Seite <input type="number" name="blog_posts_per_page" size=3 maxlength=3 min="5" max="100" value="<?php echo $blog_posts_per_page;
      ?>"/></p>
-<p>maximale Anzahl der Einträge im Newsfeed <input type="number" name="blog_feed_max_items" size=3 maxlength=3 min="5" max="100" value="<?php echo $blog_feed_max_items; ?>"/></p>
+<p>maximale Anzahl der Einträge im Newsfeed <input type="number" name="blog_feed_max_items" size=3 maxlength=3 min="5" max="100" value="<?php echo $blog_feed_max_items;
+    ?>"/></p>
 
 <p>Autor-Text<br/>
-<textarea name="blog_autor_and_date_text" rows=3 cols=50><?php echo htmlspecialchars($blog_autor_and_date_text, ENT_QUOTES, "UTF-8");?></textarea>
+<textarea name="blog_autor_and_date_text" rows=3 cols=50><?php echo htmlspecialchars($blog_autor_and_date_text, ENT_QUOTES, "UTF-8");
+    ?></textarea>
 </p>
      
 

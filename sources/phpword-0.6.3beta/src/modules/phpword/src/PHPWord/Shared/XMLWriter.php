@@ -28,7 +28,7 @@
 
 if(!defined('DATE_W3C')){
      define('DATE_W3C', 'Y-m-d\TH:i:sP');
-    }
+     }
 
 
 class PHPWord_Shared_XMLWriter{
@@ -123,7 +123,7 @@ class PHPWord_Shared_XMLWriter{
          try{
              @call_user_func_array(array($this -> _xmlWriter, $function), $args);
              }
-        catch (Exception $ex){
+         catch (Exception $ex){
              // Do nothing!
         }
          }
@@ -142,4 +142,4 @@ class PHPWord_Shared_XMLWriter{
         
          return $this -> text($text);
          }
-    }
+     }

@@ -1,6 +1,6 @@
 <?php
 $acl = new ACL();
-if(in_array("blog", getAllModules()) and $acl->hasPermission("blog_comments_dashboard")){
+if(in_array("blog", getAllModules()) and $acl -> hasPermission("blog_comments_dashboard")){
      ?>
 
 <h2 class="accordion-header">Neueste Kommentare</h2>
@@ -31,7 +31,7 @@ if(in_array("blog", getAllModules()) and $acl->hasPermission("blog_comments_dash
             
              $html .= "</a>";
             
-             if($acl->hasPermission("blog")){
+             if($acl -> hasPermission("blog")){
                  $html .= " <a href='index.php?delete_comment=" . $comment -> id . "' onclick='return confirm(\"Diesen Kommentar wirklich löschen?\")'>[Löschen]</a>";
                  }
             
@@ -41,7 +41,7 @@ if(in_array("blog", getAllModules()) and $acl->hasPermission("blog_comments_dash
              $html .= $comment -> name;
              $html .= "<br/>";
             
-             if($acl->hasPermission("blog")){
+             if($acl -> hasPermission("blog")){
                  $html .= "<strong>Email: </strong>" . $comment -> email . "<br/>";
                  }
             

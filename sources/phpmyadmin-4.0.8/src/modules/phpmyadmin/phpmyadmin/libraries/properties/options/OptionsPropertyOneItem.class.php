@@ -1,172 +1,173 @@
 <?php
-/* vim: set expandtab sw=4 ts=4 sts=4: */
+/**
+ * vim: set expandtab sw=4 ts=4 sts=4:
+ */
 /**
  * Superclass for the single Property Item classes.
- *
+ * 
  * @package PhpMyAdmin
  */
-if (! defined('PHPMYADMIN')) {
-    exit;
-}
+if (! defined('PHPMYADMIN')){
+     exit;
+    }
 
-/* This class extends the OptionsPropertyItem class */
+/**
+ * This class extends the OptionsPropertyItem class
+ */
 require_once 'OptionsPropertyItem.class.php';
 
 /**
  * Parents only single property items (not groups).
  * Defines possible options and getters and setters for them.
- *
+ * 
  * @package PhpMyAdmin
  */
 abstract class OptionsPropertyOneItem extends OptionsPropertyItem
 {
     /**
      * Whether to force or not
-     *
-     * @var bool
+     * 
+     * @var bool 
      */
-    private $_force;
-
+     private $_force;
+    
     /**
      * Values
-     *
-     * @var array
+     * 
+     * @var array 
      */
-    private $_values;
-
+     private $_values;
+    
     /**
      * Doc
-     *
-     * @var string
+     * 
+     * @var string 
      */
-    private $_doc;
-
+     private $_doc;
+    
     /**
      * Length
-     *
-     * @var int
+     * 
+     * @var int 
      */
-    private $_len;
-
+     private $_len;
+    
     /**
      * Size
-     *
-     * @var int
+     * 
+     * @var int 
      */
-    private $_size;
-
-
-    /* ~~~~~~~~~~~~~~~~~~~~ Getters and Setters ~~~~~~~~~~~~~~~~~~~~ */
-
-
+     private $_size;
+    
+    
+    /**
+     * ~~~~~~~~~~~~~~~~~~~~ Getters and Setters ~~~~~~~~~~~~~~~~~~~~
+     */
+    
+    
     /**
      * Gets the force parameter
-     *
-     * @return string
+     * 
+     * @return string 
      */
-    public function getForce()
+     public function getForce()
     {
-        return $this->_force;
-    }
-
+         return $this -> _force;
+         }
+    
     /**
      * Sets the force parameter
-     *
+     * 
      * @param bool $force force parameter
-     *
-     * @return void
+     * @return void 
      */
-    public function setForce($force)
+     public function setForce($force)
     {
-        $this->_force = $force;
-    }
-
+         $this -> _force = $force;
+         }
+    
     /**
      * Gets the values
-     *
-     * @return string
+     * 
+     * @return string 
      */
-    public function getValues()
+     public function getValues()
     {
-        return $this->_values;
-    }
-
+         return $this -> _values;
+         }
+    
     /**
      * Sets the values
-     *
+     * 
      * @param array $values values
-     *
-     * @return void
+     * @return void 
      */
-    public function setValues($values)
+     public function setValues($values)
     {
-        $this->_values = $values;
-    }
-
+         $this -> _values = $values;
+         }
+    
     /**
      * Gets the type of the newline character
-     *
-     * @return string
+     * 
+     * @return string 
      */
-    public function getDoc()
+     public function getDoc()
     {
-        return $this->_doc;
-    }
-
+         return $this -> _doc;
+         }
+    
     /**
      * Sets the doc
-     *
+     * 
      * @param string $doc doc
-     *
-     * @return void
+     * @return void 
      */
-    public function setDoc($doc)
+     public function setDoc($doc)
     {
-        $this->_doc = $doc;
-    }
-
+         $this -> _doc = $doc;
+         }
+    
     /**
      * Gets the length
-     *
-     * @return int
+     * 
+     * @return int 
      */
-    public function getLen()
+     public function getLen()
     {
-        return $this->_len;
-    }
-
+         return $this -> _len;
+         }
+    
     /**
      * Sets the length
-     *
+     * 
      * @param int $len length
-     *
-     * @return void
+     * @return void 
      */
-    public function setLen($len)
+     public function setLen($len)
     {
-        $this->_len = $len;
-    }
-
+         $this -> _len = $len;
+         }
+    
     /**
      * Gets the size
-     *
-     * @return int
+     * 
+     * @return int 
      */
-    public function getSize()
+     public function getSize()
     {
-        return $this->_size;
-    }
-
+         return $this -> _size;
+         }
+    
     /**
      * Sets the size
-     *
+     * 
      * @param int $size size
-     *
-     * @return void
+     * @return void 
      */
-    public function setSize($size)
+     public function setSize($size)
     {
-        $this->_size = $size;
+         $this -> _size = $size;
+         }
     }
-}
 ?>

@@ -260,4 +260,4 @@ class PHPWord_Shared_String
          return $count;
          }
     
-    }
+     }

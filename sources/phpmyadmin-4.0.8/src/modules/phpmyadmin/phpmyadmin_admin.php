@@ -5,10 +5,10 @@ define(MODULE_ADMIN_REQUIRED_PERMISSION, "phpmyadmin");
 
 function phpmyadmin_admin(){
     
-?>
-<p><a href="<?php echo getModulePath("phpmyadmin")."phpmyadmin/"?>" target="_blank">phpMyAdmin aufrufen</a></p>
-<?php 
-
-}
+    ?>
+<p><a href="<?php echo getModulePath("phpmyadmin") . "phpmyadmin/"?>" target="_blank">phpMyAdmin aufrufen</a></p>
+<?php
+    
+    }
 
 ?>

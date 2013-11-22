@@ -48,4 +48,4 @@ class PHPWord_Writer_ODText_Mimetype extends PHPWord_Writer_ODText_WriterPart
          return 'application/vnd.oasis.opendocument.text';
          }
     
-    }
+     }

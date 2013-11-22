@@ -1,5 +1,5 @@
-<?php 
+<?php
 function block_ips_render(){
-    return "";
-}
+     return "";
+    }
 

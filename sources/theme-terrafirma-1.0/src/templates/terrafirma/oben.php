@@ -27,14 +27,16 @@ background-color:<?php echo getconfig("header-background-color");
 
 		<div id="header">
 			<h1><?php homepage_title()?></h1>
-			<h2>by <?php homepage_owner();?></h2>
+			<h2>by <?php homepage_owner();
+?></h2>
 		</div>
 	
 		<div id="splash"></div>
 	
 		<div id="menu">
 			<ul>
-				<?php menu("top");?>
+				<?php menu("top");
+?>
 			</ul>
 
 		<div id="date"><?php echo date("d.m.Y - H:i")?> Uhr</div>
@@ -47,7 +49,8 @@ background-color:<?php echo getconfig("header-background-color");
 		
 			<div class="post">
 				<div class="header">
-				<h3><?php title();?></h3>
+				<h3><?php title();
+?></h3>
 					<div class="date"><?php echo date("d.m.Y - H:i")?> Uhr</div>
 				</div>
 				<div class="content">

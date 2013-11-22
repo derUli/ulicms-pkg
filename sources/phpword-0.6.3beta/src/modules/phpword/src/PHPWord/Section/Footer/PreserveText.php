@@ -124,5 +124,5 @@ class PHPWord_Section_Footer_PreserveText{
      public function getText(){
          return $this -> _text;
          }
-    }
+     }
 ?>

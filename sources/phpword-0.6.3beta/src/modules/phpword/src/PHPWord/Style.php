@@ -161,5 +161,5 @@ class PHPWord_Style{
              return null;
              }
          }
-    }
+     }
 ?>

@@ -1,7 +1,7 @@
 <?php
 
 if(!defined(ULICMS_ROOT))
-   die("Fuck you!");
+     die("Fuck you!");
 
 if(isset($_POST["submit"])){
      $unencoded = $_POST["template_content"];

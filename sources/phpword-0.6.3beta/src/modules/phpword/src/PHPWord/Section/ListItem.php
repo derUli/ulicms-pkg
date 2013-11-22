@@ -100,5 +100,5 @@ class PHPWord_Section_ListItem{
      public function getDepth(){
          return $this -> _depth;
          }
-    }
+     }
 ?>

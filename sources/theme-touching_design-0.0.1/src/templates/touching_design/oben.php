@@ -15,14 +15,16 @@ background-color:<?php echo getconfig("header-background-color");
  <!-- Generated at www.csscreator.com -->
 <div id="container">
 	<div id="banner">
-		<div id='bannertitle'><?php homepage_title();?></div>
+		<div id='bannertitle'><?php homepage_title();
+?></div>
 	</div>
 
 	<div id="outer">
  		<div id="inner">
  			<div id="left">
   <div class="verticalmenu">
-  <?php menu("left");?>
+  <?php menu("left");
+?>
  </div> 
 
    		</div>

@@ -79,5 +79,5 @@ class PHPWord_Style_Table{
      public function getCellMargin(){
          return array($this -> _cellMarginTop, $this -> _cellMarginLeft, $this -> _cellMarginRight, $this -> _cellMarginBottom);
          }
-    }
+     }
 ?>

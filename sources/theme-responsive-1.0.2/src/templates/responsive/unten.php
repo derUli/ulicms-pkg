@@ -1,4 +1,5 @@
-<p class="advertisement"><?php random_banner();?></p>
+<p class="advertisement"><?php random_banner();
+?></p>
 </div>
 <div id="footer">
 <div id="copyright">(C) <?php year()?> by <?php homepage_owner()?> | <a href="http://www.ulicms.de" target="_blank">Powered by UliCMS</a></div>

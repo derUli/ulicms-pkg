@@ -122,7 +122,7 @@ class PHPWord_Writer_ODText implements PHPWord_Writer_IWriter
                  }
             
              // Add mimetype to ZIP file
-            // @todo Not in ZIPARCHIVE::CM_STORE mode
+            //  @todo Not in ZIPARCHIVE::CM_STORE mode
             $objZip -> addFromString('mimetype', $this -> getWriterPart('mimetype') -> writeMimetype($this -> _document));
             
              // Add content.xml to ZIP file
@@ -276,4 +276,4 @@ class PHPWord_Writer_ODText implements PHPWord_Writer_IWriter
      public function getDiskCachingDirectory(){
          return $this -> _diskCachingDirectory;
          }
-    }
+     }

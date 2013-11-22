@@ -151,4 +151,4 @@ class PHPWord_Shared_Drawing
         
          return array($color_R, $color_G, $color_B);
          }
-    }
+     }

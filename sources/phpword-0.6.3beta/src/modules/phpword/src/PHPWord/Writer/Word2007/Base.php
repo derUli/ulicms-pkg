@@ -558,8 +558,8 @@ class PHPWord_Writer_Word2007_Base extends PHPWord_Writer_Word2007_WriterPart{
                  $objWriter -> startElement('w:tcBorders');
                  if($bTop){
                      if(is_null($brdCol[0])){
-                        $brdCol[0] = $_defaultColor;
-                    }
+                         $brdCol[0] = $_defaultColor;
+                         }
                      $objWriter -> startElement('w:top');
                      $objWriter -> writeAttribute('w:val', 'single');
                      $objWriter -> writeAttribute('w:sz', $brdSz[0]);
@@ -569,8 +569,8 @@ class PHPWord_Writer_Word2007_Base extends PHPWord_Writer_Word2007_WriterPart{
                 
                  if($bLeft){
                      if(is_null($brdCol[1])){
-                        $brdCol[1] = $_defaultColor;
-                    }
+                         $brdCol[1] = $_defaultColor;
+                         }
                      $objWriter -> startElement('w:left');
                      $objWriter -> writeAttribute('w:val', 'single');
                      $objWriter -> writeAttribute('w:sz', $brdSz[1]);
@@ -580,8 +580,8 @@ class PHPWord_Writer_Word2007_Base extends PHPWord_Writer_Word2007_WriterPart{
                 
                  if($bRight){
                      if(is_null($brdCol[2])){
-                        $brdCol[2] = $_defaultColor;
-                    }
+                         $brdCol[2] = $_defaultColor;
+                         }
                      $objWriter -> startElement('w:right');
                      $objWriter -> writeAttribute('w:val', 'single');
                      $objWriter -> writeAttribute('w:sz', $brdSz[2]);
@@ -591,8 +591,8 @@ class PHPWord_Writer_Word2007_Base extends PHPWord_Writer_Word2007_WriterPart{
                 
                  if($bBottom){
                      if(is_null($brdCol[3])){
-                        $brdCol[3] = $_defaultColor;
-                    }
+                         $brdCol[3] = $_defaultColor;
+                         }
                      $objWriter -> startElement('w:bottom');
                      $objWriter -> writeAttribute('w:val', 'single');
                      $objWriter -> writeAttribute('w:sz', $brdSz[3]);
@@ -727,5 +727,5 @@ class PHPWord_Writer_Word2007_Base extends PHPWord_Writer_Word2007_WriterPart{
         
          $objWriter -> endElement();
          }
-    }
+     }
 ?>

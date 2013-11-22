@@ -171,5 +171,5 @@ class PHPWord_Section_Object{
      public function setObjectId($objId){
          $this -> _objId = $objId;
          }
-    }
+     }
 ?>

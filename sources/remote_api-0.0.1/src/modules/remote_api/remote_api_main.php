@@ -1,6 +1,6 @@
-<?php 
+<?php
 function remote_api_render(){
-  return "Nix";
-}
+     return "Nix";
+    }
 
 ?>

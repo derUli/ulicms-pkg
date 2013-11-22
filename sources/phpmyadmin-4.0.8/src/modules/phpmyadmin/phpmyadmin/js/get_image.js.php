@@ -1,9 +1,11 @@
 <?php
-/* vim: set expandtab sw=4 ts=4 sts=4: */
+/**
+ * vim: set expandtab sw=4 ts=4 sts=4:
+ */
 /**
  * Provides the functionality for retreiving images
  * which may be actual images or an icon from a sprite
- *
+ * 
  * @package PhpMyAdmin
  */
 chdir('..');
@@ -18,19 +20,19 @@ define('PMA_MINIMUM_COMMON', true);
 require_once './libraries/common.inc.php';
 
 // Get the data for the sprites, if it's available
-if (is_readable($_SESSION['PMA_Theme']->getPath() . '/sprites.lib.php')) {
-    include $_SESSION['PMA_Theme']->getPath() . '/sprites.lib.php';
-}
+if (is_readable($_SESSION['PMA_Theme'] -> getPath() . '/sprites.lib.php')){
+     include $_SESSION['PMA_Theme'] -> getPath() . '/sprites.lib.php';
+    }
 $sprites = array();
-if (function_exists('PMA_sprites')) {
-    $sprites = PMA_sprites();
-}
+if (function_exists('PMA_sprites')){
+     $sprites = PMA_sprites();
+    }
 // We only need the keys from the array of sprites data,
 // since they contain the (partial) class names
 $keys = array();
-foreach ($sprites as $key => $value) {
-    $keys[] = "'$key'";
-}
+foreach ($sprites as $key => $value){
+     $keys[] = "'$key'";
+    }
 
 ?>
 /**
@@ -60,7 +62,8 @@ function PMA_getImage(image, alternate, attributes) {
         return false;
     };
     var sprites = [
-        <?php echo implode($keys, ",\n        ") . "\n"; ?>
+        <?php echo implode($keys, ",\n        ") . "\n";
+?>
     ];
     // custom image object, it will eventually be returned by this functions
     var retval = {
@@ -119,7 +122,8 @@ function PMA_getImage(image, alternate, attributes) {
     } else {
         // it's an image file
         retval.isSprite = false;
-        retval.attr('src', "<?php echo $_SESSION['PMA_Theme']->getImgPath(); ?>" + image);
+        retval.attr('src', "<?php echo $_SESSION['PMA_Theme'] -> getImgPath();
+?>" + image);
     }
     // set all other attrubutes
     for (var i in attributes) {

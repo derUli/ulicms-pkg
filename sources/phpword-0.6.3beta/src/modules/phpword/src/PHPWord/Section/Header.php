@@ -218,5 +218,5 @@ class PHPWord_Section_Header{
      public function getHeaderCount(){
          return $this -> _headerCount;
          }
-    }
+     }
 ?>

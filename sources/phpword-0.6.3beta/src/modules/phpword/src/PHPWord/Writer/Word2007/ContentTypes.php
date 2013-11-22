@@ -182,4 +182,4 @@ class PHPWord_Writer_Word2007_ContentTypes extends PHPWord_Writer_Word2007_Write
              throw new Exception("Invalid parameters passed.");
              }
          }
-    }
+     }

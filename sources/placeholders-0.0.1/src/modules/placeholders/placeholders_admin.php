@@ -26,8 +26,8 @@ function placeholders_list(){
          while($row = db_fetch_object($query)){
              echo "<tr>";
              echo "<td>" . $row -> id . "</strong></td>";
-             echo "<td>" .  $row -> name . "</strong></td>";
-             echo "<td>" .  $row -> value . "</strong></td>";
+             echo "<td>" . $row -> name . "</strong></td>";
+             echo "<td>" . $row -> value . "</strong></td>";
              echo "<td><a href=\"?action=module_settings&module=placeholders&placeholders_action=edit&id=" . $row -> id . "\">Bearbeiten</a></td>";
              echo "<td><a href=\"?action=module_settings&module=placeholders&placeholders_action=delete&id=" . $row -> id . "\" onclick=\"return confirm('Diesen Platzhalter wirklich löschen?');\">Löschen</a></td>";
              echo "</tr>";
@@ -53,7 +53,7 @@ function placeholders_admin(){
      if(isset($_POST["save"])){
         
          $name = db_escape(trim($_POST["name"]));
-         $value = db_escape(trim($_POST["value"]));    
+         $value = db_escape(trim($_POST["value"]));
          $match_case = intval(isset($_POST["match_case"]));
          $id = intval($_POST["id"]);
         

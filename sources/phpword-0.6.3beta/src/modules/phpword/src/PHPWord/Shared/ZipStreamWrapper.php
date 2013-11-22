@@ -174,5 +174,5 @@ class PHPWord_Shared_ZipStreamWrapper{
              return false;
              }
          }
-    }
+     }
 ?>

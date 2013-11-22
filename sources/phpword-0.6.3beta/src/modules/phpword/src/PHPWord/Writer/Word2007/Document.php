@@ -450,4 +450,4 @@ class PHPWord_Writer_Word2007_Document extends PHPWord_Writer_Word2007_Base{
          $objWriter -> endElement();
          $objWriter -> endElement();
          }
-    }
+     }
