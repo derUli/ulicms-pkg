@@ -9,5 +9,8 @@ function isIPBlocked($ip){
 
      $blocked_ips = str_replace("\r\n", "\n", $blocked_ips);
      
+     $blocked_ips = explode("\n", $blocked_ips);
+     
+     return in_array($ip, $blocked_ips);
     
     }
