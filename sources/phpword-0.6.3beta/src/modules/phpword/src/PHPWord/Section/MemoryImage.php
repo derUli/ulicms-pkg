@@ -227,5 +227,5 @@ class PHPWord_Section_MemoryImage{
      public function getImageExtension(){
          return $this -> _imageExtension;
          }
-    }
+     }
 ?>

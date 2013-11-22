@@ -141,5 +141,5 @@ class PHPWord_Section_Title{
      public function getStyle(){
          return $this -> _style;
          }
-    }
+     }
 ?>

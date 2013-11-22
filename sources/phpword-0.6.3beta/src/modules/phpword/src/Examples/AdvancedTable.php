@@ -44,7 +44,7 @@ for($i = 1; $i <= 10; $i++){
     
      $text = ($i % 2 == 0) ? 'X' : '';
      $table -> addCell(500) -> addText($text);
-    }
+     }
 
 
 // Save File

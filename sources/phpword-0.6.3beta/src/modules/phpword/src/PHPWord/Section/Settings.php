@@ -511,5 +511,5 @@ class PHPWord_Section_Settings{
      public function getBorderBottomColor(){
          return $this -> _borderBottomColor;
          }
-    }
+     }
 ?>

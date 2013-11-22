@@ -367,5 +367,5 @@ class PHPWord_Section{
      public function getFooter(){
          return $this -> _footer;
          }
-    }
+     }
 ?>

@@ -287,5 +287,5 @@ class PHPWord_Style_Cell{
      public function getDefaultBorderColor(){
          return $this -> _defaultBorderColor;
          }
-    }
+     }
 ?>

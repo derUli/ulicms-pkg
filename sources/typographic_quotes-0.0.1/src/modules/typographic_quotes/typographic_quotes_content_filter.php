@@ -48,5 +48,5 @@ function typographic_quotes_content_filter($input){
         
          }
      return $returnval;
-    }
+     }
 ?>

@@ -31,7 +31,7 @@ function blog_single($seo_shortname){
         
          $html = "";
         
-         if($acl->hasPermission("blog") or $post -> entry_enabled){
+         if($acl -> hasPermission("blog") or $post -> entry_enabled){
             
              $html .= "<h1 class='blog_headline'>" . $post -> title . "</h1>";
              $html .= "<hr class='blog_hr'/>";
@@ -62,7 +62,7 @@ function blog_single($seo_shortname){
             
              $html .= "<br/>";
             
-             if($acl->hasPermission("blog")){
+             if($acl -> hasPermission("blog")){
                  $html .= "<a href='" . get_requested_pagename() . ".html?blog_admin=edit_post&id=" . $post -> id . "'>[Bearbeiten]</a> ";
                 
                  $html .= "<a href='" . get_requested_pagename() . ".html?blog_admin=delete_post&id=" . $post -> id . "' onclick='return confirm(\"Diesen Post wirklich löschen?\")'>[Löschen]</a>";
@@ -233,28 +233,28 @@ function post_comments(){
 
 
 if(!function_exists("stringcontainsbadwords")){
-function stringcontainsbadwords($str){
-     $words_blacklist = getconfig("spamfilter_words_blacklist");
-     $str = strtolower($str);
-    
-     if($words_blacklist !== false){
-         $words_blacklist = explode("||", $words_blacklist);
-         }
-    else{
+    function stringcontainsbadwords($str){
+         $words_blacklist = getconfig("spamfilter_words_blacklist");
+         $str = strtolower($str);
+        
+         if($words_blacklist !== false){
+             $words_blacklist = explode("||", $words_blacklist);
+             }
+        else{
+             return false;
+             }
+        
+         for($i = 0; $i < count($words_blacklist); $i++){
+             $word = strtolower($words_blacklist[$i]);
+             if(strpos($str, $word) !== false)
+                 return true;
+             }
+        
+        
          return false;
          }
     
-     for($i = 0; $i < count($words_blacklist); $i++){
-         $word = strtolower($words_blacklist[$i]);
-         if(strpos($str, $word) !== false)
-             return true;
-         }
-    
-    
-     return false;
-     }
-     
-}
+    }
 
 function blog_display_comments($post_id){
      $html = "";
@@ -337,7 +337,7 @@ function blog_display_comments($post_id){
             
              $html .= "</a>";
             
-             if($acl->hasPermission("blog")){
+             if($acl -> hasPermission("blog")){
                  $html .= " <a href='" . get_requested_pagename() . ".html?blog_admin=delete_comment&id=" . $comment -> id . "' onclick='return confirm(\"Diesen Kommentar wirklich löschen?\")'>[Löschen]</a>";
                  }
             
@@ -347,7 +347,7 @@ function blog_display_comments($post_id){
              $html .= $comment -> name;
              $html .= "<br/>";
             
-             if($acl->hasPermission("blog")){
+             if($acl -> hasPermission("blog")){
                  $html .= "<strong>Email: </strong>" . $comment -> email . "<br/>";
                  }
             

@@ -79,5 +79,5 @@ class PHPWord_Style_ListItem{
      public function getListType(){
          return $this -> _listType;
          }
-    }
+     }
 ?>

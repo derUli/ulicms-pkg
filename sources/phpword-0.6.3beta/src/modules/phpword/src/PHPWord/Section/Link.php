@@ -167,5 +167,5 @@ class PHPWord_Section_Link{
      public function getParagraphStyle(){
          return $this -> _styleParagraph;
          }
-    }
+     }
 ?>

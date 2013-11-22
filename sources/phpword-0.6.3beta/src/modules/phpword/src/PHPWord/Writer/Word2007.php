@@ -237,5 +237,5 @@ class PHPWord_Writer_Word2007 implements PHPWord_Writer_IWriter{
              $this -> _chkContentTypes($element['source']);
              }
          }
-    }
+     }
 ?>

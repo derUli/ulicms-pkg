@@ -1,17 +1,19 @@
 <?php
-/* vim: set expandtab sw=4 ts=4 sts=4: */
+/**
+ * vim: set expandtab sw=4 ts=4 sts=4:
+ */
 /**
  * File for vendor customisation, you can change here paths or some behaviour,
  * which vendors such as Linux distibutions might want to change.
- *
+ * 
  * For changing this file you should know what you are doing. For this reason
  * options here are not part of normal configuration.
- *
+ * 
  * @package PhpMyAdmin
  */
-if (! defined('PHPMYADMIN')) {
-    exit;
-}
+if (! defined('PHPMYADMIN')){
+     exit;
+    }
 
 /**
  * Path to changelog file, can be gzip compressed. Useful when you want to

@@ -1,4 +1,4 @@
-<?php 
+<?php
 if(!function_exists("stringcontainsbadwords")){
      function stringcontainsbadwords($str){
          $words_blacklist = getconfig("spamfilter_words_blacklist");

@@ -271,4 +271,4 @@ class PHPWord_Writer_ODText_Styles extends PHPWord_Writer_ODText_WriterPart
          // Return
         return $objWriter -> getData();
          }
-    }
+     }

@@ -1,14 +1,16 @@
 <?php
-/* vim: set expandtab sw=4 ts=4 sts=4: */
+/**
+ * vim: set expandtab sw=4 ts=4 sts=4:
+ */
 /**
  * Menu items
- *
+ * 
  * @package PhpMyAdmin-Setup
  */
 
-if (!defined('PHPMYADMIN')) {
-    exit;
-}
+if (!defined('PHPMYADMIN')){
+     exit;
+    }
 
 $separator = PMA_get_arg_separator('html');
 ?>

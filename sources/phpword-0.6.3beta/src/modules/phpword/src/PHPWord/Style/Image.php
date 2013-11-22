@@ -126,5 +126,5 @@ class PHPWord_Style_Image{
          $this -> _marginLeft = $pValue;
          return $this;
          }
-    }
+     }
 ?>

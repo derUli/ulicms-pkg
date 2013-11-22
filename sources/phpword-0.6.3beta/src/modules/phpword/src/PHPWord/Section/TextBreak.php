@@ -41,5 +41,5 @@ class PHPWord_Section_TextBreak{
      public function __construct(){
          // nothing
     }
-    }
+     }
 ?>

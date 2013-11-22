@@ -1,7 +1,7 @@
 <?php
-include_once ULICMS_ROOT.DIRECTORY_SEPERATOR."lib".DIRECTORY_SEPERATOR."string_functions.php";
+include_once ULICMS_ROOT . DIRECTORY_SEPERATOR . "lib" . DIRECTORY_SEPERATOR . "string_functions.php";
 $acl = new ACL();
-if($acl->hasPermission(MODULE_ADMIN_REQUIRED_PERMISSION)){
+if($acl -> hasPermission(MODULE_ADMIN_REQUIRED_PERMISSION)){
     
      if(isset($_REQUEST["id"])){
          $placeholder_id = intval($_REQUEST["id"]);
@@ -9,7 +9,7 @@ if($acl->hasPermission(MODULE_ADMIN_REQUIRED_PERMISSION)){
          $result = db_fetch_object($query);
          $name = $result -> name;
          $value = $result -> value;
-         $match_case = $result-> match_case;
+         $match_case = $result -> match_case;
          }
     else{
          $name = "";
@@ -39,14 +39,15 @@ min-width:200px;
 </tr>
 <tr>
 <td>Durch</td>
-<td><textarea name="value" rows=5><?php echo $value;?></textarea></td>
+<td><textarea name="value" rows=5><?php echo $value;
+    ?></textarea></td>
 </tr>
 <tr>
 <td>Zwischen Groß- und Kleinschreibung unterscheiden</td>
 <td><input type="checkbox" name="match_case" value="1"<?php
- if($match_case) 
-echo " checked=\"checked\"";
-?>></td>
+     if($match_case)
+        echo " checked=\"checked\"";
+    ?>></td>
 </tr>
 <tr>
 <td>

@@ -79,5 +79,5 @@ class PHPWord_Writer_Word2007_Header extends PHPWord_Writer_Word2007_Base{
          // Return
         return $objWriter -> getData();
          }
-    }
+     }
 ?>

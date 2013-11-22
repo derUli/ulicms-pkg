@@ -94,4 +94,4 @@ class PHPWord_Writer_ODText_Meta extends PHPWord_Writer_ODText_WriterPart
          // Return
         return $objWriter -> getData();
          }
-    }
+     }

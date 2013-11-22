@@ -197,5 +197,5 @@ class PHPWord_Section_Footer{
      public function getFooterCount(){
          return $this -> _footerCount;
          }
-    }
+     }
 ?>

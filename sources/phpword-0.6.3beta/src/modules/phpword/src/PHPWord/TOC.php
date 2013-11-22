@@ -151,5 +151,5 @@ class PHPWord_TOC{
      public static function getStyleFont(){
          return self :: $_styleFont;
          }
-    }
+     }
 ?>

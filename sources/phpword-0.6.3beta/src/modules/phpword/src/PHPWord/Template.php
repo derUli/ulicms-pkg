@@ -119,5 +119,5 @@ class PHPWord_Template{
         
          rename($this -> _tempFileName, $strFilename);
          }
-    }
+     }
 ?>

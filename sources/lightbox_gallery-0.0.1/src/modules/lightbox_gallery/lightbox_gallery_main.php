@@ -16,7 +16,7 @@ function lightbox_gallery_render(){
     
     
     
-    }
+     }
 
 
 // Output Single image
@@ -113,10 +113,10 @@ function output_all($gallery_image_folder){
             
             
              }
-        }
+         }
     
      return $html_output;
-    }
+     }
 
 
 // Generate Thumbnails in Standard and Small Size
@@ -158,9 +158,9 @@ function generateThumbnails($gallery_image_folder){
                  }
              }
         
-        }
+         }
     
-    // Generate files in normal size
+     // Generate files in normal size
     function generateBigImages($gallery_image_folder){
          if(!file_exists($gallery_image_folder)){
              mkdir($gallery_image_folder, 0777, true);
@@ -203,11 +203,11 @@ function generateThumbnails($gallery_image_folder){
             
             
             
-            }
+             }
         
         
         
-        // Resize image
+         // Resize image
         // Resize image
         function resize_image($file, $target, $w, $h, $crop = FALSE){
              list($width, $height) = getimagesize($file);
@@ -236,9 +236,9 @@ function generateThumbnails($gallery_image_folder){
              imagecopyresampled($dst, $src, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
              imagejpeg($dst, $target, 100);
             
-            }
+             }
         
         
         
         
-        ?>
+         ?>

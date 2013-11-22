@@ -1,21 +1,25 @@
 <?php
-/* vim: set expandtab sw=4 ts=4 sts=4: */
+/**
+ * vim: set expandtab sw=4 ts=4 sts=4:
+ */
 /**
  * phpMyAdmin fatal error display page
- *
+ * 
  * @package PhpMyAdmin
  */
 
-if (! defined('PHPMYADMIN')) {
-    exit;
-}
+if (! defined('PHPMYADMIN')){
+     exit;
+    }
 
-if (! defined('TESTSUITE')) {
-    header('Content-Type: text/html; charset=utf-8');
-}
+if (! defined('TESTSUITE')){
+     header('Content-Type: text/html; charset=utf-8');
+    }
 ?>
 <!DOCTYPE HTML>
-<html lang="<?php echo $lang; ?>" dir="<?php echo $dir; ?>">
+<html lang="<?php echo $lang;
+?>" dir="<?php echo $dir;
+?>">
 <head>
     <link rel="icon" href="favicon.ico" type="image/x-icon" />
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
@@ -52,8 +56,10 @@ if (! defined('TESTSUITE')) {
     </style>
 </head>
 <body>
-<h1>phpMyAdmin - <?php echo $error_header; ?></h1>
-<p><?php echo PMA_sanitize($error_message); ?></p>
+<h1>phpMyAdmin - <?php echo $error_header;
+?></h1>
+<p><?php echo PMA_sanitize($error_message);
+?></p>
 </body>
 </html>
 

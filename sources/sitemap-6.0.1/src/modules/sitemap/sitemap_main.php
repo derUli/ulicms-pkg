@@ -2,8 +2,8 @@
 function sitemap_render(){
      $html_output = "";
      foreach(getAllMenus() as $menu){
-        $html_output .= sitemap_menu($menu);
-     }
+         $html_output .= sitemap_menu($menu);
+         }
      return $html_output;
      }
 
@@ -29,7 +29,8 @@ function sitemap_menu($name){
          break;
      case "hidden": case "none":
          $menu_in_german = "Nicht im Menü";
-         break; break;
+         break;
+        break;
      default:
          $menu_in_german = $name;
          break;

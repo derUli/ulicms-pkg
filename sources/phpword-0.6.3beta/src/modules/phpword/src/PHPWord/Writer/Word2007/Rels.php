@@ -107,4 +107,4 @@ class PHPWord_Writer_Word2007_Rels extends PHPWord_Writer_Word2007_WriterPart{
              throw new Exception("Invalid parameters passed.");
              }
          }
-    }
+     }

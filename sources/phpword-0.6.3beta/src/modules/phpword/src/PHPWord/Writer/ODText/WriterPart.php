@@ -65,4 +65,4 @@ abstract class PHPWord_Writer_ODText_WriterPart
              throw new Exception("No parent PHPWord_Writer_IWriter assigned.");
              }
          }
-    }
+     }

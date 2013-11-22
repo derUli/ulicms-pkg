@@ -148,5 +148,5 @@ class PHPWord_Section_Table{
      public function getStyle(){
          return $this -> _style;
          }
-    }
+     }
 ?>

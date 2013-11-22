@@ -29,11 +29,13 @@ if(! defined('MEMORY_LIMIT')) define ('MEMORY_LIMIT', '30M'); // Set PHP memory 
 if(! defined('BLOCK_EXTERNAL_LEECHERS')) define ('BLOCK_EXTERNAL_LEECHERS', false); // If the image or webshot is being loaded on an external site, display a red "No Hotlinking" gif.
 
 
+
 // Image fetching and caching
 if(! defined('ALLOW_EXTERNAL')) define ('ALLOW_EXTERNAL', TRUE); // Allow image fetching from external websites. Will check against ALLOWED_SITES if ALLOW_ALL_EXTERNAL_SITES is false
 if(! defined('ALLOW_ALL_EXTERNAL_SITES')) define ('ALLOW_ALL_EXTERNAL_SITES', false); // Less secure. 
 if(! defined('FILE_CACHE_ENABLED')) define ('FILE_CACHE_ENABLED', TRUE); // Should we store resized/modified images on disk to speed things up?
 if(! defined('FILE_CACHE_TIME_BETWEEN_CLEANS')) define ('FILE_CACHE_TIME_BETWEEN_CLEANS', 86400); // How often the cache is cleaned 
+
 
 
 if(! defined('FILE_CACHE_MAX_FILE_AGE')) define ('FILE_CACHE_MAX_FILE_AGE', 86400); // How old does a file have to be to be deleted from the cache
@@ -45,9 +47,11 @@ if(! defined('CURL_TIMEOUT')) define ('CURL_TIMEOUT', 20); // Timeout duration f
 if(! defined('WAIT_BETWEEN_FETCH_ERRORS')) define ('WAIT_BETWEEN_FETCH_ERRORS', 3600); // Time to wait between errors fetching remote file
 
 
+
 // Browser caching
 if(! defined('BROWSER_CACHE_MAX_AGE')) define ('BROWSER_CACHE_MAX_AGE', 864000); // Time to cache in the browser
 if(! defined('BROWSER_CACHE_DISABLE')) define ('BROWSER_CACHE_DISABLE', false); // Use for testing if you want to disable all browser caching
+
 
 
 // Image size and defaults
@@ -64,6 +68,7 @@ if(! defined('DEFAULT_CC')) define ('DEFAULT_CC', 'ffffff'); // Default canvas c
 
 
 
+
 // Image compression is enabled if either of these point to valid paths
 // These are now disabled by default because the file sizes of PNGs (and GIFs) are much smaller than we used to generate.
 // They only work for PNGs. GIFs and JPEGs are not affected.
@@ -71,6 +76,7 @@ if(! defined('OPTIPNG_ENABLED')) define ('OPTIPNG_ENABLED', false);
 if(! defined('OPTIPNG_PATH')) define ('OPTIPNG_PATH', '/usr/bin/optipng'); //This will run first because it gives better compression than pngcrush. 
 if(! defined('PNGCRUSH_ENABLED')) define ('PNGCRUSH_ENABLED', false);
 if(! defined('PNGCRUSH_PATH')) define ('PNGCRUSH_PATH', '/usr/bin/pngcrush'); //This will only run if OPTIPNG_PATH is not set or is not valid
+
 
 
 /**
@@ -125,6 +131,7 @@ if(! defined('WEBSHOT_XVFB_RUNNING')) define ('WEBSHOT_XVFB_RUNNING', false); //
 
 
 
+
 // If ALLOW_EXTERNAL is true and ALLOW_ALL_EXTERNAL_SITES is false, then external images will only be fetched from these domains and their subdomains.
 if(! isset($ALLOWED_SITES)){
      $ALLOWED_SITES = array (
@@ -138,7 +145,7 @@ if(! isset($ALLOWED_SITES)){
          'imageshack.us',
          'tinypic.com',
         );
-    }
+     }
 // -------------------------------------------------------------
 // -------------- STOP EDITING CONFIGURATION HERE --------------
 // -------------------------------------------------------------
@@ -336,9 +343,9 @@ class timthumb{
          }
      protected function tryBrowserCache(){
          if(BROWSER_CACHE_DISABLE){
-            $this -> debug(3, "Browser caching is disabled");
-            return false;
-        }
+             $this -> debug(3, "Browser caching is disabled");
+             return false;
+             }
          if(!empty($_SERVER['HTTP_IF_MODIFIED_SINCE'])){
              $this -> debug(3, "Got a conditional get");
              $mtime = false;
@@ -355,8 +362,8 @@ class timthumb{
                  $this -> debug(3, "Cached file's modification time is $mtime");
                  }
              if(! $mtime){
-                return false;
-            }
+                 return false;
+                 }
             
              $iftime = strtotime($_SERVER['HTTP_IF_MODIFIED_SINCE']);
              $this -> debug(3, "The conditional get's if-modified-since unixtime is $iftime");
@@ -849,8 +856,8 @@ class timthumb{
                  }
              }
          if($docRoot && $_SERVER['DOCUMENT_ROOT'] != '/'){
-            $docRoot = preg_replace('/\/$/', '', $docRoot);
-        }
+             $docRoot = preg_replace('/\/$/', '', $docRoot);
+             }
          $this -> debug(3, "Doc root is: " . $docRoot);
          $this -> docRoot = $docRoot;
         
@@ -883,8 +890,8 @@ class timthumb{
          if($absolute && file_exists($absolute)){ // realpath does file_exists check, so can probably skip the exists check here
              $this -> debug(3, "Found absolute path: $absolute");
              if(! $this -> docRoot){
-                $this -> sanityFail("docRoot not set when checking absolute path.");
-            }
+                 $this -> sanityFail("docRoot not set when checking absolute path.");
+                 }
              if(stripos($absolute, $this -> docRoot) === 0){
                  return $absolute;
                  }else{
@@ -1031,8 +1038,8 @@ class timthumb{
              }
          $fp = fopen($this -> cachefile, 'rb');
          if(! $fp){
-            return $this -> error("Could not open cachefile.");
-        }
+             return $this -> error("Could not open cachefile.");
+             }
          fseek($fp, strlen($this -> filePrependSecurityBlock), SEEK_SET);
          $imgType = fread($fp, 3);
          fseek($fp, 3, SEEK_CUR);
@@ -1121,22 +1128,22 @@ class timthumb{
          $ci = @$_SERVER["HTTP_CLIENT_IP"];
          if(preg_match('/^(?:192\.168|172\.16|10\.|127\.)/', $rem)){
              if($ff){
-                return $ff;
-            }
+                 return $ff;
+                 }
              if($ci){
-                return $ci;
-            }
+                 return $ci;
+                 }
              return $rem;
              }else{
              if($rem){
-                return $rem;
-            }
+                 return $rem;
+                 }
              if($ff){
-                return $ff;
-            }
+                 return $ff;
+                 }
              if($ci){
-                return $ci;
-            }
+                 return $ci;
+                 }
              return "UNKNOWN";
              }
          }
@@ -1272,4 +1279,4 @@ class timthumb{
      protected function is404(){
          return $this -> is404;
          }
-    }
+     }

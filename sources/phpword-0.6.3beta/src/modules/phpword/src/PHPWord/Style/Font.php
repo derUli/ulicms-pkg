@@ -257,5 +257,5 @@ class PHPWord_Style_Font{
      public function getParagraphStyle(){
          return $this -> _paragraphStyle;
          }
-    }
+     }
 ?>

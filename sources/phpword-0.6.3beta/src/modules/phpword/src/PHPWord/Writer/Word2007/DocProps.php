@@ -177,4 +177,4 @@ class PHPWord_Writer_Word2007_DocProps extends PHPWord_Writer_Word2007_WriterPar
          // Return
         return $objWriter -> getData();
          }
-    }
+     }

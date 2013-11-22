@@ -454,4 +454,4 @@ class LoremIpsumGenerator{
          return (float)rand() / (float)getrandmax();
          }
     
-    }
+     }

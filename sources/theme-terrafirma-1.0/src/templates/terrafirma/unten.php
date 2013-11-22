@@ -15,14 +15,16 @@
 		
 			<h3>Über Mich</h3>
 			<div class="content">
-				<img src="<?php echo getTemplateDirPath("terrafirma");?>images/pic2.jpg" class="picB" alt="" />
+				<img src="<?php echo getTemplateDirPath("terrafirma");
+?>images/pic2.jpg" class="picB" alt="" />
 				<p><strong>Nullam turpis</strong> vestibulum et sed dolore. Nulla facilisi. Sed tortor. lobortis commodo. <a href="#">More ...</a></p>
 			</div>
 			
 			<h3>Topics</h3>
 			<div class="content">
 				<ul class="linklist">
-				<?php menu("right");?>
+				<?php menu("right");
+?>
 			</div>
 
 			<!-- secondary content end -->
@@ -31,7 +33,8 @@
 	
 		<div id="footer">
 		
-			&copy; <?php homepage_owner();?> All rights reserved. Design by <a href="http://www.nodethirtythree.com/">NodeThirtyThree</a>. | <a href="http://www.ulicms.de" target="_blank">Powered by UliCMS</a> 
+			&copy; <?php homepage_owner();
+?> All rights reserved. Design by <a href="http://www.nodethirtythree.com/">NodeThirtyThree</a>. | <a href="http://www.ulicms.de" target="_blank">Powered by UliCMS</a> 
 		
 		</div>
 

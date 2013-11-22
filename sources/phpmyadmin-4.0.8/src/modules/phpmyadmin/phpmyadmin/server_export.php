@@ -1,7 +1,9 @@
 <?php
-/* vim: set expandtab sw=4 ts=4 sts=4: */
 /**
- *
+ * vim: set expandtab sw=4 ts=4 sts=4:
+ */
+/**
+ * 
  * @package PhpMyAdmin
  */
 
@@ -10,10 +12,10 @@
  */
 require_once 'libraries/common.inc.php';
 
-$response = PMA_Response::getInstance();
-$header   = $response->getHeader();
-$scripts  = $header->getScripts();
-$scripts->addFile('export.js');
+$response = PMA_Response :: getInstance();
+$header = $response -> getHeader();
+$scripts = $header -> getScripts();
+$scripts -> addFile('export.js');
 
 require 'libraries/server_common.inc.php';
 
@@ -33,37 +35,37 @@ $multi_values .= '<select name="db_select[]" id="db_select" size="10" multiple="
 $multi_values .= "\n";
 
 // Check if the selected databases are defined in $_GET (from clicking Back button on export.php)
-if (isset($_GET['db_select'])) {
-    $_GET['db_select'] = urldecode($_GET['db_select']);
-    $_GET['db_select'] = explode(",", $_GET['db_select']);
-}
+if (isset($_GET['db_select'])){
+     $_GET['db_select'] = urldecode($_GET['db_select']);
+     $_GET['db_select'] = explode(",", $_GET['db_select']);
+    }
 
-foreach ($GLOBALS['pma']->databases as $current_db) {
-    if ($current_db == 'information_schema'
-        || $current_db == 'performance_schema'
-        || $current_db == 'mysql'
-    ) {
-        continue;
-    }
-    if (isset($_GET['db_select'])) {
-        if (in_array($current_db, $_GET['db_select'])) {
-            $is_selected = ' selected="selected"';
-        } else {
-            $is_selected = '';
-        }
-    } elseif (isset($tmp_select)) {
-        if (strpos(' ' . $tmp_select, '|' . $current_db . '|')) {
-            $is_selected = ' selected="selected"';
-        } else {
-            $is_selected = '';
-        }
-    } else {
-        $is_selected = ' selected="selected"';
-    }
-    $current_db   = htmlspecialchars($current_db);
-    $multi_values .= '                <option value="' . $current_db . '"'
-        . $is_selected . '>' . $current_db . '</option>' . "\n";
-} // end while
+foreach ($GLOBALS['pma'] -> databases as $current_db){
+     if ($current_db == 'information_schema'
+         || $current_db == 'performance_schema'
+         || $current_db == 'mysql'
+        ){
+         continue;
+         }
+     if (isset($_GET['db_select'])){
+         if (in_array($current_db, $_GET['db_select'])){
+             $is_selected = ' selected="selected"';
+             }else{
+             $is_selected = '';
+             }
+         }elseif (isset($tmp_select)){
+         if (strpos(' ' . $tmp_select, '|' . $current_db . '|')){
+             $is_selected = ' selected="selected"';
+             }else{
+             $is_selected = '';
+             }
+         }else{
+         $is_selected = ' selected="selected"';
+         }
+     $current_db = htmlspecialchars($current_db);
+     $multi_values .= '                <option value="' . $current_db . '"'
+     . $is_selected . '>' . $current_db . '</option>' . "\n";
+    } // end while
 $multi_values .= "\n";
 $multi_values .= '</select></div>';
 

@@ -2,5 +2,5 @@
 
 function timthumb_render(){
      return "";
-    }
+     }
 ?>

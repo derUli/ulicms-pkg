@@ -315,5 +315,5 @@ class PHPWord_Section_Table_Cell{
      public function getWidth(){
          return $this -> _width;
          }
-    }
+     }
 ?>

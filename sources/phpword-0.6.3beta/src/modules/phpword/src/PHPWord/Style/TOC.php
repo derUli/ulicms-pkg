@@ -134,5 +134,5 @@ class PHPWord_Style_TOC{
      public function setStyleValue($key, $value){
          $this -> $key = $value;
          }
-    }
+     }
 ?>

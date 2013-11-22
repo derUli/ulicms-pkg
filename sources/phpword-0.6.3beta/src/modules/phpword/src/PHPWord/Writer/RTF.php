@@ -424,4 +424,4 @@ class PHPWord_Writer_RTF implements PHPWord_Writer_IWriter
          }
     
     
-    }
+     }

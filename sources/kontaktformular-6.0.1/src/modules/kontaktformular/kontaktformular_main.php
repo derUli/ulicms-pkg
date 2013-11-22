@@ -2,7 +2,7 @@
 
 if(file_exists("antispam-features.php")){
      include_once "antispam-features.php";
-}
+    }
 
 function kontaktformular_render(){
     
@@ -153,7 +153,7 @@ function kontaktformular_render(){
             
             
              if(@mail(getconfig("email"), $betreff, $mailtext, $headers)){
-             
+                
                  if($_SESSION["language"] == "de"){
                      return "<p class='contactform-success'>Vielen Dank für Ihre Email.<br/>Wir werden diese schnellstmöglich beantworten.</p>";
                      }
@@ -179,9 +179,9 @@ function kontaktformular_render(){
     else{
         
          $spam_counter = "";
-         
+        
          $acl = new ACL();
-         if($acl->hasPermission("kontaktformular")){
+         if($acl -> hasPermission("kontaktformular")){
              $spam_counter = "<p class='ulicms_success'>Bisher <strong>" . getconfig("contact_form_refused_spam_mails") . "</strong> Spam Mails 
    blockiert</p><hr/>";
              }

@@ -1,20 +1,24 @@
 <?php
-/* vim: set expandtab sw=4 ts=4 sts=4: */
+/**
+ * vim: set expandtab sw=4 ts=4 sts=4:
+ */
 /**
  * Properties class for the export plug-in
- *
+ * 
  * @package PhpMyAdmin
  */
-if (! defined('PHPMYADMIN')) {
-    exit;
-}
+if (! defined('PHPMYADMIN')){
+     exit;
+    }
 
-/* This class extends the PluginPropertyItem class */
+/**
+ * This class extends the PluginPropertyItem class
+ */
 require_once 'PluginPropertyItem.class.php';
 
 /**
  * Defines possible options and getters and setters for them.
- *
+ * 
  * @todo modify descriptions if needed, when the plug-in properties are integrated
  * @package PhpMyAdmin
  */
@@ -22,193 +26,189 @@ class ExportPluginProperties extends PluginPropertyItem
 {
     /**
      * Text
-     *
-     * @var string
+     * 
+     * @var string 
      */
-    private $_text;
-
+     private $_text;
+    
     /**
      * Extension
-     *
-     * @var string
+     * 
+     * @var string 
      */
-    private $_extension;
-
+     private $_extension;
+    
     /**
      * Options
-     *
-     * @var OptionsPropertyRootGroup
+     * 
+     * @var OptionsPropertyRootGroup 
      */
-    private $_options;
-
+     private $_options;
+    
     /**
      * Options text
-     *
-     * @var string
+     * 
+     * @var string 
      */
-    private $_optionsText;
-
+     private $_optionsText;
+    
     /**
      * MIME Type
-     *
-     * @var string
+     * 
+     * @var string 
      */
-    private $_mimeType;
-
+     private $_mimeType;
+    
     /**
      * Whether to force or not
-     *
-     * @var bool
+     * 
+     * @var bool 
      */
-    private $_forceFile;
-
-
-    /* ~~~~~~~~~~~~~~~~~~~~ Getters and Setters ~~~~~~~~~~~~~~~~~~~~ */
-
-
+     private $_forceFile;
+    
+    
+    /**
+     * ~~~~~~~~~~~~~~~~~~~~ Getters and Setters ~~~~~~~~~~~~~~~~~~~~
+     */
+    
+    
     /**
      * Returns the property item type of either an instance of
-     *  - OptionsPropertyOneItem ( f.e. "bool", "text", "radio", etc ) or
-     *  - OptionsPropertyGroup   ( "root", "main" or "subgroup" )
-     *  - PluginPropertyItem     ( "export", "import", "transformations" )
-     *
-     * @return string
+     *   - OptionsPropertyOneItem ( f.e. "bool", "text", "radio", etc ) or
+     *   - OptionsPropertyGroup   ( "root", "main" or "subgroup" )
+     *   - PluginPropertyItem     ( "export", "import", "transformations" )
+     * 
+     * @return string 
      */
-    public function getItemType()
+     public function getItemType()
     {
-        return "export";
-    }
-
+         return "export";
+         }
+    
     /**
      * Gets the text
-     *
-     * @return string
+     * 
+     * @return string 
      */
-    public function getText()
+     public function getText()
     {
-        return $this->_text;
-    }
-
+         return $this -> _text;
+         }
+    
     /**
      * Sets the text
-     *
+     * 
      * @param string $text text
-     *
-     * @return void
+     * @return void 
      */
-    public function setText($text)
+     public function setText($text)
     {
-        $this->_text = $text;
-    }
-
+         $this -> _text = $text;
+         }
+    
     /**
      * Gets the extension
-     *
-     * @return string
+     * 
+     * @return string 
      */
-    public function getExtension()
+     public function getExtension()
     {
-        return $this->_extension;
-    }
-
+         return $this -> _extension;
+         }
+    
     /**
      * Sets the extension
-     *
+     * 
      * @param string $extension extension
-     *
-     * @return void
+     * @return void 
      */
-    public function setExtension($extension)
+     public function setExtension($extension)
     {
-        $this->_extension = $extension;
-    }
-
+         $this -> _extension = $extension;
+         }
+    
     /**
      * Gets the options
-     *
-     * @return OptionsPropertyRootGroup
+     * 
+     * @return OptionsPropertyRootGroup 
      */
-    public function getOptions()
+     public function getOptions()
     {
-        return $this->_options;
-    }
-
+         return $this -> _options;
+         }
+    
     /**
      * Sets the options
-     *
+     * 
      * @param OptionsPropertyRootGroup $options options
-     *
-     * @return void
+     * @return void 
      */
-    public function setOptions($options)
+     public function setOptions($options)
     {
-        $this->_options = $options;
-    }
-
+         $this -> _options = $options;
+         }
+    
     /**
      * Gets the options text
-     *
-     * @return string
+     * 
+     * @return string 
      */
-    public function getOptionsText()
+     public function getOptionsText()
     {
-        return $this->_optionsText;
-    }
-
+         return $this -> _optionsText;
+         }
+    
     /**
      * Sets the options text
-     *
+     * 
      * @param string $optionsText optionsText
-     *
-     * @return void
+     * @return void 
      */
-    public function setOptionsText($optionsText)
+     public function setOptionsText($optionsText)
     {
-        $this->_optionsText = $optionsText;
-    }
-
+         $this -> _optionsText = $optionsText;
+         }
+    
     /**
      * Gets the MIME type
-     *
-     * @return string
+     * 
+     * @return string 
      */
-    public function getMimeType()
+     public function getMimeType()
     {
-        return $this->_mimeType;
-    }
-
+         return $this -> _mimeType;
+         }
+    
     /**
      * Sets the MIME type
-     *
+     * 
      * @param string $mimeType MIME type
-     *
-     * @return void
+     * @return void 
      */
-    public function setMimeType($mimeType)
+     public function setMimeType($mimeType)
     {
-        $this->_mimeType = $mimeType;
-    }
-
+         $this -> _mimeType = $mimeType;
+         }
+    
     /**
      * Gets the force file parameter
-     *
-     * @return bool
+     * 
+     * @return bool 
      */
-    public function getForceFile()
+     public function getForceFile()
     {
-        return $this->_forceFile;
-    }
-
+         return $this -> _forceFile;
+         }
+    
     /**
      * Sets the force file parameter
-     *
+     * 
      * @param bool $forceFile the force file parameter
-     *
-     * @return void
+     * @return void 
      */
-    public function setForceFile($forceFile)
+     public function setForceFile($forceFile)
     {
-        $this->_forceFile = $forceFile;
+         $this -> _forceFile = $forceFile;
+         }
     }
-}
 ?>

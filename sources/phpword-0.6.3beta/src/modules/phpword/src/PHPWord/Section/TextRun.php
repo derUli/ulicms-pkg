@@ -125,5 +125,5 @@ class PHPWord_Section_TextRun{
      public function getParagraphStyle(){
          return $this -> _styleParagraph;
          }
-    }
+     }
 ?>

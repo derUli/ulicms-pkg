@@ -66,7 +66,7 @@ if(in_array("search", getAllModules())){
 <div id="searchFormHeader">
 <form action="suche.html" method="get">
 <input type="search" results=10 autosave="<?php echo md5($_SERVER["SERVER_NAME"]);
-    ?>" id="qHead" name="q" value="">
+     ?>" id="qHead" name="q" value="">
 <?php
      if(in_array("blog", getAllModules())){
         

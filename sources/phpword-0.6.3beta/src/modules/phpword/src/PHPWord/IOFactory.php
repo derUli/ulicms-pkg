@@ -57,7 +57,7 @@ class PHPWord_IOFactory{
      * Private constructor for PHPWord_IOFactory
      */
      private function __construct(){
-    }
+         }
     
     /**
      * Get search locations
@@ -117,5 +117,5 @@ class PHPWord_IOFactory{
         
          throw new Exception("No $searchType found for type $writerType");
          }
-    }
+     }
 ?>

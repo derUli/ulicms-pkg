@@ -10,13 +10,13 @@ function auto_nofollow_callback($matches){
          $link = preg_replace('/rel=\S(?!nofollow)\S*/i', 'rel="nofollow"', $link);
          }
      return $link;
-    }
+     }
 
 function rel_nofollow_content_filter($content){
     
      return preg_replace_callback('/<a[^>]+/', 'auto_nofollow_callback', $content);
     
-    }
+     }
 
 
 

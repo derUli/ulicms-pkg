@@ -4,10 +4,10 @@ error_reporting(E_ALL);
 
 if(php_sapi_name() == 'cli' && empty($_SERVER['REMOTE_ADDR'])){
      define('EOL', PHP_EOL);
-    }
+     }
 else{
      define('EOL', '<br />');
-    }
+     }
 
 require_once '../src/PHPWord.php';
 

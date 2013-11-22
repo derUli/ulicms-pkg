@@ -438,5 +438,5 @@ class PHPWord_Style_TableFull{
      public function getCellMargin(){
          return array($this -> _cellMarginTop, $this -> _cellMarginLeft, $this -> _cellMarginRight, $this -> _cellMarginBottom);
          }
-    }
+     }
 ?>

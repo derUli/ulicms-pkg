@@ -141,5 +141,5 @@ class PHPWord_Section_Text{
      public function getText(){
          return $this -> _text;
          }
-    }
+     }
 ?>

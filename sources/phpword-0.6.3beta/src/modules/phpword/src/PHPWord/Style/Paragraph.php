@@ -170,5 +170,5 @@ class PHPWord_Style_Paragraph{
          $this -> _spacing = $pValue;
          return $this;
          }
-    }
+     }
 ?>

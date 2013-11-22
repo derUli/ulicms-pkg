@@ -69,4 +69,4 @@ class PHPWord_Shared_Font
      public static function pixelSizeToTwips($sizeInPixel = 1){
          return self :: centimeterSizeToTwips($sizeInPixel / 37.795275591);
          }
-    }
+     }

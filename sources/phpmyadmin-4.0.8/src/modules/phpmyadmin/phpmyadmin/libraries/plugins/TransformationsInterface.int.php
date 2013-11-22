@@ -1,49 +1,51 @@
 <?php
-/* vim: set expandtab sw=4 ts=4 sts=4: */
+/**
+ * vim: set expandtab sw=4 ts=4 sts=4:
+ */
 /**
  * Interface for the transformations plugins
- *
+ * 
  * @package PhpMyAdmin
  */
-if (! defined('PHPMYADMIN')) {
-    exit;
-}
+if (! defined('PHPMYADMIN')){
+     exit;
+    }
 
 /**
  * Provides a common interface that will have to be implemented by all of the
  * transformations plugins.
- *
+ * 
  * @package PhpMyAdmin
  */
 interface TransformationsInterface
 {
     /**
      * Gets the transformation description
-     *
-     * @return string
+     * 
+     * @return string 
      */
-    public static function getInfo();
-
+     public static function getInfo();
+    
     /**
      * Gets the specific MIME type
-     *
-     * @return string
+     * 
+     * @return string 
      */
-    public static function getMIMEType();
-
+     public static function getMIMEType();
+    
     /**
      * Gets the specific MIME subtype
-     *
-     * @return string
+     * 
+     * @return string 
      */
-    public static function getMIMESubtype();
-
+     public static function getMIMESubtype();
+    
     /**
      * Gets the transformation name of the specific plugin
-     *
-     * @return string
+     * 
+     * @return string 
      */
-    public static function getName();
-}
+     public static function getName();
+    }
 
 ?>
