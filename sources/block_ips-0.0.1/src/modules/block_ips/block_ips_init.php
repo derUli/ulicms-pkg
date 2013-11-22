@@ -26,4 +26,4 @@ function isIPBlocked($ip){
 $ip = $_SERVER['REMOTE_ADDR'];
 
 if(isIPBlocked($ip))
-   die("Der Zugriff Ihrer IP-Adresse ($ip) wurde gesperrt!");
+   die("Der Zugriff von Ihrer IP-Adresse ($ip) wurde gesperrt!");
