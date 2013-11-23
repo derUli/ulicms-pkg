@@ -5,7 +5,7 @@ if(containsModule(get_requested_pagename(), "random_page") or isset($_GET["view_
    do{
      $random = array_rand($allpages, 1);
      $random = $allpages[$random];
-   } while(containsModule($random, "random_page"));
+   } while(containsModule($random));
    
    header("Location: ".buildSEOUrl($random));
    exit();
