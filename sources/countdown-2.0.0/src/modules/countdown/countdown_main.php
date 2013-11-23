@@ -15,6 +15,7 @@ function countdown_render(){
 	$countdown_height = getconfig("countdown_height");
 	$countdown_style = getconfig("countdown_style");
     $countdown_target = getconfig("countdown_target");
+	$countdown_oncomplete = getconfig("countdown_oncomplete");
 	
    $retval = '<script>
    new Countdown({
@@ -25,6 +26,12 @@ function countdown_render(){
       $retval .= ",
 	  target : \"".$countdown_target."\"";
    }
+   
+      if(!empty($countdown_oncomplete) and $countdown_oncomplete != false){
+      $retval .= ",
+	  onComplete : ".$countdown_oncomplete;
+   }
+   
    $retval.=',
    style : "'.$countdown_style.'"});
 </script>';

@@ -15,5 +15,8 @@ if(!getconfig("countdown_style"))
    
 if(!getconfig("countdown_target"))
    setconfig("countdown_target", "");
+   
+if(!getconfig("countdown_oncomplete"))
+   setconfig("countdown_oncomplete", "");
  
 ?>
