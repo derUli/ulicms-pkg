@@ -24,6 +24,9 @@ function countdown_admin(){
 	   
 	if(isset($_POST["countdown_target"]))
 	   setconfig("countdown_target", db_escape($_POST["countdown_target"]));
+	   
+	if(isset($_POST["countdown_oncomplete"]))
+	   setconfig("countdown_oncomplete", db_escape($_POST["countdown_oncomplete"]));
     
      // get current options
     $countdown_to_date = getconfig("countdown_to_date");

@@ -24,16 +24,17 @@ function countdown_render(){
    height: '.$countdown_height;
    if(!empty($countdown_target) and $countdown_target != false){
       $retval .= ",
-	  target : \"".$countdown_target."\"";
+target : \"".$countdown_target."\"";
    }
    
       if(!empty($countdown_oncomplete) and $countdown_oncomplete != false){
       $retval .= ",
-	  onComplete : ".$countdown_oncomplete;
+onComplete : ".$countdown_oncomplete;
    }
    
    $retval.=',
-   style : "'.$countdown_style.'"});
+style : "'.$countdown_style.'"
+});
 </script>';
    return $retval;
 }
