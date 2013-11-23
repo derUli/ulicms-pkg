@@ -9,5 +9,8 @@ if(!getconfig("countdown_width"))
    setconfig("countdown_width", "200");
 if(!getconfig("countdown_height"))
    setconfig("countdown_height", "30");
+   
+if(!getconfig("countdown_style"))
+   setconfig("countdown_style", "boring");
  
 ?>

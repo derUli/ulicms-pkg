@@ -19,10 +19,14 @@ function countdown_admin(){
     if(isset($_POST["countdown_height"]))
 	   setconfig("countdown_height", intval($_POST["countdown_height"]));
     
+	if(isset($_POST["countdown_style"]))
+	   setconfig("countdown_style", db_escape($_POST["countdown_style"]));
+    
      // get current options
     $countdown_to_date = getconfig("countdown_to_date");
     $countdown_width = getconfig("countdown_width");
     $countdown_height = getconfig("countdown_height");
+	$countdown_style = getconfig("countdown_style");
     
      ?>
 <form method="post" action="<?php echo getModuleAdminSelfPath()?>">
@@ -44,6 +48,17 @@ echo date("Y-m-d\TH:i:s", $countdown_to_date);
 <td><input name="countdown_height" type="number" step="any" value="<?php
      echo $countdown_height;
      ?>" min="1"></td>
+</tr>
+<tr>
+<td><strong>Style</strong></td>
+<td><select name="countdown_style">
+<option value="boring" <?php if($countdown_style == "boring")
+ echo "selected";
+ ?>>boring</option>
+<option value="flip" <?php if($countdown_style == "flip")
+ echo "selected";
+ ?>>flip</option>
+</select></td>
 </tr>
 </table>
 <input type="submit" name="submit" value="Einstellungen speichern"/>

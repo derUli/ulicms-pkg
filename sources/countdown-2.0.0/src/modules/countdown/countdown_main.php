@@ -13,12 +13,15 @@ function countdown_render(){
 	   
 	$countdown_width = getconfig("countdown_width");
 	$countdown_height = getconfig("countdown_height");
+	$countdown_style = getconfig("countdown_style");
    
    $retval = '<script>
-   new Countdown({time:'.$time_difference.',
+   new Countdown({
+   time:'.$time_difference.',
    width: '.$countdown_width.',
-   height: '.$countdown_height.'});
+   height: '.$countdown_height.',
+   countdown_style : "'.$countdown_style.'"});
 </script>';
-return $retval;
+   return $retval;
 }
 ?>
