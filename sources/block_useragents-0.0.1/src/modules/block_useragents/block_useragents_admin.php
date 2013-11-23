@@ -19,7 +19,7 @@ function block_useragents_admin(){
 Sie können einen Eintrag pro Zeile eingeben.
 </p>
 <p>
-<textarea rows="10" cols="80" name="blocked_useragents"><?php echo $blocked_useragents;
+<textarea rows="10" cols="80" style="width:100%" name="blocked_useragents"><?php echo $blocked_useragents;
     ?></textarea>
 
 <p><input type="submit" name="submit" value="Einstellungen speichern"/></p>
