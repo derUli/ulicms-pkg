@@ -38,6 +38,5 @@ if(!function_exists("db_optimize")){
 			 }
         echo "</p>";
     }
-echo "<br/>";
    }
 }
