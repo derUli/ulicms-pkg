@@ -1,1 +1,1 @@
-Cronjob für mysql_optimize
+Cronjob fÃ¼r mysql_optimize
