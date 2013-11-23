@@ -21,12 +21,16 @@ function countdown_admin(){
     
 	if(isset($_POST["countdown_style"]))
 	   setconfig("countdown_style", db_escape($_POST["countdown_style"]));
+	   
+	if(isset($_POST["countdown_target"]))
+	   setconfig("countdown_target", db_escape($_POST["countdown_target"]));
     
      // get current options
     $countdown_to_date = getconfig("countdown_to_date");
     $countdown_width = getconfig("countdown_width");
     $countdown_height = getconfig("countdown_height");
 	$countdown_style = getconfig("countdown_style");
+	$countdown_target = getconfig("countdown_target");
     
      ?>
 <form method="post" action="<?php echo getModuleAdminSelfPath()?>">
@@ -48,6 +52,11 @@ echo date("Y-m-d\TH:i:s", $countdown_to_date);
 <td><input name="countdown_height" type="number" step="any" value="<?php
      echo $countdown_height;
      ?>" min="1"></td>
+</tr>
+
+<tr>
+<td><strong>Target</strong></td>
+<td><input type="text" name="countdown_target" value="<?php echo stringHelper::real_htmlspecialchars($countdown_target)?>"> </td>
 </tr>
 <tr>
 <td><strong>Style</strong></td>

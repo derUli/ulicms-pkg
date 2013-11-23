@@ -12,5 +12,8 @@ if(!getconfig("countdown_height"))
    
 if(!getconfig("countdown_style"))
    setconfig("countdown_style", "boring");
+   
+if(!getconfig("countdown_target"))
+   setconfig("countdown_target", "");
  
 ?>

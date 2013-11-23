@@ -9,11 +9,7 @@
 //                                        //
 ////////////////////////////////////////////
 // 
-var CountdownImageFolder = "images/";
-var CountdownImageBasename = "flipper";
-var CountdownImageExt = "png";
-var CountdownImagePhysicalWidth = 41;
-var CountdownImagePhysicalHeight = 60;
+
 
 // Usage:
 // var test = new Countdown({time:15});

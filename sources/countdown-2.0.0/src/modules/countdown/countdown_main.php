@@ -14,13 +14,19 @@ function countdown_render(){
 	$countdown_width = getconfig("countdown_width");
 	$countdown_height = getconfig("countdown_height");
 	$countdown_style = getconfig("countdown_style");
-   
+    $countdown_target = getconfig("countdown_target");
+	
    $retval = '<script>
    new Countdown({
    time:'.$time_difference.',
    width: '.$countdown_width.',
-   height: '.$countdown_height.',
-   countdown_style : "'.$countdown_style.'"});
+   height: '.$countdown_height;
+   if(!empty($countdown_target) and $countdown_target != false){
+      $retval .= ",
+	  target : \"".$countdown_target."\"";
+   }
+   $retval.=',
+   style : "'.$countdown_style.'"});
 </script>';
    return $retval;
 }
