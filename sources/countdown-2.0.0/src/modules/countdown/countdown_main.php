@@ -6,7 +6,7 @@ function countdown_render(){
       return $retval;
 	  
 	$end_date = intval($end_date);
-   $time_difference = $end_date - time();
+    $time_difference = $end_date - time();
     
    if($time_difference < 0)
        $time_difference = 0;
@@ -17,9 +17,9 @@ function countdown_render(){
     $countdown_target = getconfig("countdown_target");
 	$countdown_oncomplete = getconfig("countdown_oncomplete");
 	
-   $retval = '<script>
+   $retval = '<script type="text/javascript">
    new Countdown({
-   time:'.$time_difference.',
+   time: '.$time_difference.',
    width: '.$countdown_width.',
    height: '.$countdown_height;
    if(!empty($countdown_target) and $countdown_target != false){
@@ -33,7 +33,7 @@ onComplete : ".$countdown_oncomplete;
    }
    
    $retval.=',
-style : "'.$countdown_style.'"
+   style : "'.$countdown_style.'"
 });
 </script>';
    return $retval;
