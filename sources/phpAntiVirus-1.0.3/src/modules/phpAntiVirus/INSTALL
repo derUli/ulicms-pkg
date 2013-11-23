@@ -1,0 +1,254 @@
+[+]----------------------------------------------------------------------[+]
+                  _                   _   _     _             
+             _ __| |_  _ __  __ _ _ _| |_(_)_ _(_)_ _ _  _ ___
+            | '_ \ ' \| '_ \/ _` | ' \  _| \ V / | '_| || (_-<
+            | .__/_||_| .__/\__,_|_||_\__|_|\_/|_|_|  \_,_/__/
+            |_|       |_|                                     
+                               Version 1.0.3
+
+[+]----------------------------------------------------------------------[+]
+
+    Official Site:                                     Authors:
+    http://phpantivirus.sourceforge.net                KeyboardArtist
+                                                       Deekay
+    Sourceforge Page:                                  Nico
+    http://sourceforge.net/projects/phpantivirus/      Murphy
+
+    This software is provided as-is, without warranty or guarantee of
+    any kind. Use at your own risk. This software is licenced under the
+    GNU GPL license. More information is available in 'COPYING' included
+    with this distribution.
+
+[+]----------------------------------------------------------------------[+]
+
+ ==> CONTENTS OF THIS DOCUMENT
+
+      [001]  Requirements of phpAV
+      [002]  Unpack & Upload - Linux to Linux
+      [003]  Unpack & Upload - Windows to Linux
+      [004]  Unpack & Upload - Windows Server
+      [005]  Configuring The Script
+      [006]  Testing Your Installation
+      [007]  Security
+      [008]  Automating Scans
+      [009]  Keeping Updated Definitions
+      [010]  Informing Users
+
+[+]----------------------------------------------------------------------[+]
+
+ ==> [001]  Requirements of phpAV
+
+    phpAV runs on Linux web servers (it has been known to function under
+    Windows), and is optimised to run on shared web hosting accounts.
+    You will require a 
+
+    Although phpAV may function with older versions, it remains untested
+    and unsuported. Therefore we recommend you have the following
+    installed on your server:
+
+    *  Apache 1.3
+    *  PHP 4.3.x
+
+[+]----------------------------------------------------------------------[+]
+
+ ==> [002]  Unpack & Upload - Linux to Linux
+
+    If you are using a Linux machine at home, and wish to install to a
+    Linux server, follow these instructions...
+
+    *  Unpack the archive by typing:
+
+            tar -zxvf phpAntiVirus1.0.3.tar.gz
+
+    *  Upload the files to your web server:
+
+            cd phpAntiVirus 1.0.3
+            ftp
+            open <address of your ftp site>
+            <username>
+            <password>
+            cd <path to web files>
+            mkdir av
+            put index.php
+            put virus.def
+            chmod 755 virus.def
+            chmod 755 index.php
+            close
+            exit
+
+[+]----------------------------------------------------------------------[+]
+
+ ==> [003]  Unpack & Upload - Windows to Linux
+
+    If you are using a Windows machine to upload to a Linux server,
+    follow these instructions...
+
+    *  Unpack the archive using WinZip or similar
+
+    *  Open your favourite FTP program
+
+    *  Connect to your web hosting FTP site
+
+    *  Move into your public web files directory
+       (e.g. 'www', 'htdocs', 'mainwebsite', etc)
+
+    *  Create a directory for phpAV
+       (e.g. 'av')
+
+    *  Upload "virus.def" and "index.php" to the phpAV directory
+
+    *  Use your FTP program to change permissions (chmod) on the
+       "index.php" and "virus.def" files to 755
+
+[+]----------------------------------------------------------------------[+]
+
+ ==> [004]  Unpack & Upload - Windows Server
+
+    If you are installing phpAV on a Windows server, follow these
+    instructions...
+
+    *  Create a folder for phpAV in the root of your web files
+       (e.g. "av")
+
+    *  Copy "index.php", "virus.def" and "config.php" to the new
+       folder
+
+    *  Select all three files and mark them "read only"
+       (right-click, go to properties, check read only, apply)
+
+    Please note the installation instructions below concentrate on
+    Linux-based systems, and you may need to modify commands to match
+    the results.
+
+    Notably, when modifying the configuration remember to untick the
+    read only box, make changes, and renable read only for security.
+
+    Although officially unsupported, users may offer you assistance on
+    the SourceForge Support Forums.
+
+[+]----------------------------------------------------------------------[+]
+
+ ==> [005]  Configuring The Script
+
+    Now open "config.php" in your preferred text editor. The file is
+    well documented - please read the paragraph about each setting
+    before making changes.
+
+    You may wish to run in debug mode initially, then turn it off
+    before automating your scans. Or leave it on, we don't mind ;)
+
+    Once you have saved your changes, upload the "config.php" file
+    to your web server using the procedures listed above. Don't forget
+    to set the file permissions to "755" or lower for security.
+
+[+]----------------------------------------------------------------------[+]
+
+ ==> [006]  Testing Your Installation
+
+    Now open your web browser and visit "yoursite.com/av/" or the
+    path you installed phpAV in. Please note this may take some time
+    to load - it is currently scanning your web files.
+
+    If installation has gone smoothly, you should be presented with a
+    scan report of your web files.
+
+    If you encounter problems please read the "Troubleshooting" and
+    "Support" sections of the README document.
+
+[+]----------------------------------------------------------------------[+]
+
+ ==> [007]  Security
+
+    The file permissions of the phpAV scripts and data files are
+    paramount to the security of the script. Please double-triple-check
+    that file permissions are set to "755" or lower - enough to be
+    readable by Apache, and only overwritable by you.
+
+    Don't forget there may be hundreds of other (not so honest) users
+    on your shared hosting account. If they belong to the same group
+    as you, permissions of "775" will allow them to disable your phpAV.
+
+    It is HIGHLY recommended you password-protect the /av/ directory
+    to prevent anyone finding it. Vulnerabilities in future versions of
+    phpAV are unlikely, but still might happen. We don't scammers to
+    be spidering Google or domain names for holes in this script!
+
+    On Linux machines you can password-protect a folder by using
+    .htaccess and .htpasswd files. More information on this topic is
+    available here:
+
+                  http://tinyurl.com/9ha6z
+
+    You can generate encrypted passwords for your .htpasswd here:
+
+                  http://www.flash.net/cgi-bin/pw.pl
+
+    If you have problems using .htaccess files, contact your web hosting
+    provider who should be able to give you further assistance.
+
+[+]----------------------------------------------------------------------[+]
+
+ ==> [008]  Automating Scans
+
+    Installing phpAV is all very well, but will you remember to scan
+    your web files daily (or at a push, weekly)? I don't. Wouldn't it
+    be nice to simply receive an e-mail every day, containing a full
+    report of an automated scan? Cron is the answer.
+
+    Cron jobs allow you to specify commands to run at specific times.
+    For example, we would like a Linux command line that "runs phpAV
+    and redirects the output to an e-mail" every 24 hours.
+
+    Documenting cron is outside the scope of this document, but there
+    are many free resources that guide you through creating jobs.
+
+    I highly recommend contacting your web hosting provider, they
+    probably have very different procedures to this.
+
+    More information on using cron jobs is here:
+
+      http://usertools.plus.net/tutorials/id/1
+
+    If you are unable to run cron jobs with your current web host, you
+    may wish to investigate Pseudo Cron:
+
+                 http://www.bitfolge.de/pseudocron-en.html
+
+    Windows users should investigate Task Scheduler.
+
+[+]----------------------------------------------------------------------[+]
+
+ ==> [009]  Keeping Updated Definitions
+
+    New malicious code is being released constantly, and we often update
+    the "virus.def" file to catch new threats. You should keep your
+    definitions uptodate. Unfortunately this is a manual process at the
+    moment, we are still considering the security implications of
+    automated updates.
+
+    A package containing the latest virus definitions is available on
+    the homepage of our official site. Download and unpack the file,
+    upload it to your web server to replace the old version, and check
+    the file permissions are "755" or lower.
+
+                       http://phpantivirus.sourceforge.net/
+
+[+]----------------------------------------------------------------------[+]
+
+ ==> [010]  Informing Users
+
+    Telling users that you care about their safety is a good thing, and
+    increases trust in your web site. You can do this by displaying the
+    phpAV logo in the footer of your site, or in your About pages
+    somewhere.
+
+    And if you're feeling generous, you can link back to the phpAV site
+    so other webmasters can help protect their users.
+
+    Linking code and phpAV images are available from our homepage:
+
+                       http://phpantivirus.sourceforge.net/
+
+[+]----------------------------------------------------------------------[+]
+                  Document last updated 16-July-2005
+[+]----------------------------------------------------------------------[+]

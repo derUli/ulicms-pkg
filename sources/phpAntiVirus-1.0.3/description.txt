@@ -1,0 +1,1 @@
+GPL PHP AntiVirus for webmasters. Scans your web server's file system for dangerous and malicious code in public HTML, PHP, CGI and text files, usually caused by defacement or security holes in shared hosting accounts.

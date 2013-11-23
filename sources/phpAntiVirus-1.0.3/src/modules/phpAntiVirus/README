@@ -1,0 +1,179 @@
+[+]----------------------------------------------------------------------[+]
+                  _                   _   _     _             
+             _ __| |_  _ __  __ _ _ _| |_(_)_ _(_)_ _ _  _ ___
+            | '_ \ ' \| '_ \/ _` | ' \  _| \ V / | '_| || (_-<
+            | .__/_||_| .__/\__,_|_||_\__|_|\_/|_|_|  \_,_/__/
+            |_|       |_|                                     
+                               Version 1.0.3
+
+[+]----------------------------------------------------------------------[+]
+
+    Official Site:                                     Authors:
+    http://phpantivirus.sourceforge.net                KeyboardArtist
+                                                       Deekay
+    Sourceforge Page:                                  Nico
+    http://sourceforge.net/projects/phpantivirus/      Murphy
+
+    This software is provided as-is, without warranty or guarantee of
+    any kind. Use at your own risk. This software is licenced under the
+    GNU GPL license. More information is available in 'COPYING' included
+    with this distribution.
+
+[+]----------------------------------------------------------------------[+]
+
+ ==> CONTENTS OF THIS DOCUMENT
+
+      [001]  Introduction
+      [002]  What phpAV Does NOT Do
+      [003]  Linux Installation
+      [004]  Windows Installation
+      [005]  Troubleshooting
+      [006]  Getting Support
+      [007]  Frequently Asked Questions
+      [008]  Authors
+      [009]  License
+
+[+]----------------------------------------------------------------------[+]
+
+ ==> [001]  Introduction
+
+    Welcome to phpAntiVirus. In the ever-decreasing world of Internet
+    security, web servers are fast becoming a target for spammers and
+    authors of malicious code to spread their nasties.
+
+    Server security is paramount, and the spread of malicious code can
+    be prevented by competent administrators and knowledgable web
+    masters. But why not be on the safe side?
+
+    phpAntiVirus is designed to run on your web server and scan your
+    public web files for malicious code. It is small, portable and
+    efficient, uses minimal server resources, and provides a full
+    report on what has been discovered.
+
+[+]----------------------------------------------------------------------[+]
+
+ ==> [002]  What phpAV Does NOT Do
+
+    phpAntiVirus is not a replacement for standard anti-viral tools.
+    It does not scan your e-mail, it does not scan your computer, it
+    does not scan the server for malicious binaries. It does not
+    act as a tripwire for *nix account takeovers.
+
+    At the moment phpAntiVirus does not scan for vulnerabilities in
+    your web site code. It merely detects any changes as a result of
+    a vulnerability being abused.
+
+    Although considered stable, it is early days for the phpAV
+    project.
+
+    Ideally phpAntiVirus should be run on your user account alongside
+    the server administrators' own security tools.
+
+[+]----------------------------------------------------------------------[+]
+
+ ==> [003]  Linux Installation
+
+    Please see INSTALL for installation instructions.
+
+[+]----------------------------------------------------------------------[+]
+
+ ==> [004]  Windows Installation
+
+    Please see INSTALL for installation instructions.
+
+[+]----------------------------------------------------------------------[+]
+
+ ==> [005]  Troubleshooting
+
+    I get "Fatal error: Virus.def vulnerable to overwrite..."
+
+      This means the permissions of the "virus.def" file may allow
+      other users to overwrite your virus definitions, causing
+      undesirable results or rendering phpAV useless.
+
+      To fix this, read the installation instructions.
+
+
+    How do I get phpAV to scan content stored in a database?
+
+      Databases are not currently supported by phpAV. Expect this
+      to change in future releases.
+
+
+    Why does phpAV only scan X directory/scan too much?
+
+      phpAV only scans the path you define during the installation
+      procedure. Please read installation instructions.
+
+      At the moment phpAV will recursively scan ALL directories in
+      the path you have specified.
+
+[+]----------------------------------------------------------------------[+]
+
+ ==> [006]  Getting Support
+
+   If you are having problems installing/using your phpAV, please
+   PLEASE follow this list carefully. You are bound to find an answer
+   in one them. Please do not ask support a question that is already
+   answered in our carefully-structured documenation, as the response
+   may offend ;)
+
+
+   - Documentation
+
+     Yes - RTFM! We spent a long time compiling the documentation that
+     is included with each release.
+
+
+   - SourceForge Bug Reports
+
+     If you are getting an error, please check first if it is a known
+     bug. Be assured if the bug is already posted we are working as
+     fast as we can to fix it, we don't need to be told twice.
+
+
+   - SourceForge Support Forums
+
+     Still unable to find an answer to your question? Post your query
+     to the SourceForge support forums, where the developers and other
+     users will be happy to assist.
+
+
+   Please, under no circumstances, contact the developers directly for
+   support. We are UNABLE to provide support by e-mail.
+
+[+]----------------------------------------------------------------------[+]
+
+ ==> [007]  Frequently Asked Questions
+
+   In all honesty, we haven't received that many questions from users
+   yet. As our support forums grow we will include FAQs on our website
+   and future releases' documentation.
+
+[+]----------------------------------------------------------------------[+]
+
+ ==> [008]  Authors
+
+   phpAntiVirus was originally conceived and coded by KeyboardArtist.
+   Since then two other developers have joined the project - Nico and
+   Deekay. Murphy is our resident project manager.
+
+   Where possible the script, documentation and official web site were
+   written in nano. Thank you to the authors of nano (except for the
+   segmentation fault that just deleted half this document!), figlet,
+   mySQL and PHP, in fact most open source developers out there.
+
+   And of course thank you to everyone who has submitted bug reports
+   and feature requests during the lifecycle of this project. We
+   wouldn't be here without you either.
+
+[+]----------------------------------------------------------------------[+]
+
+ ==> [009]  License
+
+   Please see 'COPYING' for license agreement.
+
+
+[+]----------------------------------------------------------------------[+]
+                  Document last updated 16-July-2005
+[+]----------------------------------------------------------------------[+]
