@@ -1,1 +1,1 @@
-Stellt einen flexiblen JavaScript Countdown zur Verfügung
+Stellt einen flexiblen JavaScript Countdown zur VerfÃ¼gung
