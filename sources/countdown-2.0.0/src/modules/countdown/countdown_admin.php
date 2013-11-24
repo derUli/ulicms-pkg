@@ -49,13 +49,13 @@ echo date("Y-m-d\TH:i:s", $countdown_to_date);
 <td><strong>Breite</strong></td>
 <td><input name="countdown_width" type="number" step="any" value="<?php
      echo $countdown_width;
-     ?>" min="1"></td>
+     ?>"></td>
 </tr>
 <tr>
 <td><strong>Höhe</strong></td>
 <td><input name="countdown_height" type="number" step="any" value="<?php
      echo $countdown_height;
-     ?>" min="1"></td>
+     ?>"></td>
 </tr>
 <tr>
 <td><strong>Zielelement</strong></td>
