@@ -1,1 +1,0 @@
-Ein Leeres Dummy Paket - Kann dafür benutzt werden, um das post-install Script eines manuell installierten Pakets auszuführen.
