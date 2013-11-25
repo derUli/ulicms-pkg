@@ -18,7 +18,7 @@
 <div id="linkbar">
 <div id="navcontainer">
 <?php 
-menu("top"); 
+language_selection();
 ?>
 </div>
 </div>
@@ -28,7 +28,7 @@ menu("top");
 <div id="content">
 
 <div id="right_menu">
-<h4>Menu</h4>
+<h4>Navigation</h4>
 
 <div class="navcontainer">
 <?php menu("right"); ?>
