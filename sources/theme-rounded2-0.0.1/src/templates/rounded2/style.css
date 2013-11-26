@@ -115,3 +115,10 @@ width: 800px;
 height: 50px;
 }
 
+span.blog_article_next{
+float:right;
+}
+
+.blog_pagination_older{
+float:right;
+}
