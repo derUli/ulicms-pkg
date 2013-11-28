@@ -1,1 +1,1 @@
-Ausführliche Besucherstatistiken mit Diagrammen
+Ausführliche Besucherstatistiken mit Diagrammen (benötigt PChart)
