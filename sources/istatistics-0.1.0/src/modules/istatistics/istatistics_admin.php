@@ -104,13 +104,38 @@ $monatsarray = array();
                      $monatname = strftime("%B", $monatserster);
                      $anzahlbesucher = db_num_rows($data);
                        $besucherarray[] = $anzahlbesucher;
+                       $monatsarray[] = $monatname;
                      }
                 
                  }
              }
-        
-         $myPicture = new pImage(700,230,$MyData); 
-          $myPicture->Antialias = true; 
+   
+   $MyData->addPoints($besucherarray[], 
+   getconfig("homepage_title"));
+   
+   $MyData->setAxisName(0,"Besucher");
+   $MyData->addPoints($monatsarray, "Monate");
+    $MyData->setSerieDescription("Monate","Monat");  
+          $MyData->setAbscissa("Monate"); 
+
+         $myPicture = new pImage(700,230, $MyData);          $myPicture->Antialias = true; 
+         
+ $myPicture->drawRectangle(0,0,699,229,array("R"=>0,"G"=>0,"B"=>0)); 
+  $myPicture->setFontProperties(array("FontName"=> getModulePath("pchart")."fonts/pf_arma_five.ttf","FontSize"=>6)); 
+  
+ $myPicture->setGraphArea(60,40,650,200); 
+  $myPicture->drawLegend(580,12,array("Style"=>LEGEND_NOBORDER,"Mode"=>LEGEND_HORIZONTAL)); 
+  
+ $myPicture->setShadow(TRUE,array("X"=>1,"Y"=>1,"R"=>0,"G"=>0,"B"=>0,"Alpha"=>10));  $myPicture->setShadow(TRUE,array("X"=>1,"Y"=>1,"R"=>0,"G"=>0,"B"=>0,"Alpha"=>10)); 
+ $settings = array("Gradient"=>TRUE,"GradientMode"=>GRADIENT_EFFECT_CAN,"DisplayPos"=>LABEL_POS_INSIDE,"DisplayValues"=>TRUE,"DisplayR"=>255,"DisplayG"=>255,"DisplayB"=>255,"DisplayShadow"=>TRUE,"Surrounding"=>10);
+ $myPicture->drawBarChart(); 
+
+ /* Render the picture (choose the best way) */ 
+ $myPicture->autoOutput("../content/tmp/".md5(strval($i))); 
+
+
+          
+          
 
 
          }
