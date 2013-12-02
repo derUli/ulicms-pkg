@@ -6,8 +6,6 @@
 <link href='<?php echo $scriptPath;
      ?>fullcalendar/fullcalendar.print.css' rel='stylesheet' media='print' />
 <script src='<?php echo $scriptPath;
-     ?>jquery/jquery-1.9.1.min.js'></script>
-<script src='<?php echo $scriptPath;
      ?>jquery/jquery-ui-1.10.2.custom.min.js'></script>
 <script src='<?php echo $scriptPath;
      ?>fullcalendar/fullcalendar.js'></script>
