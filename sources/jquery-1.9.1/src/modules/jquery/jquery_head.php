@@ -8,5 +8,6 @@ if(!in_array(get_requested_pagename(), $disabled_on_pages)){
      ?>
 <script type="text/javascript" src="<?php echo getModulePath("jquery")?>jquery-1.9.1.min.js"></script>
 <?php
+add_hook("after_jquery_include");
      }
 ?>
