@@ -63,6 +63,7 @@ function blog_meta_keywords_filter($txt){
          }
     
      $meta_keywords = implode(", ", $meta_keywords);
+     $meta_keywords = unhtmlspecialchars($meta_keywords);
      return $meta_keywords;
     
      }

@@ -45,6 +45,7 @@ function blog_meta_description_filter($txt){
          }
      $shortstring = str_replace("\"", "'", $shortstring);
      $shortstring = str_replace("&quot;", "'", $shortstring);
+     $shortstring = unhtmlspecialchars($shortstring);
      return $shortstring;
     
      }
