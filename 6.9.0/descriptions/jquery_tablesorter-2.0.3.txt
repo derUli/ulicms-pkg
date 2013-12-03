@@ -1,1 +1,0 @@
-HTML-Tabellen sortierbar machen - Inklusive Theming Support (benötigt jquery)

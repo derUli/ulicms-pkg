@@ -1,1 +1,0 @@
-Eine Remote API für UliCMS (benötigt IXR_Library)
