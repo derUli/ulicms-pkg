@@ -15,29 +15,6 @@ else
      $lang = getconfig("default_language");
 
 
-function rootDirectory(){
-     $pageURL = 'http';
-     if ($_SERVER["HTTPS"] == "on"){
-         $pageURL .= "s";
-         }
-     $pageURL .= "://";
-     $dirname = dirname($_SERVER["REQUEST_URI"]);
-     $dirname = str_replace("\\", "/", $dirname);
-     $dirname = trim($dirname, "/");
-     if($dirname != ""){
-         $dirname = "/" . $dirname . "/";
-         }else{
-         $dirname = "/";
-         }
-     if ($_SERVER["SERVER_PORT"] != "80"){
-         $pageURL .= $_SERVER["SERVER_NAME"] . ":" . $_SERVER["SERVER_PORT"] . $dirname;
-         }else{
-         $pageURL .= $_SERVER["SERVER_NAME"] . $dirname;
-         }
-     return $pageURL;
-     }
-
-
 $query = db_query("SELECT id, datum, seo_shortname, content_preview, title FROM " . tbname("blog") . " WHERE entry_enabled = 1 AND language='$lang' ORDER by datum DESC LIMIT $blog_feed_max_items");
 
 header("Content-Type: text/xml; charset=UTF-8");
