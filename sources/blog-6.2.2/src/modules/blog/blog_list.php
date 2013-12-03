@@ -162,7 +162,7 @@ function blog_list(){
         
         
          if($last_post_id != $oldest_post_id){
-             $html .= "<a href='" . gbuildSEOUrl(get_requested_pagename())."?limit=" . $limit2 . "'>";
+             $html .= "<a href='" . buildSEOUrl(get_requested_pagename())."?limit=" . $limit2 . "'>";
              }
         
          if($_SESSION["language"] == "de"){
