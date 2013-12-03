@@ -107,7 +107,7 @@ function search_render(){
 		<ol class='result-list'>";
                  while($row = db_fetch_assoc($results)){
                      $html_output .= "<li><a href='" . 
-                     buildSEOURL($row["systemname"]). "'>" . 
+                     buildSEOUrl($row["systemname"]). "'>" . 
                      htmlspecialchars($row["title"], ENT_QUOTES, "UTF-8") . "</a></li>";
                     
                      }
@@ -133,7 +133,7 @@ function search_render(){
                  $html_output .= "<hr/>
 		<ol class='result-list'>";
                  while($row = db_fetch_assoc($results)){
-                     $html_output .= "<li><a href='" . buildSEOURL($blog_page) . "?single=" . htmlspecialchars($row["seo_shortname"], ENT_QUOTES, "UTF-8") . "'>" . htmlspecialchars($row["title"], ENT_QUOTES, "UTF-8") . "</a></li>";
+                     $html_output .= "<li><a href='" . buildSEOUrl($blog_page) . "?single=" . htmlspecialchars($row["seo_shortname"], ENT_QUOTES, "UTF-8") . "'>" . htmlspecialchars($row["title"], ENT_QUOTES, "UTF-8") . "</a></li>";
                     
                      }
                  $html_output .= "</ol>";
@@ -161,7 +161,7 @@ function search_render(){
                      $query2 = db_query("SELECT * FROM " . tbname("blog") . " WHERE id=" . $row["post_id"]);
                      if(db_num_rows($query2) > 0){
                          $row2 = db_fetch_assoc($query2);
-                         $html_output .= "<li><a href='" . buildSEOURL($blog_page) . "?single=" . htmlspecialchars($row2["seo_shortname"], ENT_QUOTES, "UTF-8") . "#comment" . $row["id"] . "'>" . "Kommentar #" . $row["id"] . " von " . htmlspecialchars($row["name"], ENT_QUOTES, "UTF-8") . " zu \"" . htmlspecialchars($row2["title"], ENT_QUOTES, "UTF-8") .
+                         $html_output .= "<li><a href='" . buildSEOUrl($blog_page) . "?single=" . htmlspecialchars($row2["seo_shortname"], ENT_QUOTES, "UTF-8") . "#comment" . $row["id"] . "'>" . "Kommentar #" . $row["id"] . " von " . htmlspecialchars($row["name"], ENT_QUOTES, "UTF-8") . " zu \"" . htmlspecialchars($row2["title"], ENT_QUOTES, "UTF-8") .
                          "\"" . "</a></li>";
                         
                         
