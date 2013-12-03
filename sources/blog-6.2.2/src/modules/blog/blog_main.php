@@ -218,9 +218,7 @@ function blog_update(){
         
          $html_output .= "<script type='text/javascript'>
 
-  location.replace('" . get_requested_pagename() .
-        
-         ".html?single=" . $seo_shortname . "');
+  location.replace('" . buildSEOUrl(get_requested_pagename())."?single=" . $seo_shortname . "');
 
   </script>
 
@@ -366,9 +364,7 @@ function blog_submit(){
         
          $html_output .= "<script type='text/javascript'>
 
-  location.replace('" . get_requested_pagename() .
-        
-         ".html?single=" . $seo_shortname . "');
+  location.replace('" . buildSEOUrl(get_requested_pagename())."?single=" . $seo_shortname . "');
 
   </script>
 

@@ -29,8 +29,8 @@ function blog_list(){
     // Anlegen eines neuen Blogbeitrag angezeigt
     if($acl -> hasPermission("blog")){
          $html .= "<p><a class='add_blog_entry_link' href='" .
-         get_requested_pagename() .
-         ".html?blog_admin=add'>Blogeintrag anlegen</a></p>";
+         buildSEOUrl(get_requested_pagename()).
+         "?blog_admin=add'>Blogeintrag anlegen</a></p>";
          }
     
     
@@ -78,7 +78,7 @@ function blog_list(){
             
             
             
-             $html .= "<h2 class='blog_headline'><a href='" . get_requested_pagename() . ".html?single=" . $post -> seo_shortname . "'>" . $post -> title . "</a></h2>";
+             $html .= "<h2 class='blog_headline'><a href='" . buildSEOUrl(get_requested_pagename())."?single=" . $post -> seo_shortname . "'>" . $post -> title . "</a></h2>";
              $html .= "<hr class='blog_hr'/>";
             
              $date_and_autor_string = $autor_and_date;
@@ -105,10 +105,10 @@ function blog_list(){
              $html .= "<div class='blog_post_content'>" . $post -> content_preview . "</div>";
             
              if($_SESSION["language"] == "de"){
-                 $html .= "<br/><a href='" . get_requested_pagename() . ".html?single=" . $post -> seo_shortname . "'>weiterlesen...</a>
+                 $html .= "<br/><a href='" . buildSEOUrl(get_requested_pagename())."?single=" . $post -> seo_shortname . "'>weiterlesen...</a>
 			 ";
                  }else{
-                 $html .= "<br/><a href='" . get_requested_pagename() . ".html?single=" . $post -> seo_shortname . "'>read more...</a>
+                 $html .= "<br/><a href='" .buildSEOUrl(get_requested_pagename())."?single=" . $post -> seo_shortname . "'>read more...</a>
 			";
                  }
              $html .= "<br/><br/>";
@@ -116,9 +116,9 @@ function blog_list(){
              $acl = new ACL();
             
              if($acl -> hasPermission("blog")){
-                 $html .= "<a href='" . get_requested_pagename() . ".html?blog_admin=edit_post&id=" . $post -> id . "'>[Bearbeiten]</a> ";
+                 $html .= "<a href='" . buildSEOUrl(get_requested_pagename())."?blog_admin=edit_post&id=" . $post -> id . "'>[Bearbeiten]</a> ";
                 
-                 $html .= "<a href='" . get_requested_pagename() . ".html?blog_admin=delete_post&id=" . $post -> id . "' onclick='return confirm(\"Diesen Post wirklich löschen?\")'>[Löschen]</a>";
+                 $html .= "<a href='" . buildSEOUrl(get_requested_pagename())."?blog_admin=delete_post&id=" . $post -> id . "' onclick='return confirm(\"Diesen Post wirklich löschen?\")'>[Löschen]</a>";
                 
                  $html .= "<br/><br/>";
                 
@@ -138,7 +138,7 @@ function blog_list(){
             
             
             
-             $html .= "<a href='" . get_requested_pagename() . ".html?limit=" . ($limit3) . "'>";
+             $html .= "<a href='" . buildSEOUrl(get_requested_pagename())."?limit=" . ($limit3) . "'>";
              }
         
          if($_SESSION["language"] == "de"){
@@ -162,7 +162,7 @@ function blog_list(){
         
         
          if($last_post_id != $oldest_post_id){
-             $html .= "<a href='" . get_requested_pagename() . ".html?limit=" . $limit2 . "'>";
+             $html .= "<a href='" . gbuildSEOUrl(get_requested_pagename())."?limit=" . $limit2 . "'>";
              }
         
          if($_SESSION["language"] == "de"){

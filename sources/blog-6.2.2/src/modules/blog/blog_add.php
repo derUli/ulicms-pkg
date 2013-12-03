@@ -2,7 +2,8 @@
 function blog_add_form(){
      $html_output = "";
      $all_languages = getAllLanguages();
-     $html_output .= "<form action='" . get_requested_pagename() . ".html?blog_admin=submit' method='post' style=''>";
+     $html_output .= "<form action='" .
+     buildSEOUrl(get_requested_pagename())."?blog_admin=submit' method='post' style=''>";
     
      $html_output .= "<table class='blog_admin_table'>";
     

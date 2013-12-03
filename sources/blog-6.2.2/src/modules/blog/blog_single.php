@@ -63,9 +63,9 @@ function blog_single($seo_shortname){
              $html .= "<br/>";
             
              if($acl -> hasPermission("blog")){
-                 $html .= "<a href='" . get_requested_pagename() . ".html?blog_admin=edit_post&id=" . $post -> id . "'>[Bearbeiten]</a> ";
+                 $html .= "<a href='" . buildSEOUrl(get_requested_pagename())."?blog_admin=edit_post&id=" . $post -> id . "'>[Bearbeiten]</a> ";
                 
-                 $html .= "<a href='" . get_requested_pagename() . ".html?blog_admin=delete_post&id=" . $post -> id . "' onclick='return confirm(\"Diesen Post wirklich löschen?\")'>[Löschen]</a>";
+                 $html .= "<a href='" . buildSEOUrl(get_requested_pagename())."?blog_admin=delete_post&id=" . $post -> id . "' onclick='return confirm(\"Diesen Post wirklich löschen?\")'>[Löschen]</a>";
                  }else if(logged_in()){
                  $html .= "
 		   <div class='disabled_link'>[Bearbeiten]</div>
@@ -338,7 +338,7 @@ function blog_display_comments($post_id){
              $html .= "</a>";
             
              if($acl -> hasPermission("blog")){
-                 $html .= " <a href='" . get_requested_pagename() . ".html?blog_admin=delete_comment&id=" . $comment -> id . "' onclick='return confirm(\"Diesen Kommentar wirklich löschen?\")'>[Löschen]</a>";
+                 $html .= " <a href='" . buildSEOUrl(get_requested_pagename())."?blog_admin=delete_comment&id=" . $comment -> id . "' onclick='return confirm(\"Diesen Kommentar wirklich löschen?\")'>[Löschen]</a>";
                  }
             
              $html .= "<br/>";
