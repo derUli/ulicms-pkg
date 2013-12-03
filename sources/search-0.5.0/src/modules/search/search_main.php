@@ -32,7 +32,7 @@ function search_render(){
          $type = "pages";
          }
     
-     $html_output .= "<form class='search-form' action='" . get_requested_pagename() . ".html' method='get'>
+     $html_output .= "<form class='search-form' action='" . buildSEOUrl(get_requested_pagename()) . "' method='get'>
 	<div class=\"search_subject\">Suchbegriff: <input type='search' results=10 autosave='" . md5($_SERVER["SERVER_NAME"]) . "' name='q' required='true' value='" . $search_subject . "'> <input type='submit' value='Suchen'></div>";
     
      $html_output .= '<br/><div class="search-content-type">';
@@ -106,7 +106,9 @@ function search_render(){
                  $html_output .= "<hr/>
 		<ol class='result-list'>";
                  while($row = db_fetch_assoc($results)){
-                     $html_output .= "<li><a href='" . htmlspecialchars($row["systemname"], ENT_QUOTES, "UTF-8") . ".html'>" . htmlspecialchars($row["title"], ENT_QUOTES, "UTF-8") . "</a></li>";
+                     $html_output .= "<li><a href='" . 
+                     buildSEOURL($row["systemname"]). "'>" . 
+                     htmlspecialchars($row["title"], ENT_QUOTES, "UTF-8") . "</a></li>";
                     
                      }
                  $html_output .= "</ol>";
@@ -131,7 +133,7 @@ function search_render(){
                  $html_output .= "<hr/>
 		<ol class='result-list'>";
                  while($row = db_fetch_assoc($results)){
-                     $html_output .= "<li><a href='" . $blog_page . ".html?single=" . htmlspecialchars($row["seo_shortname"], ENT_QUOTES, "UTF-8") . "'>" . htmlspecialchars($row["title"], ENT_QUOTES, "UTF-8") . "</a></li>";
+                     $html_output .= "<li><a href='" . buildSEOURL($blog_page) . "?single=" . htmlspecialchars($row["seo_shortname"], ENT_QUOTES, "UTF-8") . "'>" . htmlspecialchars($row["title"], ENT_QUOTES, "UTF-8") . "</a></li>";
                     
                      }
                  $html_output .= "</ol>";
@@ -159,7 +161,7 @@ function search_render(){
                      $query2 = db_query("SELECT * FROM " . tbname("blog") . " WHERE id=" . $row["post_id"]);
                      if(db_num_rows($query2) > 0){
                          $row2 = db_fetch_assoc($query2);
-                         $html_output .= "<li><a href='" . $blog_page . ".html?single=" . htmlspecialchars($row2["seo_shortname"], ENT_QUOTES, "UTF-8") . "#comment" . $row["id"] . "'>" . "Kommentar #" . $row["id"] . " von " . htmlspecialchars($row["name"], ENT_QUOTES, "UTF-8") . " zu \"" . htmlspecialchars($row2["title"], ENT_QUOTES, "UTF-8") .
+                         $html_output .= "<li><a href='" . buildSEOURL($blog_page) . "?single=" . htmlspecialchars($row2["seo_shortname"], ENT_QUOTES, "UTF-8") . "#comment" . $row["id"] . "'>" . "Kommentar #" . $row["id"] . " von " . htmlspecialchars($row["name"], ENT_QUOTES, "UTF-8") . " zu \"" . htmlspecialchars($row2["title"], ENT_QUOTES, "UTF-8") .
                          "\"" . "</a></li>";
                         
                         

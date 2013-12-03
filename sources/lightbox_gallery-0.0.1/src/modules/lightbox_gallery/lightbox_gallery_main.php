@@ -30,7 +30,7 @@ function output_single($gallery_image_folder, $id){
          fclose($fhandle);
          $description_content = "";
          }
-     $html_output .= "<p align='center'><a href='" . get_requested_pagename() . ".html'>" . "<img style='border:0px' src='" . $gallery_image_folder . $id . ".standard.jpg' alt='" . $description_content . "'/></a>
+     $html_output .= "<p align='center'><a href='" . buildSEOUrl(get_requested_pagename()) . "'>" . "<img style='border:0px' src='" . $gallery_image_folder . $id . ".standard.jpg' alt='" . $description_content . "'/></a>
 	<br/>" . nl2br($description_content) . "</p>";
      return $html_output;
      }
@@ -89,7 +89,7 @@ function output_all($gallery_image_folder){
                      $title_attr = "title='$description_content'";
                  $path_to_original_image = $gallery_image_folder . $filename;
                 
-                 $big_url = "" . get_requested_pagename() . ".html?" . "img_id=" . $exploded_filename[0];
+                 $big_url = "" .buildSEOUrl(get_requested_pagename()). "?" . "img_id=" . $exploded_filename[0];
                  $html_output .= "<a href='$standard_filename' $title_attr rel='lightbox[$random_id]'>";
                  $html_output .= "<img src='" . $thumbnail_filename . "' style='margin-right:20px;border:0px;'";
                  if(is_file($description_filename)){
