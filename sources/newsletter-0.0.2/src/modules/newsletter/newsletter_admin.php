@@ -49,6 +49,7 @@ function newsletter_admin(){
              echo "<table border=1>";
              echo "<tr style=\"font-weight:bold;\"><td>E-Mail:</td>";
              echo "<td>Abonnent seit:</td>";
+             echo "<td>Bestätigt:</td>";
              echo "</tr>";
             
              while($row = db_fetch_assoc($query)){
@@ -58,7 +59,14 @@ function newsletter_admin(){
                  "</td>" .
                  "<td>" .
                  date(DATE_FORMAT, $row["subscribe_date"]) .
-                 "</td></tr>";
+                 "</td>";
+                 echo "<td>";
+                 if($row->confirmed)
+                    echo "<span style='color:green'>bestätigt</span>";
+                 else
+                    echo "<span style='color:red'>nicht bestätigt</span>";
+                 echo "</td>";
+                 echo "</tr>";
                 
                  }
             
