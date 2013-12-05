@@ -1,6 +1,6 @@
 <?php
 
-if(!defined(ULICMS_ROOT))
+if(!defined("ULICMS_ROOT"))
      die("Fuck you!");
 
 if(isset($_POST["submit"])){

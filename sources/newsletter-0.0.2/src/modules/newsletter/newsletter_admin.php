@@ -61,7 +61,7 @@ function newsletter_admin(){
                  date(DATE_FORMAT, $row["subscribe_date"]) .
                  "</td>";
                  echo "<td>";
-                 if($row->confirmed)
+                 if($row->confirmed == 1)
                     echo "<span style='color:green'>bestätigt</span>";
                  else
                     echo "<span style='color:red'>nicht bestätigt</span>";

@@ -1,7 +1,7 @@
 <?php
 function getSubscribers(){
      $adresses = array();
-     $query = db_query("SELECT email FROM " . tbname("newsletter_subscribers") . " ORDER by email ASC");
+     $query = db_query("SELECT email FROM " . tbname("newsletter_subscribers") . " WHERE `confirmed` = 1 ORDER by email ASC");
     
      if(!$query){
          return $adresses;
