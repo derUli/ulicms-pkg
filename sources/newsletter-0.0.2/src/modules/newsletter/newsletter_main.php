@@ -58,6 +58,7 @@ function subscribe_newsletter($mail){
              $subscribe_date = time();
              
              $code = md5($mail.strval($subscribe_date));
+             $unescaped_mail = $mail;
              $mail = db_escape($mail);
              
              db_query("INSERT INTO " . tbname("newsletter_subscribers") .
@@ -71,7 +72,7 @@ function subscribe_newsletter($mail){
                  "Bitte klicken Sie auf folgenden Link, um den Empfang des Newsletters zu bestätigen:\n".$url."\n\n".
                  "Sollten Sie diese E-Mail ungewünscht entfangen haben, ignorieren Sie sie einfach.";
                  
-                if(@mail(getconfig("email"), "Bestätigung des Email-Newsletters", $mailtext, $headers))
+                if(@mail($unescaped_mail, "Bestätigung des Email-Newsletters", $mailtext, $headers))
             {
              $html_output .= "<p>$translation_thank_you_for_subscribing</p>";
              
