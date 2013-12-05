@@ -70,7 +70,7 @@ function subscribe_newsletter($mail){
                  
                  $url = rootDirectory().buildSEOUrl(get_requested_pagename())."?code=".$code;
                  
-                 $mailtext = "Vielen Dank für das Abonnieren, des E-Mail Newsletters von \"".getconfig("homepage_title")."\"\n\n".
+                 $mailtext = "Vielen Dank für das Abonnieren, des E-Mail Newsletters von \"".getconfig("homepage_title")."\"!\n\n".
                  "Bitte klicken Sie auf folgenden Link, um den Empfang des Newsletters zu bestätigen:\n".$url."\n\n".
                  "Sollten Sie diese E-Mail ungewünscht empfangen haben, ignorieren Sie sie einfach.";
                  
