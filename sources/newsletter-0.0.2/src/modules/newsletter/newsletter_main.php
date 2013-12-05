@@ -99,7 +99,7 @@ function subscribe_newsletter($mail){
 
 function checkIfSubscribed($mail){
      $mail = db_escape($mail);
-     $query = db_query("SELECT email FROM " . tbname("newsletter_subscribers") . " WHERE `email` = '$mail' AND `confirmed` = 1");
+     $query = db_query("SELECT email FROM " . tbname("newsletter_subscribers") . " WHERE `email` = '$mail'");
      return db_num_rows($query) > 0;
      }
 
