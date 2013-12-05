@@ -64,13 +64,15 @@ function subscribe_newsletter($mail){
              db_query("INSERT INTO " . tbname("newsletter_subscribers") .
                  "(email, subscribe_date) VALUES('$mail', " . $subscribe_date . ")");
                  
-                 $headers = "From: " . $_POST['emailadresse'] . "\nReply-To: " . $_POST['emailadresse'] . "\nContent-Type: text/plain; charset=UTF-8";
+                 $headers = "From: " . getconfig("email") . "\n".
+                 "Content-Type: text/plain; charset=UTF-8";
                  
                  
                  $url = rootDirectory().buildSEOUrl(get_requested_pagename())."?code=".$code;
+                 
                  $mailtext = "Vielen Dank für das Abonnieren, des E-Mail Newsletters von ".getconfig("homepage_title")."\n\n".
                  "Bitte klicken Sie auf folgenden Link, um den Empfang des Newsletters zu bestätigen:\n".$url."\n\n".
-                 "Sollten Sie diese E-Mail ungewünscht entfangen haben, ignorieren Sie sie einfach.";
+                 "Sollten Sie diese E-Mail ungewünscht empfangen haben, ignorieren Sie sie einfach.";
                  
                 if(@mail($unescaped_mail, "Bestätigung des Email-Newsletters", $mailtext, $headers))
             {
