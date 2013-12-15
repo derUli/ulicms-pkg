@@ -47,7 +47,6 @@
         
          }
     
-    
      $spamfilter_enabled = getconfig("spamfilter_enabled") == "yes";
     
      // Spamschutz
@@ -86,7 +85,20 @@
             
              }
         
-        
+        // Filter nach chinesisch
+		     if(getconfig("disallow_chinese_chars") and $spamfilter_enabled and
+	(is_chinese($_POST["betreff"]) or
+                 is_chinese($_POST["nachricht"]))){
+				 if($_SESSION["language"] == "de"){
+				 $fehler = "<p class='ulicms_error'>" .
+             "Chinesische Schriftzeichen sind nicht erlaubt!</p>";
+			 } else {
+			  $fehler ="<p class='ulicms_error'>" .
+             "Chinese chars are not allowed!</p>";
+			 }
+             }
+    
+		
          // Filter nach Land
         if(function_exists("isCountryBlocked")){
              if(isCountryBlocked()){

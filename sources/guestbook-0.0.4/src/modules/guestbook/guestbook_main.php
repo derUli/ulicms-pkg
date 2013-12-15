@@ -134,11 +134,27 @@ function guestbook_render(){
                      "Ihr Eintrag enthält nicht erlaubte Wörter.</p>";
                      }
                 else{
+				     $errors = true;
                      $html_output .= "<p class='ulicms_error'>" .
                      "Your comment contains not allowed words.</p>";
                      }
                  }
             
+			        // Filter nach chinesisch
+		     if(getconfig("disallow_chinese_chars") and $spamfilter_enabled and
+                 (is_chinese($_POST["gb_content"]))){
+				 
+				 $errors = true;
+				 
+				 if($_SESSION["language"] == "de"){
+				 $html_output .= "<p class='ulicms_error'>" .
+             "Chinesische Schriftzeichen sind nicht erlaubt!</p>";
+			 } else {
+			  $html_output .= "<p class='ulicms_error'>" .
+             "Chinese chars are not allowed!</p>";
+			 }
+             }
+			
              if($_POST["phone"] != "" and $spamfilter_enabled){
                  $errors = true;
                  if($_SESSION["language"] == "de"){

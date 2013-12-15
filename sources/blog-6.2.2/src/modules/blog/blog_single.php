@@ -272,7 +272,21 @@ function blog_display_comments($post_id){
              $html .= "<p class='ulicms_error'>Users from your Country are blocked by the spamfilter. If you believe, this is an error, please contact the administrator.</p>";
              }
          }
-    
+		 
+    else if(getconfig("disallow_chinese_chars") and $spamfilter_enabled and
+	(is_chinese($_POST["name"]) or
+                 is_chinese($_POST["comment"]))){
+				 if($_SESSION["language"] == "de"){
+				 $html .= "<p class='ulicms_error'>" .
+             "Chinesische Schriftzeichen sind nicht erlaubt!</p>";
+			 } else {
+			 $html .= "<p class='ulicms_error'>" .
+             "Chinese chars are not allowed!</p>";
+			 }
+             }
+			 
+			 
+				     
     else if($spamfilter_enabled and (stringcontainsbadwords($_POST["name"]) or
                  stringcontainsbadwords($_POST["comment"]))){
          if($_SESSION["language"] == "de"){
@@ -283,12 +297,7 @@ function blog_display_comments($post_id){
              $html .= "<p class='ulicms_error'>" .
              "Your comment contains not allowed words.</p>";
              }
-         }
-    
-    
-    
-    
-    else{
+         } else{
         
          if(post_comments($post -> id)){
              $html .= "<script type='text/javascript'>
