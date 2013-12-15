@@ -90,11 +90,9 @@
 	(is_chinese($_POST["betreff"]) or
                  is_chinese($_POST["nachricht"]))){
 				 if($_SESSION["language"] == "de"){
-				 $fehler = "<p class='ulicms_error'>" .
-             "Chinesische Schriftzeichen sind nicht erlaubt!</p>";
+				 $fehler = "Chinesische Schriftzeichen sind nicht erlaubt!";
 			 } else {
-			  $fehler ="<p class='ulicms_error'>" .
-             "Chinese chars are not allowed!</p>";
+			  $fehler ="Chinese chars are not allowed!";
 			 }
              }
     
