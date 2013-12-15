@@ -106,6 +106,24 @@ function kontaktformular_render(){
                 
                 
                  }
+				 
+				 
+				    // Filter nach chinesisch
+		     if(getconfig("disallow_chinese_chars") and $spamfilter_enabled and
+	(is_chinese($_POST["betreff"]) or
+                 is_chinese($_POST["nachricht"]))){
+				 
+                 setconfig("contact_form_refused_spam_mails",
+                     getconfig("contact_form_refused_spam_mails") + 1);
+					 
+				 if($_SESSION["language"] == "de"){
+				 $fehler = "<p class='ulicms_error'>" .
+             "Chinesische Schriftzeichen sind nicht erlaubt!</p>";
+			 } else {
+			  $fehler ="<p class='ulicms_error'>" .
+             "Chinese chars are not allowed!</p>";
+			 }
+             }
             
             
              // Filter nach Land
@@ -130,6 +148,8 @@ function kontaktformular_render(){
                      }
                  }
             
+			
+
             
             
             
