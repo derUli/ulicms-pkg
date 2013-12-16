@@ -1,0 +1,19 @@
+﻿body{
+margin:0;
+padding:0;
+background-color:;
+}
+
+
+.header span{
+font-size:10pt;
+}
+
+.blog_pagination_older{
+float:right;
+}
+
+.clear{
+clear:both;
+}
+
