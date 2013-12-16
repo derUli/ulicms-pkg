@@ -33,13 +33,13 @@ function subscribe_newsletter($mail){
      $html_output = "";
     
      if($_SESSION["language"] == "de"){
-         $translation_thank_you_for_subscribing = "Danke für das Abonnieren des Newsletters.";
+         $translation_thank_you_for_subscribing = "Danke für das Abonnieren des Newsletters.<br/>Sie müssen den Empfang des Newsletters noch bestätigen, in dem Sie den Link in der E-Mail die wir an Sie versandt haben anklicken.";
          $translation_already_subscribed = "Sie haben den Newsletter bereits abonniert!";
          $translation_email_adress_invalid = "Diese E-Mail Adresse ist ungültig.";
          }
     
     else{
-         $translation_thank_you_for_subscribing = "Thank you for subscribing";
+         $translation_thank_you_for_subscribing = "Thank you for subscribing! You have to confirm the newsletter by clicking on the link that we sent in an email to you";
          $translation_already_subscribed = "You've Subscribed the newsletter.";
          $translation_email_adress_invalid = "This mail adress is invalid.";
          }
@@ -55,12 +55,33 @@ function subscribe_newsletter($mail){
         else
             {
             
-             $mail = db_escape($mail);
              $subscribe_date = time();
+             
+             $code = md5($mail.strval($subscribe_date));
+             $unescaped_mail = $mail;
+             $mail = db_escape($mail);
+             
              db_query("INSERT INTO " . tbname("newsletter_subscribers") .
                  "(email, subscribe_date) VALUES('$mail', " . $subscribe_date . ")");
-            
+                 
+                 $headers = "From: " . getconfig("email") . "\n".
+                 "Content-Type: text/plain; charset=UTF-8";
+                 
+                 
+                 $url = rootDirectory().buildSEOUrl(get_requested_pagename())."?code=".$code;
+                 
+                 $mailtext = "Vielen Dank für das Abonnieren, des E-Mail Newsletters von \"".getconfig("homepage_title")."\"!\n\n".
+                 "Bitte klicken Sie auf folgenden Link, um den Empfang des Newsletters zu bestätigen:\n".$url."\n\n".
+                 "Sollten Sie diese E-Mail ungewünscht empfangen haben, ignorieren Sie sie einfach.";
+                 
+                if(@mail($unescaped_mail, "Bestätigung des Email-Newsletters", $mailtext, $headers))
+            {
              $html_output .= "<p>$translation_thank_you_for_subscribing</p>";
+             
+             } else {
+             $html_output .= "Der Versand der Bestätigungs E-Mail ist aus technischen Gründen fehlgeschlagen.<br/>
+             Bitte kontaktieren Sie den Administrator der Internetseite.";
+             }
              }
         
         
@@ -78,7 +99,7 @@ function subscribe_newsletter($mail){
 
 function checkIfSubscribed($mail){
      $mail = db_escape($mail);
-     $query = db_query("SELECT email FROM " . tbname("newsletter_subscribers") . " WHERE email = '$mail'");
+     $query = db_query("SELECT email FROM " . tbname("newsletter_subscribers") . " WHERE `email` = '$mail'");
      return db_num_rows($query) > 0;
      }
 
