@@ -1,14 +1,4 @@
 <?php
-if(file_exists("antispam-features.php")){
-     include "antispam-features.php";
-     }else{
-    
-     function isCountryBlocked(){
-         return false;
-         }
-    
-     }
-
 
 
 function blog_single($seo_shortname){

@@ -1,6 +1,5 @@
 <?php
 
-include "antispam-features.php";
 
 if(!function_exists("stringcontainsbadwords")){
      function stringcontainsbadwords($str){

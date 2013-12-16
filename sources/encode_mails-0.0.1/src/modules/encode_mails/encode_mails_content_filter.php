@@ -8,9 +8,9 @@ function ascii_encode($string){
      }
 
 function SpamBlockEmail($string){
-     $pattern = "/([a-z|A-Z|0-9|\-|_|\.]*@[a-z|A-Z|0-9|\-|_]*\.[a-zA-Z]*)/e";
+     $pattern = "/([a-z|A-Z|0-9|\-|_|\.]*@[a-z|A-Z|0-9|\-|_]*\.[a-zA-Z]*)/";
      $replacement = " ascii_encode('$1'); ";
-     $string = preg_replace($pattern, $replacement, $string);
+     $string = preg_replace_callback($pattern, 'ascii_encode', $string);
      return $string;
      }
 

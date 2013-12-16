@@ -1,8 +1,5 @@
 <?php
 
-if(file_exists("antispam-features.php")){
-     include_once "antispam-features.php";
-    }
 
 function kontaktformular_render(){
     
