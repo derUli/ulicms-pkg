@@ -37,3 +37,6 @@ releases/*
 *.*~
 .DS_Store
 thumbs.db
+
+.svn
+.DS_Store
