@@ -82,4 +82,3 @@ $('a').click(function(){
     <div id="near-clouds" class="near-clouds stage"></div>
 
     <div class="mainContent">
-<body>
