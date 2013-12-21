@@ -82,3 +82,11 @@ $('a').click(function(){
     <div id="near-clouds" class="near-clouds stage"></div>
 
     <div class="mainContent">
+<?php
+if(getconfig("logo_disabled") == "no")
+    {
+     ?>
+<p><?php logo();?></p>
+<br/>
+	 <?php } ?>
+     
