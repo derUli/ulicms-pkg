@@ -65,6 +65,6 @@ $('a').click(function(){
 if(getconfig("logo_disabled") == "no")
     {
      ?>
-<p><?php logo();?></p>
+<p style="margin-bottom:10px;"><?php logo();?></p>
 	 <?php } ?>
      
