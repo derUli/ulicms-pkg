@@ -2,31 +2,10 @@
 <html lang="<?php echo getCurrentLanguage();
 ?>">
 <head>
-<?php base_metas()?>
 <link rel="stylesheet" media="screen" type="text/css" href="<?php echo getTemplateDirPath("clouds");
 ?>style.css"/>
-<?php
-if(!getconfig("header-background-color")){
-     setconfig("header-background-color", "rgb(35, 148, 96)");
-     }
 
-if(!getconfig("body-background-color")){
-     setconfig("body-background-color", "rgb(255,255,255)");
-     }
-
-
-if(!getconfig("body-text-color")){
-     setconfig("body-text-color", "rgb(0,0,0)");
-     }
-
-
-?>
-<style type="text/css">
-.header{
-background-color:<?php echo getconfig("header-background-color");
-?>;
-}
-</style>
+<?php base_metas()?>
 <script src="<?php echo getTemplateDirPath("clouds");
 ?>js/jquery.spritely-0.6.js" type="text/javascript"></script>
  <script type="text/javascript">
@@ -87,6 +66,5 @@ if(getconfig("logo_disabled") == "no")
     {
      ?>
 <p><?php logo();?></p>
-<br/>
 	 <?php } ?>
      
