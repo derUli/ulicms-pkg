@@ -28,7 +28,7 @@ $('#menucontent').slideToggle();
 })
 
 
-$('a').click(function(){
+$('a').click(function(e){
       var href= $(this).attr('href');
      
       // do animation
@@ -43,7 +43,7 @@ $('a').click(function(){
       })
 
       // over ride browser following link when clicked
-      return false;
+      e.preventDefault();
 })
 
                 
