@@ -1,1 +1,1 @@
-Ein Theme mit animierten Wolken (Benötigt jQuery)
+Ein Theme mit animierten Wolken (BenÃ¶tigt jQuery)
