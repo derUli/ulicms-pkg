@@ -43,6 +43,10 @@ ul {
             background: url(img/sky.png) 0 0 repeat-x;
         }
 
+img{
+border:0px;
+}
+
 .stage {
             position: absolute;
             top: 0;
