@@ -1,5 +1,5 @@
 <?php
-define("NEWSLETTER_MODULE_VERSION", "0.0.1");
+define("NEWSLETTER_MODULE_VERSION", "0.0.2");
 
 function newsletter_check_install(){
      $query = db_query("SELECT * FROM " . tbname("newsletter_subscribers"));
