@@ -28,7 +28,7 @@ $('#menucontent').slideToggle();
 })
 
 
-$('a').click(function(e){
+$('#menucontainer a').click(function(e){
       var href= $(this).attr('href');
      
       // do animation
