@@ -1,1 +1,1 @@
-Zeigt eine Liste der häufigsten Referrer an.
+Zeigt eine Liste der häufigsten Referrer an
