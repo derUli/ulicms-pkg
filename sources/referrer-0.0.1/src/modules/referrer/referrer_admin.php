@@ -15,7 +15,7 @@ function referrer_admin(){
          while($row = db_fetch_object($data)){
              echo "<tr>";
              echo "<td style=\"font-weight:bold; min-width:100px;\">" . htmlspecialchars($row -> url, ENT_QUOTES, "UTF-8") . "</td>";
-             echo "<td style=\"text-align:right\">" . intval($row -> amount) . "</td>";
+             echo "<td style=\"text-align:right;min-width:100px;\">" . intval($row -> amount) . "</td>";
              echo "</tr>";
              }
         
