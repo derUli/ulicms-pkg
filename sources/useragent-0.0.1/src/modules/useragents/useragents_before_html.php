@@ -14,7 +14,7 @@ if(!is_admin_dir() and !empty($useragent) and !logged_in()){
     
     
      if(db_num_rows($query) > 0 and !empty($useragent)){
-         db_query("UPDATE " . tbname("useragents") . " SET `amount` = `amount` + 1 WHERE `url` = '$useragent'");
+         db_query("UPDATE " . tbname("useragents") . " SET `amount` = `amount` + 1 WHERE `useragent` = '$useragent'");
          }else if(!empty($useragent)){
          db_query("INSERT INTO " . tbname("useragents") . " (`useragent`, `amount`) VALUES ('$useragent', 1)");
          }
