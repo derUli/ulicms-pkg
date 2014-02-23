@@ -26,7 +26,7 @@ if(!is_admin_dir() and !crawlerDetect() and !empty($referer) and !logged_in() an
 
     
     
-     $referer = db_escape($referer);
+     $url = db_escape($referer);
     
      $query = db_query("SELECT * FROM " . tbname("referrer") . " WHERE `url` = '$url'");
     
