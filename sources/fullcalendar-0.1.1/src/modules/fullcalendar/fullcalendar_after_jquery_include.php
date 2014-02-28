@@ -34,8 +34,15 @@
 			cache: true},
                         disableDragging: true,
 			loading: function(bool) {
-				if (bool) $('#loading').show();
-				else $('#loading').hide();
+				if (bool){
+                    $('#loading').show();
+                    $('#fullcalendar').hide()
+                }
+                else
+                {
+                    $('#loading').hide();
+                    $('#fullcalendar').show()
+                }
 			}
 			
 		});
