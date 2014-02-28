@@ -32,18 +32,7 @@
 			events: {
 			url: "json-events.php",
 			cache: true},
-                        disableDragging: true,
-			loading: function(bool) {
-				if (bool){
-                    $('#loading').show();
-                    $('#fullcalendar').hide()
-                }
-                else
-                {
-                    $('#loading').hide();
-                    $('#fullcalendar').show()
-                }
-			}
+                        disableDragging: true
 			
 		});
 		
