@@ -39,7 +39,7 @@ function mysql_backup_admin(){
     $mysql_backup_last_time = getconfig("mysql_backup_last_time");
      $mysql_backup_every_days = getconfig("mysql_backup_every_days");
 
-     $backup_folder = ULICMS_ROOT . DIRECTORY_SEPERATOR . "backups";
+     $backup_folder = ULICMS_ROOT . DIRECTORY_SEPERATOR . "backup";
 
      $backup_files = array();
 
@@ -58,6 +58,9 @@ function mysql_backup_admin(){
        if(file_exists($file)){
         $cfg = new config();
           $command = "mysql -u ".$cfg->db_user." -p".$cfg->db_password." -h ".$cfg->db_host." ".$cfg->db_database." < ".'"'.$file.'"' ;
+
+          @ignore_user_abort(1); // run script in background 
+          @set_time_limit(0); // run script forever 
 
           $reset = shell_exec($command);
 
