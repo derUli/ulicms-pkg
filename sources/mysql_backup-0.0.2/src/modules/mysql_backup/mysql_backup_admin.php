@@ -28,7 +28,7 @@ function mysql_backup_admin(){
     
     
      if(!isset($_POST["backup_now"]) and
-             $_SERVER["REQUEST_METHOD"] == "POST"){
+             $_SERVER["REQUEST_METHOD"] and $_POST["backup_file"] == "-"){
          echo "<span style='color:green;'>" .
          "Die Einstellungen wurde gespeichert!" .
          "</span>" .
@@ -40,6 +40,7 @@ function mysql_backup_admin(){
      $mysql_backup_every_days = getconfig("mysql_backup_every_days");
 
      $backup_folder = ULICMS_ROOT . DIRECTORY_SEPERATOR . "backup";
+     
 
      $backup_files = array();
 
@@ -51,18 +52,27 @@ function mysql_backup_admin(){
         }
 
      }
-     $reset = null;
+     $reset = false;
 
      if(!empty($_POST["backup_file"]) and $_POST["backup_file"] != "-"){
        $file = $backup_folder . DIRECTORY_SEPERATOR . basename($_POST["backup_file"]);
+       
+       
+      $dumpfile = strstr($file,'.gz', true);
+      shell_exec("gzip -d $file > \"$dumpfile\"");
+       
        if(file_exists($file)){
-        $cfg = new config();
-          $command = "mysql -u ".$cfg->db_user." -p".$cfg->db_password." -h ".$cfg->db_host." ".$cfg->db_database." < ".'"'.$file.'"' ;
-
+       
           @ignore_user_abort(1); // run script in background 
           @set_time_limit(0); // run script forever 
+          
+        $cfg = new config();
+          $command = "mysql -u ".$cfg->db_user." -p".$cfg->db_password." -h ".$cfg->db_server." ".$cfg->db_database." < ".'"'.$dumpfile.'"' ;
+          var_dump($command);
+          unlink($dumpfile);
 
-          $reset = shell_exec($command);
+
+          $reset = true;
 
        }
 
@@ -70,7 +80,7 @@ function mysql_backup_admin(){
 
     
      ?>
-<?php if(!is_null($reset)){
+<?php if($reset){
 echo "<p style='color:green;'>". "Das Backup wurde wieder hergestellt.</p>";
 
 }?>
@@ -91,9 +101,9 @@ echo "<p style='color:green;'>". "Das Backup wurde wieder hergestellt.</p>";
 </tr>
 <tr>
 <td><strong>Existierende Backups</strong></td>
-<td><select name="backup_file" size=1>
-    <p>Warnung:<br/>
-        Alle Änderungen die nach dem Backup gemacht wurden, gehen verloren.</p>
+<td>
+<select name="backup_file" size=1>
+
 <option value="-" selected="selected" name="Backup wiederherstellen">Backup Wiederherstellen</option>
 <?php for($i=0; $i < count($backup_files); $i++){
 
@@ -103,6 +113,8 @@ echo '<option value="'.$backup_files[$i].'">'.$backup_files[$i]."</option>";
 }?>
 
 </select>
+
+
 </td>
 
 <tr>
