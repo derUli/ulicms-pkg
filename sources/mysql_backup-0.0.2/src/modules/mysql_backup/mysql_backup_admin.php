@@ -58,10 +58,13 @@ function mysql_backup_admin(){
        $file = $backup_folder . DIRECTORY_SEPERATOR . basename($_POST["backup_file"]);
        
        
-      $dumpfile = strstr($file,'.gz', true);
-      shell_exec("gzip -d $file > \"$dumpfile\"");
        
        if(file_exists($file)){
+       
+      $dumpfile = strstr($file,'.gz', true);
+      var_dump($dumpfile);
+      $extract_cmd = "gzip -d -f \"$file\" > \"$dumpfile\"";
+       
        
           @ignore_user_abort(1); // run script in background 
           @set_time_limit(0); // run script forever 
@@ -69,7 +72,6 @@ function mysql_backup_admin(){
         $cfg = new config();
           $command = "mysql -u ".$cfg->db_user." -p".$cfg->db_password." -h ".$cfg->db_server." ".$cfg->db_database." < ".'"'.$dumpfile.'"' ;
           var_dump($command);
-          unlink($dumpfile);
 
 
           $reset = true;
