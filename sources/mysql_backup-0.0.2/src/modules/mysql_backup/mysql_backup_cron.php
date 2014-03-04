@@ -59,7 +59,7 @@ if($difference >= $backup_interval and $allowed and $writable){
      @set_time_limit(0); // run script forever 
     
      // Save Dump
-    shell_exec("mysqldump -u $mysql_user -p$mysql_password --add-drop-table $mysql_database > $backup_file.sql");
+    shell_exec("mysqldump --complete-insert --hex-blob -u $mysql_user -p$mysql_password --add-drop-table $mysql_database > $backup_file.sql");
      shell_exec("gzip " . $backup_file . ".sql");
     
      }
