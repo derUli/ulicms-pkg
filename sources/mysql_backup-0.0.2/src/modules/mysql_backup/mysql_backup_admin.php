@@ -38,6 +38,21 @@ function mysql_backup_admin(){
      // get current options
     $mysql_backup_last_time = getconfig("mysql_backup_last_time");
      $mysql_backup_every_days = getconfig("mysql_backup_every_days");
+
+     $backup_folder = ULICMS_ROOT . "backups";
+
+     $backup_files = array();
+
+     $backups = scandir($backup_folder);
+     for($i=0; $i < count($backups); $i++){
+        if(endsWith($backups[$i], ".gz")){
+           array_push($backup_files, basename($backups[$i]));
+
+        }
+
+     }
+
+
     
      ?>
 <form method="post" action="<?php echo getModuleAdminSelfPath()?>">
@@ -55,6 +70,22 @@ function mysql_backup_admin(){
 <td><?php echo date("d.m.Y", $mysql_backup_last_time);
      ?>
 </tr>
+<tr>
+<td><strong>Existierende Backups</strong></td>
+<td><select name="backup_file" size=1>
+    <p>Warnung:<br/>
+        Alle Änderungen die nach dem Backup gemacht wurden, gehen verloren.</p>
+<option value="-" selected="selected" name="Backup wiederherstellen">Backup Wiederherstellen</option>
+<?php for($i=0; $i < count($backup_files); $i++){
+
+echo '<option value="'.$backup_files[$i].'">'.$backup_files[$i]."</option>";
+
+
+}?>
+
+</select>
+</td>
+
 <tr>
 <td><strong>Jetzt eine Sicherung durchführen:</td>
 <td>
