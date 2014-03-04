@@ -71,10 +71,7 @@ function mysql_backup_admin(){
     
      ?>
 <?php if(!is_null($reset)){
-echo "<p>". "Das Backup wurde wieder hergestellt.</p>";
-echo "<p>Details:<br/>";
-echo '$ <pre>'.$command."</pre><br/>";
-echo "<pre>".$reset."</pre></p>";
+echo "<p style='color:green;'>". "Das Backup wurde wieder hergestellt.</p>";
 
 }?>
 <form method="post" action="<?php echo getModuleAdminSelfPath()?>">
