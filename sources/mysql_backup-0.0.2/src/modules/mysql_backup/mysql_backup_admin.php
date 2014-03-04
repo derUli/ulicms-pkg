@@ -74,7 +74,9 @@ function mysql_backup_admin(){
           $command = "mysql -u ".$cfg->db_user." -p".$cfg->db_password." -h ".$cfg->db_server." ".$cfg->db_database." < ".'"'.$dumpfile.'"' ;
 
           shell_exec($command);
-
+          
+          $compress_cmd = "gzip \"".$dumpfile."\"";
+          shell_exec($compress_cmd);
           unlink($dumpfile);
           $reset = true;
 
