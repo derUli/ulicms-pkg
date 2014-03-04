@@ -39,7 +39,7 @@ function mysql_backup_admin(){
     $mysql_backup_last_time = getconfig("mysql_backup_last_time");
      $mysql_backup_every_days = getconfig("mysql_backup_every_days");
 
-     $backup_folder = ULICMS_ROOT . "backups";
+     $backup_folder = ULICMS_ROOT . DIRECTORY_SEPERATOR . "backups";
 
      $backup_files = array();
 
@@ -51,10 +51,29 @@ function mysql_backup_admin(){
         }
 
      }
+     $reset = null;
 
+     if(!empty($_POST["backup_file"]) and $_POST["backup_file"] != "-"){
+       $file = $backup_folder . DIRECTORY_SEPERATOR . basename($_POST["backup_file"]);
+       if(file_exists($file)){
+        $cfg = new config();
+          $command = "mysql -u ".$cfg->db_user." -p".$cfg->db_password." -h ".$cfg->db_host." ".$cfg->db_database." < ".'"'.$file.'"' ;
+
+          $reset = shell_exec($command);
+
+       }
+
+     }
 
     
      ?>
+<?php if(!is_null($reset)){
+echo "<p>". "Das Backup wurde wieder hergestellt.</p>";
+echo "<p>Details:<br/>";
+echo '$ <pre>'.$command."</pre><br/>";
+echo "<pre>".$reset."</pre></p>";
+
+}?>
 <form method="post" action="<?php echo getModuleAdminSelfPath()?>">
 <table style="border:0px">
 <tr>
