@@ -35,6 +35,7 @@ $config = new config();
 $mysql_user = $config -> db_user;
 $mysql_password = $config -> db_password;
 $mysql_database = $config -> db_database;
+$mysql_host = $config -> db_server;
 $backup_file = path_to_backup_dir() . "dump-" . date('Y-m-d');
 
 
@@ -54,13 +55,14 @@ if($writable){
 
 if($difference >= $backup_interval and $allowed and $writable){
      // set last backup time to current
-    setconfig("mysql_backup_last_time", time());
      @ignore_user_abort(1); // run script in background 
      @set_time_limit(0); // run script forever 
     
      // Save Dump
-    shell_exec("mysqldump -u $mysql_user -p$mysql_password --add-drop-table --complete-insert --hex-blob $mysql_database > $backup_file.sql");
+    shell_exec("mysqldump -h $mysqlhost -u $mysql_user -p$mysql_password --add-drop-table --complete-insert --hex-blob $mysql_database > $backup_file.sql");
      shell_exec("gzip " . $backup_file . ".sql");
+     
+    setconfig("mysql_backup_last_time", time());
     
      }
  // Backup schlägt fehl.
