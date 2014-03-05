@@ -84,7 +84,7 @@ else if($difference >= $backup_interval){
      "Content-type: text/plain; charset=UTF-8\n" .
      "X-Mailer: PHP/" . phpversion();
     
-     @mail($email_adress, $subject, $text, $headers);
+     @ulicms_mail($email_adress, $subject, $text, $headers);
     
     
      }

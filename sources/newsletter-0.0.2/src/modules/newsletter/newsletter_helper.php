@@ -60,7 +60,7 @@ if(!function_exists("send_html_mail")){
         // $header .= "Cc: $cc\n";  // falls an CC gesendet werden soll
         $header .= "X-Mailer: PHP " . phpversion();
         
-         return mail($mail_to, $subject, $html, $header);
+         return ulicms_mail($mail_to, $subject, $html, $header);
         
         
         

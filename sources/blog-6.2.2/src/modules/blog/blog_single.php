@@ -137,7 +137,7 @@ function send_comment_via_email($article_title, $article_url, $name, $txt){
      $article_url;
      $header = "From: " . getconfig("email") . "\n" .
      "Content-type: text/plain; charset=utf-8";
-     @mail(getconfig("email"),
+     @ulicms_mail(getconfig("email"),
          $subject, $message, $header);
      }
 

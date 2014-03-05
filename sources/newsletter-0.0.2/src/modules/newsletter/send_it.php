@@ -1,12 +1,7 @@
 <?php
-
-
-if(defined(MODULE_ADMIN_REQUIRED_PERMISSION)){
-     if($_SESSION["group"] < MODULE_ADMIN_REQUIRED_PERMISSION){
-         die("Fuck you!");
-         }
-    
-     }
+if(!defined("ULICMS_ROOT")){
+   die("Hacker saugen!");
+}
 
 if(isset($_SESSION["newsletter_data"])){
      @ignore_user_abort(1); // run script in background 
