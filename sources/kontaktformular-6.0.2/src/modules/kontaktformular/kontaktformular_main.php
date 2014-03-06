@@ -154,6 +154,7 @@ function kontaktformular_render(){
         
          if($fehler == false){
              $_POST["nachricht"] = preg_replace('/\r\n|\r/', "\n", $_POST["nachricht"]);
+             sanitize($_POST['emailadresse']);
              $headers = "From: " . $_POST['emailadresse'] . "\nReply-To: " . $_POST['emailadresse'] . "\nContent-Type: text/plain; charset=UTF-8";
              $betreff = "Kontaktformular (" . getconfig("homepage_title") . ")";
              $mailtext = "--------------------------------------------------------\n" .
@@ -166,6 +167,7 @@ function kontaktformular_render(){
              "Betreff:      " . $_POST["betreff"] . "\n" .
              "-----------------------------\n" .
              "Nachricht:\n\n" . $_POST["nachricht"];
+
             
             
             
