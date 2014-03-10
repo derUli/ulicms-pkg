@@ -5,8 +5,8 @@ define("MODULE_ADMIN_REQUIRED_PERMISSION", "statistics");
 
 
 function statistics_admin(){
-     if(!setlocale(LC_TIME, "de_DE")){
-         if(!setlocale(LC_TIME, "de_DE.utf8")){
+     if(!setlocale(LC_TIME, "de_DE.utf8")){
+         if(!setlocale(LC_TIME, "de_DE")){
              setlocale(LC_TIME, "deu");
              }
          }
