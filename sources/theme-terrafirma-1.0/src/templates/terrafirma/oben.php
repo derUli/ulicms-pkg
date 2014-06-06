@@ -49,7 +49,7 @@ background-color:<?php echo getconfig("header-background-color");
 		
 			<div class="post">
 				<div class="header">
-				<h3><?php title();
+				<h3><?php headline();
 ?></h3>
 					<div class="date"><?php echo date("d.m.Y - H:i")?> Uhr</div>
 				</div>

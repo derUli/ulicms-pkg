@@ -37,4 +37,4 @@ font-family:<?php echo getconfig("default-font");
 <br/>
 <?php random_banner();
 ?>
-<h1><?php title()?></h1>
+<h1><?php headline()?></h1>

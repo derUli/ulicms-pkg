@@ -53,7 +53,7 @@ font-family:<?php echo getconfig("default-font");
 	<div id="content">
 		<div class="post">
 			<div class="title">
-				<h2><a href="#"><?php title()?></a></h2>
+				<h2><a href="#"><?php headline()?></a></h2>
 				<?php if(!is_404() and !is_403){
      ?>
 				<p><small>
