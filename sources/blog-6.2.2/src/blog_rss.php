@@ -1,5 +1,6 @@
 <?php
 require_once "init.php";
+require_once "templating.php";
 
 $blog_feed_max_items = getconfig("blog_feed_max_items");
 if($blog_feed_max_items === false){
