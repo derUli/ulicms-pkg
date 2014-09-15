@@ -6,7 +6,7 @@ function blog_single($seo_shortname){
     
      $autor_and_date = getconfig("blog_autor_and_date_text");
     
-     $query = db_query("SELECT * FROM `" . tbname("blog") . "` WHERE seo_shortname='$seo_shortname'");
+     $query = db_query("SELECT * FROM `" . tbname("blog") . "` WHERE seo_shortname='$seo_shortname' ORDER by id");
     
      // count views is user not logged in
     if(!logged_in())
