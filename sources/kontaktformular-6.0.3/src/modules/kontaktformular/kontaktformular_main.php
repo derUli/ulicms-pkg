@@ -172,8 +172,15 @@ function kontaktformular_render(){
             
             
              if(@ulicms_mail(getconfig("email"), $betreff, $mailtext, $headers)){
-                
-                 if($_SESSION["language"] == "de"){
+                $kontaktformular_thankyou_page = getconfig("kontaktformular_thankyou_page");
+                if($kontaktformular_thankyou_page){
+                             $kontaktformular_thankyou_page = buildSEOUrl($kontaktformular_thankyou_page);
+                   return '<script type="text/javascript">
+                   location.replace("'.$kontaktformular_thankyou_page.'");
+                   </script>
+                   <p>Wenn Sie nicht weitergeleitet werden, klicken Sie bitte <a href="'.$kontaktformular_thankyou_page.'">hier</a></p>';
+                }
+                 else if($_SESSION["language"] == "de"){
                      return "<p class='contactform-success'>Vielen Dank für Ihre Email.<br/>Wir werden diese schnellstmöglich beantworten.</p>";
                      }
                 else{
