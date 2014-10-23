@@ -315,11 +315,21 @@ function blog_display_comments($post_id){
          $count = 0;
         
          if($_SESSION["language"] == "de"){
+             if(db_num_rows($query) != 1){
              $html .= "<p>Es sind bisher " . db_num_rows($query) .
              " Kommentare zu diesem Artikel vorhanden.</p>";
+             } else {
+             
+             $html .= "<p>Es ist bisher " . db_num_rows($query) .
+             " Kommentar zu diesem Artikel vorhanden.</p>";
+             }
              }else{
-             $html .= "<p>There are " . db_num_rows($query) . " Comments
-	 until now.</p>";
+              if(db_num_rows($query) != 1){
+              $html .= "<p>There are " . db_num_rows($query) . " Comments until now.</p>";
+              } else {
+            $html .= "<p>There is " . db_num_rows($query) . " Comment until now.</p>";              
+              }
+             
              }
         
          $html .= "<hr/>";
@@ -395,4 +405,3 @@ function blog_display_comments($post_id){
     
      return $html;
      }
-?>

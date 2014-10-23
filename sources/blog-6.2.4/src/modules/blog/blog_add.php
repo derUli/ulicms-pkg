@@ -173,13 +173,13 @@ function blog_add_form(){
     
 var editor1 = CKEDITOR.replace( 'content_full',
 					{
-						skin : 'kama'
+						skin : '".getconfig("ckeditor_skin")."'
 					});          
 					
 					
 var editor2 = CKEDITOR.replace( 'content_preview',
 					{
-						skin : 'kama'
+						skin : '".getconfig("ckeditor_skin")."'
 					});  
 					
     if(typeof jQuery != \"undefined\"){            
