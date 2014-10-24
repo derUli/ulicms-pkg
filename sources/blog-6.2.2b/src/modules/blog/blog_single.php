@@ -15,7 +15,7 @@ function blog_single($seo_shortname){
     
      $autor_and_date = getconfig("blog_autor_and_date_text");
     
-     $query = db_query("SELECT * FROM `" . tbname("blog") . "` WHERE seo_shortname='$seo_shortname'");
+     $query = db_query("SELECT * FROM `" . tbname("blog") . "` WHERE seo_shortname='$seo_shortname' ORDER by id");
     
      // count views is user not logged in
     if(!is_logged_in())
@@ -212,7 +212,7 @@ function post_comments(){
              $comment_id = mysql_insert_id();
             
              if(getconfig("blog_send_comments_via_email") == "yes"){
-                 $query = db_query("SELECT * FROM " . tbname("blog") . " WHERE id = $post_id");
+                 $query = db_query("SELECT * FROM " . tbname("blog") . " WHERE id = $post_id ORDER by datum");
                  $post = mysql_fetch_object($query);
                  $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
                  $domainName = $_SERVER['HTTP_HOST'];
@@ -300,7 +300,7 @@ function blog_display_comments($post_id){
     
     
     
-     $query = db_query("SELECT * FROM `" . tbname("blog_comments") . "` WHERE post_id = $post_id");
+     $query = db_query("SELECT * FROM `" . tbname("blog_comments") . "` WHERE post_id = $post_id ORDER by date");
     
      $html .= "<div class='comments'>";
      if($_SESSION["language"] == "de"){
@@ -316,11 +316,21 @@ function blog_display_comments($post_id){
          $count = 0;
         
          if($_SESSION["language"] == "de"){
+             if(mysql_num_rows($query) != 1){
              $html .= "<p>Es sind bisher " . mysql_num_rows($query) .
              " Kommentare zu diesem Artikel vorhanden.</p>";
+             } else {
+             
+             $html .= "<p>Es ist bisher " . mysql_num_rows($query) .
+             " Kommentar zu diesem Artikel vorhanden.</p>";
+             }
              }else{
-             $html .= "<p>There are " . mysql_num_rows($query) . " Comments
-	 until now.</p>";
+              if(mysql_num_rows($query) != 1){
+              $html .= "<p>There are " . mysql_num_rows($query) . " Comments until now.</p>";
+              } else {
+            $html .= "<p>There is " . mysql_num_rows($query) . " Comment until now.</p>";              
+              }
+             
              }
         
          $html .= "<hr/>";
