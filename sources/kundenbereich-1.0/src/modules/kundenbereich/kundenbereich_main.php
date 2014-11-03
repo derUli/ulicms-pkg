@@ -22,6 +22,9 @@ function kundenbereich_render(){
           
           $html .= "</ul>";
       
+      } else {
+         echo "<span class='shared_file_message ulicms_error'>".
+         "Es sind momentan keine Dateien für Sie freigegeben."."</span>";
       }
    }
    
