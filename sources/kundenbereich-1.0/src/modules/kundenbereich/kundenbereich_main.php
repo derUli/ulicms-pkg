@@ -6,7 +6,7 @@ function kundenbereich_render(){
       $files = db_query("SELECT id, title, filename FROM `".tbname("shared_files")."` WHERE `user_id` = ".intval($_SESSION["login_id"]). " ORDER by id");
       if(db_num_rows($files) > 0){
       
-          $html = "<ul class='shared_files_list'>";
+          $html = "<ol class='shared_files_list'>";
           while($row = db_fetch_object($files)){
           
              $html .= '<li><a href="'.buildSEOUrl().'?get='.$row->id.'">';
@@ -20,7 +20,7 @@ function kundenbereich_render(){
              
           }
           
-          $html .= "</ul>";
+          $html .= "</ol>";
       
       } else {
          echo "<span class='shared_file_message ulicms_error'>".
