@@ -5,7 +5,7 @@ $useragent = $_SERVER['HTTP_USER_AGENT'];
 
 if(!is_admin_dir() and !empty($useragent) and !logged_in()){
     
-
+    
     
     
      $useragent = db_escape($useragent);

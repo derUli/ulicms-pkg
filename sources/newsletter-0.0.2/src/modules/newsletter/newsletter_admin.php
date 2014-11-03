@@ -62,9 +62,9 @@ function newsletter_admin(){
                  "</td>";
                  echo "<td>";
                  if($row["confirmed"] == 1)
-                    echo "<span style='color:green'>bestätigt</span>";
+                     echo "<span style='color:green'>bestätigt</span>";
                  else
-                    echo "<span style='color:red'>nicht bestätigt</span>";
+                     echo "<span style='color:red'>nicht bestätigt</span>";
                  echo "</td>";
                  echo "</tr>";
                 

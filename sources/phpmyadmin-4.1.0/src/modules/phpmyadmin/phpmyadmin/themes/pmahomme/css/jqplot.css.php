@@ -1,17 +1,19 @@
 <?php
-/* vim: set expandtab sw=4 ts=4 sts=4: */
+/**
+ * vim: set expandtab sw=4 ts=4 sts=4:
+ */
 /**
  * Styles for jqplot
  * for the pmahomme theme
- *
- * @package    PhpMyAdmin-theme
+ * 
+ * @package PhpMyAdmin-theme
  * @subpackage PMAHomme
  */
 
 // unplanned execution path
-if (! defined('PMA_MINIMUM_COMMON') && ! defined('TESTSUITE')) {
-    exit();
-}
+if (! defined('PMA_MINIMUM_COMMON') && ! defined('TESTSUITE')){
+     exit();
+     }
 ?>
 
 /* jqPlot */
@@ -40,7 +42,8 @@ if (! defined('PMA_MINIMUM_COMMON') && ! defined('TESTSUITE')) {
 }
 
 .jqplot-yaxis {
-    margin-<?php echo $right; ?>: 10px;
+    margin-<?php echo $right;
+?>: 10px;
 }
 
 .jqplot-y2axis, .jqplot-y3axis, .jqplot-y4axis, .jqplot-y5axis, .jqplot-y6axis, .jqplot-y7axis, .jqplot-y8axis, .jqplot-y9axis, .jqplot-yMidAxis {
@@ -58,7 +61,8 @@ if (! defined('PMA_MINIMUM_COMMON') && ! defined('TESTSUITE')) {
 .jqplot-xaxis-tick {
     top: 0px;
     /* initial position untill tick is drawn in proper place */
-    <?php echo $left; ?>: 15px;
+    <?php echo $left;
+?>: 15px;
 /*    padding-top: 10px;*/
     vertical-align: top;
 }
@@ -66,22 +70,27 @@ if (! defined('PMA_MINIMUM_COMMON') && ! defined('TESTSUITE')) {
 .jqplot-x2axis-tick {
     bottom: 0px;
     /* initial position untill tick is drawn in proper place */
-    <?php echo $left; ?>: 15px;
+    <?php echo $left;
+?>: 15px;
 /*    padding-bottom: 10px;*/
     vertical-align: bottom;
 }
 
 .jqplot-yaxis-tick {
-    <?php echo $right; ?>: 0px;
+    <?php echo $right;
+?>: 0px;
     /* initial position untill tick is drawn in proper place */
     top: 15px;
 /*    padding-right: 10px;*/
-    text-align: <?php echo $right; ?>;
+    text-align: <?php echo $right;
+?>;
 }
 
 .jqplot-yaxis-tick.jqplot-breakTick {
-	<?php echo $right; ?>: -20px;
-	margin-<?php echo $right; ?>: 0px;
+	<?php echo $right;
+?>: -20px;
+	margin-<?php echo $right;
+?>: 0px;
 	padding:1px 5px 1px;
 /*	background-color: white;*/
 	z-index: 2;
@@ -89,12 +98,14 @@ if (! defined('PMA_MINIMUM_COMMON') && ! defined('TESTSUITE')) {
 }
 
 .jqplot-y2axis-tick, .jqplot-y3axis-tick, .jqplot-y4axis-tick, .jqplot-y5axis-tick, .jqplot-y6axis-tick, .jqplot-y7axis-tick, .jqplot-y8axis-tick, .jqplot-y9axis-tick {
-    <?php echo $left; ?>: 0px;
+    <?php echo $left;
+?>: 0px;
     /* initial position untill tick is drawn in proper place */
     top: 15px;
 /*    padding-left: 10px;*/
 /*    padding-right: 15px;*/
-    text-align: <?php echo $left; ?>;
+    text-align: <?php echo $left;
+?>;
 }
 
 .jqplot-yMidAxis-tick {
@@ -129,7 +140,8 @@ if (! defined('PMA_MINIMUM_COMMON') && ! defined('TESTSUITE')) {
 .jqplot-y2axis-label, .jqplot-y3axis-label, .jqplot-y4axis-label, .jqplot-y5axis-label, .jqplot-y6axis-label, .jqplot-y7axis-label, .jqplot-y8axis-label, .jqplot-y9axis-label {
 /*    text-align: center;*/
     font-size: 11pt;
-    margin-<?php echo $left; ?>: 10px;
+    margin-<?php echo $left;
+?>: 10px;
     position: absolute;
 }
 
@@ -205,7 +217,8 @@ div.jqplot-table-legend-swatch {
 
 .jqplot-title {
     top: 0px;
-    <?php echo $left; ?>: 0px;
+    <?php echo $left;
+?>: 0px;
     padding-bottom: 0.5em;
     font-size: 1.2em;
 }

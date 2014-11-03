@@ -8,7 +8,7 @@ function blog_edit_form($post_id){
         
          $html_output = "";
          $all_languages = getAllLanguages();
-         $html_output .= "<form action='" . buildSEOUrl(get_requested_pagename())."?blog_admin=update' method='post' style=''>";
+         $html_output .= "<form action='" . buildSEOUrl(get_requested_pagename()) . "?blog_admin=update' method='post' style=''>";
         
          $html_output .= "<table class='blog_admin_table'>";
         
@@ -208,13 +208,13 @@ function blog_edit_form($post_id){
     
 var editor1 = CKEDITOR.replace( 'content_full',
 					{
-						skin : '".getconfig("ckeditor_skin")."'
+						skin : '" . getconfig("ckeditor_skin") . "'
 					});          
 					
 					
 var editor2 = CKEDITOR.replace( 'content_preview',
 					{
-						skin : '".getconfig("ckeditor_skin")."'
+						skin : '" . getconfig("ckeditor_skin") . "'
 					});   
 
     if(typeof jQuery != \"undefined\"){					                                    

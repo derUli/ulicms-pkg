@@ -1,8 +1,10 @@
 <?php
-/* vim: set expandtab sw=4 ts=4 sts=4: */
+/**
+ * vim: set expandtab sw=4 ts=4 sts=4:
+ */
 /**
  * Displays index edit/creation form and handles it
- *
+ * 
  * @package PhpMyAdmin
  */
 
@@ -21,9 +23,9 @@ $index = PMA_prepareFormValues($db, $table);
  * run the query to build the new index
  * and moves back to "tbl_sql.php"
  */
-if (isset($_REQUEST['do_save_data'])) {
-    PMA_handleCreateOrEditIndex($db, $table, $index);
-} // end builds the new index
+if (isset($_REQUEST['do_save_data'])){
+     PMA_handleCreateOrEditIndex($db, $table, $index);
+     } // end builds the new index
 
 
 /**
@@ -40,9 +42,9 @@ $fields = PMA_getNameAndTypeOfTheColumns($db, $table);
 
 $html = PMA_getHtmlForIndexForm($fields, $index, $form_params, $add_fields);
 
-$response = PMA_Response::getInstance();
-$response->addHTML($html);
-$header   = $response->getHeader();
-$scripts  = $header->getScripts();
-$scripts->addFile('indexes.js');
+$response = PMA_Response :: getInstance();
+$response -> addHTML($html);
+$header = $response -> getHeader();
+$scripts = $header -> getScripts();
+$scripts -> addFile('indexes.js');
 ?>

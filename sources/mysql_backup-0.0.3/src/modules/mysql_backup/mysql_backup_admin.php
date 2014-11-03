@@ -38,58 +38,59 @@ function mysql_backup_admin(){
      // get current options
     $mysql_backup_last_time = getconfig("mysql_backup_last_time");
      $mysql_backup_every_days = getconfig("mysql_backup_every_days");
-
+    
      $backup_folder = ULICMS_ROOT . DIRECTORY_SEPERATOR . "backup";
-     
-
+    
+    
      $backup_files = array();
-
+    
      $backups = scandir($backup_folder);
-     for($i=0; $i < count($backups); $i++){
-        if(endsWith($backups[$i], ".gz")){
-           array_push($backup_files, basename($backups[$i]));
-
-        }
-
-     }
+     for($i = 0; $i < count($backups); $i++){
+         if(endsWith($backups[$i], ".gz")){
+             array_push($backup_files, basename($backups[$i]));
+            
+             }
+        
+         }
      $reset = false;
-
+    
      if(!empty($_POST["backup_file"]) and $_POST["backup_file"] != "-"){
-       $file = $backup_folder . DIRECTORY_SEPERATOR . basename($_POST["backup_file"]);
-       
-       
-       
-       if(file_exists($file)){
-       
-      $dumpfile = strstr($file,'.gz', true);
-
-      $extract_cmd = "gzip -d \"$file\"";
-      shell_exec($extract_cmd);
-       
-       
-          @ignore_user_abort(1); // run script in background 
-          @set_time_limit(0); // run script forever 
-          
-        $cfg = new config();
-          $command = "mysql -u ".$cfg->db_user." -p".$cfg->db_password." -h ".$cfg->db_server." ".$cfg->db_database." < ".'"'.$dumpfile.'"' ;
-
-          shell_exec($command);
-          
-          $compress_cmd = "gzip \"".$dumpfile."\"";
-          shell_exec($compress_cmd);
-          unlink($dumpfile);
-          $reset = true;
-
-       }
-
-     }
-
+         $file = $backup_folder . DIRECTORY_SEPERATOR . basename($_POST["backup_file"]);
+        
+        
+        
+         if(file_exists($file)){
+            
+             $dumpfile = strstr($file, '.gz', true);
+            
+             $extract_cmd = "gzip -d \"$file\"";
+             shell_exec($extract_cmd);
+            
+            
+             @ignore_user_abort(1); // run script in background 
+             @set_time_limit(0); // run script forever 
+            
+             $cfg = new config();
+             $command = "mysql -u " . $cfg -> db_user . " -p" . $cfg -> db_password . " -h " . $cfg -> db_server . " " . $cfg -> db_database . " < " . '"' . $dumpfile . '"' ;
+            
+             shell_exec($command);
+            
+             $compress_cmd = "gzip \"" . $dumpfile . "\"";
+             shell_exec($compress_cmd);
+             unlink($dumpfile);
+             $reset = true;
+            
+             }
+        
+         }
+    
     
      ?>
 <?php if($reset){
-echo "<p style='color:green;'>". "Das Backup wurde wieder hergestellt.</p>";
-
-}?>
+         echo "<p style='color:green;'>" . "Das Backup wurde wieder hergestellt.</p>";
+        
+         }
+     ?>
 <form method="post" action="<?php echo getModuleAdminSelfPath()?>">
 <table style="border:0px">
 <tr>
@@ -111,12 +112,13 @@ echo "<p style='color:green;'>". "Das Backup wurde wieder hergestellt.</p>";
 <select name="backup_file" size=1>
 
 <option value="-" selected="selected" name="Backup wiederherstellen">Backup Wiederherstellen</option>
-<?php for($i=0; $i < count($backup_files); $i++){
-
-echo '<option value="'.$backup_files[$i].'">'.$backup_files[$i]."</option>";
-
-
-}?>
+<?php for($i = 0; $i < count($backup_files); $i++){
+        
+         echo '<option value="' . $backup_files[$i] . '">' . $backup_files[$i] . "</option>";
+        
+        
+         }
+     ?>
 
 </select>
 

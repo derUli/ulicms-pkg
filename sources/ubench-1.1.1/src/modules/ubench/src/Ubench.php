@@ -145,4 +145,4 @@ class Ubench
         
          return sprintf($format, $time, $unit);
          }
-    }
+     }

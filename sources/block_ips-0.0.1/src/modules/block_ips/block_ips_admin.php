@@ -10,9 +10,9 @@ function block_ips_admin(){
         
          }
     
-    $blocked_ips = getconfig("blocked_ips");
-    $blocked_ips = stringHelper :: real_htmlspecialchars($blocked_ips);
-    ?>
+     $blocked_ips = getconfig("blocked_ips");
+     $blocked_ips = stringHelper :: real_htmlspecialchars($blocked_ips);
+     ?>
 
 <form action="<?php echo getModuleAdminSelfPath()?>" method="post">
 <p>Hier können Sie den Zugriff von bestimmten IP-Adressen auf das System blockieren.<br/>
@@ -21,7 +21,7 @@ Sie können je einen Eintrag pro Zeile eingeben.
 Wenn eine Zeile mit einem Punkt endet, werden alle IP-Adressen die damit anfangen blockiert.</p>
 <p>
 <textarea rows="10" cols="40" name="blocked_ips"><?php echo $blocked_ips;
-    ?></textarea>
+     ?></textarea>
 
 <p><input type="submit" name="submit" value="Einstellungen speichern"/></p>
 </form>

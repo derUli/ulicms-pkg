@@ -20,8 +20,8 @@ function intramail_render(){
 
 function intramail_generate_page(){
      echo '<a href="' . buildSEOUrl(get_requested_pagename()) . '?box=inbox">Eingang</a> | 
-    <a href="' . buildSEOUrl(get_requested_pagename()). '?box=outbox">Ausgang</a> | 
-    <a href="' . buildSEOUrl(get_requested_pagename()).'?box=new">Mail verfassen</a>
+    <a href="' . buildSEOUrl(get_requested_pagename()) . '?box=outbox">Ausgang</a> | 
+    <a href="' . buildSEOUrl(get_requested_pagename()) . '?box=new">Mail verfassen</a>
     ';
      switch($_GET["box"]){
      case "new":
@@ -79,7 +79,7 @@ function intramail_view_message(){
          '<tr>
    <td><br/></td>
    <td>' .
-         "<a href='" . buildSEOUrl(get_requested_pagename())."?box=reply&message=" . $row -> id .
+         "<a href='" . buildSEOUrl(get_requested_pagename()) . "?box=reply&message=" . $row -> id .
          "'>" . "Antworten" . "</a>"
          .
          '</td>' .
@@ -134,7 +134,7 @@ function intramail_post_inbox(){
                  echo "<strong style='color:red;'>Neu</strong> ";
                  }
              echo
-             "<a href='" . buildSEOUrl(get_requested_pagename()). "?box=inbox&message=" . $row -> id .
+             "<a href='" . buildSEOUrl(get_requested_pagename()) . "?box=inbox&message=" . $row -> id .
              "&read=1'>" . $row -> subject . "</a>" . " [" . date(getconfig("date_format"), $row -> date) .
              "] " . "[<a href='" . buildSEOUrl(get_requested_pagename()) .
              "?box=inbox&delete=" . $row -> id . "' onclick='return confirm(\"Diese Mail wirklich löschen?\")'>X</a>" . "]" .
@@ -264,7 +264,7 @@ function intramail_new_mail($mail_to = '', $subject = '', $message = ''){
          }
     
     
-     echo '<form method="post" action="' . buildSEOUrl(get_requested_pagename()).'?box=new">
+     echo '<form method="post" action="' . buildSEOUrl(get_requested_pagename()) . '?box=new">
   
   ';
     

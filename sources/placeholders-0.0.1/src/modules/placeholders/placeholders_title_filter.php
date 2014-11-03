@@ -9,4 +9,4 @@ function placeholders_title_filter($txt){
          }
     
      return $txt;
-    }
+     }

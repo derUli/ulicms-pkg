@@ -76,4 +76,4 @@ class UbenchTest extends \PHPUnit_Framework_TestCase
          $this -> assertInternalType('integer', $bench -> getMemoryPeak(true));
          $this -> assertRegExp('/^[0-9]+Mb/', $bench -> getMemoryPeak(false, '%d%s'));
          }
-    }
+     }

@@ -433,4 +433,4 @@ class DiffTest extends TestFixture
          $d = Carbon :: now() -> subYears(2);
          $this -> assertSame('2 years after', Carbon :: now() -> diffForHumans($d));
          }
-    }
+     }

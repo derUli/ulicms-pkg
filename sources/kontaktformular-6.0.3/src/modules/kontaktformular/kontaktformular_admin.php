@@ -19,30 +19,30 @@ function kontaktformular_admin(){
     
     
     
-    $kontaktformular_thankyou_page = getconfig("kontaktformular_thankyou_page");
-    $email = getconfig("email");
+     $kontaktformular_thankyou_page = getconfig("kontaktformular_thankyou_page");
+     $email = getconfig("email");
     
-    $pages = getAllSystemNames();
+     $pages = getAllSystemNames();
     
-    ?>
+     ?>
 
 <form action="<?php echo getModuleAdminSelfPath()?>" method="post">
 <p>Mails senden an<br/>
 <input type="email" name="email" value="<?php echo htmlspecialchars($email, ENT_QUOTES, "UTF-8");
-    ?>">
+     ?>">
 </p>
 <p>Zielseite<br/>
 <select name="kontaktformular_thankyou_page" size=1>
 <option value=""<?php if(!$kontaktformular_thankyou_page) echo " selected=\"selected\""?>>[Standard]</option>
 <?php
-        for ($i = 0; $i < count($pages); $i++){
-        $p = htmlspecialchars($pages[$i], ENT_QUOTES, "UTF-8");
-        ?>
+         for ($i = 0; $i < count($pages); $i++){
+         $p = htmlspecialchars($pages[$i], ENT_QUOTES, "UTF-8");
+         ?>
 <option value="<?php echo $p;
-        ?>"<?php if($kontaktformular_thankyou_page == $pages[$i]) echo " selected=\"selected\""?>><?php echo $p;
-        ?></option>
+         ?>"<?php if($kontaktformular_thankyou_page == $pages[$i]) echo " selected=\"selected\""?>><?php echo $p;
+         ?></option>
 <?php }
-    ?>
+     ?>
 </select>
 </p>
 

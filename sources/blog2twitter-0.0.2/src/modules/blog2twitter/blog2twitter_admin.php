@@ -20,32 +20,32 @@ function blog2twitter_admin(){
         
          }
     
-    $blog2twitter_consumer_key = getconfig("blog2twitter_consumer_key");
-    $blog2twitter_consumer_secret = getconfig("blog2twitter_consumer_secret");
-    $blog2twitter_access_token = getconfig("blog2twitter_access_token");
-    $blog2twitter_access_token_secret = getconfig("blog2twitter_access_token_secret");
-    ?>
+     $blog2twitter_consumer_key = getconfig("blog2twitter_consumer_key");
+     $blog2twitter_consumer_secret = getconfig("blog2twitter_consumer_secret");
+     $blog2twitter_access_token = getconfig("blog2twitter_access_token");
+     $blog2twitter_access_token_secret = getconfig("blog2twitter_access_token_secret");
+     ?>
 
 <form id="blog2twitter_settings" action="<?php echo getModuleAdminSelfPath()?>" method="post">
 
 <div class="label">Twitter Consumer Key</div>
 <div class="inputWrapper"><input type="text" name="blog2twitter_consumer_key" value="<?php echo $blog2twitter_consumer_key;
-    ?>">
+     ?>">
 </div>
 <div class="label">Twitter Consumer Secret</div>
 <div class="inputWrapper"><input type="text" name="blog2twitter_consumer_secret" value="<?php echo $blog2twitter_consumer_secret;
-    ?>">
+     ?>">
 </div>
 
 <div class="seperator"></div>
 
 <div class="label">Twitter Access Token</div>
 <div class="inputWrapper"><input type="text" name="blog2twitter_access_token" value="<?php echo $blog2twitter_access_token;
-    ?>">
+     ?>">
 </div>
 <div class="label">Twitter Access Token Secret</div>
 <div class="inputWrapper"><input type="text" name="blog2twitter_access_token_secret" value="<?php echo $blog2twitter_access_token_secret;
-    ?>">
+     ?>">
 </div>
 
 <p><input type="submit" name="submit" value="Einstellungen speichern"/></p>

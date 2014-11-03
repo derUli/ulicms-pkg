@@ -1,15 +1,15 @@
-<?php 
+<?php
 function frontend_login_render(){
-
-  $html = "";
-  if(!logged_in()){
-  if(isset($_POST["login"]) and !validate_login($_POST["user"], $_POST["password"])){
-
- $html .= "<p class=\"ulicms_error\">Die Zugangsdaten sind fehlerhaft. Bitte probieren Sie es erneut.</p>";
- 
-}
-  $html .= '
-<form action="'.buildSEOUrl().'" method="post">
+    
+     $html = "";
+     if(!logged_in()){
+         if(isset($_POST["login"]) and !validate_login($_POST["user"], $_POST["password"])){
+            
+             $html .= "<p class=\"ulicms_error\">Die Zugangsdaten sind fehlerhaft. Bitte probieren Sie es erneut.</p>";
+            
+             }
+         $html .= '
+<form action="' . buildSEOUrl() . '" method="post">
 <input type="hidden" name="login" value="login">
 <table style="border:0px;">
 <tr>
@@ -26,14 +26,14 @@ function frontend_login_render(){
 </tr>
 </table>
 </form>';
-
-  $html = apply_filter($html, "frontend_login_form");
-}
-else{
-  $html = "Hallo ".$_SESSION["ulicms_login"]."!";
-  $html = apply_filter($html, "frontend_login_welcome");
-}
-
-  return $html;
-}
+        
+         $html = apply_filter($html, "frontend_login_form");
+         }
+    else{
+         $html = "Hallo " . $_SESSION["ulicms_login"] . "!";
+         $html = apply_filter($html, "frontend_login_welcome");
+         }
+    
+     return $html;
+     }
 ?>

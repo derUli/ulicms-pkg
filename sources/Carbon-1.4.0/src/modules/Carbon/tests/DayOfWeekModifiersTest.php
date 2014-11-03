@@ -253,4 +253,4 @@ class DayOfWeekModifiersTest extends TestFixture
          $d = Carbon :: createFromDate(1975, 8, 5) -> nthOfYear(3, 3);
          $this -> assertCarbon($d, 1975, 1, 15, 0, 0, 0);
          }
-    }
+     }

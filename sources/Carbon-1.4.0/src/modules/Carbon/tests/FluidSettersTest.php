@@ -105,4 +105,4 @@ class FluidSettersTest extends TestFixture
          $this -> assertTrue($d -> timestamp(10) instanceof Carbon);
          $this -> assertSame(10, $d -> timestamp);
          }
-    }
+     }

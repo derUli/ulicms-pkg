@@ -27,4 +27,4 @@ function get_search_query()
              }
          }
      return $ref_keywords;
-    }
+     }

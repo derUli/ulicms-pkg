@@ -27,4 +27,4 @@ class CopyTest extends TestFixture
          $this -> assertSame($dating -> tzName, $dating2 -> tzName);
          $this -> assertSame($dating -> offset, $dating2 -> offset);
          }
-    }
+     }

@@ -103,24 +103,24 @@ function kontaktformular_render(){
                 
                 
                  }
-				 
-				 
-				    // Filter nach chinesisch
-		     if(getconfig("disallow_chinese_chars") and
-	(is_chinese($_POST["betreff"]) or
-                 is_chinese($_POST["nachricht"]))){
-				 
+            
+            
+             // Filter nach chinesisch
+            if(getconfig("disallow_chinese_chars") and
+                     (is_chinese($_POST["betreff"]) or
+                         is_chinese($_POST["nachricht"]))){
+                
                  setconfig("contact_form_refused_spam_mails",
                      getconfig("contact_form_refused_spam_mails") + 1);
-					 
-				 if($_SESSION["language"] == "de"){
-				 $fehler = "<p class='ulicms_error'>" .
-             "Chinesische Schriftzeichen sind nicht erlaubt!</p>";
-			 } else {
-			  $fehler ="<p class='ulicms_error'>" .
-             "Chinese chars are not allowed!</p>";
-			 }
-             }
+                
+                 if($_SESSION["language"] == "de"){
+                     $fehler = "<p class='ulicms_error'>" .
+                     "Chinesische Schriftzeichen sind nicht erlaubt!</p>";
+                     }else{
+                     $fehler = "<p class='ulicms_error'>" .
+                     "Chinese chars are not allowed!</p>";
+                     }
+                 }
             
             
              // Filter nach Land
@@ -145,8 +145,8 @@ function kontaktformular_render(){
                      }
                  }
             
-			
-
+            
+            
             
             
             
@@ -167,20 +167,20 @@ function kontaktformular_render(){
              "Betreff:      " . $_POST["betreff"] . "\n" .
              "-----------------------------\n" .
              "Nachricht:\n\n" . $_POST["nachricht"];
-
+            
             
             
             
              if(@ulicms_mail(getconfig("email"), $betreff, $mailtext, $headers)){
-                $kontaktformular_thankyou_page = getconfig("kontaktformular_thankyou_page");
-                if($kontaktformular_thankyou_page){
-                             $kontaktformular_thankyou_page = buildSEOUrl($kontaktformular_thankyou_page);
-                   return '<script type="text/javascript">
-                   location.replace("'.$kontaktformular_thankyou_page.'");
+                 $kontaktformular_thankyou_page = getconfig("kontaktformular_thankyou_page");
+                 if($kontaktformular_thankyou_page){
+                     $kontaktformular_thankyou_page = buildSEOUrl($kontaktformular_thankyou_page);
+                     return '<script type="text/javascript">
+                   location.replace("' . $kontaktformular_thankyou_page . '");
                    </script>
-                   <p>Wenn Sie nicht weitergeleitet werden, klicken Sie bitte <a href="'.$kontaktformular_thankyou_page.'">hier</a></p>';
-                }
-                 else if($_SESSION["language"] == "de"){
+                   <p>Wenn Sie nicht weitergeleitet werden, klicken Sie bitte <a href="' . $kontaktformular_thankyou_page . '">hier</a></p>';
+                     }
+                else if($_SESSION["language"] == "de"){
                      return "<p class='contactform-success'>Vielen Dank für Ihre Email.<br/>Wir werden diese schnellstmöglich beantworten.</p>";
                      }
                 else{

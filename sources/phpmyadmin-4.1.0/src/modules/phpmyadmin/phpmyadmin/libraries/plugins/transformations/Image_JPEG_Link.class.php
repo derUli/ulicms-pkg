@@ -1,44 +1,48 @@
 <?php
-/* vim: set expandtab sw=4 ts=4 sts=4: */
+/**
+ * vim: set expandtab sw=4 ts=4 sts=4:
+ */
 /**
  * Image JPEG Link Transformations plugin for phpMyAdmin
- *
- * @package    PhpMyAdmin-Transformations
+ * 
+ * @package PhpMyAdmin-Transformations
  * @subpackage Link
  */
-if (! defined('PHPMYADMIN')) {
-    exit;
-}
+if (! defined('PHPMYADMIN')){
+     exit;
+     }
 
-/* Get the link transformations interface */
+/**
+ * Get the link transformations interface
+ */
 require_once 'abstract/ImageLinkTransformationsPlugin.class.php';
 
 /**
  * Handles the link transformation for image jpeg
- *
- * @package    PhpMyAdmin-Transformations
+ * 
+ * @package PhpMyAdmin-Transformations
  * @subpackage Link
  */
 class Image_JPEG_Link extends ImageLinkTransformationsPlugin
 {
     /**
      * Gets the plugin`s MIME type
-     *
-     * @return string
+     * 
+     * @return string 
      */
-    public static function getMIMEType()
+     public static function getMIMEType()
     {
-        return "Image";
-    }
-
+         return "Image";
+         }
+    
     /**
      * Gets the plugin`s MIME subtype
-     *
-     * @return string
+     * 
+     * @return string 
      */
-    public static function getMIMESubtype()
+     public static function getMIMESubtype()
     {
-        return "JPEG";
-    }
-}
+         return "JPEG";
+         }
+     }
 ?>

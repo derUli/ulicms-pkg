@@ -1,18 +1,20 @@
 <?php
-/* vim: set expandtab sw=4 ts=4 sts=4: */
+/**
+ * vim: set expandtab sw=4 ts=4 sts=4:
+ */
 /**
  * Messages for phpMyAdmin.
- *
+ * 
  * This file defines variables in a special format suited for the
  * configuration subsystem, with $strConfig as a prefix, _desc or _name
  * as a suffix, and the directive name in between.
- *
+ * 
  * @package PhpMyAdmin
  */
 
-if (!function_exists('__')) {
-    PMA_fatalError('Bad invocation!');
-}
+if (!function_exists('__')){
+     PMA_fatalError('Bad invocation!');
+     }
 
 $strConfigAllowArbitraryServer_desc = __('If enabled user can enter any MySQL server in login form for cookie auth');
 $strConfigAllowArbitraryServer_name = __('Allow login to any MySQL server');
@@ -96,7 +98,7 @@ $strConfigExport_latex_data_caption_name = __('Table caption');
 $strConfigExport_latex_data_continued_caption_name = __('Continued table caption');
 $strConfigExport_latex_data_label_name = __('Label key');
 $strConfigExport_latex_mime_name = __('MIME type');
-$strConfigExport_latex_null_name  = __('Replace NULL with');
+$strConfigExport_latex_null_name = __('Replace NULL with');
 $strConfigExport_latex_relation_name = __('Relations');
 $strConfigExport_latex_structure_caption_name = __('Table caption');
 $strConfigExport_latex_structure_continued_caption_name = __('Continued table caption');
@@ -534,8 +536,8 @@ $strConfigProxyPass_name = __('Proxy password');
 
 $strConfigZipDump_desc = __('Enable [a@http://en.wikipedia.org/wiki/ZIP_(file_format)]ZIP[/a] compression for import and export operations');
 $strConfigZipDump_name = __('ZIP');
-$strConfigCaptchaLoginPublicKey_desc  = __('Enter your public key for your domain reCaptcha service');
-$strConfigCaptchaLoginPublicKey_name  = __('Public key for reCaptcha');
+$strConfigCaptchaLoginPublicKey_desc = __('Enter your public key for your domain reCaptcha service');
+$strConfigCaptchaLoginPublicKey_name = __('Public key for reCaptcha');
 $strConfigCaptchaLoginPrivateKey_desc = __('Enter your private key for your domain reCaptcha service');
 $strConfigCaptchaLoginPrivateKey_name = __('Private key for reCaptcha');
 

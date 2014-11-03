@@ -432,6 +432,6 @@ class Trackback{
         
          return $string;
          }
-    }
+     }
 
 ?>

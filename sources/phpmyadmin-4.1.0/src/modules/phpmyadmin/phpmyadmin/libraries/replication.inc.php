@@ -1,24 +1,26 @@
 <?php
-/* vim: set expandtab sw=4 ts=4 sts=4: */
+/**
+ * vim: set expandtab sw=4 ts=4 sts=4:
+ */
 /**
  * Replication helpers
- *
+ * 
  * @package PhpMyAdmin
  */
 
-if (! defined('PHPMYADMIN')) {
-    exit;
-}
+if (! defined('PHPMYADMIN')){
+     exit;
+     }
 
 /**
  * get master replication from server
  */
-$server_master_replication = $GLOBALS['dbi']->fetchResult('SHOW MASTER STATUS');
+$server_master_replication = $GLOBALS['dbi'] -> fetchResult('SHOW MASTER STATUS');
 
 /**
  * get slave replication from server
  */
-$server_slave_replication = $GLOBALS['dbi']->fetchResult('SHOW SLAVE STATUS');
+$server_slave_replication = $GLOBALS['dbi'] -> fetchResult('SHOW SLAVE STATUS');
 
 /**
  * replication types
@@ -31,128 +33,165 @@ $replication_types = array('master', 'slave');
  */
 $master_variables = array(
     'File',
-    'Position',
-    'Binlog_Do_DB',
-    'Binlog_Ignore_DB',
-);
+     'Position',
+     'Binlog_Do_DB',
+     'Binlog_Ignore_DB',
+    );
 
 /**
  * Define variables for slave status
  */
-$slave_variables  = array(
+$slave_variables = array(
     'Slave_IO_State',
-    'Master_Host',
-    'Master_User',
-    'Master_Port',
-    'Connect_Retry',
-    'Master_Log_File',
-    'Read_Master_Log_Pos',
-    'Relay_Log_File',
-    'Relay_Log_Pos',
-    'Relay_Master_Log_File',
-    'Slave_IO_Running',
-    'Slave_SQL_Running',
-    'Replicate_Do_DB',
-    'Replicate_Ignore_DB',
-    'Replicate_Do_Table',
-    'Replicate_Ignore_Table',
-    'Replicate_Wild_Do_Table',
-    'Replicate_Wild_Ignore_Table',
-    'Last_Errno',
-    'Last_Error',
-    'Skip_Counter',
-    'Exec_Master_Log_Pos',
-    'Relay_Log_Space',
-    'Until_Condition',
-    'Until_Log_File',
-    'Until_Log_Pos',
-    'Master_SSL_Allowed',
-    'Master_SSL_CA_File',
-    'Master_SSL_CA_Path',
-    'Master_SSL_Cert',
-    'Master_SSL_Cipher',
-    'Master_SSL_Key',
-    'Seconds_Behind_Master',
-);
+     'Master_Host',
+     'Master_User',
+     'Master_Port',
+     'Connect_Retry',
+     'Master_Log_File',
+     'Read_Master_Log_Pos',
+     'Relay_Log_File',
+     'Relay_Log_Pos',
+     'Relay_Master_Log_File',
+     'Slave_IO_Running',
+     'Slave_SQL_Running',
+     'Replicate_Do_DB',
+     'Replicate_Ignore_DB',
+     'Replicate_Do_Table',
+     'Replicate_Ignore_Table',
+     'Replicate_Wild_Do_Table',
+     'Replicate_Wild_Ignore_Table',
+     'Last_Errno',
+     'Last_Error',
+     'Skip_Counter',
+     'Exec_Master_Log_Pos',
+     'Relay_Log_Space',
+     'Until_Condition',
+     'Until_Log_File',
+     'Until_Log_Pos',
+     'Master_SSL_Allowed',
+     'Master_SSL_CA_File',
+     'Master_SSL_CA_Path',
+     'Master_SSL_Cert',
+     'Master_SSL_Cipher',
+     'Master_SSL_Key',
+     'Seconds_Behind_Master',
+    );
 /**
  * define important variables, which need to be watched for
  * correct running of replication in slave mode
- *
+ * 
  * @usedby PMA_getHtmlForReplicationStatusTable()
  */
 // TODO change to regexp or something, to allow for negative match.
 // To e.g. highlight 'Last_Error'
-//
 $slave_variables_alerts = array(
     'Slave_IO_Running' => 'No',
-    'Slave_SQL_Running' => 'No',
-);
+     'Slave_SQL_Running' => 'No',
+    );
 $slave_variables_oks = array(
     'Slave_IO_Running' => 'Yes',
-    'Slave_SQL_Running' => 'Yes',
-);
+     'Slave_SQL_Running' => 'Yes',
+    );
 
 // check which replication is available and
 // set $server_{master/slave}_status and assign values
-
 // replication info is more easily passed to functions
-/*
+/**
+ * 
  * @todo use $replication_info everywhere instead of the generated variable names
  */
 $replication_info = array();
 
-foreach ($replication_types as $type) {
-    if (count(${"server_{$type}_replication"}) > 0) {
-        ${"server_{$type}_status"} = true;
+foreach ($replication_types as $type){
+     if (count(${"server_{$type}_replication"}) > 0) {
+        ${"server_{
+                 $type}
+             _status"} = true;
         $replication_info[$type]['status'] = true;
     } else {
-        ${"server_{$type}_status"} = false;
+        ${"server_{
+                 $type}
+             _status"} = false;
         $replication_info[$type]['status'] = false;
     }
-    if (${"server_{$type}_status"}) {
+    if (${"server_{
+                 $type}
+             _status"}) {
         if ($type == "master") {
-            ${"server_{$type}_Do_DB"} = explode(
-                ",", $server_master_replication[0]["Binlog_Do_DB"]
+            ${"server_{
+                 $type}
+             _Do_DB"} = explode(
+                ", ", $server_master_replication[0]["Binlog_Do_DB"]
             );
-            $replication_info[$type]['Do_DB'] = ${"server_{$type}_Do_DB"};
+            $replication_info[$type]['Do_DB'] = ${"server_{
+                 $type}
+             _Do_DB"};
 
-            ${"server_{$type}_Ignore_DB"} = explode(
-                ",", $server_master_replication[0]["Binlog_Ignore_DB"]
+            ${"server_{
+                 $type}
+             _Ignore_DB"} = explode(
+                ", ", $server_master_replication[0]["Binlog_Ignore_DB"]
             );
-            $replication_info[$type]['Ignore_DB'] = ${"server_{$type}_Ignore_DB"};
+            $replication_info[$type]['Ignore_DB'] = ${"server_{
+                 $type}
+             _Ignore_DB"};
         } elseif ($type == "slave") {
-            ${"server_{$type}_Do_DB"} = explode(
-                ",", $server_slave_replication[0]["Replicate_Do_DB"]
+            ${"server_{
+                 $type}
+             _Do_DB"} = explode(
+                ", ", $server_slave_replication[0]["Replicate_Do_DB"]
             );
-            $replication_info[$type]['Do_DB'] = ${"server_{$type}_Do_DB"};
+            $replication_info[$type]['Do_DB'] = ${"server_{
+                 $type}
+             _Do_DB"};
 
-            ${"server_{$type}_Ignore_DB"} = explode(
-                ",", $server_slave_replication[0]["Replicate_Ignore_DB"]
+            ${"server_{
+                 $type}
+             _Ignore_DB"} = explode(
+                ", ", $server_slave_replication[0]["Replicate_Ignore_DB"]
             );
-            $replication_info[$type]['Ignore_DB'] = ${"server_{$type}_Ignore_DB"};
+            $replication_info[$type]['Ignore_DB'] = ${"server_{
+                 $type}
+             _Ignore_DB"};
 
-            ${"server_{$type}_Do_Table"} = explode(
-                ",", $server_slave_replication[0]["Replicate_Do_Table"]
+            ${"server_{
+                 $type}
+             _Do_Table"} = explode(
+                ", ", $server_slave_replication[0]["Replicate_Do_Table"]
             );
-            $replication_info[$type]['Do_Table'] = ${"server_{$type}_Do_Table"};
+            $replication_info[$type]['Do_Table'] = ${"server_{
+                 $type}
+             _Do_Table"};
 
-            ${"server_{$type}_Ignore_Table"} = explode(
-                ",", $server_slave_replication[0]["Replicate_Ignore_Table"]
+            ${"server_{
+                 $type}
+             _Ignore_Table"} = explode(
+                ", ", $server_slave_replication[0]["Replicate_Ignore_Table"]
             );
             $replication_info[$type]['Ignore_Table']
-                = ${"server_{$type}_Ignore_Table"};
+                = ${"server_{
+                 $type}
+             _Ignore_Table"};
 
-            ${"server_{$type}_Wild_Do_Table"} = explode(
-                ",", $server_slave_replication[0]["Replicate_Wild_Do_Table"]
+            ${"server_{
+                 $type}
+             _Wild_Do_Table"} = explode(
+                ", ", $server_slave_replication[0]["Replicate_Wild_Do_Table"]
             );
             $replication_info[$type]['Wild_Do_Table']
-                = ${"server_{$type}_Wild_Do_Table"};
+                = ${"server_{
+                 $type}
+             _Wild_Do_Table"};
 
-            ${"server_{$type}_Wild_Ignore_Table"} = explode(
-                ",", $server_slave_replication[0]["Replicate_Wild_Ignore_Table"]
+            ${"server_{
+                 $type}
+             _Wild_Ignore_Table"} = explode(
+                ", ", $server_slave_replication[0]["Replicate_Wild_Ignore_Table"]
             );
             $replication_info[$type]['Wild_Ignore_Table']
-                = ${"server_{$type}_Wild_Ignore_Table"};
+                = ${"server_{
+                 $type}
+             _Wild_Ignore_Table"};
         }
     }
 }
@@ -160,14 +199,14 @@ foreach ($replication_types as $type) {
 /**
  * Extracts database or table name from string
  *
- * @param string $string contains "dbname.tablename"
+ * @param string $string contains "dbname . tablename"
  * @param string $what   what to extract (db|table)
  *
  * @return $string the extracted part
  */
 function PMA_extractDbOrTable($string, $what = 'db')
 {
-    $list = explode(".", $string);
+    $list = explode(" . ", $string);
     if ('db' == $what) {
         return $list[0];
     } else {

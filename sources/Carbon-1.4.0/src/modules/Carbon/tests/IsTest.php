@@ -94,4 +94,4 @@ class IsTest extends TestFixture
     {
          $this -> assertFalse(Carbon :: now() -> addSecond() -> isPast());
          }
-    }
+     }

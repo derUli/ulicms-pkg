@@ -12,29 +12,29 @@ function countdown_admin(){
          }
     
     
-    if(isset($_POST["countdown_width"]))
-	   setconfig("countdown_width", intval($_POST["countdown_width"]));
+     if(isset($_POST["countdown_width"]))
+         setconfig("countdown_width", intval($_POST["countdown_width"]));
     
-   
-    if(isset($_POST["countdown_height"]))
-	   setconfig("countdown_height", intval($_POST["countdown_height"]));
     
-	if(isset($_POST["countdown_style"]))
-	   setconfig("countdown_style", db_escape($_POST["countdown_style"]));
-	   
-	if(isset($_POST["countdown_target"]))
-	   setconfig("countdown_target", db_escape($_POST["countdown_target"]));
-	   
-	if(isset($_POST["countdown_oncomplete"]))
-	   setconfig("countdown_oncomplete", db_escape($_POST["countdown_oncomplete"]));
+     if(isset($_POST["countdown_height"]))
+         setconfig("countdown_height", intval($_POST["countdown_height"]));
+    
+     if(isset($_POST["countdown_style"]))
+         setconfig("countdown_style", db_escape($_POST["countdown_style"]));
+    
+     if(isset($_POST["countdown_target"]))
+         setconfig("countdown_target", db_escape($_POST["countdown_target"]));
+    
+     if(isset($_POST["countdown_oncomplete"]))
+         setconfig("countdown_oncomplete", db_escape($_POST["countdown_oncomplete"]));
     
      // get current options
     $countdown_to_date = getconfig("countdown_to_date");
-    $countdown_width = getconfig("countdown_width");
-    $countdown_height = getconfig("countdown_height");
-	$countdown_style = getconfig("countdown_style");
-	$countdown_target = getconfig("countdown_target");
-	$countdown_oncomplete = getconfig("countdown_oncomplete");
+     $countdown_width = getconfig("countdown_width");
+     $countdown_height = getconfig("countdown_height");
+     $countdown_style = getconfig("countdown_style");
+     $countdown_target = getconfig("countdown_target");
+     $countdown_oncomplete = getconfig("countdown_oncomplete");
     
      ?>
 <form method="post" action="<?php echo getModuleAdminSelfPath()?>">
@@ -42,8 +42,8 @@ function countdown_admin(){
 <tr>
 <td><strong>Countdown bis</strong></td>
 <td><input name="countdown_to_date" type="datetime-local" value="<?php
-echo date("Y-m-d\TH:i:s", $countdown_to_date);
-?>"></td>
+     echo date("Y-m-d\TH:i:s", $countdown_to_date);
+     ?>"></td>
 </tr>
 <tr>
 <td><strong>Breite</strong></td>
@@ -59,21 +59,21 @@ echo date("Y-m-d\TH:i:s", $countdown_to_date);
 </tr>
 <tr>
 <td><strong>Zielelement</strong></td>
-<td><input type="text" name="countdown_target" value="<?php echo stringHelper::real_htmlspecialchars($countdown_target)?>"> </td>
+<td><input type="text" name="countdown_target" value="<?php echo stringHelper :: real_htmlspecialchars($countdown_target)?>"> </td>
 </tr>
 <tr>
 <td><strong>onComplete Funktion</strong></td>
-<td><input type="text" name="countdown_oncomplete" value="<?php echo stringHelper::real_htmlspecialchars($countdown_oncomplete)?>"> </td>
+<td><input type="text" name="countdown_oncomplete" value="<?php echo stringHelper :: real_htmlspecialchars($countdown_oncomplete)?>"> </td>
 </tr>
 <tr>
 <td><strong>Style</strong></td>
 <td><select name="countdown_style">
 <option value="boring" <?php if($countdown_style == "boring")
- echo "selected";
- ?>>boring</option>
+         echo "selected";
+     ?>>boring</option>
 <option value="flip" <?php if($countdown_style == "flip")
- echo "selected";
- ?>>flip</option>
+         echo "selected";
+     ?>>flip</option>
 </select></td>
 </tr>
 </table>

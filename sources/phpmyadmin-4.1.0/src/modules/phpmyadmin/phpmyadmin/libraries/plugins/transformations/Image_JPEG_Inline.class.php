@@ -1,44 +1,48 @@
 <?php
-/* vim: set expandtab sw=4 ts=4 sts=4: */
+/**
+ * vim: set expandtab sw=4 ts=4 sts=4:
+ */
 /**
  * Image JPEG Inline Transformations plugin for phpMyAdmin
- *
- * @package    PhpMyAdmin-Transformations
+ * 
+ * @package PhpMyAdmin-Transformations
  * @subpackage Inline
  */
-if (! defined('PHPMYADMIN')) {
-    exit;
-}
+if (! defined('PHPMYADMIN')){
+     exit;
+     }
 
-/* Get the inline transformations interface */
+/**
+ * Get the inline transformations interface
+ */
 require_once 'abstract/InlineTransformationsPlugin.class.php';
 
 /**
  * Handles the inline transformation for image jpeg
- *
- * @package    PhpMyAdmin-Transformations
+ * 
+ * @package PhpMyAdmin-Transformations
  * @subpackage Inline
  */
 class Image_JPEG_Inline extends InlineTransformationsPlugin
 {
     /**
      * Gets the plugin`s MIME type
-     *
-     * @return string
+     * 
+     * @return string 
      */
-    public static function getMIMEType()
+     public static function getMIMEType()
     {
-        return "Image";
-    }
-
+         return "Image";
+         }
+    
     /**
      * Gets the plugin`s MIME subtype
-     *
-     * @return string
+     * 
+     * @return string 
      */
-    public static function getMIMESubtype()
+     public static function getMIMESubtype()
     {
-        return "JPEG";
-    }
-}
+         return "JPEG";
+         }
+     }
 ?>

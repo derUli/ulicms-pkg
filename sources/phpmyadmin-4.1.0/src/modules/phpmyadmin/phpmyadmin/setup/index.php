@@ -1,8 +1,10 @@
 <?php
-/* vim: set expandtab sw=4 ts=4 sts=4: */
+/**
+ * vim: set expandtab sw=4 ts=4 sts=4:
+ */
 /**
  * Front controller for setup script
- *
+ * 
  * @package PhpMyAdmin-Setup
  * @license http://www.gnu.org/licenses/gpl.html GNU GPL 2.0
  */
@@ -14,13 +16,13 @@ require './lib/common.inc.php';
 
 $page = filter_input(INPUT_GET, 'page');
 $page = preg_replace('/[^a-z]/', '', $page);
-if ($page === '') {
-    $page = 'index';
-}
-if (!file_exists("./setup/frames/$page.inc.php")) {
-    // it will happen only when entering URL by hand, we don't care for these cases
+if ($page === ''){
+     $page = 'index';
+     }
+if (!file_exists("./setup/frames/$page.inc.php")){
+     // it will happen only when entering URL by hand, we don't care for these cases
     PMA_fatalError(__('Wrong GET file attribute value'));
-}
+     }
 
 // Handle done action info
 $action_done = filter_input(INPUT_GET, 'action_done');

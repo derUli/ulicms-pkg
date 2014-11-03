@@ -10,9 +10,9 @@ function block_useragents_admin(){
         
          }
     
-    $blocked_useragents = getconfig("blocked_useragents");
-    $blocked_useragents = stringHelper :: real_htmlspecialchars($blocked_useragents);
-    ?>
+     $blocked_useragents = getconfig("blocked_useragents");
+     $blocked_useragents = stringHelper :: real_htmlspecialchars($blocked_useragents);
+     ?>
 
 <form action="<?php echo getModuleAdminSelfPath()?>" method="post">
 <p>Hier können Sie den Zugriff von Clients mit bestimmten Useragents auf das System blockieren.<br/>
@@ -20,7 +20,7 @@ Sie können einen Eintrag pro Zeile eingeben.
 </p>
 <p>
 <textarea rows="10" cols="80" style="width:100%" name="blocked_useragents"><?php echo $blocked_useragents;
-    ?></textarea>
+     ?></textarea>
 
 <p><input type="submit" name="submit" value="Einstellungen speichern"/></p>
 </form>

@@ -68,7 +68,7 @@ foreach ($matches as $match){
     if ($cmd == 'exec'){
          $readme = str_replace('{{' . $name . '_eval}}', $ob, $readme);
          }
-    }
+     }
 
 // allow for escaping a command
 $readme = str_replace('\{\{', '{{', $readme);

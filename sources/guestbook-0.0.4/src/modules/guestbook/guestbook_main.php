@@ -133,27 +133,27 @@ function guestbook_render(){
                      "Ihr Eintrag enthält nicht erlaubte Wörter.</p>";
                      }
                 else{
-				     $errors = true;
+                     $errors = true;
                      $html_output .= "<p class='ulicms_error'>" .
                      "Your comment contains not allowed words.</p>";
                      }
                  }
             
-			        // Filter nach chinesisch
-		     if(getconfig("disallow_chinese_chars") and $spamfilter_enabled and
-                 (is_chinese($_POST["gb_content"]))){
-				 
-				 $errors = true;
-				 
-				 if($_SESSION["language"] == "de"){
-				 $html_output .= "<p class='ulicms_error'>" .
-             "Chinesische Schriftzeichen sind nicht erlaubt!</p>";
-			 } else {
-			  $html_output .= "<p class='ulicms_error'>" .
-             "Chinese chars are not allowed!</p>";
-			 }
-             }
-			
+             // Filter nach chinesisch
+            if(getconfig("disallow_chinese_chars") and $spamfilter_enabled and
+                     (is_chinese($_POST["gb_content"]))){
+                
+                 $errors = true;
+                
+                 if($_SESSION["language"] == "de"){
+                     $html_output .= "<p class='ulicms_error'>" .
+                     "Chinesische Schriftzeichen sind nicht erlaubt!</p>";
+                     }else{
+                     $html_output .= "<p class='ulicms_error'>" .
+                     "Chinese chars are not allowed!</p>";
+                     }
+                 }
+            
              if($_POST["phone"] != "" and $spamfilter_enabled){
                  $errors = true;
                  if($_SESSION["language"] == "de"){
@@ -213,7 +213,7 @@ function guestbook_render(){
 
 function guestbook_get_add_entry_link(){
      if($_SESSION["language"] == "de"){
-         return "<a href=\"" . "" . buildSEOUrl(get_requested_pagename()). "?action=add" . "\">Eintrag hinzufügen</a><hr/>";
+         return "<a href=\"" . "" . buildSEOUrl(get_requested_pagename()) . "?action=add" . "\">Eintrag hinzufügen</a><hr/>";
          }
     else{
          return "<a href=\"" . "" . buildSEOUrl(get_requested_pagename()) . "?action=add" . "\">Add Entry</a><hr/>";
@@ -231,7 +231,7 @@ function get_add_entry_form(){
              . "templates/add_entry_from_english.tpl");
          }
      $add_entry_form_template = str_replace("{form_action_url}",
-         "" . buildSEOUrl(get_requested_pagename()). "?action=add", $add_entry_form_template);
+         "" . buildSEOUrl(get_requested_pagename()) . "?action=add", $add_entry_form_template);
      return $add_entry_form_template;
      }
 
@@ -265,7 +265,7 @@ function guestbook_list(){
 		
 		<small>" . $row -> date . "</small>";
          if($_SESSION["group"] >= 40){
-             $html_output .= ' &nbsp;&nbsp;[<a href="' . buildSEOUrl(get_requested_pagename()).
+             $html_output .= ' &nbsp;&nbsp;[<a href="' . buildSEOUrl(get_requested_pagename()) .
              "?action=delete&delete=" .
              $row -> id . '" onclick="return confirm(\'Diesen Eintrag löschen?\');">Löschen</a>]';
             
@@ -293,7 +293,7 @@ function guestbook_list(){
      if($limit < $last){
          $new_limit = $limit + 10;
         
-         $html_output .= "<br/>br/><a href='" . buildSEOUrl(get_requested_pagename()). "?action=list&limit=$new_limit#gb_more'>" . "Mehr</a>";
+         $html_output .= "<br/>br/><a href='" . buildSEOUrl(get_requested_pagename()) . "?action=list&limit=$new_limit#gb_more'>" . "Mehr</a>";
          }
     
     

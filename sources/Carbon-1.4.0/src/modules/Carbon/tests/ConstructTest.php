@@ -77,4 +77,4 @@ class ConstructTest extends TestFixture
          $this -> assertSame('Asia/Tokyo', $c -> tzName);
          $this -> assertSame(9, $c -> offsetHours);
          }
-    }
+     }

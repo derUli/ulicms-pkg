@@ -6,14 +6,14 @@ if(isModuleInstalled("IXR_Library") and getconfig("remote_api_enabled")
          and isset($_GET["remote"])){
      include_once(getModulePath("IXR_Library") . 'IXR_Library.php');
     
-    function register_xmlrpc_call($name, $callback){
+     function register_xmlrpc_call($name, $callback){
         
          global $xmlrpc_calls;
          $xmlrpc_calls[$name] = $callback;
-        }
+         }
     
     
-    class SimpleServer extends IXR_Server{
+     class SimpleServer extends IXR_Server{
          function SimpleServer(){
              $this -> user = null;
              global $xmlrpc_calls;
@@ -161,17 +161,17 @@ if(isModuleInstalled("IXR_Library") and getconfig("remote_api_enabled")
              $number2 = $args[1];
              return $number1 + $number2;
              }
-        }
+         }
     
-    $server = new SimpleServer();
+     $server = new SimpleServer();
     
     
-    }else if(isModuleInstalled("IXR_Library") and !getconfig("remote_api_enabled")
+     }else if(isModuleInstalled("IXR_Library") and !getconfig("remote_api_enabled")
          and isset($_GET["remote"])){
      header("HTTP/1.0 503 Service Temporarily Unavailable");
      header("Content-Type: text/plain;");
      die("Remote API is disabled.");
-    }
+     }
 
 
 ?>

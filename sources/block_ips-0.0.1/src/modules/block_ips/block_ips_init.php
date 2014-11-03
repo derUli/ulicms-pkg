@@ -28,4 +28,4 @@ $ip = $_SERVER['REMOTE_ADDR'];
 if(isIPBlocked($ip)){
      header('HTTP/1.0 403 Forbidden');
      die("Der Zugriff von Ihrer IP-Adresse ($ip) wurde gesperrt!");
-}
+     }

@@ -89,7 +89,7 @@ function output_all($gallery_image_folder){
                      $title_attr = "title='$description_content'";
                  $path_to_original_image = $gallery_image_folder . $filename;
                 
-                 $big_url = "" .buildSEOUrl(get_requested_pagename()). "?" . "img_id=" . $exploded_filename[0];
+                 $big_url = "" . buildSEOUrl(get_requested_pagename()) . "?" . "img_id=" . $exploded_filename[0];
                  $html_output .= "<a href='$standard_filename' $title_attr rel='lightbox[$random_id]'>";
                  $html_output .= "<img src='" . $thumbnail_filename . "' style='margin-right:20px;border:0px;'";
                  if(is_file($description_filename)){

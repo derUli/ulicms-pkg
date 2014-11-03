@@ -23,7 +23,7 @@ $referer_contains_domain = strpos($referer, $domain) !== false;
 
 if(!is_admin_dir() and !crawlerDetect() and !empty($referer) and !logged_in() and !$referer_contains_domain){
     
-
+    
     
     
      $url = db_escape($referer);

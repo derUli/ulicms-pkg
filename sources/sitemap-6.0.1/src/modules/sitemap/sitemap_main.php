@@ -30,7 +30,7 @@ function sitemap_menu($name){
      case "hidden": case "none":
          $menu_in_german = "Nicht im Menü";
          break;
-        break;
+         break;
      default:
          $menu_in_german = $name;
          break;
@@ -47,10 +47,10 @@ function sitemap_menu($name){
      while($row = db_fetch_object($query)){
      $html_output .= "  <li>" ;
      if(get_requested_pagename() != $row -> systemname){
-     $html_output .= "<a href='" .buildSEOUrl($row -> systemname)."' target='" .
+     $html_output .= "<a href='" . buildSEOUrl($row -> systemname) . "' target='" .
      $row -> target . "'>";
      }else{
-     $html_output .= "<a href='" . buildSEOUrl($row -> systemname)."' target='" . $row -> target . "'>";
+     $html_output .= "<a href='" . buildSEOUrl($row -> systemname) . "' target='" . $row -> target . "'>";
      }
 
 
@@ -65,10 +65,10 @@ $query2 = db_query("SELECT * FROM " . tbname("content") . " WHERE active = 1 AND
      while($row2 = db_fetch_object($query2)){
          $html_output .= "      <li>";
          if(get_requested_pagename() != $row2 -> systemname){
-             $html_output .= "<a href='" . buildSEOUrl($row2 -> systemname)."' target='" .
+             $html_output .= "<a href='" . buildSEOUrl($row2 -> systemname) . "' target='" .
              $row -> target . "'>";
              }else{
-             $html_output .= "<a href='" .buildSEOUrl($row2 -> systemname)."' target='" .
+             $html_output .= "<a href='" . buildSEOUrl($row2 -> systemname) . "' target='" .
              $row -> target . "'>";
              }
          $html_output .= $row2 -> title;
@@ -98,10 +98,10 @@ $query2 = db_query("SELECT * FROM " . tbname("content") . " WHERE active = 1 AND
              while($row3 = db_fetch_object($query3)){
                  $html_output .= "      <li>";
                  if(get_requested_pagename() != $row3 -> systemname){
-                     $html_output .= "<a href='" . buildSEOUrl($row3 -> systemname)."' target='" .
+                     $html_output .= "<a href='" . buildSEOUrl($row3 -> systemname) . "' target='" .
                      $row3 -> target . "'>";
                      }else{
-                     $html_output .= "<a href='" . buildSEOUrl($row3 -> systemname)."' target='" .
+                     $html_output .= "<a href='" . buildSEOUrl($row3 -> systemname) . "' target='" .
                      $row3 -> target . "'>";
                      }
                  $html_output .= $row3 -> title;
@@ -127,10 +127,10 @@ $query2 = db_query("SELECT * FROM " . tbname("content") . " WHERE active = 1 AND
                      while($row4 = db_fetch_object($query4)){
                          $html_output .= "<li>";
                          if(get_requested_pagename() != $row4 -> systemname){
-                             $html_output .= "<a href='" . buildSEOUrl($row4 -> systemname)."' target='" .
+                             $html_output .= "<a href='" . buildSEOUrl($row4 -> systemname) . "' target='" .
                              $row4 -> target . "'>";
                              }else{
-                             $html_output .= "<a href='" . buildSEOUrl($row4 -> systemname)."' target='" .
+                             $html_output .= "<a href='" . buildSEOUrl($row4 -> systemname) . "' target='" .
                              $row4 -> target . "'>";
                              }
                          $html_output .= $row4 -> title;

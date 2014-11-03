@@ -40,14 +40,14 @@ min-width:200px;
 <tr>
 <td>Durch</td>
 <td><textarea name="value" rows=5><?php echo $value;
-    ?></textarea></td>
+     ?></textarea></td>
 </tr>
 <tr>
 <td>Zwischen Groß- und Kleinschreibung unterscheiden</td>
 <td><input type="checkbox" name="match_case" value="1"<?php
      if($match_case)
-        echo " checked=\"checked\"";
-    ?>></td>
+         echo " checked=\"checked\"";
+     ?>></td>
 </tr>
 <tr>
 <td>

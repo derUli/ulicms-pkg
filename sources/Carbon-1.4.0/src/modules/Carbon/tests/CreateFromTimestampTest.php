@@ -48,4 +48,4 @@ class CreateFromTimestampTest extends TestFixture
          $this -> assertCarbon($d, 1970, 1, 1, 0, 0, 0);
          $this -> assertTrue($d -> offset === 0);
          }
-    }
+     }

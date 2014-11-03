@@ -10,15 +10,15 @@ function google_analytics_admin(){
         
          }
     
-    $ga_id = getconfig("google_analytics_id");
-    if(!$ga_id)
+     $ga_id = getconfig("google_analytics_id");
+     if(!$ga_id)
          $ga_id = "UA-XXXXX-YY";
     
-    ?>
+     ?>
 
 <form action="<?php echo getModuleAdminSelfPath()?>" method="post">
 <p>Web-Property-ID: <input name="google_analytics_id" type="text" value="<?php echo htmlspecialchars($ga_id);
-    ?>"></p>
+     ?>"></p>
 
 <p><input type="submit" name="submit" value="Einstellungen speichern"/></p>
 </form>

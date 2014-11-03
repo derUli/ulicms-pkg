@@ -53,7 +53,8 @@ $('#menucontainer a').click(function(e){
 <div id="menucontainer">
 <div id="menubutton">Seiten</div>
 <div id="menucontent">
-<?php menu("left");?>
+<?php menu("left");
+?>
 </div>
 </div>
 <div class="container">
@@ -65,6 +66,8 @@ $('#menucontainer a').click(function(e){
 if(getconfig("logo_disabled") == "no")
     {
      ?>
-<p style="margin-bottom:10px;"><?php logo();?></p>
-	 <?php } ?>
+<p style="margin-bottom:10px;"><?php logo();
+     ?></p>
+	 <?php }
+?>
      

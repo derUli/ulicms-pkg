@@ -1,44 +1,48 @@
 <?php
-/* vim: set expandtab sw=4 ts=4 sts=4: */
+/**
+ * vim: set expandtab sw=4 ts=4 sts=4:
+ */
 /**
  * Text Plain Long To IPv4 Transformations plugin for phpMyAdmin
- *
- * @package    PhpMyAdmin-Transformations
+ * 
+ * @package PhpMyAdmin-Transformations
  * @subpackage LongToIPv4
  */
-if (! defined('PHPMYADMIN')) {
-    exit;
-}
+if (! defined('PHPMYADMIN')){
+     exit;
+     }
 
-/* Get the long to ipv4 transformations interface */
+/**
+ * Get the long to ipv4 transformations interface
+ */
 require_once 'abstract/LongToIPv4TransformationsPlugin.class.php';
 
 /**
  * Handles the long to ipv4 transformation for text plain
- *
- * @package    PhpMyAdmin-Transformations
+ * 
+ * @package PhpMyAdmin-Transformations
  * @subpackage LongToIPv4
  */
 class Text_Plain_Longtoipv4 extends LongToIPv4TransformationsPlugin
 {
     /**
      * Gets the plugin`s MIME type
-     *
-     * @return string
+     * 
+     * @return string 
      */
-    public static function getMIMEType()
+     public static function getMIMEType()
     {
-        return "Text";
-    }
-
+         return "Text";
+         }
+    
     /**
      * Gets the plugin`s MIME subtype
-     *
-     * @return string
+     * 
+     * @return string 
      */
-    public static function getMIMESubtype()
+     public static function getMIMESubtype()
     {
-        return "Plain";
-    }
-}
+         return "Plain";
+         }
+     }
 ?>

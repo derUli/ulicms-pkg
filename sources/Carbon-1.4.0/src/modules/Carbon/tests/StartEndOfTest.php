@@ -57,4 +57,4 @@ class StartEndOfTest extends TestFixture
          $dt = Carbon :: create(2000, 1, 31, 2, 3, 4) -> endOfMonth();
          $this -> assertCarbon($dt, 2000, 1, 31, 23, 59, 59);
          }
-    }
+     }

@@ -195,4 +195,4 @@ class GettersTest extends TestFixture
          $d = Carbon :: now();
          $bb = $d -> doesNotExit;
          }
-    }
+     }

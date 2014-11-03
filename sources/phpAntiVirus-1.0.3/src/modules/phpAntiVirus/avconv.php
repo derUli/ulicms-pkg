@@ -1,28 +1,22 @@
 <?php
-//                  _                   _   _     _             
-//             _ __| |_  _ __  __ _ _ _| |_(_)_ _(_)_ _ _  _ ___
-//            | '_ \ ' \| '_ \/ _` | ' \  _| \ V / | '_| || (_-<
-//            | .__/_||_| .__/\__,_|_||_\__|_|\_/|_|_|  \_,_/__/
-//            |_|       |_|                                     
-//                               Version 1.0.3
-//
-//    Official Site:                                     Authors:
-//    http://phpantivirus.sourceforge.net                KeyboardArtist
-//                                                       Deekay
-//    Sourceforge Page:                                  Nico
-//    http://sourceforge.net/projects/phpantivirus/      Murphy
-//
-//    This software is provided as-is, without warranty or guarantee of
-//    any kind. Use at your own risk. This software is licenced under the
-//    GNU GPL license. More information is available in 'COPYING' included
-//    with this distribution.
+// _                   _   _     _
+// _ __| |_  _ __  __ _ _ _| |_(_)_ _(_)_ _ _  _ ___
+// | '_ \ ' \| '_ \/ _` | ' \  _| \ V / | '_| || (_-<
+// | .__/_||_| .__/\__,_|_||_\__|_|\_/|_|_|  \_,_/__/
+// |_|       |_|
+// Version 1.0.3
+// Official Site:                                     Authors:
+// http://phpantivirus.sourceforge.net                KeyboardArtist
+// Deekay
+// Sourceforge Page:                                  Nico
+// http://sourceforge.net/projects/phpantivirus/      Murphy
+// This software is provided as-is, without warranty or guarantee of
+// any kind. Use at your own risk. This software is licenced under the
+// GNU GPL license. More information is available in 'COPYING' included
+// with this distribution.
 
-
-//
 // Example configuration file for PHP AntiVirus v1.0.3
 // Please read INSTALL before editing this file.
-//
-
 
 // DEBUG MODE
 // ----------
@@ -31,8 +25,7 @@
 // files, as well as debug information for file reading and
 // database connections.
 // Default: Off (0)
-
- $CONFIG['debug'] = 0;
+$CONFIG['debug'] = 0;
 
 
 // ROOT PATH TO SCAN
@@ -45,7 +38,6 @@
 // the number of files inside this directory - if it is too
 // large it may fail.
 // Default: Document root defined in Apache
-
 $CONFIG['scanpath'] = $_SERVER['DOCUMENT_ROOT'];
 
 
@@ -56,10 +48,8 @@ $CONFIG['scanpath'] = $_SERVER['DOCUMENT_ROOT'];
 // extension (the text after the period or dot in the file
 // name) - for example "htm", "html" or "php" files.
 // Default: None
-
 // Static files? This should be a comprehensive list, add
 // more if required.
-
 $CONFIG['extensions'][] = 'htm';
 $CONFIG['extensions'][] = 'html';
 $CONFIG['extensions'][] = 'shtm';
@@ -70,7 +60,6 @@ $CONFIG['extensions'][] = 'vbs';
 
 // PHP files? This should be a comprehensive list, add more
 // if required.
-
 $CONFIG['extensions'][] = 'php';
 $CONFIG['extensions'][] = 'php3';
 $CONFIG['extensions'][] = 'php4';
@@ -79,29 +68,27 @@ $CONFIG['extensions'][] = 'php5';
 // Text files? Virus code is harmless but invasive,
 // although uncommenting these lines may cause false
 // positives.
-
 // $CONFIG['extensions'][] = 'txt';
 // $CONFIG['extensions'][] = 'rtf';
 // $CONFIG['extensions'][] = 'doc';
 // $CONFIG['extensions'][] = 'conf';
 // $CONFIG['extensions'][] = 'dat';
-
 // Flat file data? Only enable these if you regularly store
 // data in flat files.
-
- $CONFIG['extensions'][] = 'conf';
+$CONFIG['extensions'][] = 'conf';
  $CONFIG['extensions'][] = 'config';
  $CONFIG['extensions'][] = 'csv';
  $CONFIG['extensions'][] = 'tab';
  $CONFIG['extensions'][] = 'sql';
 
 // CGI scripts? Unlikely but entirely possible.
-
- $CONFIG['extensions'][] = 'pl';
+$CONFIG['extensions'][] = 'pl';
  $CONFIG['extensions'][] = 'perl';
  $CONFIG['extensions'][] = 'cgi';
  $CONFIG['extensions'][] = '';
 
-  @set_time_limit(0); // run script forever 
+ @set_time_limit(0); // run script forever 
+
+
 
 ?>

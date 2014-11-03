@@ -2,11 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
-<?php base_metas();?>
-<link href="<?php echo getTemplateDirPath("simple_beauty");?>style.css" rel="stylesheet" type="text/css" />
+<?php base_metas();
+?>
+<link href="<?php echo getTemplateDirPath("simple_beauty");
+?>style.css" rel="stylesheet" type="text/css" />
 <style type="text/css" rel="stylesheet">
 #header, #sub_header{
-background-color:<?php echo getconfig("header-background-color");?>
+background-color:<?php echo getconfig("header-background-color");
+?>
 }
 </style>
 </head>
@@ -15,16 +18,19 @@ background-color:<?php echo getconfig("header-background-color");?>
 <div id="container">
 
 <div id="header">
-<?php 
-if(getconfig("logo_disabled") == "no"){ 
-   logo();
-} else {
+<?php
+if(getconfig("logo_disabled") == "no"){
+     logo();
+     }else{
+     ?>
+<h1><?php homepage_title();
+     ?></h1>
+<?php }
 ?>
-<h1><?php homepage_title();?></h1>
-<?php }?>
 </div>
 
-<div id="sub_header"><?php motto();?></div>
+<div id="sub_header"><?php motto();
+?></div>
 
 <div id="main_content_top"></div>
 

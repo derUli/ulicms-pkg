@@ -55,14 +55,14 @@ if($writable){
 
 if($difference >= $backup_interval and $allowed and $writable){
      // set last backup time to current
-     @ignore_user_abort(1); // run script in background 
+    @ignore_user_abort(1); // run script in background 
      @set_time_limit(0); // run script forever 
     
      // Save Dump
     shell_exec("mysqldump -h $mysql_host -u $mysql_user -p$mysql_password --skip-lock-tables --add-drop-table --complete-insert --hex-blob $mysql_database > $backup_file.sql");
      shell_exec("gzip -d " . $backup_file . ".sql");
-     
-    setconfig("mysql_backup_last_time", time());
+    
+     setconfig("mysql_backup_last_time", time());
     
      }
  // Backup schlägt fehl.

@@ -53,9 +53,9 @@ function blog_single($seo_shortname){
              $html .= "<br/>";
             
              if($acl -> hasPermission("blog")){
-                 $html .= "<a href='" . buildSEOUrl(get_requested_pagename())."?blog_admin=edit_post&id=" . $post -> id . "'>[Bearbeiten]</a> ";
+                 $html .= "<a href='" . buildSEOUrl(get_requested_pagename()) . "?blog_admin=edit_post&id=" . $post -> id . "'>[Bearbeiten]</a> ";
                 
-                 $html .= "<a href='" . buildSEOUrl(get_requested_pagename())."?blog_admin=delete_post&id=" . $post -> id . "' onclick='return confirm(\"Diesen Post wirklich löschen?\")'>[Löschen]</a>";
+                 $html .= "<a href='" . buildSEOUrl(get_requested_pagename()) . "?blog_admin=delete_post&id=" . $post -> id . "' onclick='return confirm(\"Diesen Post wirklich löschen?\")'>[Löschen]</a>";
                  }else if(logged_in()){
                  $html .= "
 		   <div class='disabled_link'>[Bearbeiten]</div>
@@ -223,7 +223,7 @@ function post_comments(){
 
 
 if(!function_exists("stringcontainsbadwords")){
-    function stringcontainsbadwords($str){
+     function stringcontainsbadwords($str){
          $words_blacklist = getconfig("spamfilter_words_blacklist");
          $str = strtolower($str);
         
@@ -244,7 +244,7 @@ if(!function_exists("stringcontainsbadwords")){
          return false;
          }
     
-    }
+     }
 
 function blog_display_comments($post_id){
      $html = "";
@@ -262,21 +262,21 @@ function blog_display_comments($post_id){
              $html .= "<p class='ulicms_error'>Users from your Country are blocked by the spamfilter. If you believe, this is an error, please contact the administrator.</p>";
              }
          }
-		 
+    
     else if(getconfig("disallow_chinese_chars") and $spamfilter_enabled and
-	(is_chinese($_POST["name"]) or
+             (is_chinese($_POST["name"]) or
                  is_chinese($_POST["comment"]))){
-				 if($_SESSION["language"] == "de"){
-				 $html .= "<p class='ulicms_error'>" .
+         if($_SESSION["language"] == "de"){
+             $html .= "<p class='ulicms_error'>" .
              "Chinesische Schriftzeichen sind nicht erlaubt!</p>";
-			 } else {
-			 $html .= "<p class='ulicms_error'>" .
+             }else{
+             $html .= "<p class='ulicms_error'>" .
              "Chinese chars are not allowed!</p>";
-			 }
              }
-			 
-			 
-				     
+         }
+    
+    
+    
     else if($spamfilter_enabled and (stringcontainsbadwords($_POST["name"]) or
                  stringcontainsbadwords($_POST["comment"]))){
          if($_SESSION["language"] == "de"){
@@ -287,7 +287,7 @@ function blog_display_comments($post_id){
              $html .= "<p class='ulicms_error'>" .
              "Your comment contains not allowed words.</p>";
              }
-         } else{
+         }else{
         
          if(post_comments($post -> id)){
              $html .= "<script type='text/javascript'>
@@ -316,20 +316,20 @@ function blog_display_comments($post_id){
         
          if($_SESSION["language"] == "de"){
              if(db_num_rows($query) != 1){
-             $html .= "<p>Es sind bisher " . db_num_rows($query) .
-             " Kommentare zu diesem Artikel vorhanden.</p>";
-             } else {
-             
-             $html .= "<p>Es ist bisher " . db_num_rows($query) .
-             " Kommentar zu diesem Artikel vorhanden.</p>";
-             }
+                 $html .= "<p>Es sind bisher " . db_num_rows($query) .
+                 " Kommentare zu diesem Artikel vorhanden.</p>";
+                 }else{
+                
+                 $html .= "<p>Es ist bisher " . db_num_rows($query) .
+                 " Kommentar zu diesem Artikel vorhanden.</p>";
+                 }
              }else{
-              if(db_num_rows($query) != 1){
-              $html .= "<p>There are " . db_num_rows($query) . " Comments until now.</p>";
-              } else {
-            $html .= "<p>There is " . db_num_rows($query) . " Comment until now.</p>";              
-              }
-             
+             if(db_num_rows($query) != 1){
+                 $html .= "<p>There are " . db_num_rows($query) . " Comments until now.</p>";
+                 }else{
+                 $html .= "<p>There is " . db_num_rows($query) . " Comment until now.</p>";
+                 }
+            
              }
         
          $html .= "<hr/>";
@@ -347,7 +347,7 @@ function blog_display_comments($post_id){
              $html .= "</a>";
             
              if($acl -> hasPermission("blog")){
-                 $html .= " <a href='" . buildSEOUrl(get_requested_pagename())."?blog_admin=delete_comment&id=" . $comment -> id . "' onclick='return confirm(\"Diesen Kommentar wirklich löschen?\")'>[Löschen]</a>";
+                 $html .= " <a href='" . buildSEOUrl(get_requested_pagename()) . "?blog_admin=delete_comment&id=" . $comment -> id . "' onclick='return confirm(\"Diesen Kommentar wirklich löschen?\")'>[Löschen]</a>";
                  }
             
              $html .= "<br/>";

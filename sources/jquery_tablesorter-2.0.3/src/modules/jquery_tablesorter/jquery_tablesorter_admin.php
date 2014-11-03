@@ -9,37 +9,37 @@ function jquery_tablesorter_admin(){
              db_escape($_POST["jquery_tablesorter_theme"]));
          }
     
-    $jquery_tablesorter_theme = getconfig("jquery_tablesorter_theme");
+     $jquery_tablesorter_theme = getconfig("jquery_tablesorter_theme");
     
-    $themeDir = getModulePath("jquery_tablesorter") . "themes/";
+     $themeDir = getModulePath("jquery_tablesorter") . "themes/";
     
-    $themeDirContent = scandir($themeDir);
+     $themeDirContent = scandir($themeDir);
     
-    $allThemes = array();
+     $allThemes = array();
     
-    for($i = 0; $i < count($themeDirContent); $i++){
+     for($i = 0; $i < count($themeDirContent); $i++){
          if($themeDirContent[$i] != "." and $themeDirContent[$i] != ".."
              and file_exists($themeDir . $themeDirContent[$i] . "/style.css") and is_file($themeDir . $themeDirContent[$i] . "/style.css")){
              array_push($allThemes, basename($themeDirContent[$i]));
              }
-        }
+         }
     
-    ?>
+     ?>
 
 <form action="<?php echo getModuleAdminSelfPath()?>" method="post">
 <p>Theme<br/>
 <select name="jquery_tablesorter_theme" size=1>
 <?php
-    for($i = 0; $i < count($allThemes); $i++){
-        ?>
+     for($i = 0; $i < count($allThemes); $i++){
+         ?>
 <option value="<?php echo $allThemes[$i];
-        ?>" <?php if($allThemes[$i] === getconfig("jquery_tablesorter_theme")) echo " selected=\"selected\"";
-        ?>>
+         ?>" <?php if($allThemes[$i] === getconfig("jquery_tablesorter_theme")) echo " selected=\"selected\"";
+         ?>>
 
 <?php echo $allThemes[$i];
-        ?></option>
+         ?></option>
 <?php }
-    ?>
+     ?>
 </select>
 </p>
 

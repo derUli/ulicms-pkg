@@ -1,17 +1,19 @@
 <?php
-/* vim: set expandtab sw=4 ts=4 sts=4: */
+/**
+ * vim: set expandtab sw=4 ts=4 sts=4:
+ */
 /**
  * Styles for CodeMirror editor
  * for the pmahomme theme
- *
- * @package    PhpMyAdmin-theme
+ * 
+ * @package PhpMyAdmin-theme
  * @subpackage PMAHomme
  */
 
 // unplanned execution path
-if (! defined('PMA_MINIMUM_COMMON') && ! defined('TESTSUITE')) {
-    exit();
-}
+if (! defined('PMA_MINIMUM_COMMON') && ! defined('TESTSUITE')){
+     exit();
+     }
 ?>
 
 /* PADDING */
@@ -112,11 +114,13 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #f22;}
   background: white;
   color: black;
   font-family: monospace;
-  height: <?php echo ceil($GLOBALS['cfg']['TextareaRows'] * 1.2); ?>em;
+  height: <?php echo ceil($GLOBALS['cfg']['TextareaRows'] * 1.2);
+?>em;
 }
 
 #inline_editor_outer .CodeMirror {
-    height: <?php echo ceil($GLOBALS['cfg']['TextareaRows'] * 0.4); ?>em;
+    height: <?php echo ceil($GLOBALS['cfg']['TextareaRows'] * 0.4);
+?>em;
 }
 
 .CodeMirror-scroll {

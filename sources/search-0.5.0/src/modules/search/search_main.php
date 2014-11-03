@@ -106,8 +106,8 @@ function search_render(){
                  $html_output .= "<hr/>
 		<ol class='result-list'>";
                  while($row = db_fetch_assoc($results)){
-                     $html_output .= "<li><a href='" . 
-                     buildSEOUrl($row["systemname"]). "'>" . 
+                     $html_output .= "<li><a href='" .
+                     buildSEOUrl($row["systemname"]) . "'>" .
                      htmlspecialchars($row["title"], ENT_QUOTES, "UTF-8") . "</a></li>";
                     
                      }
