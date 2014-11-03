@@ -46,8 +46,8 @@ if(!empty($_FILES['file']['name'])){
    $content = db_escape($content);
    $title = db_escape($_POST["title"]);
    $user_id = intval($_POST["user"]);
-   $sql = "INSERT INTO `".tbname("shared_files")."` (`title`, `filename` `user_id`, `content`) ('$title', '$filename', $user_id, '$content');";
-   db_query($sql);
+   $sql = "INSERT INTO `".tbname("shared_files")."` (`title`, `filename`, `user_id`, `content`) VALUES ('$title', '$filename', $user_id, '$content');";
+   db_query($sql)or die(db_error());
 
 }
      
@@ -56,28 +56,34 @@ if(!empty($_FILES['file']['name'])){
 function list_files($uid){
 
 echo "<p><a href=\"index.php?action=module_settings&module=kundenbereich&new&user=".intval($uid)."\">[Datei hochladen]</a></p>";
+
 if(isset($_REQUEST["delete"])){
-   db_query("DELETE FROM `".tbname("shared_files")."` WHERE id=".intval($delete));
+
+   db_query("DELETE FROM `".tbname("shared_files")."` WHERE id=".intval($_REQUEST["delete"]));
 }
 $files = db_query("SELECT id, title, filename FROM `".tbname("shared_files")."` WHERE `user_id` = ".intval($uid). " ORDER by title,filename");
       if(db_num_rows($files) > 0){
       
-          $html = "<ul class='shared_files_list'>";
-          while($row = db_fetch_row($files)){
+          $html = "<ol class='shared_files_list'>";
           
+          while($row = db_fetch_object($files)){
              $html .= '<li>';
-             if(is_null($title) or empty($title)){
+             if(is_null($row->title) or empty($row->title)){
+             
                 $html .= $row->filename;             
              } else {
 
                 $html .= $row->title;
-                $html .= " <a href=\"index.php?action=module_settings&module=kundenbereich&user=".intval($uid)."&delete=".$row->id."\">[Löschen]</a>";
-             }
+                }
+                $html .= " <a href=\"index.php?action=module_settings&module=kundenbereich&user=".intval($uid)."&delete=".$row->id."\" onclick=\"return confirm('Wirklich löschen?');\">[Löschen]</a>";
+             
              $html .= "</li>";
              
           }
           
-          $html .= "</ul>";
+          $html .= "</ol>";
+          
+          echo $html;
       
       } else {
          echo "<span class='shared_file_message ulicms_error'>".

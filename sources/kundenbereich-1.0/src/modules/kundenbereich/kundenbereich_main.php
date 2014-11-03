@@ -7,10 +7,10 @@ function kundenbereich_render(){
       if(db_num_rows($files) > 0){
       
           $html = "<ul class='shared_files_list'>";
-          while($row = db_fetch_row($files)){
+          while($row = db_fetch_object($files)){
           
-             $html .= '<li><a href="'.getCurrentURL().'&get='.$row->id.'">';
-             if(is_null($title) or empty($title)){
+             $html .= '<li><a href="'.buildSEOUrl().'?get='.$row->id.'">';
+             if(is_null($row->title) or empty($row->title)){
                 $html .= $row->filename;             
              } else {
 
