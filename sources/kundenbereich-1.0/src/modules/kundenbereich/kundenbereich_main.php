@@ -3,7 +3,7 @@ function kundenbereich_render(){
    if(!is_logged_in()){
       $html = "";
    } else {
-      $files = db_query("SELECT id, title, filename FROM `".tbname("shared_files")."` WHERE `user_id` = ".intval($_SESSION["login_id"]). " ORDER by title,filename");
+      $files = db_query("SELECT id, title, filename FROM `".tbname("shared_files")."` WHERE `user_id` = ".intval($_SESSION["login_id"]). " ORDER by id");
       if(db_num_rows($files) > 0){
       
           $html = "<ul class='shared_files_list'>";

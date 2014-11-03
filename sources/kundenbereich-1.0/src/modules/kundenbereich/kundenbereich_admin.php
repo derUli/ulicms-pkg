@@ -61,7 +61,7 @@ if(isset($_REQUEST["delete"])){
 
    db_query("DELETE FROM `".tbname("shared_files")."` WHERE id=".intval($_REQUEST["delete"]));
 }
-$files = db_query("SELECT id, title, filename FROM `".tbname("shared_files")."` WHERE `user_id` = ".intval($uid). " ORDER by title,filename");
+$files = db_query("SELECT id, title, filename FROM `".tbname("shared_files")."` WHERE `user_id` = ".intval($uid). " ORDER by id");
       if(db_num_rows($files) > 0){
       
           $html = "<ol class='shared_files_list'>";
