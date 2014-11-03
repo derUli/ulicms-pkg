@@ -86,10 +86,12 @@ $files = db_query("SELECT id, title, filename FROM `".tbname("shared_files")."` 
           echo $html;
       
       } else {
-         echo "<span class='shared_file_message ulicms_error'>".
-         "Es sind momentan keine Dateien für diesen Kunden freigegeben."."</span>";
+         echo "<p class='shared_file_message ulicms_error'>".
+         "Es sind momentan keine Dateien für diesen Kunden freigegeben."."</p>";
       }
 
+
+echo "<p><a href=\"?action=module_settings&module=kundenbereich\">[Zurück zur Kundenliste]</a></p>";
 
 }
 
