@@ -14,6 +14,8 @@ if(db_num_rows($query) > 0){
    $data = db_fetch_assoc($query);
    $content = base64_decode($data["content"]);
    $filesize = mb_strlen( $content, '8bit'); 
+   
+     @set_time_limit(0); // Kein Zeitlimit
    header("HTTP/1.0 200 OK");
    header("Content-type: application/octet-stream");
   header("Content-Disposition: attachment; filename=".$data["filename"]);
