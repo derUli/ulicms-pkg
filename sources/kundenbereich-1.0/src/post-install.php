@@ -8,3 +8,6 @@ $create_shared_files_table = "CREATE TABLE IF NOT EXISTS `".tbname("shared_files
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;";
 
 db_query($create_shared_files_table);
+
+$add_primary_key = "ALTER TABLE `".tbname("shared_files")."` ADD PRIMARY KEY (`id`);";
+ db_query($add_primary_key);
