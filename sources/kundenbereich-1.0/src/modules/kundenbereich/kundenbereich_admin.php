@@ -10,14 +10,21 @@ echo "<form action=\"index.php?action=module_settings&module=kundenbereich\" met
      echo "<select name='user'>";
      for($i = 0; $i < count($users); $i++){
          $data = getUserByName($users[$i]);
-          echo "<option value=\"".$data["id"]."\">".$data["username"]."</option>";
+         if($data["id"] == $uid){
+         
+          echo "<option value=\"".$data["id"]."\" selected=\"selected\">".$data["username"]."</option>";
+         }
+         else {
+           echo "<option value=\"".$data["id"]."\">".$data["username"]."</option>";
+         }
+        
          }
          
          echo "</select>";
          
          echo "</p>";
          echo "<p>Titel<br/>";
-         echo '<input type="text" style=\"width:300px;\" name="titel" value="">';
+         echo '<input type="text" style=\"width:300px;\" name="title" value="">';
          echo "</p>";
          
          echo "<p>Datei</br/>";
@@ -31,7 +38,24 @@ echo "<form action=\"index.php?action=module_settings&module=kundenbereich\" met
          echo "</form>";
 }
 
+function do_upload(){
+if(!empty($_FILES['file']['name'])){
+   $filename = db_escape($_FILES['file']['name']);
+   $content = file_get_contents($_FILES['file']["tmp_name"]);
+   $content = base64_encode($content);
+   $content = db_escape($content);
+   $title = db_escape($_POST["title"]);
+   $user_id = intval($_POST["user"]);
+   $sql = "INSERT INTO `".tbname("shared_files")."` (`title`, `filename` `user_id`, `content`) ('$title', '$filename', $user_id, '$content');";
+   db_query($sql);
+
+}
+     
+}
+
 function list_files($uid){
+
+echo "<p><a href=\"index.php?action=module_settings&module=kundenbereich&new&user=".intval($uid)."\">[Datei hochladen]</a></p>";
 if(isset($_REQUEST["delete"])){
    db_query("DELETE FROM `".tbname("shared_files")."` WHERE id=".intval($delete));
 }
@@ -78,7 +102,11 @@ echo "<ol>";
 
 function kundenbereich_admin(){
 if(isset($_REQUEST["user"])){
-if(isset($_REQUEST["new"])){
+if(!empty($_FILES['file']['name'])){
+   do_upload();
+   list_files($_REQUEST["user"]);
+}
+else if(isset($_REQUEST["new"])){
   new_file($_REQUEST["user"]);
 } else {
    list_files($_REQUEST["user"]);
