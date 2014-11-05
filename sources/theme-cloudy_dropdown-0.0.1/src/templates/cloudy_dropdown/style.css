@@ -5,10 +5,23 @@ body {
     padding:0;
 }
 
+html{
+overflow-y:scroll;
+}
+
+
 .footer{
 text-align:center;
 
 }
+
+img{
+border:0px;
+/* Responsive Bilder */
+  max-width: 100%;
+  height: auto;
+}
+
 .root-container {
     background:#fff url(images/sky.jpg);
     width:90%;
