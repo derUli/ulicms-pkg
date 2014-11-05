@@ -15,6 +15,7 @@
 <body>
 	<div class="root-container">
 		<div class="logo">
+		<p><a href="./">
 <?php
 if(getconfig("logo_disabled") == "no")
     {
@@ -24,9 +25,10 @@ if(getconfig("logo_disabled") == "no")
 <?php
      }
 else{
-     ?><h1><?php homepage_title()?></h1>
+     ?><strong><?php homepage_title()?></strong>
 <?php }
 ?>
+</a></p>
 <p><strong><?php motto()?></strong></div>
 <?php menu("top"); ?>
 
