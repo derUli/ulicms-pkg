@@ -7,3 +7,5 @@
 ?>style.css"/>
 </head>
 <body>
+	<div class="root-container">
+<?php menu("top"); ?>
