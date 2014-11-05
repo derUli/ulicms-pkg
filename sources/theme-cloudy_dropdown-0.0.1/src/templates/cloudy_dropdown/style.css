@@ -5,7 +5,7 @@ body {
     padding:0;
 }
 .root-container {
-    background:#fff url(../images/clouds-in-blue-sky.jpg);
+    background:#fff url(images/sky.jpg);
     width:90%;
     height:570px;
     border:1px #000 solid;
