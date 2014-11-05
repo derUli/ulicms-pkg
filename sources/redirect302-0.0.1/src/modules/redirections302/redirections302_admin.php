@@ -22,7 +22,7 @@ Sie können je einen Eintrag pro Zeile eingeben.</p>
 
 <br/>
 <p>
-<textarea rows="10" cols="40" name="redirections302"><?php echo $redirections302;
+<textarea rows="10" cols="80" style="width:100%" name="redirections302"><?php echo $redirections302;
      ?></textarea>
 
 <p><input type="submit" name="submit" value="Einstellungen speichern"/></p>
