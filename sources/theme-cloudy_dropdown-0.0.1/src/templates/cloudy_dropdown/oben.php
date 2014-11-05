@@ -33,3 +33,7 @@ else{
 <?php menu("top"); ?>
 
 <div class="content">
+
+<?php if(!containsModule(get_requested_pagename(), "blog")){?>
+<h1><?php headline() ?></h1>
+<?php }?>
