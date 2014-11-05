@@ -6,7 +6,7 @@
 <link rel="stylesheet" media="screen" type="text/css" href="<?php echo getTemplateDirPath("cloudy_dropdown");
 ?>style.css"/>
 <link rel="stylesheet" href="<?php echo getTemplateDirPath("cloudy_dropdown");
-?>mobile.css" type="text/css" media="only screen and (max-device-width:0px)"/>
+?>mobile.css" type="text/css" media="only screen and (max-device-width:800px)"/>
 
 <link rel="stylesheet" href="<?php echo getTemplateDirPath("cloudy_dropdown");
 ?>mobile.css" type="text/css" media="handheld"/>
