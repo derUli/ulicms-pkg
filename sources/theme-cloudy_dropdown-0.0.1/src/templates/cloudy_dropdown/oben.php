@@ -9,3 +9,5 @@
 <body>
 	<div class="root-container">
 <?php menu("top"); ?>
+
+<div class="content">

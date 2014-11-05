@@ -7,13 +7,18 @@ body {
 .root-container {
     background:#fff url(images/sky.jpg);
     width:90%;
-    height:570px;
     border:1px #000 solid;
     margin:20px auto;
     padding:15px;
     border-radius:3px;
     -moz-border-radius:3px;
     -webkit-border-radius:3px;
+}
+
+
+.content{
+background-color:rgba(255,255,255, 0.5);
+padding:50px;
 }
 
 
