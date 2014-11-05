@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 function code_highlighting_content_filter($html){
      // Wenn der Content keinen code-Tag enthält, abbrechen
