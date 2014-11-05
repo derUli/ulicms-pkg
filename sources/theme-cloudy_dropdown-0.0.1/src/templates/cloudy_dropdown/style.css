@@ -9,6 +9,25 @@ html{
 overflow-y:scroll;
 }
 
+a{
+color:black;
+text-decoration:none;
+}
+
+a:visited{
+color:black
+text-decoration:none;
+}
+
+a:hover{
+color:black;
+text-decoration:underline;
+}
+
+
+.blog_pagination_older{
+float:right;
+}
 
 .footer{
 text-align:center;
