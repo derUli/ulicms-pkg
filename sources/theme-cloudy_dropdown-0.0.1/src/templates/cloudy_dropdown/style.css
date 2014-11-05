@@ -52,7 +52,7 @@ body {
 }
 
 /* selected menu element */
-.menu_top .current a, .menu_top li:hover > a {
+.menu_top .menu_active_link a, .menu_top li:hover > a {
     background:#7788aa url(../images/bg.png) repeat-x 0 -20px;
     color:#000;
     border-top:1px solid #f8f8f8;
