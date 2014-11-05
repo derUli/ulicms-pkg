@@ -43,7 +43,7 @@ else{
      ?><h1><?php homepage_title()?></h1>
 <?php }
 ?>
-<span><?php motto()?></span>
+<p><strong><?php motto()?></strong></p>
 </div>
 <div class="navbar_top">
 <?php menu("top")?>
