@@ -4,6 +4,11 @@ body {
     margin:0;
     padding:0;
 }
+
+.footer{
+text-align:center;
+
+}
 .root-container {
     background:#fff url(images/sky.jpg);
     width:90%;
