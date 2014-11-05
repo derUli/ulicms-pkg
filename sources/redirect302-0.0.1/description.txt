@@ -1,1 +1,1 @@
-Alte URLS zu neuen umleiten
+Permanente HTTP-Weiterleitungen einrichten
