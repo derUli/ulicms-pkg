@@ -15,7 +15,7 @@ function redirections302_admin(){
      ?>
 
 <form action="<?php echo getModuleAdminSelfPath()?>" method="post">
-<p>Hier können Sie permanente Weiterleitungen (HTTP Status 302) einrichten.<br/>
+<p>Hier können Sie temporäre Weiterleitungen (HTTP Status 302) einrichten.<br/>
 Sie können je einen Eintrag pro Zeile eingeben.</p>
 <p>Die Einträge müssen im folgenden Format erfolgen:<br/>
 /?seite=alte_seite&amp;parameter=beispiel=&gt;http://www.neuedomain.de/kategorie/seite.html</p>

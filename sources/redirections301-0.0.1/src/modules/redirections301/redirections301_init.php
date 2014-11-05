@@ -1,5 +1,5 @@
 <?php
-     $redirections = getconfig("redirections302");
+     $redirections = getconfig("redirections301");
      if($redirections and !empty($redirections)){
      $redirections = str_replace("\r\n", "\n", $redirections);
      $redirections = explode("\n", $redirections);
