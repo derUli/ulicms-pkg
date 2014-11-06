@@ -1,9 +1,11 @@
 <?php
 function sitemap_render(){
-     $html_output = "";
+     $html_output = "<div class='sitemap-container'";
      foreach(getAllMenus() as $menu){
          $html_output .= sitemap_menu($menu);
          }
+         
+         $html_output .= "</div>";
      return $html_output;
      }
 
@@ -160,7 +162,10 @@ $query2 = db_query("SELECT * FROM " . tbname("content") . " WHERE active = 1 AND
                              }
                              }
                          $html_output .= $row4 -> title;
+                         
+                         if(!startsWith($row4->redirection, "#")){
                          $html_output .= '</a>';
+                         }
                          if(!startsWith($row4->redirection, "#")){
                          $html_output .= "</li>\n";
                          }
