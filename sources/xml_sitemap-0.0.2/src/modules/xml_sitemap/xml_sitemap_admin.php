@@ -40,6 +40,8 @@ function generate_sitemap(){
     
      $query_pages = db_query("SELECT * FROM " . tbname("content") . " WHERE active = 1 ORDER by lastmodified DESC");
      while($row = db_fetch_object($query_pages)){
+     if(!startsWith($row->redirection, "#")){
+     
          $xml_string .= "<url>\r\n";
          $xml_string .= "\t<loc>" . xmlspecialchars(getBaseURL() . $row -> systemname . ".html") . "</loc>\r\n";
          $xml_string .= "\t<lastmod>" . date("Y-m-d", $row -> lastmodified) . "</lastmod>\r\n";
@@ -57,7 +59,7 @@ function generate_sitemap(){
          }
     
     
-    
+    }
     
      $xml_string .= "</urlset>";
      $xml_string = str_replace("\r\n", "\n", $xml_string);

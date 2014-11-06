@@ -46,17 +46,25 @@ function sitemap_menu($name){
      $html_output .= "<ul>\n";
      while($row = db_fetch_object($query)){
      $html_output .= "  <li>" ;
+     if(!startsWith($row->redirection, "#")){
+       
+   
+     
      if(get_requested_pagename() != $row -> systemname){
      $html_output .= "<a href='" . buildSEOUrl($row -> systemname) . "' target='" .
      $row -> target . "'>";
      }else{
      $html_output .= "<a href='" . buildSEOUrl($row -> systemname) . "' target='" . $row -> target . "'>";
      }
+  }
+
 
 
  $html_output .= $row -> title;
-
+if(!startsWith($row->redirection, "#")){
  $html_output .= "</a>\n";
+ 
+ }
 
  // Unterebene 1
 $query2 = db_query("SELECT * FROM " . tbname("content") . " WHERE active = 1 AND `deleted_at` IS NULL AND language = '$language' AND parent=" . $row -> id . " ORDER by position");
@@ -64,6 +72,9 @@ $query2 = db_query("SELECT * FROM " . tbname("content") . " WHERE active = 1 AND
      $html_output .= "<ul>\n";
      while($row2 = db_fetch_object($query2)){
          $html_output .= "      <li>";
+         
+         if(!startsWith($row2->redirection, "#")){
+         
          if(get_requested_pagename() != $row2 -> systemname){
              $html_output .= "<a href='" . buildSEOUrl($row2 -> systemname) . "' target='" .
              $row -> target . "'>";
@@ -71,9 +82,14 @@ $query2 = db_query("SELECT * FROM " . tbname("content") . " WHERE active = 1 AND
              $html_output .= "<a href='" . buildSEOUrl($row2 -> systemname) . "' target='" .
              $row -> target . "'>";
              }
+             
+             
+             }
          $html_output .= $row2 -> title;
+         
+         if(!startsWith($row2->redirection, "#")){
          $html_output .= '</a>';
-        
+        }
         
         
         
@@ -97,6 +113,8 @@ $query2 = db_query("SELECT * FROM " . tbname("content") . " WHERE active = 1 AND
              $html_output .= "  <ul>\n";
              while($row3 = db_fetch_object($query3)){
                  $html_output .= "      <li>";
+                 if(!startsWith($row3->redirection, "#")){
+                 
                  if(get_requested_pagename() != $row3 -> systemname){
                      $html_output .= "<a href='" . buildSEOUrl($row3 -> systemname) . "' target='" .
                      $row3 -> target . "'>";
@@ -104,8 +122,14 @@ $query2 = db_query("SELECT * FROM " . tbname("content") . " WHERE active = 1 AND
                      $html_output .= "<a href='" . buildSEOUrl($row3 -> systemname) . "' target='" .
                      $row3 -> target . "'>";
                      }
+                     
+                     }
                  $html_output .= $row3 -> title;
+                 
+                 if(!startsWith($row3->redirection, "#")){
                  $html_output .= '</a>';
+                 
+                 }
                 
                 
                 
@@ -126,6 +150,7 @@ $query2 = db_query("SELECT * FROM " . tbname("content") . " WHERE active = 1 AND
                      $html_output .= "  <ul>\n";
                      while($row4 = db_fetch_object($query4)){
                          $html_output .= "<li>";
+                         if(!startsWith($row4->redirection, "#")){
                          if(get_requested_pagename() != $row4 -> systemname){
                              $html_output .= "<a href='" . buildSEOUrl($row4 -> systemname) . "' target='" .
                              $row4 -> target . "'>";
@@ -133,9 +158,12 @@ $query2 = db_query("SELECT * FROM " . tbname("content") . " WHERE active = 1 AND
                              $html_output .= "<a href='" . buildSEOUrl($row4 -> systemname) . "' target='" .
                              $row4 -> target . "'>";
                              }
+                             }
                          $html_output .= $row4 -> title;
                          $html_output .= '</a>';
+                         if(!startsWith($row4->redirection, "#")){
                          $html_output .= "</li>\n";
+                         }
                          }
                      $html_output .= "  </ul></li>\n";
                      }
