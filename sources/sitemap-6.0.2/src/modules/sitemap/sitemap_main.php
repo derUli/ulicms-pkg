@@ -166,10 +166,9 @@ $query2 = db_query("SELECT * FROM " . tbname("content") . " WHERE active = 1 AND
                          if(!startsWith($row4->redirection, "#")){
                          $html_output .= '</a>';
                          }
-                         if(!startsWith($row4->redirection, "#")){
                          $html_output .= "</li>\n";
                          }
-                         }
+                         
                      $html_output .= "  </ul></li>\n";
                      }
                 
