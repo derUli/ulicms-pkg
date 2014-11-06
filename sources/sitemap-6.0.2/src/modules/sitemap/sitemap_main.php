@@ -5,7 +5,7 @@ function sitemap_render(){
          $html_output .= sitemap_menu($menu);
          }
          
-         $html_output .= "</div>";
+     $html_output .= "</div>";
      return $html_output;
      }
 
