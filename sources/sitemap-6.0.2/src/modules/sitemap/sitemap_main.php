@@ -1,6 +1,6 @@
 <?php
 function sitemap_render(){
-     $html_output = "<div class='sitemap-container'";
+     $html_output = "<div class=\"sitemap-container\">";
      foreach(getAllMenus() as $menu){
          $html_output .= sitemap_menu($menu);
          }
