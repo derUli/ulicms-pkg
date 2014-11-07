@@ -14,10 +14,8 @@
 // any kind. Use at your own risk. This software is licenced under the
 // GNU GPL license. More information is available in 'COPYING' included
 // with this distribution.
-
 // Example configuration file for PHP AntiVirus v1.0.3
 // Please read INSTALL before editing this file.
-
 // DEBUG MODE
 // ----------
 // Uncomment this option to enable 'debug' mode
@@ -88,6 +86,7 @@ $CONFIG['extensions'][] = 'pl';
  $CONFIG['extensions'][] = '';
 
  @set_time_limit(0); // run script forever 
+
 
 
 

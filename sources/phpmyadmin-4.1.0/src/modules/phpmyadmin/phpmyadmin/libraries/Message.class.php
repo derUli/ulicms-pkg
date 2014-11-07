@@ -146,7 +146,7 @@ class PMA_Message
      * @param integer $number A numeric representation of the type of message
      * @param array $params An array of parameters to use in the message
      * @param integer $sanitize A flag to indicate what to sanitize, see
-     *                            constant definitions above
+     *                             constant definitions above
      */
      public function __construct($string = '', $number = PMA_Message :: NOTICE,
          $params = array(), $sanitize = PMA_Message :: SANITIZE_NONE
@@ -172,8 +172,8 @@ class PMA_Message
      * shorthand for getting a simple success message
      * 
      * @param string $string A localized string
-     *                         e.g. __('Your SQL query has been
-     *                         executed successfully')
+     *                          e.g. __('Your SQL query has been
+     *                          executed successfully')
      * @return PMA_Message 
      * @static 
      */
@@ -210,9 +210,9 @@ class PMA_Message
      * shorthand for getting a simple notice message
      * 
      * @param string $string A localized string
-     *                         e.g. __('The additional features for working with
-     *                         linked tables have been deactivated. To find out
-     *                         why click %shere%s.')
+     *                          e.g. __('The additional features for working with
+     *                          linked tables have been deactivated. To find out
+     *                          why click %shere%s.')
      * @return PMA_Message 
      * @static 
      */
@@ -435,7 +435,7 @@ class PMA_Message
      * 
      * @param mixed $param parameter to add
      * @param boolean $raw whether parameter should be passed as is
-     *                         without html escaping
+     *                          without html escaping
      * @return void 
      */
      public function addParam($param, $raw = true)

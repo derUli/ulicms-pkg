@@ -92,7 +92,7 @@ function PMA_formatJsVal($value)
  * @param string $key Name of value to set
  * @param mixed $value Value to set, can be either string or array of strings
  * @param bool $escape Whether to escape value or keep it as it is
- *                         (for inclusion of js code)
+ *                          (for inclusion of js code)
  * @return string Javascript code.
  */
 function PMA_getJsValue($key, $value, $escape = true)

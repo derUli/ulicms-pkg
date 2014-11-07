@@ -400,7 +400,7 @@ function PMA_getGrantsArray()
  * @param array $columns columns array
  * @param array $row first row from result or boolean false
  * @param string $name_for_select privilege types - Select_priv, Insert_priv
- *                                   Update_priv, References_priv
+ *                                    Update_priv, References_priv
  * @param string $priv_for_header privilege for header
  * @param string $name privilege name: insert, select, update, references
  * @param string $name_for_dfn name for dfn
@@ -1182,7 +1182,7 @@ function PMA_getAdministrationPrivilegeTable($db)
  * 
  * @param array $privTable privileges table array
  * @param array $privTable_names names of the privilege tables
- *                                 (Data, Structure, Administration)
+ *                                  (Data, Structure, Administration)
  * @param array $row first row from result or boolean false
  * @return string $html_output
  */
@@ -1219,7 +1219,7 @@ function PMA_getHtmlForGlobalPrivTableWithCheckboxes(
  * "change login information / copy user" form.
  * 
  * @param string $mode are we creating a new user or are we just
- *                       changing  one? (allowed values: 'new', 'change')
+ *                        changing  one? (allowed values: 'new', 'change')
  * @global array      $cfg     the phpMyAdmin configuration
  * @global ressource  $user_link the database connection
  * @return string $html_output  a HTML snippet
@@ -2461,7 +2461,7 @@ function PMA_getLinkToDbAndTable($url_dbname, $dbname, $tablename)
  * 
  * @param array $tables tables
  * @param string $user_host_condition a where clause that containd user's host
- *                                      condition
+ *                                       condition
  * @param string $dbname database name
  * @return array $db_rights database rights
  */

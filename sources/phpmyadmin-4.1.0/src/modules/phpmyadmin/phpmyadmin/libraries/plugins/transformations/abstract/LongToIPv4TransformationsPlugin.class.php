@@ -59,7 +59,7 @@ abstract class LongToIPv4TransformationsPlugin extends TransformationsPlugin
      * is attached calls PluginManager::notify()
      * 
      * @param SplSubject $subject The PluginManager notifying the observer
-     *                              of an update.
+     *                               of an update.
      * @todo implement
      * @return void 
      */

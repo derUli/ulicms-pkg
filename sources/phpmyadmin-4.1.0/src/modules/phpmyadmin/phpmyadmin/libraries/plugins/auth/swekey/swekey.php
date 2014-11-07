@@ -5,10 +5,10 @@
  * 
  * History:
  * 1.2 Use curl (widely installed) to query the server
- *       Fixed a possible tempfile race attack
- *       Random token cache can now be disabled
+ *        Fixed a possible tempfile race attack
+ *        Random token cache can now be disabled
  * 1.1 Added Swekey_HttpGet function that support faulty servers
- *       Support for custom servers
+ *        Support for custom servers
  * 1.0 First release
  * 
  * @package Swekey
@@ -22,6 +22,7 @@ define("SWEKEY_ERR_INVALID_DEV_STATUS", 901); // The satus of the device is not 
 define("SWEKEY_ERR_INTERNAL", 902); // Should never occurd
 define("SWEKEY_ERR_OUTDATED_RND_TOKEN", 910); // You random token is too old
 define("SWEKEY_ERR_INVALID_OTP", 911); // The otp was not correct
+
 
 
 
@@ -79,7 +80,7 @@ if (! isset($gSwekeyTokenCacheEnabled)){
 
 /**
  * Change the address of the Check server.
- *    If $server is empty the default value 'http://auth-check.musbe.net' will be used
+ *     If $server is empty the default value 'http://auth-check.musbe.net' will be used
  * 
  * @param server $ The protocol and hostname to use
  * @access public 
@@ -96,7 +97,7 @@ function Swekey_SetCheckServer($server)
 
 /**
  * Change the address of the Random Token Generator server.
- *    If $server is empty the default value 'http://auth-rnd-gen.musbe.net' will be used
+ *     If $server is empty the default value 'http://auth-rnd-gen.musbe.net' will be used
  * 
  * @param server $ The protocol and hostname to use
  * @access public 
@@ -113,7 +114,7 @@ function Swekey_SetRndTokenServer($server)
 
 /**
  * Change the address of the Satus server.
- *    If $server is empty the default value 'http://auth-status.musbe.net' will be used
+ *     If $server is empty the default value 'http://auth-status.musbe.net' will be used
  * 
  * @param server $ The protocol and hostname to use
  * @access public 
@@ -142,8 +143,8 @@ function Swekey_SetCAFile($cafile)
 
 /**
  * Enable or disable the random token caching
- *    Because everybody has full access to the cache file, it can be a DOS vulnerability
- *    So disable it if you are running in a non secure enviromnement
+ *     Because everybody has full access to the cache file, it can be a DOS vulnerability
+ *     So disable it if you are running in a non secure enviromnement
  * 
  * @param  $enable 
  * @access public 
@@ -181,7 +182,7 @@ function Swekey_GetLastResult()
 
 /**
  * Send a synchronous request to the  server.
- *    This function manages timeout then will not block if one of the server is down
+ *     This function manages timeout then will not block if one of the server is down
  * 
  * @param url $ The url to get
  * @param response_code $ The response code
@@ -316,8 +317,8 @@ function Swekey_HttpGet($url, & $response_code)
 
 /**
  * Get a Random Token from a Token Server
- *    The RT is a 64 vhars hexadecimal value
- *    You should better use Swekey_GetFastRndToken() for performance
+ *     The RT is a 64 vhars hexadecimal value
+ *     You should better use Swekey_GetFastRndToken() for performance
  * 
  * @access public 
  */
@@ -329,8 +330,8 @@ function Swekey_GetRndToken()
 
 /**
  * Get a Half Random Token from a Token Server
- *    The RT is a 64 vhars hexadecimal value
- *    Use this value if you want to make your own Swekey_GetFastRndToken()
+ *     The RT is a 64 vhars hexadecimal value
+ *     Use this value if you want to make your own Swekey_GetFastRndToken()
  * 
  * @access public 
  */
@@ -342,10 +343,10 @@ function Swekey_GetHalfRndToken()
 
 /**
  * Get a Half Random Token
- *    The RT is a 64 vhars hexadecimal value
- *    This function get a new random token and reuse it.
- *    Token are refetched from the server only once every 30 seconds.
- *    You should always use this function to get half random token.
+ *     The RT is a 64 vhars hexadecimal value
+ *     This function get a new random token and reuse it.
+ *     Token are refetched from the server only once every 30 seconds.
+ *     You should always use this function to get half random token.
  * 
  * @access public 
  */
@@ -404,10 +405,10 @@ function Swekey_GetFastHalfRndToken()
 
 /**
  * Get a Random Token
- *    The RT is a 64 vhars hexadecimal value
- *    This function generates a unique random token for each call but call the
- *    server only once every 30 seconds.
- *    You should always use this function to get random token.
+ *     The RT is a 64 vhars hexadecimal value
+ *     This function generates a unique random token for each call but call the
+ *     server only once every 30 seconds.
+ *     You should always use this function to get random token.
  * 
  * @access public 
  */
@@ -452,6 +453,7 @@ define("SWEKEY_STATUS_UNKOWN", 201); // We could not connect to the authenticati
 
 
 
+
 /**
  * Values that are associated with a key.
  * The Javascript Api can also return the following values
@@ -459,6 +461,7 @@ define("SWEKEY_STATUS_UNKOWN", 201); // We could not connect to the authenticati
 define("SWEKEY_STATUS_REPLACED", 100); // This key has been replaced by a backup key
 define("SWEKEY_STATUS_BACKUP_KEY", 101); // This key is a backup key that is not activated yet
 define("SWEKEY_STATUS_NOTPLUGGED", 200); // This key is not plugged in the computer
+
 
 
 
@@ -502,8 +505,8 @@ function Swekey_GetStatusStr($status)
 
 /**
  * If your web site requires a key to login you should check that the key
- *    is still valid (has not been lost or stolen) before requiring it.
- *    A key can be authenticated only if its status is SWEKEY_STATUS_OK
+ *     is still valid (has not been lost or stolen) before requiring it.
+ *     A key can be authenticated only if its status is SWEKEY_STATUS_OK
  * 
  * @param id $ The id of the swekey
  * @return The status of the swekey

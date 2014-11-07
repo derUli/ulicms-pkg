@@ -71,15 +71,15 @@ class PMA_Validator
      * 
      * Return values:
      * o array, keys - field path or formset id, values - array of errors
-     *     when $isPostSource is true values is an empty array to allow for error list
-     *     cleanup in HTML documen
+     *      when $isPostSource is true values is an empty array to allow for error list
+     *      cleanup in HTML documen
      * o false - when no validators match name(s) given by $validator_id
      * 
      * @param ConfigFile $cf Config file instance
      * @param string $ |array $validator_id ID of validator(s) to run
      * @param array $ &$values      Values to validate
      * @param bool $isPostSource tells whether $values are directly from
-     *                                     POST request
+     *                                      POST request
      * @return bool |array
      */
      public static function validate(
@@ -464,7 +464,7 @@ class PMA_Validator
      * @param bool $allow_zero allow zero
      * @param int $max_value max allowed value
      * @param string $error_string error message key:
-     *                               $GLOBALS["strConfig$error_lang_key"]
+     *                                $GLOBALS["strConfig$error_lang_key"]
      * @return string empty string if test is successful
      */
      public static function validateNumber(

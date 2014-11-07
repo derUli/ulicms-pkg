@@ -613,7 +613,7 @@ if (file_exists('libraries/language_stats.inc.php')){
  * @param string $mysql_help_page display a link to MySQL's manual
  * @param string $target special target for $url
  * @param string $a_id id for the anchor,
- *                                  used for jQuery to hook in functions
+ *                                   used for jQuery to hook in functions
  * @param string $class class for the li element
  * @param string $a_class class for the anchor element
  * @return void 

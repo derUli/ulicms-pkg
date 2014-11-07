@@ -125,7 +125,7 @@ class PMA_NavigationHeader
      * 
      * @param string $link The url for the link
      * @param bool $showText Whether to show the text or to
-     *                               only use it for title attributes
+     *                                only use it for title attributes
      * @param string $text The text to display and use for title attributes
      * @param bool $showIcon Whether to show the icon
      * @param string $icon The filename of the icon to show

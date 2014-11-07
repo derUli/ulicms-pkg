@@ -6,35 +6,36 @@ function enforce_https_admin(){
     
      if(isset($_POST["submit"])){
         
-         
+        
         
          if(isset($_POST["enforce_https"])){
              setconfig("enforce_https", "enforces");
-         } else {
+             }else{
              deleteconfig("enforce_https");
-         }
+             }
         
          }
     
      // Konfiguration checken
     $enforce_https = getconfig("enforce_https");
-
+    
     
      ?>
 
 <form action="<?php echo getModuleAdminSelfPath()?>" method="post">
 <?php if(!$enforce_https){
-?>
+        ?>
 <p style="color:red">
-Bevor Sie diese Option aktivieren, stellen Sie unbedingt sicher, dass Ihr Webserver HTTPS unterstützt. Klicken Sie hier für auf <a href="https://<?php echo $_SERVER["HTTP_HOST"];?>" target="_blank">diesen Link</a>.
+Bevor Sie diese Option aktivieren, stellen Sie unbedingt sicher, dass Ihr Webserver HTTPS unterstützt. Klicken Sie hier für auf <a href="https://<?php echo $_SERVER["HTTP_HOST"];
+        ?>" target="_blank">diesen Link</a>.
 </p>
 <p style="color:red;">
 Wen Ihr Server kein HTTPS unterstützt, führt die Aktivierung dieser Option zur Nichterreichbarkeit der Website.<br/>
 In diesem Fall müssen Sie in der MySQL Datenbank den Datensatz mit dem Namen "enforce_https" löschen.
 </p>
-<?php 
-}
-?>
+<?php
+        }
+    ?>
 <p><input type="checkbox" name="enforce_https" value="enforce"
 <?php if($enforce_https){
          echo " checked";

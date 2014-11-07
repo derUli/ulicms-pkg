@@ -178,20 +178,20 @@ function PMA_langDetect($str, $envType)
 /**
  * All the supported languages have to be listed in the array below.
  * 1. The key must be the "official" ISO 639 language code and, if required,
- *      the dialect code. It can also contain some information about the
- *      charset (see the Russian case).
+ *       the dialect code. It can also contain some information about the
+ *       charset (see the Russian case).
  * 2. The first of the values associated to the key is used in a regular
- *      expression to find some keywords corresponding to the language inside two
- *      environment variables.
- *      These values contain:
- *      - the "official" ISO language code and, if required, the dialect code
- *        too ('bu' for Bulgarian, 'fr([-_][[:alpha:]]{2})?' for all French
- *        dialects, 'zh[-_]tw' for Chinese traditional...), the dialect has to
- *        be specified first;
- *      - the '|' character (it means 'OR');
- *      - the full language name.
+ *       expression to find some keywords corresponding to the language inside two
+ *       environment variables.
+ *       These values contain:
+ *       - the "official" ISO language code and, if required, the dialect code
+ *         too ('bu' for Bulgarian, 'fr([-_][[:alpha:]]{2})?' for all French
+ *         dialects, 'zh[-_]tw' for Chinese traditional...), the dialect has to
+ *         be specified first;
+ *       - the '|' character (it means 'OR');
+ *       - the full language name.
  * 3. The second value associated to the key is the language code as defined by
- *      the RFC1766.
+ *       the RFC1766.
  * 4. The third value is its native name in html entities or UTF-8.
  * 
  * Beware that the sorting order (first values associated to keys by
@@ -415,7 +415,7 @@ function PMA_langList()
 /**
  * 
  * @global string  path to the translations directory;
- *                   may be absent if the kit is English-only
+ *                    may be absent if the kit is English-only
  */
 $GLOBALS['lang_path'] = './locale/';
 

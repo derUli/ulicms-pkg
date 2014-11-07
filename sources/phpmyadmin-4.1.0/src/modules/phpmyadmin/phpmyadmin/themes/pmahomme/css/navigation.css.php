@@ -86,8 +86,8 @@ text - align: center;
  border: 0;
 }
 
-# pma_navigation #recentTableList select,
-{ # pma_navigation #serverChoice select
+{ # pma_navigation #recentTableList select,
+# pma_navigation #serverChoice select
 width: 80 % ;
 }
 

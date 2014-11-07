@@ -34,7 +34,7 @@ class PMA_ExportPdf extends PMA_PDF
      * @param float $h cell height. Default value: 0
      * @param mixed $y starting y position, leave empty for current position
      * @param boolean $addpage if true add a page, otherwise only return
-     *                           the true/false state
+     *                            the true/false state
      * @return boolean true in case of page break, false otherwise.
      */
      function checkPageBreak($h = 0, $y = '', $addpage = true)

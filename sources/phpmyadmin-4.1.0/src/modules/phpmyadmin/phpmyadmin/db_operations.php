@@ -4,12 +4,12 @@
  */
 /**
  * handles miscellaneous db operations:
- *    - move/rename
- *    - copy
- *    - changing collation
- *    - changing comment
- *    - adding tables
- *    - viewing PDF schemas
+ *     - move/rename
+ *     - copy
+ *     - changing collation
+ *     - changing comment
+ *     - adding tables
+ *     - viewing PDF schemas
  * 
  * @package PhpMyAdmin
  */

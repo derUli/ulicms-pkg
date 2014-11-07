@@ -37,7 +37,7 @@ class PMA_PDF extends TCPDF
      * @param boolean $unicode true means that the input text is unicode
      * @param string $encoding charset encoding; default is UTF-8.
      * @param boolean $diskcache if true reduce the RAM memory usage by caching
-     *                               temporary data on filesystem (slower).
+     *                                temporary data on filesystem (slower).
      * @param boolean $pdfa If TRUE set the document to PDF/A mode.
      * @access public 
      */

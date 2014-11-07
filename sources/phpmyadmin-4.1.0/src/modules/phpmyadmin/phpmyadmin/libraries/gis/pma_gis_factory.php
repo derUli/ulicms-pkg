@@ -24,7 +24,7 @@ class PMA_GIS_Factory
      * 
      * @param string $type type of the geometric object
      * @return PMA_GIS_Geometry the singleton instance of geometric class
-     *                            of the given type
+     *                             of the given type
      * @access public 
      * @static 
      */

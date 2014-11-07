@@ -277,9 +277,9 @@ function PMA_getHtmlForServerVariablesItems($variable_doc_links)
  * Returns Array of documentation links
  * 
  * $variable_doc_links[string $name] = array(
- *      string $anchor,
- *      string $chapter,
- *      string $type);
+ *       string $anchor,
+ *       string $chapter,
+ *       string $type);
  * string $name: name of the system variable
  * string $anchor: anchor to the documentation page
  * string $chapter: chapter of "HTML, one page per chapter" documentation

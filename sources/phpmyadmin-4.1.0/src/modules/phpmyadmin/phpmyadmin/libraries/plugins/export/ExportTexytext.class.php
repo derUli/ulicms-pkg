@@ -105,7 +105,7 @@ class ExportTexytext extends ExportPlugin
      * is attached calls PluginManager::notify()
      * 
      * @param SplSubject $subject The PluginManager notifying the observer
-     *                              of an update.
+     *                               of an update.
      * @return void 
      */
      public function update (SplSubject $subject)
@@ -290,15 +290,15 @@ class ExportTexytext extends ExportPlugin
      * @param string $error_url the url to go back in case of error
      * @param bool $do_relation whether to include relation comments
      * @param bool $do_comments whether to include the pmadb-style column
-     *                                  comments as comments in the structure;
-     *                                  this is deprecated but the parameter is
-     *                                  left here because export.php calls
-     *                                  $this->exportStructure() also for other
-     *                                  export types which use this parameter
+     *                                   comments as comments in the structure;
+     *                                   this is deprecated but the parameter is
+     *                                   left here because export.php calls
+     *                                   $this->exportStructure() also for other
+     *                                   export types which use this parameter
      * @param bool $do_mime whether to include mime comments
      * @param bool $show_dates whether to include creation/update/check dates
      * @param bool $add_semicolon whether to add semicolon and end-of-line
-     *                                at the end
+     *                                 at the end
      * @param bool $view whether we're handling a view
      * @return string resulting schema
      */
@@ -461,15 +461,15 @@ class ExportTexytext extends ExportPlugin
      * @param string $crlf the end of line sequence
      * @param string $error_url the url to go back in case of error
      * @param string $export_mode 'create_table', 'triggers', 'create_view',
-     *                              'stand_in'
+     *                               'stand_in'
      * @param string $export_type 'server', 'database', 'table'
      * @param bool $do_relation whether to include relation comments
      * @param bool $do_comments whether to include the pmadb-style column
-     *                                  comments as comments in the structure;
-     *                                  this is deprecated but the parameter is
-     *                                  left here because export.php calls
-     *                                  $this->exportStructure() also for other
-     *                                  export types which use this parameter
+     *                                   comments as comments in the structure;
+     *                                   this is deprecated but the parameter is
+     *                                   left here because export.php calls
+     *                                   $this->exportStructure() also for other
+     *                                   export types which use this parameter
      * @param bool $do_mime whether to include mime comments
      * @param bool $dates whether to include creation/update/check dates
      * @return bool Whether it succeeded

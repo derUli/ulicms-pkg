@@ -30,19 +30,19 @@
  * Here's a short example of how to use this library:
  * <code>
  * <?php
- *      include('Crypt/Rijndael.php');
+ *       include('Crypt/Rijndael.php');
  * 
- *      $rijndael = new Crypt_Rijndael();
+ *       $rijndael = new Crypt_Rijndael();
  * 
- *      $rijndael->setKey('abcdefghijklmnop');
+ *       $rijndael->setKey('abcdefghijklmnop');
  * 
- *      $size = 10 * 1024;
- *      $plaintext = '';
- *      for ($i = 0; $i < $size; $i++) {
- *          $plaintext.= 'a';
- *      }
+ *       $size = 10 * 1024;
+ *       $plaintext = '';
+ *       for ($i = 0; $i < $size; $i++) {
+ *           $plaintext.= 'a';
+ *       }
  * 
- *      echo $rijndael->decrypt($rijndael->encrypt($plaintext));
+ *       echo $rijndael->decrypt($rijndael->encrypt($plaintext));
  * ?>
  * </code>
  * 
@@ -251,7 +251,7 @@ class Crypt_Rijndael{
      * @var Integer 
      * @access private 
      * @internal The max value is 32, the min value is 16.  All valid values are multiples of 4.  Exists in conjunction with
-     *       $Nb because we need this value and not $Nb to pad strings appropriately.
+     *        $Nb because we need this value and not $Nb to pad strings appropriately.
      */
      var $block_size = 16;
     
@@ -262,9 +262,9 @@ class Crypt_Rijndael{
      * @var Integer 
      * @access private 
      * @internal The max value is 256 / 32 = 8, the min value is 128 / 32 = 4.  Exists in conjunction with $block_size 
-     *      because the encryption / decryption / key schedule creation requires this number and not $block_size.  We could 
-     *      derive this from $block_size or vice versa, but that'd mean we'd have to do multiple shift operations, so in lieu
-     *      of that, we'll just precompute it once.
+     *       because the encryption / decryption / key schedule creation requires this number and not $block_size.  We could 
+     *       derive this from $block_size or vice versa, but that'd mean we'd have to do multiple shift operations, so in lieu
+     *       of that, we'll just precompute it once.
      */
      var $Nb = 4;
     
@@ -275,9 +275,9 @@ class Crypt_Rijndael{
      * @var Integer 
      * @access private 
      * @internal The max value is 256 / 8 = 32, the min value is 128 / 8 = 16.  Exists in conjunction with $key_size
-     *      because the encryption / decryption / key schedule creation requires this number and not $key_size.  We could 
-     *      derive this from $key_size or vice versa, but that'd mean we'd have to do multiple shift operations, so in lieu
-     *      of that, we'll just precompute it once.
+     *       because the encryption / decryption / key schedule creation requires this number and not $key_size.  We could 
+     *       derive this from $key_size or vice versa, but that'd mean we'd have to do multiple shift operations, so in lieu
+     *       of that, we'll just precompute it once.
      */
      var $key_size = 16;
     
@@ -590,9 +590,9 @@ class Crypt_Rijndael{
  * Sets the password.
  * 
  * Depending on what $method is set to, setPassword()'s (optional) parameters are as follows:
- *       {@link http://en.wikipedia.org/wiki/PBKDF2 pbkdf2}:
- *           $hash, $salt, $count
- *       Set $dkLen by calling setKeyLength()
+ *        {@link http://en.wikipedia.org/wiki/PBKDF2 pbkdf2}:
+ *            $hash, $salt, $count
+ *        Set $dkLen by calling setKeyLength()
  * 
  * @param String $password 
  * @param optional $ String $method
@@ -1414,22 +1414,22 @@ $temp = array();
  * will yield different outputs:
  * 
  * <code>
- *      echo $rijndael->encrypt(substr($plaintext,  0, 16));
- *      echo $rijndael->encrypt(substr($plaintext, 16, 16));
+ *       echo $rijndael->encrypt(substr($plaintext,  0, 16));
+ *       echo $rijndael->encrypt(substr($plaintext, 16, 16));
  * </code>
  * <code>
- *      echo $rijndael->encrypt($plaintext);
+ *       echo $rijndael->encrypt($plaintext);
  * </code>
  * 
  * The solution is to enable the continuous buffer.  Although this will resolve the above discrepancy, it creates
  * another, as demonstrated with the following:
  * 
  * <code>
- *      $rijndael->encrypt(substr($plaintext, 0, 16));
- *      echo $rijndael->decrypt($des->encrypt(substr($plaintext, 16, 16)));
+ *       $rijndael->encrypt(substr($plaintext, 0, 16));
+ *       echo $rijndael->decrypt($des->encrypt(substr($plaintext, 16, 16)));
  * </code>
  * <code>
- *      echo $rijndael->decrypt($des->encrypt(substr($plaintext, 16, 16)));
+ *       echo $rijndael->decrypt($des->encrypt(substr($plaintext, 16, 16)));
  * </code>
  * 
  * With the continuous buffer disabled, these would yield the same output.  With it enabled, they yield different

@@ -9,9 +9,9 @@
  * drizzle module segfaults often and when you least expect it to
  * 
  * TODO: This file and drizzle-wrappers.lib.php should be devoid
- *         of any segault related hacks.
+ *          of any segault related hacks.
  * TODO: Crashing versions of drizzle module and/or libdrizzle
- *         should be blacklisted
+ *          should be blacklisted
  * 
  * @package PhpMyAdmin-DBI
  * @subpackage Drizzle
@@ -72,7 +72,7 @@ class PMA_DBI_Drizzle implements PMA_DBI_Extension
      * @param bool $is_controluser whether this is a control user connection
      * @param array $server host/port/socket/persistent
      * @param bool $auxiliary_connection (when true, don't go back to login if
-     *                                       connection fails)
+     *                                        connection fails)
      * @return mixed false on error or a mysqli object on success
      */
      public function connect($user, $password, $is_controluser = false,

@@ -150,13 +150,13 @@ class PMA_EPS
      * width of the line. lines helps in showing relationships of tables
      * 
      * @param integer $x_from The x_from attribute defines the start
-     *                             left position of the element
+     *                              left position of the element
      * @param integer $y_from The y_from attribute defines the start
-     *                             right position of the element
+     *                              right position of the element
      * @param integer $x_to The x_to attribute defines the end
-     *                             left position of the element
+     *                              left position of the element
      * @param integer $y_to The y_to attribute defines the end
-     *                             right position of the element
+     *                              right position of the element
      * @param integer $lineWidth Sets the width of the line e.g 2
      * @return void 
      * @access public 
@@ -381,7 +381,7 @@ class Table_Stats_Eps
      * @param boolean $showInfo Whether to display table position or not
      * @global object  $eps         The current eps document
      * @global integer              The current page number (from the
-     *                                $cfg['Servers'][$i]['table_coords'] table)
+     *                                 $cfg['Servers'][$i]['table_coords'] table)
      * @global array   $cfgRelation The relations settings
      * @global string  $db          The current db name
      * @access private 

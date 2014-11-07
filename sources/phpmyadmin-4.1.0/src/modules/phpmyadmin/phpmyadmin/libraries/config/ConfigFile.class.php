@@ -85,8 +85,8 @@ class ConfigFile
      * Constructor
      * 
      * @param array $base_config base configuration read from
-     *                             {@link PMA_Config::$base_config},
-     *                             use only when not in PMA Setup
+     *                              {@link PMA_Config::$base_config},
+     *                              use only when not in PMA Setup
      */
      public function __construct(array $base_config = null)
     {
@@ -162,7 +162,7 @@ class ConfigFile
      * by {@link getConfig()} or {@link getConfigArray()}
      * 
      * @param array $mapping Contains the mapping of "Server/config options"
-     *                         to "Server/1/config options"
+     *                          to "Server/1/config options"
      * @return void 
      */
      public function setCfgUpdateReadMapping(array $mapping)

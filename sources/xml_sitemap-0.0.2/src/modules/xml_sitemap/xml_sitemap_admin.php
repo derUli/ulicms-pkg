@@ -40,26 +40,26 @@ function generate_sitemap(){
     
      $query_pages = db_query("SELECT * FROM " . tbname("content") . " WHERE active = 1 ORDER by lastmodified DESC");
      while($row = db_fetch_object($query_pages)){
-     if(!startsWith($row->redirection, "#")){
-     
-         $xml_string .= "<url>\r\n";
-         $xml_string .= "\t<loc>" . xmlspecialchars(getBaseURL() . $row -> systemname . ".html") . "</loc>\r\n";
-         $xml_string .= "\t<lastmod>" . date("Y-m-d", $row -> lastmodified) . "</lastmod>\r\n";
-         $xml_string .= "</url>\r\n\r\n";
-        
-         if(containsModule($row -> systemname, "blog")){
-             $query_blog = db_query("SELECT * FROM " . tbname("blog") . " WHERE entry_enabled = 1 ORDER by datum DESC");
-             while($row2 = db_fetch_object($query_blog)){
-                 $xml_string .= "<url>\r\n";
-                 $xml_string .= "\t<loc>" . xmlspecialchars(getBaseURL() . $row -> systemname . ".html?single=" . $row2 -> seo_shortname) . "</loc>\r\n";
-                 $xml_string .= "\t<lastmod>" . date("Y-m-d", $row2 -> datum) . "</lastmod>\r\n";
-                 $xml_string .= "</url>\r\n\r\n";
+         if(!startsWith($row -> redirection, "#")){
+            
+             $xml_string .= "<url>\r\n";
+             $xml_string .= "\t<loc>" . xmlspecialchars(getBaseURL() . $row -> systemname . ".html") . "</loc>\r\n";
+             $xml_string .= "\t<lastmod>" . date("Y-m-d", $row -> lastmodified) . "</lastmod>\r\n";
+             $xml_string .= "</url>\r\n\r\n";
+            
+             if(containsModule($row -> systemname, "blog")){
+                 $query_blog = db_query("SELECT * FROM " . tbname("blog") . " WHERE entry_enabled = 1 ORDER by datum DESC");
+                 while($row2 = db_fetch_object($query_blog)){
+                     $xml_string .= "<url>\r\n";
+                     $xml_string .= "\t<loc>" . xmlspecialchars(getBaseURL() . $row -> systemname . ".html?single=" . $row2 -> seo_shortname) . "</loc>\r\n";
+                     $xml_string .= "\t<lastmod>" . date("Y-m-d", $row2 -> datum) . "</lastmod>\r\n";
+                     $xml_string .= "</url>\r\n\r\n";
+                     }
                  }
              }
+        
+        
          }
-    
-    
-    }
     
      $xml_string .= "</urlset>";
      $xml_string = str_replace("\r\n", "\n", $xml_string);

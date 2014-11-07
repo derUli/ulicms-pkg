@@ -136,7 +136,7 @@ function PMA_getAvailableMIMEtypes()
  * 
  * @param string $file transformation file
  * @param boolean $html_formatted whether the description should be formatted
- *                                  as HTML
+ *                                   as HTML
  * @return String the description of the transformation
  */
 function PMA_getTransformationDescription($file, $html_formatted = true)
@@ -237,7 +237,7 @@ function PMA_getMIME($db, $table, $strict = false)
  * @param string $transformation the transformation of the column
  * @param string $transformation_options the transformation options of the column
  * @param boolean $forcedelete force delete, will erase any existing
- *                                          comments for this column
+ *                                           comments for this column
  * @access public 
  * @return boolean true, if comment-query was made.
  */
@@ -339,14 +339,14 @@ function PMA_setMIME($db, $table, $key, $mimetype, $transformation,
  * $buffer using $options['regex'] and $options['regex_replace'].
  * 
  * @param string $buffer text that will be replaced in $options['string'],
- *                          after being formatted
+ *                           after being formatted
  * @param array $options the options required to format $buffer
- *       = array (
- *           'string'        => 'string', // text containing "[__BUFFER__]"
- *           'regex'         => 'mixed',  // the pattern to search for
- *           'regex_replace' => 'mixed',  // string or array of strings to replace
- *                                        // with
- *       );
+ *        = array (
+ *            'string'        => 'string', // text containing "[__BUFFER__]"
+ *            'regex'         => 'mixed',  // the pattern to search for
+ *            'regex_replace' => 'mixed',  // string or array of strings to replace
+ *                                         // with
+ *        );
  * @return string containing the text with all the replacements
  */
 function PMA_Transformation_globalHtmlReplace($buffer, $options = array())

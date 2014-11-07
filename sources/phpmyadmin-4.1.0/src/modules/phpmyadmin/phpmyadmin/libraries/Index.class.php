@@ -867,7 +867,7 @@ class PMA_Index_Column
      * 
      * @param boolean $as_text whether to returned the string representation
      * @return mixed nullability of the column. True/false or Yes/No depending
-     *                 on the value of the $as_text parameter
+     *                  on the value of the $as_text parameter
      */
      public function getNull($as_text = false)
     {

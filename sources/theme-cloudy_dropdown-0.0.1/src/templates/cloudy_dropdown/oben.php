@@ -30,10 +30,13 @@ else{
 ?>
 </a></p>
 <p><strong><?php motto()?></strong></div>
-<?php menu("top"); ?>
+<?php menu("top");
+?>
 
 <div class="content">
 
-<?php if(!containsModule(get_requested_pagename(), "blog")){?>
+<?php if(!containsModule(get_requested_pagename(), "blog")){
+    ?>
 <h1><?php headline() ?></h1>
-<?php }?>
+<?php }
+?>

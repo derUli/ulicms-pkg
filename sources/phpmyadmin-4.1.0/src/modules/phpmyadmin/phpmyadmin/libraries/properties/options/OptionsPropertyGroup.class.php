@@ -36,7 +36,7 @@ abstract class OptionsPropertyGroup extends OptionsPropertyItem
      * Adds a property to the group of properties
      * 
      * @param OptionsPropertyItem $property the property instance to be added
-     *                                        to the group
+     *                                         to the group
      * @return void 
      */
      public function addProperty($property)
@@ -53,7 +53,7 @@ abstract class OptionsPropertyGroup extends OptionsPropertyItem
      * Removes a property from the group of properties
      * 
      * @param OptionsPropertyItem $property the property instance to be removed
-     *                                        from the group
+     *                                         from the group
      * @return void 
      */
      public function removeProperty($property)

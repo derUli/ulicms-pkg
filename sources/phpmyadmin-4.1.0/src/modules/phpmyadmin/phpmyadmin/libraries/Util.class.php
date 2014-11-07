@@ -158,7 +158,7 @@ class PMA_Util
      * 
      * @param string $image The name of the file to get
      * @param string $alternate Used to set 'alt' and 'title' attributes
-     *                             of the image
+     *                              of the image
      * @param array $attributes An associative array of other attributes
      * @return string an html IMG tag
      */
@@ -270,11 +270,11 @@ class PMA_Util
      * 
      * @param string $a_string the string to slash
      * @param bool $is_like whether the string will be used in a 'LIKE' clause
-     *                           (it then requires two more escaped sequences) or not
+     *                            (it then requires two more escaped sequences) or not
      * @param bool $crlf whether to treat cr/lfs as escape-worthy entities
-     *                           (converts \n to \\n, \r to \\r)
+     *                            (converts \n to \\n, \r to \\r)
      * @param bool $php_code whether this function is used as part of the
-     *                           "Create PHP code" dialog
+     *                            "Create PHP code" dialog
      * @return string the slashed string
      * @access public 
      */
@@ -847,9 +847,9 @@ class PMA_Util
      * </code>
      * 
      * @param mixed $a_name the database, table or field name to "backquote"
-     *                          or array of it
+     *                           or array of it
      * @param boolean $do_it a flag to bypass this function (used by dump
-     *                          functions)
+     *                           functions)
      * @return mixed the "backquoted" database, table or field name
      * @access public 
      */
@@ -888,11 +888,11 @@ class PMA_Util
      * </code>
      * 
      * @param mixed $a_name the database, table or field name to
-     *                                 "backquote" or array of it
+     *                                  "backquote" or array of it
      * @param string $compatibility string compatibility mode (used by dump
-     *                                 functions)
+     *                                  functions)
      * @param boolean $do_it a flag to bypass this function (used by dump
-     *                                 functions)
+     *                                  functions)
      * @return mixed the "backquoted" database, table or field name
      * @access public 
      */
@@ -1448,7 +1448,7 @@ class PMA_Util
  * @param integer $digits_right number of digits right of the comma
  * @param boolean $only_down do not reformat numbers below 1
  * @param boolean $noTrailingZero removes trailing zeros right of the comma
- *                                  (default: true)
+ *                                   (default: true)
  * @return string the formatted value and its unit
  * @access public 
  */
@@ -1816,9 +1816,9 @@ class PMA_Util
  * @param string $url the URL
  * @param string $message the link message
  * @param mixed $tag_params string: js confirmation
- *                              array: additional tag params (f.e. style="")
+ *                               array: additional tag params (f.e. style="")
  * @param boolean $new_form we set this to false when we are already in
- *                              a  form, to avoid generating nested forms
+ *                               a  form, to avoid generating nested forms
  * @param boolean $strip_img whether to strip the image
  * @param string $target target
  * @return string the results to be echoed or saved in an array
@@ -2051,7 +2051,7 @@ class PMA_Util
  * 
  * @param array $params The names of the parameters needed by the calling script
  * @param bool $request Whether to include this list in checking for
- *                         special params
+ *                          special params
  * @return void 
  * @global boolean $checked_special flag whether any special variable was required
  * @access public 
@@ -2313,14 +2313,14 @@ class PMA_Util
  * @param int $pageNow current page number
  * @param int $nbTotalPage number of total pages
  * @param int $showAll If the number of pages is lower than this
- *                              variable, no pages will be omitted in pagination
+ *                               variable, no pages will be omitted in pagination
  * @param int $sliceStart How many rows at the beginning should always
- *                              be shown?
+ *                               be shown?
  * @param int $sliceEnd How many rows at the end should always be shown?
  * @param int $percent Percentage of calculation page offsets to hop to a
- *                              next page
+ *                               next page
  * @param int $range Near the current page, how many pages should
- *                              be considered "nearby" and displayed as well?
+ *                               be considered "nearby" and displayed as well?
  * @param string $prompt The prompt to display (sometimes empty)
  * @return string 
  * @access public 
@@ -2694,8 +2694,8 @@ class PMA_Util
  * @param array $choices choices values
  * @param string $active_choice the choice to select by default
  * @param string $id id of the select element; can be different in
- *                                case the dropdown is present more than once
- *                                on the page
+ *                                 case the dropdown is present more than once
+ *                                 on the page
  * @param string $class class for the select element
  * @return string html content
  * @todo support titles
@@ -2761,7 +2761,7 @@ class PMA_Util
  * @param string $select_name The name for the dropdown box
  * @param array $options An array of options (see rte_footer.lib.php)
  * @param string $callback A JS snippet to execute when the request is
- *                              successfully processed
+ *                               successfully processed
  * @return string HTML code for the toggle button
  */
  public static function toggleButton($action, $select_name, $options, $callback)
@@ -2961,7 +2961,7 @@ class PMA_Util
  * 
  * @param string $columnspec Column specification
  * @return array associative array containing type, spec_in_brackets
- *            and possibly enum_set_values (another array)
+ *             and possibly enum_set_values (another array)
  */
  public static function extractColumnSpec($columnspec)
 {
@@ -3151,7 +3151,7 @@ class PMA_Util
  * in order to display it as a title in navigation panel
  * 
  * @param string $target a valid value for $cfg['NavigationTreeDefaultTabTable'],
- *                         $cfg['DefaultTabTable'] or $cfg['DefaultTabDatabase']
+ *                          $cfg['DefaultTabTable'] or $cfg['DefaultTabDatabase']
  * @return array 
  */
  public static function getTitleForTarget($target)
@@ -3181,12 +3181,12 @@ class PMA_Util
  * @VARIABLES 
  * @param string $string Text where to do expansion.
  * @param array $ |string $escape  Function to call for escaping variable values.
- *                            Can also be an array of:
- *                            - the escape method name
- *                            - the class that contains the method
- *                            - location of the class (for inclusion)
+ *                             Can also be an array of:
+ *                             - the escape method name
+ *                             - the class that contains the method
+ *                             - location of the class (for inclusion)
  * @param array $updates Array with overrides for default parameters
- *                       (obtained from GLOBALS).
+ *                        (obtained from GLOBALS).
  * @return string 
  */
  public static function expandUserString(
@@ -3550,13 +3550,13 @@ class PMA_Util
  * that can be applied on geometry data typess.
  * 
  * @param string $geom_type if provided the output is limited to the functions
- *                            that are applicable to the provided geometry type.
+ *                             that are applicable to the provided geometry type.
  * @param bool $binary if set to false functions that take two geometries
- *                            as arguments will not be included.
+ *                             as arguments will not be included.
  * @param bool $display if set to true separators will be added to the
- *                            output array.
+ *                             output array.
  * @return array names and details of the functions that can be applied on
- *                 geometry data typess.
+ *                  geometry data typess.
  */
  public static function getGISFunctions(
     $geom_type = null, $binary = true, $display = false
@@ -3659,14 +3659,14 @@ class PMA_Util
  * Returns default function for a particular column.
  * 
  * @param array $field Data about the column for which
- *                             to generate the dropdown
+ *                              to generate the dropdown
  * @param bool $insert_mode Whether the operation is 'insert'
  * @global array    $cfg            PMA configuration
  * @global array    $analyzed_sql   Analyzed SQL query
  * @global mixed    $data           data of currently edited row
- *                                      (used to detect whether to choose defaults)
+ *                                       (used to detect whether to choose defaults)
  * @return string An HTML snippet of a dropdown list with function
- *                      names appropriate for the requested column.
+ *                       names appropriate for the requested column.
  */
  public static function getDefaultFunctionForField($field, $insert_mode)
 {
@@ -3723,10 +3723,10 @@ class PMA_Util
  * Creates a dropdown box with MySQL functions for a particular column.
  * 
  * @param array $field Data about the column for which
- *                             to generate the dropdown
+ *                              to generate the dropdown
  * @param bool $insert_mode Whether the operation is 'insert'
  * @return string An HTML snippet of a dropdown list with function
- *                      names appropriate for the requested column.
+ *                       names appropriate for the requested column.
  */
  public static function getFunctionsForField($field, $insert_mode)
 {
@@ -3779,15 +3779,15 @@ class PMA_Util
  * relies on the INFORMATION_SCHEMA database to be present.
  * 
  * Example:   currentUserHasPrivilege('CREATE ROUTINE', 'mydb');
- *              // Checks if the currently logged in user has the global
- *              // 'CREATE ROUTINE' privilege or, if not, checks if the
- *              // user has this privilege on database 'mydb'.
+ *               // Checks if the currently logged in user has the global
+ *               // 'CREATE ROUTINE' privilege or, if not, checks if the
+ *               // user has this privilege on database 'mydb'.
  * 
  * @param string $priv The privilege to check
  * @param mixed $db null, to only check global privileges
- *                       string, db name where to also check for privileges
+ *                        string, db name where to also check for privileges
  * @param mixed $tbl null, to only check global/db privileges
- *                       string, table name where to also check for privileges
+ *                        string, table name where to also check for privileges
  * @return bool 
  */
  public static function currentUserHasPrivilege($priv, $db = null, $tbl = null)
@@ -3940,7 +3940,7 @@ class PMA_Util
  * Parses ENUM/SET values
  * 
  * @param string $definition The definition of the column
- *                             for which to parse the values
+ *                              for which to parse the values
  * @param bool $escapeHtml Whether to escape html entitites
  * @return array 
  */

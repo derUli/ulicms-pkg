@@ -26,6 +26,7 @@ define('PMA_ENGINE_DETAILS_TYPE_BOOLEAN', 3); // 'ON' or 'OFF'
 
 
 
+
 /**
  * Base Storage Engine Class
  * 
@@ -100,7 +101,7 @@ class PMA_StorageEngine
      * @param string $id The ID of the form field
      * @param string $selected The selected engine
      * @param boolean $offerUnavailableEngines Should unavailable storage
-     *                                           engines be offered?
+     *                                            engines be offered?
      * @static 
      * @return string html selectbox
      */
@@ -179,7 +180,7 @@ class PMA_StorageEngine
      * returns as HTML table of the engine's server variables
      * 
      * @return string The table that was generated based on the retrieved
-     *                  information
+     *                   information
      */
      function getHtmlVariables()
     {
@@ -426,7 +427,7 @@ class PMA_StorageEngine
      * @param string $id The page ID
      * @abstract 
      * @return string The page
-     *            boolean     or false on error.
+     *             boolean     or false on error.
      */
      function getPage($id)
     {

@@ -40,7 +40,7 @@ function new_file($uid){
 
 function do_upload(){
      if(!empty($_FILES['file']['name'])){
-     
+        
          @set_time_limit(0); // Kein Zeitlimit;
          $filename = db_escape($_FILES['file']['name']);
          $content = file_get_contents($_FILES['file']["tmp_name"]);

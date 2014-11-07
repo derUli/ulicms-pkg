@@ -24,7 +24,7 @@ if (!defined('PHPMYADMIN')){
  * @param boolean $db_is_information_schema is database information schema or not
  * @param string $url_query url query
  * @return array ($browse_table, $search_table, $browse_table_label, $empty_table,
- *                  $tracking_icon)
+ *                   $tracking_icon)
  */
 function PMA_getHtmlForActionLinks($current_table, $table_is_view, $tbl_url_query,
      $titles, $truename, $db_is_information_schema, $url_query
@@ -143,7 +143,7 @@ function PMA_getTableDropQueryAndMessage($table_is_view, $current_table)
  * @param integer $num_tables number of tables
  * @param boolean $server_slave_status server slave state
  * @param boolean $db_is_information_schema whether database is information
- *                                            schema or not
+ *                                             schema or not
  * @param integer $sum_entries sum entries
  * @param string $db_collation collation of given db
  * @param boolean $is_show_stats whether stats is show or not
@@ -263,7 +263,7 @@ function PMA_getHtmlBodyForTableSummary($num_tables, $server_slave_status,
  * @param string $text_dir url for text directory
  * @param string $overhead_check overhead check
  * @param boolean $db_is_information_schema whether database is information
- *                                            schema or not
+ *                                             schema or not
  * @param string $hidden_fields hidden fields
  * @return string $html_output
  */
@@ -813,7 +813,7 @@ function PMA_tableHeader($db_is_information_schema = false, $replication = false
  * 
  * @param string $title title to use for the link
  * @param string $sort corresponds to sortable data name mapped in
- *                                     libraries/db_info.inc.php
+ *                                      libraries/db_info.inc.php
  * @param string $initial_sort_order initial sort order
  * @return string link to be displayed in the table header
  */
@@ -1202,13 +1202,13 @@ function PMA_getHtmlForTableStructureHeader(
  * @param string $displayed_field_name displayed field name
  * @param string $type_nowrap type nowrap
  * @param array $extracted_columnspec associative array containing type,
- *                                            spec_in_brackets and possibly
- *                                            enum_set_values (another array)
+ *                                             spec_in_brackets and possibly
+ *                                             enum_set_values (another array)
  * @param string $type_mime mime type
  * @param string $field_charset field charset
  * @param string $attribute attribute (BINARY, UNSIGNED,
- *                                            UNSIGNED ZEROFILL,
- *                                            on update CURRENT_TIMESTAMP)
+ *                                             UNSIGNED ZEROFILL,
+ *                                             on update CURRENT_TIMESTAMP)
  * @param boolean $tbl_is_view whether tables is view or not
  * @param boolean $db_is_information_schema whether db is information schema or not
  * @param string $url_query url query
@@ -2314,8 +2314,8 @@ function PMA_updateColumns($db, $table)
      * this is a little bit more complex
      * 
      * @todo if someone selects A_I when altering a column we need to check:
-     *    - no other column with A_I
-     *    - the column has an index, if not create one
+     *     - no other column with A_I
+     *     - the column has an index, if not create one
      * 
      * if (count($key_fields)) {
      * $fields = array();
@@ -2505,7 +2505,7 @@ function PMA_moveColumns($db, $table)
  * @param string $db database name
  * @param string $table tablename
  * @return array $columns_with_unique_index  An array of columns with unique index,
- *                                              with $column name as the array key
+ *                                               with $column name as the array key
  */
 function PMA_getColumnsWithUniqueIndex($db , $table)
 {

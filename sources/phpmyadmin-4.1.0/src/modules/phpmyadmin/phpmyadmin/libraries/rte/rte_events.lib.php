@@ -355,13 +355,13 @@ function PMA_EVN_getDataFromName($name)
  * Displays a form used to add/edit an event
  * 
  * @param string $mode If the editor will be used edit an event
- *                                or add a new one: 'edit' or 'add'.
+ *                                 or add a new one: 'edit' or 'add'.
  * @param string $operation If the editor was previously invoked with
- *                                JS turned off, this will hold the name of
- *                                the current operation
+ *                                 JS turned off, this will hold the name of
+ *                                 the current operation
  * @param array $item Data for the event returned by
- *                                PMA_EVN_getDataFromRequest() or
- *                                PMA_EVN_getDataFromName()
+ *                                 PMA_EVN_getDataFromRequest() or
+ *                                 PMA_EVN_getDataFromName()
  * @return string HTML code for the editor.
  */
 function PMA_EVN_getEditorForm($mode, $operation, $item)

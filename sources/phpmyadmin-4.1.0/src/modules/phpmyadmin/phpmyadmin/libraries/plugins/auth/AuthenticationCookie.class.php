@@ -338,8 +338,8 @@ class AuthenticationCookie extends AuthenticationPlugin
      * it directly switches to authFails() if user inactivity timout is reached
      * 
      * @todo AllowArbitraryServer on does not imply that the user wants an
-     *            arbitrary server, or? so we should also check if this is filled
-     *            and not only if allowed
+     *             arbitrary server, or? so we should also check if this is filled
+     *             and not only if allowed
      * @return boolean whether we get authentication settings or not
      */
      public function authCheck()
@@ -791,7 +791,7 @@ class AuthenticationCookie extends AuthenticationPlugin
      * is attached calls PluginManager::notify()
      * 
      * @param SplSubject $subject The PluginManager notifying the observer
-     *                              of an update.
+     *                               of an update.
      * @return void 
      */
      public function update (SplSubject $subject)

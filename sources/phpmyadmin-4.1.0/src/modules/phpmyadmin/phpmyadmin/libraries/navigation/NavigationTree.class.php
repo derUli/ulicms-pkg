@@ -27,69 +27,69 @@ class PMA_NavigationTree
     /**
      * 
      * @var array The actual paths to all expanded nodes in the tree
-     *              This does not include nodes created after the grouping
-     *              of nodes has been performed
+     *               This does not include nodes created after the grouping
+     *               of nodes has been performed
      */
      private $_aPath = array();
     
     /**
      * 
      * @var array The virtual paths to all expanded nodes in the tree
-     *              This includes nodes created after the grouping of
-     *              nodes has been performed
+     *               This includes nodes created after the grouping of
+     *               nodes has been performed
      */
      private $_vPath = array();
     
     /**
      * 
      * @var int Position in the list of databases,
-     *            used for pagination
+     *             used for pagination
      */
      private $_pos;
     
     /**
      * 
      * @var int The names of the type of items that are being paginated on
-     *            the second level of the navigation tree. These may be
-     *            tables, views, functions, procedures or events.
+     *             the second level of the navigation tree. These may be
+     *             tables, views, functions, procedures or events.
      */
      private $_pos2_name = array();
     
     /**
      * 
      * @var int The positions of nodes in the lists of tables, views,
-     *            routines or events used for pagination
+     *             routines or events used for pagination
      */
      private $_pos2_value = array();
     
     /**
      * 
      * @var int The names of the type of items that are being paginated
-     *            on the second level of the navigation tree.
-     *            These may be columns or indexes
+     *             on the second level of the navigation tree.
+     *             These may be columns or indexes
      */
      private $_pos3_name = array();
     
     /**
      * 
      * @var int The positions of nodes in the lists of columns or indexes
-     *            used for pagination
+     *             used for pagination
      */
      private $_pos3_value = array();
     
     /**
      * 
      * @var string The search clause to use in SQL queries for
-     *               fetching databases
-     *               Used by the asynchronous fast filter
+     *                fetching databases
+     *                Used by the asynchronous fast filter
      */
      private $_searchClause = '';
     
     /**
      * 
      * @var string The search clause to use in SQL queries for
-     *               fetching nodes
-     *               Used by the asynchronous fast filter
+     *                fetching nodes
+     *                Used by the asynchronous fast filter
      */
      private $_searchClause2 = '';
     
@@ -235,15 +235,15 @@ class PMA_NavigationTree
      * Builds a branch of the tree
      * 
      * @param array $path A paths pointing to the branch
-     *                        of the tree that needs to be built
+     *                         of the tree that needs to be built
      * @param string $type2 The type of item being paginated on
-     *                        the second level of the tree
+     *                         the second level of the tree
      * @param int $pos2 The position for the pagination of
-     *                        the branch at the second level of the tree
+     *                         the branch at the second level of the tree
      * @param string $type3 The type of item being paginated on
-     *                        the third level of the tree
+     *                         the third level of the tree
      * @param int $pos3 The position for the pagination of
-     *                        the branch at the third level of the tree
+     *                         the branch at the third level of the tree
      * @return Node |false The active node or false in case of failure
      */
      private function _buildPathPart($path, $type2, $pos2, $type3, $pos3)
@@ -398,13 +398,13 @@ class PMA_NavigationTree
  * if this function is called twice on the same node
  * 
  * @param Node $table The table node, new containers will be
- *                        attached to this node
+ *                         attached to this node
  * @param int $pos2 The position for the pagination of
- *                        the branch at the second level of the tree
+ *                         the branch at the second level of the tree
  * @param string $type3 The type of item being paginated on
- *                        the third level of the tree
+ *                         the third level of the tree
  * @param int $pos3 The position for the pagination of
- *                        the branch at the third level of the tree
+ *                         the branch at the third level of the tree
  * @return array An array of new nodes
  */
  private function _addTableContainers($table, $pos2, $type3, $pos3)
@@ -452,11 +452,11 @@ foreach ($retval as $node){
  * if this function is called twice on the same node
  * 
  * @param Node $db The database node, new containers will be
- *                       attached to this node
+ *                        attached to this node
  * @param string $type The type of item being paginated on
- *                       the second level of the tree
+ *                        the second level of the tree
  * @param int $pos2 The position for the pagination of
- *                       the branch at the second level of the tree
+ *                        the branch at the second level of the tree
  * @return array An array of new nodes
  */
  private function _addDbContainers($db, $type, $pos2)
@@ -510,9 +510,9 @@ foreach ($retval as $node){
  * Recursively groups tree nodes given a separator
  * 
  * @param mixed $node The node to group or null
- *                      to group the whole tree. If
- *                      passed as an argument, $node
- *                      must be of type CONTAINER
+ *                       to group the whole tree. If
+ *                       passed as an argument, $node
+ *                       must be of type CONTAINER
  * @return void 
  */
  public function groupTree($node = null)
@@ -774,7 +774,7 @@ foreach ($retval as $node){
  * 
  * @param Node $node The node to render
  * @param int $ |bool $recursive Bool: Whether to render a single node or a branch
- *                              Int: How many levels deep to render
+ *                               Int: How many levels deep to render
  * @param string $class An additional class for the list item
  * @return string HTML code for the tree node or branch
  */
@@ -1093,7 +1093,7 @@ $placeholder_key = 'value';
  * Generates the HTML code for displaying the list pagination
  * 
  * @param Node $node The node for whose children the page
- *                     selector will be created
+ *                      selector will be created
  * @return string 
  */
  private function _getPageSelector($node)

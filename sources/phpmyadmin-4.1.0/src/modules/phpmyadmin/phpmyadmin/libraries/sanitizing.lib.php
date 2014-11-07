@@ -184,10 +184,10 @@ function PMA_sanitize($message, $escape = false, $safe = false)
  * Sanitize a filename by removing anything besides legit characters
  * 
  * Intended usecase:
- *      When using a filename in a Content-Disposition header
- *      the value should not contain ; or "
+ *       When using a filename in a Content-Disposition header
+ *       the value should not contain ; or "
  * 
- *      When exporting, avoiding generation of an unexpected double-extension file
+ *       When exporting, avoiding generation of an unexpected double-extension file
  * 
  * @param string $filename The filename
  * @param boolean $replaceDots Whether to also replace dots
