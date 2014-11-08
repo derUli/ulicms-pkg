@@ -1,0 +1,3 @@
+Youtube Videos als Hintergrundbild anzeigen. 
+Benötigt jquery und stringparser_bbcode.
+Für eine Anleitung siehe modules/tubular/liesmich.txt

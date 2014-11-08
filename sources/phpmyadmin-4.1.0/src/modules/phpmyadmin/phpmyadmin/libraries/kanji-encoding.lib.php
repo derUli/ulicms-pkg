@@ -7,7 +7,7 @@
  * language)
  * 
  * PHP4 configure requirements:
- *        --enable-mbstring --enable-mbstr-enc-trans --enable-mbregex
+ *         --enable-mbstring --enable-mbstr-enc-trans --enable-mbregex
  * 
  * 2002/2/22 - by Yukihiro Kawada <kawada@den.fujifilm.co.jp>
  * 

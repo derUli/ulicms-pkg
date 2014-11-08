@@ -8,9 +8,9 @@
  * Explanation of used terms:
  * o work_path - original field path, eg. Servers/4/verbose
  * o system_path - work_path modified so that it points to the first server,
- *                    eg. Servers/1/verbose
+ *                     eg. Servers/1/verbose
  * o translated_path - work_path modified for HTML field name, a path with
- *                        slashes changed to hyphens, eg. Servers-4-verbose
+ *                         slashes changed to hyphens, eg. Servers-4-verbose
  * 
  * @package PhpMyAdmin
  */
@@ -151,7 +151,7 @@ class FormDisplay
      * Processes forms, returns true on successful save
      * 
      * @param bool $allow_partial_save allows for partial form saving
-     *                                    on failed validation
+     *                                     on failed validation
      * @param bool $check_form_submit whether check for $_POST['submit_save']
      * @return boolean whether processing was successful
      */
@@ -221,7 +221,7 @@ class FormDisplay
      * 
      * @param bool $tabbed_form if true, use a form with tabs
      * @param bool $show_restore_default whether show "restore default" button
-     *                                      besides the input field
+     *                                       besides the input field
      * @return void 
      */
      public function display($tabbed_form = false, $show_restore_default = false)
@@ -336,14 +336,14 @@ class FormDisplay
      * @param string $system_path field path, eg. Servers/1/verbose
      * @param string $work_path work path, eg. Servers/4/verbose
      * @param string $translated_path work path changed so that it can be
-     *                                        used as XHTML id
+     *                                         used as XHTML id
      * @param bool $show_restore_default whether show "restore default" button
-     *                                        besides the input field
+     *                                         besides the input field
      * @param mixed $userprefs_allow whether user preferences are enabled
-     *                                        for this field (null - no support,
-     *                                        true/false - enabled/disabled)
+     *                                         for this field (null - no support,
+     *                                         true/false - enabled/disabled)
      * @param array $ &$js_default          array which stores JavaScript code
-     *                                        to be displayed
+     *                                         to be displayed
      * @return void 
      */
      private function _displayFieldInput(
@@ -536,7 +536,7 @@ class FormDisplay
          * 
          * @param array $ |string $forms              array of form names
          * @param bool $allow_partial_save allows for partial form saving on
-         *                                            failed validation
+         *                                             failed validation
          * @return boolean true on success (no errors and all saved)
          */
          public function save($forms, $allow_partial_save = true)

@@ -6,7 +6,7 @@
  * SQL executor
  * 
  * @todo we must handle the case if sql.php is called directly with a query
- *             that returns 0 rows - to prevent cyclic redirects or includes
+ *              that returns 0 rows - to prevent cyclic redirects or includes
  * @package PhpMyAdmin
  */
 

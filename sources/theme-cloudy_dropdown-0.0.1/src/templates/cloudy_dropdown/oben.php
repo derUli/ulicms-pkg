@@ -36,7 +36,7 @@ else{
 <div class="content">
 
 <?php if(!containsModule(get_requested_pagename(), "blog")){
-    ?>
+     ?>
 <h1><?php headline() ?></h1>
 <?php }
 ?>

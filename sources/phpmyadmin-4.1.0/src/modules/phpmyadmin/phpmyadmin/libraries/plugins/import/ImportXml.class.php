@@ -69,7 +69,7 @@ class ImportXml extends ImportPlugin
      * is attached calls PluginManager::notify()
      * 
      * @param SplSubject $subject The PluginManager notifying the observer
-     *                               of an update.
+     *                                of an update.
      * @return void 
      */
      public function update (SplSubject $subject)
@@ -229,7 +229,7 @@ class ImportXml extends ImportPlugin
                     /**
                      * 
                      * @todo Generating a USE here blocks importing of a table
-                     *             into another database.
+                     *              into another database.
                      */
                     $attrs = $val2 -> attributes();
                      $create[] = "USE "

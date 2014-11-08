@@ -61,10 +61,10 @@ class ZipFile
      * Sets member variable this -> doWrite to true
      * - Should be called immediately after class instantiantion
      * - If set to true, then ZIP archive are echo'ed to STDOUT as each
-     *      file is added via this -> addfile(), and central directories are
-     *      echoed to STDOUT on final call to this -> file().  Also,
-     *      this -> file() returns an empty string so it is safe to issue a
-     *      "echo $zipfile;" command
+     *       file is added via this -> addfile(), and central directories are
+     *       echoed to STDOUT on final call to this -> file().  Also,
+     *       this -> file() returns an empty string so it is safe to issue a
+     *       "echo $zipfile;" command
      * 
      * @access public 
      * @return void 

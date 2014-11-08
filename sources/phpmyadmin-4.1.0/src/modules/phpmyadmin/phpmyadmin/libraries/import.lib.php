@@ -289,7 +289,7 @@ function PMA_lookForUse($buffer, $db, $reload)
  * Returns next part of imported file/buffer
  * 
  * @param int $size size of buffer to read
- *                     (this is maximal size function will return)
+ *                      (this is maximal size function will return)
  * @return string part of file/buffer
  * @access public 
  */
@@ -544,7 +544,7 @@ function PMA_getD($last_cumulative_size)
  * 
  * @param string $cell cell content
  * @return array Contains the precision, scale, and full size
- *                   representation of the given decimal cell
+ *                    representation of the given decimal cell
  * @access public 
  */
 function PMA_getDecimalSize($cell)
@@ -564,9 +564,9 @@ function PMA_getDecimalSize($cell)
  * 
  * @param string $last_cumulative_size Last cumulative column size
  * @param int $last_cumulative_type Last cumulative column type
- *                                        (NONE or VARCHAR or DECIMAL or INT or BIGINT)
+ *                                         (NONE or VARCHAR or DECIMAL or INT or BIGINT)
  * @param int $curr_type Type of the current cell
- *                                        (NONE or VARCHAR or DECIMAL or INT or BIGINT)
+ *                                         (NONE or VARCHAR or DECIMAL or INT or BIGINT)
  * @param string $cell The current cell
  * @return string Size of the given cell in the type-appropriate format
  * @access public 
@@ -779,11 +779,11 @@ function PMA_detectSize($last_cumulative_size, $last_cumulative_type,
  * Determines what MySQL type a cell is
  * 
  * @param int $last_cumulative_type Last cumulative column type
- *                                        (VARCHAR or INT or BIGINT or DECIMAL or NONE)
+ *                                         (VARCHAR or INT or BIGINT or DECIMAL or NONE)
  * @param string $cell String representation of the cell for which
- *                                        a best-fit type is to be determined
+ *                                         a best-fit type is to be determined
  * @return int The MySQL type representation
- *                  (VARCHAR or INT or BIGINT or DECIMAL or NONE)
+ *                   (VARCHAR or INT or BIGINT or DECIMAL or NONE)
  * @access public 
  */
 function PMA_detectType($last_cumulative_type, $cell)

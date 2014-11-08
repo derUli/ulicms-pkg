@@ -324,8 +324,8 @@ function PMA_getColumnTitle($column, $comments_map)
  * 
  * @param array $column description of column in given table
  * @return boolean If check to ensure types such as "enum('one','two','binary',..)"
- *                    or "enum('one','two','varbinary',..)" are not categorized as
- *                    binary.
+ *                     or "enum('one','two','varbinary',..)" are not categorized as
+ *                     binary.
  */
 function PMA_isColumnBinary($column)
 {
@@ -346,8 +346,8 @@ function PMA_isColumnBinary($column)
  * 
  * @param array $column description of column in given table
  * @return boolean If check to ensure types such as "enum('one','two','blob',..)"
- *                    or "enum('one','two','tinyblob',..)" etc. are not categorized
- *                    as blob.
+ *                     or "enum('one','two','tinyblob',..)" etc. are not categorized
+ *                     as blob.
  */
 function PMA_isColumnBlob($column)
 {
@@ -367,7 +367,7 @@ function PMA_isColumnBlob($column)
  * 
  * @param array $column description of column in given table
  * @return boolean If check to ensure types such as "enum('one','two','char',..)" or
- *                    "enum('one','two','varchar',..)" are not categorized as char.
+ *                     "enum('one','two','varchar',..)" are not categorized as char.
  */
 function PMA_isColumnChar($column)
 {
@@ -419,14 +419,14 @@ function PMA_getEnumSetAndTimestampColumns($column, $timestamp_seen)
  * The function column
  * We don't want binary data to be destroyed
  * Note: from the MySQL manual: "BINARY doesn't affect how the column is
- *          stored or retrieved" so it does not mean that the contents is binary
+ *           stored or retrieved" so it does not mean that the contents is binary
  * 
  * @param array $column description of column in given table
  * @param boolean $is_upload upload or no
  * @param string $column_name_appendix the name atttibute
  * @param string $unnullify_trigger validation string
  * @param array $no_support_types list of datatypes that are not (yet)
- *                                          handled by PMA
+ *                                           handled by PMA
  * @param integer $tabindex_for_function +3000
  * @param integer $tabindex tab index
  * @param integer $idindex id index
@@ -570,22 +570,22 @@ function PMA_getNullifyCodeForNullColumn($column, $foreigners, $foreignData)
  * @param array $paramTableDbArray array containing $table and $db
  * @param array $rownumber the row number
  * @param array $titles An HTML IMG tag for a particular icon from
- *                                          a theme, which may be an actual file or
- *                                          an icon from a sprite
+ *                                           a theme, which may be an actual file or
+ *                                           an icon from a sprite
  * @param array $text_dir text direction
  * @param string $special_chars_encoded replaced char if the string starts
- *                                          with a \r\n pair (0x0d0a) add an extra \n
+ *                                           with a \r\n pair (0x0d0a) add an extra \n
  * @param string $vkey [multi_edit]['row_id']
  * @param boolean $is_upload is upload or not
  * @param integer $biggest_max_file_size 0 intger
  * @param string $default_char_editing default char editing mode which is stroe
- *                                          in the config.inc.php script
+ *                                           in the config.inc.php script
  * @param array $no_support_types list of datatypes that are not (yet)
- *                                          handled by PMA
+ *                                           handled by PMA
  * @param array $gis_data_types list of GIS data types
  * @param array $extracted_columnspec associative array containing type,
- *                                          spec_in_brackets and possibly
- *                                          enum_set_values (another array)
+ *                                           spec_in_brackets and possibly
+ *                                           enum_set_values (another array)
  * @return string an html snippet
  */
 function PMA_getValueColumn($column, $backup_field, $column_name_appendix,
@@ -690,8 +690,8 @@ function PMA_getValueColumn($column, $backup_field, $column_name_appendix,
  * @param array $paramTableDbArray array containing $table and $db
  * @param array $rownumber the row number
  * @param array $titles An HTML IMG tag for a particular icon from
- *                                         a theme, which may be an actual file or
- *                                         an icon from a sprite
+ *                                          a theme, which may be an actual file or
+ *                                          an icon from a sprite
  * @return string an html snippet
  */
 function PMA_getForeignLink($column, $backup_field, $column_name_appendix,
@@ -778,7 +778,7 @@ function PMA_dispRowForeignData($backup_field, $column_name_appendix,
  * @param integer $idindex id index
  * @param array $text_dir text direction
  * @param array $special_chars_encoded replaced char if the string starts
- *                                          with a \r\n pair (0x0d0a) add an extra \n
+ *                                           with a \r\n pair (0x0d0a) add an extra \n
  * @return string an html snippet
  */
 function PMA_getTextarea($column, $backup_field, $column_name_appendix,
@@ -793,7 +793,7 @@ function PMA_getTextarea($column, $backup_field, $column_name_appendix,
         /**
          * 
          * @todo clarify the meaning of the "textfield" class and explain
-         *          why character columns have the "char" class instead
+         *           why character columns have the "char" class instead
          */
          $the_class = 'char';
          $textAreaRows = $GLOBALS['cfg']['CharTextareaRows'];
@@ -826,8 +826,8 @@ function PMA_getTextarea($column, $backup_field, $column_name_appendix,
  * @param type $backup_field hidden input field
  * @param type $column_name_appendix the name atttibute
  * @param type $extracted_columnspec associative array containing type,
- *                                      spec_in_brackets and possibly
- *                                      enum_set_values (another array)
+ *                                       spec_in_brackets and possibly
+ *                                       enum_set_values (another array)
  * @param type $unnullify_trigger validation string
  * @param type $tabindex tab index
  * @param type $tabindex_for_value offset for the values tabindex
@@ -871,8 +871,8 @@ function PMA_getPmaTypeEnum($column, $backup_field, $column_name_appendix,
  * 
  * @param array $column description of column in given table
  * @param array $extracted_columnspec associative array containing type,
- *                                       spec_in_brackets and possibly enum_set_values
- *                                       (another array)
+ *                                        spec_in_brackets and possibly enum_set_values
+ *                                        (another array)
  * @return array column values as an associative array
  */
 function PMA_getColumnEnumValues($column, $extracted_columnspec)
@@ -974,8 +974,8 @@ function PMA_getRadioButtonDependingOnLength(
  * 
  * @param array $column description of column in given table
  * @param array $extracted_columnspec associative array containing type,
- *                                         spec_in_brackets and possibly
- *                                         enum_set_values (another array)
+ *                                          spec_in_brackets and possibly
+ *                                          enum_set_values (another array)
  * @param string $backup_field hidden input field
  * @param string $column_name_appendix the name atttibute
  * @param string $unnullify_trigger validation string
@@ -1020,8 +1020,8 @@ function PMA_getPmaTypeSet(
  * 
  * @param array $column description of column in given table
  * @param array $extracted_columnspec associative array containing type,
- *                                       spec_in_brackets and possibly enum_set_values
- *                                       (another array)
+ *                                        spec_in_brackets and possibly enum_set_values
+ *                                        (another array)
  * @return array $column['values'], $column['select_size']
  */
 function PMA_getColumnSetValueAndSelectSize($column, $extracted_columnspec)
@@ -1054,7 +1054,7 @@ function PMA_getColumnSetValueAndSelectSize($column, $extracted_columnspec)
  * @param integer $idindex id index
  * @param string $text_dir text direction
  * @param string $special_chars_encoded replaced char if the string starts
- *                                          with a \r\n pair (0x0d0a) add an extra \n
+ *                                           with a \r\n pair (0x0d0a) add an extra \n
  * @param string $vkey [multi_edit]['row_id']
  * @param boolean $is_upload is upload or not
  * @return string an html snippet
@@ -1259,7 +1259,7 @@ function PMA_getMaxUploadSize($column, $biggest_max_file_size)
  * 
  * @param array $column description of column in given table
  * @param string $default_char_editing default char editing mode which is stroe
- *                                          in the config.inc.php script
+ *                                           in the config.inc.php script
  * @param string $backup_field hidden input field
  * @param string $column_name_appendix the name atttibute
  * @param string $unnullify_trigger validation string
@@ -1269,11 +1269,11 @@ function PMA_getMaxUploadSize($column, $biggest_max_file_size)
  * @param integer $idindex id index
  * @param string $text_dir text direction
  * @param array $special_chars_encoded replaced char if the string starts
- *                                          with a \r\n pair (0x0d0a) add an extra \n
+ *                                           with a \r\n pair (0x0d0a) add an extra \n
  * @param strign $data data to edit
  * @param array $extracted_columnspec associative array containing type,
- *                                          spec_in_brackets and possibly
- *                                          enum_set_values (another array)
+ *                                           spec_in_brackets and possibly
+ *                                           enum_set_values (another array)
  * @return string an html snippet
  */
 function PMA_getValueColumnForOtherDatatypes($column, $default_char_editing,
@@ -1334,8 +1334,8 @@ function PMA_getValueColumnForOtherDatatypes($column, $default_char_editing,
  * 
  * @param array $column description of column in given table
  * @param array $extracted_columnspec associative array containing type,
- *                                       spec_in_brackets and possibly enum_set_values
- *                                       (another array)
+ *                                        spec_in_brackets and possibly enum_set_values
+ *                                        (another array)
  * @return integer field size
  */
 function PMA_getColumnSize($column, $extracted_columnspec)
@@ -1609,13 +1609,13 @@ function PMA_getHeadAndFootOfInsertRowTable($url_params)
  * @param array $current_row a row of the table
  * @param array $column description of column in given table
  * @param array $extracted_columnspec associative array containing type,
- *                                         spec_in_brackets and possibly
- *                                         enum_set_values (another array)
+ *                                          spec_in_brackets and possibly
+ *                                          enum_set_values (another array)
  * @param boolean $real_null_value whether column value null or not null
  * @param array $gis_data_types list of GIS data types
  * @param string $column_name_appendix string to append to column name in input
  * @return array $real_null_value, $data, $special_chars, $backup_field,
- *                  $special_chars_encoded
+ *                   $special_chars_encoded
  */
 function PMA_getSpecialCharsAndBackupFieldForExistingRow(
     $current_row, $column, $extracted_columnspec,
@@ -1707,7 +1707,7 @@ function PMA_getSpecialCharsAndBackupFieldForExistingRow(
  * @param type $column description of column in given table
  * @param boolean $real_null_value whether column value null or not null
  * @return array $real_null_value, $data, $special_chars,
- *                  $backup_field, $special_chars_encoded
+ *                   $backup_field, $special_chars_encoded
  */
 function PMA_getSpecialCharsAndBackupFieldForInsertingMode(
     $column, $real_null_value
@@ -1833,7 +1833,7 @@ function PMA_setSessionForEditNext($one_where_clause)
  * and new_insert, same_insert, edit_next
  * 
  * @param string $goto_include store some script for include, otherwise it is
- *                                boolean false
+ *                                 boolean false
  * @return string $goto_include
  */
 function PMA_getGotoInclude($goto_include)
@@ -1910,7 +1910,7 @@ function PMA_buildSqlQuery($is_insertignore, $query_fields, $value_sets)
  * @param array $url_params url parameters array
  * @param array $query built query from PMA_buildSqlQuery()
  * @return array $url_params, $total_affected_rows, $last_messages
- *                              $warning_messages, $error_messages, $return_to_sql_query
+ *                               $warning_messages, $error_messages, $return_to_sql_query
  */
 function PMA_executeSqlQuery($url_params, $query)
 {
@@ -1995,7 +1995,7 @@ function PMA_getWarningMessages()
  * @param string $where_comparison string that contain relation field value
  * @param string $relation_field_value relation field value
  * @param array $map all Relations to foreign tables for a given
- *                                        table or optionally a given column in a table
+ *                                         table or optionally a given column in a table
  * @param string $relation_field relation field
  * @return string $dispval display value from the foreign table
  */
@@ -2029,7 +2029,7 @@ function PMA_getDisplayValueForForeignTableColumn($where_comparison,
  * Display option in the cell according to user choises
  * 
  * @param array $map all Relations to foreign tables for a given
- *                                        table or optionally a given column in a table
+ *                                         table or optionally a given column in a table
  * @param string $relation_field relation field
  * @param string $where_comparison string that contain relation field value
  * @param string $dispval display value from the foreign table
@@ -2079,7 +2079,7 @@ function PMA_getLinkForRelationalDisplayField($map, $relation_field,
  * @param string $db db name
  * @param string $table table name
  * @param array $transformation mimetypes for all columns of a table
- *                                  [field_name][field_key]
+ *                                   [field_name][field_key]
  * @param array $edited_values transform columns list and new values
  * @param string $file file containing the transformation plugin
  * @param string $column_name column name
@@ -2195,11 +2195,11 @@ function PMA_getCurrentValueAsAnArrayForMultipleEdit($multi_edit_colummns,
  * @param array $query_values SET part of the sql query
  * @param array $query_fields array of query fields
  * @param string $current_value_as_an_array current value in the column
- *                                                 as an array
+ *                                                  as an array
  * @param array $value_sets array of valu sets
  * @param string $key an md5 of the column name
  * @param array $multi_edit_columns_null_prev array of multiple edit columns
- *                                                 null previous
+ *                                                  null previous
  * @return array ($query_values, $query_fields)
  */
 function PMA_getQueryValuesForInsertAndUpdateInMultipleEdit($multi_edit_columns_name,
@@ -2644,7 +2644,7 @@ function PMA_getHtmlForInsertEditFormHeader($has_blob_field, $is_upload)
  * @param array $titles titles
  * @param int $biggest_max_file_size biggest max file size
  * @param string $default_char_editing default char editing mode which is stroe
- *                                         in the config.inc.php script
+ *                                          in the config.inc.php script
  * @param string $text_dir text direction
  * @return string 
  */

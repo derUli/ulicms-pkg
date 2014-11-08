@@ -215,7 +215,7 @@ foreach ($tables as $keyname => $current_table){
      * the icons are greyed, because
      * 1. for views, we don't know the number of rows at this point
      * 2. for tables, another source could have populated them since the
-     *       page was generated
+     *        page was generated
      * 
      * I could have used the PHP ternary conditional operator but I find
      * the code easier to read without this operator.
@@ -282,6 +282,7 @@ $response -> addHTML(
         )
     );
 $response -> addHTML('</form>'); //end of form
+
 
 
 

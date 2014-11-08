@@ -645,6 +645,7 @@ function PMA_getJsonForLogDataTypeGeneral($start, $end)
 
 
 
+
  $result = $GLOBALS['dbi'] -> tryQuery($q);
 
  $return = array('rows' => array(), 'sum' => array());

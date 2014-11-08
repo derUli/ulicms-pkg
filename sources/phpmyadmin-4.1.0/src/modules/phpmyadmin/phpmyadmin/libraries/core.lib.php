@@ -622,7 +622,7 @@ header(
  * Sends header indicating file download.
  * 
  * @param string $filename Filename to include in headers if empty,
- *                            none Content-Disposition header will be sent.
+ *                             none Content-Disposition header will be sent.
  * @param string $mimetype MIME type to include in headers.
  * @param int $length Length of content (optional)
  * @param bool $no_cache Whether to include no-caching headers.
@@ -798,7 +798,7 @@ function PMA_addJSCode($str)
  * @param string $key Name of value to set
  * @param mixed $value Value to set, can be either string or array of strings
  * @param bool $escape Whether to escape value or keep it as it is
- *                          (for inclusion of js code)
+ *                           (for inclusion of js code)
  * @return void 
  */
 function PMA_addJSVar($key, $value, $escape = true)

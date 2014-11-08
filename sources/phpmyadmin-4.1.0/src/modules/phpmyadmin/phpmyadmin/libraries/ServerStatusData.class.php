@@ -19,8 +19,8 @@ if (! defined('PHPMYADMIN')){
  * All properties of the class are read-only
  * 
  * TODO: Use lazy initialisation for some of the properties
- *          since not all of the server_status_*.php pages need
- *          all the data that this class provides.
+ *           since not all of the server_status_*.php pages need
+ *           all the data that this class provides.
  * 
  * @package PhpMyAdmin
  */

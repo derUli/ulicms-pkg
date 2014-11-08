@@ -36,8 +36,8 @@ function PMA_RTN_setGlobals()
  * Main function for the routines functionality
  * 
  * @param string $type 'FUNCTION' for functions,
- *                        'PROCEDURE' for procedures,
- *                        null for both
+ *                         'PROCEDURE' for procedures,
+ *                         null for both
  * @return void 
  */
 function PMA_RTN_main($type)
@@ -609,7 +609,7 @@ function PMA_RTN_getDataFromRequest()
  * @param string $name The name of the routine.
  * @param string $type Type of routine (ROUTINE|PROCEDURE)
  * @param bool $all Whether to return all data or just
- *                        the info about parameters.
+ *                         the info about parameters.
  * @return array Data necessary to create the routine editor.
  */
 function PMA_RTN_getDataFromName($name, $type, $all = true)
@@ -730,12 +730,12 @@ function PMA_RTN_getDataFromName($name, $type, $all = true)
  * Creates one row for the parameter table used in the routine editor.
  * 
  * @param array $routine Data for the routine returned by
- *                           PMA_RTN_getDataFromRequest() or
- *                           PMA_RTN_getDataFromName()
+ *                            PMA_RTN_getDataFromRequest() or
+ *                            PMA_RTN_getDataFromName()
  * @param mixed $index Either a numeric index of the row being processed
- *                           or NULL to create a template row for AJAX request
+ *                            or NULL to create a template row for AJAX request
  * @param string $class Class used to hide the direction column, if the
- *                           row is for a stored function.
+ *                            row is for a stored function.
  * @return string HTML code of one row of parameter table for the editor.
  */
 function PMA_RTN_getParameterRow($routine = array(), $index = null, $class = '')
@@ -838,13 +838,13 @@ function PMA_RTN_getParameterRow($routine = array(), $index = null, $class = '')
  * Displays a form used to add/edit a routine
  * 
  * @param string $mode If the editor will be used edit a routine
- *                             or add a new one: 'edit' or 'add'.
+ *                              or add a new one: 'edit' or 'add'.
  * @param string $operation If the editor was previously invoked with
- *                             JS turned off, this will hold the name of
- *                             the current operation
+ *                              JS turned off, this will hold the name of
+ *                              the current operation
  * @param array $routine Data for the routine returned by
- *                             PMA_RTN_getDataFromRequest() or
- *                             PMA_RTN_getDataFromName()
+ *                              PMA_RTN_getDataFromRequest() or
+ *                              PMA_RTN_getDataFromName()
  * @return string HTML code for the editor.
  */
 function PMA_RTN_getEditorForm($mode, $operation, $routine)
@@ -1553,7 +1553,7 @@ function PMA_RTN_handleExecute()
  * Creates the HTML code that shows the routine execution dialog.
  * 
  * @param array $routine Data for the routine returned by
- *                          PMA_RTN_getDataFromName()
+ *                           PMA_RTN_getDataFromName()
  * @return string HTML code for the routine execution dialog.
  */
 function PMA_RTN_getExecuteForm($routine)

@@ -102,7 +102,7 @@ if (!$GLOBALS['sqlvalidator_error']){
          * @param string $connection_technology Connection Technology
          * @param string $connection_technology_version Con. Technology version
          * @param integer $interactive boolean 1/0 to specify if
-         *                                                  we are an interactive system
+         *                                                   we are an interactive system
          * @return object stdClass return object with data
          * @access private 
          */

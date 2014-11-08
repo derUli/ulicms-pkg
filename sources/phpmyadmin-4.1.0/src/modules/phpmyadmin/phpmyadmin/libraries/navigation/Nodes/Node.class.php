@@ -33,14 +33,14 @@ class Node
     /**
      * 
      * @var string A non-unique identifier for the node
-     *                This may be trimmed when grouping nodes
+     *                 This may be trimmed when grouping nodes
      */
      public $name = "";
     
     /**
      * 
      * @var string A non-unique identifier for the node
-     *                This will never change after being assigned
+     *                 This will never change after being assigned
      */
      public $real_name = "";
     
@@ -53,42 +53,42 @@ class Node
     /**
      * 
      * @var bool Whether this object has been created while grouping nodes
-     *              Only relevant if the node is of type CONTAINER
+     *               Only relevant if the node is of type CONTAINER
      */
      public $is_group;
     
     /**
      * 
      * @var bool Whether to add a "display: none;" CSS
-     *              rule to the node when rendering it
+     *               rule to the node when rendering it
      */
      public $visible = false;
     
     /**
      * 
      * @var Node A reference to the parent object of
-     *              this node, NULL for the root node.
+     *               this node, NULL for the root node.
      */
      public $parent;
     
     /**
      * 
      * @var array An array of Node objects that are
-     *               direct children of this node
+     *                direct children of this node
      */
      public $children = array();
     
     /**
      * 
      * @var Mixed A string used to group nodes, or an array of strings
-     *               Only relevant if the node is of type CONTAINER
+     *                Only relevant if the node is of type CONTAINER
      */
      public $separator = '';
     
     /**
      * 
      * @var int How many time to recursively apply the grouping function
-     *             Only relevant if the node is of type CONTAINER
+     *              Only relevant if the node is of type CONTAINER
      */
      public $separator_depth = 1;
     
@@ -101,7 +101,7 @@ class Node
     /**
      * 
      * @var Array An array of A tags, used when rendering the node
-     *               The indexes in the array may be 'icon' and 'text'
+     *                The indexes in the array may be 'icon' and 'text'
      */
      public $links;
     
@@ -120,14 +120,14 @@ class Node
     /**
      * 
      * @var int The position for the pagination of
-     *             the branch at the second level of the tree
+     *              the branch at the second level of the tree
      */
      public $pos2 = 0;
     
     /**
      * 
      * @var int The position for the pagination of
-     *             the branch at the third level of the tree
+     *              the branch at the third level of the tree
      */
      public $pos3 = 0;
     
@@ -137,7 +137,7 @@ class Node
      * @param string $name An identifier for the new node
      * @param int $type Type of node, may be one of CONTAINER or OBJECT
      * @param bool $is_group Whether this object has been created
-     *                            while grouping nodes
+     *                             while grouping nodes
      * @return Node 
      */
      public function __construct($name, $type = Node :: OBJECT, $is_group = false)
@@ -169,9 +169,9 @@ class Node
      * 
      * @param string $name The name of requested child
      * @param bool $real_name Whether to use the "real_name"
-     *                             instead of "name" in comparisons
+     *                              instead of "name" in comparisons
      * @return false |Node The requested child node or false,
-     *                       if the requested node cannot be found
+     *                        if the requested node cannot be found
      */
      public function getChild($name, $real_name = false)
     {
@@ -258,7 +258,7 @@ class Node
      * This function checks if the node has children nodes associated with it
      * 
      * @param bool $count_empty_containers Whether to count empty child
-     *                                        containers as valid children
+     *                                         containers as valid children
      * @return bool Whether the node has child nodes
      */
      public function hasChildren($count_empty_containers = true)
@@ -364,7 +364,7 @@ class Node
      * This method is overridden by the Node_Database and Node_Table classes
      * 
      * @param string $type The type of item we are looking for
-     *                                ('tables', 'views', etc)
+     *                                 ('tables', 'views', etc)
      * @param int $pos The offset of the list within the results
      * @param string $searchClause A string used to filter the results of the query
      * @return array 
@@ -401,7 +401,7 @@ class Node
      * This method is overridden by the Node_Database and Node_Table classes
      * 
      * @param string $type The type of item we are looking for
-     *                                ('tables', 'views', etc)
+     *                                 ('tables', 'views', etc)
      * @param string $searchClause A string used to filter the results of the query
      * @return int 
      */

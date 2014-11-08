@@ -414,9 +414,9 @@ class PMA_Table
      * @param string $collation collation
      * @param bool $ |string $null           with 'NULL' or 'NOT NULL'
      * @param string $default_type whether default is CURRENT_TIMESTAMP,
-     *                                       NULL, NONE, USER_DEFINED
+     *                                        NULL, NONE, USER_DEFINED
      * @param string $default_value default value for USER_DEFINED
-     *                                       default type
+     *                                        default type
      * @param string $extra 'AUTO_INCREMENT'
      * @param string $comment field comment
      * @param array $ &$field_primary list of fields for PRIMARY KEY
@@ -557,7 +557,7 @@ if ($move_to == '-first'){ // dash can't appear as part of column name
  * @param bool $force_exact whether to force an exact count
  * @param bool $is_view whether the table is a view
  * @return mixed the number of records if "retain" param is true,
- *                  otherwise true
+ *                   otherwise true
  */
  static public function countRecords($db, $table, $force_exact = false,
  $is_view = null
@@ -644,9 +644,9 @@ if ($GLOBALS['cfg']['MaxExactCountViews'] == 0){
  * @param string $collation collation
  * @param bool $ |string $null           with 'NULL' or 'NOT NULL'
  * @param string $default_type whether default is CURRENT_TIMESTAMP,
- *                                       NULL, NONE, USER_DEFINED
+ *                                        NULL, NONE, USER_DEFINED
  * @param string $default_value default value for USER_DEFINED default
- *                                       type
+ *                                        type
  * @param string $extra 'AUTO_INCREMENT'
  * @param string $comment field comment
  * @param array $ &$field_primary list of fields for PRIMARY KEY
@@ -672,16 +672,16 @@ $newcol, $type, $index, $length, $attribute,
  * entry
  * 
  * @param string $work The array index, which Relation feature to
- *                                check ('relwork', 'commwork', ...)
+ *                                 check ('relwork', 'commwork', ...)
  * @param string $pma_table The array index, which PMA-table to update
- *                                ('bookmark', 'relation', ...)
+ *                                 ('bookmark', 'relation', ...)
  * @param array $get_fields Which fields will be SELECT'ed from the old entry
  * @param array $where_fields Which fields will be used for the WHERE query
- *                                (array('FIELDNAME' => 'FIELDVALUE'))
+ *                                 (array('FIELDNAME' => 'FIELDVALUE'))
  * @param array $new_fields Which fields will be used as new VALUES.
- *                                These are the important keys which differ
- *                                from the old entry
- *                                (array('FIELDNAME' => 'NEW FIELDVALUE'))
+ *                                 These are the important keys which differ
+ *                                 from the old entry
+ *                                 (array('FIELDNAME' => 'NEW FIELDVALUE'))
  * @global relation variable
  * @return int |true
  */
@@ -1327,10 +1327,10 @@ __('Table %1$s has been renamed to %2$s.'),
  * all columns being single indexed in PRIMARY or UNIQUE
  * 
  * e.g.
- *     - PRIMARY(id) // id
- *     - UNIQUE(name) // name
- *     - PRIMARY(fk_id1, fk_id2) // NONE
- *     - UNIQUE(x,y) // NONE
+ *      - PRIMARY(id) // id
+ *      - UNIQUE(name) // name
+ *      - PRIMARY(fk_id1, fk_id2) // NONE
+ *      - UNIQUE(x,y) // NONE
  * 
  * @param bool $backquoted whether to quote name with backticks ``
  * @param bool $fullName whether to include full name of the table as a prefix
@@ -1602,7 +1602,7 @@ return isset($this -> uiprefs[$property]) ? $this -> uiprefs[$property] : false;
  * @param string $property Property
  * @param mixed $value Value for the property
  * @param string $table_create_time Needed for PROP_COLUMN_ORDER
- *                                     and PROP_COLUMN_VISIB
+ *                                      and PROP_COLUMN_VISIB
  * @return boolean |PMA_Message
  */
  public function setUiProp($property, $value, $table_create_time = null)

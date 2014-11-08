@@ -319,8 +319,8 @@ class Advisor
      * 
      * @param string $expr expression to evaluate
      * @param int $ignoreUntil if > 0, it doesn't replace any variables until
-     *                               that string position, but still evaluates the
-     *                               whole expr
+     *                                that string position, but still evaluates the
+     *                                whole expr
      * @return string result of evaluated expression
      * @throws Exception
      */

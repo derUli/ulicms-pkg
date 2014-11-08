@@ -17,7 +17,7 @@ if (! defined('PHPMYADMIN')){
  * @param string $file zip file
  * @param string $specific_entry regular expression to match a file
  * @return array ($error_message, $file_data); $error_message
- *                     is empty if no error
+ *                      is empty if no error
  */
 function PMA_getZipContents($file, $specific_entry = null)
 {

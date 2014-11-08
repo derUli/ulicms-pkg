@@ -101,7 +101,7 @@ class PMA_Scripts
      * 
      * @param string $filename The name of the file to include
      * @param bool $conditional_ie Whether to wrap the script tag in
-     *                                  conditional comments for IE
+     *                                   conditional comments for IE
      * @return void 
      */
      public function addFile($filename, $conditional_ie = false)
@@ -121,7 +121,7 @@ class PMA_Scripts
      * Determines whether to fire up an onload event for a file
      * 
      * @param string $filename The name of the file to be checked
-     *                            against the blacklist
+     *                             against the blacklist
      * @return int 1 to fire up the event, 0 not to
      */
      private function _eventBlacklist($filename)
@@ -156,8 +156,8 @@ class PMA_Scripts
      * 
      * @param string $event The name of the event to register
      * @param string $function The code to execute when the event fires
-     *                            E.g: 'function () { doSomething(); }'
-     *                            or 'doSomething'
+     *                             E.g: 'function () { doSomething(); }'
+     *                             or 'doSomething'
      * @return void 
      */
      public function addEvent($event, $function)
