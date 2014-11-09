@@ -48,7 +48,7 @@ function generate_sitemap(){
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ';
     
-     $query_pages = db_query("SELECT * FROM " . tbname("content") . " WHERE active = 1 ORDER by lastmodified DESC");
+     $query_pages = db_query("SELECT * FROM " . tbname("content") . " WHERE active = 1 AND `deleted_at` IS NULL ORDER by lastmodified DESC");
      while($row = db_fetch_object($query_pages)){
          if(!startsWith($row -> redirection, "#")){
             
