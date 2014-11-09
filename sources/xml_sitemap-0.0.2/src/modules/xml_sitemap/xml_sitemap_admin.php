@@ -5,7 +5,7 @@ function xmlspecialchars($text){
      return str_replace('&#039;', '&apos;', htmlspecialchars($text, ENT_QUOTES));
      }
 
-function getBaseURL(){
+function getBaseURL($language = null){
      $pageURL = 'http';
      if ($_SERVER["HTTPS"] == "on"){
          $pageURL .= "s";
@@ -19,11 +19,21 @@ function getBaseURL(){
          }else{
          $dirname = "/";
          }
-     if ($_SERVER["SERVER_PORT"] != "80"){
-         $pageURL .= $_SERVER["SERVER_NAME"] . ":" . $_SERVER["SERVER_PORT"] . $dirname;
-         }else{
-         $pageURL .= $_SERVER["SERVER_NAME"] . $dirname;
+         if(is_null($language)){
+            $domain = $_SERVER["HTTP_HOST"];
+         } else {
+         
+            $domain = getDomainByLanguage($language);
+            if(!$domain){
+               $domain = $_SERVER["HTTP_HOST"];
+            }
          }
+     if ($_SERVER["SERVER_PORT"] != "80"){
+         $pageURL .= $domain . ":" . $_SERVER["SERVER_PORT"] . $dirname;
+         }
+         else{
+         $pageURL .= $domain . $dirname;
+         } 
      return $pageURL;
      }
 
@@ -43,7 +53,7 @@ function generate_sitemap(){
          if(!startsWith($row -> redirection, "#")){
             
              $xml_string .= "<url>\r\n";
-             $xml_string .= "\t<loc>" . xmlspecialchars(getBaseURL() . $row -> systemname . ".html") . "</loc>\r\n";
+             $xml_string .= "\t<loc>" . xmlspecialchars(getBaseURL($row->language) . $row -> systemname . ".html") . "</loc>\r\n";
              $xml_string .= "\t<lastmod>" . date("Y-m-d", $row -> lastmodified) . "</lastmod>\r\n";
              $xml_string .= "</url>\r\n\r\n";
             
