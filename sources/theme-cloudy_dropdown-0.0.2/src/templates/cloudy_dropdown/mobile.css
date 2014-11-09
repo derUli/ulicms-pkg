@@ -24,7 +24,7 @@ input[type=range]::-webkit-slider-thumb {
   -webkit-border-radius: 22px; -moz-border-radius: 22px; border-radius: 22px;
 }
 
-input[type=submit], input[type=button], button{
+input[type=submit], input[type=button], input[type=reset], button{
  -webkit-appearance: none; -moz-appearance: none;
  display: block;
  margin: 1.5em 0;
