@@ -6,7 +6,7 @@ if(containsModule(get_requested_pagename(), "random_page") or isset($_GET["view_
          $random = array_rand($allpages, 1);
          $random = $allpages[$random];
          } while(containsModule($random));
-    
+     // Todo, keine Seiten mit Hash-URL dürfen ausgewählt werden.
      header("Location: " . buildSEOUrl($random));
      exit();
     
