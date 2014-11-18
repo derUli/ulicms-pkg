@@ -61,7 +61,7 @@ function generate_sitemap(){
                  $query_blog = db_query("SELECT * FROM " . tbname("blog") . " WHERE entry_enabled = 1 AND language='".$row->language."' ORDER by datum DESC");
                  while($row2 = db_fetch_object($query_blog)){
                      $xml_string .= "<url>\r\n";
-                     $xml_string .= "\t<loc>" . xmlspecialchars(getBaseURL() . $row -> systemname . ".html?single=" . $row2 -> seo_shortname) . "</loc>\r\n";
+                     $xml_string .= "\t<loc>" . xmlspecialchars(getBaseURL($row->language) . $row -> systemname . ".html?single=" . $row2 -> seo_shortname) . "</loc>\r\n";
                      $xml_string .= "\t<lastmod>" . date("Y-m-d", $row2 -> datum) . "</lastmod>\r\n";
                      $xml_string .= "</url>\r\n\r\n";
                      }
