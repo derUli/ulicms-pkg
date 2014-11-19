@@ -1,4 +1,4 @@
 <?php 
-function gallery_name(){
+function google_analytics_name(){
    return "Google Analytics";
 }
