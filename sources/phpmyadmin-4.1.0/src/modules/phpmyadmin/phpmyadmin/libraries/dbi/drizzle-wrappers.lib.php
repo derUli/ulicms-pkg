@@ -22,7 +22,7 @@ if (! defined('PHPMYADMIN')){
  * 
  * @return void 
  * @todo drizzle module segfaults while freeing resources, often.
- *           This allows at least for some development
+ *            This allows at least for some development
  */
 function PMA_drizzleShutdownFlush()
 {
@@ -146,7 +146,7 @@ class PMA_DrizzleCon
      * @param string $query query to execute
      * @param int $bufferMode PMA_Drizzle::BUFFER_RESULT,PMA_Drizzle::BUFFER_ROW
      * @param int $fetchMode PMA_Drizzle::FETCH_ASSOC, PMA_Drizzle::FETCH_NUM
-     *                               or PMA_Drizzle::FETCH_BOTH
+     *                                or PMA_Drizzle::FETCH_BOTH
      * @return PMA_DrizzleResult 
      */
      public function query($query, $bufferMode = PMA_Drizzle :: BUFFER_RESULT,

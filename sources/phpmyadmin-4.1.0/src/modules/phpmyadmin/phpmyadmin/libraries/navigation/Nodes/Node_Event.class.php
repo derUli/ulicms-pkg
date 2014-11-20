@@ -26,7 +26,7 @@ class Node_Event extends Node_DatabaseChild
      * @param string $name An identifier for the new node
      * @param int $type Type of node, may be one of CONTAINER or OBJECT
      * @param bool $is_group Whether this object has been created
-     *                             while grouping nodes
+     *                              while grouping nodes
      * @return Node_Event 
      */
      public function __construct($name, $type = Node :: OBJECT, $is_group = false)

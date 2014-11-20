@@ -1,3 +1,3 @@
-<?php 
+<?php
 deleteconfig("image_quality");
 ?>

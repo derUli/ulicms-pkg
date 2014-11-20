@@ -56,7 +56,7 @@ foreach ($plugins as $plugin){
  * Checks if APC bar extension is available and configured correctly.
  * 
  * @return boolean true if APC extension is available and if rfc1867 is enabled,
- *                          false if it is not
+ *                           false if it is not
  */
 function PMA_Import_apcCheck()
 {
@@ -73,7 +73,7 @@ function PMA_Import_apcCheck()
  * Checks if UploadProgress bar extension is available.
  * 
  * @return boolean true if UploadProgress extension is available,
- *                     false if it is not
+ *                      false if it is not
  */
 function PMA_Import_progressCheck()
 {
@@ -89,7 +89,7 @@ function PMA_Import_progressCheck()
  * Checks if PHP 5.4 session upload-progress feature is available.
  * 
  * @return boolean true if PHP 5.4 session upload-progress is available,
- *                     false if it is not
+ *                      false if it is not
  */
 function PMA_Import_sessionCheck()
 {
@@ -117,7 +117,7 @@ function PMA_Import_nopluginCheck()
  * It uses PMA_getUploadStatus, which is defined in plugin's file.
  * 
  * @param string $id ID of transfer, usually $upload_id
- *                       from display_import_ajax.lib.php
+ *                        from display_import_ajax.lib.php
  * @return void 
  */
 function PMA_importAjaxStatus($id)

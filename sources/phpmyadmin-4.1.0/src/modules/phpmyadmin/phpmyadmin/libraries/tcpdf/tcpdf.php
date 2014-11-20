@@ -6496,37 +6496,37 @@ $this -> resetLastH();
  * Generally, if you want to know the exact height for a block of content you can use the following alternative technique:
  * 
  * @pre // store current object
- *      $pdf->startTransaction();
- *      // store starting values
- *      $start_y = $pdf->GetY();
- *      $start_page = $pdf->getPage();
- *      // call your printing functions with your parameters
- *      // - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
- *      $pdf->MultiCell($w=0, $h=0, $txt, $border=1, $align='L', $fill=false, $ln=1, $x='', $y='', $reseth=true, $stretch=0, $ishtml=false, $autopadding=true, $maxh=0);
- *      // - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
- *      // get the new Y
- *      $end_y = $pdf->GetY();
- *      $end_page = $pdf->getPage();
- *      // calculate height
- *      $height = 0;
- *      if ($end_page == $start_page) {
- *      	$height = $end_y - $start_y;
- *      } else {
- *      	for ($page=$start_page; $page <= $end_page; ++$page) {
- *      		$this->setPage($page);
- *      		if ($page == $start_page) {
- *      			// first page
- *      			$height = $this->h - $start_y - $this->bMargin;
- *      		} elseif ($page == $end_page) {
- *      			// last page
- *      			$height = $end_y - $this->tMargin;
- *      		} else {
- *      			$height = $this->h - $this->tMargin - $this->bMargin;
- *      		}
- *      	}
- *      }
- *      // restore previous object
- *      $pdf = $pdf->rollbackTransaction();
+ *       $pdf->startTransaction();
+ *       // store starting values
+ *       $start_y = $pdf->GetY();
+ *       $start_page = $pdf->getPage();
+ *       // call your printing functions with your parameters
+ *       // - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ *       $pdf->MultiCell($w=0, $h=0, $txt, $border=1, $align='L', $fill=false, $ln=1, $x='', $y='', $reseth=true, $stretch=0, $ishtml=false, $autopadding=true, $maxh=0);
+ *       // - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ *       // get the new Y
+ *       $end_y = $pdf->GetY();
+ *       $end_page = $pdf->getPage();
+ *       // calculate height
+ *       $height = 0;
+ *       if ($end_page == $start_page) {
+ *       	$height = $end_y - $start_y;
+ *       } else {
+ *       	for ($page=$start_page; $page <= $end_page; ++$page) {
+ *       		$this->setPage($page);
+ *       		if ($page == $start_page) {
+ *       			// first page
+ *       			$height = $this->h - $start_y - $this->bMargin;
+ *       		} elseif ($page == $end_page) {
+ *       			// last page
+ *       			$height = $end_y - $this->tMargin;
+ *       		} else {
+ *       			$height = $this->h - $this->tMargin - $this->bMargin;
+ *       		}
+ *       	}
+ *       }
+ *       // restore previous object
+ *       $pdf = $pdf->rollbackTransaction();
  * @param  $w (float) Width of cells. If 0, they extend up to the right margin of the page.
  * @param  $txt (string) String for calculating his height
  * @param  $reseth (boolean) if true reset the last cell height (default false).

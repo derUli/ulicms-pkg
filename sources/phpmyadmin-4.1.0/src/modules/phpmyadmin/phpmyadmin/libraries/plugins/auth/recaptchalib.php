@@ -1,17 +1,17 @@
 <?php
 /**
  * This is a PHP library that handles calling reCAPTCHA.
- *        - Documentation and latest version
- *              http://recaptcha.net/plugins/php/
- *        - Get a reCAPTCHA API Key
- *              https://www.google.com/recaptcha/admin/create
- *        - Discussion group
- *              http://groups.google.com/group/recaptcha
+ *         - Documentation and latest version
+ *               http://recaptcha.net/plugins/php/
+ *         - Get a reCAPTCHA API Key
+ *               https://www.google.com/recaptcha/admin/create
+ *         - Discussion group
+ *               http://groups.google.com/group/recaptcha
  * 
  * Copyright (c) 2007 reCAPTCHA -- http://recaptcha.net
  * AUTHORS:
- *       Mike Crawford
- *       Ben Maurer
+ *        Mike Crawford
+ *        Ben Maurer
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal

@@ -15,7 +15,7 @@
  * @param string $plugin_format the format of the plugin (sql, xml, et )
  * @param string $plugins_dir directrory with plugins
  * @param mixed $plugin_param parameter to plugin by which they can
- *                                  decide whether they can work
+ *                                   decide whether they can work
  * @return object |null new plugin instance
  */
 function PMA_getPlugin(
@@ -44,7 +44,7 @@ function PMA_getPlugin(
  * @param string $plugin_type the type of the plugin (import, export, etc)
  * @param string $plugins_dir directrory with plugins
  * @param mixed $plugin_param parameter to plugin by which they can
- *                                 decide whether they can work
+ *                                  decide whether they can work
  * @return array list of plugin instances
  */
 function PMA_getPlugins($plugin_type, $plugins_dir, $plugin_param)
@@ -98,7 +98,7 @@ function PMA_getString($name)
  * should be set by config or request
  * 
  * @param string $section name of config section in
- *                            $GLOBALS['cfg'][$section] for plugin
+ *                             $GLOBALS['cfg'][$section] for plugin
  * @param string $opt name of option
  * @return string hmtl input tag option 'checked'
  */
@@ -122,7 +122,7 @@ function PMA_pluginCheckboxCheck($section, $opt)
  * Returns default value for option $opt
  * 
  * @param string $section name of config section in
- *                            $GLOBALS['cfg'][$section] for plugin
+ *                             $GLOBALS['cfg'][$section] for plugin
  * @param string $opt name of option
  * @return string default value for option $opt
  */
@@ -165,7 +165,7 @@ function PMA_pluginGetDefault($section, $opt)
  * and hidden fields denoting whether each plugin must be exported as a file
  * 
  * @param string $section name of config section in
- *                            $GLOBALS['cfg'][$section] for plugin
+ *                             $GLOBALS['cfg'][$section] for plugin
  * @param string $name name of select element
  * @param array $ &$list   array with plugin instances
  * @param string $cfgname name of config value, if none same as $name
@@ -224,7 +224,7 @@ function PMA_pluginGetChoice($section, $name, & $list, $cfgname = null)
  * Returns single option in a list element
  * 
  * @param string $section name of config section in
- *                                   $GLOBALS['cfg'][$section] for plugin
+ *                                    $GLOBALS['cfg'][$section] for plugin
  * @param string $plugin_name unique plugin name
  * @param array $ &$propertyGroup options property main group instance
  * @param boolean $is_subgroup if this group is a subgroup

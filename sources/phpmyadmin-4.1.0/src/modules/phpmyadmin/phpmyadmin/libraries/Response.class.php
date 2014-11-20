@@ -206,7 +206,7 @@ class PMA_Response
      * Add HTML code to the response
      * 
      * @param string $content A string to be appended to
-     *                            the current output buffer
+     *                             the current output buffer
      * @return void 
      */
      public function addHTML($content)
@@ -226,9 +226,9 @@ class PMA_Response
      * Add JSON code to the response
      * 
      * @param mixed $json Either a key (string) or an
-     *                         array or key-value pairs
+     *                          array or key-value pairs
      * @param mixed $value Null, if passing an array in $json otherwise
-     *                         it's a string value to the key
+     *                          it's a string value to the key
      * @return void 
      */
      public function addJSON($json, $value = null)

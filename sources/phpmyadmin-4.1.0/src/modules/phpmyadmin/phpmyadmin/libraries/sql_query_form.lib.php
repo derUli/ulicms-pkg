@@ -26,14 +26,15 @@ require_once './libraries/bookmark.lib.php'; // used for bookmarks
 
 
 
+
 /**
  * return HTML for the sql query boxes
  * 
  * @param boolean $ |string $query       query to display in the textarea
- *                                        or true to display last executed
+ *                                         or true to display last executed
  * @param boolean $ |string $display_tab sql|files|history|full|false
- *                                        what part to display
- *                                        false if not inside querywindow
+ *                                         what part to display
+ *                                         false if not inside querywindow
  * @param string $delimiter delimeter
  * @return string 
  * @usedby server_sql.php

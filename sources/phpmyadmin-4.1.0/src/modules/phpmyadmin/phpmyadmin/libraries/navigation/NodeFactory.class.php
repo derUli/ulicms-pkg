@@ -23,7 +23,7 @@ class PMA_NodeFactory
     /**
      * 
      * @var string $_path A template for generating paths to files
-     *                        that contain various Node classes
+     *                         that contain various Node classes
      * @access private 
      */
      private static $_path = 'libraries/navigation/Nodes/%s.class.php';
@@ -81,7 +81,7 @@ class PMA_NodeFactory
      * @param string $name An identifier for the new node
      * @param int $type Type of node, may be one of CONTAINER or OBJECT
      * @param bool $is_group Whether this object has been created
-     *                             while grouping nodes
+     *                              while grouping nodes
      * @return mixed 
      */
      public static function getInstance(

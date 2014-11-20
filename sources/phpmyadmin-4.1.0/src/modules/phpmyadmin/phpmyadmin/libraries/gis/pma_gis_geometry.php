@@ -103,7 +103,7 @@ abstract class PMA_GIS_Geometry
      * @param string $srid spatial reference ID
      * @param array $scale_data data related to scaling
      * @return string OpenLayers.Bounds object that
-     *                    correspond to the bounds of GIS data
+     *                     correspond to the bounds of GIS data
      * @access protected 
      */
      protected function getBoundsForOl($srid, $scale_data)
@@ -271,7 +271,7 @@ abstract class PMA_GIS_Geometry
      * @param string $srid spatial reference id
      * @param bool $is_line_string whether it's an array of LineString
      * @return string JavaScript for adding an array of LineString
-     *                    or LineRing to OpenLayers
+     *                     or LineRing to OpenLayers
      * @access protected 
      */
      protected function getLineArrayForOpenLayers($lines, $srid,

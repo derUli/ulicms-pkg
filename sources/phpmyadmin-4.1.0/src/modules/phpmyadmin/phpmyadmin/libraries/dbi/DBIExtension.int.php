@@ -23,7 +23,7 @@ interface PMA_DBI_Extension
      * @param bool $is_controluser whether this is a control user connection
      * @param array $server host/port/socket/persistent
      * @param bool $auxiliary_connection (when true, don't go back to login if
-     *                                         connection fails)
+     *                                          connection fails)
      * @return mixed false on error or a connection object on success
      */
      public function connect(

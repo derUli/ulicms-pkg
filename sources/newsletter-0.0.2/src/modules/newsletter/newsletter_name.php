@@ -1,4 +1,4 @@
-<?php 
+<?php
 function newsletter_name(){
-   return "Newsletter";
-}
+     return "Newsletter";
+    }

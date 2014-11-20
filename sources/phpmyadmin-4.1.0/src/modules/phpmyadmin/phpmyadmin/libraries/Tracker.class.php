@@ -563,7 +563,7 @@ class PMA_Tracker
      * @param string $version version number
      * @static 
      * @return mixed record DDM log, DDL log, structure snapshot, tracked
-     *             statements.
+     *              statements.
      */
      static public function getTrackedData($dbname, $tablename, $version)
     {
@@ -658,9 +658,9 @@ class PMA_Tracker
     
     /**
      * Parses a query. Gets
-     *      - statement identifier (UPDATE, ALTER TABLE, ...)
-     *      - type of statement, is it part of DDL or DML ?
-     *      - tablename
+     *       - statement identifier (UPDATE, ALTER TABLE, ...)
+     *       - type of statement, is it part of DDL or DML ?
+     *       - tablename
      * 
      * @param string $query query
      * @static 

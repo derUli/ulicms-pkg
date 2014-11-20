@@ -102,7 +102,7 @@ class PMA_DisplayResults
         
         /**
          * integer the total number of rows returned by the SQL query without any
-         *             appended "LIMIT" clause programmatically
+         *              appended "LIMIT" clause programmatically
          */
          'unlim_num_rows' => null,
         
@@ -323,8 +323,8 @@ class PMA_DisplayResults
      * Set properties which were not initialized at the constructor
      * 
      * @param integer $unlim_num_rows the total number of rows returned by
-     *                                         the SQL query without any appended
-     *                                         "LIMIT" clause programmatically
+     *                                          the SQL query without any appended
+     *                                          "LIMIT" clause programmatically
      * @param array $fields_meta meta information about fields
      * @param boolean $is_count statement is SELECT COUNT
      * @param integer $is_export statement contains INTO OUTFILE
@@ -379,27 +379,27 @@ class PMA_DisplayResults
      * 
      * It uses a synthetic string that contains all the required informations.
      * In this string:
-     *       - the first two characters stand for the action to do while
-     *         clicking on the "edit" link (e.g. 'ur' for update a row, 'nn' for no
-     *         edit link...);
-     *       - the next two characters stand for the action to do while
-     *         clicking on the "delete" link (e.g. 'kp' for kill a process, 'nn' for
-     *         no delete link...);
-     *       - the next characters are boolean values (1/0) and respectively stand
-     *         for sorting links, navigation bar, "insert a new row" link, the
-     *         bookmark feature, the expand/collapse text/blob fields button and
-     *         the "display printable view" option.
-     *         Of course '0'/'1' means the feature won't/will be enabled.
+     *        - the first two characters stand for the action to do while
+     *          clicking on the "edit" link (e.g. 'ur' for update a row, 'nn' for no
+     *          edit link...);
+     *        - the next two characters stand for the action to do while
+     *          clicking on the "delete" link (e.g. 'kp' for kill a process, 'nn' for
+     *          no delete link...);
+     *        - the next characters are boolean values (1/0) and respectively stand
+     *          for sorting links, navigation bar, "insert a new row" link, the
+     *          bookmark feature, the expand/collapse text/blob fields button and
+     *          the "display printable view" option.
+     *          Of course '0'/'1' means the feature won't/will be enabled.
      * 
      * @param string $ &$the_disp_mode the synthetic value for display_mode (see a few
-     *                                    lines above for explanations)
+     *                                     lines above for explanations)
      * @param integer $ &$the_total     the total number of rows returned by the SQL
-     *                                     query without any programmatically appended
-     *                                     LIMIT clause
-     *                                     (just a copy of $unlim_num_rows if it exists,
-     *                                     elsecomputed inside this function)
+     *                                      query without any programmatically appended
+     *                                      LIMIT clause
+     *                                      (just a copy of $unlim_num_rows if it exists,
+     *                                      elsecomputed inside this function)
      * @return array an array with explicit indexes for all the display
-     *                       elements
+     *                        elements
      * @access private 
      * @see getTable
      */
@@ -1009,10 +1009,10 @@ _getMoveForwardButtonsForTableNavigation()
      * @param array $ |string $analyzed_sql                the analyzed query
      * @param string $sort_expression sort expression
      * @param string $sort_expression_nodirection sort expression
-     *                                                      without direction
+     *                                                       without direction
      * @param string $sort_direction sort direction
      * @param boolean $is_limited_display with limited operations
-     *                                                      or not
+     *                                                       or not
      * @return string html content
      * @access private 
      * @see getTable
@@ -1354,7 +1354,7 @@ _getMoveForwardButtonsForTableNavigation()
      * text button or link
      * 
      * @param boolean $directionCondition display direction horizontal or
-     *                                               horizontalflipped
+     *                                                horizontalflipped
      * @param array $ &$is_display               which elements to display
      * @param string $full_or_partial_text_link full/partial link or text button
      * @return array 3 element array - $colspan, $rowspan, $button_html
@@ -1476,10 +1476,10 @@ _getMoveForwardButtonsForTableNavigation()
      * Get table comments as array
      * 
      * @param boolean $direction display direction, horizontal
-     *                                  or horizontalflipped
+     *                                   or horizontalflipped
      * @param array $analyzed_sql the analyzed query
      * @return array $comments_map table comments when condition true
-     *              null                when condition falls
+     *               null                when condition falls
      * @access private 
      * @see _getTableHeaders
      */
@@ -1811,12 +1811,12 @@ _getMoveForwardButtonsForTableNavigation()
      * @param string $comments comment for row
      * @param string $sort_direction sort direction
      * @param boolean $directionCondition display direction horizontal
-     *                                                 or horizontalflipped
+     *                                                  or horizontalflipped
      * @param boolean $col_visib column is visible(false)
-     *            array                                column isn't visible(string array)
+     *             array                                column isn't visible(string array)
      * @param string $col_visib_j element of $col_visib array
      * @param boolean $condition_field whether the column is a part of
-     *                                                 the where clause
+     *                                                  the where clause
      * @return array 2 element array - $order_link, $sorted_header_html
      * @access private 
      * @see _getTableHeaders
@@ -2106,7 +2106,7 @@ _getMoveForwardButtonsForTableNavigation()
      * Prepare columns to draggable effect for sortable columns
      * 
      * @param boolean $col_visib the column is visible (false)
-     *            array                    the column is not visible (string array)
+     *             array                    the column is not visible (string array)
      * @param string $col_visib_j element of $col_visib array
      * @param boolean $condition_field whether to add CSS class condition
      * @param string $direction the display direction
@@ -2161,7 +2161,7 @@ _getMoveForwardButtonsForTableNavigation()
      * Prepare columns to draggable effect for non sortable columns
      * 
      * @param boolean $col_visib the column is visible (false)
-     *            array                    the column is not visible (string array)
+     *             array                    the column is not visible (string array)
      * @param string $col_visib_j element of $col_visib array
      * @param boolean $condition_field whether to add CSS class condition
      * @param string $direction the display direction
@@ -2227,7 +2227,7 @@ _getMoveForwardButtonsForTableNavigation()
      * 
      * @param array $ &$is_display               which elements to display
      * @param boolean $directionCondition display direction horizontal
-     *                                               or horizontalflipped
+     *                                                or horizontalflipped
      * @param string $full_or_partial_text_link full/partial link or text button
      * @param string $colspan column span of table header
      * @param string $rowspan row span of table header
@@ -2372,8 +2372,8 @@ _getDataCellForNonNumericAndNonBlobColumns()
      * @param string $nowrap avoid wrapping
      * @param bool $is_field_truncated is field truncated (display ...)
      * @param string $transformation_plugin transformation plugin.
-     *                                          Can also be the default function:
-     *                                          PMA_mimeDefaultFunction
+     *                                           Can also be the default function:
+     *                                           PMA_mimeDefaultFunction
      * @param string $default_function default transformation function
      * @return string the list of classes
      * @access private 
@@ -2417,7 +2417,7 @@ _getDataCellForNonNumericAndNonBlobColumns()
      * Prepare the body of the results table
      * 
      * @param integer $ &$dt_result         the link id associated to the query
-     *                                        which results have to be displayed
+     *                                         which results have to be displayed
      * @param array $ &$is_display        which elements to display
      * @param array $map the list of relations
      * @param array $analyzed_sql the analyzed query
@@ -2516,8 +2516,8 @@ _getDataCellForNonNumericAndNonBlobColumns()
             /**
              * 
              * @todo $where_clause could be empty, for example a table
-             *           with only one field and it's a BLOB; in this case,
-             *           avoid to display the delete and edit links
+             *            with only one field and it's a BLOB; in this case,
+             *            avoid to display the delete and edit links
              */
             list($where_clause, $clause_is_unique, $condition_array)
              = PMA_Util :: getUniqueCondition(
@@ -2646,15 +2646,15 @@ _getDataCellForNonNumericAndNonBlobColumns()
      * Get the values for one data row
      * 
      * @param integer $ &$dt_result         the link id associated to the query
-     *                                        which results have to be displayed
+     *                                         which results have to be displayed
      * @param array $row current row data
      * @param integer $row_no the index of current row
      * @param array $col_order the column order
-     *                                        false when a property not found
+     *                                         false when a property not found
      * @param array $map the list of relations
      * @param string $grid_edit_class the class for all editable columns
      * @param boolean $col_visib column is visible(false)
-     *            array                       column isn't visible(string array)
+     *             array                       column isn't visible(string array)
      * @param string $where_clause where clause
      * @param string $url_sql_query the analyzed sql query
      * @param array $analyzed_sql the analyzed query
@@ -2915,7 +2915,7 @@ _getDataCellForNonNumericAndNonBlobColumns()
          * @param string $copy_str the label for copy row
          * @param string $alternating_color_class class for display two colors in rows
          * @param array $condition_array array of keys
-         *                                             (primary,unique,condition)
+         *                                              (primary,unique,condition)
          * @return void 
          * @access private 
          * @see _getTableBody
@@ -3187,7 +3187,7 @@ _getDataCellForNonNumericAndNonBlobColumns()
          * Prepare vertical display mode necessay HTML stuff
          * 
          * @param array $vertical_display informations used with vertical
-         *                                        display mode
+         *                                         display mode
          * @param integer $row_no the index of current row
          * @param boolean $directionCondition the directional condition
          * @return string $vertical_disp_html     html content
@@ -3242,7 +3242,7 @@ _getDataCellForNonNumericAndNonBlobColumns()
          * @param boolean $clause_is_unique the unique condition of clause
          * @param string $url_sql_query the analyzed sql query
          * @return array 5 element array - $edit_url, $copy_url,
-         *                                      $edit_str, $copy_str, $edit_anchor_class
+         *                                       $edit_str, $copy_str, $edit_anchor_class
          * @access private 
          * @see _getTableBody
          */
@@ -3296,7 +3296,7 @@ _getDataCellForNonNumericAndNonBlobColumns()
          * @param string $del_lnk the delete link of current row
          * @param array $row the current row
          * @return array 4 element array - $del_query,
-         *                                          $del_url, $del_str, $js_conf
+         *                                           $del_url, $del_str, $js_conf
          * @access private 
          * @see _getTableBody
          */
@@ -3490,12 +3490,12 @@ _getDataCellForNonNumericAndNonBlobColumns()
          * @param string $column the relevant column in data row
          * @param string $class the html class for column
          * @param boolean $condition_field the column should highlighted
-         *                                           or not
+         *                                            or not
          * @param object $meta the meta-information about this
-         *                                           field
+         *                                            field
          * @param array $map the list of relations
          * @param boolean $is_field_truncated the condition for blob data
-         *                                           replacements
+         *                                            replacements
          * @param array $analyzed_sql the analyzed query
          * @param string $transformation_plugin the name of transformation plugin
          * @param string $default_function the default transformation function
@@ -3546,17 +3546,17 @@ _getDataCellForNonNumericAndNonBlobColumns()
          * @param string $column the relevant column in data row
          * @param string $class the html class for column
          * @param object $meta the meta-information about this
-         *                                           field
+         *                                            field
          * @param array $_url_params the parameters for generate url
          * @param string $field_flags field flags for column(blob,
-         *                                           primary etc)
+         *                                            primary etc)
          * @param string $transformation_plugin the name of transformation function
          * @param string $default_function the default transformation function
          * @param string $transform_options the transformation parameters
          * @param boolean $condition_field the column should highlighted
-         *                                           or not
+         *                                            or not
          * @param boolean $is_field_truncated the condition for blob data
-         *                                           replacements
+         *                                            replacements
          * @return string $cell                the prepared cell, html content
          * @access private 
          * @see _getTableBody
@@ -3759,15 +3759,15 @@ _getDataCellForNonNumericAndNonBlobColumns()
          * @param array $map the list of relations
          * @param array $_url_params the parameters for generate url
          * @param boolean $condition_field the column should highlighted
-         *                                           or not
+         *                                            or not
          * @param string $transformation_plugin the name of transformation function
          * @param string $default_function the default transformation function
          * @param string $transform_options the transformation parameters
          * @param boolean $is_field_truncated the condition for blob data
-         *                                           replacements
+         *                                            replacements
          * @param array $analyzed_sql the analyzed query
          * @param integer $ &$dt_result            the link id associated to the query
-         *                                            which results have to be displayed
+         *                                             which results have to be displayed
          * @param integer $col_index the column index
          * @return string $cell               the prepared data cell, html content
          * @access private 
@@ -4321,7 +4321,7 @@ _getDataCellForNonNumericAndNonBlobColumns()
          * This function is called by the "sql.php" script.
          * 
          * @param integer $ &$dt_result         the link id associated to the query
-         *                                        which results have to be displayed
+         *                                         which results have to be displayed
          * @param array $ &$the_disp_mode     the display mode
          * @param array $analyzed_sql the analyzed query
          * @param boolean $is_limited_display With limited operations or not
@@ -4563,7 +4563,7 @@ _getDataCellForNonNumericAndNonBlobColumns()
          * 
          * @param string $order_by_clause the order by clause of the sql query
          * @return array 3 element array: $sort_expression,
-         *                                    $sort_expression_nodirection, $sort_direction
+         *                                     $sort_expression_nodirection, $sort_direction
          * @access private 
          * @see getTable
          */
@@ -4604,11 +4604,11 @@ _getDataCellForNonNumericAndNonBlobColumns()
          * Prepare sorted column message
          * 
          * @param integer $ &$dt_result                  the link id associated to the
-         *                                                  query which results have to
-         *                                                  be displayed
+         *                                                   query which results have to
+         *                                                   be displayed
          * @param string $sort_expression_nodirection sort expression without direction
          * @return string html content
-         *              null                                if not found sorted column
+         *               null                                if not found sorted column
          * @access private 
          * @see getTable
          */
@@ -4719,8 +4719,8 @@ _getDataCellForNonNumericAndNonBlobColumns()
          * @param string $sorted_column_message the message for sorted column
          * @param string $limit_clause the limit clause of analyzed query
          * @param integer $total the total number of rows returned by
-         *                                           the SQL query without any
-         *                                           programmatically appended LIMIT clause
+         *                                            the SQL query without any
+         *                                            programmatically appended LIMIT clause
          * @param integer $pos_next the offset for next page
          * @param string $pre_count the string renders before row count
          * @param string $after_count the string renders after row count
@@ -4869,7 +4869,7 @@ _getDataCellForNonNumericAndNonBlobColumns()
          * Prepare multi field edit/delete links
          * 
          * @param integer $ &$dt_result   the link id associated to the query
-         *                                  which results have to be displayed
+         *                                   which results have to be displayed
          * @param array $analyzed_sql the analyzed query
          * @param string $del_link the display element - 'del_link'
          * @return string $links_html html content
@@ -5225,8 +5225,8 @@ _getDataCellForNonNumericAndNonBlobColumns()
             /**
              * 
              * @todo detect privileges to create a view
-             *           (but see 2006-01-19 note in display_create_table.lib.php,
-             *            I think we cannot detect db-specific privileges reliably)
+             *            (but see 2006-01-19 note in display_create_table.lib.php,
+             *             I think we cannot detect db-specific privileges reliably)
              * Note: we don't display a Create view link if we found a PROCEDURE clause
              */
             if (!$header_shown){
@@ -5254,13 +5254,13 @@ _getDataCellForNonNumericAndNonBlobColumns()
          * @param string $category BLOB|BINARY|GEOMETRY
          * @param string $content the binary content
          * @param string $transformation_plugin transformation plugin.
-         *                                          Can also be the default function:
-         *                                          PMA_mimeDefaultFunction
+         *                                           Can also be the default function:
+         *                                           PMA_mimeDefaultFunction
          * @param string $transform_options transformation parameters
          * @param string $default_function default transformation function
          * @param object $meta the meta-information about the field
          * @param array $url_params parameters that should go to the
-         *                                          download link
+         *                                           download link
          * @return mixed string or float
          * @access private 
          * @see _getDataCellForBlobColumns(),
@@ -5339,17 +5339,17 @@ _getSortedColumnMessage()
          * 
          * @param string $class css classes for the td element
          * @param bool $condition_field whether the column is a part of the
-         *                                          where clause
+         *                                           where clause
          * @param string $analyzed_sql the analyzed query
          * @param object $meta the meta-information about the field
          * @param array $map the list of relations
          * @param string $data data
          * @param string $transformation_plugin transformation plugin.
-         *                                          Can also be the default function:
-         *                                          PMA_mimeDefaultFunction
+         *                                           Can also be the default function:
+         *                                           PMA_mimeDefaultFunction
          * @param string $default_function default function
          * @param string $nowrap 'nowrap' if the content should not
-         *                                          be wrapped
+         *                                           be wrapped
          * @param string $where_comparison data for the where clause
          * @param array $transform_options array of options for transformation
          * @param bool $is_field_truncated whether the field is truncated
@@ -5547,7 +5547,7 @@ _getDataCellForNonNumericAndNonBlobColumns(),
          * 
          * @param string $del_url delete url
          * @param array $is_display array with explicit indexes for all
-         *                                      the display elements
+         *                                       the display elements
          * @param string $row_no the row number
          * @param string $where_clause_html url encoded where clause
          * @param array $condition_array array of conditions in the where clause
@@ -5715,7 +5715,7 @@ _getDataCellForNonNumericAndNonBlobColumns(),
          * @param string $position the position of the checkbox and links
          * @param string $del_url delete url
          * @param array $is_display array with explicit indexes for all the
-         *                                      display elements
+         *                                       display elements
          * @param string $row_no row number
          * @param string $where_clause where clause
          * @param string $where_clause_html url encoded where clause

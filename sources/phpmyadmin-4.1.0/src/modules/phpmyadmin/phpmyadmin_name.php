@@ -1,4 +1,4 @@
-<?php 
+<?php
 function phpmyadmin_name(){
-  return "phpMyAdmin";
-}
+     return "phpMyAdmin";
+    }

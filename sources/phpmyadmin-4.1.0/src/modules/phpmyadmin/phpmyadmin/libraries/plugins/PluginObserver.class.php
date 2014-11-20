@@ -52,7 +52,7 @@ abstract class PluginObserver implements SplObserver
      * See bug #3625
      * 
      * @param SplSubject $subject The PluginManager notifying the observer
-     *                                of an update.
+     *                                 of an update.
      * @return void 
      * @throws Exception
      */
@@ -83,7 +83,7 @@ abstract class PluginObserver implements SplObserver
      * Setter for $_pluginManager
      * 
      * @param PluginManager $_pluginManager the private instance that it will
-     *                                          attach to
+     *                                           attach to
      * @return void 
      */
      public function setPluginManager($_pluginManager)

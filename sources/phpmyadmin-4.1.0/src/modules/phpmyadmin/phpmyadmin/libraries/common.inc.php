@@ -15,15 +15,15 @@
  * ... so the required order is:
  * 
  * LABEL_variables_init
- *      - initialize some variables always needed
+ *       - initialize some variables always needed
  * LABEL_parsing_config_file
- *      - parsing of the configuration file
+ *       - parsing of the configuration file
  * LABEL_loading_language_file
- *      - loading language file
+ *       - loading language file
  * LABEL_setup_servers
- *      - check and setup configured servers
+ *       - check and setup configured servers
  * LABEL_theme_setup
- *      - setting up themes
+ *       - setting up themes
  * 
  * - load of MySQL extension (if necessary)
  * - loading of an authentication library
@@ -269,7 +269,7 @@ if (version_compare(phpversion(), '5.4', 'lt')){
  * this could produce an E_STRICT - but only once,
  * if not done here it will produce E_STRICT on every date/time function
  * (starting with PHP 5.3, this code can produce E_WARNING rather than
- *      E_STRICT)
+ *       E_STRICT)
  */
 date_default_timezone_set(@date_default_timezone_get());
 
@@ -1035,7 +1035,7 @@ if (! defined('PMA_MINIMUM_COMMON')){
         /**
          * with phpMyAdmin 3 we support MySQL >=5
          * but only production releases:
-         *      - > 5.0.15
+         *       - > 5.0.15
          */
          if (PMA_MYSQL_INT_VERSION < 50015){
              PMA_fatalError(

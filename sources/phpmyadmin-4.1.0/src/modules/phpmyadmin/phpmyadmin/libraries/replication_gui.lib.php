@@ -471,7 +471,7 @@ function PMA_getHtmlForAddUserInputDiv($label_array, $input_array)
  * 
  * @param string $type either master or slave
  * @param boolean $hidden if true, then default style is set to hidden,
- *                            default value false
+ *                             default value false
  * @param boolean $title if true, then title is displayed, default true
  * @return String HTML code
  */

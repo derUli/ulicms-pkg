@@ -97,7 +97,7 @@ function PMA_Bookmark_getList($db)
  * @param mixed $id the id of the bookmark to get
  * @param string $id_field which field to look up the $id
  * @param boolean $action_bookmark_all true: get all bookmarks regardless
- *                                         of the owning user
+ *                                          of the owning user
  * @param boolean $exact_user_match whether to ignore bookmarks with no user
  * @return string the sql query
  * @access public 
@@ -136,7 +136,7 @@ function PMA_Bookmark_get($db, $id, $id_field = 'id', $action_bookmark_all = fal
  * Adds a bookmark
  * 
  * @param array $bkm_fields the properties of the bookmark to add; here,
- *                                $bkm_fields['bkm_sql_query'] is urlencoded
+ *                                 $bkm_fields['bkm_sql_query'] is urlencoded
  * @param boolean $all_users whether to make the bookmark available for all users
  * @return boolean whether the INSERT succeeds or not
  * @access public 

@@ -56,9 +56,9 @@ function PMA_getIndexedColumns()
  * @param int $field_cnt number of columns
  * @param int $ &$field_primary primary index field
  * @param boolean $is_create_tbl true if requirement is to get the statement
- *                                    for table creation
+ *                                     for table creation
  * @return array $definitions An array of initial sql statements
- *                                 according to the request
+ *                                  according to the request
  */
 function PMA_buildColumnCreationStatement(
     $field_cnt, & $field_primary, $is_create_tbl = true
@@ -109,7 +109,7 @@ function PMA_buildColumnCreationStatement(
  * 
  * @param int $current_field_num current column number
  * @param boolean $is_create_tbl true if requirement is to get the statement
- *                                       for table creation
+ *                                        for table creation
  * @return string $sql_suffix suffix
  */
 function PMA_setColumnCreationStatementSuffix($current_field_num,
@@ -143,9 +143,9 @@ function PMA_setColumnCreationStatementSuffix($current_field_num,
  * 
  * @param array $indexed_fields an array of index columns
  * @param string $index_type index type that which represents
- *                                    the index type of $indexed_fields
+ *                                     the index type of $indexed_fields
  * @param boolean $is_create_tbl true if requirement is to get the statement
- *                                    for table creation
+ *                                     for table creation
  * @return array an array of sql statements for indexes
  */
 function PMA_buildIndexStatements($indexed_fields, $index_type,
@@ -169,7 +169,7 @@ function PMA_buildIndexStatements($indexed_fields, $index_type,
  * Statement prefix for the PMA_buildColumnCreationStatement()
  * 
  * @param boolean $is_create_tbl true if requirement is to get the statement
- *                                   for table creation
+ *                                    for table creation
  * @return string $sql_prefix prefix
  */
 function PMA_getStatementPrefix($is_create_tbl = true)
@@ -186,7 +186,7 @@ function PMA_getStatementPrefix($is_create_tbl = true)
  * requested
  * 
  * @param boolean $is_create_tbl true if requirement is to get the statement
- *                                   for table creation
+ *                                    for table creation
  * @return string sql statement
  */
 function PMA_getColumnCreationStatements($is_create_tbl = true)

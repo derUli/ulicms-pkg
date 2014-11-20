@@ -66,7 +66,7 @@ class AuthenticationConfig extends AuthenticationPlugin
      * @global string  the default font size to use in case of failure
      * @global string  the big font size to use in case of failure
      * @global boolean tell the "PMA_mysqlDie()" function headers have been
-     *                     sent
+     *                      sent
      * @return boolean always true (no return indeed)
      */
      public function authFails()
@@ -169,7 +169,7 @@ class AuthenticationConfig extends AuthenticationPlugin
      * is attached calls PluginManager::notify()
      * 
      * @param SplSubject $subject The PluginManager notifying the observer
-     *                                of an update.
+     *                                 of an update.
      * @return void 
      */
      public function update (SplSubject $subject)

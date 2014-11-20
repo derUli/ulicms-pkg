@@ -19,9 +19,9 @@ require_once 'libraries/properties/PropertyItem.class.php';
 
 /**
  * Superclass for
- *      - ExportPluginProperties,
- *      - ImportPluginProperties and
- *      - TransformationsPluginProperties
+ *       - ExportPluginProperties,
+ *       - ImportPluginProperties and
+ *       - TransformationsPluginProperties
  * 
  * @package PhpMyAdmin
  */

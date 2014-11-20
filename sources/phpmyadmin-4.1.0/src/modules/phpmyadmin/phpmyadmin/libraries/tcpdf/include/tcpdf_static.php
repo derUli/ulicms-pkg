@@ -3396,17 +3396,17 @@ class TCPDF_STATIC{
      * 
      * @param  $style (string) Style of rendering. Possible values are:
      * <ul>
-     *       <li>S or D: Stroke the path.</li>
-     *       <li>s or d: Close and stroke the path.</li>
-     *       <li>f or F: Fill the path, using the nonzero winding number rule to determine the region to fill.</li>
-     *       <li>f* or F*: Fill the path, using the even-odd rule to determine the region to fill.</li>
-     *       <li>B or FD or DF: Fill and then stroke the path, using the nonzero winding number rule to determine the region to fill.</li>
-     *       <li>B* or F*D or DF*: Fill and then stroke the path, using the even-odd rule to determine the region to fill.</li>
-     *       <li>b or fd or df: Close, fill, and then stroke the path, using the nonzero winding number rule to determine the region to fill.</li>
-     *       <li>b or f*d or df*: Close, fill, and then stroke the path, using the even-odd rule to determine the region to fill.</li>
-     *       <li>CNZ: Clipping mode using the even-odd rule to determine which regions lie inside the clipping path.</li>
-     *       <li>CEO: Clipping mode using the nonzero winding number rule to determine which regions lie inside the clipping path</li>
-     *       <li>n: End the path object without filling or stroking it.</li>
+     *        <li>S or D: Stroke the path.</li>
+     *        <li>s or d: Close and stroke the path.</li>
+     *        <li>f or F: Fill the path, using the nonzero winding number rule to determine the region to fill.</li>
+     *        <li>f* or F*: Fill the path, using the even-odd rule to determine the region to fill.</li>
+     *        <li>B or FD or DF: Fill and then stroke the path, using the nonzero winding number rule to determine the region to fill.</li>
+     *        <li>B* or F*D or DF*: Fill and then stroke the path, using the even-odd rule to determine the region to fill.</li>
+     *        <li>b or fd or df: Close, fill, and then stroke the path, using the nonzero winding number rule to determine the region to fill.</li>
+     *        <li>b or f*d or df*: Close, fill, and then stroke the path, using the even-odd rule to determine the region to fill.</li>
+     *        <li>CNZ: Clipping mode using the even-odd rule to determine which regions lie inside the clipping path.</li>
+     *        <li>CEO: Clipping mode using the nonzero winding number rule to determine which regions lie inside the clipping path</li>
+     *        <li>n: End the path object without filling or stroking it.</li>
      * </ul>
      * @param  $default (string) default style
      * @author Nicola Asuni 

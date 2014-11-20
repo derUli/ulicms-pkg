@@ -96,7 +96,7 @@ class PluginManager implements SplSubject
      * Setter for $_storage
      * 
      * @param SplObjectStorage $_storage the list with all the plugins that
-     *                                      attach to it
+     *                                       attach to it
      * @return void 
      */
      public function setStorage($_storage)

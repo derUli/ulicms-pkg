@@ -752,7 +752,7 @@ class PMA_DatabaseInterface
      * @param string $sort_order ASC or DESC
      * @param integer $limit_offset starting offset for LIMIT
      * @param bool $ |int $limit_count  row count for LIMIT or true
-     *                                   for $GLOBALS['cfg']['MaxDbList']
+     *                                    for $GLOBALS['cfg']['MaxDbList']
      * @todo move into PMA_List_Database?
      * @return array $databases
      */
@@ -908,7 +908,7 @@ class PMA_DatabaseInterface
      * @param string $a first argument to sort
      * @param string $b second argument to sort
      * @return integer a value representing whether $a should be before $b in the
-     *                       sorted array or not
+     *                        sorted array or not
      * @access private 
      */
      private static function _usortComparisonCallback($a, $b)
@@ -1167,7 +1167,7 @@ class PMA_DatabaseInterface
      * @param boolean $full whether to return full info or only column names
      * @param mixed $link mysql link resource
      * @return false |array   array indexed by column names or,
-     *                            if $column is given, flat array description
+     *                             if $column is given, flat array description
      */
      public function getColumns($database, $table, $column = null, $full = false,
          $link = null
@@ -1304,7 +1304,7 @@ class PMA_DatabaseInterface
      * 
      * @param string $var mysql server variable name
      * @param int $type PMA_DatabaseInterface::GETVAR_SESSION |
-     *                         PMA_DatabaseInterface::GETVAR_GLOBAL
+     *                          PMA_DatabaseInterface::GETVAR_GLOBAL
      * @param mixed $link mysql link resource|object
      * @return mixed value for mysql server variable
      */
@@ -1514,12 +1514,12 @@ class PMA_DatabaseInterface
      * 
      * @param string $ |mysql_result $result     query or mysql result
      * @param integer $row_number row to fetch the value from,
-     *                                            starting at 0, with 0 being default
+     *                                             starting at 0, with 0 being default
      * @param integer $ |string      $field      field to fetch the value from,
-     *                                            starting at 0, with 0 being default
+     *                                             starting at 0, with 0 being default
      * @param resource $link mysql link
      * @return mixed value of first field in first row from result
-     *                   or false if not found
+     *                    or false if not found
      */
      public function fetchValue($result, $row_number = 0, $field = 0, $link = null)
     {
@@ -1574,11 +1574,11 @@ class PMA_DatabaseInterface
      * 
      * @param string $ |mysql_result $result query or mysql result
      * @param string $type NUM|ASSOC|BOTH
-     *                                        returned array should either numeric
-     *                                        associativ or booth
+     *                                         returned array should either numeric
+     *                                         associativ or booth
      * @param resource $link mysql link
      * @return array |boolean first row from result
-     *                           or false if result is empty
+     *                            or false if result is empty
      */
      public function fetchSingleRow($result, $type = 'ASSOC', $link = null)
     {
@@ -1658,9 +1658,9 @@ class PMA_DatabaseInterface
      * 
      * @param string $ |mysql_result $result  query or mysql result
      * @param string $ |integer      $key     field-name or offset
-     *                                         used as key for array
+     *                                          used as key for array
      * @param string $ |integer      $value   value-name or offset
-     *                                         used as value for array
+     *                                          used as value for array
      * @param resource $link mysql link
      * @param mixed $options query options
      * @return array resultrows or values indexed by $key
@@ -1953,7 +1953,7 @@ class PMA_DatabaseInterface
                 /**
                  * InnoDB contraints, see
                  * http://dev.mysql.com/doc/refman/5.0/en/
-                 *      innodb-foreign-key-constraints.html
+                 *       innodb-foreign-key-constraints.html
                  */
                  $error .= ' - ' . $error_message .
                  ' (<a href="server_engines.php' .
@@ -2011,7 +2011,7 @@ class PMA_DatabaseInterface
      * 
      * @param string $schema_name Name of schema (database) to test
      * @param bool $test_for_mysql_schema Whether 'mysql' schema should
-     *                                          be treated the same as IS and DD
+     *                                           be treated the same as IS and DD
      * @return bool 
      */
      public function isSystemSchema($schema_name, $test_for_mysql_schema = false)
@@ -2030,7 +2030,7 @@ class PMA_DatabaseInterface
      * @param bool $is_controluser whether this is a control user connection
      * @param array $server host/port/socket/persistent
      * @param bool $auxiliary_connection (when true, don't go back to login if
-     *                                         connection fails)
+     *                                          connection fails)
      * @return mixed false on error or a connection object on success
      */
      public function connect(

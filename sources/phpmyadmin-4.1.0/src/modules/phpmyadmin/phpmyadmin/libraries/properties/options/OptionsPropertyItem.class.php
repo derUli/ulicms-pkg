@@ -19,8 +19,8 @@ require_once 'libraries/properties/PropertyItem.class.php';
 
 /**
  * Superclass for
- *      - OptionsPropertyOneItem and
- *      - OptionsProperty Group
+ *       - OptionsPropertyOneItem and
+ *       - OptionsProperty Group
  * 
  * @package PhpMyAdmin
  */

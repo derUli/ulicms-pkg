@@ -205,11 +205,11 @@ function PMA_countLines($filename)
  * 
  * @param Array $filenames list of files in order of concatenation
  * @param Integer $cumulative_number the cumulative line number in the
- *                                       concatenated files
+ *                                        concatenated files
  * @return Array the filename and linenumber
  * Returns two variables in an array:
  * - A String $filename the filename where the requested cumulative number
- *       exists
+ *        exists
  * - Integer $linenumber the translated line number in the returned file
  */
 function PMA_getLineNumber($filenames, $cumulative_number)

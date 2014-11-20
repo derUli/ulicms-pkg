@@ -191,7 +191,7 @@ function PMA_GIS_saveToFile($data, $visualizationSettings, $format, $fileName)
  * Function to get html for the lebel column and spatial column
  * 
  * @param string $column the column type. i.e either "labelColumn"
- *                                          or "spatialColumn"
+ *                                           or "spatialColumn"
  * @param array $columnCandidates the list of select options
  * @param array $visualizationSettings visualization settings
  * @return string $html

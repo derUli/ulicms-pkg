@@ -75,7 +75,7 @@ if ($cfgRelation['pdfwork']){
      * for table positions, put the x,y co-ordinates
      * 
      * @param string $do It tells what the Schema is supposed to do
-     *                      create and select a page, generate schema etc
+     *                       create and select a page, generate schema etc
      */
      if (isset($_REQUEST['do'])){
          $user_schema -> setAction($_REQUEST['do']);

@@ -22,19 +22,19 @@
  * Here's a short example of how to use this library:
  * <code>
  * <?php
- *        include('Crypt/AES.php');
+ *         include('Crypt/AES.php');
  * 
- *        $aes = new Crypt_AES();
+ *         $aes = new Crypt_AES();
  * 
- *        $aes->setKey('abcdefghijklmnop');
+ *         $aes->setKey('abcdefghijklmnop');
  * 
- *        $size = 10 * 1024;
- *        $plaintext = '';
- *        for ($i = 0; $i < $size; $i++) {
- *            $plaintext.= 'a';
- *        }
+ *         $size = 10 * 1024;
+ *         $plaintext = '';
+ *         for ($i = 0; $i < $size; $i++) {
+ *             $plaintext.= 'a';
+ *         }
  * 
- *        echo $aes->decrypt($aes->encrypt($plaintext));
+ *         echo $aes->decrypt($aes->encrypt($plaintext));
  * ?>
  * </code>
  * 

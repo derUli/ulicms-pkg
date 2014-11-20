@@ -16,8 +16,8 @@ if (! defined('PHPMYADMIN')){
 /**
  * 1) To load data from .dbf file only when the dBase extension is available.
  * 2) To use PMA_importGetNextChunk() functionality to read data, rather than
- *        reading directly from a file. Using ImportShp::readFromBuffer() in place
- *        of fread(). This makes it possible to use compressions.
+ *         reading directly from a file. Using ImportShp::readFromBuffer() in place
+ *         of fread(). This makes it possible to use compressions.
  * 
  * @package PhpMyAdmin-Import
  * @subpackage ESRI_Shape

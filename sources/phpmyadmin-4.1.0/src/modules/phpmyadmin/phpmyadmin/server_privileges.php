@@ -140,7 +140,7 @@ list($queries, $password) = PMA_getDataForChangeOrCopyUser();
 
 /**
  * Adds a user
- *       (Changes / copies a user, part II)
+ *        (Changes / copies a user, part II)
  */
 list($ret_message, $ret_queries, $queries_for_display, $sql_query, $_add_user_error)
  = PMA_addUser(
@@ -212,7 +212,7 @@ if (isset($_REQUEST['change_pw'])){
 
 /**
  * Deletes users
- *       (Changes / copies a user, part IV)
+ *        (Changes / copies a user, part IV)
  */
 if (isset($_REQUEST['delete'])
          || (isset($_REQUEST['change_copy']) && $_REQUEST['mode'] < 4)

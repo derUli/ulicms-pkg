@@ -109,7 +109,7 @@ class ImportSql extends ImportPlugin
      * is attached calls PluginManager::notify()
      * 
      * @param SplSubject $subject The PluginManager notifying the observer
-     *                                of an update.
+     *                                 of an update.
      * @return void 
      */
      public function update (SplSubject $subject)
@@ -224,7 +224,7 @@ class ImportSql extends ImportPlugin
                 /**
                  * 
                  * @todo we should not look for a delimiter that might be
-                 *           inside quotes (or even double-quotes)
+                 *            inside quotes (or even double-quotes)
                  */
                  // the cost of doing this one with preg_match() would be too high
                 $first_sql_delimiter = strpos($buffer, $sql_delimiter, $i);

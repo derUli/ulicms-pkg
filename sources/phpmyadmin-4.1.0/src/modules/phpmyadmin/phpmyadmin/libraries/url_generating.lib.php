@@ -15,11 +15,11 @@ if (! defined('PHPMYADMIN')){
  * Generates text with hidden inputs.
  * 
  * @param string $db optional database name
- *                                 (can also be an array of parameters)
+ *                                  (can also be an array of parameters)
  * @param string $table optional table name
  * @param int $indent indenting level
  * @param string $ |array $skip   do not generate a hidden field for this parameter
- *                                 (can be an array of strings)
+ *                                  (can be an array of strings)
  * @see PMA_URL_getCommon
  * @return string string with input fields
  * @global string   the current language
@@ -85,15 +85,15 @@ function PMA_URL_getHiddenInputs($db = '', $table = '',
  * 
  * <code>
  * $values = array(
- *         'aaa' => aaa,
- *         'bbb' => array(
- *              'bbb_0',
- *              'bbb_1',
- *         ),
- *         'ccc' => array(
- *              'a' => 'ccc_a',
- *              'b' => 'ccc_b',
- *         ),
+ *          'aaa' => aaa,
+ *          'bbb' => array(
+ *               'bbb_0',
+ *               'bbb_1',
+ *          ),
+ *          'ccc' => array(
+ *               'a' => 'ccc_a',
+ *               'b' => 'ccc_b',
+ *          ),
  * );
  * echo PMA_getHiddenFields($values);
  * 
@@ -165,16 +165,16 @@ function PMA_getHiddenFields($values, $pre = '')
  * </code>
  * 
  * @param mixed $ assoc. array with url params or optional string with database name
- *                   if first param is an array there is also an ? prefixed to the url
+ *                    if first param is an array there is also an ? prefixed to the url
  * @param string $ - if first param is array: 'html' to use htmlspecialchars()
- *                   on the resulting URL (for a normal URL displayed in HTML)
- *                   or something else to avoid using htmlspecialchars() (for
- *                   a URL sent via a header); if not set,'html' is assumed
- *                   - if first param is not array:  optional table name
+ *                    on the resulting URL (for a normal URL displayed in HTML)
+ *                    or something else to avoid using htmlspecialchars() (for
+ *                    a URL sent via a header); if not set,'html' is assumed
+ *                    - if first param is not array:  optional table name
  * @param string $ - if first param is array: optional character to
- *                   use instead of '?'
- *                   - if first param is not array: optional character to use
- *                   instead of '&amp;' for dividing URL parameters
+ *                    use instead of '?'
+ *                    - if first param is not array: optional character to use
+ *                    instead of '&amp;' for dividing URL parameters
  * @return string string with URL parameters
  * @access public 
  */

@@ -943,8 +943,8 @@ function PMA_SQP_analyze($arr)
      * The SELECT syntax (simplified) is
      * 
      * SELECT
-     *        select_expression,...
-     *        [FROM [table_references]
+     *         select_expression,...
+     *         [FROM [table_references]
      * 
      * 
      * ['select_expr'] is filled with each expression, the key represents the
@@ -970,7 +970,7 @@ function PMA_SQP_analyze($arr)
      * ['queryflags']['select_from'] = 1;  if this is a real SELECT...FROM
      * ['queryflags']['drop_database'] = 1;if this is a DROP DATABASE
      * ['queryflags']['reload'] = 1;       for the purpose of reloading the
-     *                                         navigation bar
+     *                                          navigation bar
      * ['queryflags']['distinct'] = 1;     for a DISTINCT
      * ['queryflags']['union'] = 1;        for a UNION
      * ['queryflags']['join'] = 1;         for a JOIN
@@ -979,18 +979,18 @@ function PMA_SQP_analyze($arr)
      * ['queryflags']['is_explain'] = 1;   for the presence of EXPLAIN
      * ['queryflags']['is_delete'] = 1;    for the presence of DELETE
      * ['queryflags']['is_affected'] = 1;  for the presence of UPDATE, DELETE
-     *                                         or INSERT|LOAD DATA|REPLACE
+     *                                          or INSERT|LOAD DATA|REPLACE
      * ['queryflags']['is_replace'] = 1;   for the presence of REPLACE
      * ['queryflags']['is_insert'] = 1;    for the presence of INSERT
      * ['queryflags']['is_maint'] = 1;     for the presence of CHECK|ANALYZE
-     *                                         |REPAIR|OPTIMIZE TABLE
+     *                                          |REPAIR|OPTIMIZE TABLE
      * ['queryflags']['is_show'] = 1;      for the presence of SHOW
      * ['queryflags']['is_analyse'] = 1;   for the presence of PROCEDURE ANALYSE
      * ['queryflags']['is_export'] = 1;    for the presence of INTO OUTFILE
      * ['queryflags']['is_group'] = 1;     for the presence of GROUP BY|HAVING|
-     *                                         SELECT DISTINCT
+     *                                          SELECT DISTINCT
      * ['queryflags']['is_func'] = 1;      for the presence of SUM|AVG|STD|STDDEV
-     *                                         |MIN|MAX|BIT_OR|BIT_AND
+     *                                          |MIN|MAX|BIT_OR|BIT_AND
      * ['queryflags']['is_count'] = 1;     for the presence of SELECT COUNT
      * ['queryflags']['is_procedure'] = 1; for the presence of CALL
      * 
@@ -1037,10 +1037,10 @@ function PMA_SQP_analyze($arr)
      * even for non-TIMESTAMP fields.
      * 
      * Sub-elements: ['type'] which contains the column type
-     *                   optional (currently they are never false but can be absent):
-     *                   ['default_current_timestamp'] boolean
-     *                   ['on_update_current_timestamp'] boolean
-     *                   ['timestamp_not_null'] boolean
+     *                    optional (currently they are never false but can be absent):
+     *                    ['default_current_timestamp'] boolean
+     *                    ['on_update_current_timestamp'] boolean
+     *                    ['timestamp_not_null'] boolean
      * 
      * section_before_limit, section_after_limit
      * -----------------------------------------

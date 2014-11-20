@@ -28,7 +28,7 @@ if (!defined('TESTSUITE')){
      * 
      * - Please keep the parameters in order of their appearance in the form
      * - Some of these parameters are not used, as the code below directly
-     *       verifies from the superglobal $_POST or $_REQUEST
+     *        verifies from the superglobal $_POST or $_REQUEST
      */
      $post_params = array(
         'db',

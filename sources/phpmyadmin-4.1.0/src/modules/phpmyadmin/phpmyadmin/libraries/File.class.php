@@ -15,7 +15,7 @@ if (! defined('PHPMYADMIN')){
  * File wrapper class
  * 
  * @todo when uploading a file into a blob field, should we also consider using
- *           chunks like in import? UPDATE `table` SET `field` = `field` + [chunk]
+ *            chunks like in import? UPDATE `table` SET `field` = `field` + [chunk]
  * @package PhpMyAdmin
  */
 class PMA_File
@@ -171,7 +171,7 @@ class PMA_File
      * @param integer $offset starting offset
      * @param integer $length length
      * @return mixed the binary file content as a string,
-     *                     or false if no content
+     *                      or false if no content
      * @access public 
      */
      public function getContent($as_binary = true, $offset = 0, $length = null)

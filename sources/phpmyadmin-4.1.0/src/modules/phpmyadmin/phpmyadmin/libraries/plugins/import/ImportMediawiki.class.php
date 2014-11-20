@@ -71,7 +71,7 @@ class ImportMediawiki extends ImportPlugin
      * is attached calls PluginManager::notify()
      * 
      * @param SplSubject $subject The PluginManager notifying the observer
-     *                                of an update.
+     *                                 of an update.
      * @return void 
      */
      public function update (SplSubject $subject)
@@ -311,11 +311,11 @@ class ImportMediawiki extends ImportPlugin
      * Imports data from a single table
      * 
      * @param array $table containing all table info:
-     *            <code>
-     *                $table[0] - string containing table name
-     *                $table[1] - array[]   of table headers
-     *                $table[2] - array[][] of table content rows
-     *            </code>
+     *             <code>
+     *                 $table[0] - string containing table name
+     *                 $table[1] - array[]   of table headers
+     *                 $table[2] - array[][] of table content rows
+     *             </code>
      * @global bool  $analyze whether to scan for column types
      * @return void 
      */
@@ -363,7 +363,7 @@ class ImportMediawiki extends ImportPlugin
      * Set generic names for table headers, if they don't exist
      * 
      * @param array $ &$table_headers reference to the array containing the headers
-     *                                  of a table
+     *                                   of a table
      * @param array $table_row array containing the first content row
      * @return void 
      */
@@ -384,13 +384,13 @@ class ImportMediawiki extends ImportPlugin
      * Used in PMA_importDataAllTables() and $this->_importDataOneTable()
      * 
      * @param array $ &$tables   structure:
-     *                  array(
-     *                      array(table_name, array() column_names, array()() rows)
-     *                  )
+     *                   array(
+     *                       array(table_name, array() column_names, array()() rows)
+     *                   )
      * @param array $ &$analyses structure:
-     *                  $analyses = array(
-     *                      array(array() column_types, array() column_sizes)
-     *                  )
+     *                   $analyses = array(
+     *                       array(array() column_types, array() column_sizes)
+     *                   )
      * @global string $db name of the database to import in
      * @return void 
      */

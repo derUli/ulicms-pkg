@@ -25,7 +25,7 @@
  * Your phpMyAdmin URL.
  * 
  * Complete the variable below with the full URL ie
- *        http://www.your_web.net/path_to_your_phpMyAdmin_directory/
+ *         http://www.your_web.net/path_to_your_phpMyAdmin_directory/
  * 
  * It must contain characters that are valid for a URL, and the path is
  * case sensitive on some Web servers, for example Unix-based servers.
@@ -336,8 +336,8 @@ $cfg['Servers'][$i]['verbose'] = '';
 /**
  * Database used for Relation, Bookmark and PDF Features
  * (see examples/create_tables.sql)
- *       - leave blank for no support
- *         SUGGESTED: 'phpmyadmin'
+ *        - leave blank for no support
+ *          SUGGESTED: 'phpmyadmin'
  * 
  * @global string $cfg['Servers'][$i]['pmadb']
  */
@@ -345,8 +345,8 @@ $cfg['Servers'][$i]['pmadb'] = '';
 
 /**
  * Bookmark table
- *       - leave blank for no bookmark support
- *         SUGGESTED: 'pma__bookmark'
+ *        - leave blank for no bookmark support
+ *          SUGGESTED: 'pma__bookmark'
  * 
  * @global string $cfg['Servers'][$i]['bookmarktable']
  */
@@ -354,8 +354,8 @@ $cfg['Servers'][$i]['bookmarktable'] = '';
 
 /**
  * table to describe the relation between links (see doc)
- *       - leave blank for no relation-links support
- *         SUGGESTED: 'pma__relation'
+ *        - leave blank for no relation-links support
+ *          SUGGESTED: 'pma__relation'
  * 
  * @global string $cfg['Servers'][$i]['relation']
  */
@@ -363,8 +363,8 @@ $cfg['Servers'][$i]['relation'] = '';
 
 /**
  * table to describe the display fields
- *       - leave blank for no display fields support
- *         SUGGESTED: 'pma__table_info'
+ *        - leave blank for no display fields support
+ *          SUGGESTED: 'pma__table_info'
  * 
  * @global string $cfg['Servers'][$i]['table_info']
  */
@@ -372,8 +372,8 @@ $cfg['Servers'][$i]['table_info'] = '';
 
 /**
  * table to describe the tables position for the PDF schema
- *       - leave blank for no PDF schema support
- *         SUGGESTED: 'pma__table_coords'
+ *        - leave blank for no PDF schema support
+ *          SUGGESTED: 'pma__table_coords'
  * 
  * @global string $cfg['Servers'][$i]['table_coords']
  */
@@ -381,8 +381,8 @@ $cfg['Servers'][$i]['table_coords'] = '';
 
 /**
  * table to describe pages of relationpdf
- *       - leave blank if you don't want to use this
- *         SUGGESTED: 'pma__pdf_pages'
+ *        - leave blank if you don't want to use this
+ *          SUGGESTED: 'pma__pdf_pages'
  * 
  * @global string $cfg['Servers'][$i]['pdf_pages']
  */
@@ -390,8 +390,8 @@ $cfg['Servers'][$i]['pdf_pages'] = '';
 
 /**
  * table to store column information
- *       - leave blank for no column comments/mime types
- *         SUGGESTED: 'pma__column_info'
+ *        - leave blank for no column comments/mime types
+ *          SUGGESTED: 'pma__column_info'
  * 
  * @global string $cfg['Servers'][$i]['column_info']
  */
@@ -399,8 +399,8 @@ $cfg['Servers'][$i]['column_info'] = '';
 
 /**
  * table to store SQL history
- *       - leave blank for no SQL query history
- *         SUGGESTED: 'pma__history'
+ *        - leave blank for no SQL query history
+ *          SUGGESTED: 'pma__history'
  * 
  * @global string $cfg['Servers'][$i]['history']
  */
@@ -408,8 +408,8 @@ $cfg['Servers'][$i]['history'] = '';
 
 /**
  * table to store the coordinates for Designer
- *       - leave blank for no Designer feature
- *         SUGGESTED: 'pma__designer_coords'
+ *        - leave blank for no Designer feature
+ *          SUGGESTED: 'pma__designer_coords'
  * 
  * @global string $cfg['Servers'][$i]['designer_coords']
  */
@@ -417,22 +417,22 @@ $cfg['Servers'][$i]['designer_coords'] = '';
 
 /**
  * table to store recently used tables
- *       - leave blank for no "persistent" recently used tables
- *         SUGGESTED: 'pma__recent'
+ *        - leave blank for no "persistent" recently used tables
+ *          SUGGESTED: 'pma__recent'
  */
 $cfg['Servers'][$i]['recent'] = '';
 
 /**
  * table to store UI preferences for tables
- *       - leave blank for no "persistent" UI preferences
- *         SUGGESTED: 'pma__table_uiprefs'
+ *        - leave blank for no "persistent" UI preferences
+ *          SUGGESTED: 'pma__table_uiprefs'
  */
 $cfg['Servers'][$i]['table_uiprefs'] = '';
 
 /**
  * table to store SQL tracking
- *       - leave blank for no SQL tracking
- *         SUGGESTED: 'pma__tracking'
+ *        - leave blank for no SQL tracking
+ *          SUGGESTED: 'pma__tracking'
  * 
  * @global string $cfg['Servers'][$i]['tracking']
  */
@@ -440,8 +440,8 @@ $cfg['Servers'][$i]['tracking'] = '';
 
 /**
  * table to store user preferences
- *       - leave blank to disable server storage
- *         SUGGESTED: 'pma__userconfig'
+ *        - leave blank to disable server storage
+ *          SUGGESTED: 'pma__userconfig'
  * 
  * @global string $cfg['Servers'][$i]['userconfig']
  */
@@ -449,8 +449,8 @@ $cfg['Servers'][$i]['userconfig'] = '';
 
 /**
  * table to store users and their assignment to user groups
- *       - leave blank to disable configurable menus feature
- *         SUGGESTED: 'pma__users'
+ *        - leave blank to disable configurable menus feature
+ *          SUGGESTED: 'pma__users'
  * 
  * @global string $cfg['Servers'][$i]['users']
  */
@@ -458,8 +458,8 @@ $cfg['Servers'][$i]['users'] = '';
 
 /**
  * table to store allowed menu items for each user group
- *       - leave blank to disable configurable menus feature
- *         SUGGESTED: 'pma__usergroups'
+ *        - leave blank to disable configurable menus feature
+ *          SUGGESTED: 'pma__usergroups'
  * 
  * @global string $cfg['Servers'][$i]['usergroups']
  */
@@ -467,8 +467,8 @@ $cfg['Servers'][$i]['usergroups'] = '';
 
 /**
  * table to store information about item hidden from navigation triee
- *       - leave blank to disable hide/show navigation items feature
- *         SUGGESTED: 'pma__navigationhiding'
+ *        - leave blank to disable hide/show navigation items feature
+ *          SUGGESTED: 'pma__navigationhiding'
  * 
  * @global string $cfg['Servers'][$i]['navigationhiding']
  */
@@ -1123,10 +1123,10 @@ $cfg['GridEditing'] = 'double-click';
 /**
  * disallow editing of binary fields
  * valid values are:
- *       false    allow editing
- *       'blob'   allow editing except for BLOB fields
- *       'noblob' disallow editing except for BLOB fields
- *       'all'    disallow editing
+ *        false    allow editing
+ *        'blob'   allow editing except for BLOB fields
+ *        'noblob' disallow editing except for BLOB fields
+ *        'all'    disallow editing
  * 
  * @global string $cfg['ProtectBinary']
  */
@@ -1148,8 +1148,8 @@ $cfg['ShowFieldTypesInDataEditView'] = true;
 
 /**
  * Which editor should be used for CHAR/VARCHAR fields:
- *      input - allows limiting of input length
- *      textarea - allows newlines in fields
+ *       input - allows limiting of input length
+ *       textarea - allows newlines in fields
  * 
  * @global string $cfg['CharEditing']
  */
@@ -2171,12 +2171,12 @@ $cfg['FilterLanguages'] = '';
 /**
  * You can select here which functions will be used for character set conversion.
  * Possible values are:
- *          auto   - automatically use available one (first is tested iconv, then
- *                   recode)
- *          iconv  - use iconv or libiconv functions
- *          recode - use recode_string function
- *          mb     - use mbstring extension
- *          none   - disable encoding conversion
+ *           auto   - automatically use available one (first is tested iconv, then
+ *                    recode)
+ *           iconv  - use iconv or libiconv functions
+ *           recode - use recode_string function
+ *           mb     - use mbstring extension
+ *           none   - disable encoding conversion
  * 
  * @global string $cfg['RecodingEngine']
  */

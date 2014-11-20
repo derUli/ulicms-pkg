@@ -212,7 +212,7 @@ class Table_Stats_Dia
      * 
      * @param string $tableName The table name
      * @param integer $pageNumber The current page number (from the
-     *                                $cfg['Servers'][$i]['table_coords'] table)
+     *                                 $cfg['Servers'][$i]['table_coords'] table)
      * @param boolean $showKeys Whether to display ONLY keys or not
      * @global object $dia         The current dia document
      * @global array  $cfgRelation The relations settings

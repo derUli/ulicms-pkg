@@ -20,29 +20,29 @@ if (! defined('PHPMYADMIN')){
  * 
  * Variable structure ex:
  * $GLOBALS['special_schema_links'] = array(
- *         // Database name is the major element
- *         'mysql' => array(
- *             // Table name
- *             'db' => array(
- *                 // Column name
- *                 'user' => array(
- *                     // Main url param (can be an array where represent sql)
- *                     'link_param' => 'username',
- *                     // Other url params
- *                     'link_dependancy_params' => array(
- *                         0 => array(
- *                             // URL parameter name
- *                             // (can be array where url param has static value)
- *                             'param_info' => 'hostname',
- *                             // Column name related to url param
- *                             'column_name' => 'host'
- *                         )
- *                     ),
- *                     // Page to link
- *                     'default_page' => 'server_privileges.php'
- *                 )
- *             )
- *         )
+ *          // Database name is the major element
+ *          'mysql' => array(
+ *              // Table name
+ *              'db' => array(
+ *                  // Column name
+ *                  'user' => array(
+ *                      // Main url param (can be an array where represent sql)
+ *                      'link_param' => 'username',
+ *                      // Other url params
+ *                      'link_dependancy_params' => array(
+ *                          0 => array(
+ *                              // URL parameter name
+ *                              // (can be array where url param has static value)
+ *                              'param_info' => 'hostname',
+ *                              // Column name related to url param
+ *                              'column_name' => 'host'
+ *                          )
+ *                      ),
+ *                      // Page to link
+ *                      'default_page' => 'server_privileges.php'
+ *                  )
+ *              )
+ *          )
  * );
  */
 $GLOBALS['special_schema_links'] = array(

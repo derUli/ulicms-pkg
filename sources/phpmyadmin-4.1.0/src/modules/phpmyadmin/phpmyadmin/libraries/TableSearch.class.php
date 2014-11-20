@@ -327,7 +327,7 @@ EOT;
          * Enum in search mode --> multiselect
          * Set in edit mode    --> multiselect
          * Set in search mode  --> input (skipped here, so the 'else'
-         *                                     section would handle it)
+         *                                      section would handle it)
          */
          if ((strncasecmp($column_type, 'enum', 4) && ! $in_zoom_search_edit)
                  || (strncasecmp($column_type, 'set', 3) && $in_zoom_search_edit)

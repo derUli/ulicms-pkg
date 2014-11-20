@@ -106,11 +106,11 @@ function PMA_displayFieldsetTop($title = '', $description = '', $errors = null,
  * o setvalue - (string) shows button allowing to set poredefined value
  * o show_restore_default - (boolean) whether show "restore default" button
  * o userprefs_allow - whether user preferences are enabled for this field
- *                        (null - no support, true/false - enabled/disabled)
+ *                         (null - no support, true/false - enabled/disabled)
  * o userprefs_comment - (string) field comment
  * o values - key - value paris for <select> fields
  * o values_escaped - (boolean) tells whether values array is already escaped
- *                        (defaults to false)
+ *                         (defaults to false)
  * o values_disabled -  (array)list of disabled values (keys from values)
  * o comment - (string) tooltip comment
  * o comment_warning - (bool) whether this comments warns about something

@@ -155,7 +155,7 @@ class ExportXml extends ExportPlugin
      * is attached calls PluginManager::notify()
      * 
      * @param SplSubject $subject The PluginManager notifying the observer
-     *                                of an update.
+     *                                 of an update.
      * @return void 
      */
      public function update (SplSubject $subject)

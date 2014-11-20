@@ -1,4 +1,4 @@
-<?php 
+<?php
 function useragents_name(){
-   return "Useragents";
-}
+     return "Useragents";
+    }

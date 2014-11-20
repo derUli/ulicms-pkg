@@ -1330,7 +1330,7 @@ function PMA_getHtmlForPartitionMaintenance($partition_names, $url_params)
  * Get the HTML for Referential Integrity check
  * 
  * @param array $foreign all Relations to foreign tables for a given table
- *                              or optionally a given column in a table
+ *                               or optionally a given column in a table
  * @param array $url_params array of url parameters
  * @return string $html_output
  */
@@ -1521,7 +1521,7 @@ function PMA_getTableAltersArray($is_myisam_or_aria, $is_isam, $pack_keys,
  * 
  * @param string $tbl_storage_engine table storage engine
  * @return array ($is_myisam_or_aria, $is_innodb, $is_isam,
- *                    $is_berkeleydb, $is_aria, $is_pbxt)
+ *                     $is_berkeleydb, $is_aria, $is_pbxt)
  */
 function PMA_setGlobalVariablesForEngine($tbl_storage_engine)
 {

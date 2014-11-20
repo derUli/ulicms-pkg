@@ -443,7 +443,7 @@ class PMA_GIS_Visualization
      * @param array $scale_data Data related to scaling
      * @param string $format Format of the visulaization
      * @param object $results Image object in the case of png
-     *                               TCPDF object in the case of pdf
+     *                                TCPDF object in the case of pdf
      * @return mixed the formatted array of data
      * @access private 
      */

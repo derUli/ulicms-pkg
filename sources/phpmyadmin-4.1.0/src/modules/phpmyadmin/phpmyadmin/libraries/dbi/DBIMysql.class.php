@@ -78,7 +78,7 @@ class PMA_DBI_Mysql implements PMA_DBI_Extension
      * @param mysqli $link mysqli object
      * @param string $query multi query statement to execute
      * @return boolean false always false since mysql extention not support
-     *                           for multi query executions
+     *                            for multi query executions
      */
      public function realMultiQuery($link, $query)
     {
@@ -97,7 +97,7 @@ class PMA_DBI_Mysql implements PMA_DBI_Extension
      * @param bool $is_controluser whether this is a control user connection
      * @param array $server host/port/socket/persistent
      * @param bool $auxiliary_connection (when true, don't go back to login if
-     *                                         connection fails)
+     *                                          connection fails)
      * @return mixed false on error or a mysqli object on success
      */
      public function connect(

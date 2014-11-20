@@ -19,21 +19,21 @@ function getBaseURL($language = null){
          }else{
          $dirname = "/";
          }
-         if(is_null($language)){
-            $domain = $_SERVER["HTTP_HOST"];
-         } else {
-         
-            $domain = getDomainByLanguage($language);
-            if(!$domain){
-               $domain = $_SERVER["HTTP_HOST"];
-            }
+     if(is_null($language)){
+         $domain = $_SERVER["HTTP_HOST"];
+         }else{
+        
+         $domain = getDomainByLanguage($language);
+         if(!$domain){
+             $domain = $_SERVER["HTTP_HOST"];
+             }
          }
      if ($_SERVER["SERVER_PORT"] != "80"){
          $pageURL .= $domain . ":" . $_SERVER["SERVER_PORT"] . $dirname;
          }
-         else{
+    else{
          $pageURL .= $domain . $dirname;
-         } 
+         }
      return $pageURL;
      }
 
@@ -53,15 +53,15 @@ function generate_sitemap(){
          if(!startsWith($row -> redirection, "#")){
             
              $xml_string .= "<url>\r\n";
-             $xml_string .= "\t<loc>" . xmlspecialchars(getBaseURL($row->language) . $row -> systemname . ".html") . "</loc>\r\n";
+             $xml_string .= "\t<loc>" . xmlspecialchars(getBaseURL($row -> language) . $row -> systemname . ".html") . "</loc>\r\n";
              $xml_string .= "\t<lastmod>" . date("Y-m-d", $row -> lastmodified) . "</lastmod>\r\n";
              $xml_string .= "</url>\r\n\r\n";
             
              if(containsModule($row -> systemname, "blog")){
-                 $query_blog = db_query("SELECT * FROM " . tbname("blog") . " WHERE entry_enabled = 1 AND language='".$row->language."' ORDER by datum DESC");
+                 $query_blog = db_query("SELECT * FROM " . tbname("blog") . " WHERE entry_enabled = 1 AND language='" . $row -> language . "' ORDER by datum DESC");
                  while($row2 = db_fetch_object($query_blog)){
                      $xml_string .= "<url>\r\n";
-                     $xml_string .= "\t<loc>" . xmlspecialchars(getBaseURL($row->language) . $row -> systemname . ".html?single=" . $row2 -> seo_shortname) . "</loc>\r\n";
+                     $xml_string .= "\t<loc>" . xmlspecialchars(getBaseURL($row -> language) . $row -> systemname . ".html?single=" . $row2 -> seo_shortname) . "</loc>\r\n";
                      $xml_string .= "\t<lastmod>" . date("Y-m-d", $row2 -> datum) . "</lastmod>\r\n";
                      $xml_string .= "</url>\r\n\r\n";
                      }
