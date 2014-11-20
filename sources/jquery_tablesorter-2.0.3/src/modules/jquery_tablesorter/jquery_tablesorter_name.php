@@ -1,4 +1,4 @@
 <?php 
-function guestbook_name(){
+function jquery_tablesorter_name(){
    return "jQuery Table Sorter";
 }
