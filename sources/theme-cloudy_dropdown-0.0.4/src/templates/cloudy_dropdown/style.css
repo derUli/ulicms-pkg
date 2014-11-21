@@ -5,6 +5,10 @@ body {
     font-size:1.3em;
 }
 
+.sub_menu{
+z-index:4;
+}
+
 html{
 overflow-y:scroll;
 }
