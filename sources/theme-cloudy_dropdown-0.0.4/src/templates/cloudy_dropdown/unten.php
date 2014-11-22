@@ -4,7 +4,7 @@
 </div>
 </div>
 <div class="footer">
-	(C) <?php year();
+	&copy; <?php year();
 ?> by <?php homepage_owner();
 ?>
 </div>
