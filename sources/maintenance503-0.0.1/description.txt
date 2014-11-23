@@ -1,1 +1,0 @@
-Sendet HTTP-Status 503 Service Temporarily Unavailable und Retry-After, wenn das CMS sich im Wartungsmodus befindet
