@@ -1,7 +1,7 @@
 <?php
 function blog_meta_description_filter($txt){
      $single = db_escape($_GET["single"]);
-     $query = db_query("SELECT content_preview FROM `" . tbname("blog") . "` WHERE seo_shortname='$single'");
+     $query = db_query("SELECT content_preview, meta_description FROM `" . tbname("blog") . "` WHERE seo_shortname='$single'");
      $content_preview = false;
     
      if(!$query)
@@ -10,6 +10,10 @@ function blog_meta_description_filter($txt){
      if(db_num_rows($query) > 0){
          $result = db_fetch_assoc($query);
          $content_preview = $result["content_preview"];
+         if(!is_null($result["meta_description"]) and !empty($result["meta_description"])){
+           $meta_description = trim($result["meta_description"]);
+            return real_htmlspecialchars($meta_description);
+         }
          }
     
      if(!containsModule(get_requested_pagename(), "blog") or !$single or !$content_preview)

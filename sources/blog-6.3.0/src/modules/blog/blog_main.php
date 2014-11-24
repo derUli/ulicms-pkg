@@ -168,7 +168,6 @@ function blog_update(){
     
     
      $content_full = db_escape($content_full);
-    
      $content_preview = db_escape($content_preview);
     
     
@@ -196,7 +195,8 @@ function blog_update(){
          }
     
     
-    
+    $meta_description = db_escape($_POST["meta_description"]);
+    $meta_keywords = db_escape($_POST["meta_keywords"]);
     
     
      // Rechte prüfen
@@ -210,11 +210,13 @@ function blog_update(){
 
 	 datum = $datum,
 
-	 content_preview = '$content_preview' WHERE id = $id
+	 content_preview = '$content_preview',
+	 meta_keywords='$meta_keywords',
+	 meta_description='$meta_description' WHERE id = $id
 
 	 ";
         
-         db_query($insert_query);
+         db_query($insert_query) or die(db_error());
         
          $html_output .= "<script type='text/javascript'>
 
@@ -406,10 +408,6 @@ function blog_check_installation(){
             
              db_query("ALTER TABLE `" . tbname("blog") . "` ADD views int DEFAULT 0");
             
-             }
-             
-             if(!isset($fetch["meta_description"])){
-               db_query("ALTER TABLE `".tbname("blog")."` ADD `meta_description` VARCHAR(255) NULL , ADD `meta_keywords` VARCHAR(255) NULL;")             
              }
         
          }

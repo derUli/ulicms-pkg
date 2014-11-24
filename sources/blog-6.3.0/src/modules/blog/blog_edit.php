@@ -17,7 +17,7 @@ function blog_edit_form($post_id){
          $html_output .= "<strong>Titel dieser News:</strong>";
          $html_output .= "</td>";
          $html_output .= "<td>";
-         $html_output .= "<input name='title' type='text' maxlength=200 size=70 value='" .
+         $html_output .= "<input name='title' type='text' maxlength=200 size=40 value='" .
          htmlspecialchars($post -> title, ENT_QUOTES, "UTF-8") . "'>";
          $html_output .= "</td>";
          $html_output .= "</tr>";
@@ -29,7 +29,7 @@ function blog_edit_form($post_id){
          $html_output .= "<td>";
          $html_output .= "http://" . $_SERVER["SERVER_NAME"] .
          "/pfad/zu/ulicms/" . get_requested_pagename() .
-         ".html?single=<input style='font-weight:bold;background-color:rgb(240, 240, 240);border:0px;' name='seo_shortname' type='text' maxlength=200 size=50 value='" .
+         ".html?single=<input style='font-weight:bold;background-color:rgb(240, 240, 240);border:0px;' name='seo_shortname' type='text' maxlength=200 size=30 value='" .
          htmlspecialchars($post -> seo_shortname) . "'>";
          $html_output .= "</td>";
          $html_output .= "</tr>";
@@ -113,7 +113,16 @@ function blog_edit_form($post_id){
          $html_output .= "<td>";
          $html_output .= "<strong><input name=\"datum\" type=\"datetime-local\" value=\"" . date("Y-m-d\TH:i:s", $post -> datum) . "\" step=any></strong>";
          $html_output .= "</td>";
-        
+         $html_output .= "</tr>";
+                  
+         $html_output .= "<tr>";
+         $html_output .= "<td><strong>Meta Beschreibung:</strong></td>";
+         $html_output .= "<td><textarea name=\"meta_description\" cols=\"40\" rows=\"3\">".real_htmlspecialchars($post-> meta_description)."</textarea></td>";
+         $html_output .= "</tr>";
+         
+         $html_output .= "<tr>";
+         $html_output .= "<td><strong>Meta Keywords:</strong></td>";
+         $html_output .= "<td><textarea name=\"meta_keywords\" cols=\"40\" rows=\"3\">".real_htmlspecialchars($post-> meta_keywords)."</textarea></td>";
          $html_output .= "</tr>";
         
         

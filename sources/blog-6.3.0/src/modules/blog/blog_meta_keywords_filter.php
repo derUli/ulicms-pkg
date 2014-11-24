@@ -2,7 +2,7 @@
 function blog_meta_keywords_filter($txt){
      include "lib/string_functions.php";
      $single = db_escape($_GET["single"]);
-     $query = db_query("SELECT content_full FROM `" . tbname("blog") . "` WHERE seo_shortname='$single'");
+     $query = db_query("SELECT content_full, meta_keywords FROM `" . tbname("blog") . "` WHERE seo_shortname='$single'");
     
      if(!$query)
          return $txt;
@@ -12,6 +12,10 @@ function blog_meta_keywords_filter($txt){
      if(db_num_rows($query) > 0){
          $result = db_fetch_assoc($query);
          $content_full = $result["content_full"];
+            if(!is_null($result["meta_keywords"]) and !empty($result["meta_keywords"])){
+           $meta_keywords = trim($result["meta_keywords"]);
+            return real_htmlspecialchars($meta_keywords);
+         }
          }
     
     
