@@ -105,7 +105,7 @@ function blog_list(){
              $html .= "<div class='blog_post_content'>" . $post -> content_preview . "</div>";
             
              if($_SESSION["language"] == "de"){
-                 $html .= "<br/><a href='" . buildSEOUrl(get_requested_pagename()) . "?single=" . $post -> seo_shortname . "'>weiterlesen...</a>
+                 $html .= "<a href='" . buildSEOUrl(get_requested_pagename()) . "?single=" . $post -> seo_shortname . "'>weiterlesen...</a>
 			 ";
                  }else{
                  $html .= "<br/><a href='" . buildSEOUrl(get_requested_pagename()) . "?single=" . $post -> seo_shortname . "'>read more...</a>
