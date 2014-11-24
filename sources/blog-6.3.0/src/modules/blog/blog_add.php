@@ -12,7 +12,7 @@ function blog_add_form(){
      $html_output .= "<strong>Titel dieser News:</strong>";
      $html_output .= "</td>";
      $html_output .= "<td>";
-     $html_output .= "<input name='title' type='text' maxlength=200 size=70>";
+     $html_output .= "<input name='title' type='text' maxlength=200 size=40>";
      $html_output .= "</td>";
      $html_output .= "</tr>";
     
@@ -23,7 +23,7 @@ function blog_add_form(){
      $html_output .= "<td>";
      $html_output .= "http://" . $_SERVER["SERVER_NAME"] .
      "/pfad/zu/ulicms/" . get_requested_pagename() .
-     ".html?single=<input style=<input style='font-weight:bold;background-color:rgb(240, 240, 240);border:0px;' name='seo_shortname' type='text' maxlength=200 size=50>";
+     ".html?single=<input style=<input style='font-weight:bold;background-color:rgb(240, 240, 240);border:0px;' name='seo_shortname' type='text' maxlength=200 size=30>";
      $html_output .= "</td>";
      $html_output .= "</tr>";
     
@@ -84,6 +84,16 @@ function blog_add_form(){
      $html_output .= "</td>";
     
      $html_output .= "</tr>";
+     
+      $html_output .= "<tr>";
+         $html_output .= "<td><strong>Meta Beschreibung:</strong></td>";
+         $html_output .= "<td><textarea name=\"meta_description\" cols=\"40\" rows=\"3\"></textarea></td>";
+         $html_output .= "</tr>";
+         
+         $html_output .= "<tr>";
+         $html_output .= "<td><strong>Meta Keywords:</strong></td>";
+         $html_output .= "<td><textarea name=\"meta_keywords\" cols=\"40\" rows=\"3\"></textarea></td>";
+         $html_output .= "</tr>";
     
     
      $html_output .= "<tr>";

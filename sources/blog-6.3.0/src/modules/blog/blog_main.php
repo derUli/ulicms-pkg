@@ -1,10 +1,4 @@
 <?php
-
-
-
-
-
-
 function blog_render(){
     
      $acl = new ACL();
@@ -340,8 +334,9 @@ function blog_submit(){
          $datum = time();
         
          }
-    
-    
+             
+    $meta_description = db_escape($_POST["meta_description"]);
+    $meta_keywords = db_escape($_POST["meta_keywords"]);
     
      // Rechte prüfen
     if($acl -> hasPermission("blog")){
@@ -352,11 +347,11 @@ function blog_submit(){
 
   entry_enabled, author, 
 
-  content_full, content_preview) VALUES ($datum, '$title', 
+  content_full, content_preview, meta_description, meta_keywords) VALUES ($datum, '$title', 
 
   '$seo_shortname', $comments_enabled, '$language', $entry_enabled,
 
-  $author, '$content_full', '$content_preview')";
+  $author, '$content_full', '$content_preview', '$meta_description', '$meta_keywords')";
         
         
         
