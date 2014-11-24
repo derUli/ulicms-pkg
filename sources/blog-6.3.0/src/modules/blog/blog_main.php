@@ -1,16 +1,7 @@
 <?php
 function blog_render(){
     
-     $acl = new ACL();
-    
-    
-     // Prüfen, ob Blog schon installiert
-    blog_check_installation();
-    
-    
-    
-    
-    
+     $acl = new ACL();    
      if(!empty($_GET["single"])){
         
          require_once getModulePath("blog") . "blog_single.php";
@@ -355,7 +346,7 @@ function blog_submit(){
         
         
         
-         db_query($insert_query);
+         db_query($insert_query)or die(db_error());
         
         
         
@@ -378,51 +369,6 @@ function blog_submit(){
      return $html_output;
     
      }
-
-
-
-
-
-
-
-function blog_check_installation(){
-    
-     $test = db_query("SELECT * FROM " . tbname("blog"));
-    
-     if(!$test){
-        
-         require_once getModulePath("blog") . "blog_install.php";
-        
-         blog_do_install();
-        
-         }else{
-        
-         $fetch = db_fetch_assoc($test);
-        
-         if(!isset($fetch["views"])){
-            
-             db_query("ALTER TABLE `" . tbname("blog") . "` ADD views int DEFAULT 0");
-            
-             }
-        
-         }
-    
-    
-    
-     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 ?>
