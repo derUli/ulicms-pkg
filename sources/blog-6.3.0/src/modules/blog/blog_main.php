@@ -407,6 +407,10 @@ function blog_check_installation(){
              db_query("ALTER TABLE `" . tbname("blog") . "` ADD views int DEFAULT 0");
             
              }
+             
+             if(!isset($fetch["meta_description"])){
+               db_query("ALTER TABLE `".tbname("blog")."` ADD `meta_description` VARCHAR(255) NULL , ADD `meta_keywords` VARCHAR(255) NULL;")             
+             }
         
          }
     
