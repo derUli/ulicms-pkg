@@ -1,0 +1,2 @@
+Block Bad Queries
+Protect Against Malicious URL Requests
