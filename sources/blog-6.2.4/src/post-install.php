@@ -6,5 +6,7 @@ if(!function_exists("setconfig"))
 echo "<p>Lege Datenbankstruktur an</p>";
 require_once getModulePath("blog") . "blog_main.php";
 blog_check_installation();
+if(!getconfig("ckeditor_skin"))
+   setconfig("ckeditor_skin", "kama");
 echo "<p>fertig</p>";
 ?>
