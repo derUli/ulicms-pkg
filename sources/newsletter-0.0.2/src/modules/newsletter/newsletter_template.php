@@ -48,7 +48,7 @@ echo htmlspecialchars(NEWSLETTER_TEMPLATE_CONTENT);
 <script type="text/javascript">
 var editor = CKEDITOR.replace( 'template_content',
 					{
-						skin : 'kama'
+						skin : '<?php echo getconfig("ckeditor_skin");?>'
 					});                                         
 
 </script>
