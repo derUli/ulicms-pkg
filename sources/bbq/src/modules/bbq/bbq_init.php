@@ -58,7 +58,6 @@ if (	//strlen($request_uri) > 255 ||
 	stripos($query_string, ':') || 
 	stripos($query_string, '[') || 
 	stripos($query_string, ']') || 
-	stripos($query_string, '../') || 
 	stripos($query_string, '127.0.0.1') || 
 	stripos($query_string, 'loopback') || 
 	stripos($query_string, '%0A') || 
@@ -100,5 +99,6 @@ if (	//strlen($request_uri) > 255 ||
 	@header('HTTP/1.1 403 Forbidden');
 	@header('Status: 403 Forbidden');
 	@header('Connection: Close');
+	echo "Blocked by BBQ Firewall";
 	@exit;
 }
