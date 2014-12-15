@@ -1,6 +1,6 @@
 <?php
 define("MODULE_ADMIN_HEADLINE", "Lightbox Bildergalerie");
-define(MODULE_ADMIN_REQUIRED_PERMISSION, "gallery_settings");
+define("MODULE_ADMIN_REQUIRED_PERMISSION", "gallery_settings");
 
 
 if(!empty($_POST["image_gallery_images_per_row"])){
