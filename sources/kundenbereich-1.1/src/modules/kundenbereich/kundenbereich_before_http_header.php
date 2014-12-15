@@ -1,7 +1,7 @@
 <?php
 if(containsModule(get_requested_pagename(), "kundenbereich")){
      if(!is_logged_in()){
-         $url = "admin/?go=" . getCurrentURL();
+         $url = "admin/?go=" . urlencode(getCurrentURL());
          header("Location: " . $url);
          exit();
          }
