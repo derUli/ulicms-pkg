@@ -51,11 +51,11 @@ if (	//strlen($request_uri) > 255 ||
 	stripos($request_uri, '/=') || 
 	stripos($request_uri, '...') || 
 	stripos($request_uri, '+++') || 
-	stripos($request_uri, '://') || 
+	// stripos($request_uri, '://') || 
 	stripos($request_uri, '/&&') || 
 	// query strings
 	stripos($query_string, '?') || 
-	stripos($query_string, ':') || 
+	//stripos($query_string, ':') || 
 	stripos($query_string, '[') || 
 	stripos($query_string, ']') || 
 	stripos($query_string, '127.0.0.1') || 
