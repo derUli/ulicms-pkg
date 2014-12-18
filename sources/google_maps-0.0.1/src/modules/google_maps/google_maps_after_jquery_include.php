@@ -4,9 +4,9 @@ if(containsModule(get_requested_pagename(), "google_maps")){
 $google_maps_marker = getconfig("google_maps_marker");
 $google_maps_marker = htmlspecialchars($google_maps_marker, ENT_QUOTES, "UTF-8");
 
-$google_zoom_level = getconfig("google_zoom_level");
-   if($google_zoom_level === false or $google_zoom_level == 0)
-     $google_zoom_level = 10;
+$google_maps_zoom_level = getconfig("google_maps_zoom_level");
+   if($google_maps_zoom_level === false or $google_maps_zoom_level == 0)
+     $google_maps_zoom_level = 10;
 if($google_maps_marker and !empty($google_maps_marker)){
 
      ?>
@@ -31,7 +31,7 @@ if($google_maps_marker and !empty($google_maps_marker)){
           },
           map:{
             options:{
-              zoom: <?php echo intval($google_zoom_level);?>
+              zoom: <?php echo intval($google_maps_zoom_level);?>
             }
           }
         });
