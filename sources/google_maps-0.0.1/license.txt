@@ -1,2 +1,7 @@
-jQuery GMap Plugin: GPL v3
+jQuery GMap Plugin: 
+GPL v3 
+Copyright (c) 2010-2014 Jean-Baptiste DEMONTE
+
+
 UliCMS Integration: UliCMS Lizenz (BSD)
+Copyright (C) 2014 by Ulrich Schmidt
