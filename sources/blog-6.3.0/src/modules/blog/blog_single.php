@@ -50,7 +50,6 @@ function blog_single($seo_shortname){
              $html .= "<br/>";
              $html .= "<div class='blog_post_content'>" . $post -> content_full . "</div>";
             
-             $html .= "<br/>";
             
              if($acl -> hasPermission("blog")){
                  $html .= "<a href='" . buildSEOUrl(get_requested_pagename()) . "?blog_admin=edit_post&id=" . $post -> id . "'>[Bearbeiten]</a> ";
