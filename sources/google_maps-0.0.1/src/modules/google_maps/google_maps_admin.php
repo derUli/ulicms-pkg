@@ -27,7 +27,7 @@ function google_maps_admin(){
 <p><strong>Zoom Level</strong>
 <br/>
 <select name="google_maps_zoom_level">
-<?php for($i=0; i <= 21; $ii){
+<?php for($i=0; $i <= 21; $i++){
 ?>
 <option value="<?php echo $i;?>" <?php if($i == $google_maps_zoom_level) echo "selected";?> size= "1"><?php echo $i;?></option>
 <?php } ?>
