@@ -120,7 +120,7 @@ function blog_list(){
                 
                  $html .= "<a href='" . buildSEOUrl(get_requested_pagename()) . "?blog_admin=delete_post&id=" . $post -> id . "' onclick='return confirm(\"Diesen Post wirklich löschen?\")'>[Löschen]</a>";
                 
-                 $html .= "<br/><br/>";
+                 $html .= "<br/>";
                 
                  }
             
