@@ -111,7 +111,7 @@ function blog_list(){
                  $html .= "<br/><a href='" . buildSEOUrl(get_requested_pagename()) . "?single=" . $post -> seo_shortname . "'>read more...</a>
 			";
                  }
-             $html .= "<br/><br/>";
+             $html .= "<br/>";
             
              $acl = new ACL();
             
