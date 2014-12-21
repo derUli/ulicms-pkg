@@ -22,7 +22,7 @@ function rss2blog_admin(){
 <form action="<?php echo getModuleAdminSelfPath()?>" method="post">
 <p>Hier können Sie Ihren Blog automatisch aus externen RSS-Feeds mit Inhalten befüllen.</p>
 <p>Format<br/>
-URL[Tabulator]User-ID
+URL User-ID
 </p>
 <p>
 Der Parameter URL muss die direkte Adresse zu einem RSS Newsfeed enthalten.<br/>
