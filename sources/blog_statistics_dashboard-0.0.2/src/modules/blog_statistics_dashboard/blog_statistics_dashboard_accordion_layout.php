@@ -4,15 +4,16 @@ if(in_array("blog", getAllModules()) and $acl -> hasPermission("blog")){
      ?>
 
 <?php
-     $query = db_query("SELECT * FROM " . tbname("blog"));
-     $blog_post_count = db_num_rows($query);
+     $query = db_query("SELECT count(*) AS anzahl FROM " . tbname("blog"));
+     $result = db_fetch_assoc($query);
+     $blog_post_count = $result["anzahl"];
+    
+     $query = db_query("SELECT count(*) AS anzahl FROM " . tbname("blog_comments"));
+     $result = db_fetch_assoc($query);
+     $comment_count = $result["anzahl"];
     
     
-     $query = db_query("SELECT * FROM " . tbname("blog_comments"));
-     $comment_count = db_num_rows($query);
-    
-    
-     $query = db_query("SELECT * FROM " . tbname("blog") . " ORDER by `views` DESC LIMIT 5");
+     $query = db_query("SELECT title, `views` FROM " . tbname("blog") . " ORDER by `views` DESC LIMIT 5");
     
     
      ?>
