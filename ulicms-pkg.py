@@ -24,6 +24,14 @@ if len(sys.argv) < 2:
 elif sys.argv[1] == "update":
    os.system("git pull")
    sys.exit()
+   
+elif sys.argv[1] == "checkout":
+   if len(sys.argv) > 2:
+      os.system("git checkout " + sys.argv[2])
+      sys.exit()
+   else:
+      print("Usage: ./ulicms-pkg.py checkout [branch]")
+      sys.exit();
 
 # Init package folder
 if sys.argv[1] == "init":
