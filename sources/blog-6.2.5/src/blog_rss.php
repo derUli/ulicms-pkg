@@ -51,7 +51,7 @@ while($row = db_fetch_object($query)){
     
      $url .= $servername;
     
-     $description = $row -> content_preview;
+     $description = replaceShortcodesWithModules($row -> content_preview);
      // Replace Relative URLs
     $description =
      str_replace("<a href=\"/", "<a href=\"$url/",
