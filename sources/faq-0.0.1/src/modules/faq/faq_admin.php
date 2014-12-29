@@ -49,7 +49,7 @@ if(isset($_POST["edit-faq"])){
 
 if($action == "new"){
 ?>
-<form action="action=module_settings&module=faq&do=list" method="post">
+<form action="?action=module_settings&module=faq&do=list" method="post">
 <table>
 <tr>
 <td style="width:150px">Frage</td>
@@ -76,7 +76,7 @@ $edit = intval($_GET["edit"]);
 $sql = db_query("SELECT * FROM ".tbname("faq"). " where id = $edit ORDER by question ASC");
 $data = db_fetch_object($sql);
 ?>
-<form action="action=module_settings&module=faq&do=list" method="post">
+<form action="?action=module_settings&module=faq&do=list" method="post">
 <table>
 <tr>
 <td style="width:150px">Frage</td>
