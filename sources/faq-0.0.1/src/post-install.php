@@ -1,7 +1,7 @@
 <?php
 db_query("Create table ".tbname("faq")."
 (
-id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+iid INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 question VARCHAR(255) NULL,
 answer text NULL
 )");
