@@ -36,11 +36,11 @@ if(isset($_POST["edit-faq"])){
 
 if($action == "new"){
 ?>
-<form action="action=module_settings&module=faq&action=list" method="post">
+<form action="action=module_settings&module=faq&do=list" method="post">
 <table>
 <tr>
 <td>Frage</td>
-<td><input type="text" name="question" value="Warum ist die Banane Krum?"></td>
+<td><input type="text" name="question" size="50" maxlength="255" value="Warum ist die Banane Krum?"></td>
 </tr>
 <tr>
 <td>Antwort</td>
@@ -49,7 +49,8 @@ if($action == "new"){
 <tr>
 <td>
 </td>
-<td><input type="submit" name="create-faq" value="create-faq">
+<td><input type="hidden" name="create-faq" value="create-faq">
+<input type="submit" value="Frage Erstellen">
 </td>
 </tr>
 </form>
@@ -61,11 +62,11 @@ $edit = intval($_GET["edit"]);
 $sql = db_query("SELECT * FROM ".tbname("faq"). " where id = $edit ORDER by question ASC");
 $data = db_fetch_object($sql);
 ?>
-<form action="action=module_settings&module=faq&action=list" method="post">
+<form action="action=module_settings&module=faq&do=list" method="post">
 <table>
 <tr>
 <td>Frage</td>
-<td><input type="text" name="question" value="<?php echo htmspecialchars($data->question, ENT_QUOTES, "utf-8");?>"></td>
+<td><input type="text" size="50" maxlength="255" name="question" value="<?php echo htmspecialchars($data->question, ENT_QUOTES, "utf-8");?>"></td>
 </tr>
 <tr>
 <td>Antwort</td>
@@ -74,7 +75,9 @@ $data = db_fetch_object($sql);
 <tr>
 <td>
 </td>
-<td><input type="submit" name="edit-faq" value="<?php echo $data->id;?>">
+<td><input type="hidden" name="edit-faq" value="<?php echo $data->id;?>">
+
+<input type="submit" value="Frage Speichern">
 </td>
 </tr>
 </form>
@@ -86,13 +89,13 @@ $data = db_fetch_object($sql);
 if($action == "list"){
 
 ?>
-<p><strong><a href="?action=module_settings&module=faq&action=new">[Frage erstellen]</a></strong>
+<p><strong><a href="?action=module_settings&module=faq&do=new">[Frage erstellen]</a></strong>
 </p>
 <?php
 $sql = db_query("SELECT * FROM ".tbname("faq"). " ORDER by question ASC");
 if(db_num_rows($sql) > 0){
 ?>
-<table>
+<table style="width:100%">
 <tr>
 <th>Frage</th>
 <th>Antwort</th>
@@ -102,10 +105,10 @@ if(db_num_rows($sql) > 0){
 <?php while($row = db_fetch_object($sql)){
 echo '<tr>';
 echo '<td>'.htmlspecialchars($row->question).'</td>';
-echo '<td>'.nl2br(htmlspecialchars($row->answer)).'</td>';
-echo '<td>'.'<a href="?action=module_settings&module=faq&action=edit&edit='.$row->id.'"><img src="gfx/edit.gif" alt="Bearbeiten" title="Bearbeiten"></a>'.'</td>';
+echo '<td>'.nl2br(chunk_split(htmlspecialchars($row->answer), 60)).'</td>';
+echo '<td>'.'<a href="?action=module_settings&module=faq&do=edit&edit='.$row->id.'"><img src="gfx/edit.gif" alt="Bearbeiten" title="Bearbeiten"></a>'.'</td>';
 
-echo '<td>'.'<a href="?action=module_settings&module=faq&action=delete&delete='.$row->id.'" onclick="return confirm(\'Wirklich löschen?\')"><img src="gfx/delete.gif" alt="Löschen" title="Löschen"></a>'.'</td>';
+echo '<td>'.'<a href="?action=module_settings&module=faq&do=delete&delete='.$row->id.'" onclick="return confirm(\'Wirklich löschen?\')"><img src="gfx/delete.gif" alt="Löschen" title="Löschen"></a>'.'</td>';
 echo '</tr>';
 }?>
 </table>
