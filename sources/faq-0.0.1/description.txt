@@ -1,1 +1,1 @@
-Häufig gestellte Fragen in einem schicken Accordin Layout anzeigen
+Häufig gestellte Fragen in einem schicken Accordin Layout anzeigen (benötigt jQuery)
