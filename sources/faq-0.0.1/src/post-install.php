@@ -15,7 +15,7 @@ if(db_num_rows($q) == 0){
 }
 
 ?>
-<p>Bitte beachten Sie, dass Sie noch Ihr Stylesheet für die FAQ-Seite anpassen müssen.<br/>
+<p>Bitte beachten Sie, dass Sie noch Ihr Stylesheet fÃ¼r die FAQ-Seite anpassen mÃ¼ssen.<br/>
 <br/>
-Sie können die Datei <a href="scripts/vallenato/vallenato.css">scripts/vallenato/vallenato.css</a> als Vorlage nehmen</p>
+Sie kÃ¶nnen die Datei <a href="scripts/vallenato/vallenato.css">scripts/vallenato/vallenato.css</a> als Vorlage nehmen</p>
 </p>
