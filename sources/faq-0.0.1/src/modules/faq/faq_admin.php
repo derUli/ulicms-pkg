@@ -26,6 +26,14 @@ if(isset($_POST["create-faq"])){
    VALUES('$question', '$answer')");
 }
 
+if(isset($_POST["edit-faq"])){
+  $id = intval($_POST["edit-faq"]);
+   $question = db_escape($_POST["question"]);
+   $answer = db_escape($_POST["answer"]);
+   db_query("UPDATE ". tbname("faq"). " SET question='$question',
+   answer='$answer' WHERE id = $id");
+}
+
 if($action == "new"){
 ?>
 <form action="action=module_settings&module=faq&action=list" method="post">
@@ -47,6 +55,34 @@ if($action == "new"){
 </form>
 <?
 }
+
+if($action == "edit"){
+$edit = intval($_GET["edit"]);
+$sql = db_query("SELECT * FROM ".tbname("faq"). " where id = $edit ORDER by question ASC");
+$data = db_fetch_object($sql);
+?>
+<form action="action=module_settings&module=faq&action=list" method="post">
+<table>
+<tr>
+<td>Frage</td>
+<td><input type="text" name="question" value="<?php echo htmspecialchars($data->question, ENT_QUOTES, "utf-8");?>"></td>
+</tr>
+<tr>
+<td>Antwort</td>
+<td><textarea name="answer" cols="50" rows="10"><?php echo nl2br(htmspecialchars($data->answer));?></textarea>></td>
+</tr>
+<tr>
+<td>
+</td>
+<td><input type="submit" name="edit-faq" value="<?php echo $data->id;?>">
+</td>
+</tr>
+</form>
+
+<?php
+
+}
+
 if($action == "list"){
 
 ?>
