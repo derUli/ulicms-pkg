@@ -13,3 +13,9 @@ if(db_num_rows($q) == 0){
   db_query("INSERT INTO ".tbname("faq"). " (question, answer) VALUES ('$question', '$answer')");
 
 }
+
+?>
+<p>Bitte beachten Sie, dass Sie noch Ihr Stylesheet für die FAQ-Seite anpassen müssen.<br/>
+<br/>
+Sie können die Datei <a href="scripts/vallenato/vallenato.css">scripts/vallenato/vallenato.css</a> als Vorlage nehmen</p>
+</p>
