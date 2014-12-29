@@ -8,7 +8,7 @@ function faq_render(){
    
    while($row = db_fetch_object($sql)){
       $html = '<h2 class="accordion-header">'.htmlspecialchars($row->question).'</h2>';
-      $html = '<div class="accordion-content">'.htmlspecialchars($row->answer).'</div>';
+      $html = '<div class="accordion-content">'.nl2br(htmlspecialchars($row->answer)).'</div>';
       
    }
 
