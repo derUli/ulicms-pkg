@@ -80,7 +80,7 @@ $data = db_fetch_object($sql);
 <table>
 <tr>
 <td style="width:150px">Frage</td>
-<td><input type="text" size="50" maxlength="255" name="question" value="<?php echo htmspecialchars($data->question, ENT_QUOTES, "utf-8");?>"></td>
+<td><input type="text" size="50" maxlength="255" name="question" value="<?php echo htmlspecialchars($data->question, ENT_QUOTES, "utf-8");?>"></td>
 </tr>
 <tr>
 <td style="width:150px">Antwort</td>
