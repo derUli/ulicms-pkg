@@ -84,7 +84,7 @@ $data = db_fetch_object($sql);
 </tr>
 <tr>
 <td style="width:150px">Antwort</td>
-<td><textarea name="answer" cols="50" rows="10"><?php echo nl2br(htmspecialchars($data->answer));?></textarea>></td>
+<td><textarea name="answer" cols="50" rows="10"><?php echo nl2br(htmlspecialchars($data->answer));?></textarea>></td>
 </tr>
 <tr>
 <td>
