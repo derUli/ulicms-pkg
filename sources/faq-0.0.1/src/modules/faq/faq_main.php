@@ -13,4 +13,5 @@ function faq_render(){
    }
 
 $html .="</div>";
+return $html;
 }
