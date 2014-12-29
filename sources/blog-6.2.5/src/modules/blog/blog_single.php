@@ -48,7 +48,7 @@ function blog_single($seo_shortname){
              $html .= $date_and_autor_string;
             
              $html .= "<br/>";
-             $html .= "<div class='blog_post_content'>" . $post -> content_full . "</div>";
+             $html .= "<div class='blog_post_content'>" . replaceShortcodesWithModules($post -> content_full) . "</div>";
             
              $html .= "<br/>";
             

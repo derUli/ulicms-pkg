@@ -102,7 +102,7 @@ function blog_list(){
             
              $html .= $date_and_autor_string .
              "<br/>";
-             $html .= "<div class='blog_post_content'>" . $post -> content_preview . "</div>";
+             $html .= "<div class='blog_post_content'>" . replaceShortcodesWithModules($post -> content_preview) . "</div>";
             
              if($_SESSION["language"] == "de"){
                  $html .= "<br/><a href='" . buildSEOUrl(get_requested_pagename()) . "?single=" . $post -> seo_shortname . "'>weiterlesen...</a>
