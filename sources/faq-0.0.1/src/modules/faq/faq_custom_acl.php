@@ -1,3 +1,3 @@
 <?php
 global $acl_array;
-$acl_array["edit_faq"] = null;
+$acl_array["faq_edit"] = null;
