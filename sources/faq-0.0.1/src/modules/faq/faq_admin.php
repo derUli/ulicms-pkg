@@ -93,12 +93,12 @@ $sql = db_query("SELECT * FROM ".tbname("faq"). " ORDER by question ASC");
 if(db_num_rows($sql) > 0){
 ?>
 <table>
-<th>
-<td>Frage</td>
-<td>Antwort</td>
-<td>Bearbeiten</td>
-<td>Löschen</td>
-</th>
+<tr>
+<th>Frage</th>
+<th>Antwort</th>
+<th>Bearbeiten</th>
+<th>Löschen</th>
+</tr>
 <?php while($row = db_fetch_object($sql)){
 echo '<tr>';
 echo '<td>'.htmlspecialchars($row->question).'</td>';
