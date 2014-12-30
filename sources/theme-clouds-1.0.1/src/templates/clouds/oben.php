@@ -7,7 +7,7 @@
 
 <?php base_metas()?>
 <script src="<?php echo getTemplateDirPath("clouds");
-?>js/jquery.spritely-0.6.js" type="text/javascript"></script>
+?>js/jquery.spritely.js" type="text/javascript"></script>
  <script type="text/javascript">
             $(document).ready(function() {
                 $('#far-clouds').pan({fps: 30, speed: 0.7, dir: 'left', depth: 30});

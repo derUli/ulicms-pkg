@@ -31,7 +31,7 @@ echo "<link>" . rootDirectory() . "</link>\n";
 echo "<description>" . getconfig("motto") . "</description>\n";
 
 if(!getconfig("hide_meta_generator")){
-     $generator = "UliCMS Release " . cms_version();
+     $generator = "UliCMS " . cms_version();
      echo "<generator>" . $generator . "</generator>\n";
      }
 
