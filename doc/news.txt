@@ -5,3 +5,5 @@ Neue Pakete
 Aktualisierte Pakete
 - blog-6.2.5
 - theme-cloudy_dropdown-0.0.5
+- break_frames-0.0.2
+- phpmyadmin-4.3.4
