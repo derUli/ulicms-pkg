@@ -9,5 +9,3 @@ Aktualisierte Pakete
 - rss2blog-0.0.2
 - statistics-0.0.2
 - theme-clouds-1.0.1
-
-
