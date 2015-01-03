@@ -277,9 +277,9 @@ class StringParser{
      * @access public 
      * @param string $text The text to parse
      * @return mixed Either the root object of the tree if no output method
-     *                is defined, the tree reoutput to e.g. a string or false
-     *                if an internal error occured, such as a parse error if
-     *                in strict mode or the object is already parsing a text.
+     *                 is defined, the tree reoutput to e.g. a string or false
+     *                 if an internal error occured, such as a parse error if
+     *                 in strict mode or the object is already parsing a text.
      */
      function parse ($text){
          if ($this -> _parsing){
@@ -476,7 +476,7 @@ if ($topelem -> occurredAt < 0){
 // StringParser_Node?
 $this -> _setStatus (0);
  $res = $this -> _appendText ($this -> _text{
-        $topelem -> occurredAt}
+         $topelem -> occurredAt}
     );
  if (!$res){
      return false;
@@ -592,7 +592,7 @@ if ($this -> strict){
          }
      if (!$res){
          $res = $this -> _appendText ($this -> _text{
-                $this -> _cpos}
+                 $this -> _cpos}
             );
          if (!$res){
              return false;
@@ -937,7 +937,7 @@ class StringParser_Node{
  * 
  * @access public 
  * @param int $occurredAt The position in the text where this node
- *                         occurred at. If not determinable, it is -1.
+ *                          occurred at. If not determinable, it is -1.
  * @global __STRINGPARSER_NODE_ID
  */
  function StringParser_Node ($occurredAt = -1){
@@ -1062,7 +1062,7 @@ $new_index = count ($this -> _children);
  * @access public 
  * @param object $node The node to be inserted.
  * @param object $reference The reference node where the new node is
- *                           to be inserted before.
+ *                            to be inserted before.
  * @return bool On success, the function returns true, else false.
  */
  function insertChildBefore (& $node, & $reference){
@@ -1114,7 +1114,7 @@ while ($index >= $child){
  * @access public 
  * @param object $node The node to be inserted.
  * @param object $reference The reference node where the new node is
- *                           to be inserted after.
+ *                            to be inserted after.
  * @return bool On success, the function returns true, else false.
  */
  function insertChildAfter (& $node, & $reference){
@@ -1170,8 +1170,8 @@ while ($index >= $child + 1){
  * 
  * @access public 
  * @param mixed $child The child to destroy; either an integer
- *                      specifying the index of the child or a reference
- *                      to the child itself.
+ *                       specifying the index of the child or a reference
+ *                       to the child itself.
  * @param bool $destroy Destroy the child afterwards.
  * @return bool On success, the function returns true, else false.
  */
@@ -1515,7 +1515,7 @@ class StringParser_Node_Text extends StringParser_Node{
  * @access public 
  * @param string $content The initial content of this element
  * @param int $occurredAt The position in the text where this node
- *                         occurred at. If not determinable, it is -1.
+ *                          occurred at. If not determinable, it is -1.
  * @see StringParser_Node_Text::content
  */
  function StringParser_Node_Text ($content, $occurredAt = -1){

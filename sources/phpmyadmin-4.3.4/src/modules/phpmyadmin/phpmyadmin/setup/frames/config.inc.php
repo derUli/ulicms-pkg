@@ -1,14 +1,16 @@
 <?php
-/* vim: set expandtab sw=4 ts=4 sts=4: */
+/**
+ * vim: set expandtab sw=4 ts=4 sts=4:
+ */
 /**
  * Config file view and save screen
- *
+ * 
  * @package PhpMyAdmin-Setup
  */
 
-if (!defined('PHPMYADMIN')) {
-    exit;
-}
+if (!defined('PHPMYADMIN')){
+     exit;
+    }
 
 /**
  * Core libraries.
@@ -25,24 +27,24 @@ echo '<h2>' . __('Configuration file') . '</h2>';
 
 PMA_displayFormTop('config.php');
 echo '<input type="hidden" name="eol" value="'
-    . htmlspecialchars(PMA_ifSetOr($_GET['eol'], 'unix')) . '" />';
+ . htmlspecialchars(PMA_ifSetOr($_GET['eol'], 'unix')) . '" />';
 PMA_displayFieldsetTop('config.inc.php', '', null, array('class' => 'simple'));
 echo '<tr>';
 echo '<td>';
 echo '<textarea cols="50" rows="20" name="textconfig" '
-    . 'id="textconfig" spellcheck="false">';
-echo htmlspecialchars(ConfigGenerator::getConfigFile($GLOBALS['ConfigFile']));
+ . 'id="textconfig" spellcheck="false">';
+echo htmlspecialchars(ConfigGenerator :: getConfigFile($GLOBALS['ConfigFile']));
 echo '</textarea>';
 echo '</td>';
 echo '</tr>';
 echo '<tr>';
 echo '<td class="lastrow" style="text-align: left">';
 echo '<input type="submit" name="submit_download" value="'
-    . __('Download') . '" class="green" />';
+ . __('Download') . '" class="green" />';
 echo '<input type="submit" name="submit_save" value="' . __('Save') . '"';
-if (!$config_writable) {
-    echo ' disabled="disabled"';
-}
+if (!$config_writable){
+     echo ' disabled="disabled"';
+    }
 echo '/>';
 echo '</td>';
 echo '</tr>';

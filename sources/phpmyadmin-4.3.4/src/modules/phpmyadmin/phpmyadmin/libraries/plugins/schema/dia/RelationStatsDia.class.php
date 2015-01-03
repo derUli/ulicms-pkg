@@ -1,142 +1,138 @@
 <?php
-/* vim: set expandtab sw=4 ts=4 sts=4: */
+/**
+ * vim: set expandtab sw=4 ts=4 sts=4:
+ */
 /**
  * Contains Relation_Stats_Dia class
- *
+ * 
  * @package PhpMyAdmin
  */
-if (! defined('PHPMYADMIN')) {
-    exit;
-}
+if (! defined('PHPMYADMIN')){
+     exit;
+    }
 
 /**
  * Relation preferences/statistics
- *
+ * 
  * This class fetches the table master and foreign fields positions
  * and helps in generating the Table references and then connects
  * master table's master field to foreign table's foreign key
  * in dia XML document.
- *
+ * 
  * @package PhpMyAdmin
- * @name    Relation_Stats_Dia
- * @see     PMA_DIA
+ * @name Relation_Stats_Dia
+ * @see PMA_DIA
  */
 class Relation_Stats_Dia
 {
     /**
      * Defines properties
      */
-    public $srcConnPointsRight;
-    public $srcConnPointsLeft;
-    public $destConnPointsRight;
-    public $destConnPointsLeft;
-    public $masterTableId;
-    public $foreignTableId;
-    public $masterTablePos;
-    public $foreignTablePos;
-    public $referenceColor;
-
+     public $srcConnPointsRight;
+     public $srcConnPointsLeft;
+     public $destConnPointsRight;
+     public $destConnPointsLeft;
+     public $masterTableId;
+     public $foreignTableId;
+     public $masterTablePos;
+     public $foreignTablePos;
+     public $referenceColor;
+    
     /**
      * The "Relation_Stats_Dia" constructor
-     *
-     * @param string $master_table  The master table name
-     * @param string $master_field  The relation field in the master table
+     * 
+     * @param string $master_table The master table name
+     * @param string $master_field The relation field in the master table
      * @param string $foreign_table The foreign table name
      * @param string $foreign_field The relation field in the foreign table
-     *
      * @see Relation_Stats_Dia::_getXy
      */
-    function __construct($master_table, $master_field, $foreign_table,
-        $foreign_field
-    ) {
-        $src_pos  = $this->_getXy($master_table, $master_field);
-        $dest_pos = $this->_getXy($foreign_table, $foreign_field);
-        $this->srcConnPointsLeft = $src_pos[0];
-        $this->srcConnPointsRight = $src_pos[1];
-        $this->destConnPointsLeft = $dest_pos[0];
-        $this->destConnPointsRight = $dest_pos[1];
-        $this->masterTablePos = $src_pos[2];
-        $this->foreignTablePos = $dest_pos[2];
-        $this->masterTableId = $master_table->tableId;
-        $this->foreignTableId = $foreign_table->tableId;
-    }
-
+     function __construct($master_table, $master_field, $foreign_table,
+         $foreign_field
+        ){
+         $src_pos = $this -> _getXy($master_table, $master_field);
+         $dest_pos = $this -> _getXy($foreign_table, $foreign_field);
+         $this -> srcConnPointsLeft = $src_pos[0];
+         $this -> srcConnPointsRight = $src_pos[1];
+         $this -> destConnPointsLeft = $dest_pos[0];
+         $this -> destConnPointsRight = $dest_pos[1];
+         $this -> masterTablePos = $src_pos[2];
+         $this -> foreignTablePos = $dest_pos[2];
+         $this -> masterTableId = $master_table -> tableId;
+         $this -> foreignTableId = $foreign_table -> tableId;
+         }
+    
     /**
      * Each Table object have connection points
      * which is used to connect to other objects in Dia
      * we detect the position of key in fields and
      * then determines its left and right connection
      * points.
-     *
-     * @param string $table  The current table name
+     * 
+     * @param string $table The current table name
      * @param string $column The relation column name
-     *
      * @return array Table right,left connection points and key position
-     *
-     * @access private
+     * @access private 
      */
-    private function _getXy($table, $column)
+     private function _getXy($table, $column)
     {
-        $pos = array_search($column, $table->fields);
-        // left, right, position
+         $pos = array_search($column, $table -> fields);
+         // left, right, position
         $value = 12;
-        if ($pos != 0) {
-            return array($pos + $value + $pos, $pos + $value + $pos + 1, $pos);
-        }
-        return array($pos + $value , $pos + $value + 1, $pos);
-    }
-
+         if ($pos != 0){
+             return array($pos + $value + $pos, $pos + $value + $pos + 1, $pos);
+             }
+         return array($pos + $value , $pos + $value + 1, $pos);
+         }
+    
     /**
      * Draws relation references
-     *
+     * 
      * connects master table's master field to foreign table's
      * foreign field using Dia object type Database - Reference
      * Dia object is used to generate the XML of Dia Document.
      * Database reference Object and their attributes are involved
      * in the combination of displaying Database - reference on Dia Document.
-     *
+     * 
      * @param boolean $showColor Whether to use one color per relation or not
      * if showColor is true then an array of $listOfColors will be used to choose
      * the random colors for references lines. we can change/add more colors to this
-     *
-     * @return boolean|void
-     *
+     * @return boolean |void
      * @global object $dia The current Dia document
-     *
-     * @access public
+     * @access public 
      * @see PMA_PDF
      */
-    public function relationDraw($showColor)
+     public function relationDraw($showColor)
     {
-        global $dia;
-
-        PMA_Dia_Relation_Schema::$objectId += 1;
-        /*
+         global $dia;
+        
+         PMA_Dia_Relation_Schema :: $objectId += 1;
+        /**
          * if source connection points and destination connection
-        * points are same then return it false and don't draw that
-        * relation
-        */
-        if ( $this->srcConnPointsRight == $this->destConnPointsRight) {
-            if ( $this->srcConnPointsLeft == $this->destConnPointsLeft) {
-                return false;
-            }
-        }
-
-        if ($showColor) {
-            $listOfColors = array(
+         * points are same then return it false and don't draw that
+         * relation
+         */
+         if ($this -> srcConnPointsRight == $this -> destConnPointsRight){
+             if ($this -> srcConnPointsLeft == $this -> destConnPointsLeft){
+                 return false;
+                 }
+             }
+        
+         if ($showColor){
+             $listOfColors = array(
                 'FF0000',
-                '000099',
-                '00FF00'
-            );
-            shuffle($listOfColors);
-            $this->referenceColor =  '#' . $listOfColors[0] . '';
-        } else {
-            $this->referenceColor = '#000000';
-        }
-
-        $dia->writeRaw(
+                 '000099',
+                 '00FF00'
+                );
+             shuffle($listOfColors);
+             $this -> referenceColor = '#' . $listOfColors[0] . '';
+             }else{
+             $this -> referenceColor = '#000000';
+             }
+        
+         $dia -> writeRaw(
             '<dia:object type="Database - Reference" version="0" id="'
-            . PMA_Dia_Relation_Schema::$objectId . '">
+             . PMA_Dia_Relation_Schema :: $objectId . '">
             <dia:attribute name="obj_pos">
                 <dia:point val="3.27,18.9198"/>
             </dia:attribute>
@@ -168,7 +164,7 @@ class Relation_Stats_Dia
                 <dia:color val="#000000"/>
             </dia:attribute>
             <dia:attribute name="line_colour">
-                <dia:color val="' . $this->referenceColor . '"/>
+                <dia:color val="' . $this -> referenceColor . '"/>
             </dia:attribute>
             <dia:attribute name="line_width">
                 <dia:real val="0.10000000000000001"/>
@@ -203,14 +199,14 @@ class Relation_Stats_Dia
             </dia:attribute>
             <dia:connections>
                 <dia:connection handle="0" to="'
-            . $this->masterTableId . '" connection="'
-            . $this->srcConnPointsRight . '"/>
+             . $this -> masterTableId . '" connection="'
+             . $this -> srcConnPointsRight . '"/>
                 <dia:connection handle="1" to="'
-            . $this->foreignTableId . '" connection="'
-            . $this->destConnPointsRight . '"/>
+             . $this -> foreignTableId . '" connection="'
+             . $this -> destConnPointsRight . '"/>
             </dia:connections>
             </dia:object>'
-        );
+            );
+         }
     }
-}
 ?>

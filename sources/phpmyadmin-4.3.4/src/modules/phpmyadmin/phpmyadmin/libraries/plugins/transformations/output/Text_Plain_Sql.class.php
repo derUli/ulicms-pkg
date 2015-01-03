@@ -1,45 +1,49 @@
 <?php
-/* vim: set expandtab sw=4 ts=4 sts=4: */
+/**
+ * vim: set expandtab sw=4 ts=4 sts=4:
+ */
 /**
  * Text Plain SQL Transformations plugin for phpMyAdmin
- *
- * @package    PhpMyAdmin-Transformations
+ * 
+ * @package PhpMyAdmin-Transformations
  * @subpackage SQL
  */
-if (! defined('PHPMYADMIN')) {
-    exit;
-}
+if (! defined('PHPMYADMIN')){
+     exit;
+    }
 
-/* Get the sql transformations interface */
+/**
+ * Get the sql transformations interface
+ */
 require_once 'libraries/plugins/transformations/abstract/'
-    . 'SQLTransformationsPlugin.class.php';
+ . 'SQLTransformationsPlugin.class.php';
 
 /**
  * Handles the sql transformation for text plain
- *
- * @package    PhpMyAdmin-Transformations
+ * 
+ * @package PhpMyAdmin-Transformations
  * @subpackage SQL
  */
 class Text_Plain_Sql extends SQLTransformationsPlugin
 {
     /**
      * Gets the plugin`s MIME type
-     *
-     * @return string
+     * 
+     * @return string 
      */
-    public static function getMIMEType()
+     public static function getMIMEType()
     {
-        return "Text";
-    }
-
+         return "Text";
+         }
+    
     /**
      * Gets the plugin`s MIME subtype
-     *
-     * @return string
+     * 
+     * @return string 
      */
-    public static function getMIMESubtype()
+     public static function getMIMESubtype()
     {
-        return "Plain";
+         return "Plain";
+         }
     }
-}
 ?>
