@@ -18,18 +18,17 @@ else {
 }
     ?>
 <script type="text/javascript">
-funcion fillTemplate(){
+function fillTemplate(){
 
      $.ajax({
             url: "<?php echo getModulePath("humanstxt");?>template.txt",
             async: true,
             success: function (data){
-                $("textarea#text").text(data);
+                $("textarea#text").val(data);
             }
         });
    
 }
-
 </script><form action="<?php echo getModuleAdminSelfPath()?>" method="post">
 <p><a href="http://humanstxt.org">Über humans.txt</a><br/></p>
 <input type="button" value="Vorlage einfügen" onclick="fillTemplate();">
