@@ -9,4 +9,4 @@ function fullcalendar_name(){
          }else{
          return $names["de"];
          }
-    }
+     }

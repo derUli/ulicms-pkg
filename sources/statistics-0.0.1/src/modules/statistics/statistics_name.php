@@ -9,4 +9,4 @@ function statistics_name(){
          }else{
          return $names["de"];
          }
-    }
+     }

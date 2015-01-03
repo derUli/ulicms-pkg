@@ -11,9 +11,9 @@ function blog_meta_description_filter($txt){
          $result = db_fetch_assoc($query);
          $content_preview = $result["content_preview"];
          if(!is_null($result["meta_description"]) and !empty($result["meta_description"])){
-           $meta_description = trim($result["meta_description"]);
-            return real_htmlspecialchars($meta_description);
-         }
+             $meta_description = trim($result["meta_description"]);
+             return real_htmlspecialchars($meta_description);
+             }
          }
     
      if(!containsModule(get_requested_pagename(), "blog") or !$single or !$content_preview)

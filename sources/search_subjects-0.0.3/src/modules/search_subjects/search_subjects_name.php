@@ -9,4 +9,4 @@ function search_subjects_name(){
          }else{
          return $names["de"];
          }
-    }
+     }

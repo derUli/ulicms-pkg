@@ -9,4 +9,4 @@ function renumber_page_positions_name(){
          }else{
          return $names["de"];
          }
-    }
+     }

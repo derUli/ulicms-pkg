@@ -9,4 +9,4 @@ function blog_name(){
          }else{
          return $names["de"];
          }
-    }
+     }

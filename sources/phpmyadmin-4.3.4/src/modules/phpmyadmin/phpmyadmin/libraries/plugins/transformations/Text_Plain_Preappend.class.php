@@ -1,45 +1,49 @@
 <?php
-/* vim: set expandtab sw=4 ts=4 sts=4: */
+/**
+ * vim: set expandtab sw=4 ts=4 sts=4:
+ */
 /**
  * Text Plain Prepend/Append Transformations plugin for phpMyAdmin
- *
- * @package    PhpMyAdmin-Transformations
+ * 
+ * @package PhpMyAdmin-Transformations
  * @subpackage PreApPend
  */
-if (! defined('PHPMYADMIN')) {
-    exit;
-}
+if (! defined('PHPMYADMIN')){
+     exit;
+    }
 
-/* Get the prepend/append transformations interface */
+/**
+ * Get the prepend/append transformations interface
+ */
 require_once 'abstract/PreApPendTransformationsPlugin.class.php';
 
 /**
  * Handles the prepend and/or append transformation for text plain.
  * Has two options: the text to be prepended and appended (if any, default '')
- *
- * @package    PhpMyAdmin-Transformations
+ * 
+ * @package PhpMyAdmin-Transformations
  * @subpackage PreApPend
  */
 class Text_Plain_PreApPend extends PreApPendTransformationsPlugin
 {
     /**
      * Gets the plugin`s MIME type
-     *
-     * @return string
+     * 
+     * @return string 
      */
-    public static function getMIMEType()
+     public static function getMIMEType()
     {
-        return "Text";
-    }
-
+         return "Text";
+         }
+    
     /**
      * Gets the plugin`s MIME subtype
-     *
-     * @return string
+     * 
+     * @return string 
      */
-    public static function getMIMESubtype()
+     public static function getMIMESubtype()
     {
-        return "Plain";
+         return "Plain";
+         }
     }
-}
 ?>

@@ -9,4 +9,4 @@ function enforce_https_name(){
          }else{
          return $names["de"];
          }
-    }
+     }

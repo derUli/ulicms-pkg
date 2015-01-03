@@ -9,4 +9,4 @@ function mysql_optimize_name(){
          }else{
          return $names["de"];
          }
-    }
+     }

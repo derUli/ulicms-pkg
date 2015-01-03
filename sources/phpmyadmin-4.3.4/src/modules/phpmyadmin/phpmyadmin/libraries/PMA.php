@@ -1,15 +1,16 @@
 <?php
-/* vim: set expandtab sw=4 ts=4 sts=4: */
+/**
+ * vim: set expandtab sw=4 ts=4 sts=4:
+ */
 /**
  * phpMyAdmin main Controller
- *
+ * 
  * @package PhpMyAdmin
- *
  */
 
-if (! defined('PHPMYADMIN')) {
-    exit;
-}
+if (! defined('PHPMYADMIN')){
+     exit;
+    }
 
 /**
  * Database listing.
@@ -18,9 +19,8 @@ require_once './libraries/List_Database.class.php';
 
 /**
  * phpMyAdmin main Controller
- *
+ * 
  * @package PhpMyAdmin
- *
  * @property resource $userlink
  * @property resource $controllink
  */
@@ -28,85 +28,83 @@ class PMA
 {
     /**
      * Holds database list
-     *
-     * @var PMA_List_Database
+     * 
+     * @var PMA_List_Database 
      */
-    protected $databases = null;
-
+     protected $databases = null;
+    
     /**
      * DBMS user link
-     *
-     * @var resource
+     * 
+     * @var resource 
      */
-    protected $userlink = null;
-
+     protected $userlink = null;
+    
     /**
      * DBMS control link
-     *
-     * @var resource
+     * 
+     * @var resource 
      */
-    protected $controllink = null;
-
+     protected $controllink = null;
+    
     /**
      * magic access to protected/inaccessible members/properties
-     *
+     * 
      * @param string $param parameter name
-     *
-     * @return mixed
+     * @return mixed 
      * @see http://php.net/language.oop5.overloading
      */
-    public function __get($param)
+     public function __get($param)
     {
-        switch ($param) {
-        case 'databases' :
-            return $this->getDatabaseList();
-            break;
-        case 'userlink' :
-            return $this->userlink;
-            break;
-        case 'controllink' :
-            return $this->controllink;
-            break;
-        }
-
-        return null;
-    }
-
+         switch ($param){
+         case 'databases' :
+             return $this -> getDatabaseList();
+             break;
+         case 'userlink' :
+             return $this -> userlink;
+             break;
+         case 'controllink' :
+             return $this -> controllink;
+             break;
+             }
+        
+         return null;
+         }
+    
     /**
      * magic access to protected/inaccessible members/properties
-     *
+     * 
      * @param string $param parameter name
-     * @param mixed  $value value to set
-     *
-     * @return void
+     * @param mixed $value value to set
+     * @return void 
      * @see http://php.net/language.oop5.overloading
      */
-    public function __set($param, $value)
+     public function __set($param, $value)
     {
-        switch ($param) {
-        case 'userlink' :
-            $this->userlink = $value;
-            break;
-        case 'controllink' :
-            $this->controllink = $value;
-            break;
-        }
-    }
-
+         switch ($param){
+         case 'userlink' :
+             $this -> userlink = $value;
+             break;
+         case 'controllink' :
+             $this -> controllink = $value;
+             break;
+             }
+         }
+    
     /**
      * Accessor to PMA::$databases
-     *
-     * @return PMA_List_Database
+     * 
+     * @return PMA_List_Database 
      */
-    public function getDatabaseList()
+     public function getDatabaseList()
     {
-        if (null === $this->databases) {
-            $this->databases = new PMA_List_Database(
-                $this->userlink
-            );
-        }
-
-        return $this->databases;
+         if (null === $this -> databases){
+             $this -> databases = new PMA_List_Database(
+                $this -> userlink
+                );
+             }
+        
+         return $this -> databases;
+         }
     }
-}
 ?>

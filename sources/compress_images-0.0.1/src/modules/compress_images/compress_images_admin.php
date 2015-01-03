@@ -68,18 +68,18 @@ if(isset($_POST["submit"])){
              }
         
          }
-    }
+     }
 
 // Konfiguration checken
 $send_comments_via_email = getconfig("blog_send_comments_via_email") == "yes";
 
 function compress_images_admin(){
-    ?>
+     ?>
 
 <form action="<?php echo getModuleAdminSelfPath()?>" method="post">
 <input type="submit" name="submit" value="Kompression durchführen"/>
 </form>
 <?php
-    }
+     }
 
 ?>

@@ -9,4 +9,4 @@ function lightbox_gallery_name(){
          }else{
          return $names["de"];
          }
-    }
+     }

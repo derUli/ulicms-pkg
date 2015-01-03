@@ -84,16 +84,16 @@ function blog_add_form(){
      $html_output .= "</td>";
     
      $html_output .= "</tr>";
-     
-      $html_output .= "<tr>";
-         $html_output .= "<td><strong>Meta Beschreibung:</strong></td>";
-         $html_output .= "<td><textarea name=\"meta_description\" cols=\"40\" rows=\"3\"></textarea></td>";
-         $html_output .= "</tr>";
-         
-         $html_output .= "<tr>";
-         $html_output .= "<td><strong>Meta Keywords:</strong></td>";
-         $html_output .= "<td><textarea name=\"meta_keywords\" cols=\"40\" rows=\"3\"></textarea></td>";
-         $html_output .= "</tr>";
+    
+     $html_output .= "<tr>";
+     $html_output .= "<td><strong>Meta Beschreibung:</strong></td>";
+     $html_output .= "<td><textarea name=\"meta_description\" cols=\"40\" rows=\"3\"></textarea></td>";
+     $html_output .= "</tr>";
+    
+     $html_output .= "<tr>";
+     $html_output .= "<td><strong>Meta Keywords:</strong></td>";
+     $html_output .= "<td><textarea name=\"meta_keywords\" cols=\"40\" rows=\"3\"></textarea></td>";
+     $html_output .= "</tr>";
     
     
      $html_output .= "<tr>";

@@ -9,4 +9,4 @@ function guestbook_name(){
          }else{
          return $names["de"];
          }
-    }
+     }

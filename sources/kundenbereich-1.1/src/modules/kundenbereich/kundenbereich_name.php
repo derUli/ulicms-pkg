@@ -9,4 +9,4 @@ function kundenbereich_name(){
          }else{
          return $names["de"];
          }
-    }
+     }

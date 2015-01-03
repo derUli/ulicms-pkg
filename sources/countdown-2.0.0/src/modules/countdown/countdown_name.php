@@ -9,4 +9,4 @@ function countdown_name(){
          }else{
          return $names["de"];
          }
-    }
+     }

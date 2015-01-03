@@ -9,4 +9,4 @@ function block_useragents_name(){
          }else{
          return $names["de"];
          }
-    }
+     }

@@ -9,4 +9,4 @@ function redirections301_name(){
          }else{
          return $names["de"];
          }
-    }
+     }

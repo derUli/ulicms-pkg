@@ -9,4 +9,4 @@ function link_checker_name(){
          }else{
          return $names["de"];
          }
-    }
+     }

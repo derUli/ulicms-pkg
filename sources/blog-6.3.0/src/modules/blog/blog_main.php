@@ -1,7 +1,7 @@
 <?php
 function blog_render(){
     
-     $acl = new ACL();    
+     $acl = new ACL();
      if(!empty($_GET["single"])){
         
          require_once getModulePath("blog") . "blog_single.php";
@@ -180,8 +180,8 @@ function blog_update(){
          }
     
     
-    $meta_description = db_escape($_POST["meta_description"]);
-    $meta_keywords = db_escape($_POST["meta_keywords"]);
+     $meta_description = db_escape($_POST["meta_description"]);
+     $meta_keywords = db_escape($_POST["meta_keywords"]);
     
     
      // Rechte prüfen
@@ -325,9 +325,9 @@ function blog_submit(){
          $datum = time();
         
          }
-             
-    $meta_description = db_escape($_POST["meta_description"]);
-    $meta_keywords = db_escape($_POST["meta_keywords"]);
+    
+     $meta_description = db_escape($_POST["meta_description"]);
+     $meta_keywords = db_escape($_POST["meta_keywords"]);
     
      // Rechte prüfen
     if($acl -> hasPermission("blog")){

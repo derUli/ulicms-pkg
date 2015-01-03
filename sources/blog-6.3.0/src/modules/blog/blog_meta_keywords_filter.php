@@ -12,10 +12,10 @@ function blog_meta_keywords_filter($txt){
      if(db_num_rows($query) > 0){
          $result = db_fetch_assoc($query);
          $content_full = $result["content_full"];
-            if(!is_null($result["meta_keywords"]) and !empty($result["meta_keywords"])){
-           $meta_keywords = trim($result["meta_keywords"]);
-            return real_htmlspecialchars($meta_keywords);
-         }
+         if(!is_null($result["meta_keywords"]) and !empty($result["meta_keywords"])){
+             $meta_keywords = trim($result["meta_keywords"]);
+             return real_htmlspecialchars($meta_keywords);
+             }
          }
     
     

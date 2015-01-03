@@ -9,4 +9,4 @@ function gallery_name(){
          }else{
          return $names["de"];
          }
-    }
+     }

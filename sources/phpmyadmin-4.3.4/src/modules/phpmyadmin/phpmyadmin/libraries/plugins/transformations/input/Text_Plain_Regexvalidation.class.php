@@ -1,46 +1,50 @@
 <?php
-/* vim: set expandtab sw=4 ts=4 sts=4: */
+/**
+ * vim: set expandtab sw=4 ts=4 sts=4:
+ */
 /**
  * Text Plain Regex Validation Input Transformations plugin for phpMyAdmin
- *
- * @package    PhpMyAdmin-Transformations
+ * 
+ * @package PhpMyAdmin-Transformations
  * @subpackage RegexValidation
  */
-if (! defined('PHPMYADMIN')) {
-    exit;
-}
+if (! defined('PHPMYADMIN')){
+     exit;
+    }
 
-/* Get the regex validation transformations class */
+/**
+ * Get the regex validation transformations class
+ */
 require_once 'libraries/plugins/transformations/abstract/'
-    . 'RegexValidationTransformationsPlugin.class.php';
+ . 'RegexValidationTransformationsPlugin.class.php';
 
 /**
  * Handles the input regex validation transformation for text plain.
  * Has one option: the regular expression
- *
- * @package    PhpMyAdmin-Transformations
+ * 
+ * @package PhpMyAdmin-Transformations
  * @subpackage RegexValidation
  */
 class Text_Plain_RegexValidation extends RegexValidationTransformationsPlugin
 {
     /**
      * Gets the plugin`s MIME type
-     *
-     * @return string
+     * 
+     * @return string 
      */
-    public static function getMIMEType()
+     public static function getMIMEType()
     {
-        return "Text";
-    }
-
+         return "Text";
+         }
+    
     /**
      * Gets the plugin`s MIME subtype
-     *
-     * @return string
+     * 
+     * @return string 
      */
-    public static function getMIMESubtype()
+     public static function getMIMESubtype()
     {
-        return "Plain";
+         return "Plain";
+         }
     }
-}
 ?>

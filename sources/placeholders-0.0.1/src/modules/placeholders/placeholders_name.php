@@ -9,4 +9,4 @@ function placeholders_name(){
          }else{
          return $names["de"];
          }
-    }
+     }

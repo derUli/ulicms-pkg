@@ -1,71 +1,76 @@
 <?php
-/* vim: set expandtab sw=4 ts=4 sts=4: */
+/**
+ * vim: set expandtab sw=4 ts=4 sts=4:
+ */
 /**
  * Abstract class for the prepend/append transformations plugins
- *
- * @package    PhpMyAdmin-Transformations
+ * 
+ * @package PhpMyAdmin-Transformations
  * @subpackage PreApPend
  */
-if (! defined('PHPMYADMIN')) {
-    exit;
-}
+if (! defined('PHPMYADMIN')){
+     exit;
+    }
 
-/* Get the transformations interface */
+/**
+ * Get the transformations interface
+ */
 require_once 'libraries/plugins/TransformationsPlugin.class.php';
 
 /**
  * Provides common methods for all of the prepend/append transformations plugins.
- *
- * @package    PhpMyAdmin-Transformations
+ * 
+ * @package PhpMyAdmin-Transformations
  * @subpackage PreApPend
  */
 abstract class PreApPendTransformationsPlugin extends TransformationsPlugin
 {
     /**
      * Gets the transformation description of the specific plugin
-     *
-     * @return string
+     * 
+     * @return string 
      */
-    public static function getInfo()
+     public static function getInfo()
     {
-        return __(
+         return __(
             'Prepends and/or Appends text to a string. First option is text'
-            . ' to be prepended, second is appended (enclosed in single'
-            . ' quotes, default empty string).'
-        );
-    }
-
+             . ' to be prepended, second is appended (enclosed in single'
+             . ' quotes, default empty string).'
+            );
+         }
+    
     /**
      * Does the actual work of each specific transformations plugin.
-     *
-     * @param string $buffer  text to be transformed
-     * @param array  $options transformation options
-     * @param string $meta    meta information
-     *
-     * @return string
+     * 
+     * @param string $buffer text to be transformed
+     * @param array $options transformation options
+     * @param string $meta meta information
+     * @return string 
      */
-    public function applyTransformation($buffer, $options = array(), $meta = '')
+     public function applyTransformation($buffer, $options = array(), $meta = '')
     {
-        $options = $this->getOptions($options, array('', ''));
-
-        //just prepend and/or append the options to the original text
+         $options = $this -> getOptions($options, array('', ''));
+        
+         // just prepend and/or append the options to the original text
         $newtext = htmlspecialchars($options[0]) . $buffer
-            . htmlspecialchars($options[1]);
-
-        return $newtext;
-    }
-
-    /* ~~~~~~~~~~~~~~~~~~~~ Getters and Setters ~~~~~~~~~~~~~~~~~~~~ */
-
-
+         . htmlspecialchars($options[1]);
+        
+         return $newtext;
+         }
+    
+    /**
+     * ~~~~~~~~~~~~~~~~~~~~ Getters and Setters ~~~~~~~~~~~~~~~~~~~~
+     */
+    
+    
     /**
      * Gets the transformation name of the specific plugin
-     *
-     * @return string
+     * 
+     * @return string 
      */
-    public static function getName()
+     public static function getName()
     {
-        return "PreApPend";
+         return "PreApPend";
+         }
     }
-}
 ?>

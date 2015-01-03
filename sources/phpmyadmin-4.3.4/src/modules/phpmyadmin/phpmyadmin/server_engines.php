@@ -1,8 +1,10 @@
 <?php
-/* vim: set expandtab sw=4 ts=4 sts=4: */
+/**
+ * vim: set expandtab sw=4 ts=4 sts=4:
+ */
 /**
  * display list of server engines and additional information about them
- *
+ * 
  * @package PhpMyAdmin
  */
 
@@ -21,13 +23,13 @@ require 'libraries/server_engines.lib.php';
 /**
  * Displays the sub-page heading
  */
-$response = PMA_Response::getInstance();
-$response->addHTML(PMA_getHtmlForSubPageHeader('engines'));
+$response = PMA_Response :: getInstance();
+$response -> addHTML(PMA_getHtmlForSubPageHeader('engines'));
 
 /**
  * start output
  */
-$response->addHTML(PMA_getHtmlForServerEngines());
+$response -> addHTML(PMA_getHtmlForServerEngines());
 
 exit;
 

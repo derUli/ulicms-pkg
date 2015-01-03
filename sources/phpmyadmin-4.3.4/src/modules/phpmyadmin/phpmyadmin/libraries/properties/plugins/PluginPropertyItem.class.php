@@ -1,183 +1,184 @@
 <?php
-/* vim: set expandtab sw=4 ts=4 sts=4: */
+/**
+ * vim: set expandtab sw=4 ts=4 sts=4:
+ */
 /**
  * The top-level class of the "Plugin" subtree of the object-oriented
  * properties system (the other subtree is "Options").
- *
+ * 
  * @package PhpMyAdmin
  */
-if (! defined('PHPMYADMIN')) {
-    exit;
-}
+if (! defined('PHPMYADMIN')){
+     exit;
+    }
 
-/* This class extends the PropertyItem class */
+/**
+ * This class extends the PropertyItem class
+ */
 require_once 'libraries/properties/PropertyItem.class.php';
 
 /**
  * Superclass for
- *  - ExportPluginProperties,
- *  - ImportPluginProperties and
- *  - TransformationsPluginProperties
- *
+ *   - ExportPluginProperties,
+ *   - ImportPluginProperties and
+ *   - TransformationsPluginProperties
+ * 
  * @package PhpMyAdmin
  */
 abstract class PluginPropertyItem extends PropertyItem
 {
     /**
      * Text
-     *
-     * @var string
+     * 
+     * @var string 
      */
-    private $_text;
-
+     private $_text;
+    
     /**
      * Extension
-     *
-     * @var string
+     * 
+     * @var string 
      */
-    private $_extension;
-
+     private $_extension;
+    
     /**
      * Options
-     *
-     * @var OptionsPropertyRootGroup
+     * 
+     * @var OptionsPropertyRootGroup 
      */
-    private $_options;
-
+     private $_options;
+    
     /**
      * Options text
-     *
-     * @var string
+     * 
+     * @var string 
      */
-    private $_optionsText;
-
+     private $_optionsText;
+    
     /**
      * MIME Type
-     *
-     * @var string
+     * 
+     * @var string 
      */
-    private $_mimeType;
-
-    /* ~~~~~~~~~~~~~~~~~~~~ Getters and Setters ~~~~~~~~~~~~~~~~~~~~ */
-
+     private $_mimeType;
+    
+    /**
+     * ~~~~~~~~~~~~~~~~~~~~ Getters and Setters ~~~~~~~~~~~~~~~~~~~~
+     */
+    
     /**
      * Gets the text
-     *
-     * @return string
+     * 
+     * @return string 
      */
-    public function getText()
+     public function getText()
     {
-        return $this->_text;
-    }
-
+         return $this -> _text;
+         }
+    
     /**
      * Sets the text
-     *
+     * 
      * @param string $text text
-     *
-     * @return void
+     * @return void 
      */
-    public function setText($text)
+     public function setText($text)
     {
-        $this->_text = $text;
-    }
-
+         $this -> _text = $text;
+         }
+    
     /**
      * Gets the extension
-     *
-     * @return string
+     * 
+     * @return string 
      */
-    public function getExtension()
+     public function getExtension()
     {
-        return $this->_extension;
-    }
-
+         return $this -> _extension;
+         }
+    
     /**
      * Sets the extension
-     *
+     * 
      * @param string $extension extension
-     *
-     * @return void
+     * @return void 
      */
-    public function setExtension($extension)
+     public function setExtension($extension)
     {
-        $this->_extension = $extension;
-    }
-
+         $this -> _extension = $extension;
+         }
+    
     /**
      * Gets the options
-     *
-     * @return OptionsPropertyRootGroup
+     * 
+     * @return OptionsPropertyRootGroup 
      */
-    public function getOptions()
+     public function getOptions()
     {
-        return $this->_options;
-    }
-
+         return $this -> _options;
+         }
+    
     /**
      * Sets the options
-     *
+     * 
      * @param OptionsPropertyRootGroup $options options
-     *
-     * @return void
+     * @return void 
      */
-    public function setOptions($options)
+     public function setOptions($options)
     {
-        $this->_options = $options;
-    }
-
+         $this -> _options = $options;
+         }
+    
     /**
      * Gets the options text
-     *
-     * @return string
+     * 
+     * @return string 
      */
-    public function getOptionsText()
+     public function getOptionsText()
     {
-        return $this->_optionsText;
-    }
-
+         return $this -> _optionsText;
+         }
+    
     /**
      * Sets the options text
-     *
+     * 
      * @param string $optionsText optionsText
-     *
-     * @return void
+     * @return void 
      */
-    public function setOptionsText($optionsText)
+     public function setOptionsText($optionsText)
     {
-        $this->_optionsText = $optionsText;
-    }
-
+         $this -> _optionsText = $optionsText;
+         }
+    
     /**
      * Gets the MIME type
-     *
-     * @return string
+     * 
+     * @return string 
      */
-    public function getMimeType()
+     public function getMimeType()
     {
-        return $this->_mimeType;
-    }
-
+         return $this -> _mimeType;
+         }
+    
     /**
      * Sets the MIME type
-     *
+     * 
      * @param string $mimeType MIME type
-     *
-     * @return void
+     * @return void 
      */
-    public function setMimeType($mimeType)
+     public function setMimeType($mimeType)
     {
-        $this->_mimeType = $mimeType;
-    }
-
+         $this -> _mimeType = $mimeType;
+         }
+    
     /**
      * Returns the property type ( either "options", or "plugin" ).
-     *
-     * @return string
+     * 
+     * @return string 
      */
-    public function getPropertyType()
+     public function getPropertyType()
     {
-        return "plugin";
+         return "plugin";
+         }
     }
-}
 ?>

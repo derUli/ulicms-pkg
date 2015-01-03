@@ -4,7 +4,7 @@ if(!function_exists("setconfig"))
      include "init.php";
 
 echo "<p>Lege Datenbankstruktur an</p>";
-     db_query("CREATE TABLE IF NOT EXISTS `" . tbname("blog") . "` (
+ db_query("CREATE TABLE IF NOT EXISTS `" . tbname("blog") . "` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `datum` bigint(20) NOT NULL,
   `title` varchar(200) NOT NULL,
@@ -18,9 +18,9 @@ echo "<p>Lege Datenbankstruktur an</p>";
   `views` int NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;");
-    
-    
-     db_query("CREATE TABLE IF NOT EXISTS `" . tbname("blog_comments") . "` (
+
+
+ db_query("CREATE TABLE IF NOT EXISTS `" . tbname("blog_comments") . "` (
 `id` int(11) NOT NULL AUTO_INCREMENT,
 `name` varchar(38) NOT NULL,
 `email` varchar(255) NOT NULL,
@@ -31,7 +31,7 @@ echo "<p>Lege Datenbankstruktur an</p>";
 PRIMARY KEY (`id`)
 )ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;");
 
-db_query("ALTER TABLE `".tbname("blog")."` ADD `meta_description` VARCHAR(255) NULL, ADD `meta_keywords` VARCHAR(255) NULL");
+db_query("ALTER TABLE `" . tbname("blog") . "` ADD `meta_description` VARCHAR(255) NULL, ADD `meta_keywords` VARCHAR(255) NULL");
 
 
 

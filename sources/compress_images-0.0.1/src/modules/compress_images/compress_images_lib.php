@@ -22,4 +22,4 @@ function compress_image($source_url, $destination_url, $quality){
     
      // return destination file
     return $destination_url;
-    }
+     }

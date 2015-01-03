@@ -9,4 +9,4 @@ function phpinfo_name(){
          }else{
          return $names["de"];
          }
-    }
+     }

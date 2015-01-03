@@ -9,4 +9,4 @@ function redirections302_name(){
          }else{
          return $names["de"];
          }
-    }
+     }

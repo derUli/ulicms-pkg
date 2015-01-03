@@ -228,8 +228,8 @@ class StringParser_BBCode extends StringParser{
      * Set occurrence type
      * 
      * Example:
-     *     $bbcode->setOccurrenceType ('url', 'link');
-     *     $bbcode->setMaxOccurrences ('link', 4);
+     *      $bbcode->setOccurrenceType ('url', 'link');
+     *      $bbcode->setMaxOccurrences ('link', 4);
      * Would create the situation where a link may only occur four
      * times in the hole text.
      * 
@@ -1894,8 +1894,8 @@ if ($ret -> _type != STRINGPARSER_NODE_TEXT && !$ret -> hadCloseTag ()){
  * 
  * @access public 
  * @param string $action The action which is to be called ('validate'
- *                         for first validation, 'validate_again' for
- *                         second validation (optional))
+ *                          for first validation, 'validate_again' for
+ *                          second validation (optional))
  * @return bool 
  */
  function validate ($action = 'validate'){

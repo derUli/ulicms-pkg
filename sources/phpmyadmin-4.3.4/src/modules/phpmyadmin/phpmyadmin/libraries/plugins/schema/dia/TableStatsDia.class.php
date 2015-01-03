@@ -1,149 +1,146 @@
 <?php
-/* vim: set expandtab sw=4 ts=4 sts=4: */
+/**
+ * vim: set expandtab sw=4 ts=4 sts=4:
+ */
 /**
  * Contains Table_Stats_Dia class
- *
+ * 
  * @package PhpMyAdmin
  */
-if (! defined('PHPMYADMIN')) {
-    exit;
-}
+if (! defined('PHPMYADMIN')){
+     exit;
+    }
 
 require_once 'libraries/plugins/schema/TableStats.class.php';
 
 /**
  * Table preferences/statistics
- *
+ * 
  * This class preserves the table co-ordinates,fields
  * and helps in drawing/generating the Tables in dia XML document.
- *
+ * 
  * @package PhpMyAdmin
- * @name    Table_Stats_Dia
- * @see     PMA_DIA
+ * @name Table_Stats_Dia
+ * @see PMA_DIA
  */
 class Table_Stats_Dia extends TableStats
 {
-    public $tableId;
-    public $tableColor;
-
+     public $tableId;
+     public $tableColor;
+    
     /**
      * The "Table_Stats_Dia" constructor
-     *
-     * @param string  $tableName  The table name
+     * 
+     * @param string $tableName The table name
      * @param integer $pageNumber The current page number (from the
-     *                            $cfg['Servers'][$i]['table_coords'] table)
-     * @param boolean $showKeys   Whether to display ONLY keys or not
-     * @param boolean $offline    Whether the coordinates are sent from the browser
-     *
+     *                             $cfg['Servers'][$i]['table_coords'] table)
+     * @param boolean $showKeys Whether to display ONLY keys or not
+     * @param boolean $offline Whether the coordinates are sent from the browser
      * @global object $dia         The current dia document
-     *
      * @see PMA_DIA
      */
-    function __construct(
+     function __construct(
         $tableName, $pageNumber, $showKeys = false, $offline = false
-    ) {
-        global $dia;
-        parent::__construct(
+        ){
+         global $dia;
+         parent :: __construct(
             $dia, $GLOBALS['db'], $pageNumber, $tableName, $showKeys, false, $offline
-        );
-
+            );
+        
         /**
          * Every object in Dia document needs an ID to identify
          * so, we used a static variable to keep the things unique
-        */
-        PMA_Dia_Relation_Schema::$objectId += 1;
-        $this->tableId = PMA_Dia_Relation_Schema::$objectId;
-    }
-
+         */
+         PMA_Dia_Relation_Schema :: $objectId += 1;
+         $this -> tableId = PMA_Dia_Relation_Schema :: $objectId;
+         }
+    
     /**
      * Displays an error when the table cannot be found.
-     *
-     * @return void
+     * 
+     * @return void 
      */
-    protected function showMissingTableError()
+     protected function showMissingTableError()
     {
-        $this->diagram->dieSchema(
-            $this->pageNumber,
-            "DIA",
-            sprintf(__('The %s table doesn\'t exist!'), $this->tableName)
-        );
-    }
-
+         $this -> diagram -> dieSchema(
+            $this -> pageNumber,
+             "DIA",
+             sprintf(__('The %s table doesn\'t exist!'), $this -> tableName)
+            );
+         }
+    
     /**
      * Displays an error on missing coordinates
-     *
-     * @return void
+     * 
+     * @return void 
      */
-    protected function showMissingCoordinatesError()
+     protected function showMissingCoordinatesError()
     {
-        $this->diagram->dieSchema(
-            $this->pageNumber,
-            "DIA",
-            sprintf(
+         $this -> diagram -> dieSchema(
+            $this -> pageNumber,
+             "DIA",
+             sprintf(
                 __('Please configure the coordinates for table %s'),
-                $this->tableName
-            )
-        );
-    }
-
-
+                 $this -> tableName
+                )
+            );
+         }
+    
+    
     /**
      * Do draw the table
-     *
+     * 
      * Tables are generated using object type Database - Table
      * primary fields are underlined in tables. Dia object
      * is used to generate the XML of Dia Document. Database Table
      * Object and their attributes are involved in the combination
      * of displaing Database - Table on Dia Document.
-     *
+     * 
      * @param boolean $showColor Whether to show color for tables text or not
      * if showColor is true then an array of $listOfColors will be used to choose
      * the random colors for tables text we can change/add more colors to this array
-     *
-     * @return void
-     *
+     * @return void 
      * @global object $dia The current Dia document
-     *
-     * @access public
+     * @access public 
      * @see PMA_DIA
      */
-    public function tableDraw($showColor)
+     public function tableDraw($showColor)
     {
-        global $dia;
-
-        if ($showColor) {
-            $listOfColors = array(
+         global $dia;
+        
+         if ($showColor){
+             $listOfColors = array(
                 'FF0000',
-                '000099',
-                '00FF00'
-            );
-            shuffle($listOfColors);
-            $this->tableColor =  '#' . $listOfColors[0] . '';
-        } else {
-            $this->tableColor = '#000000';
-        }
-
-        $factor = 0.1;
-
-        $dia->startElement('dia:object');
-        $dia->writeAttribute('type', 'Database - Table');
-        $dia->writeAttribute('version', '0');
-        $dia->writeAttribute('id', '' . $this->tableId . '');
-        $dia->writeRaw(
+                 '000099',
+                 '00FF00'
+                );
+             shuffle($listOfColors);
+             $this -> tableColor = '#' . $listOfColors[0] . '';
+             }else{
+             $this -> tableColor = '#000000';
+             }
+        
+         $factor = 0.1;
+        
+         $dia -> startElement('dia:object');
+         $dia -> writeAttribute('type', 'Database - Table');
+         $dia -> writeAttribute('version', '0');
+         $dia -> writeAttribute('id', '' . $this -> tableId . '');
+         $dia -> writeRaw(
             '<dia:attribute name="obj_pos">
                 <dia:point val="'
-            . ($this->x * $factor) . ',' . ($this->y * $factor) . '"/>
+             . ($this -> x * $factor) . ',' . ($this -> y * $factor) . '"/>
             </dia:attribute>
             <dia:attribute name="obj_bb">
                 <dia:rectangle val="'
-            . ($this->x * $factor) . ',' . ($this->y * $factor) . ';9.97,9.2"/>
+             . ($this -> x * $factor) . ',' . ($this -> y * $factor) . ';9.97,9.2"/>
             </dia:attribute>
             <dia:attribute name="meta">
                 <dia:composite type="dict"/>
             </dia:attribute>
             <dia:attribute name="elem_corner">
                 <dia:point val="'
-            . ($this->x * $factor) . ',' . ($this->y * $factor) . '"/>
+             . ($this -> x * $factor) . ',' . ($this -> y * $factor) . '"/>
             </dia:attribute>
             <dia:attribute name="elem_width">
                 <dia:real val="5.9199999999999999"/>
@@ -152,7 +149,7 @@ class Table_Stats_Dia extends TableStats
                 <dia:real val="3.5"/>
             </dia:attribute>
             <dia:attribute name="text_colour">
-                <dia:color val="' . $this->tableColor . '"/>
+                <dia:color val="' . $this -> tableColor . '"/>
             </dia:attribute>
             <dia:attribute name="line_colour">
                 <dia:color val="#000000"/>
@@ -164,7 +161,7 @@ class Table_Stats_Dia extends TableStats
                 <dia:real val="0.10000000000000001"/>
             </dia:attribute>
             <dia:attribute name="name">
-                <dia:string>#' . $this->tableName . '#</dia:string>
+                <dia:string>#' . $this -> tableName . '#</dia:string>
             </dia:attribute>
             <dia:attribute name="comment">
                 <dia:string>##</dia:string>
@@ -199,13 +196,13 @@ class Table_Stats_Dia extends TableStats
             <dia:attribute name="comment_font_height">
                 <dia:real val="0.69999999999999996"/>
             </dia:attribute>'
-        );
-
-        $dia->startElement('dia:attribute');
-        $dia->writeAttribute('name', 'attributes');
-
-        foreach ($this->fields as $field) {
-            $dia->writeRaw(
+            );
+        
+         $dia -> startElement('dia:attribute');
+         $dia -> writeAttribute('name', 'attributes');
+        
+         foreach ($this -> fields as $field){
+             $dia -> writeRaw(
                 '<dia:composite type="table_attribute">
                     <dia:attribute name="name">
                 <dia:string>#' . $field . '#</dia:string>
@@ -216,16 +213,16 @@ class Table_Stats_Dia extends TableStats
                     <dia:attribute name="comment">
                 <dia:string>##</dia:string>
                 </dia:attribute>'
-            );
-            unset($pm);
-            $pm = 'false';
-            if (in_array($field, $this->primary)) {
-                $pm = 'true';
-            }
-            if ($field == $this->displayfield) {
-                $pm = 'false';
-            }
-            $dia->writeRaw(
+                );
+             unset($pm);
+             $pm = 'false';
+             if (in_array($field, $this -> primary)){
+                 $pm = 'true';
+                 }
+             if ($field == $this -> displayfield){
+                 $pm = 'false';
+                 }
+             $dia -> writeRaw(
                 '<dia:attribute name="primary_key">
                     <dia:boolean val="' . $pm . '"/>
                 </dia:attribute>
@@ -236,10 +233,10 @@ class Table_Stats_Dia extends TableStats
                     <dia:boolean val="' . $pm . '"/>
                 </dia:attribute>
                 </dia:composite>'
-            );
-        }
-        $dia->endElement();
-        $dia->endElement();
+                );
+             }
+         $dia -> endElement();
+         $dia -> endElement();
+         }
     }
-}
 ?>

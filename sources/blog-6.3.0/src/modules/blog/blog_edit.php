@@ -114,15 +114,15 @@ function blog_edit_form($post_id){
          $html_output .= "<strong><input name=\"datum\" type=\"datetime-local\" value=\"" . date("Y-m-d\TH:i:s", $post -> datum) . "\" step=any></strong>";
          $html_output .= "</td>";
          $html_output .= "</tr>";
-                  
+        
          $html_output .= "<tr>";
          $html_output .= "<td><strong>Meta Beschreibung:</strong></td>";
-         $html_output .= "<td><textarea name=\"meta_description\" cols=\"40\" rows=\"3\">".real_htmlspecialchars($post-> meta_description)."</textarea></td>";
+         $html_output .= "<td><textarea name=\"meta_description\" cols=\"40\" rows=\"3\">" . real_htmlspecialchars($post -> meta_description) . "</textarea></td>";
          $html_output .= "</tr>";
-         
+        
          $html_output .= "<tr>";
          $html_output .= "<td><strong>Meta Keywords:</strong></td>";
-         $html_output .= "<td><textarea name=\"meta_keywords\" cols=\"40\" rows=\"3\">".real_htmlspecialchars($post-> meta_keywords)."</textarea></td>";
+         $html_output .= "<td><textarea name=\"meta_keywords\" cols=\"40\" rows=\"3\">" . real_htmlspecialchars($post -> meta_keywords) . "</textarea></td>";
          $html_output .= "</tr>";
         
         

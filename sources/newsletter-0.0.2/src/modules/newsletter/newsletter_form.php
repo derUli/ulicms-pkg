@@ -85,7 +85,8 @@ echo htmlspecialchars($_SESSION["newsletter_data"]["newsletter_text"]);
 <script type="text/javascript">
 var editor = CKEDITOR.replace( 'newsletter_text',
 					{
-						skin : '<?php echo getconfig("ckeditor_skin");?>'
+						skin : '<?php echo getconfig("ckeditor_skin");
+?>'
 					});                                         
 
 </script>
