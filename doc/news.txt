@@ -2,7 +2,7 @@ Neue Pakete
 - statistics_visitoirs_today_widget-0.0.1
 - jquery_migrate-1.2.1
 - google_maps-0.0.1
-
+- humanstxt-0.0.1
 
 Aktualisierte Pakete
 - blog_statistics_dashbord-0.0.2
