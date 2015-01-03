@@ -1,0 +1,2 @@
+<link rel="author" href="humans.txt" />
+
