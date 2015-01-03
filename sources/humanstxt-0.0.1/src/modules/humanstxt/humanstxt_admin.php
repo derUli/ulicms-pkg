@@ -19,12 +19,18 @@ else {
     ?>
 <script type="text/javascript">
 function fillTemplate(){
-
+     $("#message").html("Lade Vorlage");
+     $("#loading").show();
+     $("#message").show();
      $.ajax({
             url: "<?php echo getModulePath("humanstxt");?>template.txt",
             async: true,
             success: function (data){
                 $("textarea#text").val(data);
+                $("textarea#text").focus()
+                $("#message").html("");
+                $("#loading").hide();
+                $("#message").hide();
             }
         });
    
