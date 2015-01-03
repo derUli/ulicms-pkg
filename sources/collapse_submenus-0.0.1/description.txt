@@ -1,4 +1,3 @@
-Es werden nicht mehr alle Untermenüs angezeigt, sondern nur noch das derzeit geöffnete.
-So werden z.B. die Untermenüpunkte "Produkt 1" und "Produkt 2" nur angezeigt, wenn man im Menü auf "Produkte" steht. 
-Funktioniert für das linke und das rechte Menü
+Klappt alle Untermenüs außer dem derzeit geöffneten zu.
+Funktioniert für das linke und das rechte Menü.
 Benötigt jQuery.
