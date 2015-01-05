@@ -11,7 +11,7 @@ if($blog_feed_max_items === false){
 $seite = basename($_GET["s"]);
 
 if(!empty($_GET["lang"]))
-     $lang = basename($_GET["lang"]);
+     $lang = db_escape($_GET["lang"]);
 else
      $lang = getconfig("default_language");
 
