@@ -8,3 +8,4 @@ Aktualisierte Pakete
 - theme-cloudy_dropdown-0.0.5
 - break_frames-0.0.2
 - phpmyadmin-4.3.4
+- kontaktformular-6.0.4

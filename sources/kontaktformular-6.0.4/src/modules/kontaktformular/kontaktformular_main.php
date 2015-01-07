@@ -241,38 +241,38 @@ function kontaktformular_render(){
 				<td>
 					<strong>' . $translation_firstname . ': </strong></td>
 				<td>
-					<input name="vorname" size="40" type="text" /></td>
+					<input name="vorname" size="40" type="text" required="true"/></td>
 			</tr>
 			<tr>
 				<td>
 					<strong>' . $translation_lastname . ':</strong></td>
 				<td>
-					<input name="nachname" size="40" type="text" /></td>
+					<input name="nachname" size="40" type="text" required="true"/></td>
 			</tr>
 			<tr>
 				<td>
 					<strong>' . $translation_emailadress . ':</strong>:</td>
 				<td>
-					<input name="emailadresse" size="40" type="text" /></td>
+					<input name="emailadresse" size="40"  required="true" type="email" /></td>
 			</tr>
 			<tr>
 				<td>
 					<strong>' . $translation_subject . ':</strong></td>
 				<td>
-					<input name="betreff" size="40" type="text" /></td>
+					<input name="betreff" size="40" type="text" required="true"/></td>
 			</tr>
 			<tr>
 				<td>
 					<strong>' . $translation_spam_protection . ':</strong></td>
 				<td>
-					<input name="email" size="40" type="text" /></td>
+					<input name="email" size="40" type="text" required="true"/></td>
 			</tr>
 			<tr>
 				<td>
 					<strong>' . $translation_your_message . ':</strong></td>
 				<td>
 					<p>
-						<textarea cols="60" name="nachricht" rows="20"></textarea></p>
+						<textarea cols="60" name="nachricht" rows="20" required="true"></textarea></p>
 					<p>
 						&nbsp;</p>
 				</td>
