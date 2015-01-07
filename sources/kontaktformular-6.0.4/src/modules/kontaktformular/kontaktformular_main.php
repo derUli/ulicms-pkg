@@ -265,7 +265,7 @@ function kontaktformular_render(){
 				<td>
 					<strong>' . $translation_spam_protection . ':</strong></td>
 				<td>
-					<input name="email" size="40" type="text" required="true"/></td>
+					<input name="email" size="40" type="text"/></td>
 			</tr>
 			<tr>
 				<td>
