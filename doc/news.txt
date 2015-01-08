@@ -2,6 +2,7 @@ Neue Pakete
 - faq-0.0.1
 - better_touch-0.0.1
 - humanstxt-0.0.1
+- clear_apc_cache-0.0.1
 
 Aktualisierte Pakete
 - blog-6.2.5
