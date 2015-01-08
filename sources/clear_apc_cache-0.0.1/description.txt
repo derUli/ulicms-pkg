@@ -1,0 +1,1 @@
+Mit diesem Modul können Sie den APC Bytecode Cache leeren.
