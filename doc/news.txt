@@ -5,6 +5,7 @@ Neue Pakete
 - humanstxt-0.0.1
 - collapse_submenus-0.0.1
 - clear_apc_cache-0.0.1
+- title_ucwords-0.0.1
 
 Aktualisierte Pakete
 - blog_statistics_dashbord-0.0.2
