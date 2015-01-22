@@ -1,5 +1,5 @@
 Neue Pakete
-- statistics_visitoirs_today_widget-0.0.1
+- statistics_visitors_today_widget-0.0.1
 - jquery_migrate-1.2.1
 - google_maps-0.0.1
 - humanstxt-0.0.1
@@ -9,8 +9,8 @@ Neue Pakete
 - require_login-0.0.1
 
 Aktualisierte Pakete
-- theme_cloudy_dropwon-0.0.5
-- blog_statistics_dashbord-0.0.2
+- theme_cloudy_dropdown-0.0.5
+- blog_statistics_dashboard-0.0.2
 - rss2blog-0.0.2
 - statistics-0.0.2
 - theme-clouds-1.0.1
