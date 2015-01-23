@@ -94,13 +94,11 @@ if(!$cache_time)
 
 
 
-
-
 for($n = 0; $n < count($srclist); $n++){
      $currentLine = trim($srclist[$n]);
      if(!startsWith($currentLine, "#") and !empty($currentLine)){
         
-         $splittedLine = explode("\t", $currentLine);
+         $splittedLine = explode(" ", $currentLine);
          if(count($splittedLine) > 1){
              $currentLine = $splittedLine[0];
              $bot_user_id = intval($splittedLine[1]);
