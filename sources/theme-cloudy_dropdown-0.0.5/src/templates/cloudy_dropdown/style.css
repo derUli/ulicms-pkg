@@ -71,7 +71,7 @@ padding:20px 50px 20px 50px;
     display:inline-block;
     width:100%;
     min-height:60px;
-    font-size:20px;
+    font-size:18px;
     margin:0px auto;
     padding:0;
     background:#335599;
@@ -133,7 +133,7 @@ padding:20px 50px 20px 50px;
     opacity:0;
     visibility:hidden;
     padding:0;
-    width:175px;
+    width:177px;
     position:absolute;
     background:#aabbcc;
     border:1px solid #7788aa;
@@ -151,6 +151,6 @@ padding:20px 50px 20px 50px;
     text-shadow:0 2px 2px rgba(255,255,255, 0.7);
 }
 .menu_top ul ul {
-    left:160px;
+    left:177px;
     top:0px;
 }
