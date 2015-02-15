@@ -6,7 +6,7 @@ define("MODULE_ADMIN_REQUIRED_PERMISSION", "kontaktformular_settings");
 function kontaktformular_admin(){
     
      if(isset($_POST["submit"])){
-         setconfig("email",
+         setconfig("contact_form_mail_to",
              db_escape($_POST["email"]));
         
          if(empty($_POST["kontaktformular_thankyou_page"]))
@@ -20,7 +20,7 @@ function kontaktformular_admin(){
     
     
      $kontaktformular_thankyou_page = getconfig("kontaktformular_thankyou_page");
-     $email = getconfig("email");
+     $email = getconfig("contact_form_mail_to");
     
      $pages = getAllSystemNames();
     

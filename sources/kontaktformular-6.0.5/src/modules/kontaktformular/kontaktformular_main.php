@@ -171,7 +171,7 @@ function kontaktformular_render(){
             
             
             
-             if(@ulicms_mail(getconfig("email"), $betreff, $mailtext, $headers)){
+             if(@ulicms_mail(getconfig("contact_form_mail_to"), $betreff, $mailtext, $headers)){
                  $kontaktformular_thankyou_page = getconfig("kontaktformular_thankyou_page");
                  if($kontaktformular_thankyou_page){
                      $kontaktformular_thankyou_page = buildSEOUrl($kontaktformular_thankyou_page);
