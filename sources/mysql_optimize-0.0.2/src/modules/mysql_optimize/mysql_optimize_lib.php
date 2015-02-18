@@ -1,6 +1,7 @@
 <?php
 if(!function_exists("db_optimize")){
      function db_optimize($datase){
+         @set_time_limit(0);
          $obj = db_query('SHOW TABLES');
         
          while($value = db_fetch_array($obj)){
