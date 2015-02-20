@@ -6,3 +6,4 @@ Aktualisierte Pakete
 - phpmyadmin-4.3.9 
 - ip_check-0.0.2
 - mysql_optimize-0.0.2
+- fortune-0.0.2
