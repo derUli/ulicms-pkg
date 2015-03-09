@@ -1,7 +1,7 @@
 <?php
 $facebook_app_id = getconfig("facebook_app_id");
 if(!$facebook_app_id){
-  echo "Please set facebook_app_id!";
+  echo "<p class='ulicms_error'>Please set facebook_app_id!</p>";
 }
 else {
 ?>
