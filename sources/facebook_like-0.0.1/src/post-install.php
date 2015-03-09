@@ -24,5 +24,7 @@ facebook_like_button_data_colorscheme
 facebook_like_button_show_faces
 facebook_like_button_show_faces
 facebook_like_button_share
-Mögliche Werte können Sie sehen im Facebook Developer Netzwerk
-</pre>
+Mögliche Werte können Sie sehen im Facebook Developer Netzwerk.
+Außerdem können Sie den Facebook Share Button auf bestimmten Seiten deaktivieren,
+in dem Sie folgendes in das Feld "Custom Data" eintragen:
+{"disable_facebook_like", "yes"}</pre>
