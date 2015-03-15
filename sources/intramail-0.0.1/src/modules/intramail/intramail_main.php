@@ -269,6 +269,8 @@ function intramail_new_mail($mail_to = '', $subject = '', $message = ''){
   ';
     
     
+    csrf_token_html();
+    
      $users = getUsers();
     
      echo '<strong>Empfänger:</strong><br/><select name="mail_to">';
