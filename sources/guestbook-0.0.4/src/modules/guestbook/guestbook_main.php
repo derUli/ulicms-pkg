@@ -232,6 +232,7 @@ function get_add_entry_form(){
          }
      $add_entry_form_template = str_replace("{form_action_url}",
          "" . buildSEOUrl(get_requested_pagename()) . "?action=add", $add_entry_form_template);
+     $add_entry_form_template = str_replace("{csrf_token}", get_csrf_token_html(), $add_entry_form_template);
      return $add_entry_form_template;
      }
 
