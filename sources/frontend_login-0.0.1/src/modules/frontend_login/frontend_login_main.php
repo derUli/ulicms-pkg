@@ -8,8 +8,10 @@ function frontend_login_render(){
              $html .= "<p class=\"ulicms_error\">Die Zugangsdaten sind fehlerhaft. Bitte probieren Sie es erneut.</p>";
             
              }
+             
          $html .= '
-<form action="' . buildSEOUrl() . '" method="post">
+<form action="' . buildSEOUrl() . '" method="post">'.
+get_csrf_token_html().'
 <input type="hidden" name="login" value="login">
 <table style="border:0px;">
 <tr>
