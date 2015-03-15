@@ -47,6 +47,7 @@ function blog_admin(){
      ?>
 
 <form action="<?php echo getModuleAdminSelfPath()?>" method="post">
+<?php csrf_token_html();?>
 <p><input type="checkbox" name="blog_send_comments_via_email" value="yes"
 <?php if(getconfig("blog_send_comments_via_email") == "yes"){
          echo " checked";

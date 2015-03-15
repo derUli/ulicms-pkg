@@ -5,6 +5,7 @@ define("MODULE_ADMIN_HEADLINE", "Kundenbereich");
 
 function new_file($uid){
      echo "<form action=\"index.php?action=module_settings&module=kundenbereich\" method=\"post\" enctype=\"multipart/form-data\">";
+     echo get_csrf_token_html();
      $users = getUsers();
      echo "<p>Kunde<br/>";
      echo "<select name='user'>";

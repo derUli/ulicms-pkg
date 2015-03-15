@@ -31,6 +31,7 @@ min-width:200px;
 
 </style>
 <form action="index.php?action=module_settings&module=placeholders" method="post">
+<?php csrf_token_html();?>
 <table>
 <tr>
 <td>Ersetze</td>

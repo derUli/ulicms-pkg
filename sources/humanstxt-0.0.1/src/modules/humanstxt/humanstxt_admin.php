@@ -37,6 +37,7 @@ function fillTemplate(){
    
 }
 </script><form action="<?php echo getModuleAdminSelfPath()?>" method="post">
+<?php csrf_token_html();?>
 <p><a href="http://humanstxt.org">Über humans.txt</a><br/></p>
 <input type="button" value="Vorlage einfügen" onclick="fillTemplate();">
 <p>

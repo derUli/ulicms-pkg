@@ -92,6 +92,7 @@ function mysql_backup_admin(){
          }
      ?>
 <form method="post" action="<?php echo getModuleAdminSelfPath()?>">
+<?php csrf_token_html();?>
 <table style="border:0px">
 <tr>
 <td><strong>Die Datenbank alle X Tage sichern</strong></td>

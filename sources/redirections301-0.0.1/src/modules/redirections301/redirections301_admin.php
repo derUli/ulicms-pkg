@@ -15,6 +15,7 @@ function redirections301_admin(){
      ?>
 
 <form action="<?php echo getModuleAdminSelfPath()?>" method="post">
+<?php csrf_token_html();?>
 <p>Hier können Sie permanente Weiterleitungen (HTTP Status 301) einrichten.<br/>
 Sie können je einen Eintrag pro Zeile eingeben.</p>
 <p>Die Einträge müssen im folgenden Format erfolgen:<br/>

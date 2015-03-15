@@ -75,6 +75,7 @@ window.location.replace(url);
 <?php }
 ?>
 <form method="post" action="<?php echo getModuleAdminSelfPath()?>">
+<?php csrf_token_html();?>
 <p><strong>Titel: </strong><input type="text" maxlength=78 size=78 name="newsletter_title" value="<?php echo htmlspecialchars($_SESSION["newsletter_data"]["newsletter_title"])?>"></p>
 
 

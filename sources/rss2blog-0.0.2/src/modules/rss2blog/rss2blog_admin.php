@@ -20,6 +20,7 @@ function rss2blog_admin(){
      ?>
 
 <form action="<?php echo getModuleAdminSelfPath()?>" method="post">
+<?php csrf_token_html();?>
 <p>Hier können Sie Ihren Blog automatisch aus externen RSS-Feeds mit Inhalten befüllen.</p>
 <p>Format<br/>
 URL User-ID

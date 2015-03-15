@@ -19,6 +19,7 @@ function google_maps_admin(){
      ?>
 
 <form action="<?php echo getModuleAdminSelfPath()?>" method="post">
+<?php csrf_token_html();?>
 <p><strong>Adresse, Ort</strong>
 <br/>
 <input type="text" name="google_maps_marker" value="<?php echo htmlspecialchars($google_maps_marker);

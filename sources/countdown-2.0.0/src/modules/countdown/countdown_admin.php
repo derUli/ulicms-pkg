@@ -38,6 +38,7 @@ function countdown_admin(){
     
      ?>
 <form method="post" action="<?php echo getModuleAdminSelfPath()?>">
+<?php csrf_token_html();?>
 <table style="border:0px">
 <tr>
 <td><strong>Countdown bis</strong></td>
