@@ -15,6 +15,7 @@ function block_useragents_admin(){
      ?>
 
 <form action="<?php echo getModuleAdminSelfPath()?>" method="post">
+<?php csrf_token_html();?>
 <p>Hier können Sie den Zugriff von Clients mit bestimmten Useragents auf das System blockieren.<br/>
 Sie können einen Eintrag pro Zeile eingeben.
 </p>
