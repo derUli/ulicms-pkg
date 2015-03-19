@@ -18,7 +18,7 @@ function facebook_sdk_admin(){
 
 <form action="<?php echo getModuleAdminSelfPath()?>" method="post">
 <?php if(function_exists("csrf_token_html")) csrf_token_html();?>
-<p>Facebook App-ID: <input name="facebook_app_id" required="true" type="text" value="<?php echo htmlspecialchars($facebook_app_id);
+<p><strong>Facebook App-ID</strong> <input name="facebook_app_id" required="true" type="text" value="<?php echo htmlspecialchars($facebook_app_id);
      ?>"></p>
 <p><a href="https://developers.facebook.com/">[Get an App-ID / Eine App-ID beantragen}</a></p>
 <p><input type="submit" name="submit" value="<?php translate("SAVE_CHANGES");?>"/></p>
