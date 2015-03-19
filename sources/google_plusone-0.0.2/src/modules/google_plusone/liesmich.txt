@@ -1,0 +1,3 @@
+Diesen Modul bindet die +1 Buttons von dem sozialem Netzwerk Google+ ein.
+Um es auf einer bestimmten Seite zu deaktivieren, führen Sie bitte folgenden Code in das "Custom Data" Feld ein:
+{"disable_google_plusone" : "disable"}
