@@ -12,11 +12,12 @@ function facebook_sdk_admin(){
     
      $facebook_app_id = getconfig("facebook_app_id");
      if(!$facebook_app_id)
-         $ga_id = "";
+         $facebook_app_id = "";
     
      ?>
 
 <form action="<?php echo getModuleAdminSelfPath()?>" method="post">
+<?php if(function_exists("csrf_token_html")) csrf_token_html();?>
 <p>Facebook APP-ID: <input name="facebook_app_id" required="true" type="text" value="<?php echo htmlspecialchars($facebook_app_id);
      ?>"></p>
 <p><a href="https://developers.facebook.com/">Get an APP-ID / Eine APP-ID beantragen</a></p>
