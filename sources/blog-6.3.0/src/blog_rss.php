@@ -14,7 +14,7 @@ if(!empty($_GET["lang"]))
      $lang = basename($_GET["lang"]);
 else
      $lang = getconfig("default_language");
-     
+
 $lang = db_escape($lang);
 
 $query = db_query("SELECT id, datum, seo_shortname, content_preview, title FROM " . tbname("blog") . " WHERE entry_enabled = 1 AND language='$lang' ORDER by datum DESC LIMIT $blog_feed_max_items");

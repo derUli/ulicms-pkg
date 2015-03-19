@@ -1,19 +1,19 @@
 <?php
 if(!getconfig("facebook_like_button_layout"))
-   setconfig("facebook_like_button_layout", "standard");
-   
+     setconfig("facebook_like_button_layout", "standard");
+
 if(!getconfig("facebook_like_button_action"))
-   setconfig("facebook_like_button_action", "like");
-   
+     setconfig("facebook_like_button_action", "like");
+
 if(!getconfig("facebook_like_button_data_colorscheme"))
-   setconfig("facebook_like_button_data_colorscheme", "light");
-   
+     setconfig("facebook_like_button_data_colorscheme", "light");
+
 if(getconfig("facebook_like_button_show_faces") === false)
-   setconfig("facebook_like_button_show_faces", "true");
-   
+     setconfig("facebook_like_button_show_faces", "true");
+
 if(getconfig("facebook_like_button_shware") === false)
-   setconfig("facebook_like_button_share", "true");
-   
+     setconfig("facebook_like_button_share", "true");
+
 ?>
 <pre>
 Sie können optional die folgenden Konfigurationseinstellungen 

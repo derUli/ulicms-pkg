@@ -12,10 +12,10 @@ function humanstxt_admin(){
      if(file_exists($file)){
          $text = file_get_contents($file);
          $text = stringHelper :: real_htmlspecialchars($text);
-        }
+         }
     else{
          $text = "";
-        }
+         }
      ?>
 <script type="text/javascript">
 function fillTemplate(){
@@ -24,7 +24,7 @@ function fillTemplate(){
      $("#message").show();
      $.ajax({
             url: "<?php echo getModulePath("humanstxt");
-    ?>template.txt",
+     ?>template.txt",
             async: true,
             success: function (data){
                 $("textarea#text").val(data);

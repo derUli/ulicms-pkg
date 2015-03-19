@@ -1,21 +1,25 @@
 <?php
-/* vim: set expandtab sw=4 ts=4 sts=4: */
+/**
+ * vim: set expandtab sw=4 ts=4 sts=4:
+ */
 /**
  * Superclass for the Property Group classes.
- *
+ * 
  * @package PhpMyAdmin
  */
-if (! defined('PHPMYADMIN')) {
-    exit;
-}
+if (! defined('PHPMYADMIN')){
+     exit;
+    }
 
-/* This class extends the OptionsPropertyItem class */
+/**
+ * This class extends the OptionsPropertyItem class
+ */
 require_once 'OptionsPropertyItem.class.php';
 
 /**
  * Parents group property items and provides methods to manage groups of
  * properties.
- *
+ * 
  * @todo modify descriptions if needed, when the options are integrated
  * @package PhpMyAdmin
  */
@@ -23,77 +27,77 @@ abstract class OptionsPropertyGroup extends OptionsPropertyItem
 {
     /**
      * Holds a group of properties (OptionsPropertyItem instances)
-     *
-     * @var array
+     * 
+     * @var array 
      */
-    private $_properties;
-
+     private $_properties;
+    
     /**
      * Adds a property to the group of properties
-     *
+     * 
      * @param OptionsPropertyItem $property the property instance to be added
-     *                                      to the group
-     *
-     * @return void
+     *                                       to the group
+     * @return void 
      */
-    public function addProperty($property)
+     public function addProperty($property)
     {
-        if (! $this->getProperties() == null
-            && in_array($property, $this->getProperties(), true)
-        ) {
-            return;
-        }
-        $this->_properties [] = $property;
-    }
-
+         if (! $this -> getProperties() == null
+                 && in_array($property, $this -> getProperties(), true)
+                ){
+             return;
+             }
+         $this -> _properties [] = $property;
+         }
+    
     /**
      * Removes a property from the group of properties
-     *
+     * 
      * @param OptionsPropertyItem $property the property instance to be removed
-     *                                      from the group
-     *
-     * @return void
+     *                                       from the group
+     * @return void 
      */
-    public function removeProperty($property)
+     public function removeProperty($property)
     {
-        $this->_properties = array_diff(
-            $this->getProperties(),
-            array($property)
-        );
-    }
-
-
-    /* ~~~~~~~~~~~~~~~~~~~~ Getters and Setters ~~~~~~~~~~~~~~~~~~~~ */
-
-
+         $this -> _properties = array_diff(
+            $this -> getProperties(),
+             array($property)
+            );
+         }
+    
+    
+    /**
+     * ~~~~~~~~~~~~~~~~~~~~ Getters and Setters ~~~~~~~~~~~~~~~~~~~~
+     */
+    
+    
     /**
      * Gets the instance of the class
-     *
-     * @return array
+     * 
+     * @return array 
      */
-    public function getGroup()
+     public function getGroup()
     {
-        return $this;
-    }
-
+         return $this;
+         }
+    
     /**
      * Gets the group of properties
-     *
-     * @return array
+     * 
+     * @return array 
      */
-    public function getProperties()
+     public function getProperties()
     {
-        return $this->_properties;
-    }
-
+         return $this -> _properties;
+         }
+    
     /**
      * Gets the number of properties
-     *
-     * @return int
+     * 
+     * @return int 
      */
-    public function getNrOfProperties()
+     public function getNrOfProperties()
     {
-        return count($this->_properties);
+         return count($this -> _properties);
+         }
     }
-}
 ?>

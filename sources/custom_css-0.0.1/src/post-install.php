@@ -5,6 +5,6 @@ if(!getconfig("custom_css")){
      setconfig("custom_css", db_escape($default));
     
     
-    }
+     }
 
 ?>

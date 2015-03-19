@@ -6,4 +6,4 @@ function humanstxt_render(){
          $html = nl2br(htmlspecialchars(file_get_contents($file))) ;
          }
      return $html;
-    }
+     }

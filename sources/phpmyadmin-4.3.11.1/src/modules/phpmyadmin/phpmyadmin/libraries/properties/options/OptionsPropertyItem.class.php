@@ -1,127 +1,130 @@
 <?php
-/* vim: set expandtab sw=4 ts=4 sts=4: */
+/**
+ * vim: set expandtab sw=4 ts=4 sts=4:
+ */
 /**
  * The top-level class of the "Options" subtree of the object-oriented
  * properties system (the other subtree is "Plugin").
- *
+ * 
  * @package PhpMyAdmin
  */
-if (! defined('PHPMYADMIN')) {
-    exit;
-}
+if (! defined('PHPMYADMIN')){
+     exit;
+    }
 
-/* This class extends the PropertyItem class */
+/**
+ * This class extends the PropertyItem class
+ */
 require_once 'libraries/properties/PropertyItem.class.php';
 
 /**
  * Superclass for
- *  - OptionsPropertyOneItem and
- *  - OptionsProperty Group
- *
+ *   - OptionsPropertyOneItem and
+ *   - OptionsProperty Group
+ * 
  * @package PhpMyAdmin
  */
 abstract class OptionsPropertyItem extends PropertyItem
 {
     /**
      * Name
-     *
-     * @var string
+     * 
+     * @var string 
      */
-    private $_name;
-
+     private $_name;
+    
     /**
      * Text
-     *
-     * @var string
+     * 
+     * @var string 
      */
-    private $_text;
-
+     private $_text;
+    
     /**
      * What to force
-     *
-     * @var string
+     * 
+     * @var string 
      */
-    private $_force;
-
-
-
-    /* ~~~~~~~~~~~~~~~~~~~~ Getters and Setters ~~~~~~~~~~~~~~~~~~~~ */
-
-
+     private $_force;
+    
+    
+    
+    /**
+     * ~~~~~~~~~~~~~~~~~~~~ Getters and Setters ~~~~~~~~~~~~~~~~~~~~
+     */
+    
+    
     /**
      * Gets the name
-     *
-     * @return string
+     * 
+     * @return string 
      */
-    public function getName()
+     public function getName()
     {
-        return $this->_name;
-    }
-
+         return $this -> _name;
+         }
+    
     /**
      * Sets the name
-     *
+     * 
      * @param string $name name
-     *
-     * @return void
+     * @return void 
      */
-    public function setName($name)
+     public function setName($name)
     {
-        $this->_name = $name;
-    }
-
+         $this -> _name = $name;
+         }
+    
     /**
      * Gets the text
-     *
-     * @return string
+     * 
+     * @return string 
      */
-    public function getText()
+     public function getText()
     {
-        return $this->_text;
-    }
-
+         return $this -> _text;
+         }
+    
     /**
      * Sets the text
-     *
+     * 
      * @param string $text text
-     *
-     * @return void
+     * @return void 
      */
-    public function setText($text)
+     public function setText($text)
     {
-        $this->_text = $text;
-    }
-
+         $this -> _text = $text;
+         }
+    
     /**
      * Gets the force parameter
-     *
-     * @return string
+     * 
+     * @return string 
      */
-    public function getForce()
+     public function getForce()
     {
-        return $this->_force;
-    }
-
+         return $this -> _force;
+         }
+    
     /**
      * Sets the force parameter
-     *
+     * 
      * @param string $force force parameter
-     *
-     * @return void
+     * @return void 
      */
-    public function setForce($force)
+     public function setForce($force)
     {
-        $this->_force = $force;
-    }
-
+         $this -> _force = $force;
+         }
+    
     /**
      * Returns the property type ( either "options", or "plugin" ).
-     *
-     * @return string
+     * 
+     * @return string 
      */
-    public function getPropertyType()
+     public function getPropertyType()
     {
-        return "options";
+         return "options";
+         }
     }
-}
 ?>

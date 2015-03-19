@@ -3,17 +3,17 @@
 // Main Function
 function lightbox_gallery_render(){
      $gallery_image_folder = "content/files/gallery/";
-     
+    
      // Version 0.0.2 - 2015-03-19
-     // Es ist nun möglich gallery_image_folder über Custom Data zu überschreiben
-     $data = get_custom_data();
+    // Es ist nun möglich gallery_image_folder über Custom Data zu überschreiben
+    $data = get_custom_data();
      if(isset($data["gallery_image_folder"]) and !empty($data["gallery_image_folder"])){
-       $gallery_image_folder = $data["gallery_image_folder"];
-     }
-     
+         $gallery_image_folder = $data["gallery_image_folder"];
+         }
+    
      if(!endsWith($gallery_image_folder, "/"))
-        $gallery_image_folder .= "/";
-        
+         $gallery_image_folder .= "/";
+    
      $gallery_image_folder = ltrim($gallery_image_folder, "/");
     
      generateThumbnails($gallery_image_folder);

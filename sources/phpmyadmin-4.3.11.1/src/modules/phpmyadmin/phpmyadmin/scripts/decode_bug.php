@@ -1,13 +1,15 @@
 <?php
-/* vim: set expandtab sw=4 ts=4 sts=4: */
+/**
+ * vim: set expandtab sw=4 ts=4 sts=4:
+ */
 /**
  * Parser bug report decoder
- *
+ * 
  * This is the parser bug decoder system
  * Throw the bug data in the query box, and hit submit for output.
- *
+ * 
  * Copyright 2002 Robin Johnson <robbat2@users.sourceforge.net>
- *
+ * 
  * @package PhpMyAdmin-debug
  */
 
@@ -45,7 +47,8 @@
 <br />
 
 <form method="post" action="./decode_bug.php">
-    <input type="hidden" name="bar" value="<?php echo rand(); ?>" />
+    <input type="hidden" name="bar" value="<?php echo rand();
+?>" />
     Encoded bug report:<br />
     <textarea name="bug_encoded" cols="72" rows="10"></textarea>
     <br /><br />
@@ -60,46 +63,50 @@
 
 /**
  * Display the decoded bug report in ASCII format
- *
+ * 
  * @param string $textdata the text data
- *
- * @return string  the text enclosed by "<pre>...</pre>" tags
- *
- * @access public
+ * @return string the text enclosed by "<pre>...</pre>" tags
+ * @access public 
  */
 function PMA_printDecodedBug($textdata)
 {
-    return '<pre>' . htmlspecialchars($textdata) . '</pre><br />';
-} // end of the "PMA_printDecodedBug()" function
+     return '<pre>' . htmlspecialchars($textdata) . '</pre><br />';
+    } // end of the "PMA_printDecodedBug()" function
 
 
-if (!empty($_POST) && isset($_POST['bug_encoded'])) {
-    $bug_encoded = $_POST['bug_encoded'];
-}
-
-if (!empty($bug_encoded) && is_string($bug_encoded)) {
-    if (function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc()) {
-        $bug_encoded = stripslashes($bug_encoded);
+if (!empty($_POST) && isset($_POST['bug_encoded'])){
+     $bug_encoded = $_POST['bug_encoded'];
     }
 
-    /** @var PMA_String $pmaString */
-    $pmaString = $GLOBALS['PMA_String'];
-
-    $bug_encoded     = preg_replace('/[[:space:]]/', '', $bug_encoded);
-    $bug_decoded     = base64_decode($bug_encoded);
-    if (/*overload*/mb_substr($bug_encoded, 0, 2) == 'eN') {
-        if (function_exists('gzuncompress')) {
-            $result  = PMA_printDecodedBug(gzuncompress($bug_decoded));
-        } else {
-            $result  = 'Error: &quot;gzuncompress()&quot; is unavailable!' . "\n";
-        }
-    } else {
-        $result  = PMA_printDecodedBug($bug_decoded);
-    } // end if... else...
-
-    echo '<p>Decoded:</p>' . "\n"
-         . $result . "\n";
-} // end if
+if (!empty($bug_encoded) && is_string($bug_encoded)){
+     if (function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc()){
+         $bug_encoded = stripslashes($bug_encoded);
+         }
+    
+    /**
+     * *
+     * 
+     * @var PMA_String $pmaString
+     */
+     $pmaString = $GLOBALS['PMA_String'];
+    
+     $bug_encoded = preg_replace('/[[:space:]]/', '', $bug_encoded);
+     $bug_decoded = base64_decode($bug_encoded);
+     if (/**
+         * overload
+         */mb_substr($bug_encoded, 0, 2) == 'eN'){
+         if (function_exists('gzuncompress')){
+             $result = PMA_printDecodedBug(gzuncompress($bug_decoded));
+             }else{
+             $result = 'Error: &quot;gzuncompress()&quot; is unavailable!' . "\n";
+             }
+         }else{
+         $result = PMA_printDecodedBug($bug_decoded);
+         } // end if... else...
+    
+     echo '<p>Decoded:</p>' . "\n"
+     . $result . "\n";
+    } // end if
 ?>
 </body>
 

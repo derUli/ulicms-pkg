@@ -9,4 +9,4 @@ function google_maps_render(){
      return '<div id="gmap3"></div>';
     
     
-    }
+     }

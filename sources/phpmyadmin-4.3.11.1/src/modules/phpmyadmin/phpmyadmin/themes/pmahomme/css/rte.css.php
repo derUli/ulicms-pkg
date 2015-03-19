@@ -1,17 +1,19 @@
 <?php
-/* vim: set expandtab sw=4 ts=4 sts=4: */
+/**
+ * vim: set expandtab sw=4 ts=4 sts=4:
+ */
 /**
  * Styles for management of Routines, Triggers and Events
  * for the pmahomme theme
- *
- * @package    PhpMyAdmin-theme
+ * 
+ * @package PhpMyAdmin-theme
  * @subpackage PMAHomme
  */
 
 // unplanned execution path
-if (! defined('PMA_MINIMUM_COMMON') && ! defined('TESTSUITE')) {
-    exit();
-}
+if (! defined('PMA_MINIMUM_COMMON') && ! defined('TESTSUITE')){
+     exit();
+    }
 ?>
 
 .rte_table {

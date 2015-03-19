@@ -102,4 +102,4 @@ if (// strlen($request_uri) > 255 ||
      @header('Connection: Close');
      echo "Blocked by BBQ Firewall";
      @exit;
-    }
+     }

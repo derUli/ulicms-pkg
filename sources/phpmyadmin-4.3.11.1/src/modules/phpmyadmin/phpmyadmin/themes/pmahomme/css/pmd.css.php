@@ -1,16 +1,18 @@
 <?php
-/* vim: set expandtab sw=4 ts=4 sts=4: */
+/**
+ * vim: set expandtab sw=4 ts=4 sts=4:
+ */
 /**
  * Designer styles for the pmahomme theme
- *
- * @package    PhpMyAdmin-theme
+ * 
+ * @package PhpMyAdmin-theme
  * @subpackage PMAHomme
  */
 
 // unplanned execution path
-if (! defined('PMA_MINIMUM_COMMON') && ! defined('TESTSUITE')) {
-    exit();
-}
+if (! defined('PMA_MINIMUM_COMMON') && ! defined('TESTSUITE')){
+     exit();
+    }
 ?>
 
 /* Designer */
@@ -53,7 +55,8 @@ canvas.pmd * {
 }
 
 .tab_zag {
-    background-image: url(<?php echo $_SESSION['PMA_Theme']->getImgPath('pmd/Header.png'); ?>);
+    background-image: url(<?php echo $_SESSION['PMA_Theme'] -> getImgPath('pmd/Header.png');
+?>);
     background-repeat: repeat-x;
     text-align: center;
     cursor: move;
@@ -62,7 +65,8 @@ canvas.pmd * {
 }
 
 .tab_zag_2 {
-    background-image: url(<?php echo $_SESSION['PMA_Theme']->getImgPath('pmd/Header_Linked.png'); ?>);
+    background-image: url(<?php echo $_SESSION['PMA_Theme'] -> getImgPath('pmd/Header_Linked.png');
+?>);
     background-repeat: repeat-x;
     text-align: center;
     cursor: move;
@@ -94,7 +98,8 @@ canvas.pmd * {
     position: absolute;
     background-color: #99FF99;
     color: #000;
-    <?php echo $left; ?>: 200px;
+    <?php echo $left;
+?>: 200px;
     top: 50px;
     z-index: 3;
     border: #00CC66 solid 1px;
@@ -115,9 +120,11 @@ canvas.pmd * {
     text-indent: 3px;
     font-weight: bold;
     margin-left: 2px;
-    text-align: <?php echo $left; ?>;
+    text-align: <?php echo $left;
+?>;
     background-color: #fff;
-    background-image: url(<?php echo $_SESSION['PMA_Theme']->getImgPath('pmd/left_panel_butt.png'); ?>);
+    background-image: url(<?php echo $_SESSION['PMA_Theme'] -> getImgPath('pmd/left_panel_butt.png');
+?>);
     border: #ccc solid 1px;
 }
 
@@ -130,7 +137,8 @@ canvas.pmd * {
     white-space: nowrap;
     text-decoration: none;
     border: #9999FF solid 1px;
-    text-align: <?php echo $left; ?>;
+    text-align: <?php echo $left;
+?>;
 }
 
 .owner {
@@ -151,7 +159,8 @@ canvas.pmd * {
     cursor: default;
     width: 1px;
     color: #000;
-    background-image: url(<?php echo $_SESSION['PMA_Theme']->getImgPath('pmd/Header.png'); ?>);
+    background-image: url(<?php echo $_SESSION['PMA_Theme'] -> getImgPath('pmd/Header.png');
+?>);
     background-repeat: repeat-x;
 }
 
@@ -159,7 +168,8 @@ canvas.pmd * {
     vertical-align: top;
     background-color: #0064ea;
     color: #fff;
-    background-image: url(<?php echo $_SESSION['PMA_Theme']->getImgPath('pmd/small_tab.png'); ?>);
+    background-image: url(<?php echo $_SESSION['PMA_Theme'] -> getImgPath('pmd/small_tab.png');
+?>);
     cursor: default;
     text-align: center;
     font-weight: bold;
@@ -183,7 +193,8 @@ canvas.pmd * {
 }
 
 .small_tab_pref {
-    background-image: url(<?php echo $_SESSION['PMA_Theme']->getImgPath('pmd/Header.png'); ?>);
+    background-image: url(<?php echo $_SESSION['PMA_Theme'] -> getImgPath('pmd/Header.png');
+?>);
     background-repeat: repeat-x;
     text-align: center;
     width: 1px;
@@ -234,35 +245,43 @@ canvas.pmd * {
 }
 
 .frams1 {
-    background: url(<?php echo $_SESSION['PMA_Theme']->getImgPath('pmd/1.png'); ?>) no-repeat right bottom;
+    background: url(<?php echo $_SESSION['PMA_Theme'] -> getImgPath('pmd/1.png');
+?>) no-repeat right bottom;
 }
 
 .frams2 {
-    background: url(<?php echo $_SESSION['PMA_Theme']->getImgPath('pmd/2.png'); ?>) no-repeat left bottom;
+    background: url(<?php echo $_SESSION['PMA_Theme'] -> getImgPath('pmd/2.png');
+?>) no-repeat left bottom;
 }
 
 .frams3 {
-    background: url(<?php echo $_SESSION['PMA_Theme']->getImgPath('pmd/3.png'); ?>) no-repeat left top;
+    background: url(<?php echo $_SESSION['PMA_Theme'] -> getImgPath('pmd/3.png');
+?>) no-repeat left top;
 }
 
 .frams4 {
-    background: url(<?php echo $_SESSION['PMA_Theme']->getImgPath('pmd/4.png'); ?>) no-repeat right top;
+    background: url(<?php echo $_SESSION['PMA_Theme'] -> getImgPath('pmd/4.png');
+?>) no-repeat right top;
 }
 
 .frams5 {
-    background: url(<?php echo $_SESSION['PMA_Theme']->getImgPath('pmd/5.png'); ?>) repeat-x center bottom;
+    background: url(<?php echo $_SESSION['PMA_Theme'] -> getImgPath('pmd/5.png');
+?>) repeat-x center bottom;
 }
 
 .frams6 {
-    background: url(<?php echo $_SESSION['PMA_Theme']->getImgPath('pmd/6.png'); ?>) repeat-y left;
+    background: url(<?php echo $_SESSION['PMA_Theme'] -> getImgPath('pmd/6.png');
+?>) repeat-y left;
 }
 
 .frams7 {
-    background: url(<?php echo $_SESSION['PMA_Theme']->getImgPath('pmd/7.png'); ?>) repeat-x top;
+    background: url(<?php echo $_SESSION['PMA_Theme'] -> getImgPath('pmd/7.png');
+?>) repeat-x top;
 }
 
 .frams8 {
-    background: url(<?php echo $_SESSION['PMA_Theme']->getImgPath('pmd/8.png'); ?>) repeat-y right;
+    background: url(<?php echo $_SESSION['PMA_Theme'] -> getImgPath('pmd/8.png');
+?>) repeat-y right;
 }
 
 #osn_tab {
@@ -278,7 +297,8 @@ canvas.pmd * {
     font-weight: bold;
     margin: 0;
     padding: 0;
-    background-image: url(<?php echo $_SESSION['PMA_Theme']->getImgPath('pmd/top_panel.png'); ?>);
+    background-image: url(<?php echo $_SESSION['PMA_Theme'] -> getImgPath('pmd/top_panel.png');
+?>);
     background-position: top;
     background-repeat: repeat-x;
     border-right: #999 solid 1px;
@@ -291,7 +311,8 @@ canvas.pmd * {
 
 .pmd_header a, .pmd_header span{
     display: block;
-    float: <?php echo $left; ?>;
+    float: <?php echo $left;
+?>;
     margin: 3px 1px 4px;
     height: 20px;
     border: 1px dotted #fff;
@@ -299,7 +320,8 @@ canvas.pmd * {
 
 .pmd_header .M_bord {
     display: block;
-    float: <?php echo $left; ?>;
+    float: <?php echo $left;
+?>;
     margin: 4px;
     height: 20px;
     width: 2px;
@@ -331,21 +353,24 @@ a.M_butt:hover {
 #layer_menu {
     z-index: 100;
     position: absolute;
-    <?php echo $left; ?>: 0;
+    <?php echo $left;
+?>: 0;
     background-color: #EAEEF0;
     border: #999 solid 1px;
 }
 
 #layer_upd_relation {
     position: absolute;
-    <?php echo $left; ?>: 637px;
+    <?php echo $left;
+?>: 637px;
     top: 224px;
     z-index: 100;
 }
 
 #layer_new_relation {
     position: absolute;
-    <?php echo $left; ?>: 636px;
+    <?php echo $left;
+?>: 636px;
     top: 85px;
     z-index: 100;
     width: 153px;
@@ -353,14 +378,16 @@ a.M_butt:hover {
 
 #pmd_optionse {
     position: absolute;
-    <?php echo $left; ?>: 636px;
+    <?php echo $left;
+?>: 636px;
     top: 85px;
     z-index: 100;
     width: 153px;
 }
 
 #layer_menu_sizer {
-    background-image: url(<?php echo $_SESSION['PMA_Theme']->getImgPath('pmd/resize.png'); ?>);
+    background-image: url(<?php echo $_SESSION['PMA_Theme'] -> getImgPath('pmd/resize.png');
+?>);
     cursor: nw-resize;
     width: 16px;
     height: 16px;
@@ -369,7 +396,8 @@ a.M_butt:hover {
 .panel {
     position: fixed;
     top: 60px;
-    <?php echo $right; ?>: 0;
+    <?php echo $right;
+?>: 0;
     display: none;
     background: #FFF;
     border: 1px solid gray;
@@ -377,7 +405,8 @@ a.M_butt:hover {
     max-height: 500px;
     overflow:scroll;
     padding: 30px;
-    padding-<?php echo $left; ?>: 30px;
+    padding-<?php echo $left;
+?>: 30px;
     color: #FFF;
     z-index: 102;
 }
@@ -386,10 +415,12 @@ a.trigger {
     position: fixed;
     text-decoration: none;
     top: 60px;
-    <?php echo $right; ?>: 0;
+    <?php echo $right;
+?>: 0;
     color: #fff;
     padding: 10px 40px 10px 15px;
-    background: #333 url(<?php echo $_SESSION['PMA_Theme']->getImgPath('pmd/plus.png'); ?>) 85% 55% no-repeat;
+    background: #333 url(<?php echo $_SESSION['PMA_Theme'] -> getImgPath('pmd/plus.png');
+?>) 85% 55% no-repeat;
     border: 1px solid #444;
     display: block;
     z-index: 102;
@@ -397,17 +428,20 @@ a.trigger {
 
 a.trigger:hover {
     color: #080808;
-    background: #fff696 url(<?php echo $_SESSION['PMA_Theme']->getImgPath('pmd/plus.png'); ?>) 85% 55% no-repeat;
+    background: #fff696 url(<?php echo $_SESSION['PMA_Theme'] -> getImgPath('pmd/plus.png');
+?>) 85% 55% no-repeat;
     border: 1px solid #999;
 }
 
 a.active.trigger {
-    background: #222 url(<?php echo $_SESSION['PMA_Theme']->getImgPath('pmd/minus.png'); ?>) 85% 55% no-repeat;
+    background: #222 url(<?php echo $_SESSION['PMA_Theme'] -> getImgPath('pmd/minus.png');
+?>) 85% 55% no-repeat;
     z-index: 999;
 }
 
 a.active.trigger:hover {
-    background: #fff696 url(<?php echo $_SESSION['PMA_Theme']->getImgPath('pmd/minus.png'); ?>) 85% 55% no-repeat;
+    background: #fff696 url(<?php echo $_SESSION['PMA_Theme'] -> getImgPath('pmd/minus.png');
+?>) 85% 55% no-repeat;
 }
 
 h2.tiger {
@@ -417,13 +451,15 @@ h2.tiger {
     padding: 50px 20px 50px;
     margin: 0 0 5px 0;
     width: 250px;
-    float: <?php echo $left; ?>;
+    float: <?php echo $left;
+?>;
     color : #333;
     text-align: center;
 }
 
 h2.tiger a {
-    background-image: url(<?php echo $_SESSION['PMA_Theme']->getImgPath('pmd/Header.png'); ?>);
+    background-image: url(<?php echo $_SESSION['PMA_Theme'] -> getImgPath('pmd/Header.png');
+?>);
     text-align: center;
     text-decoration: none;
     color : #333;
@@ -432,11 +468,13 @@ h2.tiger a {
 
 h2.tiger a:hover {
     color: #000;
-    background-image: url(<?php echo $_SESSION['PMA_Theme']->getImgPath('pmd/Header_Linked.png'); ?>);
+    background-image: url(<?php echo $_SESSION['PMA_Theme'] -> getImgPath('pmd/Header_Linked.png');
+?>);
 }
 
 h2.active {
-    background-image: url(<?php echo $_SESSION['PMA_Theme']->getImgPath('pmd/Header.png'); ?>);
+    background-image: url(<?php echo $_SESSION['PMA_Theme'] -> getImgPath('pmd/Header.png');
+?>);
     background-repeat: repeat-x;
     padding: 1px;
     background-position: left bottom;
@@ -486,7 +524,8 @@ h2.active {
     display: none;
     position: absolute;
     top: 20%;
-    <?php echo $left; ?>: 30%;
+    <?php echo $left;
+?>: 30%;
     width: 500px;
     height: 220px;
     padding: 48px;
@@ -501,7 +540,8 @@ h2.active {
     position: absolute;
     float: center;
     top: 0;
-    <?php echo $left; ?>: 0;
+    <?php echo $left;
+?>: 0;
     width: 593px;
     height: 20px;
     padding: 0;
@@ -511,20 +551,24 @@ h2.active {
     background-color: #D0DCE0;
     color: black;
     font-weight: bold;
-    padding-<?php echo $left; ?>: 2px;
-    text-align: <?php echo $left; ?>;
+    padding-<?php echo $left;
+?>: 2px;
+    text-align: <?php echo $left;
+?>;
 }
 
 #tblfooter {
     background-color: #D3DCE3;
-    float: <?php echo $right; ?>;
+    float: <?php echo $right;
+?>;
     padding-top: 10px;
     color: black;
     font-weight: normal;
 }
 
 #foreignkeychk {
-    text-align: <?php echo $left; ?>;
+    text-align: <?php echo $left;
+?>;
     position: absolute;
     cursor: pointer;
 }
