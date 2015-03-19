@@ -1,16 +1,30 @@
 <?php
 // Image Gallery Plugin 0.2 for UliCMS 2014 R2
 // Main Function
-function gallery_render(){
+function lightbox_gallery_render(){
      $gallery_image_folder = "content/files/gallery/";
+     
+     // Version 0.0.2 - 2015-03-19
+     // Es ist nun möglich gallery_image_folder über Custom Data zu überschreiben
+     $data = get_custom_data();
+     if(isset($data["gallery_image_folder"]) and !empty($data["gallery_image_folder"])){
+       $gallery_image_folder = $data["gallery_image_folder"];
+     }
+     
+     if(!endsWith($gallery_image_folder, "/"))
+        $gallery_image_folder .= "/";
     
      generateThumbnails($gallery_image_folder);
      generateBigImages($gallery_image_folder);
+    
      if(!isset($_GET["img_id"])){
          return output_all($gallery_image_folder);
          }else{
          return output_single($gallery_image_folder, basename($_GET["img_id"]));
          }
+    
+    
+    
     
      }
 
@@ -49,6 +63,8 @@ function output_all($gallery_image_folder){
          $max_row_count = 3;
          }
     
+     $random_id = md5(uniqid());
+    
      $max_row_count = getconfig("image_gallery_images_per_row");
     
      $html_output = "";
@@ -69,11 +85,22 @@ function output_all($gallery_image_folder){
                      $html_output .= "<p align='center'>\n";
                      }
                  $thumbnail_filename = $gallery_image_folder . $exploded_filename[0] . ".thumb.jpg";
+                 $standard_filename = $gallery_image_folder . $exploded_filename[0] . ".standard.jpg";
                  $description_filename = $gallery_image_folder . $exploded_filename[0] . ".txt";
+                
+                 if(file_exists($description_filename))
+                     $description_content = file_get_contents($description_filename);
+                 else
+                     $description_content = "";
+                
+                 $title_attr = "";
+                
+                 if(!empty($description_content))
+                     $title_attr = "title='$description_content'";
                  $path_to_original_image = $gallery_image_folder . $filename;
                 
                  $big_url = "" . buildSEOUrl(get_requested_pagename()) . "?" . "img_id=" . $exploded_filename[0];
-                 $html_output .= "<a href='$big_url'>";
+                 $html_output .= "<a href='$standard_filename' $title_attr rel='lightbox[$random_id]'>";
                  $html_output .= "<img src='" . $thumbnail_filename . "' style='margin-right:20px;border:0px;'";
                  if(is_file($description_filename)){
                      $description_content = htmlspecialchars(file_get_contents($description_filename));
@@ -97,7 +124,6 @@ function output_all($gallery_image_folder){
             
              }
          }
-    
     
      return $html_output;
      }
