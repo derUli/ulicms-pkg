@@ -7,3 +7,4 @@ gallery-0.2.1
 lightbox_gallery-0.0.3
 phpmyadmin-4.3.11.1
 facebook_like-0.0.2
+facebook_sdk-2.0.1
