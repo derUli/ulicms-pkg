@@ -1,9 +1,9 @@
-Neue Pakete
-- better_touch-0.0.2 
-- blog_postlist-0.0.1 
+Neue Pakete:
+faq-0.0.1
+google_plusone-0.0.2
 
-Aktualisierte Pakete
-- phpmyadmin-4.3.9 
-- ip_check-0.0.2
-- mysql_optimize-0.0.2
-- fortune-0.0.2
+Aktualisierte Pakete:
+gallery-0.2.1
+lightbox_gallery-0.0.3
+phpmyadmin-4.3.11.1
+facebook_like-0.0.2
