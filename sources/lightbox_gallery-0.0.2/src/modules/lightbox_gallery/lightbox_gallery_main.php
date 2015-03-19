@@ -13,6 +13,8 @@ function lightbox_gallery_render(){
      
      if(!endsWith($gallery_image_folder, "/"))
         $gallery_image_folder .= "/";
+        
+     $gallery_image_folder = ltrim($gallery_image_folder, "/");
     
      generateThumbnails($gallery_image_folder);
      generateBigImages($gallery_image_folder);
