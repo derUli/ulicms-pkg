@@ -1,6 +1,6 @@
 <?php
 define("MODULE_ADMIN_HEADLINE", "Facebook SDK");
-define("MODULE_ADMIN_REQUIRED_PERMISSION", "facebook_api_settings");
+define("MODULE_ADMIN_REQUIRED_PERMISSION", "facebook_sdk_settings");
 
 function facebook_sdk_admin(){
     
