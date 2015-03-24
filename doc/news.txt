@@ -2,6 +2,7 @@ Neue Pakete:
 faq-0.0.1
 google_plusone-0.0.2
 failed_login_notifications-0.0.1
+ip_whitelist-0.0.1
 
 Aktualisierte Pakete:
 gallery-0.2.1
