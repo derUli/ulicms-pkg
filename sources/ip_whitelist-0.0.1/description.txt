@@ -1,1 +1,1 @@
-Zugriff auf den Administrationsbereich von UliCMS nur von bestimmten IP-Adressen erlauben.
+Zugriff auf den Administrationsbereich von UliCMS nur von bestimmten IP-Adressen aus erlauben.
