@@ -22,7 +22,7 @@ else
 <form action="<?php echo getModuleAdminSelfPath()?>" method="post">
 <?php if(function_exists("csrf_token_html")) csrf_token_html();?>
 <?php translate("IP_WHITELIST_INSTRUCTION");?>
-<?php translate("IP_WHITELIST_YOUR_IP");?>
+<?php echo str_replace("%ip%", $your_ip, get_translation("IP_WHITELIST_YOUR_IP"));?>
 <p>
 <textarea rows="10" cols="40" name="ip_whitelist"><?php echo $ip_whitelist;
      ?></textarea>
