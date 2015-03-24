@@ -31,7 +31,7 @@ if(is_admin_dir() and !isIPAllowed($ip)){
      header("Content-Type: text/html; charset=UTF-8");
      if(!$translation)
         $translation = "Access to UliCMS Backend is not allowed from your IP (%ip%).";
-     $translation = str_replace("%ip", $ip, $translation);
+     $translation = str_replace("%ip%", $ip, $translation);
      
      die($translation);
      }
