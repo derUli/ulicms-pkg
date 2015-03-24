@@ -1,5 +1,5 @@
 <?php
-define("MODULE_ADMIN_HEADLINE", "Ip Whitelist");
+define("MODULE_ADMIN_HEADLINE", "IP Whitelist");
 define("MODULE_ADMIN_REQUIRED_PERMISSION", "ip_whitelist");
 
 function ip_whitelist_admin(){
