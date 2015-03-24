@@ -1,4 +1,4 @@
 <?php
-function block_ips_name(){
+function ip_whitelist_name(){
      return "IP Whitelist";
      }
