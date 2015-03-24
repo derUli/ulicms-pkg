@@ -8,7 +8,7 @@ function isIPAllowed($ip){
      $ip_whitelist = explode("\n", $ip_whitelist);
     
      for($i = 0; $i < count($ip_whitelist); $i++){
-        $ip_whitelist = trim($ip_whitelist[$i]);
+        $ip_whitelist[$i] = trim($ip_whitelist[$i]);
          if(endsWith($ip_whitelist[$i], ".")){
              if(startsWith($ip, $ip_whitelist[$i]))
                  return true;
