@@ -11,7 +11,7 @@ function isIPBlocked($ip){
      $blocked_ips = explode("\n", $blocked_ips);
     
      for($i = 0; $i < count($blocked_ips); $i++){
-         $blocked_ips = trim($blocked_ips, " ");
+         $blocked_ips[$i] = trim($blocked_ips[$i], " ");
          if(endsWith($blocked_ips[$i], ".")){
              if(startsWith($ip, $blocked_ips[$i]))
                  return true;
