@@ -1,4 +1,4 @@
 <?php
-if(!getconfig("ip_whítelist"))
-     setconfig("ip_whítelist", "");
+if(!getconfig("ip_whitelist"))
+     setconfig("ip_whitelist", "");
 
