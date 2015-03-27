@@ -29,7 +29,7 @@ if(!function_exists("rootDirectory")){
      }
 
 
-include_once getModulePath("twitter_for_php") . "twitter.class.php";
+include_once getModulePath("twitter_for_php") . "/src/twitter.class.php";
 
 if($_GET["blog_admin"] == "submit"){
      if(!empty($_POST["title"]) and isset($_POST["seo_shortname"])){
