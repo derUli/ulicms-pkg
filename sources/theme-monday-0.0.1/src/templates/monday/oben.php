@@ -29,8 +29,6 @@ window.onload = function(){
 
 <?php }
 ?>
-<link rel="stylesheet" media="screen" type="text/css" href="<?php echo getTemplateDirPath("monday");
-?>style.css"/>
 <style type="text/css">
 #header{
 background-color:<?php echo getconfig("header-background-color");

@@ -16,9 +16,6 @@ Description: Three-column blog design with the third column allocated for ads. F
 <head>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <?php base_metas()?>
-
-<link href="<?php echo getTemplateDirPath("nightvision");
-?>style.css" rel="stylesheet" type="text/css" media="screen" />
 </head>
 <style type="text/css">
 body{

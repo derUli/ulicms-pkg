@@ -2,9 +2,6 @@
 <html lang="<?php echo getCurrentLanguage();
 ?>">
 <head>
-<link rel="stylesheet" media="screen" type="text/css" href="<?php echo getTemplateDirPath("clouds");
-?>style.css"/>
-
 <?php base_metas()?>
 <script src="<?php echo getTemplateDirPath("clouds");
 ?>js/jquery.spritely.js" type="text/javascript"></script>

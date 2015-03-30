@@ -3,8 +3,6 @@
 ?>">
 <head>
 <?php base_metas()?>
-<link rel="stylesheet" media="screen" type="text/css" href="<?php echo getTemplateDirPath("default");
-?>style.css"/>
 <?php
 if(!getconfig("header-background-color")){
      setconfig("header-background-color", "rgb(35, 148, 96)");

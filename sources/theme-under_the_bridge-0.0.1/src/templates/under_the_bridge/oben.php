@@ -3,7 +3,6 @@
 <head>
 <?php base_metas();
 ?>
-<link rel="stylesheet" type="text/css" href="<?php echo getTemplateDirPath("under_the_bridge")?>style.css" />
 </head>
 
 <body>

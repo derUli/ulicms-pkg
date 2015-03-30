@@ -3,8 +3,6 @@
 ?>">
 <head>
 <?php base_metas()?>
-<link rel="stylesheet" media="screen" type="text/css" href="<?php echo getTemplateDirPath("dogs");
-?>style.css"/>
 <meta name="viewport" content="width=1280, initial-scale=1"/>
 <style type="text/css">
 body{

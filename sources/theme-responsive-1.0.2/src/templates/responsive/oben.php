@@ -3,8 +3,6 @@
 ?>">
 <head>
 <?php base_metas()?>
-<link rel="stylesheet" type="text/css" href="<?php echo getTemplateDirPath("responsive");
-?>style.css"/>
 <style type="text/css">
 body{
 color:<?php echo getconfig("body-text-color");

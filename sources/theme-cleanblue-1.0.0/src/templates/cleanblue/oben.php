@@ -2,10 +2,8 @@
 <html lang="<?php echo getCurrentLanguage();
 ?>">
 <head>
-<meta name="viewport" content="width=1024"/>
-<link rel="stylesheet" media="screen" type="text/css" href="<?php echo getTemplateDirPath("cleanblue");
-?>style.css"/>
 <?php base_metas()?>
+<meta name="viewport" content="width=1024"/>
 </head>
 <body>
 <div id="root-container">

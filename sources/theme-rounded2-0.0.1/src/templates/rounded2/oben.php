@@ -4,8 +4,6 @@
 <head>
 <?php base_metas();
 ?>
-<link rel="stylesheet" type="text/css" href="<?php echo getTemplateDirPath("rounded2");
-?>style.css" />
 </head>
 <body>
 	<div id="wrapper">

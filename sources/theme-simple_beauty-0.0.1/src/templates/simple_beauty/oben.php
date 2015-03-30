@@ -4,8 +4,6 @@
 <head>
 <?php base_metas();
 ?>
-<link href="<?php echo getTemplateDirPath("simple_beauty");
-?>style.css" rel="stylesheet" type="text/css" />
 <style type="text/css" rel="stylesheet">
 #header, #sub_header{
 background-color:<?php echo getconfig("header-background-color");
