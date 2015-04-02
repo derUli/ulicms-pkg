@@ -12,7 +12,7 @@ function clear_log_admin(){
      ?>
 <?php if(isset($_POST["submit"])){
 ?>
-<p>Log wurde erfolgreich geleert</p>
+<p>Protokoll wurde erfolgreich geleert.</p>
 <?php }?>
 
 <form action="<?php echo getModuleAdminSelfPath()?>" method="post">
