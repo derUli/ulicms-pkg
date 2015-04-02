@@ -38,7 +38,8 @@ define("NEWSLETTER_TEMPLATE_CONTENT", getconfig("newsletter_template_content"));
 
 <h3>Vorlage</h3>
 <form method="post" action="<?php echo getModuleAdminSelfPath()?>">
-<?php csrf_token_html();?>
+<?php csrf_token_html();
+?>
 <p><strong>Titel: </strong><input type="text" maxlength=78 size=78 name="template_title" value="<?php echo htmlspecialchars(NEWSLETTER_TEMPLATE_TITLE)?>"></p>
 
 

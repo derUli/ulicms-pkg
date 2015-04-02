@@ -14,7 +14,8 @@ function renumber_page_positions_admin(){
      ?>
 
 <form action="<?php echo getModuleAdminSelfPath()?>" method="post">
-<?php csrf_token_html();?>
+<?php csrf_token_html();
+    ?>
 <p>Falls Sie eine neue Seite erstellen möchten, aber Sie keinen Abstand zwischen den Positionen gelassen haben, können Sie diese Funktion nutzen, um die Positionsnummern der Seiten neu zu organisieren.</p>
 <input type="submit" name="submit" value="Seitenenpositionen neu organisieren"/>
 </form>

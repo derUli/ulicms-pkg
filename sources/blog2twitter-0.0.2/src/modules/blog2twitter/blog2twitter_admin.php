@@ -27,7 +27,8 @@ function blog2twitter_admin(){
      ?>
 
 <form id="blog2twitter_settings" action="<?php echo getModuleAdminSelfPath()?>" method="post">
-<?php csrf_token_html();?>
+<?php csrf_token_html();
+    ?>
 <div class="label">Twitter Consumer Key</div>
 <div class="inputWrapper"><input type="text" name="blog2twitter_consumer_key" value="<?php echo $blog2twitter_consumer_key;
      ?>">

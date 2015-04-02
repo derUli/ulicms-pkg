@@ -1,7 +1,7 @@
 <?php
 /**
  * Authentication functions
- *
+ * 
  * @package Swekey
  */
 ?>

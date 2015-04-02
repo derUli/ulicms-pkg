@@ -23,7 +23,8 @@ function enforce_https_admin(){
      ?>
 
 <form action="<?php echo getModuleAdminSelfPath()?>" method="post">
-<?php csrf_token_html();?>
+<?php csrf_token_html();
+    ?>
 <?php if(!$enforce_https){
          ?>
 <p style="color:red">

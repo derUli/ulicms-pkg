@@ -4,7 +4,7 @@ function blog_add_form(){
      $all_languages = getAllLanguages();
      $html_output .= "<form action='" .
      buildSEOUrl(get_requested_pagename()) . "?blog_admin=submit' method='post' style=''>";
-     
+    
      $html_output .= get_csrf_token_html();
     
      $html_output .= "<table class='blog_admin_table'>";

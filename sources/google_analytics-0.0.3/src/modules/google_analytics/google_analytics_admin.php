@@ -17,7 +17,8 @@ function google_analytics_admin(){
      ?>
 
 <form action="<?php echo getModuleAdminSelfPath()?>" method="post">
-<?php csrf_token_html();?>
+<?php csrf_token_html();
+    ?>
 <p>Web-Property-ID: <input name="google_analytics_id" type="text" value="<?php echo htmlspecialchars($ga_id);
      ?>"></p>
 

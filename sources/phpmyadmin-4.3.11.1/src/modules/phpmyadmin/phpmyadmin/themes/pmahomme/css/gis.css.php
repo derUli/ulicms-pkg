@@ -1,16 +1,18 @@
 <?php
-/* vim: set expandtab sw=4 ts=4 sts=4: */
+/**
+ * vim: set expandtab sw=4 ts=4 sts=4:
+ */
 /**
  * GIS styles for the pmahomme theme
- *
- * @package    PhpMyAdmin-theme
+ * 
+ * @package PhpMyAdmin-theme
  * @subpackage PMAHomme
  */
 
 // unplanned execution path
-if (! defined('PMA_MINIMUM_COMMON') && ! defined('TESTSUITE')) {
-    exit();
-}
+if (! defined('PMA_MINIMUM_COMMON') && ! defined('TESTSUITE')){
+     exit();
+    }
 ?>
 
 .gis_table td {
@@ -23,14 +25,16 @@ if (! defined('PMA_MINIMUM_COMMON') && ! defined('TESTSUITE')) {
 }
 
 .gis_table .button {
-   text-align: <?php echo $right; ?>;
+   text-align: <?php echo $right;
+?>;
 }
 
 /**
  * GIS data editor styles
  */
 a.close_gis_editor {
-    float: <?php echo $right; ?>;
+    float: <?php echo $right;
+?>;
 }
 
 #gis_editor {

@@ -33,7 +33,8 @@ width:80px;
 }
 </style>
 <form action="index.php?action=module_settings&module=fullcalendar" method="post">
-<?php csrf_token_html();?>
+<?php csrf_token_html();
+    ?>
 <table>
 <tr>
 <td>Anfang:</td>

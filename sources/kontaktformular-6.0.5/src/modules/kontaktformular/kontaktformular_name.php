@@ -9,4 +9,4 @@ function kontaktformular_name(){
          }else{
          return $names["de"];
          }
-    }
+     }

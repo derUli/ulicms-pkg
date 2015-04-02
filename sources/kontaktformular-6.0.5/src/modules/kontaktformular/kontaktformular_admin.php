@@ -27,7 +27,8 @@ function kontaktformular_admin(){
      ?>
 
 <form action="<?php echo getModuleAdminSelfPath()?>" method="post">
-<?php csrf_token_html();?>
+<?php csrf_token_html();
+    ?>
 <p>Mails senden an<br/>
 <input type="email" name="email" value="<?php echo htmlspecialchars($email, ENT_QUOTES, "UTF-8");
      ?>">

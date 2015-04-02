@@ -27,7 +27,8 @@ function jquery_tablesorter_admin(){
      ?>
 
 <form action="<?php echo getModuleAdminSelfPath()?>" method="post">
-<?php csrf_token_html();?>
+<?php csrf_token_html();
+    ?>
 <p>Theme<br/>
 <select name="jquery_tablesorter_theme" size=1>
 <?php

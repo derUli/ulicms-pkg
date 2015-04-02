@@ -12,10 +12,10 @@ function humanstxt_admin(){
      if(file_exists($file)){
          $text = file_get_contents($file);
          $text = stringHelper :: real_htmlspecialchars($text);
-        }
+         }
     else{
          $text = "";
-        }
+         }
      ?>
 <script type="text/javascript">
 function fillTemplate(){
@@ -24,7 +24,7 @@ function fillTemplate(){
      $("#message").show();
      $.ajax({
             url: "<?php echo getModulePath("humanstxt");
-    ?>template.txt",
+     ?>template.txt",
             async: true,
             success: function (data){
                 $("textarea#text").val(data);
@@ -37,7 +37,8 @@ function fillTemplate(){
    
 }
 </script><form action="<?php echo getModuleAdminSelfPath()?>" method="post">
-<?php csrf_token_html();?>
+<?php csrf_token_html();
+    ?>
 <p><a href="http://humanstxt.org">Über humans.txt</a><br/></p>
 <input type="button" value="Vorlage einfügen" onclick="fillTemplate();">
 <p>

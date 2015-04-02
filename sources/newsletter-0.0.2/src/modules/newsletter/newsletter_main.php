@@ -151,7 +151,7 @@ function newsletter_render(){
     
     
      $html_output .= "<form class=\"newsletter_form\" action=\"" . get_requested_pagename() . ".html\" method=\"get\">";
-     
+    
      $html_output .= get_csrf_token_html();
     
      if($email){

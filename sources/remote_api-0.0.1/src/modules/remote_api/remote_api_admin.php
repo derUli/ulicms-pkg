@@ -19,7 +19,8 @@ function remote_api_admin(){
      ?>
 
 <form action="<?php echo getModuleAdminSelfPath()?>" method="post">
-<?php csrf_token_html();?>
+<?php csrf_token_html();
+    ?>
 <p><input name="remote_api_enabled" type="checkbox"<?php if($remote_api_enabled) echo " checked=\"checked\""?>> Aktiviert</p>
 <p>Wenn UliCMS sich im Root-Verzeichnis Ihrer Domain befindet, lautet die Remote-URL in den meisten Fällen:
 <br/>

@@ -1,8 +1,10 @@
 <?php
-/* vim: set expandtab sw=4 ts=4 sts=4: */
+/**
+ * vim: set expandtab sw=4 ts=4 sts=4:
+ */
 /**
  * Exporting of $goto_whitelist from PHP to Javascript
- *
+ * 
  * @package PhpMyAdmin
  */
 
@@ -24,8 +26,8 @@ session_write_close();
 
 echo "var PMA_gotoWhitelist = new Array();\n";
 $i = -1;
-foreach ($GLOBALS['goto_whitelist'] as $one_whitelist) {
-    $i++;
-    echo 'PMA_gotoWhitelist[' . $i . ']="' . $one_whitelist . '";' . "\n";
-}
+foreach ($GLOBALS['goto_whitelist'] as $one_whitelist){
+     $i++;
+     echo 'PMA_gotoWhitelist[' . $i . ']="' . $one_whitelist . '";' . "\n";
+    }
 ?>

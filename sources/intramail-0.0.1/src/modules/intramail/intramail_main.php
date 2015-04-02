@@ -269,7 +269,7 @@ function intramail_new_mail($mail_to = '', $subject = '', $message = ''){
   ';
     
     
-    csrf_token_html();
+     csrf_token_html();
     
      $users = getUsers();
     

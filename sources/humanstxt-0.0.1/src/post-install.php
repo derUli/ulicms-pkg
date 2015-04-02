@@ -6,7 +6,7 @@ if(!file_exists($file)){
      echo "Erstelle humans.txt Vorlage";
      file_put_contents($file, $template);
      echo "Fertig";
-    }
+     }
 else{
      echo "humans.txt existiert bereits";
-    }
+     }

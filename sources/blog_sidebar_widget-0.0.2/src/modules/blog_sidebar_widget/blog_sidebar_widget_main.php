@@ -29,5 +29,5 @@ function blog_sidebar_widget_render(){
     
      $html .= "</ul>";
     
-    return $html;
-    }
+     return $html;
+     }

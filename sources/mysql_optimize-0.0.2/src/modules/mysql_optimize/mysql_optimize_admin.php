@@ -14,7 +14,8 @@ function mysql_optimize_admin(){
      ?>
 
 <form action="<?php echo getModuleAdminSelfPath()?>" method="post">
-<?php csrf_token_html();?>
+<?php csrf_token_html();
+    ?>
 <input type="submit" name="submit" value="Datenbank optimieren und reparieren"/>
 </form>
 <?php

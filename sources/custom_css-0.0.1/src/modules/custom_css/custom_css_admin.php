@@ -15,7 +15,8 @@ function custom_css_admin(){
      ?>
 
 <form action="<?php echo getModuleAdminSelfPath()?>" method="post">
-<?php csrf_token_html();?>
+<?php csrf_token_html();
+    ?>
 <p>Hier können Sie eigene CSS Regeln definieren, ohne den Code der Templates modifizieren zu müssen.<br/>
 </p>
 <p>

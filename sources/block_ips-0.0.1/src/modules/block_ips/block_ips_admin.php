@@ -15,7 +15,8 @@ function block_ips_admin(){
      ?>
 
 <form action="<?php echo getModuleAdminSelfPath()?>" method="post">
-<?php csrf_token_html();?>
+<?php csrf_token_html();
+    ?>
 <p>Hier können Sie den Zugriff von bestimmten IP-Adressen auf das System blockieren.<br/>
 Sie können je einen Eintrag pro Zeile eingeben.
 <br/>
