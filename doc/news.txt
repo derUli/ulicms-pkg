@@ -1,0 +1,9 @@
+Neue Pakete:
+pfbc-3.1
+redirect_on_404-0.0.1
+slicknav-1.0.2
+
+Aktualisierte Pakete:
+blog2twitter-0.0.3
+kontaktformular-6.0.6
+twitter_for_php-3.5
