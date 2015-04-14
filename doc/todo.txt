@@ -1,2 +1,3 @@
 [ ] PHPMyAdmin aktualisieren
 [ ] Übersetztes Kontaktformular von Camillo in 8.0.0 und 9.0.0  einpflegen, Aufruf von Sanitize() rausschmeissen (Bug)
+[ ] Bootstrap Paket erstellen
