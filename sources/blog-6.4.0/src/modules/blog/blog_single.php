@@ -354,7 +354,7 @@ function blog_display_comments($post_id){
              $html .= "<br/>";
              $html .= "<br/>";
              
-             $html .= '<img src="'.get_gravatar($comment->email, 80).'" alt="Gravatar '.real_htmlspecialchars($comment->name).'"/>';
+             $html .= '<img src="'.get_gravatar($comment->email, 100).'" alt="Gravatar '.real_htmlspecialchars($comment->name).'"/>';
              $html .= "<br/>";
              $html .= "<br/>";
              $html .= "<strong>Name: </strong>";
