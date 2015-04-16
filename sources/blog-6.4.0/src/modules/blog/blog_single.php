@@ -89,6 +89,8 @@ function blog_single($seo_shortname){
 function comment_form($post_id){
      $html = "<div class=\"comment_form\">";
      $html .= "<form name='form' action='" . $_SERVER['REQUEST_URI'] . "' method='post'>";
+     
+     $html .= get_csrf_token_html();
      if($_SESSION["language"] == "de"){
          $submit = "Kommentar veröffentlichen";
          }else{
@@ -349,6 +351,10 @@ function blog_display_comments($post_id){
                  $html .= " <a href='" . buildSEOUrl(get_requested_pagename()) . "?blog_admin=delete_comment&id=" . $comment -> id . "' onclick='return confirm(\"Diesen Kommentar wirklich löschen?\")'>[Löschen]</a>";
                  }
             
+             $html .= "<br/>";
+             $html .= "<br/>";
+             
+             $html .= '<img src="'.get_gravatar().'" alt="Gravatar '.real_htmlspecialchars($comment->name).'"/>'
              $html .= "<br/>";
              $html .= "<br/>";
              $html .= "<strong>Name: </strong>";
