@@ -1,1 +1,2 @@
 [ ] PHPMyAdmin aktualisieren
+[ ] Blog sollte Gravatar anzeigen
