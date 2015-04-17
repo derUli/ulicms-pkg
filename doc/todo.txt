@@ -1,2 +1,3 @@
 [ ] PHPMyAdmin aktualisieren
-[ ] Blog sollte Gravatar anzeigen
+[X] Blog sollte Gravatar anzeigen
+[ ] Mobile Modul ähnlich wie WPTouch (https://wordpress.org/plugins/wptouch/)
