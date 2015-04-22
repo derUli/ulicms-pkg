@@ -21,7 +21,7 @@ function facebook_sdk_admin(){
     ?>
 <p><strong>Facebook App-ID</strong> <input name="facebook_app_id" required="true" type="text" value="<?php echo htmlspecialchars($facebook_app_id);
      ?>"></p>
-<p><a href="https://developers.facebook.com/">[Get an App-ID / Eine App-ID beantragen}</a></p>
+<p><a href="https://developers.facebook.com/">[Get an App-ID / Eine App-ID beantragen]</a></p>
 <p><input type="submit" name="submit" value="<?php translate("SAVE_CHANGES");
     ?>"/></p>
 </form>
