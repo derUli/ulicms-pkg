@@ -1,6 +1,7 @@
 Neue Pakete
 - better_touch-0.0.2 
 - blog_postlist-0.0.1 
+- breadcrumbs-0.0.1
 
 Aktualisierte Pakete
 - phpmyadmin-4.3.9 
