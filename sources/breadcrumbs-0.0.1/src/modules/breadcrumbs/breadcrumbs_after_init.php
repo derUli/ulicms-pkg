@@ -26,8 +26,8 @@ if(!function_exists("breadcrumbs")){
 
 
 if(!function_exists("breadcrumbs")){
-function breadcrumbs(){
-  echo get_breadcrumbs();
+  function breadcrumbs(){
+    echo get_breadcrumbs();
 }
 
 }
