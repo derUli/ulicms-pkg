@@ -1,5 +1,5 @@
 <?php
-if(!function_exists("breadcrumbs")){
+if(!function_exists("get_breadcrumbs")){
   function get_breadcrumbs(){
     if(!is_200())
        return "";
