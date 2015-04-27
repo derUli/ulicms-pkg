@@ -5,7 +5,7 @@ function phpContact_render(){
    if(is_file($path)){
      ob_start();
      include_once $file;
-     $retval = ob_get_contents();
+     $retval = ob_get_clean();
  
    }
     return $retval;
