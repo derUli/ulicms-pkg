@@ -9,4 +9,3 @@ Als "Einbauvariante" muss "PHP Variante (per "include" oder "require")" ausgewä
 Es kann nur das "Default" Template verwendet werden.
 
 Wenn phpContact konfiguriert ist, können Sie das UliCMS Modul installieren, und den Embed Code in die Seite, die das Kontaktformular enthalten soll einbinden.
-
