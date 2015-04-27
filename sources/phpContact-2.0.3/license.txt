@@ -1,3 +1,5 @@
+Die Lizenzbedingungen sind nur für die UliCMS Integration gültig.
+Die Lizenzbedingungen von phpContact finden Sie unter http://www.phpcontact.net/
 Copyright (c) 2011 - 2015, Der Uli im Netz 
 All rights reserved.
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
