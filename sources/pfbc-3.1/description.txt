@@ -1,3 +1,0 @@
-php-form-builder-class
-
-This project promotes rapid development of HTML forms through an object-oriented PHP framework.
