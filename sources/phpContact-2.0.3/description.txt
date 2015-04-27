@@ -1,3 +1,2 @@
-Integration von phpContact (http://www.phpcontact.net/)
-Bitte beachten Sie, dass phpContact in ULICMS_ROOT/phpContact installiert sein muss.
-Es kann nur das Default Template von phpContact verwendet werden.
+Integration von phpContact
+Für eine Installations-Anleitung schauen Sie bitte in die liesmich.txt im Modulordner
