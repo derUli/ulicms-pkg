@@ -2,6 +2,7 @@ Neue Pakete:
 breadcrumbs-0.0.3
 redirect_on_404-0.0.1
 slicknav-1.0.2
+phpContact-2.0.3
 
 Aktualisierte Pakete:
 blog2twitter-0.0.3
