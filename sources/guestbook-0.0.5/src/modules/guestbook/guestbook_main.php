@@ -301,9 +301,6 @@ function guestbook_list(){
      return $html_output;
      }
 
-
-
-
 function check_installation(){
      $test = db_query("SELECT * FROM " . tbname("guestbook_entries"));
      if(!$test){
