@@ -2,17 +2,17 @@
 <table>
 <tr>
 <td>Dein Name:</td>
-<td><input type="text" name="gb_name" value="" size=50 maxlength=500></td>
+<td><input type="text" name="gb_name" value="" size=50 maxlength=500 required></td>
 </tr>
 
 <tr>
 <td>Ort:</td>
-<td><input type="text" name="gb_city" value="" size=50 maxlength=500></td>
+<td><input type="text" name="gb_city" value="" size=50 maxlength=500 required></td>
 </tr>
 
 <tr>
 <td>Email:</td>
-<td><input type="text" name="gb_mail" value="" size=50 maxlength=500></td>
+<td><input type="text" name="gb_mail" value="" size=50 maxlength=500 required></td>
 </tr>
 <tr>
 <td>Homepage:</td>
@@ -21,7 +21,7 @@
 <tr>
 <td></td>
 <td>
-<textarea name="gb_content" cols="40" rows="10" size=50 maxlength=500></textarea>
+<textarea name="gb_content" cols="40" rows="10" size=50 maxlength=500 required></textarea>
 </td>
 </tr>
 <tr style="display:none">
