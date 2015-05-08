@@ -18,7 +18,7 @@
 <td>Homepage:</td>
 <td><input type="text" name="gb_homepage" value="" size=50 maxlength=500></td>
 </tr>
-<tr>
+<tr style="display:none">
 <td></td>
 <td>
 <textarea name="gb_content" cols="40" rows="10" size=50 maxlength=500></textarea>

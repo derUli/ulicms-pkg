@@ -8,3 +8,5 @@ Aktualisierte Pakete:
 blog2twitter-0.0.3
 kontaktformular-6.0.6
 twitter_for_php-3.5
+guestbook-0.0.5
+kontaktformular-6.0.6

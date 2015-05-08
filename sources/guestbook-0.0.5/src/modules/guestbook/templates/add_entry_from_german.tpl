@@ -24,7 +24,7 @@
 <textarea name="gb_content" cols="40" rows="10" size=50 maxlength=500></textarea>
 </td>
 </tr>
-<tr>
+<tr style="display:none">
 <td>Spamschutz:</td>
 <td>Dieses Feld leer lassen! <input type="text" name="phone" value=""></td>
 </tr>
