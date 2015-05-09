@@ -262,7 +262,7 @@ function kontaktformular_render(){
 				<td>
 					<input name="betreff" size="40" type="text" required="true"/></td>
 			</tr>
-			<tr>
+			<tr style="display:none">
 				<td>
 					<strong>' . $translation_spam_protection . ':</strong></td>
 				<td>
