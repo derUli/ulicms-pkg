@@ -234,7 +234,7 @@ function kontaktformular_render(){
              }
         
         
-         return $spam_counter . '<form action="' . htmlspecialchars($_SERVER['REQUEST_URI']) . '" method="post">
+         return $spam_counter . '<form action="' . htmlspecialchars($_SERVER['REQUEST_URI']) . '" method="post" class="kontaktformular">
 	<table border="0" cellpadding="1" cellspacing="1" style="height: 479px; width: 100%; ">
 		<tbody>
 			<tr>
