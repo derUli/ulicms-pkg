@@ -251,7 +251,7 @@ function kontaktformular_render(){
 			</tr>
 			<tr>
 				<td>
-					<strong>' . $translation_emailadress . ':</strong>:</td>
+					<strong>' . $translation_emailadress . ':</strong></td>
 				<td>
 					<input name="emailadresse" size="40"  required="true" type="email" /></td>
 			</tr>
