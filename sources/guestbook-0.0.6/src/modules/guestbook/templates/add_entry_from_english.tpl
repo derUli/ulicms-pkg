@@ -1,4 +1,5 @@
 <form action="{form_action_url}" class="guestbook_form" method="post">
+{csrf_token}
 <table>
 <tr>
 <td>Your Name:</td>
