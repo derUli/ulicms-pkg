@@ -9,9 +9,22 @@ if(!isset($data["disable_socialshare"]) and is_200()){
   <script type="text/javascript">
     jQuery(document).ready(function($){
       if($('.socialshareprivacy').length > 0){
-        $('.socialshareprivacy').socialSharePrivacy({
-          "css_path"  : "<?php echo  getModulePath("jquery_socialshareprivacy");?>js/plugins/socialshareprivacy/socialshareprivacy.css",
-          "lang_path" : "<?php echo  getModulePath("jquery_socialshareprivacy");?>js/plugins/socialshareprivacy/lang/",
+        $('.socialshareprivacy').socialSharePrivacy({'services' : {
+    'facebook' : {
+      'dummy_img' : '<?php echo getModulePath("jquery_socialshareprivacy");?>socialshareprivacy/images/dummy_facebook.png',
+      'layout' : 'box_count'
+    },
+    'twitter' : {
+      'dummy_img' : '<?php echo getModulePath("jquery_socialshareprivacy");?>socialshareprivacy/images/dummy_twitter.png',
+      'count' : 'vertical'
+    },
+    'gplus' : {
+      'dummy_img' : '<?php echo getModulePath("jquery_socialshareprivacy");?>socialshareprivacy/images/dummy_gplus.png',
+      'size' : 'tall'
+    }
+  },
+          "css_path"  : "<?php echo  getModulePath("jquery_socialshareprivacy");?>socialshareprivacy/socialshareprivacy.css",
+          "lang_path" : "<?php echo getModulePath("jquery_socialshareprivacy");?>socialshareprivacy/lang/",
           "language"  : "<?php echo $language;?>"
         });
       }
