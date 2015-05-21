@@ -1,3 +1,6 @@
 Neue Pakete
 - jquery_socialshareprivacy-1.6
 - google_translator_widget-0.0.1
+
+Aktualisierte Pakete
+- Alle theme-* Pakete
