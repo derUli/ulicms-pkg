@@ -1,6 +1,22 @@
 Neue Pakete
 - jquery_socialshareprivacy-1.6
 - google_translator_widget-0.0.1
+- bootstrap-3.3.4
 
 Aktualisierte Pakete
 - Alle theme-* Pakete
+- guestbook-0.0.7
+- phpmyadmin-4.4.7
+- theme-cleanblue-1.0.1
+- theme-clouds-1.0.2
+- theme-cloudy_dropdown-0.0.6
+- theme-default-6.0.4
+- theme-dogs-6.0.2
+- theme-monday-0.0.2
+- theme-nightvision-6.0.1
+- theme-rounded2-0.0.2
+- theme-simple_beauty-0.0.2
+- theme-terrafirma-1.1
+- theme-touching_design-0.0.2
+- theme-under_the_bridge-0.0.2
+
