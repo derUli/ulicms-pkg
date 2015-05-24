@@ -51,11 +51,6 @@ if sys.argv[1] == "init":
    print("Done.")
    sys.exit()
 
-# reformat / tidy source code
-elif sys.argv[1] == "reformat-src":
-   execfile("reformat_code.py")
-   sys.exit()
-
 # create new source folder
 elif sys.argv[1] == "src-folder-create":
    if len(sys.argv) > 2:
