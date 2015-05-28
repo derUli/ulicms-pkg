@@ -1,0 +1,25 @@
+==== Installation unter MySQL Version 5.6 und neuer ====
+Das Modul ist sofort nach der Installation einsatzbereit.
+
+==== Installation unter MySQL Version 5.5 und älter ====
+
+Führen Sie sofern Sie eine MySQL Version kleiner als 5.6 als Datenbank benutzen, folgende Befehle in der sql_console oder in phpMyAdmin aus um die Datenbank-Engine der Tabellen auf MyISAM umzustellen.
+Sonst wird das search-Modul nicht funktionieren.
+Passen Sie gegebenfalls den Tabellenprefix an.
+
+alter table ulicms_content engine=MyiSAM;
+
+Sofern die entsprechenden Module installiert sind auch noch diese Befehle ausführen:
+alter table ulicms_blog engine=MyiSAM;
+alter table ulicms_blog_comments engine=MyiSAM;
+
+alter table ulicms_blog_events engine=MyiSAM;
+
+Installieren Sie anschließend das search Modul erneut.
+
+==== Limitierungen ====
+- In der Standardkonfiguration von MySQL werden nur Wörter gefunden, die mindestens 4 Zeichen haben. 
+- Es müssen mindestens 3 Datensätze in einer Tabelle vorhanden sein, damit die Suchfunktion Ergebnisse findet
+
+Details zu MySQL Fulltext siehe hier
+https://dev.mysql.com/doc/refman/5.1/en/fulltext-fine-tuning.html
