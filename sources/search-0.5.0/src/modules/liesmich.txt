@@ -13,7 +13,7 @@ Sofern die entsprechenden Module installiert sind auch noch diese Befehle ausfü
 alter table ulicms_blog engine=MyiSAM;
 alter table ulicms_blog_comments engine=MyiSAM;
 
-alter table ulicms_blog_events engine=MyiSAM;
+alter table ulicms_events engine=MyiSAM;
 
 Installieren Sie anschließend das search Modul erneut.
 
