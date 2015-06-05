@@ -1,5 +1,5 @@
 <?php
-define("MODULE_ADMIN_HEADLINE", "Permanente Weiterleitung");
+define("MODULE_ADMIN_HEADLINE", "Temporäre Weiterleitungen");
 define("MODULE_ADMIN_REQUIRED_PERMISSION", "redirections302_edit");
 
 function redirections302_admin(){
