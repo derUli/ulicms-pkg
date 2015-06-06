@@ -8,7 +8,7 @@ if($require_change_engine){
         db_query("ALTER TABLE ".tbname("content"). " ENGINE=MyISAM");
 }
 
-db_query("ALTER TABLE " . tbname("content") . " ADD fulltext(systemname, title, content, meta_description, meta_keywords)");
+db_query("ALTER TABLE " . tbname("content") . " ADD fulltext(systemname, title, content, meta_description, meta_keywords, alternate_title)");
 
 if(in_array("blog", getAllModules())){
      if($require_change_engine){
