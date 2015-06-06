@@ -2,8 +2,6 @@
 
 global $db_connection;
 
-
-
 $require_change_engine = (mysqli_get_server_version ( $db_connection ) < 50600);
 
 if($require_change_engine){
@@ -15,7 +13,7 @@ db_query("ALTER TABLE " . tbname("content") . " ADD fulltext(systemname, title, 
 if(in_array("blog", getAllModules())){
      if($require_change_engine){
         db_query("ALTER TABLE ".tbname("blog"). " ENGINE=MyISAM");
-        db_query("ALTER TABLE ".tbname("blog"). " ENGINE=MyISAM");
+        db_query("ALTER TABLE ".tbname("blog_comments"). " ENGINE=MyISAM");
      }
      
      db_query("ALTER TABLE " . tbname("blog") . " ADD fulltext(seo_shortname, title, content_full, content_preview)");
@@ -26,10 +24,12 @@ if(in_array("blog", getAllModules())){
      }
 
 if(in_array("fullcalendar", getAllModules())){
-     db_query("ALTER TABLE " . tbname("events") . " ADD fulltext(title, url)");
      if($require_change_engine){
         db_query("ALTER TABLE ".tbname("events"). " ENGINE=MyISAM");
 }
+
+     db_query("ALTER TABLE " . tbname("events") . " ADD fulltext(title, url)");
+
      }
     
 
