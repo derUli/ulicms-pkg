@@ -2,6 +2,8 @@ Neue Pakete
 - jquery_socialshareprivacy-1.6
 - google_translator_widget-0.0.1
 - bootstrap-3.3.4
+- cron_only_at_night-0.0.1
+- jquery_socialshareprivacy-1.6
 
 Aktualisierte Pakete
 - Alle theme-* Pakete
@@ -19,4 +21,4 @@ Aktualisierte Pakete
 - theme-terrafirma-1.1
 - theme-touching_design-0.0.2
 - theme-under_the_bridge-0.0.2
-
+- block_yasni-0.0.4
