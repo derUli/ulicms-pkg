@@ -8,7 +8,7 @@ Neue Pakete
 Aktualisierte Pakete
 - Alle theme-* Pakete
 - guestbook-0.0.7
-- phpmyadmin-4.4.7
+- phpmyadmin-4.4.9
 - theme-cleanblue-1.0.1
 - theme-clouds-1.0.2
 - theme-cloudy_dropdown-0.0.6
@@ -22,3 +22,4 @@ Aktualisierte Pakete
 - theme-touching_design-0.0.2
 - theme-under_the_bridge-0.0.2
 - block_yasni-0.0.4
+- search-0.5.1
