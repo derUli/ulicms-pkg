@@ -23,3 +23,5 @@ Aktualisierte Pakete
 - theme-under_the_bridge-0.0.2
 - block_yasni-0.0.4
 - search-0.5.1
+- block_ips-0.0.2
+- block_useragents-0.0.2
