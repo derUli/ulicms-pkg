@@ -3,10 +3,8 @@ Neue Pakete
 - google_translator_widget-0.0.1
 - bootstrap-3.3.4
 - cron_only_at_night-0.0.1
-- jquery_socialshareprivacy-1.6
 
 Aktualisierte Pakete
-- Alle theme-* Pakete
 - guestbook-0.0.7
 - phpmyadmin-4.4.9
 - theme-cleanblue-1.0.1
