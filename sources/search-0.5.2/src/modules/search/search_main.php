@@ -36,41 +36,41 @@ function search_render(){
 	<div class=\"search_subject\">Suchbegriff: <input type='search' results=10 autosave='" . md5($_SERVER["SERVER_NAME"]) . "' name='q' required='true' value='" . $search_subject . "'> <input type='submit' value='Suchen'></div>";
     
      $html_output .= '<br/><div class="search-content-type">';
-     $html_output .= "<strong>Bereich:</strong><br/><input type='radio' value='pages' name='type' ";
+     $html_output .= "<strong>Bereich:</strong><br/><input type='radio' value='pages' id='radio_btn_pages' name='type' ";
      if($type == "pages"){
          $html_output .= " checked";
          }
-     $html_output .= "> Seiten<br/>";
+     $html_output .= "><label for='radio_btn_pages'>Seiten</label><br/>";
     
     
      if(in_array("blog", getAllModules())){
         
-         $html_output .= "<input type='radio' value='blog' name='type' ";
+         $html_output .= "<input type='radio' value='blog' id='radio_btn_blog' name='type' ";
         
          if($type == "blog"){
              $html_output .= " checked";
              }
-         $html_output .= "> Blog<br/>";
+         $html_output .= "><label for='radio_btn_blog'>Blog</label><br/>";
         
         
-         $html_output .= "<input type='radio' value='comments' name='type' ";
+         $html_output .= "<input type='radio' value='comments' name='type' id='radio_btn_comments' ";
         
          if($type == "comments"){
              $html_output .= " checked";
              }
-         $html_output .= "> Kommentare<br/>";
+         $html_output .= "><label for='radio_btn_comments'>Kommentare</label><br/>";
         
         
          }
     
      if(in_array("fullcalendar", getAllModules())){
         
-         $html_output .= "<input type='radio' value='events' name='type' ";
+         $html_output .= "<input type='radio' value='events' name='type' id='radio_btn_events' ";
         
          if($type == "events"){
              $html_output .= " checked";
              }
-         $html_output .= "> Veranstaltungen<br/>";
+         $html_output .= "><label for='radio_btn_events'>Veranstaltungen</label><br/>";
         
          }
     
