@@ -32,8 +32,7 @@ function search_render(){
          $type = "pages";
          }
     $html_output .= "<div class=\"search-container\">";
-     $html_output .= "<form class='search-form' action='" . buildSEOUrl(get_requested_pagename()) . "' method='get'>" . get_csrf_token_html() .
-     "
+     $html_output .= "<form class='search-form' action='" . buildSEOUrl(get_requested_pagename()) . "' method='get'>
 	<div class=\"search_subject\">Suchbegriff: <input type='search' results=10 autosave='" . md5($_SERVER["SERVER_NAME"]) . "' name='q' required='true' value='" . $search_subject . "'> <input type='submit' value='Suchen'></div>";
     
      $html_output .= '<br/><div class="search-content-type">';
