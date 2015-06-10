@@ -36,7 +36,7 @@ function search_render(){
 	<div class=\"search_subject\">".TRANSLATION_SEARCH_SUBJECT.": <input type='search' results=10 autosave='" . md5($_SERVER["SERVER_NAME"]) . "' name='q' required='true' value='" . $search_subject . "'> <input type='submit' value='".TRANSLATION_DO_SEARCH."'></div>";
     
      $html_output .= '<br/><div class="search-content-type">';
-     $html_output .= "<strong>".TRANSLATION_AREA.":</strong><br/><input type='radio' value='pages' id='radio_btn_pages' name='type' ";
+     $html_output .= "<strong>".TRANSLATION_AREA."</strong><br/><input type='radio' value='pages' id='radio_btn_pages' name='type' ";
      if($type == "pages"){
          $html_output .= " checked";
          }
