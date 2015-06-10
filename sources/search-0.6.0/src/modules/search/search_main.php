@@ -92,15 +92,19 @@ function search_render(){
          $search_request = db_escape($search_request);
          $search_request_unencoded = db_escape($search_request_unencoded);
         
-        
+         $boolean_mode = getconfig("search_enable_boolean_mode");
+         if($boolean_mode){
+            $boolean_mode = " IN BOOLEAN MODE";
+         } else{
+            $boolean_mode = "";
+         }
          if($type == "pages"){
              $search_sql_query = "SELECT systemname, title FROM " . tbname("content") .
              " WHERE MATCH (systemname, title, content, meta_description, meta_keywords) " .
-             "AGAINST ('" . $search_request_unencoded . "') " .
-             "";
-             $results = db_query($search_sql_query);
+             "AGAINST ('" . $search_request_unencoded . "'".$boolean_mode.");";
+             $results = db_query($search_sql_query)or die(db_error());
              $result_count = db_num_rows($results);
-             $html_output .= "<p class='search-results'><strong>$result_count</strong> Suchergebnisse gefunden</p>";
+             $html_output .= "<p class='search-results'><strong>$result_count</strong> Suchergebnisse gefunden.</p>";
              if($result_count > 0){
                 
                  $html_output .= "<hr/>
@@ -123,7 +127,7 @@ function search_render(){
             
              $search_sql_query = "SELECT seo_shortname, title FROM " . tbname("blog") .
              " WHERE MATCH (seo_shortname, title, content_full, content_preview) " .
-             "AGAINST ('" . $search_request_unencoded . "') ORDER by datum DESC" .
+             "AGAINST ('" . $search_request_unencoded . "'".$boolean_mode.") ORDER by datum DESC" .
              "";
              $results = db_query($search_sql_query);
              $result_count = db_num_rows($results);
@@ -149,7 +153,7 @@ function search_render(){
             
              $search_sql_query = "SELECT * FROM " . tbname("blog_comments") .
              " WHERE MATCH (comment, name, url) " .
-             "AGAINST ('" . $search_request_unencoded . "')";
+             "AGAINST ('" . $search_request_unencoded . "'".$boolean_mode.")";
              $results = db_query($search_sql_query);
              $result_count = db_num_rows($results);
              $html_output .= "<p class='search-results'><strong>$result_count</strong> Suchergebnisse gefunden</p>";
@@ -176,7 +180,7 @@ function search_render(){
             
              $search_sql_query = "SELECT * FROM " . tbname("events") .
              " WHERE MATCH (title, url) " .
-             "AGAINST ('" . $search_request_unencoded . "') AND `start` > " . (time() - 60 * 60 * 23) . " ORDER by `start` ASC";
+             "AGAINST ('" . $search_request_unencoded . "'".$boolean_mode.") AND `start` > " . (time() - 60 * 60 * 23) . " ORDER by `start` ASC";
             
              $results = db_query($search_sql_query);
              $result_count = db_num_rows($results);
