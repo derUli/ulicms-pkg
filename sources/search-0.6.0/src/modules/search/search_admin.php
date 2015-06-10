@@ -17,7 +17,7 @@ if(isset($_POST["submit"])){
 <form action="<?php echo getModuleAdminSelfPath()?>" method="post">
 <?php csrf_token_html();?>
 <p>
-<input type="checkbox" name="search_enable_boolean_mode" id="search_enable_boolean_mode" value="search_enable_boolean_mode" <?php if(getconfig("search_enable_boolean_mode")) echo "checked";?> <label for="search_enable_boolean_mode"><?php translate("enable_boolean_mode");?></label>
+<input type="checkbox" name="search_enable_boolean_mode" id="search_enable_boolean_mode" value="search_enable_boolean_mode" <?php if(getconfig("search_enable_boolean_mode")) echo "checked";?>> <label for="search_enable_boolean_mode"><?php translate("enable_boolean_mode");?></label>
 </p>
 <p>
 <input name="submit" type="submit" value="<?php translate("save_changes");?>">
