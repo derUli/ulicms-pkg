@@ -33,14 +33,14 @@ function search_render(){
          }
     $html_output .= "<div class=\"search-container\">";
      $html_output .= "<form class='search-form' action='" . buildSEOUrl(get_requested_pagename()) . "' method='get'>
-	<div class=\"search_subject\">Suchbegriff: <input type='search' results=10 autosave='" . md5($_SERVER["SERVER_NAME"]) . "' name='q' required='true' value='" . $search_subject . "'> <input type='submit' value='Suchen'></div>";
+	<div class=\"search_subject\">".TRANSLATION_SEARCH_SUBJECT.": <input type='search' results=10 autosave='" . md5($_SERVER["SERVER_NAME"]) . "' name='q' required='true' value='" . $search_subject . "'> <input type='submit' value='".TRANSLATION_DO_SEARCH."'></div>";
     
      $html_output .= '<br/><div class="search-content-type">';
-     $html_output .= "<strong>Bereich:</strong><br/><input type='radio' value='pages' id='radio_btn_pages' name='type' ";
+     $html_output .= "<strong>".TRANSLATION_AREA.":</strong><br/><input type='radio' value='pages' id='radio_btn_pages' name='type' ";
      if($type == "pages"){
          $html_output .= " checked";
          }
-     $html_output .= "><label for='radio_btn_pages'>Seiten</label><br/>";
+     $html_output .= "><label for='radio_btn_pages'>".TRANSLATION_PAGES."</label><br/>";
     
     
      if(in_array("blog", getAllModules())){
@@ -50,7 +50,7 @@ function search_render(){
          if($type == "blog"){
              $html_output .= " checked";
              }
-         $html_output .= "><label for='radio_btn_blog'>Blog</label><br/>";
+         $html_output .= "><label for='radio_btn_blog'>".TRANSLATION_BLOG."</label><br/>";
         
         
          $html_output .= "<input type='radio' value='comments' name='type' id='radio_btn_comments' ";
@@ -58,7 +58,7 @@ function search_render(){
          if($type == "comments"){
              $html_output .= " checked";
              }
-         $html_output .= "><label for='radio_btn_comments'>Kommentare</label><br/>";
+         $html_output .= "><label for='radio_btn_comments'>".TRANSLATION_COMMENTS."</label><br/>";
         
         
          }
@@ -70,7 +70,7 @@ function search_render(){
          if($type == "events"){
              $html_output .= " checked";
              }
-         $html_output .= "><label for='radio_btn_events'>Veranstaltungen</label><br/>";
+         $html_output .= "><label for='radio_btn_events'>".TRANSLATION_EVENTS."</label><br/>";
         
          }
     
@@ -104,7 +104,7 @@ function search_render(){
              "AGAINST ('" . $search_request_unencoded . "'".$boolean_mode.");";
              $results = db_query($search_sql_query)or die(db_error());
              $result_count = db_num_rows($results);
-             $html_output .= "<p class='search-results'><strong>$result_count</strong> Suchergebnisse gefunden.</p>";
+             $html_output .= "<p class='search-results'><strong>$result_count</strong> ".TRANSLATION_SEARCH_RESULTS_FOUND."</p>";
              if($result_count > 0){
                 
                  $html_output .= "<hr/>
@@ -131,7 +131,7 @@ function search_render(){
              "";
              $results = db_query($search_sql_query);
              $result_count = db_num_rows($results);
-             $html_output .= "<p class='search-results'><strong>$result_count</strong> Suchergebnisse gefunden</p>";
+             $html_output .= "<p class='search-results'><strong>$result_count</strong> ".TRANSLATION_SEARCH_RESULTS_FOUND."</p>";
              if($result_count > 0){
                 
                  $html_output .= "<hr/>
@@ -156,7 +156,7 @@ function search_render(){
              "AGAINST ('" . $search_request_unencoded . "'".$boolean_mode.")";
              $results = db_query($search_sql_query);
              $result_count = db_num_rows($results);
-             $html_output .= "<p class='search-results'><strong>$result_count</strong> Suchergebnisse gefunden</p>";
+             $html_output .= "<p class='search-results'><strong>$result_count</strong> ".TRANSLATION_SEARCH_RESULTS_FOUND."</p>";
              if($result_count > 0){
                 
                  $html_output .= "<hr/>
@@ -184,7 +184,7 @@ function search_render(){
             
              $results = db_query($search_sql_query);
              $result_count = db_num_rows($results);
-             $html_output .= "<p class='search-results'><strong>$result_count</strong> Suchergebnisse gefunden</p>";
+             $html_output .= "<p class='search-results'><strong>$result_count</strong> ".TRANSLATION_SEARCH_RESULTS_FOUND."</p>";
              if($result_count > 0){
                 
                  $html_output .= "<hr/>
