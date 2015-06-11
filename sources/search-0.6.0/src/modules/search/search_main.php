@@ -99,9 +99,10 @@ function search_render(){
             $boolean_mode = "";
          }
          if($type == "pages"){
-             $search_sql_query = "SELECT systemname, title FROM " . tbname("content") .
+             $search_sql_query = "SELECT systemname, title, MATCH (systemname, title, content, meta_description, meta_keywords) " .
+             "AGAINST ('" . $search_request_unencoded . "'".$boolean_mode.") as score FROM " . tbname("content") .
              " WHERE MATCH (systemname, title, content, meta_description, meta_keywords) " .
-             "AGAINST ('" . $search_request_unencoded . "'".$boolean_mode.");";
+             "AGAINST ('" . $search_request_unencoded . "'".$boolean_mode.") order by score desc;";
              $results = db_query($search_sql_query)or die(db_error());
              $result_count = db_num_rows($results);
              $html_output .= "<p class='search-results'><strong>$result_count</strong> ".TRANSLATION_SEARCH_RESULTS_FOUND."</p>";
@@ -125,9 +126,10 @@ function search_render(){
              if(!$blog_page)
                  $blog_page = "blog";
             
-             $search_sql_query = "SELECT seo_shortname, title FROM " . tbname("blog") .
+             $search_sql_query = "SELECT seo_shortname, title, MATCH (seo_shortname, title, content_full, content_preview) " .
+             "AGAINST ('" . $search_request_unencoded . "'".$boolean_mode.") as score FROM " . tbname("blog") .
              " WHERE MATCH (seo_shortname, title, content_full, content_preview) " .
-             "AGAINST ('" . $search_request_unencoded . "'".$boolean_mode.") ORDER by datum DESC" .
+             "AGAINST ('" . $search_request_unencoded . "'".$boolean_mode.") ORDER by score DESC" .
              "";
              $results = db_query($search_sql_query);
              $result_count = db_num_rows($results);
@@ -151,9 +153,10 @@ function search_render(){
              if(!$blog_page)
                  $blog_page = "blog";
             
-             $search_sql_query = "SELECT * FROM " . tbname("blog_comments") .
+             $search_sql_query = "SELECT *, MATCH (comment, name, url) " .
+             "AGAINST ('" . $search_request_unencoded . "'".$boolean_mode.") as score FROM " . tbname("blog_comments") .
              " WHERE MATCH (comment, name, url) " .
-             "AGAINST ('" . $search_request_unencoded . "'".$boolean_mode.")";
+             "AGAINST ('" . $search_request_unencoded . "'".$boolean_mode.") order by score desc";
              $results = db_query($search_sql_query);
              $result_count = db_num_rows($results);
              $html_output .= "<p class='search-results'><strong>$result_count</strong> ".TRANSLATION_SEARCH_RESULTS_FOUND."</p>";
