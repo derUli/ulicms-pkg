@@ -21,7 +21,7 @@ function blog_sidebar_widget_render(){
     
     
     
-     $query = db_query("SELECT title, seo_shortname FROM " . tbname("blog") . " WHERE language='" . $_SESSION["language"] . "' ORDER by datum DESC" . $limit_sql);
+     $query = db_query("SELECT title, seo_shortname FROM " . tbname("blog") . " WHERE language='" . $_SESSION["language"] . "' AND entry_enabled = 1 ORDER by datum DESC" . $limit_sql);
      while($row = db_fetch_object($query)){
          $url = $blog_page_url . "?single=" . $row -> seo_shortname;
          $html .= "<li>" . "<a href=\"" . htmlspecialchars($url) . "\">" . htmlspecialchars($row -> title) . "</a></li>";
