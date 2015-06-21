@@ -78,7 +78,7 @@ function blog_list(){
             
             
             
-             $html .= "<h2 class='blog_headline'><a href='" . buildSEOUrl(get_requested_pagename()) . "?single=" . $post -> seo_shortname . "'>" . $post -> title . "</a></h2>";
+             $html .= "<h2 class='blog_headline'><a href='" . buildSEOUrl(get_requested_pagename()) . "?single=" . $post -> seo_shortname . "'>" . htmlspecialchars($post -> title) . "</a></h2>";
              $html .= "<hr class='blog_hr'/>";
             
              $date_and_autor_string = $autor_and_date;
