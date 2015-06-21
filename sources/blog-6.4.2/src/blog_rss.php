@@ -72,7 +72,7 @@ while($row = db_fetch_object($query)){
          $description);
     
      echo "<item>\n";
-     echo "<title>" . $row -> title . "</title>\n";
+     echo "<title>" . htmlspecialchars($row -> title) . "</title>\n";
      $link = rootDirectory() . buildSEOUrl($seite) . "?single=" . $row -> seo_shortname;
     
      echo "<link>" . $link . "</link>\n";
