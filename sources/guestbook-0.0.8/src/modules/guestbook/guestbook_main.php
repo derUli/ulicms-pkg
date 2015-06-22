@@ -294,7 +294,7 @@ function guestbook_list(){
      if($limit < $last){
          $new_limit = $limit + 10;
         
-         $html_output .= "<br/>br/><a href='" . buildSEOUrl(get_requested_pagename()) . "?action=list&limit=$new_limit#gb_more'>" . "Mehr</a>";
+         $html_output .= "<br/><br/><a href='" . buildSEOUrl(get_requested_pagename()) . "?action=list&limit=$new_limit#gb_more'>" . "Mehr</a>";
          }
     
     
