@@ -10,5 +10,5 @@ function get_Menutron($min = true){
 
 
 function Menutron($min = true){
-   echo getMenutron($min);
+   echo get_Menutron($min);
 }
