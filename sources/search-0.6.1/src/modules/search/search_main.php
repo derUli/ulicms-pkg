@@ -99,9 +99,9 @@ function search_render(){
             $boolean_mode = "";
          }
          if($type == "pages"){
-             $search_sql_query = "SELECT systemname, title, MATCH (systemname, title, content, meta_description, meta_keywords) " .
+             $search_sql_query = "SELECT systemname, title, MATCH (systemname, title, content, meta_description, meta_keywords, alternate_title) " .
              "AGAINST ('" . $search_request_unencoded . "'".$boolean_mode.") as score FROM " . tbname("content") .
-             " WHERE MATCH (systemname, title, content, meta_description, meta_keywords) " .
+             " WHERE MATCH (systemname, title, content, meta_description, meta_keywords, alternate_title) " .
              "AGAINST ('" . $search_request_unencoded . "'".$boolean_mode.") order by score desc;";
              $results = db_query($search_sql_query)or die(db_error());
              $result_count = db_num_rows($results);
