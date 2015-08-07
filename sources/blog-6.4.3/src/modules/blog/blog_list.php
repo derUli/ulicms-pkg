@@ -142,7 +142,7 @@ function blog_list(){
              }
         
          if($_SESSION["language"] == "de"){
-             $html .= "Neuer";
+             $html .= "Neuere";
             
              }else{
              $html .= "newer";
