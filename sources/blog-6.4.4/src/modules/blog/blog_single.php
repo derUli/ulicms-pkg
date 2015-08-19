@@ -352,25 +352,22 @@ function blog_display_comments($post_id){
                  $html .= " <a href='" . buildSEOUrl(get_requested_pagename()) . "?blog_admin=delete_comment&id=" . $comment -> id . "' onclick='return confirm(\"Diesen Kommentar wirklich löschen?\")'>[Löschen]</a>";
                  }
             
-             $html .= "<br/>";
-             $html .= "<br/>";
-             
+             $html .= '<div class="blog-comment-gravatar">';
              $html .= '<img src="'.get_gravatar($comment->email, 100).'" alt="Gravatar '.real_htmlspecialchars($comment->name).'"/>';
-             $html .= "<br/>";
-             $html .= "<br/>";
-             $html .= "<strong>Name: </strong>";
+             $html .= "</div>
+             $html .= "<strong class='blog-name-label'>Name: </strong>";
              $html .= $comment -> name;
              $html .= "<br/>";
             
              if($acl -> hasPermission("blog")){
-                 $html .= "<strong>Email: </strong>" . $comment -> email . "<br/>";
+                 $html .= "<strong class='blog-email-label'>Email: </strong>" . $comment -> email . "<br/>";
                  }
             
              if($_SESSION["language"] == "de"){
-                 $html .= "<strong>Datum:</strong>";
+                 $html .= "<strong class='blog-datum-label'>Datum:</strong>";
                 
                  }else{
-                 $html .= "<strong>Date:</strong>";
+                 $html .= "<strong class='blog-datum-label'>Date:</strong>";
                  }
             
             
