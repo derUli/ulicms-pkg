@@ -46,8 +46,6 @@ function blog_single($seo_shortname){
              $date_and_autor_string = str_replace("%views%", $post -> views, $date_and_autor_string);
             
              $html .= $date_and_autor_string;
-            
-             $html .= "<br/>";
              $html .= "<div class='blog_post_content'>" . $post -> content_full . "</div>";
             
             
