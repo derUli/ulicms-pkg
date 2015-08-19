@@ -339,35 +339,38 @@ function blog_display_comments($post_id){
          while($comment = db_fetch_object($query)){
              $count++;
             
-             $html .= "<div class='a_comment'>
+             $html .= "<div class='a_comment'>";
+             $html .= "<div class='before_comment_link'>";
+             
+             $html .="
 	   <a href='#comment" . $comment -> id . "' name='comment" . $comment -> id . "'>";
              $html .= "#" . $count;
-            
-            
-            
-            
              $html .= "</a>";
+             
             
              if($acl -> hasPermission("blog")){
                  $html .= " <a href='" . buildSEOUrl(get_requested_pagename()) . "?blog_admin=delete_comment&id=" . $comment -> id . "' onclick='return confirm(\"Diesen Kommentar wirklich löschen?\")'>[Löschen]</a>";
                  }
+                 
+                 
+             $html .= "</div>";
             
              $html .= '<div class="blog-comment-gravatar">';
              $html .= '<img src="'.get_gravatar($comment->email, 100).'" alt="Gravatar '.real_htmlspecialchars($comment->name).'"/>';
-             $html .= "</div>
-             $html .= "<strong class='blog-name-label'>Name: </strong>";
+             $html .= "</div>";
+             $html .= "<strong>Name: </strong>";
              $html .= $comment -> name;
              $html .= "<br/>";
             
              if($acl -> hasPermission("blog")){
-                 $html .= "<strong class='blog-email-label'>Email: </strong>" . $comment -> email . "<br/>";
+                 $html .= "<strong>Email: </strong>" . $comment -> email . "<br/>";
                  }
             
              if($_SESSION["language"] == "de"){
-                 $html .= "<strong class='blog-datum-label'>Datum:</strong>";
+                 $html .= "<strong>Datum:</strong>";
                 
                  }else{
-                 $html .= "<strong class='blog-datum-label'>Date:</strong>";
+                 $html .= "<strong>Date:</strong>";
                  }
             
             
