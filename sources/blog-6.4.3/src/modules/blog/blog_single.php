@@ -333,7 +333,7 @@ function blog_display_comments($post_id){
             
              }
         
-         $html .= "<hr/>";
+         $html .= "<hr class=\"blog_hr\"/>";
         
          while($comment = db_fetch_object($query)){
              $count++;
