@@ -98,7 +98,6 @@ function blog_list(){
              $date_and_autor_string = str_replace("%views%", $post -> views, $date_and_autor_string);
             
              $html .= $date_and_autor_string .
-             "<br/>";
              $html .= "<div class='blog_post_content'>" . $post -> content_preview . "</div>";
             
             $html .= '<div class="blog-read-more-link">';
