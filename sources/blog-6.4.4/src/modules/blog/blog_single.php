@@ -49,17 +49,20 @@ function blog_single($seo_shortname){
              $html .= "<div class='blog_post_content'>" . $post -> content_full . "</div>";
             
             
+           $acl = new ACL();
+            
              if($acl -> hasPermission("blog")){
-                 $html .= "<a href='" . buildSEOUrl(get_requested_pagename()) . "?blog_admin=edit_post&id=" . $post -> id . "'>[Bearbeiten]</a> ";
+                 $html .="<div class='blog-edit-and-delete-links'>";
+                 $html .= "<a href='" . buildSEOUrl(get_requested_pagename()) . "?blog_admin=edit_post&id=" . $post -> id . "' class='blog-edit-link'>[Bearbeiten]</a> ";
                 
-                 $html .= "<a href='" . buildSEOUrl(get_requested_pagename()) . "?blog_admin=delete_post&id=" . $post -> id . "' onclick='return confirm(\"Diesen Post wirklich löschen?\")'>[Löschen]</a>";
-                 }else if(logged_in()){
-                 $html .= "
-		   <div class='disabled_link'>[Bearbeiten]</div>
-		   <div class='disabled_link'>[Löschen]</div>";
+                 $html .= "<a href='" . buildSEOUrl(get_requested_pagename()) . "?blog_admin=delete_post&id=" . $post -> id . "' onclick='return confirm(\"Diesen Post wirklich löschen?\")' class='blog-delete-link'>[Löschen]</a>";
+                
+                 $html .= "</div>";
+                
                  }
             
              $html = apply_filter($html, "blog_before_comments");
+             add_hook("blog_before_comments");
             
              if($post -> comments_enabled){
                  $html .= "" .
