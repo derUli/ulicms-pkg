@@ -389,7 +389,7 @@ function blog_display_comments($post_id){
              $html .= "<br/><br/>";
             
              if($count != db_num_rows($query)){
-                 $html .= "<hr/>";
+                 $html .= "<hr class='blog_hr'/>";
                  }
             
             
