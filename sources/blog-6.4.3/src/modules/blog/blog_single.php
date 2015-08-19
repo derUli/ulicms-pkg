@@ -19,7 +19,7 @@ function blog_single($seo_shortname){
          $post = db_fetch_object($query);
          $user = getUserById($post -> author);
         
-         $html = "<div class=\"post-single-view\">";
+         $html = "";
         
          if($acl -> hasPermission("blog") or $post -> entry_enabled){
             
@@ -46,30 +46,29 @@ function blog_single($seo_shortname){
              $date_and_autor_string = str_replace("%views%", $post -> views, $date_and_autor_string);
             
              $html .= $date_and_autor_string;
+            
+             $html .= "<br/>";
              $html .= "<div class='blog_post_content'>" . $post -> content_full . "</div>";
             
             
-           $acl = new ACL();
-            
              if($acl -> hasPermission("blog")){
-                 $html .="<div class='blog-edit-and-delete-links'>";
-                 $html .= "<a href='" . buildSEOUrl(get_requested_pagename()) . "?blog_admin=edit_post&id=" . $post -> id . "' class='blog-edit-link'>[Bearbeiten]</a> ";
+                 $html .= "<a href='" . buildSEOUrl(get_requested_pagename()) . "?blog_admin=edit_post&id=" . $post -> id . "'>[Bearbeiten]</a> ";
                 
-                 $html .= "<a href='" . buildSEOUrl(get_requested_pagename()) . "?blog_admin=delete_post&id=" . $post -> id . "' onclick='return confirm(\"Diesen Post wirklich löschen?\")' class='blog-delete-link'>[Löschen]</a>";
-                
-                 $html .= "</div>";
-                
+                 $html .= "<a href='" . buildSEOUrl(get_requested_pagename()) . "?blog_admin=delete_post&id=" . $post -> id . "' onclick='return confirm(\"Diesen Post wirklich löschen?\")'>[Löschen]</a>";
+                 }else if(logged_in()){
+                 $html .= "
+		   <div class='disabled_link'>[Bearbeiten]</div>
+		   <div class='disabled_link'>[Löschen]</div>";
                  }
             
              $html = apply_filter($html, "blog_before_comments");
-             add_hook("blog_before_comments");
             
              if($post -> comments_enabled){
                  $html .= "" .
                  blog_display_comments($post -> id);
                  }
             
-            $html .= "</div>";
+            
              return $html;
             
             
@@ -119,10 +118,10 @@ function comment_form($post_id){
     
      $html .= "</table>";
     
-     $html .= "<div class='blog-textarea-wrap'><textarea name='comment' rows=15 cols=60 required='true'></textarea></div>";
+     $html .= "<br/><textarea name='comment' rows=15 cols=60 required='true'></textarea>";
      $html .= "<input type='text' name='phone' class='antispam_honeypot' value=''>";
      $html .= "<input type='hidden' name='post_comment_to' value='" . $post_id . "'>";
-     $html .= "<div class=\"ulicms_publish_comment\"><input type='submit' value='" . $submit . "'></div>";
+     $html .= "<br/><br/><div class=\"ulicms_publish_comment\"><input type='submit' value='" . $submit . "'></div>";
      $html .= "</form></div>";
     
      return $html;
@@ -339,25 +338,25 @@ function blog_display_comments($post_id){
          while($comment = db_fetch_object($query)){
              $count++;
             
-             $html .= "<div class='a_comment'>";
-             $html .= "<div class='before_comment_link'>";
-             
-             $html .="
+             $html .= "<div class='a_comment'>
 	   <a href='#comment" . $comment -> id . "' name='comment" . $comment -> id . "'>";
              $html .= "#" . $count;
+            
+            
+            
+            
              $html .= "</a>";
-             
             
              if($acl -> hasPermission("blog")){
                  $html .= " <a href='" . buildSEOUrl(get_requested_pagename()) . "?blog_admin=delete_comment&id=" . $comment -> id . "' onclick='return confirm(\"Diesen Kommentar wirklich löschen?\")'>[Löschen]</a>";
                  }
-                 
-                 
-             $html .= "</div>";
             
-             $html .= '<div class="blog-comment-gravatar">';
+             $html .= "<br/>";
+             $html .= "<br/>";
+             
              $html .= '<img src="'.get_gravatar($comment->email, 100).'" alt="Gravatar '.real_htmlspecialchars($comment->name).'"/>';
-             $html .= "</div>";
+             $html .= "<br/>";
+             $html .= "<br/>";
              $html .= "<strong>Name: </strong>";
              $html .= $comment -> name;
              $html .= "<br/>";
@@ -389,7 +388,7 @@ function blog_display_comments($post_id){
              $html .= "<br/><br/>";
             
              if($count != db_num_rows($query)){
-                 $html .= "<hr class='blog_hr'/>";
+                 $html .= "<hr/>";
                  }
             
             

@@ -18,7 +18,10 @@ function blog_list(){
          $autor_and_date = getconfig("blog_autor_and_date_text");
          }
     
-     $html = "<div class=\"post-list-view\">";
+    
+    
+    
+     $html = "";
      $acl = new ACL();
     
      // Wenn der Nutzer mindestens die Berechtigungen
@@ -73,7 +76,7 @@ function blog_list(){
          while($post = db_fetch_object($query)){
              $user = getUserById($post -> author);
             
-             $html.= '<div class="blog-list-item">';
+            
             
              $html .= "<h2 class='blog_headline'><a href='" . buildSEOUrl(get_requested_pagename()) . "?single=" . $post -> seo_shortname . "'>" . htmlspecialchars($post -> title) . "</a></h2>";
              $html .= "<hr class='blog_hr'/>";
@@ -98,9 +101,9 @@ function blog_list(){
              $date_and_autor_string = str_replace("%views%", $post -> views, $date_and_autor_string);
             
              $html .= $date_and_autor_string .
+             "<br/>";
              $html .= "<div class='blog_post_content'>" . $post -> content_preview . "</div>";
             
-            $html .= '<div class="blog-read-more-link">';
              if($_SESSION["language"] == "de"){
                  $html .= "<a href='" . buildSEOUrl(get_requested_pagename()) . "?single=" . $post -> seo_shortname . "'>weiterlesen...</a>
 			 ";
@@ -108,27 +111,25 @@ function blog_list(){
                  $html .= "<br/><a href='" . buildSEOUrl(get_requested_pagename()) . "?single=" . $post -> seo_shortname . "'>read more...</a>
 			";
                  }
-                 
-             $html .= "</div>";
+             $html .= "<br/><br/>";
             
              $acl = new ACL();
             
              if($acl -> hasPermission("blog")){
-                 $html .="<div class='blog-edit-and-delete-links'>";
-                 $html .= "<a href='" . buildSEOUrl(get_requested_pagename()) . "?blog_admin=edit_post&id=" . $post -> id . "' class='blog-edit-link'>[Bearbeiten]</a> ";
+                 $html .= "<a href='" . buildSEOUrl(get_requested_pagename()) . "?blog_admin=edit_post&id=" . $post -> id . "'>[Bearbeiten]</a> ";
                 
-                 $html .= "<a href='" . buildSEOUrl(get_requested_pagename()) . "?blog_admin=delete_post&id=" . $post -> id . "' onclick='return confirm(\"Diesen Post wirklich löschen?\")' class='blog-delete-link'>[Löschen]</a>";
+                 $html .= "<a href='" . buildSEOUrl(get_requested_pagename()) . "?blog_admin=delete_post&id=" . $post -> id . "' onclick='return confirm(\"Diesen Post wirklich löschen?\")'>[Löschen]</a>";
                 
-                 $html .= "</div>";
+                 $html .= "<br/>";
                 
                  }
             
             
-             $html.= '</div>';
              $last_post_id = $post -> id;
              }
+         $html .= "<br/>";
         
-         $html .= "<div class='page_older_newer'>";
+         $html .= "<br/><div class='page_older_newer'>";
         
         
          $html .= "<span class='blog_pagination_newer'>";
@@ -181,7 +182,6 @@ function blog_list(){
          $html .= "</span>";
         
         
-         $html .= "</div>";
          $html .= "</div>";
         
          return $html;
