@@ -2,3 +2,5 @@
 [X] Blog sollte Gravatar anzeigen
 [ ] Mobile Modul ähnlich wie WPTouch (https://wordpress.org/plugins/wptouch/)
 [X] Brotkrumen Navigation
+[ ] Slider Modul
+[ ] Redirect on 404 to Page
