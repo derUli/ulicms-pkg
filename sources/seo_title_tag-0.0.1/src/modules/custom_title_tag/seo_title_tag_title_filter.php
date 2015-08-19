@@ -5,8 +5,7 @@ function seo_title_tag_title_filter($title){
         !empty($custom_data["seo_title"])){
           $title = str_replace("%seo_title%", $custom_data["seo_title"], $title);
       } else {
-      
-          $title = str_replace("%title_tag%", get_title(), $title);
+          $title = str_replace("%seo_title%", get_title(), $title);
       }
       
       return $title;
