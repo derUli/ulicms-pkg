@@ -19,7 +19,7 @@ function blog_single($seo_shortname){
          $post = db_fetch_object($query);
          $user = getUserById($post -> author);
         
-         $html = "";
+         $html = '<div class="blog-list-view">';
         
          if($acl -> hasPermission("blog") or $post -> entry_enabled){
             
@@ -65,8 +65,8 @@ function blog_single($seo_shortname){
                  $html .= "" .
                  blog_display_comments($post -> id);
                  }
-            
-            
+              
+             $html .= "</div>";
              return $html;
             
             

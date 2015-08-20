@@ -21,7 +21,7 @@ function blog_list(){
     
     
     
-     $html = "";
+     $html = '<div class="blog-list-view">';
      $acl = new ACL();
     
      // Wenn der Nutzer mindestens die Berechtigungen
@@ -104,10 +104,10 @@ function blog_list(){
              $html .= "<div class='blog_post_content'>" . $post -> content_preview . "</div>";
             
              if($_SESSION["language"] == "de"){
-                 $html .= "<a href='" . buildSEOUrl(get_requested_pagename()) . "?single=" . $post -> seo_shortname . "'>weiterlesen...</a>
+                 $html .= "<a href='" . buildSEOUrl(get_requested_pagename()) . "?single=" . $post -> seo_shortname . "' class='blog-read-more-link'>weiterlesen...</a>
 			 ";
                  }else{
-                 $html .= "<br/><a href='" . buildSEOUrl(get_requested_pagename()) . "?single=" . $post -> seo_shortname . "'>read more...</a>
+                 $html .= "<br/><a href='" . buildSEOUrl(get_requested_pagename()) . "?single=" . $post -> seo_shortname . "' class='blog-read-more-link'>read more...</a>
 			";
                  }
              $html .= "<br/><br/>";
@@ -182,6 +182,7 @@ function blog_list(){
         
         
          $html .= "</div>";
+         $html .= "</div>";
         
          return $html;
         
@@ -198,6 +199,7 @@ function blog_list(){
         
         
         
+         $html .= "</div>";
          return $html;
         
          }
