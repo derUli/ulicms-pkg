@@ -1,6 +1,6 @@
 <?php
 function blog_add_form(){
-     $html_output = "";
+     $html_output = '<div class="blog-admin-add">';
      $all_languages = getAllLanguages();
      $html_output .= "<form action='" .
      buildSEOUrl(get_requested_pagename()) . "?blog_admin=submit' method='post' style=''>";
@@ -262,7 +262,7 @@ function confirmExit()
         
     </style>";
     
-    
+     $html_output .= "</div>";
      return $html_output;
      }
 

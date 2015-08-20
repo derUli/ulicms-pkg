@@ -2,11 +2,11 @@
 function blog_edit_form($post_id){
      $query = db_query("SELECT * FROM `" . tbname("blog") . "` WHERE id = $post_id");
      if(db_num_rows($query) == 0){
-         return "<p>Dieser Blogpost ist nicht mehr vorhanden</p>";
+         return "<p class='ulicms_errror'>Dieser Blogpost ist nicht mehr vorhanden</p>";
          }else{
          $post = db_fetch_object($query);
         
-         $html_output = "";
+         $html_output = '<div class="blog-admin-edit">';
          $all_languages = getAllLanguages();
          $html_output .= "<form action='" . buildSEOUrl(get_requested_pagename()) . "?blog_admin=update' method='post' style=''>";
         
@@ -295,7 +295,7 @@ function confirmExit()
         
     </style>";
         
-        
+         $html .= "</div>";
          return $html_output;
          }
     
