@@ -17,7 +17,7 @@ Description: Three-column blog design with the third column allocated for ads. F
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <?php base_metas()?>
 </head>
-<body class="<?php body_classes()?;">
+<body class="<?php body_classes();?>">
 <!-- start header -->
 <div id="wrapper">
 <div id="header">
@@ -25,7 +25,7 @@ Description: Three-column blog design with the third column allocated for ads. F
 		<h1><a href="<?php echo getconfig("frontpage")?>.html"><?php homepage_title()?></a></h1>
 		<p><span>by <?php homepage_owner()?></span></p>
 	</div>
-	
+
 </div>
 <!-- end header -->
 <!-- star menu -->
@@ -48,7 +48,7 @@ Description: Three-column blog design with the third column allocated for ads. F
 				<?php if(!is_404() and !is_403){
      ?>
 				<p><small>
-				
+
 				<?php autor()?></small></p>
 				<?php }
 ?>

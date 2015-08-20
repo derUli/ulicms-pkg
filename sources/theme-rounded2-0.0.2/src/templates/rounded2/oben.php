@@ -6,13 +6,13 @@
 ?>
 </head>
 
-<body class="<?php body_classes()?;">
+<body class="<?php body_classes();?>">
 	<div id="wrapper">
 		<div id="top">
 		</div>
 		<div id="content">
 			<div id="header">
-			
+
 			<?php
  if(getconfig("logo_disabled") == "no"){
      logo();
@@ -20,11 +20,10 @@
      homepage_title();
      }
 ?>
-			
+
 			</div>
 			<div id="menu">
 				<?php menu("left");
 ?>
 			</div>
 			<div id="stuff">
-			

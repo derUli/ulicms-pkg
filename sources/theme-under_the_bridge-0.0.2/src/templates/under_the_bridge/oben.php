@@ -5,7 +5,7 @@
 ?>
 </head>
 
-<body class="<?php body_classes()?;">
+<body class="<?php body_classes();?>">
 
 <div id="container">
 
@@ -37,4 +37,3 @@ language_selection();
 ?>
 </div>
 </div>
-

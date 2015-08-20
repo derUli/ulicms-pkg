@@ -12,7 +12,7 @@ font-family:<?php echo getconfig("default-font");
 </style>
 </head>
 
-<body class="<?php body_classes()?;">
+<body class="<?php body_classes();?>">
 <div id="root_container">
 <img src="<?php echo getTemplateDirPath("dogs");
 ?>images/56blnk.jpg" id="header_image">

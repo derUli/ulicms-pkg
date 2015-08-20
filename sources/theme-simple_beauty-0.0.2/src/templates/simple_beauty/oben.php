@@ -12,7 +12,7 @@ background-color:<?php echo getconfig("header-background-color");
 </style>
 </head>
 
-<body class="<?php body_classes()?;">
+<body class="<?php body_classes();?>">
 
 <div id="container">
 

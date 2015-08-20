@@ -26,7 +26,7 @@ background-color:<?php echo getconfig("header-background-color");
 }
 </style>
 </head>
-<body class="<?php body_classes()?;">
+<body class="<?php body_classes();?>">
 <div class="header">
 <div class="logo">
 <?php
@@ -34,7 +34,7 @@ if(getconfig("logo_disabled") == "no")
     {
      logo();
      ?>
-<br/>  
+<br/>
 <?php
      }
 else{

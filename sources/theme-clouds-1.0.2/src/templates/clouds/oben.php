@@ -27,7 +27,7 @@ $('#menucontent').slideToggle();
 
 $('#menucontainer a').click(function(e){
       var href= $(this).attr('href');
-     
+
       // do animation
       $('.container').fadeOut( 500, function(){
       $('#menucontainer').fadeOut(500, function(){
@@ -43,12 +43,12 @@ $('#menucontainer a').click(function(e){
       e.preventDefault();
 })
 
-                
+
    });
     </script>
 </head>
 
-<body class="<?php body_classes()?;">
+<body class="<?php body_classes();?>">
 <div id="menucontainer">
 <div id="menubutton">Seiten</div>
 <div id="menucontent">
@@ -69,4 +69,3 @@ if(getconfig("logo_disabled") == "no")
      ?></p>
 	 <?php }
 ?>
-     

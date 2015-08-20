@@ -16,7 +16,7 @@ window.onload = function(){
      if(qHead.value == "Suchen"){
 	    qHead.value = "";
 	 }
-	 
+
 	 }
 	 qHead.onblur  = function(e){
      if(qHead.value == ""){
@@ -38,7 +38,7 @@ background-color:<?php echo getconfig("header-background-color");
 <meta name="viewport" content="width=1280"/>
 </head>
 
-<body class="<?php body_classes()?;">
+<body class="<?php body_classes();?>">
 <div id="rootContainer">
 <div id="header">
 <div id="logo">
@@ -67,7 +67,7 @@ if(in_array("search", getAllModules())){
      ?>" id="qHead" name="q" value="">
 <?php
      if(in_array("blog", getAllModules())){
-        
+
          ?>
 <input type="hidden" name="type" value="blog">
 <?php }else{

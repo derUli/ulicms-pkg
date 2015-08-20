@@ -10,7 +10,7 @@ background-color:<?php echo getconfig("header-background-color");
 </style>
 </head>
 
-<body class="<?php body_classes()?;">
+<body class="<?php body_classes();?>">
  <!-- Generated at www.csscreator.com -->
 <div id="container">
 	<div id="banner">
@@ -24,7 +24,7 @@ background-color:<?php echo getconfig("header-background-color");
   <div class="verticalmenu">
   <?php menu("left");
 ?>
- </div> 
+ </div>
 
    		</div>
    		<div id="content">

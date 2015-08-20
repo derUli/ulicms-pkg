@@ -11,7 +11,7 @@
 
 </head>
 
-<body class="<?php body_classes()?;">
+<body class="<?php body_classes();?>">
 	<div class="root-container">
 		<div class="logo">
 		<p><a href="./">
@@ -20,7 +20,7 @@ if(getconfig("logo_disabled") == "no")
     {
      logo();
      ?>
-<br/>  
+<br/>
 <?php
      }
 else{

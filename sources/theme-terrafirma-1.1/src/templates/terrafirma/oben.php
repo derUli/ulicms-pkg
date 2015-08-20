@@ -16,7 +16,7 @@ background-color:<?php echo getconfig("header-background-color");
 </style>
 </head>
 
-<body class="<?php body_classes()?;">
+<body class="<?php body_classes();?>">
 
 <div id="outer">
 
@@ -29,9 +29,9 @@ background-color:<?php echo getconfig("header-background-color");
 			<h2>by <?php homepage_owner();
 ?></h2>
 		</div>
-	
+
 		<div id="splash"></div>
-	
+
 		<div id="menu">
 			<ul>
 				<?php menu("top");
@@ -40,12 +40,12 @@ background-color:<?php echo getconfig("header-background-color");
 
 		<div id="date"><?php echo date("d.m.Y - H:i")?> Uhr</div>
 		</div>
-	
+
 
 		<div id="primarycontent">
-		
+
 			<!-- primary content start -->
-		
+
 			<div class="post">
 				<div class="header">
 				<h3><?php headline();
