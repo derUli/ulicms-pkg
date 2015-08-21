@@ -4,3 +4,4 @@
 [X] Brotkrumen Navigation
 [ ] Slider Modul
 [ ] Redirect on 404 to Page
+[ ] Blog Modul um Felder für Open Graph erweitern (Ab UliCMS 9.0.2)
