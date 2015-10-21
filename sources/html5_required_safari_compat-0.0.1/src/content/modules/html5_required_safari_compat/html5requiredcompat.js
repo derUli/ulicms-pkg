@@ -11,7 +11,7 @@ if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('
 				{
 					var userLang = navigator.language || navigator.userLanguage;
 					var message = "Required field should not be blank.";
-					if(userLang.indexOf("en") == "de"){
+					if(userLang.indexOf("de") != -1){
 					   message = "Bitte füllen Sie alle Pflichtfelder aus.";
 					}
 
