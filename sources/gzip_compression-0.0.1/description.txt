@@ -1,1 +1,0 @@
-compress html output of UliCMS with gzip even if mod_gzip is not installed
