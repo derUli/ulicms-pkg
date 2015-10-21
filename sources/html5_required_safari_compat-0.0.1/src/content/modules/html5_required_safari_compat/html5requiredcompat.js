@@ -10,12 +10,12 @@ if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('
 				if ( $(this).val() == '' )
 				{
 					var userLang = navigator.language || navigator.userLanguage;
-					var_message = "Required field should not be blank.";
+					var message = "Required field should not be blank.";
 					if(userLang == "de"){
 					   message = "Bitte füllen Sie alle Pflichtfelder aus.";
 					}
 
-					alert(var_message);
+					alert(message);
 					$(this).focus();
 
 					e.preventDefault();
