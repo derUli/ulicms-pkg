@@ -1,7 +1,5 @@
-var is_chrome = navigator.userAgent.indexOf('Chrome') > -1;
-var is_safari = navigator.userAgent.indexOf("Safari") > -1;
-	
-if(is_safari && !is_chrome){
+if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1) {
+
     $(document).ready(function(){
 		$("form").submit(function(e) {
 
@@ -16,15 +14,18 @@ if(is_safari && !is_chrome){
 					   message = "Bitte füllen Sie alle Pflichtfelder aus.";
 					}
 
-						alert(var_message);
+					alert(var_message);
 					$(this).focus();
 
 					e.preventDefault();
 					return false;
 				}
 			});  return true;
-	});
-};
+
+});
 
 
 });
+
+
+}
