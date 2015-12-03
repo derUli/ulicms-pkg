@@ -20,7 +20,7 @@ $file = str_replace("\r\n", "\n", $files);
 $file = explode("\n", $file);
 sort($file);
 
-foreach($files as $line){
+foreach($file as $line){
    $splitted = splitPackageName($line);
    $modules[$splitted[0]] = $modules[$splitted[1]];
 }
