@@ -48,6 +48,7 @@ if sys.argv[1] == "init":
       f = open("packages/list.txt", "a")
       f.close()
       print("creating packages/list.txt")
+   shutil.copyfile("newest_version.php", "packages/newest_version.php")
    print("Done.")
    sys.exit()
 
@@ -62,11 +63,9 @@ elif sys.argv[1] == "src-folder-create":
          sys.exit()
       srcDir = os.path.join(targetDir, "src")
       licenseFile = os.path.join(targetDir, "license.txt")
-      newest_version = os.path.join(targetDir, "newest_version.php")
       os.makedirs(targetDir)
       os.makedirs(srcDir)
       shutil.copyfile("doc/license.txt", licenseFile)
-      shutil.copyfile("newest_version.php", licenseFile)
       print("Done.")
       sys.exit()
 
