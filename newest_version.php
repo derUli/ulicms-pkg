@@ -16,14 +16,16 @@ $q = $_GET["q"];
 $modules = array();
 
 $file = file_get_contents("list.txt");
-$file = str_replace("\r\n", "\n", $files);
+$file = str_replace("\r\n", "\n", $file);
 $file = explode("\n", $file);
 sort($file);
 
 foreach($file as $line){
+   $line = trim($line);
    $splitted = splitPackageName($line);
-   $modules[$splitted[0]] = $modules[$splitted[1]];
+   $modules[$splitted[0]] = $splitted[1];
 }
+
 if(isset($modules[$q]) and !empty($modules[$q])){
    header("HTTP/1.0 200 OK");
    echo $modules[$q];
