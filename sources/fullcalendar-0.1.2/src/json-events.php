@@ -3,20 +3,7 @@
  include "templating.php";
  $events = array();
 
-$c = getconfig("cache_type");
-switch($c){
- case "cache_lite":
-     @include "classes/Cache/Lite.php";
-     $cache_type = "cache_lite";
-    
-     break;
- case "file": default:
-     $cache_type = "file";
-     break;
-     break;
-     }
-
-header('Content-Type: application/json; charset=utf8');
+ header('Content-Type: application/json; charset=utf8');
 
  if(!isset($_REQUEST["start"])){
     $_REQUEST["start"] = mktime(0, 0, 0, date("m"), 1, date("y"));
@@ -26,7 +13,7 @@ header('Content-Type: application/json; charset=utf8');
     $_REQUEST["end"] = mktime(0, 0, 0, date("m") + 1, 0, date("y"));
 }
 
- $query = db_query("SELECT * FROM `" . tbname("events") . "` WHERE `start` > " . intval($_REQUEST["start"]) . " AND `end` <" . intval($_REQUEST["end"]) . " ORDER BY id");
+ $query = db_query("SELECT * FROM `" . tbname("events") . "` WHERE `start` >= " . intval($_REQUEST["start"]) . " AND `end` <" . intval($_REQUEST["end"]) . " ORDER BY id");
  while($row = db_fetch_object($query)){
 	 $obj = array();
 	 $obj["id"] = $row -> id;
