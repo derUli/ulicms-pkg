@@ -83,9 +83,9 @@ function generate_sitemap(){
          fwrite($handle, $xml_string);
          fclose($handle);
         
-         echo "<p><a href=\"../sitemap.xml\" target=\"_blank\">sitemap.xml</a> wurde generiert.</p>";
+         translate("GENERATE_XML_SITEMAP_SUCCESS");
          }else{
-         echo "<p>sitemap.xml konnte nicht erzeugt werden. Bitte legen Sie die Datei manuell an und fügen Sie folgenden Code ein.</p>";
+         translate("GENERATE_XML_SITEMAP_FAILED");
          echo "<textarea cols=70 rows=20>";
          echo htmlspecialchars($xml_string);
          echo "</textarea><br/><br/>";
@@ -108,7 +108,7 @@ function xml_sitemap_admin(){
 <form action="<?php echo getModuleAdminSelfPath()?>" method="post">
 <?php csrf_token_html();
     ?>
-<input type="submit" name="submit" value="Sitemap generieren"/>
+<input type="submit" name="submit" value="<?php translate("generate_xml_sitemap");?>"/>
 </form>
 <?php
      }
