@@ -1,1 +1,1 @@
-XML Sitemaps generieren lassen
+Generate a XML sitemap
