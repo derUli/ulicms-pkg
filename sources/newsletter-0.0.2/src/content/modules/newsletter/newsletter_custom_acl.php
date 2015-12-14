@@ -1,3 +1,3 @@
 <?php
 global $acl_array;
-$acl_array["newsletter"] = null;
+$acl_array ["newsletter"] = null;

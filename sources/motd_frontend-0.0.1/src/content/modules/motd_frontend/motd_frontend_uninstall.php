@@ -1,3 +1,3 @@
 <?php
-deleteconfig("cache_disabled");
+deleteconfig ( "cache_disabled" );
 ?>

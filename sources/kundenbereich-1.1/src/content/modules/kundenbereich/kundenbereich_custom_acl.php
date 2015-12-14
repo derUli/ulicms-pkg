@@ -1,6 +1,4 @@
 <?php
-
-
 global $acl_array;
 
-$acl_array["kundenbereich_upload"] = null;
+$acl_array ["kundenbereich_upload"] = null;

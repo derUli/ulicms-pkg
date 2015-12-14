@@ -1,4 +1,4 @@
 <?php
-function random_page_render(){
-     return "";
-     }
+function random_page_render() {
+	return "";
+}

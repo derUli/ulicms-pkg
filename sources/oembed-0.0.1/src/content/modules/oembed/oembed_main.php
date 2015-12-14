@@ -1,5 +1,5 @@
 <?php
-function oembed_render(){
-     return "";
-     }
+function oembed_render() {
+	return "";
+}
 ?>

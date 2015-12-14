@@ -1,3 +1,3 @@
 <?php
 global $acl_array;
-$acl_array["referrer"] = null;
+$acl_array ["referrer"] = null;

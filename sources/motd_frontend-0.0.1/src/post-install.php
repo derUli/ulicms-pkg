@@ -1,3 +1,3 @@
 <?php
-setconfig("cache_disabled", "disabled");
+setconfig ( "cache_disabled", "disabled" );
 ?>

@@ -1,5 +1,5 @@
 <?php
-function print_version_render(){
-     return "";
-     }
+function print_version_render() {
+	return "";
+}
 ?>

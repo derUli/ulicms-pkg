@@ -1,5 +1,5 @@
 <?php
-$create_shared_files_table = "CREATE TABLE IF NOT EXISTS `" . tbname("shared_files") . "` (
+$create_shared_files_table = "CREATE TABLE IF NOT EXISTS `" . tbname ( "shared_files" ) . "` (
 `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(255) DEFAULT NULL,
   `filename` varchar(255) NOT NULL,
@@ -8,4 +8,4 @@ $create_shared_files_table = "CREATE TABLE IF NOT EXISTS `" . tbname("shared_fil
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;";
 
-db_query($create_shared_files_table);
+db_query ( $create_shared_files_table );

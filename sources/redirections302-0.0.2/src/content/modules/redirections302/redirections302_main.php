@@ -1,5 +1,5 @@
 <?php
-function redirections302_render(){
-     return "";
-     }
+function redirections302_render() {
+	return "";
+}
 

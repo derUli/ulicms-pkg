@@ -1,5 +1,5 @@
 <?php
-function link_checker_render(){
-     return "";
-     }
+function link_checker_render() {
+	return "";
+}
 ?>

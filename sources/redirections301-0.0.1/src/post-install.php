@@ -1,4 +1,4 @@
 <?php
-if(!getconfig("redirections301"))
-     setconfig("redirections301", "");
+if (! getconfig ( "redirections301" ))
+	setconfig ( "redirections301", "" );
 
