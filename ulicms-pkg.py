@@ -84,6 +84,7 @@ elif sys.argv[1] == "clean":
       os.makedirs("packages/descriptions")
       h = open("packages/list.txt", "w")
       h.close()
+      shutil.copyfile("newest_version.php", "packages/newest_version.php")
       print("finisihed")
       sys.exit()
    else:
