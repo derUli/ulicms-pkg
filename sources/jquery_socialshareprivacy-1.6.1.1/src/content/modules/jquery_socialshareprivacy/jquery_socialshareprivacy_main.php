@@ -1,4 +1,4 @@
 <?php
-function jquery_socialshareprivacy_render(){
-   return "";
+function jquery_socialshareprivacy_render() {
+	return "";
 }

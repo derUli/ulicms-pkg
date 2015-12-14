@@ -1,4 +1,4 @@
 <?php
-function jquery_migrate_render(){
-     return "";
-     }
+function jquery_migrate_render() {
+	return "";
+}
