@@ -1,5 +1,5 @@
 <?php
-function schnee_render(){
-     return "";
-     }
+function schnee_render() {
+	return "";
+}
 ?>
