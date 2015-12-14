@@ -2,28 +2,31 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<?php base_metas();
+<?php
+
+base_metas ();
 ?>
 </head>
 
 <body class="<?php body_classes();?>">
 	<div id="wrapper">
-		<div id="top">
-		</div>
+		<div id="top"></div>
 		<div id="content">
 			<div id="header">
 
 			<?php
- if(getconfig("logo_disabled") == "no"){
-     logo();
-     }else{
-     homepage_title();
-     }
-?>
+			if (getconfig ( "logo_disabled" ) == "no") {
+				logo ();
+			} else {
+				homepage_title ();
+			}
+			?>
 
 			</div>
 			<div id="menu">
-				<?php menu("left");
-?>
+				<?php
+				
+menu ( "left" );
+				?>
 			</div>
 			<div id="stuff">

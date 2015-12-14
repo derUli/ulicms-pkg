@@ -1,3 +1,3 @@
 <?php
-db_query("DROP TABLE `" . tbname("useragents") . "`");
+db_query ( "DROP TABLE `" . tbname ( "useragents" ) . "`" );
 ?>

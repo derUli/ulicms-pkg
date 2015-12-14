@@ -1,5 +1,5 @@
 <?php
-function typographic_quotes_render(){
-     return "";
-     }
+function typographic_quotes_render() {
+	return "";
+}
 ?>

@@ -1,10 +1,8 @@
-
 /*
 Design by Free CSS Templates
 http://www.freecsstemplates.org
 Released for free under a Creative Commons Attribution 2.5 License
 */
-
 body {
 	margin: 0;
 	padding: 0;
@@ -14,10 +12,9 @@ body {
 	color: #7F7772;
 }
 
-
-.ulicms_comments{
-background-color:white !important;
-width:510px;
+.ulicms_comments {
+	background-color: white !important;
+	width: 510px;
 }
 
 form {
@@ -87,12 +84,10 @@ img {
 img.left {
 	float: left;
 	margin: 8px 20px 0px 0px;
-	border: 2px solid #434343; 
+	border: 2px solid #434343;
 }
 
-
 /* Header */
-
 #wrapper {
 	background: url(images/img14.jpg) no-repeat center top;
 }
@@ -130,7 +125,6 @@ img.left {
 }
 
 /* RSS */
-
 #rss {
 	padding: 30px 39px 20px 0;
 	text-align: right;
@@ -148,7 +142,6 @@ img.left {
 }
 
 /* Search */
-
 #search {
 	float: right;
 	width: 200px;
@@ -175,7 +168,6 @@ img.left {
 }
 
 /* Menu */
-
 #menu {
 	width: 980px;
 	height: 60px;
@@ -211,13 +203,11 @@ img.left {
 	color: #000000;
 }
 
-
 .menu_active_link a {
 	color: #FFFFFF !important;
 }
 
 /* Page */
-
 #page {
 	width: 980px;
 	margin: 0 auto;
@@ -225,7 +215,6 @@ img.left {
 }
 
 /* Ads */
-
 #ads {
 	float: right;
 	width: 160px;
@@ -233,7 +222,6 @@ img.left {
 }
 
 /* Content */
-
 #content {
 	float: left;
 	width: 430px;
@@ -245,6 +233,7 @@ img.left {
 }
 
 .post .title {
+	
 }
 
 .post .title h2 {
@@ -292,7 +281,6 @@ img.left {
 }
 
 /* Sidebar */
-
 #sidebar {
 	float: right;
 	width: 240px;
@@ -331,7 +319,6 @@ img.left {
 }
 
 /* Calendar */
-
 #calendar_wrap {
 	padding: 15px 20px;
 }
@@ -373,7 +360,6 @@ img.left {
 }
 
 /* Footer */
-
 #footer {
 	clear: both;
 	width: 950px;
@@ -392,4 +378,3 @@ img.left {
 #footer a {
 	text-decoration: none;
 }
-

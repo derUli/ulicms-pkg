@@ -1,11 +1,17 @@
 <!doctype html>
-<html lang="<?php echo getCurrentLanguage();
+<html lang="<?php
+
+echo getCurrentLanguage ();
 ?>">
 <head>
 <?php base_metas()?>
-<script src="<?php echo getTemplateDirPath("clouds");
-?>js/jquery.spritely.js" type="text/javascript"></script>
- <script type="text/javascript">
+<script
+	src="<?php
+	
+echo getTemplateDirPath ( "clouds" );
+	?>js/jquery.spritely.js"
+	type="text/javascript"></script>
+<script type="text/javascript">
             $(document).ready(function() {
                 $('#far-clouds').pan({fps: 30, speed: 0.7, dir: 'left', depth: 30});
                 $('#near-clouds').pan({fps: 30, speed: 1, dir: 'left', depth: 70});
@@ -49,23 +55,28 @@ $('#menucontainer a').click(function(e){
 </head>
 
 <body class="<?php body_classes();?>">
-<div id="menucontainer">
-<div id="menubutton">Seiten</div>
-<div id="menucontent">
-<?php menu("left");
+	<div id="menucontainer">
+		<div id="menubutton">Seiten</div>
+		<div id="menucontent">
+<?php
+
+menu ( "left" );
 ?>
 </div>
-</div>
-<div class="container">
-    <div id="far-clouds" class="far-clouds stage"></div>
-    <div id="near-clouds" class="near-clouds stage"></div>
+	</div>
+	<div class="container">
+		<div id="far-clouds" class="far-clouds stage"></div>
+		<div id="near-clouds" class="near-clouds stage"></div>
 
-    <div class="mainContent">
+		<div class="mainContent">
 <?php
-if(getconfig("logo_disabled") == "no")
-    {
-     ?>
-<p style="margin-bottom:10px;"><?php logo();
-     ?></p>
-	 <?php }
+if (getconfig ( "logo_disabled" ) == "no") {
+	?>
+<p style="margin-bottom: 10px;"><?php
+	
+logo ();
+	?></p>
+	 <?php
+
+}
 ?>

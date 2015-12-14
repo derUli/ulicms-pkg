@@ -3,28 +3,34 @@
 <head>
 <?php base_metas()?>
 <style type="text/css">
-#banner{
-background-color:<?php echo getconfig("header-background-color");
-?>;
+#banner {
+	background-color: <?php
+	
+echo getconfig ( "header-background-color" );
+	?>;
 }
 </style>
 </head>
 
 <body class="<?php body_classes();?>">
- <!-- Generated at www.csscreator.com -->
-<div id="container">
-	<div id="banner">
-		<div id='bannertitle'><?php homepage_title();
-?></div>
-	</div>
+	<!-- Generated at www.csscreator.com -->
+	<div id="container">
+		<div id="banner">
+			<div id='bannertitle'><?php
+			
+homepage_title ();
+			?></div>
+		</div>
 
-	<div id="outer">
- 		<div id="inner">
- 			<div id="left">
-  <div class="verticalmenu">
-  <?php menu("left");
-?>
+		<div id="outer">
+			<div id="inner">
+				<div id="left">
+					<div class="verticalmenu">
+  <?php
+		
+menu ( "left" );
+		?>
  </div>
 
-   		</div>
-   		<div id="content">
+				</div>
+				<div id="content">

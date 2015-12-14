@@ -1,4 +1,4 @@
 <?php
-function shRating_render(){
-   return "";
+function shRating_render() {
+	return "";
 }
