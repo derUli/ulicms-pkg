@@ -1,3 +1,3 @@
 <?php
 global $acl_array;
-$acl_array["clear_log"] = null;
+$acl_array ["clear_log"] = null;

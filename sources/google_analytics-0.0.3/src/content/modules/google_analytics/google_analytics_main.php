@@ -1,5 +1,5 @@
 <?php
-function google_analytics_render(){
-     return "";
-     }
+function google_analytics_render() {
+	return "";
+}
 ?>

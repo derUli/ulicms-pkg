@@ -1,6 +1,5 @@
 <?php
-function break_frames_render(){
-    
-     return "";
-     }
+function break_frames_render() {
+	return "";
+}
 ?>

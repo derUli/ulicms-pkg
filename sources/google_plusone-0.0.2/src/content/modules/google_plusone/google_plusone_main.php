@@ -1,4 +1,4 @@
 <?php
-function google_plusone_render(){
-     return "";
-     }
+function google_plusone_render() {
+	return "";
+}

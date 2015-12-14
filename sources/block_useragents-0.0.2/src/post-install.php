@@ -1,3 +1,3 @@
 <?php
- if(!getconfig("blocked_useragents"))
-     setconfig("blocked_useragents", "");
+if (! getconfig ( "blocked_useragents" ))
+	setconfig ( "blocked_useragents", "" );

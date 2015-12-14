@@ -1,4 +1,4 @@
 <?php
-function bootstrap_render(){
-   return "";
+function bootstrap_render() {
+	return "";
 }

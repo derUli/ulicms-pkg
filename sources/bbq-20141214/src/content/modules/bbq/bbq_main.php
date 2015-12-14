@@ -1,4 +1,4 @@
 <?php
-function bbq_render(){
-     return "";
-     }
+function bbq_render() {
+	return "";
+}

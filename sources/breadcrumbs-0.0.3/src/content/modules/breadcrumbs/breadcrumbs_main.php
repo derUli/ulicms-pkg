@@ -1,4 +1,4 @@
 <?php
-function breadcrumbs_render(){
-  return "";
+function breadcrumbs_render() {
+	return "";
 }

@@ -1,5 +1,5 @@
 <?php
-function block_yasni_render(){
-     return "";
-     }
+function block_yasni_render() {
+	return "";
+}
 ?>

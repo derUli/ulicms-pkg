@@ -1,6 +1,5 @@
 <?php
-function barrel_roll_render(){
-    
-     return "";
-     }
+function barrel_roll_render() {
+	return "";
+}
 ?>

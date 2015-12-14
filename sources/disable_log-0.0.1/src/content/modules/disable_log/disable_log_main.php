@@ -1,4 +1,4 @@
 <?php
-function disable_log_render(){
-     return "";
-    }
+function disable_log_render() {
+	return "";
+}

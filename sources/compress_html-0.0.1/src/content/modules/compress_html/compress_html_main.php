@@ -1,5 +1,4 @@
 <?php
-function compress_html_render(){
-    
-     }
+function compress_html_render() {
+}
 ?>

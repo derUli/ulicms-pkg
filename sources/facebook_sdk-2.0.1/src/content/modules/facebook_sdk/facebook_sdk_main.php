@@ -1,4 +1,4 @@
 <?php
-function facebook_sdk_render(){
-     return "";
-     }
+function facebook_sdk_render() {
+	return "";
+}

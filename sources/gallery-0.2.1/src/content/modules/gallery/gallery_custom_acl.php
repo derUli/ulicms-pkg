@@ -1,3 +1,3 @@
 <?php
 global $acl_array;
-$acl_array["gallery_setings"] = null;
+$acl_array ["gallery_setings"] = null;
