@@ -8,7 +8,8 @@ echo getCurrentLanguage ();
 <meta name="viewport" content="width=1280, initial-scale=1" />
 <style type="text/css">
 body {
-	font-family: <? php echo getconfig ( "default-font" );
+	font-family: <?php 
+	echo getconfig ( "default-font" );
 ?>;
 }
 </style>
