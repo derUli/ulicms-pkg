@@ -6,3 +6,4 @@
 [ ] Redirect on 404 to Page
 [ ] Blog Modul um Felder für Open Graph erweitern (Ab UliCMS 9.8.0)
 [ ] Poll Modul
+[ ] google_maps Adresse und Zoom Level soll je Seite definierbar sein (Custom Data)
