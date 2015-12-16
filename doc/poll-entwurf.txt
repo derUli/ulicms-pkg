@@ -1,0 +1,19 @@
+Datenbanktabellen
+prefix_poll:
+id
+question
+autor
+created
+changed
+date_from
+date_to
+
+prefix_poll_questions
+id
+poll_id
+question_text
+votes
+
+prefix_poll_voter
+poll_id
+identifier (md5(ip))
