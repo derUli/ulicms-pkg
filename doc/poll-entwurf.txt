@@ -17,3 +17,5 @@ votes
 prefix_poll_voter
 poll_id
 identifier (md5(ip))
+
+Mehrfach-Votes verhindern per Cookie
