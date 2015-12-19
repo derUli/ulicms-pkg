@@ -8,10 +8,10 @@ changed
 date_from
 date_to
 
-prefix_poll_questions
+prefix_poll_answers
 id
 poll_id
-question_text
+answer_text
 votes
 
 prefix_poll_voter
