@@ -1,0 +1,138 @@
+/* *** css by miss monorom www.intensivstation.ch *** */
+/* css released under Creative Commons License -  http://creativecommons.org/licenses/by/2.0/deed.en  */
+body {
+	background: url('body.jpg') top left;
+	padding: 0px;
+	margin: 0px;
+}
+
+a {
+	color: #DB7093;
+}
+
+a:visited {
+	color: #c43300;
+}
+
+a:hover {
+	color: #c43300;
+}
+
+a:active {
+	color: #000000;
+}
+
+h1 {
+	text-transform: uppercase;
+}
+
+h2 {
+	color: #9A1212;
+	font-size: 1.2em;
+	font-weight: normal;
+}
+
+img.download {
+	vertical-align: middle;
+}
+
+/* ----------container to center the layout-------------- */
+#container {
+	width: 760px;
+	margin-left: auto;
+	margin-right: auto;
+	height: 100%;
+	background: #E8E8E8 url('menubottom.jpg') no-repeat bottom left;
+	border: 1px solid #8D8D8D;
+}
+
+/* ----------banner for logo-------------- */
+#banner {
+	height: 114px;
+	text-align: center;
+	background: url('header.jpg') no-repeat bottom center;
+	padding: 0px;
+	margin: 0px;
+}
+
+#banner img {
+	padding: 10px 0px;
+}
+
+#bannertitle {
+	padding-top: 50px;
+	font-size: 2em;
+	font-weight: bold;
+}
+
+/* -----------------content--------------------- */
+#content {
+	background: #ffffff url('content.jpg') no-repeat top right;
+	padding: 10px;
+	margin-left: 200px;
+	margin-right: 0px;
+	word-wrap: break-word;
+}
+
+div#content {
+	min-height: 600px;
+	/*height:expression(this.scrollHeight > 600 ? "auto":"600px"); */
+}
+
+/* --------------left navi------------- */
+#left {
+	float: left;
+	width: 200px;
+	margin: 0px;
+	padding: 0px;
+	background: #E8E8E8;
+	height: 90%;
+}
+
+/* -----------footer--------------------------- */
+#footer {
+	clear: both;
+	margin: 0px;
+	padding: 0px;
+	height: 35px;
+	text-align: right;
+	background: url('footer.gif') repeat-x;
+}
+
+#footer h2 a {
+	color: #FFFFFF;
+}
+
+#footer h1 {
+	padding: 5px 5px 0px 0px;
+	font-size: 0.8em;
+}
+
+/**********vertical menu***************/
+.verticalmenu ul {
+	list-style: none;
+	/*list-style-image: url("bullet.gif")*/
+	padding: 10px;
+	margin: 0px;
+}
+
+.blog_pagination_older {
+	float: right;
+}
+
+.verticalmenu li a:link, .verticalmenu a:visited .verticalmenu a:hover {
+	display: block;
+	font-weight: bold;
+	font-size: 1.1em;
+	color: #9A1212;
+	text-decoration: none;
+	text-align: left;
+	width: 140px;
+	height: 32px;
+	/*background: url('menuhover.gif') no-repeat;*/
+}
+
+.verticalmenu a:hover {
+	background: url('menuhover.gif') no-repeat;
+	color: #dc4d1b;
+}

@@ -1,0 +1,6 @@
+Ermöglicht, einen Titel für den title-Tag einzugeben, der vom tatsächlichen Titel abweicht.
+
+Unter "Design" - "Seitentitel Format" muss %title% durch %seo_title% ersetzen werden. Dann kann man per Benutzerdefinierte Daten den Titel für den <title> Tag wie folgt festlegen
+{ 
+"seo_title" : "Mein eigener Titel"
+}

@@ -1,0 +1,2 @@
+Integration von phpContact
+Für eine Installations-Anleitung schauen Sie bitte in die liesmich.txt im Modulordner

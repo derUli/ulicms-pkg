@@ -1,0 +1,11 @@
+phpContact ist ein Kontaktformular-Skript welches unter folgender URL herunterladbar ist:
+http://www.phpcontact.net/de/
+
+Es ist individueller und bietet mehr Konfigurationsmöglichkeiten als das normale Kontaktformulare von UliCMS.
+Es existiert ein Modul zur Integration in UliCMS.
+phpContact muss unter ULICMS_ROOT/phpContact installiert sein, damit die Integration funktioniert.
+Für eine Installationsanleitung schauen Sie bitte in die Dokumentation von phpContact.
+Als "Einbauvariante" muss "PHP Variante (per "include" oder "require")" ausgewählt werden.
+Es kann nur das "Default" Template verwendet werden.
+
+Wenn phpContact konfiguriert ist, können Sie das UliCMS Modul installieren, und den Embed Code in die Seite, die das Kontaktformular enthalten soll einbinden.

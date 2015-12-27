@@ -24,6 +24,14 @@ if len(sys.argv) < 2:
 elif sys.argv[1] == "update":
    os.system("git pull")
    sys.exit()
+   
+elif sys.argv[1] == "checkout":
+   if len(sys.argv) > 2:
+      os.system("git checkout " + sys.argv[2])
+      sys.exit()
+   else:
+      print("Usage: ./ulicms-pkg.py checkout [branch]")
+      sys.exit();
 
 # Init package folder
 if sys.argv[1] == "init":
@@ -40,12 +48,8 @@ if sys.argv[1] == "init":
       f = open("packages/list.txt", "a")
       f.close()
       print("creating packages/list.txt")
+   shutil.copyfile("newest_version.php", "packages/newest_version.php")
    print("Done.")
-   sys.exit()
-
-# reformat / tidy source code
-elif sys.argv[1] == "reformat-src":
-   execfile("reformat_code.py")
    sys.exit()
 
 # create new source folder
@@ -80,6 +84,7 @@ elif sys.argv[1] == "clean":
       os.makedirs("packages/descriptions")
       h = open("packages/list.txt", "w")
       h.close()
+      shutil.copyfile("newest_version.php", "packages/newest_version.php")
       print("finisihed")
       sys.exit()
    else:

@@ -1,0 +1,3 @@
+Eine Google Maps Karte in UliCMS integrieren.
+
+Benötigt jQuery!

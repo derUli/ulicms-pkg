@@ -1,0 +1,1 @@
+Stellt einen geschützten Bereich in dem Sie bestimmten Kunden Dateien zum Download anbieten können zur Verfügung.

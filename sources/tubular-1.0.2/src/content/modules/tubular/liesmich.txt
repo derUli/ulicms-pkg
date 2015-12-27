@@ -1,0 +1,20 @@
+Tubular ermöglicht es, Youtube-Videos als Hintergrundbild zu verwenden.
+
+Für die Nutzung von Tubular sind Anpassungen an den Templates erforderlich.
+
+Folgende Schritte sind durchzuführen.
+
+1. Module jquery-1.9.1 und stringparser_bbcode-0.3.3 installieren, falls noch nicht vorhanden.
+
+2. Ein Div mit der ID "tubular" an den Anfang des Bodys einfügen.
+<div id="tubular"></div>
+
+3. Zum Wrapper bzw. Hauptcontainer des Templates folgende zwei CSS-Regeln hinzufügen:
+position:relative;
+z-index:99;
+
+4. Eventuell mittels rgba das Wrapper-Div halbtransparent machen, um die Lesbarkeit des Textes zu verbessern.
+
+5. BB-Code in eine Seite einfügen.
+Folgender BB-Code würde z.B. ein Katzenvideo als Hintergrund einbinden.
+[tubular]0Bmhjf0rKe8[/tubular]

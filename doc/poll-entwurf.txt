@@ -1,0 +1,21 @@
+Datenbanktabellen
+prefix_poll:
+id
+question
+autor
+created
+changed
+date_from
+date_to
+
+prefix_poll_answers
+id
+poll_id
+answer_text
+votes
+
+prefix_poll_voter
+poll_id
+identifier (md5(ip))
+
+Mehrfach-Votes verhindern per Cookie und/oder IP-Adresse

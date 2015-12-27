@@ -1,0 +1,3 @@
+Klappt alle Untermenüs außer dem derzeit geöffneten zu.
+Funktioniert für das linke und das rechte Menü.
+Benötigt jQuery.

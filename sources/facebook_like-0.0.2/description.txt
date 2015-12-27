@@ -1,0 +1,3 @@
+The Like button is the quickest way for people to share content with their friends.
+
+A single click on the Like button will 'like' pieces of content on the web and share them on Facebook. You can also display a Share button next to the Like button to let people add a personal message and customize who they share with.
