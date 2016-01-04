@@ -36,24 +36,27 @@ if (containsModule ( null, "blog" )) {
 	$accessToken = getconfig ( "blog2twitter_access_token" );
 	$accessTokenSecret = getconfig ( "blog2twitter_access_token_secret" );
 	
-	if ($consumerKey !== false && $consumerSecret !== false && $accessToken !== false && $accessTokenSecret !== false) {	
-		$twitter = new Twitter ( $consumerKey, $consumerSecret, $accessToken, $accessTokenSecret );
+	if ($consumerKey !== false && $consumerSecret !== false && $accessToken !== false && $accessTokenSecret !== false) {
 		$query = db_query ( "select id, title, seo_shortname from " . tbname ( "blog" ) . " where entry_enabled = 1 and posted2twitter = 0 order by datum limit 5" );
-		while ( $row = db_fetch_assoc ( $query ) ) {
-			$id = $row ["id"];
-			$title = $row ["title"];
-			$seo_shortname = $row ["seo_shortname"];
+		if (db_num_rows ( $query ) > 0) {
+			$twitter = new Twitter ( $consumerKey, $consumerSecret, $accessToken, $accessTokenSecret );
 			
-			$link = rootDirectory () . get_requested_pagename () . ".html?single=" . $seo_shortname;
-			
-			$post = $title . " " . $link;
-			
-			try {
-				$status = $twitter->send ( $post );
-				setconfig ( "blog2twitter_status", "Funktioniert!" );
-				db_query ( "UPDATE " . tbname ( "blog" ) . " set posted2twitter = 1 where id = $id" );
-			} catch ( TwitterException $e ) {
-				setconfig ( "blog2twitter_status", db_escape ( $e->getMessage () ) );
+			while ( $row = db_fetch_assoc ( $query ) ) {
+				$id = $row ["id"];
+				$title = $row ["title"];
+				$seo_shortname = $row ["seo_shortname"];
+				
+				$link = rootDirectory () . get_requested_pagename () . ".html?single=" . $seo_shortname;
+				
+				$post = $title . " " . $link;
+				
+				try {
+					$status = $twitter->send ( $post );
+					setconfig ( "blog2twitter_status", "Funktioniert!" );
+					db_query ( "UPDATE " . tbname ( "blog" ) . " set posted2twitter = 1 where id = $id" );
+				} catch ( TwitterException $e ) {
+					setconfig ( "blog2twitter_status", db_escape ( $e->getMessage () ) );
+				}
 			}
 		}
 	} else {
