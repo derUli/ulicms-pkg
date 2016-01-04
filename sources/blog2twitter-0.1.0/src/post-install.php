@@ -10,4 +10,6 @@ if (! getconfig ( "blog2twitter_access_token" ))
 
 if (! getconfig ( "blog2twitter_access_token_secret" ))
 	setconfig ( "blog2twitter_access_token_secret", "XXXXXXXXXXXXXXXXXXX" );
+	
+db_query( "ALTER TABLE " . tbname("blog") . " ADD posted2twitter BOOLEAN not null default 0" );
 ?>
