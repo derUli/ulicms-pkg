@@ -33,7 +33,7 @@ if (containsModule ( null, "blog" )) {
 	
 	$query = db_query ( "select id, title, seo_shortname from " . tbname ( "blog" ) . " where entry_enabled = 1 and posted2twitter = 0 order by datum limit 5" );
 	
-	$twitter = new Twitter ( $consumerKey, $consumerSecret, $accessToken, $accessTokenSecret );	
+	$twitter = new Twitter ( $consumerKey, $consumerSecret, $accessToken, $accessTokenSecret );
 	while ( $row = db_fetch_assoc ( $query ) ) {
 		$id = $row ["id"];
 		$title = $row ["title"];
