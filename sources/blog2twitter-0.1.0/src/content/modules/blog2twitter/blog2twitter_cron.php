@@ -31,7 +31,9 @@ if (containsModule ( null, "blog" )) {
 	
 	include_once getModulePath ( "twitter_for_php" ) . "twitter.class.php";
 	
-	$query = db_query ( "select id, title, seo_shortname from " . tbname ( "blog" ) . " where entry_enabled = 1 and posted2twitter = 0 order by datum limit 2" );
+	$query = db_query ( "select id, title, seo_shortname from " . tbname ( "blog" ) . " where entry_enabled = 1 and posted2twitter = 0 order by datum limit 5" );
+	
+	$twitter = new Twitter ( $consumerKey, $consumerSecret, $accessToken, $accessTokenSecret );	
 	while ( $row = db_fetch_assoc ( $query ) ) {
 		$id = $row ["id"];
 		$title = $row ["title"];
@@ -49,7 +51,6 @@ if (containsModule ( null, "blog" )) {
 		if ($consumerKey !== false && $consumerSecret !== false && $accessToken !== false && $accessTokenSecret !== false) {
 			
 			try {
-				$twitter = new Twitter ( $consumerKey, $consumerSecret, $accessToken, $accessTokenSecret );
 				$status = $twitter->send ( $post );
 				
 				setconfig ( "blog2twitter_status", "Funktioniert!" );
