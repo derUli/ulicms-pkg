@@ -1,1 +1,1 @@
-Eine Blog- und News-Funktion mit Kommentarfunktion und RSS-Feed
+A simple blog for UliCMS including a comment function
