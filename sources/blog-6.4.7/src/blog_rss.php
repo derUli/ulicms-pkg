@@ -17,7 +17,7 @@ else
 
 $lang = db_escape ( $lang );
 
-$query = db_query ( "SELECT id, datum, seo_shortname, content_preview, title FROM " . tbname ( "blog" ) . " WHERE entry_enabled = 1 AND language='$lang' ORDER by datum DESC LIMIT $blog_feed_max_items" );
+$query = db_query ( "SELECT id, datum, seo_shortname, content_preview, content_full, title FROM " . tbname ( "blog" ) . " WHERE entry_enabled = 1 AND language='$lang' ORDER by datum DESC LIMIT $blog_feed_max_items" );
 
 header ( "Content-Type: text/xml; charset=UTF-8" );
 
@@ -49,7 +49,11 @@ while ( $row = db_fetch_object ( $query ) ) {
 	
 	$url .= $servername;
 	
-	$description = $row->content_preview;
+	$description = trim($row->content_preview);
+	if(empty($description)){
+		$description = trim($row->content_full);
+	}
+	
 	// Replace Relative URLs
 	$description = str_replace ( "<a href=\"/", "<a href=\"$url/", $description );
 	

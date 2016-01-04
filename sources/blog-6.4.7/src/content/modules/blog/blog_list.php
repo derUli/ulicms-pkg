@@ -71,7 +71,11 @@ function blog_list() {
 			$date_and_autor_string = str_replace ( "%views%", $post->views, $date_and_autor_string );
 			
 			$html .= $date_and_autor_string;
-			$html .= "<div class='blog_post_content'>" . $post->content_preview . "</div>";
+			$text = trim($post->content_preview);
+			if(empty($text)){
+			   $text = trim($post->content_full);
+			}
+			$html .= "<div class='blog_post_content'>" . $text . "</div>";
 			
 			if ($_SESSION ["language"] == "de") {
 				$html .= "<a href='" . buildSEOUrl ( get_requested_pagename () ) . "?single=" . $post->seo_shortname . "' class='blog-read-more-link'>weiterlesen...</a>
