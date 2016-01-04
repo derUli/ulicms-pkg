@@ -22,14 +22,14 @@ function blog2twitter_admin() {
 	action="<?php echo getModuleAdminSelfPath()?>" method="post">
 <?php
 	
-csrf_token_html ();
+	csrf_token_html ();
 	?>
 <div class="label">Twitter Consumer Key</div>
 	<div class="inputWrapper">
 		<input type="text" name="blog2twitter_consumer_key"
 			value="<?php
 	
-echo $blog2twitter_consumer_key;
+	echo $blog2twitter_consumer_key;
 	?>">
 	</div>
 	<div class="label">Twitter Consumer Secret</div>
@@ -37,7 +37,7 @@ echo $blog2twitter_consumer_key;
 		<input type="text" name="blog2twitter_consumer_secret"
 			value="<?php
 	
-echo $blog2twitter_consumer_secret;
+	echo $blog2twitter_consumer_secret;
 	?>">
 	</div>
 
@@ -48,7 +48,7 @@ echo $blog2twitter_consumer_secret;
 		<input type="text" name="blog2twitter_access_token"
 			value="<?php
 	
-echo $blog2twitter_access_token;
+	echo $blog2twitter_access_token;
 	?>">
 	</div>
 	<div class="label">Twitter Access Token Secret</div>
@@ -56,7 +56,7 @@ echo $blog2twitter_access_token;
 		<input type="text" name="blog2twitter_access_token_secret"
 			value="<?php
 	
-echo $blog2twitter_access_token_secret;
+	echo $blog2twitter_access_token_secret;
 	?>">
 	</div>
 
@@ -79,6 +79,6 @@ $("#blog2twitter_settings").ajaxForm({beforeSubmit: function(e){
 </script>
 </form>
 <?php
-     }
+}
 
 ?>

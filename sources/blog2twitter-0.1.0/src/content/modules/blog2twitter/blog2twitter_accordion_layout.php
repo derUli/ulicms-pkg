@@ -8,7 +8,7 @@ if ($status !== false and is_admin ()) {
 <div class="accordion-content">
 	<p><?php
 	
-echo nl2br ( $status );
+	echo nl2br ( $status );
 	?></p>
 </div>
 <?php
