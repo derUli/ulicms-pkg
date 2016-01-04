@@ -36,10 +36,9 @@ if (containsModule ( null, "blog" )) {
 	$accessToken = getconfig ( "blog2twitter_access_token" );
 	$accessTokenSecret = getconfig ( "blog2twitter_access_token_secret" );
 	
-	if ($consumerKey !== false && $consumerSecret !== false && $accessToken !== false && $accessTokenSecret !== false) {
-		$query = db_query ( "select id, title, seo_shortname from " . tbname ( "blog" ) . " where entry_enabled = 1 and posted2twitter = 0 order by datum limit 5" );
-		
+	if ($consumerKey !== false && $consumerSecret !== false && $accessToken !== false && $accessTokenSecret !== false) {	
 		$twitter = new Twitter ( $consumerKey, $consumerSecret, $accessToken, $accessTokenSecret );
+		$query = db_query ( "select id, title, seo_shortname from " . tbname ( "blog" ) . " where entry_enabled = 1 and posted2twitter = 0 order by datum limit 5" );
 		while ( $row = db_fetch_assoc ( $query ) ) {
 			$id = $row ["id"];
 			$title = $row ["title"];
