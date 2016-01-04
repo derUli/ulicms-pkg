@@ -31,14 +31,14 @@ if (containsModule ( null, "blog" )) {
 	
 	include_once getModulePath ( "twitter_for_php" ) . "twitter.class.php";
 	
-	$query = db_query ( "select id, title, seo_shortname from " . tbname ( "blog" ) . " where entry_enabled = 1 and posted2twitter = 0 order by datum limit 5" );
-	
 	$consumerKey = getconfig ( "blog2twitter_consumer_key" );
 	$consumerSecret = getconfig ( "blog2twitter_consumer_secret" );
 	$accessToken = getconfig ( "blog2twitter_access_token" );
 	$accessTokenSecret = getconfig ( "blog2twitter_access_token_secret" );
 	
 	if ($consumerKey !== false && $consumerSecret !== false && $accessToken !== false && $accessTokenSecret !== false) {
+		$query = db_query ( "select id, title, seo_shortname from " . tbname ( "blog" ) . " where entry_enabled = 1 and posted2twitter = 0 order by datum limit 5" );
+		
 		$twitter = new Twitter ( $consumerKey, $consumerSecret, $accessToken, $accessTokenSecret );
 		while ( $row = db_fetch_assoc ( $query ) ) {
 			$id = $row ["id"];
