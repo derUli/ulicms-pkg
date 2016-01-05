@@ -1,0 +1,1 @@
+An easy-to-use PHP class for access to Twitter's API
