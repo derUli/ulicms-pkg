@@ -21,7 +21,7 @@ function google_maps_admin() {
 csrf_token_html ();
 	?>
 <p>
-		<strong>Adresse, Ort</strong> <br /> <input type="text"
+		<strong><?php translate("ADDRESS_TOWN");?></strong> <br /> <input type="text"
 			name="google_maps_marker"
 			value="<?php
 	
@@ -30,7 +30,7 @@ echo htmlspecialchars ( $google_maps_marker );
 	</p>
 
 	<p>
-		<strong>Zoom Level</strong> <br /> <select
+		<strong><?php translate("ZOOM_LEVEL");?></strong> <br /> <select
 			name="google_maps_zoom_level">
 <?php
 	
@@ -57,7 +57,7 @@ echo $i;
 	
 	
 	<p>
-		<input type="submit" name="submit" value="Einstellungen speichern" />
+		<input type="submit" name="submit" value="<?php translate("save");?>" />
 	</p>
 </form>
 <?php

@@ -1,13 +1,21 @@
 <?php
 if (containsModule ( get_requested_pagename (), "google_maps" )) {
 	$google_maps_marker = getconfig ( "google_maps_marker" );
-	$google_maps_marker = htmlspecialchars ( $google_maps_marker, ENT_QUOTES, "UTF-8" );
 	
 	$google_maps_zoom_level = getconfig ( "google_maps_zoom_level" );
 	if ($google_maps_zoom_level === false or $google_maps_zoom_level == 0)
 		$google_maps_zoom_level = 10;
-	if ($google_maps_marker and ! empty ( $google_maps_marker )) {
+	$custom_data = get_custom_data();
+	
+	if(isset($custom_data["google_maps_marker"]) and !empty($custom_data["google_maps_marker"])){
+	   $google_maps_marker = $custom_data["google_maps_marker"];
+	}
 		
+	if(isset($custom_data["google_maps_zoom_level"]) and !empty($custom_data["google_maps_zoom_level"])){
+	   $google_maps_zoom_level = intval($custom_data["google_maps_zoom_level"]);
+	}
+	
+	if($google_maps_marker and $google_maps_zoom_level){
 		?>
 
 
@@ -37,14 +45,14 @@ echo getModulePath ( "google_maps" );
           marker:{
             address: "<?php
 		
-echo $google_maps_marker;
+echo real_htmlspecialchars($google_maps_marker);
 		?>"
           },
           map:{
             options:{
               zoom: <?php
 		
-echo intval ( $google_maps_zoom_level );
+echo real_htmlspecialchars($google_maps_zoom_level );
 		?>
             }
           }
