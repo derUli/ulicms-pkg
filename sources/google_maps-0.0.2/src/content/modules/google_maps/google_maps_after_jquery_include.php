@@ -5,17 +5,17 @@ if (containsModule ( get_requested_pagename (), "google_maps" )) {
 	$google_maps_zoom_level = getconfig ( "google_maps_zoom_level" );
 	if ($google_maps_zoom_level === false or $google_maps_zoom_level == 0)
 		$google_maps_zoom_level = 10;
-	$custom_data = get_custom_data();
+	$custom_data = get_custom_data ();
 	
-	if(isset($custom_data["google_maps_marker"]) and !empty($custom_data["google_maps_marker"])){
-	   $google_maps_marker = $custom_data["google_maps_marker"];
-	}
-		
-	if(isset($custom_data["google_maps_zoom_level"]) and !empty($custom_data["google_maps_zoom_level"])){
-	   $google_maps_zoom_level = intval($custom_data["google_maps_zoom_level"]);
+	if (isset ( $custom_data ["google_maps_marker"] ) and ! empty ( $custom_data ["google_maps_marker"] )) {
+		$google_maps_marker = $custom_data ["google_maps_marker"];
 	}
 	
-	if($google_maps_marker and $google_maps_zoom_level){
+	if (isset ( $custom_data ["google_maps_zoom_level"] ) and ! empty ( $custom_data ["google_maps_zoom_level"] )) {
+		$google_maps_zoom_level = intval ( $custom_data ["google_maps_zoom_level"] );
+	}
+	
+	if ($google_maps_marker and $google_maps_zoom_level) {
 		?>
 
 
@@ -26,7 +26,7 @@ if (containsModule ( get_requested_pagename (), "google_maps" )) {
 <script type="text/javascript"
 	src="<?php
 		
-echo getModulePath ( "google_maps" );
+		echo getModulePath ( "google_maps" );
 		?>gmap3.min.js"></script>
 
 
@@ -34,7 +34,7 @@ echo getModulePath ( "google_maps" );
 <link rel="stylesheet" type="text/css"
 	href="<?php
 		
-echo getModulePath ( "google_maps" );
+		echo getModulePath ( "google_maps" );
 		?>style.css" />
 
 
@@ -45,14 +45,14 @@ echo getModulePath ( "google_maps" );
           marker:{
             address: "<?php
 		
-echo real_htmlspecialchars($google_maps_marker);
+		echo real_htmlspecialchars ( $google_maps_marker );
 		?>"
           },
           map:{
             options:{
               zoom: <?php
 		
-echo real_htmlspecialchars($google_maps_zoom_level );
+		echo real_htmlspecialchars ( $google_maps_zoom_level );
 		?>
             }
           }

@@ -18,14 +18,14 @@ function google_maps_admin() {
 <form action="<?php echo getModuleAdminSelfPath()?>" method="post">
 <?php
 	
-csrf_token_html ();
+	csrf_token_html ();
 	?>
 <p>
-		<strong><?php translate("ADDRESS_TOWN");?></strong> <br /> <input type="text"
-			name="google_maps_marker"
+		<strong><?php translate("ADDRESS_TOWN");?></strong> <br /> <input
+			type="text" name="google_maps_marker"
 			value="<?php
 	
-echo htmlspecialchars ( $google_maps_marker );
+	echo htmlspecialchars ( $google_maps_marker );
 	?>">
 	</p>
 
@@ -34,24 +34,23 @@ echo htmlspecialchars ( $google_maps_marker );
 			name="google_maps_zoom_level">
 <?php
 	
-for($i = 0; $i <= 21; $i ++) {
+	for($i = 0; $i <= 21; $i ++) {
 		?>
 <option value="<?php
 		
-echo $i;
+		echo $i;
 		?>"
 				<?php
 		
-if ($i == $google_maps_zoom_level)
+		if ($i == $google_maps_zoom_level)
 			echo "selected";
 		?>
 				size="1"><?php
 		
-echo $i;
+		echo $i;
 		?></option>
 <?php
-	
-}
+	}
 	?>
 </select>
 	
@@ -61,6 +60,6 @@ echo $i;
 	</p>
 </form>
 <?php
-     }
+}
 
 ?>
