@@ -1,0 +1,1 @@
+This package contains the open source PHP SDK that allows you to access the Facebook Platform from your PHP app.
