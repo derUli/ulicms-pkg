@@ -1,4 +1,6 @@
 <?php
+include_once ULICMS_ROOT . "/templating.php";
+
 define ( "MODULE_ADMIN_HEADLINE", "XML Sitemap" );
 function xmlspecialchars($text) {
 	return str_replace ( '&#039;', '&apos;', htmlspecialchars ( $text, ENT_QUOTES ) );
@@ -64,6 +66,8 @@ function generate_sitemap() {
 		}
 	}
 	
+	$xml_string = apply_filter ( $xml_string, "xml_sitemap_urlset" );
+	
 	$xml_string .= "</urlset>";
 	$xml_string = str_replace ( "\r\n", "\n", $xml_string );
 	$xml_string = str_replace ( "\r", "\n", $xml_string );
@@ -91,11 +95,11 @@ function xml_sitemap_admin() {
 	if (isset ( $_POST ["submit"] ))
 		generate_sitemap ()?>
 
-		
+
 <form action="<?php echo getModuleAdminSelfPath()?>" method="post">
 <?php
 	
-csrf_token_html ();
+	csrf_token_html ();
 	?>
 <input type="submit" name="submit"
 		value="<?php translate("generate_xml_sitemap");?>" />
