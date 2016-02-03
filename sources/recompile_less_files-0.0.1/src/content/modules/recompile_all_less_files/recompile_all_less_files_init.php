@@ -1,6 +1,6 @@
 <?php
 function recompile_all_less_files() {
-	include_once getModulePath ( "lessphp" ) . "lessc.inc.php";
+	require_once getModulePath ( "lessphp" ) . "lessc.inc.php";
 	
 	$all_files = find_all_files ( ULICMS_ROOT );
 	$less_files = array ();
