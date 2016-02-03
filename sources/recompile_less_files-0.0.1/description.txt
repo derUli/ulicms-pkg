@@ -1,1 +1,1 @@
-Recompile all less files on clear cache
+Recompile all less files on clear cache (Requires lessphp package)
