@@ -9,4 +9,3 @@ if (! isset ( $data ["disable_socialshare"] ) and ! isset ( $data ["disable_face
 <script type="text/javascript"
 	src="<?php echo getModulePath("shariff");?>shariff.min.js"></script><?php
 }
-?>
