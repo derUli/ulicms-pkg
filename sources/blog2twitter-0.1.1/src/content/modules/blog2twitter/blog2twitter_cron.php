@@ -1,10 +1,10 @@
 <?php
 if (containsModule ( null, "blog" )) {
-	
+
 	if (! function_exists ( "get_requested_pagename" ) and ! is_admin_dir ()) {
 		include_once "templating.php";
 	}
-	
+
 	if (! function_exists ( "rootDirectory" )) {
 		function rootDirectory() {
 			$pageURL = 'http';
@@ -28,28 +28,28 @@ if (containsModule ( null, "blog" )) {
 			return $pageURL;
 		}
 	}
-	
-	include_once getModulePath ( "twitter_for_php" ) . "twitter.class.php";
-	
+
+	include_once getModulePath ( "twitter_for_php" ) . "src/twitter.class.php";
+
 	$consumerKey = getconfig ( "blog2twitter_consumer_key" );
 	$consumerSecret = getconfig ( "blog2twitter_consumer_secret" );
 	$accessToken = getconfig ( "blog2twitter_access_token" );
 	$accessTokenSecret = getconfig ( "blog2twitter_access_token_secret" );
-	
+
 	if ($consumerKey !== false && $consumerSecret !== false && $accessToken !== false && $accessTokenSecret !== false) {
 		$query = db_query ( "select id, title, seo_shortname from " . tbname ( "blog" ) . " where entry_enabled = 1 and posted2twitter = 0 order by datum limit 5" );
 		if (db_num_rows ( $query ) > 0) {
 			$twitter = new Twitter ( $consumerKey, $consumerSecret, $accessToken, $accessTokenSecret );
-			
+
 			while ( $row = db_fetch_assoc ( $query ) ) {
 				$id = $row ["id"];
 				$title = $row ["title"];
 				$seo_shortname = $row ["seo_shortname"];
-				
+
 				$link = rootDirectory () . get_requested_pagename () . ".html?single=" . $seo_shortname;
-				
+
 				$post = $title . " " . $link;
-				
+
 				try {
 					$status = $twitter->send ( $post );
 					setconfig ( "blog2twitter_status", "Funktioniert!" );
