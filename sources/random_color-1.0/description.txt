@@ -1,1 +1,1 @@
-Generate random colors. For usage instructions please read usage.txt
+Generate random RGB color codes. For usage instructions please read usage.txt
