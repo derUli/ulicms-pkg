@@ -29,7 +29,7 @@ function block_ips_admin() {
 
 
 	<p>
-		<input type="submit" name="submit" value="<?php translate("save_settings");?>" />
+		<input type="submit" name="submit" value="<?php translate("save");?>" />
 	</p>
 </form>
 <?php
