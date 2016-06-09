@@ -1,4 +1,7 @@
 <?php
+$syslang = getSystemLanguage ();
+include_once getLanguageFilePath ( $syslang );
+
 function isIPBlocked($ip) {
 	$blocked_ips = getconfig ( "blocked_ips" );
 	if (! $blocked_ips)
