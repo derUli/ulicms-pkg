@@ -1,2 +1,1 @@
-Zugriffe von bestimmten IP-Adressen sperren.
-Es ist auch möglich, ganze IP-Ränge zu blockieren.
+﻿Block access from specific IP Addresses
