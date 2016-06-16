@@ -1,0 +1,2 @@
+Polls Module for UliCMS.
+Please read "handbuch.pdf" in "docs" folder for details how to setup a poll.
