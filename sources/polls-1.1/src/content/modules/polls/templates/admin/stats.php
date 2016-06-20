@@ -124,14 +124,14 @@ $(document).ready(function(){
 			$votes = $answer->getVotes () * 100 / $votes_total * 3;
 		}
 		$votes = str_replace ( ",", ".", $votes );
-		$color = random_color ();
+		$color = RandomColor::get();
 		?>
 			<strong>
 			<?php Template::escape($answer->title);?>
 			</strong> <br />
 			
 <?php if($votes > 0){?>
-<div style="width: <?php echo intval($votes);?>px; background-color:#<?php echo random_color();?>; float:left;margin-right:5px;">&nbsp;</div>
+<div style="width: <?php echo intval($votes);?>px; background-color:<?php echo $color;?>; float:left;margin-right:5px;">&nbsp;</div>
 <?php
 		}
 		?><div style="">
