@@ -97,9 +97,9 @@ function kontaktformular_render() {
 				setconfig ( "contact_form_refused_spam_mails", getconfig ( "contact_form_refused_spam_mails" ) + 1 );
 				
 				if ($_SESSION ["language"] == "de") {
-					$fehler = "<p class='ulicms_error'>" . "cyrillic Schriftzeichen sind nicht erlaubt!</p>";
+					$fehler = "<p class='ulicms_error'>" . "Kyrillische Schriftzeichen sind nicht erlaubt!</p>";
 				} else {
-					$fehler = "<p class='ulicms_error'>" . "Chinese chars are not allowed!</p>";
+					$fehler = "<p class='ulicms_error'>" . "Cyrillic chars are not allowed!</p>";
 				}
 			}
 			
