@@ -21,13 +21,13 @@ function kontaktformular_admin() {
 <form action="<?php echo getModuleAdminSelfPath()?>" method="post">
 <?php
 	
-csrf_token_html ();
+	csrf_token_html ();
 	?>
 <p>
 		Mails senden an<br /> <input type="email" name="email"
 			value="<?php
 	
-echo htmlspecialchars ( $email, ENT_QUOTES, "UTF-8" );
+	echo htmlspecialchars ( $email, ENT_QUOTES, "UTF-8" );
 	?>">
 	</p>
 	<p>
@@ -40,15 +40,14 @@ echo htmlspecialchars ( $email, ENT_QUOTES, "UTF-8" );
 		?>
 <option value="<?php
 		
-echo $p;
+		echo $p;
 		?>"
 				<?php if($kontaktformular_thankyou_page == $pages[$i]) echo " selected=\"selected\""?>><?php
 		
-echo $p;
+		echo $p;
 		?></option>
 <?php
-	
-}
+	}
 	?>
 </select>
 	</p>
@@ -58,6 +57,6 @@ echo $p;
 	</p>
 </form>
 <?php
-     }
+}
 
 ?>
