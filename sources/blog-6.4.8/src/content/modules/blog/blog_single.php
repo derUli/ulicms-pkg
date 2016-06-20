@@ -216,7 +216,7 @@ function blog_display_comments($post_id) {
 			$html .= "<p class='ulicms_error'>" . "Chinese chars are not allowed!</p>";
 		}
 	} 
-	else if (getconfig ( "disallow_cyrillic_chars" ) and $spamfilter_enabled and (cyrillic ( $_POST ["name"] ) or cyrillic ( $_POST ["comment"] ))) {
+	else if (getconfig ( "disallow_cyrillic_chars" ) and $spamfilter_enabled and (is_cyrillic ( $_POST ["name"] ) or is_cyrillic ( $_POST ["comment"] ))) {
 		if ($_SESSION ["language"] == "de") {
 			$html .= "<p class='ulicms_error'>" . "Kyrillische Schriftzeichen sind nicht erlaubt!</p>";
 		} else {
