@@ -1,1 +1,0 @@
-﻿A simple contact form with antispam protection
