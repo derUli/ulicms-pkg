@@ -1,6 +1,4 @@
 <?php
-$syslang = getSystemLanguage ();
-include_once getLanguageFilePath ( $syslang );
 
 function isIPBlocked($ip) {
 	$blocked_ips = getconfig ( "blocked_ips" );
@@ -29,5 +27,7 @@ $ip = $_SERVER ['REMOTE_ADDR'];
 
 if (isIPBlocked ( $ip )) {
 	header ( 'HTTP/1.0 403 Forbidden' );
+	$syslang = getSystemLanguage ();
+	include_once getLanguageFilePath ( $syslang );
 	die ( get_translation("access_from_your_ip_is_blocked", array("%ip%" => $ip)) );
 }
