@@ -1,0 +1,5 @@
+﻿Compress graphics in the Pictures folder by reducing the image quality.
+The reduced quality can be configured by setting the environment variable image_quality.
+Danger:
+save the original files Please before use this plugin.
+The modle doesn't make backups of the original files.
