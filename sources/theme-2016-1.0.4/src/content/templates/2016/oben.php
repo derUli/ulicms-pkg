@@ -43,6 +43,7 @@ echo getconfig ( "header-background-color" );
 </script>
 </head>
 <body class="<?php body_classes();?>">
+<div class="grey-bar"></div>
 	<header>
 		<a href="./">
 <?php
