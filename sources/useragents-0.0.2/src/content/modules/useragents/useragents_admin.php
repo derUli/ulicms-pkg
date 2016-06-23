@@ -1,5 +1,5 @@
 <?php
-define ( "MODULE_ADMIN_HEADLINE", get_translation("common_useragents") );
+define ( "MODULE_ADMIN_HEADLINE", get_translation ( "common_useragents" ) );
 define ( "MODULE_ADMIN_REQUIRED_PERMISSION", "useragents" );
 function useragents_admin() {
 	$useragents_limit = getconfig ( "useragents_limit" );
@@ -20,6 +20,6 @@ function useragents_admin() {
 		
 		echo "</table>";
 	} else {
-		echo "<p>".get_translation("no_data")."</p>";
+		echo "<p>" . get_translation ( "no_data" ) . "</p>";
 	}
 }
