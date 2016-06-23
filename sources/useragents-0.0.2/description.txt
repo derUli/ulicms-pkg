@@ -1,1 +1,1 @@
-Zeigt eine Liste der häufigsten Useragents an
+﻿Shows a list of the most common useragents.
