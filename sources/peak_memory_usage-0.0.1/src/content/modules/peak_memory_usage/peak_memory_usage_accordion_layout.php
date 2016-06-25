@@ -1,12 +1,12 @@
 <?php
-$acl = new ACL();
+$acl = new ACL ();
 
-if ($acl->hasPermission("peak_memory_usage")) {
-	$data = Settings::get("peak_memory_usage");
-	if($data){
-	  $data = formatSizeUnits($data);
+if ($acl->hasPermission ( "peak_memory_usage" )) {
+	$data = Settings::get ( "peak_memory_usage" );
+	if ($data) {
+		$data = formatSizeUnits ( $data );
 	} else {
-	  $data = "No Data";
+		$data = "No Data";
 	}
 	?>
 
