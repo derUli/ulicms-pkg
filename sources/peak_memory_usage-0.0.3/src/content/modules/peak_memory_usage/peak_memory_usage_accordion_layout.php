@@ -20,7 +20,7 @@ if ($acl->hasPermission ( "peak_memory_usage" )) {
 		</tr>
 		<tr>
 			<td><strong><?php translate("AVERAGE");?></strong></td>
-			<td>
+			<td style="text-align: right">
 <?php echo $average;?>
 </td>
 		</tr>
