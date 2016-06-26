@@ -30,7 +30,7 @@ if ($acl->hasPermission ( "average_views" )) {
 		<tr>
 			<td><strong><?php translate("blog_articles");?></strong></td>
 			<td style="text-align: right">
-<?php echo $avg_pages;?></td>
+<?php echo $avg_blog;?></td>
 
 		</tr>
 <?php
