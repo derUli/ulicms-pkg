@@ -14,19 +14,19 @@ if ($acl->hasPermission ( "peak_memory_usage" )) {
 	<table border=0>
 		<tr>
 			<td><strong><?php translate("MINIMAL");?></strong></td>
-			<td>
+			<td style="text-align: right">
 <?php echo $min;?>
 </td>
 		</tr>
 		<tr>
 			<td><strong><?php translate("AVERAGE");?></strong></td>
-			<td>
+			<td style="text-align: right">
 <?php echo $average;?>
 </td>
 		</tr>
 		<tr>
 			<td><strong><?php translate("MAXIMAL");?></strong></td>
-			<td>
+			<td style="text-align: right">
 <?php echo $max;?>
 </td>
 		</tr>
