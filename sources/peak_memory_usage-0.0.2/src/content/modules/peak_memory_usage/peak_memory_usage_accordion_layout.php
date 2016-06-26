@@ -4,6 +4,7 @@ include_once getModulePath ( "peak_memory_usage" ) . "/objects/peak_memory_usage
 $acl = new ACL ();
 if ($acl->hasPermission ( "peak_memory_usage" )) {
 	
+	$min = formatSizeUnits ( PeakMemoryUsage::getMinimalUsage () );
 	$average = formatSizeUnits ( PeakMemoryUsage::getAverageMemoryUsage () );
 	$max = formatSizeUnits ( PeakMemoryUsage::getMaximalUsage () );
 	?>
@@ -11,6 +12,12 @@ if ($acl->hasPermission ( "peak_memory_usage" )) {
 <h2 class="accordion-header"><?php translate("PEAK_MEMORY_USAGE");?></h2>
 <div class="accordion-content">
 	<table border=0>
+		<tr>
+			<td><strong><?php translate("MINIMAL");?></strong></td>
+			<td>
+<?php echo $min;?>
+</td>
+		</tr>
 		<tr>
 			<td><strong><?php translate("AVERAGE");?></strong></td>
 			<td>
