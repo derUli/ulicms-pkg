@@ -1,5 +1,5 @@
 <?php
-define ( "MODULE_ADMIN_HEADLINE", "Häufige Referrer" );
+define ( "MODULE_ADMIN_HEADLINE", get_translation ( "REFERRER_HEADLINE" ) );
 define ( "MODULE_ADMIN_REQUIRED_PERMISSION", "referrer" );
 function referrer_admin() {
 	$referrer_limit = getconfig ( "referrer_limit" );
@@ -20,6 +20,6 @@ function referrer_admin() {
 		
 		echo "</table>";
 	} else {
-		echo "<p>Bisher noch keine Referrer vorhanden</p>";
+		echo "<p>" . get_translation ( "REFERRER_NO_DATA" ) . "</p>";
 	}
 }
