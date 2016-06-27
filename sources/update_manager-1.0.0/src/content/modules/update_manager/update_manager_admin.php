@@ -7,19 +7,35 @@ function update_manager_admin() {
 	$i = 0;
 	?>
 <form action="#" id="update-manager" method="get">
+
 	<?php
-	if (count ( $updates ) > 0)
+	if (count ( $updates ) > 0) {
+		?>
+		<p>
+		<input id="checkall" type="checkbox" class="checkall" checked> <label
+			for="checkall"><?php
+		
+		translate ( "select_all" );
+		?> </label>
+	</p>
+		<?php
 		foreach ( $updates as $update ) {
 			$i ++;
 			?>
 <input type="checkbox" class="package" id="update_<?php echo $i;?>"
-		name="updates[]" value="<?php Template::escape($update);?>"> <label
+		name="updates[]" value="<?php Template::escape($update);?>" checked> <label
 		for="update_<?php echo $i;?>"><?php Template::escape($update);?></label>
 	<br />
+	<?php
+		}
+		
+		?>
 	<p>
 		<input type="submit" value="<?php translate("install_updates");?>">
 	</p>
-	<?php } else {?>
+	<?php
+	} else {
+		?>
 	<p><?php translate("NO_UPDATES_AVAILABLE");?></p>
 	<?php }?>
 	<span id="translation_please_select_packages"

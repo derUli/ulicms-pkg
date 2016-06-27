@@ -2,9 +2,8 @@ $(function() {
 	$("form#update-manager").submit(
 			function() {
 				event.preventDefault();
-				var packages = $(
-						'form#update-manager input[type=checkbox]:checked')
-						.map(function(_, el) {
+				var packages = $('form#update-manager .package:checked').map(
+						function(_, el) {
 							return $(el).val();
 						}).get();
 				if (packages.length > 0) {
@@ -17,4 +16,8 @@ $(function() {
 				}
 
 			});
+
+	$('.checkall').on('click', function() {
+		$("form#update-manager .package").prop('checked', this.checked);
+	});
 });
