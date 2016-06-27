@@ -1,4 +1,4 @@
 <?php
-function adminer_render(){
-   return "";
+function adminer_render() {
+	return "";
 }

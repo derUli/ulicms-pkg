@@ -1,3 +1,3 @@
 <?php
 global $acl_array;
-$acl_array["adminer"] = null;
+$acl_array ["adminer"] = null;
