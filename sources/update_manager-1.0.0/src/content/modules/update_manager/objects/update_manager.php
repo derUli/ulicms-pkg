@@ -19,9 +19,9 @@ class UpdateManager {
 		$themes = getThemeList ();
 		if (count ( $themes ) > 0) {
 			foreach ( $themes as $theme ) {
-				$theme = "theme-" . $theme;
-				$version = getModuleMeta ( $theme, "version" );
+				$version = getThemeMeta ( $theme, "version" );
 				if ($version != null) {
+					$theme = "theme-" . $theme;
 					$status = $pkg->checkForNewerVersionOfPackage ( $theme );
 					if (version_compare ( $status, $version, '>' )) {
 						$retval [] = $theme . "-" . $status;
