@@ -10,9 +10,9 @@ if (! function_exists ( "db_optimize" )) {
 			$repair_sql = 'REPAIR TABLE ' . $value;
 			echo ($repair_sql) . " ";
 			if (db_query ( $repair_sql )) {
-				echo " <span style='color:green'>[" . translate ( "ok" ) . "]</span>";
+				echo " <span style='color:green'>[" . get_translation ( "ok" ) . "]</span>";
 			} else {
-				echo " <span style='color:red'>[" . translate ( "failed" ) . "]</span>";
+				echo " <span style='color:red'>[" . get_translation ( "failed" ) . "]</span>";
 				echo "<br/>";
 				echo db_error ();
 			}
@@ -20,9 +20,9 @@ if (! function_exists ( "db_optimize" )) {
 			$optimize_sql = 'OPTIMIZE TABLE ' . $value;
 			echo $optimize_sql;
 			if (db_query ( $optimize_sql )) {
-				echo " <span style='color:green'>[" . translate ( "ok" ) . "]</span>";
+				echo " <span style='color:green'>[" . get_translation ( "ok" ) . "]</span>";
 			} else {
-				echo " <span style='color:red'>[" . translate ( "failed" ) . "]</span>";
+				echo " <span style='color:red'>[" . get_translation ( "failed" ) . "]</span>";
 				echo "<br/>";
 				echo db_error ();
 			}
@@ -31,9 +31,9 @@ if (! function_exists ( "db_optimize" )) {
 			$flush_sql = 'FLUSH TABLE ' . $value;
 			echo $flush_sql;
 			if (db_query ( $flush_sql )) {
-				echo " <span style='color:green'>[" . translate ( "ok" ) . "]</span>";
+				echo " <span style='color:green'>[" . get_translation ( "ok" ) . "]</span>";
 			} else {
-				echo " <span style='color:red'>[" . translate ( "failed" ) . "]</span>";
+				echo " <span style='color:red'>[" . get_translation ( "failed" ) . "]</span>";
 				echo "<br/>";
 				echo db_error ();
 			}
