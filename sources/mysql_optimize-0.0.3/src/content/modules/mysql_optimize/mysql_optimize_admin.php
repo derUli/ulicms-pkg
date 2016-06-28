@@ -1,5 +1,5 @@
 <?php
-define ( "MODULE_ADMIN_HEADLINE", get_translations ( "OPTIMIZE_DATABASE" ) );
+define ( "MODULE_ADMIN_HEADLINE", get_translation ( "OPTIMIZE_DATABASE" ) );
 define ( "MODULE_ADMIN_REQUIRED_PERMISSION", "mysql_optimize" );
 function mysql_optimize_admin() {
 	if (isset ( $_POST ["submit"] )) {
