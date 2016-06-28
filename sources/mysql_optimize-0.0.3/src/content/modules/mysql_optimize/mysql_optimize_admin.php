@@ -1,5 +1,5 @@
 <?php
-define ( "MODULE_ADMIN_HEADLINE", "Datenbanken optimieren" );
+define ( "MODULE_ADMIN_HEADLINE", get_translation ( "OPTIMIZE_DATABASE" ) );
 define ( "MODULE_ADMIN_REQUIRED_PERMISSION", "mysql_optimize" );
 function mysql_optimize_admin() {
 	if (isset ( $_POST ["submit"] )) {
@@ -13,10 +13,10 @@ function mysql_optimize_admin() {
 <form action="<?php echo getModuleAdminSelfPath()?>" method="post">
 <?php
 	
-csrf_token_html ();
+	csrf_token_html ();
 	?>
 <input type="submit" name="submit"
-		value="Datenbank optimieren und reparieren" />
+		value="<?php translate("OPTIMIZE_AND_UPDATE_DATABASE");?>" />
 </form>
 <?php
 }
