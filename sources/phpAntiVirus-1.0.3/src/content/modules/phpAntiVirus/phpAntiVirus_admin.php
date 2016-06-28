@@ -7,7 +7,7 @@ function phpAntiVirus_admin() {
 <form action="<?php echo getModuleAdminSelfPath()?>" method="post">
 <?php
 	
-csrf_token_html ();
+	csrf_token_html ();
 	?>
 <input type="submit" name="submit" value="Scan durchführen" />
 </form>

@@ -1,1 +1,1 @@
-Silbentrennung mit CSS3
+Hyphenation with CSS3

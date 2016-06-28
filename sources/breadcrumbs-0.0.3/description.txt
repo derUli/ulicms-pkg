@@ -1,3 +1,3 @@
-Dieses Modul stellt Funktionen zur Einbindung einer Brotkrumen Navigation zur Verfügung.
-Nachdem Sie dieses Modul installiert haben, müssen Sie nur noch
-die Funktion breadcrumbs() in einem Template an der Stelle wo es erscheinen soll einfügen.
+﻿This module provides functions for integrating a breadcrumb navigation.
+Once you have this module installed, you just have to call 
+the function breadcrumbs() in a template at the point to where it will appear to insert.

@@ -30,21 +30,21 @@ form input[type="text"], textarea {
 	method="post">
 <?php
 	
-csrf_token_html ();
+	csrf_token_html ();
 	?>
 <table>
 		<tr>
 			<td>Ersetze</td>
 			<td><input type="text" name="name" value="<?php
 	
-echo $name;
+	echo $name;
 	?>"></td>
 		</tr>
 		<tr>
 			<td>Durch</td>
 			<td><textarea name="value" rows=5><?php
 	
-echo $value;
+	echo $value;
 	?></textarea></td>
 		</tr>
 		<tr>
@@ -60,12 +60,12 @@ echo $value;
 			<td align="center">
 <?php
 	
-if (isset ( $placeholder_id )) {
+	if (isset ( $placeholder_id )) {
 		?>
 <input type="hidden" name="id"
 				value="<?php
 		
-echo $placeholder_id;
+		echo $placeholder_id;
 		?>">
 <?php
 	}
@@ -77,5 +77,7 @@ echo $placeholder_id;
 
 </form>
 
-<?php }
+<?php
+
+}
 ?>

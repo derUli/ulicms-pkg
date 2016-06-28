@@ -1,0 +1,1 @@
+PHP class which generates PDF files from UTF-8 encoded HTML

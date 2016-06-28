@@ -1,5 +1,0 @@
-Komprimiert die Grafiken im Bilderordner durch Verringerung der Bildqualität.
-Die reduzierte Qualität kann durch setzen der Umgebungsvariable image_quality konfiguriert werden.
-Achtung:
-Bitte vor Einsatz dieses Plugins die Originaldateien sichern.
-Es werden keine Sicherungskopien der Grafikdateien erstelt.

@@ -59,8 +59,7 @@ function placeholders_admin() {
 	?>
 <?php
 
-	
-if (! isset ( $action )) {
+	if (! isset ( $action )) {
 		?>
 <a
 	href="?action=module_settings&module=placeholders&placeholders_action=add">Platzhalter
@@ -69,12 +68,11 @@ if (! isset ( $action )) {
 <br />
 <?php
 		
-placeholders_list ();
+		placeholders_list ();
 		?>
 
 <?php
-	
-} 
+	} 
 
 	else if ($action == "add" or $action == "edit") {
 		include getModulePath ( "placeholders" ) . "placeholders_add.php";

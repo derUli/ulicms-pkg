@@ -50,7 +50,7 @@ a, a:hover, a:visited {
 </style>
 <title><?php
 	
-title ();
+	title ();
 	?></title>
 <?php
 	base_metas ();

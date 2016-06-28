@@ -24,6 +24,5 @@ function search_admin() {
 	</p>
 </form>
 <?php
-     }
-
+}
 ?>

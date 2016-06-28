@@ -1,1 +1,1 @@
-Blogeinträge auf Twitter posten (benötigt twitter_for_php)
+﻿Auto post blog entries to Twitter (requires twitter_for_php)

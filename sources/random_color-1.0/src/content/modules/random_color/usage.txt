@@ -1,0 +1,2 @@
+How to use random_color:
+$color = RandomColor::get();
