@@ -2,7 +2,7 @@
 <div class="clear"></div>
 <br />
 <div id="nav_bottom">
-<?php menu("bottom")?>
+<?php menu("bottom");?>
 </div>
 <div id="footer">
 	Powered By <a href="http://www.ulicms.de" target="_blank">UliCMS</a> | &copy; <?php year()?> by <?php homepage_owner()?><br />
