@@ -1,4 +1,5 @@
 ﻿[ ] System um Downloads zu verkaufen (Zahlung per PayPal)
 [ ] Slider Modul
+[ ] sql_console mit Speicherfunktion
 [ ] Blog Modul um Felder für Open Graph erweitern (Ab UliCMS 9.8.0)
 [ ] Aufschlüßelung der Useragents nach Browser, Betriebssystem, Mobil / PC, Tablet, Android usw.

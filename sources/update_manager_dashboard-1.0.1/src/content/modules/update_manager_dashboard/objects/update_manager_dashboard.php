@@ -1,8 +1,7 @@
 <?php
-class UpdateManager {
-	public static function getAllUpdateablePackages() {
-		$pkg = new packageManager ();
-		$retval = array ();
+class UpdateManagerDashboard {
+	public static function anyUpdateAvailable() {
+		$pkg = new PackageManager ();
 		$modules = getAllModules ();
 		if (count ( $modules ) > 0) {
 			foreach ( $modules as $module ) {
@@ -10,7 +9,7 @@ class UpdateManager {
 				if ($version != null) {
 					$status = $pkg->checkForNewerVersionOfPackage ( $module );
 					if (version_compare ( $status, $version, '>' )) {
-						$retval [] = $module . "-" . $status;
+						return true;
 					}
 				}
 			}
@@ -24,12 +23,12 @@ class UpdateManager {
 					$theme = "theme-" . $theme;
 					$status = $pkg->checkForNewerVersionOfPackage ( $theme );
 					if (version_compare ( $status, $version, '>' )) {
-						$retval [] = $theme . "-" . $status;
+						return true;
 					}
 				}
 			}
 		}
 		
-		return $retval;
+		return false;
 	}
 }
