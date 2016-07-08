@@ -1,7 +1,8 @@
 <?php
 if (isset ( $_GET ["single"] )) {
-	$single = db_escape ( $_GET ["single"] );
-	$query = db_query ( "SELECT * FROM `" . tbname ( "blog" ) . "` WHERE seo_shortname='$single'" );
+	$single = Database::escapeValue ( $_GET ["single"] );
+	$language = Database::escapeValue ( getCurrentLanguage () );
+	$query = db_query ( "SELECT * FROM `" . tbname ( "blog" ) . "` WHERE seo_shortname='$single' and language = '$language'" );
 	
 	if ($query) {
 		
@@ -11,6 +12,8 @@ if (isset ( $_GET ["single"] )) {
 			
 			if (containsModule ( get_requested_pagename (), "blog" ))
 				header ( 'Last-Modified: ' . gmdate ( 'D, d M Y H:i:s', $datum ) . ' GMT' );
+		} else {
+			header ( "HTTP/1.0 404 Not Found" );
 		}
 	}
 }
