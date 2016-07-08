@@ -3,7 +3,7 @@ $acl = new ACL ();
 if (in_array ( "blog", getAllModules () ) and $acl->hasPermission ( "blog_comments_dashboard" )) {
 	?>
 
-<h2 class="accordion-header">Neueste Kommentare</h2>
+<h2 class="accordion-header"><?php translate("new_comments");?></h2>
 <div class="accordion-content">
 <?php
 	if (isset ( $_GET ["delete_comment"] )) {
@@ -13,7 +13,7 @@ if (in_array ( "blog", getAllModules () ) and $acl->hasPermission ( "blog_commen
 	$query = db_query ( "SELECT * FROM " . tbname ( "blog_comments" ) . " ORDER by `date` DESC LIMIT 5" );
 	
 	if (db_num_rows ( $query ) === 0) {
-		echo "<p>Es sind noch keine Kommentare vorhanden.</p>";
+		echo "<p>" . get_translation ( "no_comments_yet" ) . "</p>";
 	} else {
 		
 		$html = "";
