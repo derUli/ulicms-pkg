@@ -28,7 +28,7 @@ if (in_array ( "blog", getAllModules () ) and $acl->hasPermission ( "blog_commen
 			$html .= "</a>";
 			
 			if ($acl->hasPermission ( "blog" )) {
-				$html .= " <a href='index.php?delete_comment=" . $comment->id . "' onclick='return confirm(\"Diesen Kommentar wirklich löschen?\")'>[Löschen]</a>";
+				$html .= " <a href='index.php?delete_comment=" . $comment->id . "' onclick='return confirm(\"" . get_translation ( "really_delete_comment" ) . "\")'>[" . get_translation ( "delete" ) . "]</a>";
 			}
 			
 			$html .= "<br/>";
