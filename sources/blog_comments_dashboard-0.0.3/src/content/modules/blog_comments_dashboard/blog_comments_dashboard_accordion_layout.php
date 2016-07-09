@@ -38,14 +38,11 @@ if (in_array ( "blog", getAllModules () ) and $acl->hasPermission ( "blog_commen
 			$html .= "<br/>";
 			
 			if ($acl->hasPermission ( "blog" )) {
-				$html .= "<strong>Email: </strong>" . $comment->email . "<br/>";
+				$html .= "<strong>" . get_translation ( "email" ) . ": </strong>" . $comment->email . "<br/>";
 			}
-			
-			if ($_SESSION ["language"] == "de") {
-				$html .= "<strong>Datum:</strong>";
-			} else {
-				$html .= "<strong>Date:</strong>";
-			}
+			$html .= "<strong>";
+			$html .= get_translation ( "date" );
+			$html .= ":</strong>";
 			
 			$html .= " ";
 			$html .= date ( getconfig ( "date_format" ), $comment->date );
