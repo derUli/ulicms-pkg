@@ -1,6 +1,6 @@
 <?php
 $modules = getAllModules ();
-if (in_array ( "jquery", $modules ) and isset ( $_GET ["q"] )) {
+if (isset ( $_GET ["q"] ) and !empty ( $_GET ["q"] )) {
 	$q = $_GET ["q"];
 	$q = trim ( $q );
 	$q = strtolower ( $q );
