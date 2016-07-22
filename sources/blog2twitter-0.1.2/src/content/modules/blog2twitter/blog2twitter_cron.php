@@ -52,7 +52,7 @@ if (containsModule ( null, "blog" )) {
 
 				try {
 					$status = $twitter->send ( $post );
-					setconfig ( "blog2twitter_status", "Funktioniert!" );
+					setconfig ( "blog2twitter_status", get_translation("blog2twitter_works") );
 					db_query ( "UPDATE " . tbname ( "blog" ) . " set posted2twitter = 1 where id = $id" );
 				} catch ( TwitterException $e ) {
 					setconfig ( "blog2twitter_status", db_escape ( $e->getMessage () ) );

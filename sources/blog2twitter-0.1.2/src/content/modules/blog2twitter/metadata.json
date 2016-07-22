@@ -1,0 +1,4 @@
+{
+"version" : "0.1.2",
+"custom_acl" : ["blog2twitter_settings", "blog2twitter_show_status"]
+}
