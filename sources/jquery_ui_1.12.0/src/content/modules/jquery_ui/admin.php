@@ -1,6 +1,6 @@
 <?php
 define ( "MODULE_ADMIN_HEADLINE", get_translation ( "jquery_ui_samples" ) );
-define ( MODULE_ADMIN_REQUIRED_PERMISSION, "info" );
+define ( "MODULE_ADMIN_REQUIRED_PERMISSION", "info" );
 function jquery_ui_admin() {
 	?>
 <p>

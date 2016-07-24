@@ -1,6 +1,6 @@
 <?php
 define ( "MODULE_ADMIN_HEADLINE", get_translation ( "nusoap_docs" ) );
-define ( MODULE_ADMIN_REQUIRED_PERMISSION, "info" );
+define ( "MODULE_ADMIN_REQUIRED_PERMISSION", "info" );
 function nusoap_docs_admin() {
 	?>
 <p>
