@@ -212,8 +212,7 @@ function kontaktformular_render() {
 			<tr>
 				<td>
 					<strong>Formular:</strong></td>
-				<td>
-					<input type="reset" value="' . $translation_reset . '" />&nbsp;&nbsp; <input type="submit" value="' . $translation_submit . '" /> <input name="absenden" type="hidden" value="absenden" /></td>
+				<td><input type="submit" value="' . $translation_submit . '" /> <input name="absenden" type="hidden" value="absenden" /></td>
 			</tr>
 			<tr>
 				<td>
