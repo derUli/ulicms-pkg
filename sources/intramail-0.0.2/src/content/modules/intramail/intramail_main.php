@@ -139,7 +139,7 @@ function intramail_reply() {
 		for($i = 0; $i < count ( $message ); $i ++) {
 			$message [$i] = trim ( $message [$i] );
 			
-			$message [$i] = "> " . $message [$i];
+			$message [$i] = "# " . $message [$i];
 		}
 		$new_message = join ( "\n", $message );
 		
@@ -201,7 +201,7 @@ function intramail_new_mail($mail_to = '', $subject = '', $message = '') {
 		if (isset ( $mail_to ) and $users [$i] == $mail_to) {
 			echo " selected";
 		}
-		echo ">" . $users [$i] . "</option>";
+		echo ">".$users [$i] . "</option>";
 	}
 	
 	echo "</select>";
