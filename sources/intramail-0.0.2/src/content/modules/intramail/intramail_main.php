@@ -110,7 +110,7 @@ function intramail_post_inbox() {
 	}
 }
 function intramail_post_outbox() {
-	$all_mails = db_query ( "SELECT * FROM `" . tbname ( "messages" ) . "` WHERE mail_from='" . $_SESSION ["ulicms_login"] . "' AND `read` = 0 ORDER by date DESC" );
+	$all_mails = db_query ( "SELECT * FROM `" . tbname ( "messages" ) . "` WHERE mail_from='" . $_SESSION ["ulicms_login"] . "' ORDER by date DESC" );
 	
 	if (db_num_rows ( $all_mails ) > 0) {
 		echo "<ol>";
