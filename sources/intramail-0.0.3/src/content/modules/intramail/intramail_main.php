@@ -42,6 +42,19 @@ function intramail_view_message() {
 	$message_query = db_query ( "SELECT * FROM `" . tbname ( "messages" ) . "` WHERE id = $message_id and (mail_from='" . $_SESSION ["ulicms_login"] . "' or mail_to = '" . $_SESSION ["ulicms_login"] . "') LIMIT 1" );
 	
 	while ( $row = db_fetch_object ( $message_query ) ) {
+		$message = $row->message;
+		$message = str_replace("\r\n", "\n", $message);
+		$message = explode("\n", $message);
+		$nmessage = "";
+		foreach($message as $line){
+			if(startsWith($line, "#")){
+				$nmessage .= "<span style=\"color:#8c8b8b\">".$line."</span>";
+				$nmessage .= "\n";
+			} else {
+				$nmessage .= $line."\n";
+			}
+		}
+		
 		echo '<table style="border:0px;">
    <tr>
    <td><strong>Von:</strong></td>
@@ -60,7 +73,7 @@ function intramail_view_message() {
    <td>
    <br/><br/> 
    </td>
-   <td>' . nl2br ( $row->message ) . '</td>
+   <td>' . nl2br ( $nmessage ) . '</td>
    </tr>' . '<tr>
    <td><br/></td>
    <td>' . "<a href='" . buildSEOUrl ( get_requested_pagename () ) . "?box=reply&message=" . $row->id . "'>" . "Antworten" . "</a>" . '</td>' . '</table>';
