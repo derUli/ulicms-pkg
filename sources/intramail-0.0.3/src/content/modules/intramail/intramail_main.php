@@ -43,15 +43,15 @@ function intramail_view_message() {
 	
 	while ( $row = db_fetch_object ( $message_query ) ) {
 		$message = $row->message;
-		$message = str_replace("\r\n", "\n", $message);
-		$message = explode("\n", $message);
+		$message = str_replace ( "\r\n", "\n", $message );
+		$message = explode ( "\n", $message );
 		$nmessage = "";
-		foreach($message as $line){
-			if(startsWith($line, "#")){
-				$nmessage .= "<span style=\"color:#8c8b8b\">".$line."</span>";
+		foreach ( $message as $line ) {
+			if (startsWith ( $line, "#" )) {
+				$nmessage .= "<span style=\"color:#8c8b8b\">" . $line . "</span>";
 				$nmessage .= "\n";
 			} else {
-				$nmessage .= $line."\n";
+				$nmessage .= $line . "\n";
 			}
 		}
 		
@@ -214,7 +214,7 @@ function intramail_new_mail($mail_to = '', $subject = '', $message = '') {
 		if (isset ( $mail_to ) and $users [$i] == $mail_to) {
 			echo " selected";
 		}
-		echo ">".$users [$i] . "</option>";
+		echo ">" . $users [$i] . "</option>";
 	}
 	
 	echo "</select>";
