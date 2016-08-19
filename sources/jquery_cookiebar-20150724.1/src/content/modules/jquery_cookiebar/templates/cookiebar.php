@@ -5,7 +5,7 @@ $jquery_accept_text = Settings::getLang ( "jquery_accept_text", $language );
 ?>
 
 <script type="text/javascript"
-	src="<?php echo getModulePath("jquery_cookiebar")?>jquery.cookiebar.js"></script>
+	src="<?php echo getModulePath("jquery_cookiebar")?>jquery.cookiebar.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
 		var options = {
