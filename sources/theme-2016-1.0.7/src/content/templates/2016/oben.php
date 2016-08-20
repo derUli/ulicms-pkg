@@ -33,7 +33,7 @@ echo getconfig ( "header-background-color" );
 }
 </style>
 <script>
-	$(function(){
+	$(window).load(function(){
 		$('ul.menu_top').slicknav({
            "prependTo" : "div#mobile-menu",
            "label" : "<?php translate("pages");?>",
