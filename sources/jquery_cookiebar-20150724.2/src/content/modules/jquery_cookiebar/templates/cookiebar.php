@@ -5,9 +5,9 @@ $jquery_accept_text = Settings::getLang ( "jquery_accept_text", $language );
 ?>
 
 <script type="text/javascript"
-	src="<?php echo getModulePath("jquery_cookiebar")?>jquery.cookiebar.min.js"></script>
+	src="<?php echo getModulePath("jquery_cookiebar")?>jquery.cookiebar.min.js" async></script>
 <script type="text/javascript">
-	$(document).ready(function(){
+	$(window).load(function(){
 		var options = {
 				message : "<?php echo Template::escape($jquery_cookiebar_message);?>",
 				acceptText : "<?php echo Template::escape($jquery_accept_text);?>"
