@@ -15,7 +15,7 @@ if (isset ( $_POST ["submit"] )) {
 		$quality = 70;
 	}
 	
-	$image_dir = "../content/images/";
+	$image_dir = "../content";
 	
 	if (is_dir ( $image_dir )) {
 		$files = find_all_files ( $image_dir );
