@@ -1,0 +1,22 @@
+<?php
+if (containsModule ( get_requested_pagename (), "jquery_tablesorter" )) {
+	
+	$theme = getconfig ( "jquery_tablesorter_theme" );
+	if (! $theme)
+		$theme1 = "blue";
+	
+	$theme = basename ( $theme );
+	?>
+<script type="text/javascript"
+	src="<?php
+	
+echo getModulePath ( "jquery_tablesorter" );
+	?>jquery.tablesorter.min.js"></script>
+	<script type="text/javascript" src="<?php
+	
+echo getModulePath ( "jquery_tablesorter" );
+	?>sort-tables.min.js"></script>
+<?php
+
+}
+?>
