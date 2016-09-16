@@ -9,13 +9,14 @@ function fullcalendar_list() {
 		echo "<table style=\"outline:4px solid #d4d4d4; background-color:#f0f0f0;width:96%; margin:auto;\">";
 		echo "<tr style=\"background-color:#f0f0f0;font-weight:bold;\">";
 		echo "<td>";
-		echo "Start";
+		translate("begin");
 		echo "</td>";
 		echo "<td>";
-		echo "Ende";
+		translate("end");
 		echo "</td>";
 		echo "<td>";
-		echo "Titel";
+		translate("title");
+		echo ":";
 		echo "</td>";
 		echo "<td></td>";
 		echo "<td></td>";

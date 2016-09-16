@@ -38,7 +38,7 @@ table tr td:first-child {
 	?>
 <table>
 		<tr>
-			<td>Anfang:</td>
+			<td><?php translate("begin");?></td>
 			<td><input type="text" name="start"
 				value="<?php
 	
@@ -46,21 +46,21 @@ table tr td:first-child {
 	?>"></td>
 		</tr>
 		<tr>
-			<td>Ende:</td>
+			<td><?php translate("end");?></td>
 			<td><input type="text" name="end" value="<?php
 	
 	echo $endzeit;
 	?>"></td>
 		</tr>
 		<tr>
-			<td>Titel:</td>
+			<td><?php translate("title");?>:</td>
 			<td><input type="text" name="title" value="<?php
 	
 	echo $title;
 	?>"></td>
 		</tr>
 		<tr>
-			<td>URL:</td>
+			<td><?php translate("url");?></td>
 			<td><input type="url" name="url" value="<?php
 	
 	echo $url;
@@ -88,6 +88,5 @@ table tr td:first-child {
 </form>
 
 <?php
-
 }
 ?>
