@@ -1,29 +1,26 @@
 <?php
-
 if (containsModule ( get_requested_pagename (), "fullcalendar" )) {
 	$scriptPath = getModulePath ( "fullcalendar" ) . "script/";
 	?>
-<link
-	href='<?php
+<link href='<?php
 	
-echo $scriptPath;
+	echo $scriptPath;
 	?>fullcalendar/fullcalendar.css'
 	rel='stylesheet' />
 <link
 	href='<?php
 	
-echo $scriptPath;
+	echo $scriptPath;
 	?>fullcalendar/fullcalendar.print.css'
 	rel='stylesheet' media='print' />
 <script
 	src='<?php
 	
-echo $scriptPath;
+	echo $scriptPath;
 	?>jquery/jquery-ui-1.10.2.custom.min.js'></script>
-<script
-	src='<?php
+<script src='<?php
 	
-echo $scriptPath;
+	echo $scriptPath;
 	?>fullcalendar/fullcalendar.js'></script>
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -31,7 +28,7 @@ echo $scriptPath;
 			editable: false,
                         <?php
 	
-if ($_SESSION ["language"] === "de") {
+	if ($_SESSION ["language"] === "de") {
 		?>
                         buttonText: {
                         today: 'Heute',
@@ -46,8 +43,7 @@ if ($_SESSION ["language"] === "de") {
 
 
 <?php
-	
-}
+	}
 	?>
 			events: {
 			url: "json-events.php",
@@ -67,6 +63,5 @@ if ($_SESSION ["language"] === "de") {
 </style>
 
 <?php
-
 }
 ?>

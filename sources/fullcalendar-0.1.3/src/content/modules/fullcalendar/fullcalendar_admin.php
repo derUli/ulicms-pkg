@@ -9,13 +9,13 @@ function fullcalendar_list() {
 		echo "<table style=\"outline:4px solid #d4d4d4; background-color:#f0f0f0;width:96%; margin:auto;\">";
 		echo "<tr style=\"background-color:#f0f0f0;font-weight:bold;\">";
 		echo "<td>";
-		translate("begin");
+		translate ( "begin" );
 		echo "</td>";
 		echo "<td>";
-		translate("end");
+		translate ( "end" );
 		echo "</td>";
 		echo "<td>";
-		translate("title");
+		translate ( "title" );
 		echo ":";
 		echo "</td>";
 		echo "<td></td>";
@@ -28,7 +28,7 @@ function fullcalendar_list() {
 			echo "<td>" . date ( "d.m.Y", $row->end ) . "</strong></td>";
 			echo "<td>" . htmlspecialchars ( $row->title ) . "</strong></td>";
 			echo "<td><a href=\"?action=module_settings&module=fullcalendar&calendar_action=edit&id=" . $row->id . "\">" . get_translation ( "edit" ) . "</a></td>";
-			echo "<td><a href=\"?action=module_settings&module=fullcalendar&calendar_action=delete&id=" . $row->id . "\" onclick=\"return confirm('Diesen Termin wirklich löschen?');\">".get_translation("delete")."</a></td>";
+			echo "<td><a href=\"?action=module_settings&module=fullcalendar&calendar_action=delete&id=" . $row->id . "\" onclick=\"return confirm('" . get_Translation ( "ask_for_delete_event" ) . "');\">" . get_translation ( "delete" ) . "</a></td>";
 			echo "</tr>";
 		}
 		
@@ -85,8 +85,7 @@ function fullcalendar_admin() {
 	if (! isset ( $action )) {
 		?>
 <a
-	href="?action=module_settings&module=fullcalendar&calendar_action=add">Termin
-	eintragen</a>
+	href="?action=module_settings&module=fullcalendar&calendar_action=add"><?php translate("add_event");?></a>
 <br />
 <br />
 <?php
