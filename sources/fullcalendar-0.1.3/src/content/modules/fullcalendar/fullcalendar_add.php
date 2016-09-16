@@ -34,7 +34,7 @@ table tr td:first-child {
 	method="post">
 <?php
 	
-csrf_token_html ();
+	csrf_token_html ();
 	?>
 <table>
 		<tr>
@@ -42,54 +42,52 @@ csrf_token_html ();
 			<td><input type="text" name="start"
 				value="<?php
 	
-echo $startzeit;
+	echo $startzeit;
 	?>"></td>
 		</tr>
 		<tr>
 			<td>Ende:</td>
-			<td><input type="text" name="end"
-				value="<?php
+			<td><input type="text" name="end" value="<?php
 	
-echo $endzeit;
+	echo $endzeit;
 	?>"></td>
 		</tr>
 		<tr>
 			<td>Titel:</td>
-			<td><input type="text" name="title"
-				value="<?php
+			<td><input type="text" name="title" value="<?php
 	
-echo $title;
+	echo $title;
 	?>"></td>
 		</tr>
 		<tr>
 			<td>URL:</td>
 			<td><input type="url" name="url" value="<?php
 	
-echo $url;
+	echo $url;
 	?>"></td>
-		</tr>
 		</tr>
 		<tr>
 			<td></td>
 			<td align="center">
 <?php
 	
-if (isset ( $event_id )) {
+	if (isset ( $event_id )) {
 		?>
-<input type="hidden" name="id"
-				value="<?php
+<input type="hidden" name="id" value="<?php
 		
-echo $event_id;
+		echo $event_id;
 		?>">
 <?php
 	}
 	?>
-<input type="submit" name="save" value="Eintragen" />
+<input type="submit" name="save" value="<?php translate("save");?>" />
 			</td>
 		</tr>
 	</table>
 
 </form>
 
-<?php }
+<?php
+
+}
 ?>

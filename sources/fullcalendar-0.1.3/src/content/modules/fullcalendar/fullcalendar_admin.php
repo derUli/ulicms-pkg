@@ -26,8 +26,8 @@ function fullcalendar_list() {
 			echo "<td>" . date ( "d.m.Y", $row->start ) . "</strong></td>";
 			echo "<td>" . date ( "d.m.Y", $row->end ) . "</strong></td>";
 			echo "<td>" . htmlspecialchars ( $row->title ) . "</strong></td>";
-			echo "<td><a href=\"?action=module_settings&module=fullcalendar&calendar_action=edit&id=" . $row->id . "\">Bearbeiten</a></td>";
-			echo "<td><a href=\"?action=module_settings&module=fullcalendar&calendar_action=delete&id=" . $row->id . "\" onclick=\"return confirm('Diesen Termin wirklich löschen?');\">Löschen</a></td>";
+			echo "<td><a href=\"?action=module_settings&module=fullcalendar&calendar_action=edit&id=" . $row->id . "\">" . get_translation ( "edit" ) . "</a></td>";
+			echo "<td><a href=\"?action=module_settings&module=fullcalendar&calendar_action=delete&id=" . $row->id . "\" onclick=\"return confirm('Diesen Termin wirklich löschen?');\">".get_translation("delete")."</a></td>";
 			echo "</tr>";
 		}
 		
@@ -81,8 +81,7 @@ function fullcalendar_admin() {
 	?>
 <?php
 
-	
-if (! isset ( $action )) {
+	if (! isset ( $action )) {
 		?>
 <a
 	href="?action=module_settings&module=fullcalendar&calendar_action=add">Termin
@@ -91,12 +90,11 @@ if (! isset ( $action )) {
 <br />
 <?php
 		
-fullcalendar_list ();
+		fullcalendar_list ();
 		?>
 
 <?php
-	
-} 
+	} 
 
 	else if ($action == "add" or $action == "edit") {
 		include getModulePath ( "fullcalendar" ) . "fullcalendar_add.php";
