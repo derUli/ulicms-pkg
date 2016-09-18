@@ -221,11 +221,11 @@ function intramail_new_mail($mail_to = '', $subject = '', $message = '') {
 	
 	echo '<br/><br/>';
 	
-	echo '<strong>Betreff:</strong><br/><input type="text" name="subject" value="' . $subject . '" maxlength=78 size=40>';
+	echo '<strong>Betreff:</strong><br/><input type="text" name="subject" value="' . $subject . '" maxlength=78 size=40 required="required">';
 	
 	echo '<br/><br/>';
 	
-	echo '<textarea name="message" cols=50 rows=15>' . htmlspecialchars ( $message ) . '</textarea>';
+	echo '<textarea name="message" cols=50 rows=15 required="required">' . htmlspecialchars ( $message ) . '</textarea>';
 	
 	echo '
   <br/><br/><strong>Folgende HTML-Codes sind erlaubt:</strong><br/>
