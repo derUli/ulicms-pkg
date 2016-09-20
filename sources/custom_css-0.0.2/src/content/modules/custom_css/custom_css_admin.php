@@ -1,5 +1,5 @@
 <?php
-define ( "MODULE_ADMIN_HEADLINE", get_translation("custom_css_title") );
+define ( "MODULE_ADMIN_HEADLINE", get_translation ( "custom_css_title" ) );
 define ( "MODULE_ADMIN_REQUIRED_PERMISSION", "custom_css" );
 function custom_css_admin() {
 	if (isset ( $_POST ["submit"] )) {
@@ -16,8 +16,7 @@ function custom_css_admin() {
 	csrf_token_html ();
 	?>
 <p>
-		Hier können Sie eigene CSS Regeln definieren, ohne den Code der
-		Templates modifizieren zu müssen.<br />
+		<?php translate("custom_css_help")?><br />
 	</p>
 	<p>
 		<textarea rows="30" cols="80" style="width: 100%" name="custom_css"><?php
