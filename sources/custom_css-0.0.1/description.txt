@@ -1,1 +1,0 @@
-Definieren Sie eigenen CSS Code, ohne das Theme modifizieren zu müssen.
