@@ -1,5 +1,5 @@
 <?php
-define ( "MODULE_ADMIN_HEADLINE", "Benutzerdefinierte CSS Regeln" );
+define ( "MODULE_ADMIN_HEADLINE", get_translation("custom_css_title") );
 define ( "MODULE_ADMIN_REQUIRED_PERMISSION", "custom_css" );
 function custom_css_admin() {
 	if (isset ( $_POST ["submit"] )) {
@@ -27,7 +27,8 @@ function custom_css_admin() {
 	
 	
 	<p>
-		<input type="submit" name="submit" value="Einstellungen speichern" />
+		<input type="submit" name="submit"
+			value="<?php translate("save_changes");?>" />
 	</p>
 </form>
 <?php

@@ -1,6 +1,6 @@
 <?php
 if (! getconfig ( "custom_css" )) {
-	$default = "/* Geben Sie hier Ihren CSS Code ein */
+	$default = "/* Insert your css codes here */
 ";
 	setconfig ( "custom_css", db_escape ( $default ) );
 }
