@@ -16,7 +16,7 @@ function custom_css_admin() {
 	csrf_token_html ();
 	?>
 <p>
-		<?php translate("custom_css_help")?><br />
+		<?php translate("custom_css_help");?><br />
 	</p>
 	<p>
 		<textarea rows="30" cols="80" style="width: 100%" name="custom_css"><?php
