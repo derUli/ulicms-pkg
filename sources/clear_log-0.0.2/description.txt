@@ -1,1 +1,1 @@
-Das HTTP Anfragen Protokoll leeren
+truncate access logs
