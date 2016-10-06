@@ -1,5 +1,5 @@
 <?php
-define ( "MODULE_ADMIN_HEADLINE", "Protokoll leeren" );
+define ( "MODULE_ADMIN_HEADLINE", get_translation ( "clear_log" ) );
 define ( "MODULE_ADMIN_REQUIRED_PERMISSION", "clear_log" );
 function clear_log_admin() {
 	if (isset ( $_POST ["submit"] ))
@@ -8,18 +8,18 @@ function clear_log_admin() {
 	?>
 <?php
 
-	
-if (isset ( $_POST ["submit"] )) {
+	if (isset ( $_POST ["submit"] )) {
 		?>
-<p>Protokoll wurde erfolgreich geleert.</p>
+<p><?php translate("log_cleared");?></p>
 <?php }?>
 
 <form action="<?php echo getModuleAdminSelfPath()?>" method="post">
 <?php
 	
-csrf_token_html ();
+	csrf_token_html ();
 	?>
-<input type="submit" name="submit" value="Protokoll leeren" />
+<input type="submit" name="submit"
+		value="<?php translate("clear_log");?>" />
 </form>
 <?php
 }
