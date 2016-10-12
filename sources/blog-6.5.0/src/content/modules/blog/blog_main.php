@@ -136,6 +136,9 @@ function blog_update() {
 		
 		db_query ( $insert_query ) or die ( db_error () );
 		
+		
+		Cache::clear();
+		
 		$html_output .= "<script type='text/javascript'>
 
   location.replace('" . buildSEOUrl ( get_requested_pagename () ) . "?single=" . $seo_shortname . "');
