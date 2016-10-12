@@ -131,7 +131,7 @@ $srclist = file_get_contents ( $srclist );
 $srclist = str_replace ( "\r\n", "\n", $srclist );
 $srclist = explode ( "\n", $srclist );
 
-$max_import_amount = 10;
+$max_import_amount = 3;
 $imported = 0;
 $query = db_query ( "SELECT `src_link` FROM " . tbname ( "blog" ) . " ORDER by `datum` DESC" );
 
