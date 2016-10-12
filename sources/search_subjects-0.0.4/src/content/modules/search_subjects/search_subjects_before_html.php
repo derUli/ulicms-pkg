@@ -22,7 +22,7 @@ if ((! is_admin_dir () and ! crawlerDetect () and isset ( $_GET ["q"] )) or (! i
 	
 	$subject = db_escape ( $subject );
 	
-	$query = db_query ( "SELECT * FROM " . tbname ( "search_subjects" ) . " WHERE `subject` = '$subject'" );
+	$query = db_query ( "SELECT id FROM " . tbname ( "search_subjects" ) . " WHERE `subject` = '$subject'" );
 	
 	if (db_num_rows ( $query ) > 0 and ! empty ( $subject )) {
 		db_query ( "UPDATE " . tbname ( "search_subjects" ) . " SET `amount` = `amount` + 1 WHERE `subject` = '$subject'" );
