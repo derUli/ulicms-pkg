@@ -1,1 +1,0 @@
-A flexible FTP and SSL-FTP client for PHP. This lib provides helpers easy to use to manage the remote files.
