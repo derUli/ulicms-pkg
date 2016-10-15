@@ -1,4 +1,4 @@
-#<?php
+<?php
 define ( "MODULE_ADMIN_HEADLINE", get_translation ( "clear_log" ) );
 define ( "MODULE_ADMIN_REQUIRED_PERMISSION", "clear_log" );
 function clear_log_admin() {
