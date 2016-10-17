@@ -1,1 +1,0 @@
-shRating is a jQuery plugin, which helps web developers to create rating widgets and integrate them easily into their web applications.
