@@ -12,8 +12,7 @@ function redirections301_admin() {
 
 <form action="<?php echo getModuleAdminSelfPath()?>" method="post">
 <?php
-	
-csrf_token_html ();
+	csrf_token_html ();
 	?>
 <p>
 		Hier können Sie permanente Weiterleitungen (HTTP Status 301)
@@ -28,8 +27,7 @@ csrf_token_html ();
 	<p>
 		<textarea rows="10" cols="80" style="width: 100%"
 			name="redirections301"><?php
-	
-echo $redirections301;
+	echo $redirections301;
 	?></textarea>
 	
 	
@@ -38,6 +36,6 @@ echo $redirections301;
 	</p>
 </form>
 <?php
-     }
+}
 
 ?>
