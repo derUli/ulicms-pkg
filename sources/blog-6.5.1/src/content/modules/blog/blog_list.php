@@ -23,7 +23,7 @@ function blog_list() {
 	// Wenn der Nutzer mindestens die Berechtigungen
 	// eines Mitarbeiters hat, bekommt er den Link zum
 	// Anlegen eines neuen Blogbeitrag angezeigt
-	if ($acl->hasPermission ( "blog" )) {
+	if ($hasPermission) {
 		$html .= "<p><a class='add_blog_entry_link' href='" . buildSEOUrl ( get_requested_pagename () ) . "?blog_admin=add'>Blogeintrag anlegen</a></p>";
 	}
 
@@ -48,7 +48,7 @@ function blog_list() {
 
 	$acl = new ACL ();
 
-	if ($acl->hasPermission ( "blog" )) {
+	if ($hasPermission) {
 		$query = db_query ( "SELECT * FROM `" . tbname ( "blog" ) . "` WHERE language='" . $_SESSION ["language"] . "' ORDER by datum DESC LIMIT $limit1, " . ($posts_per_page) );
 	} else {
 		$query = db_query ( "SELECT * FROM `" . tbname ( "blog" ) . "` WHERE language='" . $_SESSION ["language"] . "' AND entry_enabled = 1 ORDER by datum DESC LIMIT $limit1, " . ($posts_per_page) );
