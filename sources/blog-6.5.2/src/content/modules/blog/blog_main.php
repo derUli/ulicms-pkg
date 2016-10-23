@@ -1,10 +1,7 @@
 <?php
 function blog_render() {
-	$acl = new ACL ();
 	if (! empty ( $_GET ["single"] )) {
-		
 		require_once getModulePath ( "blog" ) . "blog_single.php";
-		
 		return blog_single ( db_escape ( $_GET ["single"] ) );
 	} 
 
@@ -48,9 +45,7 @@ function blog_render() {
 	} 
 
 	else {
-		
 		require_once getModulePath ( "blog" ) . "blog_list.php";
-		
 		return blog_list ();
 	}
 }
@@ -62,9 +57,9 @@ function blog_update() {
 	
 	$title = $_POST ["title"];
 	
-	if ($doSpellCheck)
-		
+	if ($doSpellCheck) {
 		$title = autocorrect_common_typos ( $title );
+	}
 	
 	$title = db_escape ( $title );
 	
