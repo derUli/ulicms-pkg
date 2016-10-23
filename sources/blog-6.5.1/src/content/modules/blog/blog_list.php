@@ -7,6 +7,10 @@ function blog_list() {
 		$posts_per_page = 5;
 	}
 
+	$acl = new ACL ();
+	
+	$hasPermission = $acl->hasPermission("blog");
+	
 	$autor_and_date = getconfig ( "blog_autor_and_date_text" );
 
 	if ($autor_and_date === false) {
@@ -15,7 +19,6 @@ function blog_list() {
 	}
 
 	$html = '<div class="blog-list-view">';
-	$acl = new ACL ();
 
 	// Wenn der Nutzer mindestens die Berechtigungen
 	// eines Mitarbeiters hat, bekommt er den Link zum
@@ -39,8 +42,9 @@ function blog_list() {
 	$oldest_post_id = $first_post->id;
 	$total_entries = db_num_rows ( $count_query );
 
-	if ($limit1 < 0)
+	if ($limit1 < 0){
 		$limit1 = 0;
+	}
 
 	$acl = new ACL ();
 
@@ -88,10 +92,8 @@ function blog_list() {
 			";
 			}
 			$html .= "<br/><br/>";
-
-			$acl = new ACL ();
-
-			if ($acl->hasPermission ( "blog" )) {
+			
+			if ($hasPermission) {
 				$html .= "<a href='" . buildSEOUrl ( get_requested_pagename () ) . "?blog_admin=edit_post&id=" . $post->id . "'>[Bearbeiten]</a> ";
 
 				$html .= "<a href='" . buildSEOUrl ( get_requested_pagename () ) . "?blog_admin=delete_post&id=" . $post->id . "' onclick='return confirm(\"Diesen Post wirklich löschen?\")'>[Löschen]</a>";
