@@ -123,7 +123,7 @@ function intramail_post_inbox() {
 	}
 }
 function intramail_post_outbox() {
-	$all_mails = db_query ( "SELECT `read`, subject, id, `date` FROM `" . tbname ( "messages" ) . "` WHERE mail_from='" . $_SESSION ["ulicms_login"] . "' ORDER by date DESC" );
+	$all_mails = db_query ( "SELECT * FROM `" . tbname ( "messages" ) . "` WHERE mail_from='" . $_SESSION ["ulicms_login"] . "' ORDER by date DESC" );
 	
 	if (db_num_rows ( $all_mails ) > 0) {
 		echo "<ol>";
@@ -140,7 +140,7 @@ function intramail_post_outbox() {
 function intramail_reply() {
 	$message_id = intval ( $_GET ["message"] );
 	
-	$message_query = db_query ( "SELECT subject, message FROM `" . tbname ( "messages" ) . "` WHERE id = $message_id and (mail_from='" . $_SESSION ["ulicms_login"] . "' or mail_to = '" . $_SESSION ["ulicms_login"] . "') LIMIT 1" );
+	$message_query = db_query ( "SELECT * FROM `" . tbname ( "messages" ) . "` WHERE id = $message_id and (mail_from='" . $_SESSION ["ulicms_login"] . "' or mail_to = '" . $_SESSION ["ulicms_login"] . "') LIMIT 1" );
 	
 	while ( $row = db_fetch_object ( $message_query ) ) {
 		$new_subject = $row->subject;
