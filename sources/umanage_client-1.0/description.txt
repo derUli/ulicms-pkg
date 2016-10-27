@@ -1,0 +1,1 @@
+Remote System Management Client (requires clear_log and update_manager)
