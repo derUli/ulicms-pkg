@@ -9,4 +9,6 @@ $message = get_translation ( "REGISTRATION_EMAIL_NOTIFICATION_MESSAGE", array (
 		"{ip}" => get_ip () 
 ) );
 
-ulicms_mail ( $to, $subject, $message );
+$headers = "From: $to";
+
+ulicms_mail ( $to, $subject, $message, $headers );
