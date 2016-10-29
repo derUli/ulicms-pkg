@@ -4,12 +4,13 @@ function blog_single($seo_shortname) {
 	
 	$autor_and_date = getconfig ( "blog_autor_and_date_text" );
 	
-	$query = db_query ( "SELECT * FROM `" . tbname ( "blog" ) . "` WHERE seo_shortname='$seo_shortname'" );
+	$query = db_query ( "SELECT author, datum, id, entry_enabled, title, `views`, content_full, comments_enabled FROM `" . tbname ( "blog" ) . "` WHERE seo_shortname='$seo_shortname'" );
 	
 	// count views is user not logged in
-	if (! logged_in ())
+	if (! logged_in ()){
 		db_query ( "UPDATE `" . tbname ( "blog" ) . "` SET views = views + 1
        WHERE seo_shortname='$seo_shortname'" );
+	}
 	
 	if (db_num_rows ( $query ) > 0) {
 		$post = db_fetch_object ( $query );
