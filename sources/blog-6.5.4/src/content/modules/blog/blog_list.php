@@ -45,11 +45,15 @@ function blog_list() {
 	if ($limit1 < 0) {
 		$limit1 = 0;
 	}
-	
+	$fields = " Case WHEN content_preview = '' OR content_preview IS NULL OR char_length(TRIM(content_preview)) = 0 
+     THEN content_full 
+     ELSE content_preview END as preview,
+id, author, seo_shortname, title, datum, `views`, language, id, author, seo_shortname, title, datum, `views`, language";
+
 	if ($hasPermission) {
-		$query = db_query ( "SELECT * FROM `" . tbname ( "blog" ) . "` WHERE language='" . $_SESSION ["language"] . "' ORDER by datum DESC LIMIT $limit1, " . ($posts_per_page) );
+		$query = db_query ( "SELECT $fields FROM `" . tbname ( "blog" ) . "` WHERE language='" . $_SESSION ["language"] . "' ORDER by datum DESC LIMIT $limit1, " . ($posts_per_page) );
 	} else {
-		$query = db_query ( "SELECT * FROM `" . tbname ( "blog" ) . "` WHERE language='" . $_SESSION ["language"] . "' AND entry_enabled = 1 ORDER by datum DESC LIMIT $limit1, " . ($posts_per_page) );
+		$query = db_query ( "SELECT $fields FROM `" . tbname ( "blog" ) . "` WHERE language='" . $_SESSION ["language"] . "' AND entry_enabled = 1 ORDER by datum DESC LIMIT $limit1, " . ($posts_per_page) );
 	}
 	
 	$html .= "";
@@ -73,10 +77,8 @@ function blog_list() {
 			$date_and_autor_string = str_replace ( "%views%", $post->views, $date_and_autor_string );
 			
 			$html .= $date_and_autor_string;
-			$text = trim ( $post->content_preview );
-			if (empty ( $text )) {
-				$text = trim ( $post->content_full );
-			}
+			$text = trim ( $post->preview );
+
 			
 			$text = apply_filter ( $text, "content" );
 			
