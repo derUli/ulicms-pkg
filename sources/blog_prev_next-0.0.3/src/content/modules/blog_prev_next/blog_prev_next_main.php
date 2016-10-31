@@ -1,14 +1,16 @@
 <?php
 function blog_prev_next_render() {
-	if (! isset ( $_GET ["single"] ))
+	if (! isset ( $_GET ["single"] )){
 		return "";
+	}
 	
 	$html = "";
 	
 	$single = db_escape ( $_GET ["single"] );
 	
-	if (empty ( $single ))
+	if (empty ( $single )){
 		return "";
+	}
 	
 	$query = db_query ( "SELECT datum FROM " . tbname ( "blog" ) . " WHERE seo_shortname='" . $single . "'" );
 	$thisQuery = db_fetch_object ( $query );
@@ -17,8 +19,9 @@ function blog_prev_next_render() {
 	
 	$nextQuery = db_query ( "SELECT title, seo_shortname FROM " . tbname ( "blog" ) . " WHERE datum > " . $thisQuery->datum . " AND language='" . db_escape ( $_SESSION ["language"] ) . "' ORDER by datum ASC LIMIT 1" );
 	
-	if (db_num_rows ( $prevQuery ) == 0 and db_num_rows ( $nextQuery ) == 0)
+	if (db_num_rows ( $prevQuery ) == 0 and db_num_rows ( $nextQuery ) == 0){
 		return "";
+	}
 	
 	$html .= "<div class=\"blogArticlePrevNext\">";
 	

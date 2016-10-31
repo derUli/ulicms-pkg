@@ -1,0 +1,7 @@
+{
+"version" : "1.0.1",
+"embed" : false,
+"custom_acl" : ["delete_all_comments"],
+"admin_permission" : "delete_all_comments"
+}
+
