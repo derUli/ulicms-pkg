@@ -1,11 +1,11 @@
 <?php
 function blog_meta_keywords_filter($txt) {
-	include "lib/string_functions.php";
 	$single = db_escape ( $_GET ["single"] );
 	$query = db_query ( "SELECT content_full, meta_keywords FROM `" . tbname ( "blog" ) . "` WHERE seo_shortname='$single'" );
 	
-	if (! $query)
+	if (! $query) {
 		return $txt;
+	}
 	
 	$content_full = false;
 	
@@ -18,10 +18,10 @@ function blog_meta_keywords_filter($txt) {
 		}
 	}
 	
-	if (! containsModule ( get_requested_pagename (), "blog" ) or ! $single or ! $content_full)
+	if (! containsModule ( get_requested_pagename (), "blog" ) or ! $single or ! $content_full) {
 		return $txt;
+	}
 	
-	include_once "lib/string_functions.php";
 	$maxlength_chars = 160;
 	$content_full = strip_tags ( $content_full );
 	

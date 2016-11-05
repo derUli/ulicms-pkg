@@ -4,7 +4,7 @@ function blog_meta_description_filter($txt) {
 	$query = db_query ( "SELECT content_preview, meta_description FROM `" . tbname ( "blog" ) . "` WHERE seo_shortname='$single'" );
 	$content_preview = false;
 	
-	if (! $query){
+	if (! $query) {
 		return $txt;
 	}
 	
@@ -17,11 +17,10 @@ function blog_meta_description_filter($txt) {
 		}
 	}
 	
-	if (! containsModule ( get_requested_pagename (), "blog" ) or ! $single or ! $content_preview){
+	if (! containsModule ( get_requested_pagename (), "blog" ) or ! $single or ! $content_preview) {
 		return $txt;
 	}
 	
-	include_once "lib/string_functions.php";
 	$maxlength_chars = 160;
 	$content_preview = strip_tags ( $content_preview );
 	
