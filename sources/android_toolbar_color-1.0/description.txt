@@ -1,1 +1,1 @@
-This module change android-chrome address bar color. It's supported use color picker for select address bar color.
+This module changes Android Chromes and Windows Phones browser toolbar color.
