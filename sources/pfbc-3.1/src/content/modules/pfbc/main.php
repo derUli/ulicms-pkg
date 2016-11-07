@@ -1,4 +1,4 @@
 <?php
-function pfbc_render(){
-   return null;
+function pfbc_render() {
+	return null;
 }
