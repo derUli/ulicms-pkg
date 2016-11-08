@@ -191,6 +191,7 @@ function get_add_entry_form() {
 	return $add_entry_form_template;
 }
 function guestbook_list() {
+	$acl = new ACL ();
 	$html_output = "";
 	if (empty ( $_GET ["limit"] )) {
 		$limit = 10;
@@ -213,7 +214,7 @@ function guestbook_list() {
 		$html_output .= "
 		
 		<small>" . $row->date . "</small>";
-		if ($_SESSION ["group"] >= 40) {
+		if ($acl->hasPermission ( "guestbook" )) {
 			$html_output .= ' &nbsp;&nbsp;[<a href="' . buildSEOUrl ( get_requested_pagename () ) . "?action=delete&delete=" . $row->id . '" onclick="return confirm(\'Diesen Eintrag löschen?\');">Löschen</a>]';
 		}
 		
