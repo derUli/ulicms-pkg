@@ -15,7 +15,8 @@ function intramail_install() {
 ) ENGINE = MYISAM DEFAULT CHARSET=utf8;
 " );
 	
-	db_query ( "ALTER TABLE `" . tbname ( "messages" ) . "` ADD `read` BOOL NOT NULL AFTER `date` " );
+	db_query ( "ALTER TABLE `" . tbname ( "messages" ) . "` ADD `read` BOOL NOT NULL AFTER `date`  " );
+	Database::query ( "ALTER TABLE `{prefix}messages` modify `message` mediumtext NOT NULL;", true );
 }
 
 ?>
