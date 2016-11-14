@@ -30,6 +30,9 @@ db_query ( "CREATE TABLE IF NOT EXISTS `" . tbname ( "blog_comments" ) . "` (
 PRIMARY KEY (`id`)
 )ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;" );
 
+Database::query ( "ALTER TABLE `{prefix}blog` modify `content_full` mediumtext NOT NULL;", true );
+Database::query ( "ALTER TABLE `{prefix}blog` modify `content_preview` mediumtext NOT NULL;", true );
+
 db_query ( "ALTER TABLE `" . tbname ( "blog" ) . "` ADD `meta_description` VARCHAR(255) NULL, ADD `meta_keywords` VARCHAR(255) NULL" );
 
 echo "<p>fertig</p>";
