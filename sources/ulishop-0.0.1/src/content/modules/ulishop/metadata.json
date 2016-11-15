@@ -1,0 +1,11 @@
+{
+	"version" : "0.0.1", 
+	"embed" : false,
+	"custom_types" : {
+		"product" : [
+		"price",
+		"special_tax",
+		"quantity"
+		]
+	}
+}
