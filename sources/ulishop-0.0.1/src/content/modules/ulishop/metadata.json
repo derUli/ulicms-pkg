@@ -3,9 +3,14 @@
 	"embed" : false,
 	"custom_types" : {
 		"product" : [
+		"article_number",
 		"price",
 		"special_tax",
 		"quantity"
-		]
+		],
+		"basket" : [],
+		"checkout" : [],
+		
+		"thank_you" : []
 	}
 }

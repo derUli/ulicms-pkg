@@ -6,6 +6,7 @@ define ( "TRANSLATION_SPECIAL_TAX", "Spezieller Mehrwertsteuersatz (in Prozent)"
 define ( "TRANSLATION_QUANTITY", "Menge bzw. Gewicht (mit Einheit)" );
 define ( "TRANSLATION_BASKET", "UliShop $TRANSLATION_ULISHOP_SEPERATOR Warenkorb" );
 define ( "TRANSLATION_CHECKOUT", "UliShop $TRANSLATION_ULISHOP_SEPERATOR Checkout" );
-
 define ( "TRANSLATION_THANK_YOU", "UliShop $TRANSLATION_ULISHOP_SEPERATOR Danke für Ihre Bestellung" );
+define ( "TRANSLATION_ARTICLE_NUMBER", "Artikelnummer" );
+
 
