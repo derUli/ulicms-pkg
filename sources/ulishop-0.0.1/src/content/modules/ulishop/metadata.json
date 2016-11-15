@@ -2,6 +2,7 @@
 	"version" : "0.0.1", 
 	"embed" : false,
 	"custom_types" : {
+		"shop_category" : [],
 		"product" : [
 		"article_number",
 		"price",
