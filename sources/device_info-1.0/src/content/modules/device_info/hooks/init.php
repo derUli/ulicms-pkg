@@ -1,5 +1,4 @@
 <?php
-
 if(!is_logged_in()){
     if(is_crawler()){
         Database::query("Update `{prefix}device_infos` set crawler = crawler + 1", true);
