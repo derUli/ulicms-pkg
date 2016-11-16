@@ -8,5 +8,5 @@ Database::query("CREATE TABLE IF NOT EXISTS `{prefix}device_infos` (
 
 $query = Database::query("select * from {prefix}device_infos", true);
 if(Database::getNumRows($query) <= 0){
-   Database::query("insert into `{prefix}device_infos` (mobile, tablet, crawler, pc) values (0, 0, 0, 0 )");
+   Database::query("insert into `{prefix}device_infos` (mobile, tablet, crawler, pc) values (0, 0, 0, 0 )", true);
 }
