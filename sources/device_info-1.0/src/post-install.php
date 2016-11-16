@@ -5,3 +5,8 @@ Database::query("CREATE TABLE IF NOT EXISTS `{prefix}device_infos` (
   `crawler` mediumint(9) NOT NULL DEFAULT '0',
   `pc` mediumint(9) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=ut8;", true);
+
+$query = Database::query("select * from {prefix}device_infos", true);
+if(Database::getNumRows($query) <= 0){
+   Database::query("insert into `{prefix}device_infos` (mobile, tablet, crawler, pc) values (0, 0, 0, 0 )");
+}
