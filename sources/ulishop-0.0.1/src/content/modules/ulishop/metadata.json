@@ -5,6 +5,7 @@
 		"shop_category" : [],
 		"product" : [
 		"article_number",
+		"shipping_time",
 		"price",
 		"special_tax",
 		"quantity"

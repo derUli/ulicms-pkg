@@ -9,5 +9,5 @@ define ( "TRANSLATION_CHECKOUT", "UliShop $TRANSLATION_ULISHOP_SEPERATOR Checkou
 define ( "TRANSLATION_THANK_YOU", "UliShop $TRANSLATION_ULISHOP_SEPERATOR Danke für Ihre Bestellung" );
 define ( "TRANSLATION_ARTICLE_NUMBER", "Artikelnummer" );
 define ( "TRANSLATION_SHOP_CATEGORY", "UliShop $TRANSLATION_ULISHOP_SEPERATOR Kategorie" );
-
+define ( "TRANSLATION_SHIPPING_TIME", "Versanddauer (z.B. 2 Wochen)" );
 
