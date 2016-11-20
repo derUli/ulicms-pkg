@@ -9,6 +9,7 @@ if (! function_exists ( "db_optimize" )) {
 			$value = $value [0];
 			$repair_sql = 'REPAIR TABLE ' . $value;
 			echo ($repair_sql) . " ";
+			fcflush();
 			if (db_query ( $repair_sql )) {
 				echo " <span style='color:green'>[" . get_translation ( "ok" ) . "]</span>";
 			} else {
@@ -19,6 +20,7 @@ if (! function_exists ( "db_optimize" )) {
 			echo "<br/>";
 			$optimize_sql = 'OPTIMIZE TABLE ' . $value;
 			echo $optimize_sql;
+			fcflush();
 			if (db_query ( $optimize_sql )) {
 				echo " <span style='color:green'>[" . get_translation ( "ok" ) . "]</span>";
 			} else {
@@ -30,6 +32,7 @@ if (! function_exists ( "db_optimize" )) {
 			echo "<br/>";
 			$flush_sql = 'FLUSH TABLE ' . $value;
 			echo $flush_sql;
+			fcflush();
 			if (db_query ( $flush_sql )) {
 				echo " <span style='color:green'>[" . get_translation ( "ok" ) . "]</span>";
 			} else {
@@ -38,6 +41,7 @@ if (! function_exists ( "db_optimize" )) {
 				echo db_error ();
 			}
 			echo "</p>";
+			fcflush();
 		}
 	}
 }
