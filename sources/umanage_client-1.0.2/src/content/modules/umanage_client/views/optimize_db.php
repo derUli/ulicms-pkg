@@ -1,4 +1,4 @@
-<h1><?php translate("clear_log");?></h1>
+<h1><?php translate("optimize_database");?></h1>
 <?php
 foreach ( explode ( ",", $_REQUEST ["sites"] ) as $id ) {
 	$nid = intval ( $id );
