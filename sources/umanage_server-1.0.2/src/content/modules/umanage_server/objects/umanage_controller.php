@@ -108,8 +108,8 @@ class UManageController {
 	private static function optimizeDB() {
 		@include_once getModulePath ( "mysql_optimize" ) . "mysql_optimize_lib.php";
 		$cfg = new config ();
-		ob_start ();
 		if (function_exists ( "db_optimize" )) {
+			ob_start ();
 			db_optimize ( $cfg->db_database );
 			ob_get_clean ();
 			return array (
