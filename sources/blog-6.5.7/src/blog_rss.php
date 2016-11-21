@@ -10,10 +10,11 @@ if ($blog_feed_max_items === false) {
 
 $seite = basename ( $_GET ["s"] );
 
-if (! empty ( $_GET ["lang"] ))
+if (! empty ( $_GET ["lang"] )) {
 	$lang = basename ( $_GET ["lang"] );
-else
+} else {
 	$lang = getconfig ( "default_language" );
+}
 
 $lang = db_escape ( $lang );
 
@@ -49,9 +50,9 @@ while ( $row = db_fetch_object ( $query ) ) {
 	
 	$url .= $servername;
 	
-	$description = trim($row->content_preview);
-	if(empty($description)){
-		$description = trim($row->content_full);
+	$description = trim ( $row->content_preview );
+	if (empty ( $description )) {
+		$description = trim ( $row->content_full );
 	}
 	
 	// Replace Relative URLs

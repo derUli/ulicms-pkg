@@ -24,6 +24,15 @@ class uManageConnection {
 		}
 		return $data;
 	}
+	public function optimizeDB() {
+		$uri = $this->url . "?umanage=optimize_db&key=" . $this->api_key;
+		$result = file_get_contents_wrapper ( $uri, true );
+		$data = json_decode ( $result, true );
+		if (! $data) {
+			return null;
+		}
+		return $data;
+	}
 	public function checkForPatches() {
 		$uri = $this->url . "?umanage=check_for_patches&key=" . $this->api_key;
 		$result = file_get_contents_wrapper ( $uri, true );

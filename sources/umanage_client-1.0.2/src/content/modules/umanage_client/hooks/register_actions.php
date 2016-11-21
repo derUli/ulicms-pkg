@@ -10,6 +10,7 @@ $actions ["umanage_check_for_patches"] = $module_base_path . "/check_for_patches
 $actions ["check_for_package_updates"] = $module_base_path . "/check_for_package_updates.php";
 $actions ["umanage_install_patches"] = $module_base_path . "/install_patches.php";
 $actions ["umanage_install_packages"] = $module_base_path . "/install_packages.php";
+$actions ["optimize_db"] = $module_base_path . "/optimize_db.php";
 
 include_once getModulePath ( $module_name ) . "/objects/sites.php";
 include_once getModulePath ( $module_name ) . "/objects/connection.php";

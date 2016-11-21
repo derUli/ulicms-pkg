@@ -18,6 +18,7 @@ $sites = Sites::getAllSites ();
 			<option value="umanage_check_for_patches"><?php translate("check_for_patches");?></option>
 			<option value="check_for_package_updates"><?php translate("check_for_package_updates");?></option>
 			<option value="umanage_clear_log"><?php translate("clear_log");?></option>
+			<option value="optimize_db"><?php translate("OPTIMIZE_DATABASE");?></option>
 		</select>
 
 	</p>

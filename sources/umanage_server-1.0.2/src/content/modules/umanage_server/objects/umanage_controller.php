@@ -35,6 +35,9 @@ class UManageController {
 				case "install_patches" :
 					$response = self::installPatches ();
 					break;
+				case "optimize_db" :
+					$response = self::optimizeDB ();
+					break;
 				default :
 					$response ["error"] = "unknown_command";
 					break;
@@ -79,7 +82,7 @@ class UManageController {
 				} else {
 					$result ["failed"] [] = $package;
 				}
-				ob_end_clean();
+				ob_end_clean ();
 			}
 		} else {
 			return array (
@@ -101,6 +104,22 @@ class UManageController {
 		return array (
 				"result" => "ok" 
 		);
+	}
+	private static function optimizeDB() {
+		@include_once getModulePath ( "mysql_optimize" ) . "mysql_optimize_lib.php";
+		$cfg = new config ();
+		ob_start ();
+		if (function_exists ( "db_optimize" )) {
+			db_optimize ( $cfg->db_database );
+			ob_get_clean ();
+			return array (
+					"result" => "ok" 
+			);
+		} else {
+			return array (
+					"result" => "failed" 
+			);
+		}
 	}
 	private static function checkForPatches() {
 		$result = array (
