@@ -17,6 +17,7 @@ foreach ( explode ( ",", $_REQUEST ["sites"] ) as $id ) {
 		<?php Template::escape($site["domain"]);?> ×</span>
 <?php
 	}
+	fcflush ();
 	?>
 
 <br />

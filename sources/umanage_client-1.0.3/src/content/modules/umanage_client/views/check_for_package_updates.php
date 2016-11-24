@@ -51,9 +51,13 @@ foreach ( explode ( ",", $_REQUEST ["sites"] ) as $id ) {
 				<td><?php Template::escape($site["domain"]);?></td>
 				<td><?php Template::escape($package);?></td>
 			</tr>
-			<?php }?>
+			<?php
+				fcflush ();
+			}
+			?>
 				<?php
 		}
+		fcflush ();
 	}
 	?>
 		</tbody>

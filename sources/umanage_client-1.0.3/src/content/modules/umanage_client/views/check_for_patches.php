@@ -52,9 +52,14 @@ foreach ( explode ( ",", $_REQUEST ["sites"] ) as $id ) {
 				<td><?php Template::escape($patch[0]);?></td>
 				<td><?php Template::escape($patch[1]);?></td>
 			</tr>
-			<?php }?>
+			<?php
+				fcflush ();
+			}
+			?>
 				<?php
 		}
+		
+		fcflush ();
 	}
 	?>
 		</tbody>

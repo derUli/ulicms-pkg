@@ -22,13 +22,13 @@ foreach ( explode ( ",", $_REQUEST ["sites"] ) as $id ) {
 <br />
 
 <?php
+	fcflush ();
 }
 ?>
 	
 	<?php if(count($_GET["sites"]) > 0){?>
 <br />
 <?php
-	
-}
+	}
 	?>
 <a href="#" onclick="history.back();"><?php translate("back")?></a>
