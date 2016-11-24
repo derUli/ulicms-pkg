@@ -28,6 +28,7 @@ foreach ( $_POST ["patches"] as $p ) {
 <br />
 
 <?php
+	fcflush ();
 }
 ?>
 	

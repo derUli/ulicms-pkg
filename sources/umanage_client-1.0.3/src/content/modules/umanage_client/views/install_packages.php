@@ -1,4 +1,4 @@
-<h1><?php translate("clear_log");?></h1>
+<h1><?php translate("install_packages");?></h1>
 <?php
 foreach ( $_POST ["packages"] as $p ) {
 	$splitted = explode ( "/", $p );
@@ -27,6 +27,7 @@ foreach ( $_POST ["packages"] as $p ) {
 <br />
 
 <?php
+	fcflush ();
 }
 ?>
 	
