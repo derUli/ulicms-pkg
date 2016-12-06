@@ -1,1 +1,0 @@
-﻿Removes unnecessary spaces from html output to reduce size of code

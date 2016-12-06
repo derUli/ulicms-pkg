@@ -1,5 +1,0 @@
-{
-  "version" : "2015.03.12",
-  "embed" : false,
-  "custom_acl" : ["opcache_status"]
-}

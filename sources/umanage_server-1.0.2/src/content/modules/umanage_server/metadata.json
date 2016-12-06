@@ -1,0 +1,6 @@
+{
+   "version" : "1.0.2",
+   "embed" : false,
+   "custom_acl" : [ "umanage_server" ],
+   "admin_permission" : "umanage_server"
+}

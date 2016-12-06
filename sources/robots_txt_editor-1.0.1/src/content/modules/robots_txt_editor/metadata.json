@@ -1,0 +1,6 @@
+{
+	"version" : "1.0.1",
+	"embed" : false,
+	"custom_acl" :  ["robots_txt_editor"],
+	"admin_permission" : "robots_txt_editor"
+}
