@@ -51,14 +51,13 @@ function blog_render() {
 }
 function blog_update() {
 	$acl = new ACL ();
-	include_once "spellcheck.php";
 	$html_output = "";
 	$doSpellCheck = isset ( $_POST ["spellcheck"] );
 	
 	$title = $_POST ["title"];
 	
 	if ($doSpellCheck) {
-		$title = autocorrect_common_typos ( $title );
+		$title = SpellChecker::autoCorrectCommonTypos ( $title );
 	}
 	
 	$title = db_escape ( $title );
@@ -87,10 +86,8 @@ function blog_update() {
 	$content_preview = $_POST ["content_preview"];
 	
 	if ($doSpellCheck) {
-		
-		$content_full = autocorrect_common_typos ( $content_full );
-		
-		$content_preview = autocorrect_common_typos ( $content_preview );
+		$content_full = SpellChecker::autoCorrectCommonTypos ( $content_full );
+		$content_preview = SpellChecker::autoCorrectCommonTypos ( $content_preview );
 	}
 	
 	$content_full = db_escape ( $content_full );
@@ -144,18 +141,15 @@ function blog_update() {
 }
 function blog_submit() {
 	$acl = new ACL ();
-	
-	include_once "spellcheck.php";
-	
 	$html_output = "";
 	
 	$doSpellCheck = isset ( $_POST ["spellcheck"] );
 	
 	$title = $_POST ["title"];
 	
-	if ($doSpellCheck)
-		
-		$title = autocorrect_common_typos ( $title );
+	if ($doSpellCheck) {
+		$title = SpellChecker::autoCorrectCommonTypos ( $title );
+	}
 	
 	$title = db_escape ( $title );
 	
@@ -183,10 +177,8 @@ function blog_submit() {
 	$content_preview = $_POST ["content_preview"];
 	
 	if ($doSpellCheck) {
-		
-		$content_full = autocorrect_common_typos ( $content_full );
-		
-		$content_preview = autocorrect_common_typos ( $content_preview );
+		$content_full = SpellChecker::autoCorrectCommonTypos ( $content_full );
+		$content_preview = SpellChecker::autoCorrectCommonTypos ( $content_preview );
 	}
 	
 	$content_full = db_escape ( $content_full );
