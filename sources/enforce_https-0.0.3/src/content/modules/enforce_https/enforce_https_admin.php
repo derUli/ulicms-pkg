@@ -3,35 +3,33 @@ define ( "MODULE_ADMIN_HEADLINE", "HTTPS Erzwingen" );
 define ( "MODULE_ADMIN_REQUIRED_PERMISSION", "settings_enforce_https" );
 function enforce_https_admin() {
 	if (isset ( $_POST ["submit"] )) {
-		
 		if (isset ( $_POST ["enforce_https"] )) {
 			setconfig ( "enforce_https", "enforces" );
 		} else {
 			deleteconfig ( "enforce_https" );
 		}
 	}
-	
+
 	// Konfiguration checken
 	$enforce_https = getconfig ( "enforce_https" );
-	
+
 	?>
 
 <form action="<?php echo getModuleAdminSelfPath()?>" method="post">
 <?php
-	
-csrf_token_html ();
+
+	csrf_token_html ();
 	?>
 <?php
 
-	
-if (! $enforce_https) {
+	if (! $enforce_https) {
 		?>
 <p style="color: red">
 		Bevor Sie diese Option aktivieren, stellen Sie unbedingt sicher, dass
 		Ihr Webserver HTTPS unterstützt. Klicken Sie hier für auf <a
 			href="https://<?php
-		
-echo $_SERVER ["HTTP_HOST"];
+
+		echo $_SERVER ["HTTP_HOST"];
 		?>"
 			target="_blank">diesen Link</a>.
 	</p>
@@ -45,15 +43,14 @@ echo $_SERVER ["HTTP_HOST"];
 	}
 	?>
 <p>
-		<input type="checkbox" name="enforce_https" value="enforce"
+		<input type="checkbox" name="enforce_https" id="enforce_https" value="enforce"
 			<?php
-	
-if ($enforce_https) {
+
+	if ($enforce_https) {
 		echo " checked";
 	}
-	?> /> <label for="enforce_https">Verschlüsselte HTTP Verbindung
-			erzwingen
-	
+	?> /> <label for="enforce_https">Verschlüsselte HTTP Verbindung erzwingen </label>
+
 	</p>
 
 
@@ -63,6 +60,6 @@ if ($enforce_https) {
 	</p>
 </form>
 <?php
-     }
+}
 
 ?>
