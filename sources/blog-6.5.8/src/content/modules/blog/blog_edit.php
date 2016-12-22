@@ -160,7 +160,7 @@ function blog_edit_form($post_id) {
 		$html_output .= "</td>";
 		$html_output .= "<td align='center'>";
 		
-		$html_output .= "<input type='checkbox' name='spellcheck' value='spellcheck' checked/> Häufige Rechtschreibfehler korrigieren";
+		$html_output .= "<input type='checkbox' name='spellcheck' value='spellcheck'/> Häufige Rechtschreibfehler korrigieren";
 		$html_output .= "</td>";
 		$html_output .= "</tr>";
 		
