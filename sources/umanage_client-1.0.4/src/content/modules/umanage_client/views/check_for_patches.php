@@ -25,14 +25,15 @@ foreach ( explode ( ",", $_REQUEST ["sites"] ) as $id ) {
 	translate ( "select_all" );
 	?> </label>
 	</p>
-	<table class="tablesorter">
-		<thead>
-			<td></td>
-			<th><?php translate("domain");?></th>
-			<th><?php translate("patch");?></th>
-			<th><?php translate("description");?></th>
-		</thead>
-		<tbody>
+	<div class="scroll">
+		<table class="tablesorter">
+			<thead>
+				<td></td>
+				<th><?php translate("domain");?></th>
+				<th><?php translate("patch");?></th>
+				<th><?php translate("description");?></th>
+			</thead>
+			<tbody>
 <?php
 	foreach ( explode ( ",", $_REQUEST ["sites"] ) as $id ) {
 		$nid = intval ( $id );
@@ -45,13 +46,13 @@ foreach ( explode ( ",", $_REQUEST ["sites"] ) as $id ) {
 			?>
 			<?php foreach($patches as $patch){?>
 <tr>
-				<td><input type="checkbox" name="patches[]" class="patch-checkbox"
-					value="<?php Template::escape($site["id"]);?>/<?php Template::escape($patch[0]);?>"
-					checked></td>
-				<td><?php Template::escape($site["domain"]);?></td>
-				<td><?php Template::escape($patch[0]);?></td>
-				<td><?php Template::escape($patch[1]);?></td>
-			</tr>
+					<td><input type="checkbox" name="patches[]" class="patch-checkbox"
+						value="<?php Template::escape($site["id"]);?>/<?php Template::escape($patch[0]);?>"
+						checked></td>
+					<td><?php Template::escape($site["domain"]);?></td>
+					<td><?php Template::escape($patch[0]);?></td>
+					<td><?php Template::escape($patch[1]);?></td>
+				</tr>
 			<?php
 				fcflush ();
 			}
@@ -63,7 +64,8 @@ foreach ( explode ( ",", $_REQUEST ["sites"] ) as $id ) {
 	}
 	?>
 		</tbody>
-	</table>
+		</table>
+	</div>
 	<p>
 		<input type="submit" value="<?php translate("install_patches");?>">
 	</p>
