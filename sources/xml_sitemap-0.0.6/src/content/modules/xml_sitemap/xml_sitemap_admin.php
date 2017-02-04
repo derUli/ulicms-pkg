@@ -22,13 +22,13 @@ function getBaseURL($language = null) {
 	if (is_null ( $language )) {
 		$domain = $_SERVER ["HTTP_HOST"];
 	} else {
-		
+
 		$domain = getDomainByLanguage ( $language );
 		if (! $domain) {
 			$domain = $_SERVER ["HTTP_HOST"];
 		}
 	}
-	if ($_SERVER ["SERVER_PORT"] != "80") {
+	if ($_SERVER ["SERVER_PORT"] != "80" and $_SERVER ["SERVER_PORT"] != "443") {
 		$pageURL .= $domain . ":" . $_SERVER ["SERVER_PORT"] . $dirname;
 	} else {
 		$pageURL .= $domain . $dirname;
@@ -40,20 +40,20 @@ define ( "MODULE_ADMIN_REQUIRED_PERMISSION", "xml_sitemap" );
 function generate_sitemap() {
 	@set_time_limit ( 0 );
 	@ini_set ( 'max_execution_time', 0 );
-	
+
 	$xml_string = '<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ';
-	
+
 	$query_pages = db_query ( "SELECT * FROM " . tbname ( "content" ) . " WHERE active = 1 AND `deleted_at` IS NULL ORDER by lastmodified DESC" );
 	while ( $row = db_fetch_object ( $query_pages ) ) {
 		if (! startsWith ( $row->redirection, "#" )) {
-			
+
 			$xml_string .= "<url>\r\n";
 			$xml_string .= "\t<loc>" . xmlspecialchars ( getBaseURL ( $row->language ) . $row->systemname . ".html" ) . "</loc>\r\n";
 			$xml_string .= "\t<lastmod>" . date ( "Y-m-d", $row->lastmodified ) . "</lastmod>\r\n";
 			$xml_string .= "</url>\r\n\r\n";
-			
+
 			if (containsModule ( $row->systemname, "blog" )) {
 				$query_blog = db_query ( "SELECT * FROM " . tbname ( "blog" ) . " WHERE entry_enabled = 1 AND language='" . $row->language . "' ORDER by datum DESC" );
 				while ( $row2 = db_fetch_object ( $query_blog ) ) {
@@ -66,19 +66,19 @@ function generate_sitemap() {
 		}
 	}
 	$xml_string = apply_filter ( $xml_string, "xml_sitemap_urlset" );
-	
+
 	$xml_string .= "</urlset>";
 	$xml_string = str_replace ( "\r\n", "\n", $xml_string );
 	$xml_string = str_replace ( "\r", "\n", $xml_string );
 	$xml_string = str_replace ( "\n", "\r\n", $xml_string );
-	
+
 	$xml_file = "../sitemap.xml";
-	
+
 	$handle = @fopen ( $xml_file, "w" );
 	if ($handle) {
 		fwrite ( $handle, $xml_string );
 		fclose ( $handle );
-		
+
 		translate ( "GENERATE_XML_SITEMAP_SUCCESS" );
 	} else {
 		translate ( "GENERATE_XML_SITEMAP_FAILED" );
@@ -97,7 +97,7 @@ function xml_sitemap_admin() {
 
 <form action="<?php echo getModuleAdminSelfPath()?>" method="post">
 <?php
-	
+
 	csrf_token_html ();
 	?>
 <input type="submit" name="submit"

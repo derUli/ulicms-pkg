@@ -29,16 +29,17 @@ $sites = Sites::getAllSites ();
 	translate ( "select_all" );
 	?> </label>
 	</p>
-	<table class="tablesorter">
-		<thead>
-			<td></td>
-			<th><?php translate("domain");?></th>
-			<th><?php translate("ulicms_version");?></th>
-			<th><?php translate("client_version");?></th>
-			<td style="font-weight: bold; text-align: center;"><?php translate("edit")?></td>
-			<td style="font-weight: bold; text-align: center;"><?php translate("delete")?></td>
-		</thead>
-		<tbody>
+	<div class="scroll">
+		<table class="tablesorter">
+			<thead>
+				<td></td>
+				<th><?php translate("domain");?></th>
+				<th><?php translate("ulicms_version");?></th>
+				<th><?php translate("client_version");?></th>
+				<td style="font-weight: bold; text-align: center;"><?php translate("edit")?></td>
+				<td style="font-weight: bold; text-align: center;"><?php translate("delete")?></td>
+			</thead>
+			<tbody>
 	<?php
 	
 	while ( $site = Database::fetchAssoc ( $sites ) ) {
@@ -65,28 +66,29 @@ $sites = Sites::getAllSites ();
 		}
 		?>
 		<tr>
-				<td><input type="checkbox" name="sites"
-					id="site-<?php echo $site["id"];?>"
-					value="<?php echo $site["id"];?>" checked class="site-checkbox"></td>
-				<td><a href="<?php Template::escape($site["url"]);?>"
-					target="_blank"><?php Template::escape($site["domain"]);?></a></td>
-				<td><span  style="color: <?php echo $ulicms_version_color;?>"><?php Template::escape($ulicms_version); echo $char;?></span></td>
-				<td><?php Template::escape($client_version);?></td>
-				<td style="text-align: center;"><a
-					href="index.php?action=umanage_edit&id=<?php echo $site["id"];?>"><img
-						src="gfx/edit.png" alt="<?php translate("edit")?>"
-						title="<?php translate("edit")?>"></a></td>
-				<td style="text-align: center;"><a
-					href="index.php?action=module_settings&module=umanage_client&form_action=delete_site&id=<?php echo $site["id"];?>"><img
-						src="gfx/delete.png" alt="<?php translate("delete");?>"
-						title="<?php translate("delete");?>"
-						nclick="return confirm('<?php translate("ask_for_delete");?>');"></a></td>
+					<td><input type="checkbox" name="sites"
+						id="site-<?php echo $site["id"];?>"
+						value="<?php echo $site["id"];?>" checked class="site-checkbox"></td>
+					<td><a href="<?php Template::escape($site["url"]);?>"
+						target="_blank"><?php Template::escape($site["domain"]);?></a></td>
+					<td><span  style="color: <?php echo $ulicms_version_color;?>"><?php Template::escape($ulicms_version); echo $char;?></span></td>
+					<td><?php Template::escape($client_version);?></td>
+					<td style="text-align: center;"><a
+						href="index.php?action=umanage_edit&id=<?php echo $site["id"];?>"><img
+							src="gfx/edit.png" alt="<?php translate("edit")?>"
+							title="<?php translate("edit")?>"></a></td>
+					<td style="text-align: center;"><a
+						href="index.php?action=module_settings&module=umanage_client&form_action=delete_site&id=<?php echo $site["id"];?>"><img
+							src="gfx/delete.png" alt="<?php translate("delete");?>"
+							title="<?php translate("delete");?>"
+							nclick="return confirm('<?php translate("ask_for_delete");?>');"></a></td>
 
-				</td>
-			</tr>
+					</td>
+				</tr>
 	<?php }?>
 	</tbody>
-	</table>
+		</table>
+	</div>
 	<p>
 		<input type="submit" value="<?php translate("execute_action");?>">
 	</p>

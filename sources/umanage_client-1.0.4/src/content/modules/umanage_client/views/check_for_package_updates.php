@@ -25,13 +25,14 @@ foreach ( explode ( ",", $_REQUEST ["sites"] ) as $id ) {
 	translate ( "select_all" );
 	?> </label>
 	</p>
-	<table class="tablesorter">
-		<thead>
-			<td></td>
-			<th><?php translate("domain");?></th>
-			<th><?php translate("package");?></th>
-		</thead>
-		<tbody>
+	<div class="scroll">
+		<table class="tablesorter">
+			<thead>
+				<td></td>
+				<th><?php translate("domain");?></th>
+				<th><?php translate("package");?></th>
+			</thead>
+			<tbody>
 <?php
 	foreach ( explode ( ",", $_REQUEST ["sites"] ) as $id ) {
 		$nid = intval ( $id );
@@ -44,13 +45,13 @@ foreach ( explode ( ",", $_REQUEST ["sites"] ) as $id ) {
 			?>
 			<?php foreach($packages as $package){?>
 <tr>
-				<td><input type="checkbox" name="packages[]"
-					class="package-checkbox"
-					value="<?php Template::escape($site["id"]);?>/<?php Template::escape($package);?>"
-					checked></td>
-				<td><?php Template::escape($site["domain"]);?></td>
-				<td><?php Template::escape($package);?></td>
-			</tr>
+					<td><input type="checkbox" name="packages[]"
+						class="package-checkbox"
+						value="<?php Template::escape($site["id"]);?>/<?php Template::escape($package);?>"
+						checked></td>
+					<td><?php Template::escape($site["domain"]);?></td>
+					<td><?php Template::escape($package);?></td>
+				</tr>
 			<?php
 				fcflush ();
 			}
@@ -61,7 +62,8 @@ foreach ( explode ( ",", $_REQUEST ["sites"] ) as $id ) {
 	}
 	?>
 		</tbody>
-	</table>
+		</table>
+	</div>
 	<p>
 		<input type="submit" value="<?php translate("install_updates");?>">
 	</p>
