@@ -147,7 +147,6 @@ function post_comments() {
 				return false;
 			}
 			if (stringcontainsbadwords ( $_POST ["name"] ) or stringcontainsbadwords ( $_POST ["comment"] )) {
-				Settings::set( "contact_form_refused_spam_mails", Settings::get( "contact_form_refused_spam_mails" ) + 1);
 				return false;
 			}
 		}
@@ -201,6 +200,7 @@ function blog_display_comments($post_id) {
 	$spamfilter_enabled = getconfig ( "spamfilter_enabled" ) == "yes";
 
 	if (isCountryBlocked () and $spamfilter_enabled) {
+		Settings::set( "contact_form_refused_spam_mails", Settings::get( "contact_form_refused_spam_mails" ) + 1);
 		if ($_SESSION ["language"] == "de") {
 			$html .= "<p class='ulicms_error'>
            Benutzer aus Ihrem Land werden vom Spamfilter blockiert.<br/> Wenn Sie denken, dass das ein Fehler ist,
@@ -211,6 +211,7 @@ function blog_display_comments($post_id) {
 	}
 
 	else if (getconfig ( "disallow_chinese_chars" ) and $spamfilter_enabled and (is_chinese ( $_POST ["name"] ) or is_chinese ( $_POST ["comment"] ))) {
+		Settings::set( "contact_form_refused_spam_mails", Settings::get( "contact_form_refused_spam_mails" ) + 1);
 		if ($_SESSION ["language"] == "de") {
 			$html .= "<p class='ulicms_error'>" . "Chinesische Schriftzeichen sind nicht erlaubt!</p>";
 		} else {
@@ -219,6 +220,7 @@ function blog_display_comments($post_id) {
 	}
 
 	else if ($spamfilter_enabled and (stringcontainsbadwords ( $_POST ["name"] ) or stringcontainsbadwords ( $_POST ["comment"] ))) {
+		Settings::set( "contact_form_refused_spam_mails", Settings::get( "contact_form_refused_spam_mails" ) + 1);
 		if ($_SESSION ["language"] == "de") {
 			$html .= "<p class='ulicms_error'>" . "Ihr Kommentar enthält nicht erlaubte Wörter.</p>";
 		} else {
