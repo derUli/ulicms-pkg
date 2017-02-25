@@ -1,7 +1,7 @@
 <?php
 if (containsModule ( get_requested_pagename (), "google_maps" )) {
 	$google_maps_marker = getconfig ( "google_maps_marker" );
-	
+	$google_maps_api_key = Settings::get ( "google_maps_api_key" );
 	$google_maps_zoom_level = getconfig ( "google_maps_zoom_level" );
 	if ($google_maps_zoom_level === false or $google_maps_zoom_level == 0)
 		$google_maps_zoom_level = 10;
@@ -15,13 +15,14 @@ if (containsModule ( get_requested_pagename (), "google_maps" )) {
 		$google_maps_zoom_level = intval ( $custom_data ["google_maps_zoom_level"] );
 	}
 	
+	if (isset ( $custom_data ["google_maps_api_key"] )) {
+		$google_maps_api_key = $custom_data ["google_maps_api_key"];
+	}
+	
 	if ($google_maps_marker and $google_maps_zoom_level) {
 		?>
-
-
-
 <script type="text/javascript"
-	src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+	src="http://maps.googleapis.com/maps/api/js?key=<?php Template::escape($google_maps_api_key);?>"></script>
 
 <script type="text/javascript"
 	src="<?php
