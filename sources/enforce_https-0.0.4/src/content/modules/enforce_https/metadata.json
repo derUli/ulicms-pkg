@@ -1,0 +1,7 @@
+{
+	"version" : "0.0.4",
+	"admin_permission" : "settings_enforce_https",
+	"custom_acl" : ["settings_enforce_https"],
+	"embed" : false
+}
+

@@ -1,6 +1,0 @@
-{
-"version" : "0.0.3",
-"admin_permission" : "settings_enforce_https",
-"custom_acl" : ["settings_enforce_https"]
-}
-
