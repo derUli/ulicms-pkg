@@ -56,6 +56,10 @@ function google_maps_admin() {
 </select>
 	
 	
+	<p><?php translate("maps_key_info", array("%link%" =>"https://developers.google.com/maps/documentation/javascript/get-api-key#key"));?>
+	
+	
+	
 	<p>
 		<strong><?php translate("google_maps_api_key");?></strong> <br /> <input
 			type="text" name="google_maps_api_key"
