@@ -8,7 +8,7 @@ function android_toolbar_color_admin() {
 	?>
 <form action="<?php echo getModuleAdminSelfPath()?>" method="post">
 	<p><strong><?php translate("android_toolbar_color");?></strong><br /> <input name="android_toolbar_color"
-				class="color {hash:true,caps:true}"
+				class="jscolor {hash:true,caps:true}"
 				value="<?php
 	
 	echo real_htmlspecialchars ( Settings::get ( "android_toolbar_color" ) );

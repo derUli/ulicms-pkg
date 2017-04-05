@@ -1,5 +1,5 @@
 {
-	"version" : "1.0",
+	"version" : "1.1",
 	"embed" : false,
 	"admin_permission" : "android_toolbar_color",
 	"custom_acl" : ["android_toolbar_color"]
