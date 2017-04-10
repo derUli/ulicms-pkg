@@ -56,7 +56,7 @@ class UManageController {
 			define ( "UPDATE_CHECK_URL", "http://update.ulicms.de/?v=" . urlencode ( implode ( ".", $version->getInternalVersion () ) ) . "&update=" . urlencode ( $version->getUpdate () ) );
 		}
 		$isCoreCurrent = @file_get_contents_Wrapper ( UPDATE_CHECK_URL, true );
-		$isCoreCurrent = ! isNotNullOrEmpty ( $isCoreCurrent );
+		$isCoreCurrent = ! StringHelper::isNotNullOrEmpty ( $isCoreCurrent );
 		
 		$info = array (
 				"version" => cms_version (),

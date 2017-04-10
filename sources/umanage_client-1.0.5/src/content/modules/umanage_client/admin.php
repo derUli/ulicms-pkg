@@ -30,7 +30,7 @@ function umanage_edit_site() {
 	return Database::pQuery ( $sql, $args );
 }
 function umanage_client_admin() {
-	if (isNotNullOrEmpty ( $_REQUEST ["form_action"] ) and function_exists ( "umanage_" . $_REQUEST ["form_action"] )) {
+	if (StringHelper::isNotNullOrEmpty ( $_REQUEST ["form_action"] ) and function_exists ( "umanage_" . $_REQUEST ["form_action"] )) {
 		call_user_func ( "umanage_" . $_REQUEST ["form_action"] );
 	}
 	Request::javascriptRedirect ( "index.php?action=umanage_list" );

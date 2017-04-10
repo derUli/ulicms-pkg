@@ -1,12 +1,12 @@
 <?php
 $article_meta = get_article_meta ();
-if (isNotNullOrEmpty ( $article_meta )) {
+if (StringHelper::isNotNullOrEmpty ( $article_meta )) {
 	?>
 <div id="article-meta">
 	<small><?php
 	
-	if (isNotNullOrEmpty ( $article_meta->article_author_name )) {
-		if (isNotNullOrEmpty ( $article_meta->article_author_email )) {
+	if (StringHelper::isNotNullOrEmpty ( $article_meta->article_author_name )) {
+		if (StringHelper::isNotNullOrEmpty ( $article_meta->article_author_email )) {
 			echo '<a class="author-email-link" href="mailto:"' . Template::getEscape ( $article_meta->article_author_email ) . ">";
 			echo Template::escape ( $article_meta->article_author_name );
 			echo "</a>";
@@ -16,7 +16,7 @@ if (isNotNullOrEmpty ( $article_meta )) {
 	} else {
 		translate ( "guest" );
 	}
-	if (isNotNullOrEmpty ( $article_meta->article_date )) {
+	if (StringHelper::isNotNullOrEmpty ( $article_meta->article_date )) {
 		?>
 	<?php translate("on_time");?>
 		<?php echo strftime ( "%A, %x %X", strtotime ( $article_meta->article_date ) );?>
