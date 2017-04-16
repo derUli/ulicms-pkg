@@ -217,7 +217,7 @@ function blog_display_comments($post_id) {
 		} else {
 			$html .= "<p class='ulicms_error'>" . "Chinese chars are not allowed!</p>";
 		}
-	} else if (getconfig ( "disallow_cyrillic_chars" ) and $spamfilter_enabled and (AntispamHelper::isCyrillic ( $_POST ["name"] ) or antispamHelper::is ( $_POST ["comment"] ))) {
+	} else if (getconfig ( "disallow_cyrillic_chars" ) and $spamfilter_enabled and (AntispamHelper::isCyrillic ( $_POST ["name"] ) or antispamHelper::isCyrillic ( $_POST ["comment"] ))) {
 		Settings::set ( "contact_form_refused_spam_mails", Settings::get ( "contact_form_refused_spam_mails" ) + 1 );
 		if ($_SESSION ["language"] == "de") {
 			$html .= "<p class='ulicms_error'>" . "Kyrillische Schriftzeichen sind nicht erlaubt!</p>";
