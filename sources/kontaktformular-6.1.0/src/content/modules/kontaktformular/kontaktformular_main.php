@@ -90,7 +90,17 @@ function kontaktformular_render() {
 					$fehler = "<p class='ulicms_error'>" . "Chinese chars are not allowed!</p>";
 				}
 			}
-			
+			// Filter nach russisch
+			if (getconfig ( "disallow_cyrillic_chars" ) and (AntispamHelper::isCyrillic ( $_POST ["betreff"] ) or is_chinese ( $_POST ["nachricht"] ))) {
+				
+				setconfig ( "contact_form_refused_spam_mails", getconfig ( "contact_form_refused_spam_mails" ) + 1 );
+				
+				if ($_SESSION ["language"] == "de") {
+					$fehler = "<p class='ulicms_error'>" . "Kyrillische Schriftzeichen sind nicht erlaubt!</p>";
+				} else {
+					$fehler = "<p class='ulicms_error'>" . "Cyrillic chars are not allowed!</p>";
+				}
+			}
 			// Filter nach Land
 			if (function_exists ( "isCountryBlocked" )) {
 				if (isCountryBlocked ()) {

@@ -116,7 +116,7 @@ function guestbook_render() {
 				}
 				
 				// Filter nach chinesisch
-				if (getconfig ( "disallow_chinese_chars" ) and $spamfilter_enabled and (is_chinese ( $_POST ["gb_content"] ))) {
+				if (getconfig ( "disallow_chinese_chars" ) and $spamfilter_enabled and (AntispamHelper::isChinese ( $_POST ["gb_content"] ))) {
 					
 					$errors = true;
 					
@@ -126,7 +126,17 @@ function guestbook_render() {
 						$html_output .= "<p class='ulicms_error'>" . "Chinese chars are not allowed!</p>";
 					}
 				}
-				
+				// Filter nach chinesisch
+				if (getconfig ( "disallow_cyrillic_chars" ) and $spamfilter_enabled and (AntispamHelper::isCyrillic ( $_POST ["gb_content"] ))) {
+					
+					$errors = true;
+					
+					if ($_SESSION ["language"] == "de") {
+						$html_output .= "<p class='ulicms_error'>" . "Kyrillische Schriftzeichen sind nicht erlaubt!</p>";
+					} else {
+						$html_output .= "<p class='ulicms_error'>" . "Cyrilic chars are not allowed!</p>";
+					}
+				}
 				if ($_POST ["phone"] != "" and $spamfilter_enabled) {
 					$errors = true;
 					if ($_SESSION ["language"] == "de") {
