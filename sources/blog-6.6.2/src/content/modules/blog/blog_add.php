@@ -36,7 +36,7 @@ function blog_add_form() {
 	for($i = 0; $i < count ( $all_languages ); $i ++) {
 		$this_language = $all_languages [$i];
 		$translatedLanguage = getLanguageNameByCode ( $this_language );
-		if (getCurrentLanguage (true) == $this_language) {
+		if (getCurrentLanguage ( false ) == $this_language) {
 			$html_output .= "<option value='$this_language' selected>$translatedLanguage</option>";
 		} else {
 			$html_output .= "<option value='$this_language'>$translatedLanguage</option>";
