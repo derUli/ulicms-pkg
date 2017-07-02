@@ -36,7 +36,6 @@ class PollFactory {
 		}
 		return $retval;
 	}
-	// @FIXME: Per GUI aufrufbar machen
 	public static function resetPoll($question_id) {
 		$question_id = intval ( $question_id );
 		$sql = "UPDATE " . tbname ( "poll_answers" ) . " set amount = 0 where question_id = $question_id";
