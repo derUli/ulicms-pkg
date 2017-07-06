@@ -6,6 +6,6 @@ $create_shared_files_table = "CREATE TABLE IF NOT EXISTS `" . tbname ( "shared_f
   `content` longtext NOT NULL,
   `user_id` int(11) NOT NULL,
   PRIMARY KEY (id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;";
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=1 ;";
 
 db_query ( $create_shared_files_table );
