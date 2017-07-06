@@ -17,7 +17,7 @@ db_query ( "CREATE TABLE IF NOT EXISTS `" . tbname ( "blog" ) . "` (
   `content_preview` longtext NOT NULL,
   `views` int NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;" );
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=1 ;" );
 
 db_query ( "CREATE TABLE IF NOT EXISTS `" . tbname ( "blog_comments" ) . "` (
 `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -28,7 +28,7 @@ db_query ( "CREATE TABLE IF NOT EXISTS `" . tbname ( "blog_comments" ) . "` (
 `date` BIGINT NOT NULL,
 `post_id` int(11) NOT NULL,
 PRIMARY KEY (`id`)
-)ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;" );
+)ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=1;" );
 
 Database::query ( "ALTER TABLE `{prefix}blog` modify `content_full` mediumtext NOT NULL;", true );
 Database::query ( "ALTER TABLE `{prefix}blog` modify `content_preview` mediumtext NOT NULL;", true );
