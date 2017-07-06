@@ -5,7 +5,7 @@ Database::query ( "CREATE TABLE IF NOT EXISTS `{prefix}device_infos` (
   `crawler` mediumint(9) NOT NULL DEFAULT '0',
   `pc` mediumint(9) NOT NULL DEFAULT '0',
   `ajax` mediumint(9) not null default '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;", true );
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;", true );
 
 $query = Database::query ( "select * from {prefix}device_infos", true );
 if (Database::getNumRows ( $query ) <= 0) {
