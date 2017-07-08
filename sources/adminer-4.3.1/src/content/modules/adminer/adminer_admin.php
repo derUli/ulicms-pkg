@@ -9,5 +9,3 @@ function adminer_admin() {
 </p>
 <?php
 }
-
-?>
