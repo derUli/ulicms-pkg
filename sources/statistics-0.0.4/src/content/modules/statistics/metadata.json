@@ -1,5 +1,7 @@
 {
- "version" : "0.0.4",
+  "version" : "0.0.4",
+ "admin_permission" : "statistics",
+ "custom_acl" : ["statistics"],
  "admin_permission" : "statistics"
 }
 
