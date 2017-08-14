@@ -1,15 +1,5 @@
 <?php
-if (! function_exists ( "crawlerDetect" )) {
-	function crawlerDetect() {
-		if (isset ( $_SERVER ['HTTP_USER_AGENT'] ) && preg_match ( '/bot|crawl|slurp|spider/i', $_SERVER ['HTTP_USER_AGENT'] )) {
-			return TRUE;
-		} else {
-			return FALSE;
-		}
-	}
-}
-
-if (! logged_in () and ! is_admin_dir () and ! crawlerDetect ()) {
+if (! logged_in () and ! is_admin_dir () and ! is_crawler ()) {
 	
 	$heute = mktime ( 0, 0, 0, date ( "m" ), date ( "d" ), date ( "Y" ) );
 	
