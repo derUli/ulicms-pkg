@@ -1,6 +1,6 @@
  {
 	"version": "0.0.4",
-	"embed": true,
+	"embed": false,
 	"custom_acl": [
 		"statistics"
 	],
