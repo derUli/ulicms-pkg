@@ -1,6 +1,6 @@
 <?php
 define("MODULE_ADMIN_HEADLINE", "Link Checker");
-define(MODULE_ADMIN_REQUIRED_PERMISSION, "link_checker");
+define("MODULE_ADMIN_REQUIRED_PERMISSION", "link_checker");
 
 function get_http_response_code($theURL)
 {
@@ -9,8 +9,6 @@ function get_http_response_code($theURL)
         return false;
     return substr($headers[0], 9);
 }
-
-include_once "../templating.php";
 
 function link_checker_admin()
 {
