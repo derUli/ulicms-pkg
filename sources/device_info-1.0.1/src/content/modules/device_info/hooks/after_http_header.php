@@ -1,6 +1,6 @@
 <?php
 if (! is_logged_in ()) {
-	if (is_ajax_request ()) {
+    if (Request::isAjaxRequest ()) {
 		Database::query ( "Update `{prefix}device_infos` set ajax = ajax + 1", true );
 	} else if (is_crawler ()) {
 		Database::query ( "Update `{prefix}device_infos` set crawler = crawler + 1", true );
