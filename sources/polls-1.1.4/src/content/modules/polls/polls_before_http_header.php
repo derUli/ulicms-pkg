@@ -12,7 +12,7 @@ if (isset ( $data ["poll_id"] ) and is_numeric ( $data ["poll_id"] )) {
 		if ($answer->getID () !== null) {
 			$answer->plus1 ();
 			PollFactory::setUserHasVotedFor ( $id );
-			ulicms_redirect ( buildSEOURL () );
+			Request::redirect ( buildSEOURL () );
 		}
 	}
 }
