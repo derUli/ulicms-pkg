@@ -19,7 +19,8 @@ function custom_admin_css_admin() {
 		<?php translate("custom_admin_css_help")?><br />
 	</p>
 	<p>
-		<textarea rows="30" cols="80" style="width: 100%" name="custom_admin_css"><?php
+		<textarea rows="30" cols="80" style="width: 100%"
+			name="custom_admin_css" class="codemirror" data-mimetype="text/css"><?php
 	
 	echo $custom_admin_css;
 	?></textarea>

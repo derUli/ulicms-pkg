@@ -19,7 +19,7 @@ function custom_css_admin() {
 		<?php translate("custom_css_help");?><br />
 	</p>
 	<p>
-		<textarea rows="30" cols="80" style="width: 100%" name="custom_css"><?php
+		<textarea rows="30" cols="80" style="width: 100%" name="custom_css" class="codemirror" data-mimetype="text/css"><?php
 	
 	echo $custom_css;
 	?></textarea>
