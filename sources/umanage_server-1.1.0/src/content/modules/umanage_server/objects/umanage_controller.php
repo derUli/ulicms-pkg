@@ -75,11 +75,12 @@ class UManageController
     {
         $version = new ulicms_version();
         $umanage_server_version = getModuleMeta("umanage_server", "version");
-        if (! defined("UPDATE_CHECK_URL")) {
-            define("UPDATE_CHECK_URL", "http://update.ulicms.de/?v=" . urlencode(implode(".", $version->getInternalVersion())) . "&update=" . urlencode($version->getUpdate()));
+        
+        $isCoreCurrent = true;
+        $controller = ControllerRegistry::get("CoreUpgradeController");
+        if ($controller) {
+            $isCoreCurrent = is_null($controller->checkForUpgrades());
         }
-        $isCoreCurrent = @file_get_contents_Wrapper(UPDATE_CHECK_URL, true);
-        $isCoreCurrent = ! StringHelper::isNotNullOrEmpty($isCoreCurrent);
         
         $info = array(
             "version" => cms_version(),
