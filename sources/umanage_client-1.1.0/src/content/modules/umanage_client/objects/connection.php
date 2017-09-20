@@ -94,18 +94,18 @@ class uManageConnection
     {
         $uri = $uri = $this->url . "?umanage=upgrade_core&key=" . $this->api_key;
         $http = curl_init($uri);
+        curl_setopt($http, CURLOPT_RETURNTRANSFER, true);
+        
         // do your curl thing here
         $result = curl_exec($http);
         $http_status = curl_getinfo($http, CURLINFO_HTTP_CODE);
         curl_close($http);
-        if (in_array(array(
-            200,
+        if (in_array($http_status, array(
             302,
             303
-        ), $http_status)) {
+        ))) {
             return true;
-        } else {
-            return $result;
         }
+        return $result;
     }
 }

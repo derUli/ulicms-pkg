@@ -61,13 +61,13 @@ class UManageController
         if ($controller) {
             if ($controller->checkForUpgrades()) {
                 if (! $controller->runUpgrade(true)) {
-                    TextResult(500, "upgrade_failed");
+                    TextResult("upgrade_failed", 500);
                 }
             } else {
-                TextResult(404, "no_upgrades_available");
+                TextResult("no_upgrades_available", 404);
             }
         }
-        TextResult(503, "oneclick_upgrade_not_available");
+        TextResult("oneclick_upgrade_not_available", 503);
     }
 
     // @TODO: Funktion implementieren, zum Abfragen von Systeminfos (UliCMS Release Version, usw.)
