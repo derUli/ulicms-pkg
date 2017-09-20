@@ -1,11 +1,14 @@
-
 <?php
-$id = intval ( $_GET ["id"] );
-if ($id > 0) {
-	$site = Sites::getSiteByID ($id);
-	if ($site and Database::getNumRows ( $site ) > 0) {
-		$site = Database::fetchAssoc ( $site );
-		?>
+$acl = new ACL();
+if ($acl->hasPermission("umanage_client")) {
+    ?>
+<?php
+    $id = intval($_GET["id"]);
+    if ($id > 0) {
+        $site = Sites::getSiteByID($id);
+        if ($site and Database::getNumRows($site) > 0) {
+            $site = Database::fetchAssoc($site);
+            ?>
 <h1><?php translate("add_site");?></h1>
 <form action="index.php?action=module_settings&module=umanage_client"
 	method="post">
@@ -31,5 +34,8 @@ if ($id > 0) {
 		value="<?php Template::escape($site["id"]);?>">
 </form>
 <?php
-	}
+        }
+    }
+} else {
+    noperms();
 }

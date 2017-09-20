@@ -1,6 +1,10 @@
 <?php
-$sites = Sites::getAllSites();
-?>
+$acl = new ACL();
+if ($acl->hasPermission("umanage_client")) {
+    ?>
+<?php
+    $sites = Sites::getAllSites();
+    ?>
 <h1><?php translate("list_of_remote_sites")?></h1>
 
 <p>
@@ -26,46 +30,48 @@ $sites = Sites::getAllSites();
 	<p>
 		<input id="checkall" type="checkbox" class="checkall" checked> <label
 			for="checkall"><?php
-    
-    translate("select_all");
-    ?> </label>
+        
+        translate("select_all");
+        ?> </label>
 	</p>
 	<div class="scroll">
 		<table class="tablesorter">
 			<thead>
-				<td></td>
-				<th><?php translate("domain");?></th>
-				<th><?php translate("ulicms_version");?></th>
-				<th><?php translate("client_version");?></th>
-				<td style="font-weight: bold; text-align: center;"><?php translate("edit")?></td>
-				<td style="font-weight: bold; text-align: center;"><?php translate("delete")?></td>
+				<tr>
+					<td></td>
+					<th><?php translate("domain");?></th>
+					<th><?php translate("ulicms_version");?></th>
+					<th><?php translate("client_version");?></th>
+					<td style="font-weight: bold; text-align: center;"><?php translate("edit")?></td>
+					<td style="font-weight: bold; text-align: center;"><?php translate("delete")?></td>
+				</tr>
 			</thead>
 			<tbody>
 	<?php
-    
-    while ($site = Database::fetchAssoc($sites)) {
-        $ulicms_version = get_translation("unknown");
-        $client_version = get_translation("unknown");
-        $ulicms_version_color = "inherit";
-        $con = new uManageConnection($site["api_key"], $site["url"]);
-        $info = $con->getInfo();
-        $char = " ";
-        if ($info) {
-            if ($info["version"]) {
-                $ulicms_version = $info["version"];
+        
+        while ($site = Database::fetchAssoc($sites)) {
+            $ulicms_version = get_translation("unknown");
+            $client_version = get_translation("unknown");
+            $ulicms_version_color = "inherit";
+            $con = new uManageConnection($site["api_key"], $site["url"]);
+            $info = $con->getInfo();
+            $char = " ";
+            if ($info) {
+                if ($info["version"]) {
+                    $ulicms_version = $info["version"];
+                }
+                if ($info["umanage_server_version"]) {
+                    $client_version = $info["umanage_server_version"];
+                }
+                if ($info["is_core_current"]) {
+                    $ulicms_version_color = "green";
+                    $char = " ✓";
+                } else {
+                    $ulicms_version_color = "red";
+                    $char = " ×";
+                }
             }
-            if ($info["umanage_server_version"]) {
-                $client_version = $info["umanage_server_version"];
-            }
-            if ($info["is_core_current"]) {
-                $ulicms_version_color = "green";
-                $char = " ✓";
-            } else {
-                $ulicms_version_color = "red";
-                $char = " ×";
-            }
-        }
-        ?>
+            ?>
 		<tr>
 					<td><input type="checkbox" name="sites"
 						id="site-<?php echo $site["id"];?>"
@@ -96,5 +102,10 @@ $sites = Sites::getAllSites();
 </form>
 
 <?php }?>
+	<?php
+} else {
+    noperms();
+}
+?>
 <script type="text/javascript"
 	src="<?php echo getModulePath("umanage_client")?>scripts/list.js"></script>

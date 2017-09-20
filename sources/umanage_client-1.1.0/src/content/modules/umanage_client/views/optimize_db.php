@@ -1,3 +1,7 @@
+<?php
+$acl = new ACL();
+if ($acl->hasPermission("umanage_client")) {
+    ?>
 <h1><?php translate("optimize_database");?></h1>
 <?php
 foreach ( explode ( ",", $_REQUEST ["sites"] ) as $id ) {
@@ -22,7 +26,7 @@ foreach ( explode ( ",", $_REQUEST ["sites"] ) as $id ) {
 <br />
 
 <?php
-	fcflush ();
+    fcflush ();
 }
 ?>
 	
@@ -31,4 +35,9 @@ foreach ( explode ( ",", $_REQUEST ["sites"] ) as $id ) {
 <?php
 	}
 	?>
+	<?php
+} else {
+    noperms();
+}
+?>
 <a href="#" onclick="history.back();"><?php translate("back")?></a>
