@@ -18,3 +18,6 @@ define("TRANSLATION_PACKAGE", "Package");
 define("TRANSLATION_INSTALL_UPDATES", "Install updates");
 idefine("TRANSLATION_CLEAR_LOG", "Clear Log");
 idefine("TRANSLATION_UPGRADE_CORE", "Upgrade Core");
+define("TRANSLATION_UPGRADE_FAILED", "Upgrade FAILED");
+define("TRANSLATION_NO_UPGRADES_FAILED", "No upgrades available");
+define("TRANSLATION_ONECLICK_UPGRADE_NOT_AVAILABLE", "oneclick_upgrade is not installed");
