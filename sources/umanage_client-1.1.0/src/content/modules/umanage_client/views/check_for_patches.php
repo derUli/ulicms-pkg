@@ -1,19 +1,21 @@
 <?php
 $acl = new ACL();
 if ($acl->hasPermission("umanage_client")) {
-    $data_here = false;
-    foreach (explode(",", $_REQUEST["sites"]) as $id) {
-        $nid = intval($id);
-        $site = Sites::getSiteByID($nid);
-        $site = Database::fetchAssoc($site);
-        $con = new uManageConnection($site["api_key"], $site["url"]);
-        $result = $con->checkForPatches();
-        if ($result and count($result["patches"]) > 0) {
-            $data_here = true;
-            break;
+    if (StringHelper::isNotNullOrWhitespace(Request::getVar("sites"))) {
+        
+        $data_here = false;
+        foreach (explode(",", $_REQUEST["sites"]) as $id) {
+            $nid = intval($id);
+            $site = Sites::getSiteByID($nid);
+            $site = Database::fetchAssoc($site);
+            $con = new uManageConnection($site["api_key"], $site["url"]);
+            $result = $con->checkForPatches();
+            if ($result and count($result["patches"]) > 0) {
+                $data_here = true;
+                break;
+            }
         }
-    }
-    ?>
+        ?>
 
 <h1><?php translate("check_for_patches");?></h1>
 <?php if($data_here){?>
@@ -23,9 +25,9 @@ if ($acl->hasPermission("umanage_client")) {
 	<p>
 		<input id="checkall" type="checkbox" class="checkall" checked> <label
 			for="checkall"><?php
-        
-        translate("select_all");
-        ?> </label>
+            
+            translate("select_all");
+            ?> </label>
 	</p>
 	<div class="scroll">
 		<table class="tablesorter">
@@ -39,15 +41,15 @@ if ($acl->hasPermission("umanage_client")) {
 			</thead>
 			<tbody>
 <?php
-        foreach (explode(",", $_REQUEST["sites"]) as $id) {
-            $nid = intval($id);
-            $site = Sites::getSiteByID($nid);
-            $site = Database::fetchAssoc($site);
-            $con = new uManageConnection($site["api_key"], $site["url"]);
-            $result = $con->checkForPatches();
-            if ($result and isset($result["patches"])) {
-                $patches = $result["patches"];
-                ?>
+            foreach (explode(",", $_REQUEST["sites"]) as $id) {
+                $nid = intval($id);
+                $site = Sites::getSiteByID($nid);
+                $site = Database::fetchAssoc($site);
+                $con = new uManageConnection($site["api_key"], $site["url"]);
+                $result = $con->checkForPatches();
+                if ($result and isset($result["patches"])) {
+                    $patches = $result["patches"];
+                    ?>
 			<?php foreach($patches as $patch){?>
 <tr>
 					<td><input type="checkbox" name="patches[]" class="patch-checkbox"
@@ -58,15 +60,15 @@ if ($acl->hasPermission("umanage_client")) {
 					<td><?php Template::escape($patch[1]);?></td>
 				</tr>
 			<?php
-                    fcflush();
-                }
-                ?>
+                        fcflush();
+                    }
+                    ?>
 				<?php
+                }
+                
+                fcflush();
             }
-            
-            fcflush();
-        }
-        ?>
+            ?>
 		</tbody>
 		</table>
 	</div>
@@ -75,17 +77,19 @@ if ($acl->hasPermission("umanage_client")) {
 	</p>
 </form>
 <?php
-    } else {
-        ?>
+        } else {
+            ?>
 <p><?php translate("NO_PATCHES_AVAILABLE");?></p>
 <?php }?>
-<p>
-	<a href="index.php?action=umanage_list"><?php translate("back")?></a>
-</p>
+
 <?php
+    }
 } else {
     noperms();
 }
 ?>
+<p>
+	<a href="index.php?action=umanage_list"><?php translate("back")?></a>
+</p>
 <script type="text/javascript"
 	src="<?php echo getModulePath("umanage_client")?>scripts/patches.js"></script>
