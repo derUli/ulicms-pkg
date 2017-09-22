@@ -1,3 +1,7 @@
+<?php
+$acl = new ACL();
+if ($acl->hasPermission("umanage_client")) {
+    ?>
 <h1><?php translate("add_site");?></h1>
 <form action="index.php?action=module_settings&module=umanage_client"
 	method="post">
@@ -15,3 +19,9 @@
 	<input type="submit" value="<?php translate("save");?>"> <input
 		type="hidden" name="form_action" value="create_site">
 </form>
+
+<?php
+} else {
+    noperms();
+}
+?>
