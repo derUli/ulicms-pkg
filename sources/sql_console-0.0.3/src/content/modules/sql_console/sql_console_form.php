@@ -11,5 +11,5 @@
 			<?php if($_SESSION["sql_console_replace_placeholders"]) echo "checked";?>>
 		<label for="sql_console_replace_placeholders"><?php translate("sql_console_replace_placeholders")?></label>
 	</p>
-	<input type="submit" value="Ausführen">
+	<input type="submit" value="<?php translate("sql_console_execute");?>">
 </form>
