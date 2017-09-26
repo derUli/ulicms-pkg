@@ -3,7 +3,8 @@
 <form action="<?php echo getModuleAdminSelfPath()?>" method="post">
 <?php csrf_token_html();?>
 <p>
-		<textarea name="sql_code" id="sql_code"><?php echo htmlspecialchars($_SESSION["sql_code"])?></textarea>
+		<textarea name="sql_code" id="sql_code" class="codemirror"
+			data-mimetype="text/x-sql"><?php echo htmlspecialchars($_SESSION["sql_code"])?></textarea>
 	</p>
 	<p>
 		<input type="checkbox" id="sql_console_replace_placeholders"
