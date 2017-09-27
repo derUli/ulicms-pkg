@@ -2,9 +2,6 @@
 define("MODULE_ADMIN_HEADLINE", "SQL Console");
 define("MODULE_ADMIN_REQUIRED_PERMISSION", "sql_console");
 
-// Konfiguration checken
-$send_comments_via_email = getconfig("blog_send_comments_via_email") == "yes";
-
 // Session-Variable initialisieren
 if (! isset($_SESSION["sql_code"])) {
     $_SESSION["sql_code"] = "";
