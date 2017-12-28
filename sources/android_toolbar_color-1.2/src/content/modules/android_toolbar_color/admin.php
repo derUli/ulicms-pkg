@@ -14,7 +14,7 @@ function android_toolbar_color_admin() {
 	echo real_htmlspecialchars ( Settings::get ( "android_toolbar_color" ) );
 	?>">
 	</p>
-	<p><input type="submit" value="<?php translate("save_changes");?>">
+	<p><button type="submit" class="btn btn-success"><?php translate("save_changes");?></button>
 	</p>
 	<?php csrf_token_html();?>
 </form>
