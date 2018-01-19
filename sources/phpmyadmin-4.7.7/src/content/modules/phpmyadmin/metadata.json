@@ -1,0 +1,6 @@
+{
+   "version" : "4.7.7",
+   "admin_permission" : "phpmyadmin",
+   "custom_acl" : ["phpmyadmin"],
+   "embed" : false
+}
