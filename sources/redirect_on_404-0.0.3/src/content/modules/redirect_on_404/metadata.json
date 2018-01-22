@@ -1,0 +1,6 @@
+{
+ 	"version" : "0.0.3",
+ 	"embed" : false,
+ 	"admin_permission" : "redirect_on_404",
+ 	"custom_acl" : ["redirect_on_404"]
+}
