@@ -1,58 +1,58 @@
 <?php
-include_once getModulePath ( "polls" ) . "/polls_main.php";
-$id = intval ( $_REQUEST ["poll_stats"] );
-$question = new Question ( $id );
-if ($question->getID () === null) {
-	translate ( "poll_not_found" );
+include_once getModulePath("polls") . "/polls_main.php";
+$id = intval($_REQUEST["poll_stats"]);
+$question = new Question($id);
+if ($question->getID() === null) {
+    translate("poll_not_found");
 } else {
-	
-	$votes_total = PollFactory::getVotesSum ( $id );
-	?>
+    
+    $votes_total = PollFactory::getVotesSum($id);
+    ?>
 <!doctype html>
 <html>
 <head>
 <meta name="viewport" content="width=device-width, user-scalable=yes" />
 <title><?php
-	
-	Template::escape ( $question->title );
-	?></title>
+    
+    Template::escape($question->title);
+    ?></title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <?php
-	$enq = array (
-			"scripts/php.js/strip_tags.js",
-			"scripts/php.js/htmlspecialchars.js",
-			"scripts/jquery.min.js",
-			"scripts/jquery.form.min.js",
-			"scripts/jquery.tablesorter.min.js",
-			"scripts/vallenato/vallenato.js",
-			"codemirror/lib/codemirror.js",
-			"codemirror/mode/php/php.js",
-			"codemirror/mode/xml/xml.js",
-			"codemirror/mode/javascript/javascript.js",
-			"codemirror/mode/clike/clike.js",
-			"codemirror/mode/css/css.js",
-			"scripts/url.min.js",
-			"scripts/util.js" 
-	);
-	
-	foreach ( $enq as $script ) {
-		enqueueScriptFile ( $script );
-	}
-	?>
+    $enq = array(
+        "scripts/php.js/strip_tags.js",
+        "scripts/php.js/htmlspecialchars.js",
+        "scripts/jquery.min.js",
+        "scripts/jquery.form.min.js",
+        "scripts/jquery.tablesorter.min.js",
+        "scripts/vallenato/vallenato.js",
+        "codemirror/lib/codemirror.js",
+        "codemirror/mode/php/php.js",
+        "codemirror/mode/xml/xml.js",
+        "codemirror/mode/javascript/javascript.js",
+        "codemirror/mode/clike/clike.js",
+        "codemirror/mode/css/css.js",
+        "scripts/url.min.js",
+        "scripts/util.js"
+    );
+    
+    foreach ($enq as $script) {
+        enqueueScriptFile($script);
+    }
+    ?>
 
-<?php combined_script_html();?>
+<?php combinedScriptHtml();?>
 <link rel="stylesheet" type="text/css" href="" />
 <?php
-	$styles = array ();
-	$styles [] = "css/blue.css";
-	$styles [] = getModulePath ( "polls" ) . "css/stats.css";
-	
-	foreach ( $styles as $style ) {
-		enqueueStylesheet ( $style );
-	}
-	
-	combined_stylesheet_html ();
-	?>
+    $styles = array();
+    $styles[] = "css/blue.css";
+    $styles[] = getModulePath("polls") . "css/stats.css";
+    
+    foreach ($styles as $style) {
+        enqueueStylesheet($style);
+    }
+    
+    combined_stylesheet_html();
+    ?>
 <link rel="stylesheet" type="text/css"
 	href="scripts/tablesorter/style.css" />
 <link rel="icon" href="gfx/favicon.ico" type="image/x-icon" />
@@ -82,9 +82,9 @@ $(document).ready(function(){
 <body>
 	<div class="stats-container">
 		<h1><?php
-	
-	Template::escape ( $question->title );
-	?></h1>
+    
+    Template::escape($question->title);
+    ?></h1>
 
 		<table class="tablesorter">
 			<thead>
@@ -96,8 +96,8 @@ $(document).ready(function(){
 			</thead>
 			<tbody>
 <?php
-	foreach ( $question->getAnswers () as $answer ) {
-		?>
+    foreach ($question->getAnswers() as $answer) {
+        ?>
 <tr>
 					<td><?php Template::escape($answer->title);?></td>
 					<td style="text-align: right" class="votes-row number-font"><?php Template::escape($answer->getVotes());?></td>
@@ -118,14 +118,14 @@ $(document).ready(function(){
 		<div class="poll-bar-graph no-print"
 			style="margin-top: 20px; border: 1px solid #eee; padding: 20px;">
 <?php
-	foreach ( $question->getAnswers () as $answer ) {
-		$votes = 0.00;
-		if ($votes_total > 0 and $answer->getVotes () > 0) {
-			$votes = $answer->getVotes () * 100 / $votes_total * 3;
-		}
-		$votes = str_replace ( ",", ".", $votes );
-		$color = RandomColor::get();
-		?>
+    foreach ($question->getAnswers() as $answer) {
+        $votes = 0.00;
+        if ($votes_total > 0 and $answer->getVotes() > 0) {
+            $votes = $answer->getVotes() * 100 / $votes_total * 3;
+        }
+        $votes = str_replace(",", ".", $votes);
+        $color = RandomColor::get();
+        ?>
 			<strong>
 			<?php Template::escape($answer->title);?>
 			</strong> <br />
@@ -133,24 +133,20 @@ $(document).ready(function(){
 <?php if($votes > 0){?>
 <div style="width: <?php echo intval($votes);?>px; background-color:<?php echo $color;?>; float:left;margin-right:5px;">&nbsp;</div>
 <?php
-		}
-		?><div style="">
+        }
+        ?><div style="">
 <?php echo $answer->getVotes();?></div>
 
 
 			<?php
-	}
-	?>
+    }
+    ?>
 		</div>
-
-
 		<div class="no-print print-button-container">
 			<input type="button" value="<?php translate("print_results");?>"
 				onclick="window.print();">
 		</div>
 	</div>
-
-
 </body>
 </html>
 <?php }?>
