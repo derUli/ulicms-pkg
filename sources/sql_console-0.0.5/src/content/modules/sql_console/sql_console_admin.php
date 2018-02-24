@@ -12,9 +12,9 @@ if (! isset($_SESSION["sql_console_replace_placeholders"])) {
 
 function sql_console_admin()
 {
-    include getModulePath("sql_console") . "sql_console_functions.php";
+    include getModulePath("sql_console", true) . "sql_console_functions.php";
     
-    include getModulePath("sql_console") . "sql_console_styles.php";
+    include getModulePath("sql_console", true) . "sql_console_styles.php";
     if (Request::isPost()) {
         $_SESSION["sql_console_replace_placeholders"] = isset($_POST["sql_console_replace_placeholders"]);
         if (isset($_POST["sql_code"])) {
@@ -23,7 +23,7 @@ function sql_console_admin()
         }
     }
     
-    include getModulePath("sql_console") . "sql_console_form.php";
+    include getModulePath("sql_console", true) . "sql_console_form.php";
     $config = new config();
     db_select_db($config->db_database);
 }

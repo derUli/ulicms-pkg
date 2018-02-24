@@ -7,10 +7,10 @@ define("MODULE_ADMIN_REQUIRED_PERMISSION", "newsletter");
 
 define("DATE_FORMAT", getconfig("date_format"));
 
-include getModulePath("newsletter") . "newsletter_install.php";
+include getModulePath("newsletter", true) . "newsletter_install.php";
 newsletter_check_install();
 
-include getModulePath("newsletter") . "newsletter_helper.php";
+include getModulePath("newsletter", true) . "newsletter_helper.php";
 
 if (! isset($_SESSION["newsletter_data"])) {
     $_SESSION["newsletter_data"] = array(
@@ -76,11 +76,11 @@ function newsletter_admin()
             echo "</table>";
         }
     } else if ($_GET["newsletter_action"] == "edit_template") {
-        include getModulePath("newsletter") . "newsletter_template.php";
+        include getModulePath("newsletter", true) . "newsletter_template.php";
     } else if ($_GET["newsletter_action"] == "prepare_newsletter") {
-        include getModulePath("newsletter") . "newsletter_form.php";
+        include getModulePath("newsletter", true) . "newsletter_form.php";
     } else if ($_GET["newsletter_action"] == "send_it") {
-        include getModulePath("newsletter") . "send_it.php";
+        include getModulePath("newsletter", true) . "send_it.php";
     } else {
         echo "<br/>";
         echo "<p>(C) 2013 by Ulrich Schmidt<br/>";
