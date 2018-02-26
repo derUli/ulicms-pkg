@@ -78,14 +78,18 @@ function generate_sitemap()
     $xml_string = str_replace("\r", "\n", $xml_string);
     $xml_string = str_replace("\n", "\r\n", $xml_string);
     
-    $xml_file = "../sitemap.xml";
+    $xml_file = ULICMS_DATA_STORAGE_ROOT . "/sitemap.xml";
+    
+    $url = defined("ULICMS_DATA_STORAGE_URL") ? ULICMS_DATA_STORAGE_URL . "/sitemap.xml" : "../sitemap.xml";
     
     $handle = @fopen($xml_file, "w");
     if ($handle) {
         fwrite($handle, $xml_string);
         fclose($handle);
         
-        translate("GENERATE_XML_SITEMAP_SUCCESS");
+        translate("GENERATE_XML_SITEMAP_SUCCESS", array(
+            "%url%" => $url
+        ));
     } else {
         translate("GENERATE_XML_SITEMAP_FAILED");
         echo "<textarea cols=70 rows=20>";
