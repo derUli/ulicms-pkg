@@ -1,6 +1,6 @@
 <?php
 if (isset($_SERVER['SERVER_SOFTWARE']) && strpos($_SERVER['SERVER_SOFTWARE'], 'Google App Engine') !== false) {
-    head("HTTP/1.1 501 Not Implemented");
+    header("HTTP/1.1 501 Not Implemented");
     die("RSS Feed is not supported on Google Cloud.");
 }
 
