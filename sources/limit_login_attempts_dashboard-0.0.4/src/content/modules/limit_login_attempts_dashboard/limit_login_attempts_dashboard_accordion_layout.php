@@ -5,8 +5,9 @@ if (in_array("limit_login_attempts", getAllModules()) and $acl->hasPermission("l
     $alreadyDisplayed = Array();
     
     $max_login_attempts = getconfig("max_login_attempts");
-    if (! $max_login_attempts)
+    if (! $max_login_attempts) {
         $max_login_attempts = 5;
+    }
     
     ?>
 
@@ -34,7 +35,6 @@ if (in_array("limit_login_attempts", getAllModules()) and $acl->hasPermission("l
         
         while ($row = db_fetch_object($query)) {
             $query2 = db_query("SELECT * FROM " . tbname("failed_logins") . " WHERE ip='" . $row->ip . "' ORDER by time DESC");
-            
             $result = db_fetch_assoc($query2);
             
             if (! in_array($row->ip, $alreadyDisplayed)) {
