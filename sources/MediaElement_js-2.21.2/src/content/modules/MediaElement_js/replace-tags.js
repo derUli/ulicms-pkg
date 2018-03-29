@@ -1,4 +1,0 @@
-$(function() {
-	// using jQuery
-	$('video, audio').mediaelementplayer();
-});
