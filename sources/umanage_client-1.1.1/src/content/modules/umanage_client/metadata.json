@@ -1,0 +1,8 @@
+{
+	"version": "1.1.1",
+	"embed": false,
+	"custom_acl": [
+		"umanage_client"
+	],
+	"admin_permission": "umanage_client"
+}
