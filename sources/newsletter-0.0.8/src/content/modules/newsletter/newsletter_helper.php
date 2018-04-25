@@ -57,6 +57,7 @@ if (! function_exists ( "send_html_mail" )) {
 	}
 }
 function send_loop() {
+	@set_time_limit(0);
 	define ( "ADMIN_EMAIL", getconfig ( "email" ) );
 	
 	if ($_SESSION ["newsletter_data"] ["newsletter_remaining"] > 0) {
