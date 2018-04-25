@@ -83,7 +83,7 @@ function newsletter_admin()
         include getModulePath("newsletter", true) . "send_it.php";
     } else {
         echo "<br/>";
-        echo "<p>(C) 2013 by Ulrich Schmidt<br/>";
+        echo "<p>(C) 2013 - 2018 by Ulrich Schmidt<br/>";
         echo "Version " . NEWSLETTER_MODULE_VERSION . "</p>";
     }
 }
