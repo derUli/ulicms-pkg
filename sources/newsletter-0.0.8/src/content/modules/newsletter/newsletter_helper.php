@@ -68,20 +68,21 @@ function send_loop() {
 				
 				echo "Newsletter an " . $_SESSION ["newsletter_data"] ["newsletter_receivers"] [$i] . " senden ";
 				
-				flush ();
+				fcflush ();
 				
 				if ($sent) {
 					$_SESSION ["newsletter_data"] ["newsletter_remaining"] --;
 					$_SESSION ["newsletter_data"] ["newsletter_receivers"] [$i] = "";
 					
 					echo '<span style="color:green">[Erfolgreich]</span>';
-					flush ();
+					fcflush ();
 				} else {
 					echo '<span style="color:red">[Fehlgeschlagen]</span>';
-					flush ();
+					fcflush ();
 				}
 			}
 			
+		
 			echo "<br/>";
 			
 			if ($_SESSION ["newsletter_data"] ["newsletter_remaining"] < 1) {
@@ -90,6 +91,12 @@ function send_loop() {
 				// increment newsletter_id
 				setconfig ( "newsletter_id", getconfig ( "newsletter_id" ) + 1 );
 				return;
+			}
+			// Configuration option newsletter_sleep
+			// Waits X seconds before sending the next mail
+			$cfg = new CMSConfig();
+			if(isset($cfg->newsletter_sleep) and $cfg->newsletter_sleep > 0){
+				sleep($cfg->newsletter_sleep);
 			}
 		}
 	} else {
