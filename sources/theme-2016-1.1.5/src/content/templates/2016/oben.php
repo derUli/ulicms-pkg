@@ -7,6 +7,14 @@ og_html_prefix ();
 base_metas ();
 og_tags ();
 ?>
+<?php 
+$modules = getAllModules ();
+$hasSearch = (faster_in_array ( "search", $modules ) || faster_in_array ( "extended_search", $modules ));
+$searchPage = ModuleHelper::getFirstPageWithModule ( "extended_search" );
+if (! $searchPage) {
+	$searchPage = ModuleHelper::getFirstPageWithModule ( "search" );
+}
+?>
 <meta name="viewport" content="width=device-width" />
 <link rel="stylesheet" type="text/css"
 	href="<?php echo getTemplateDirPath(get_theme());?>mobile.css" />
@@ -61,6 +69,19 @@ if (getconfig ( "logo_disabled" ) == "no") {
 }
 ?>
 </a>
+<?php
+								
+								if ((! containsModule ( null, "extended_search" ) and ! containsModule ( null, "search" )) and $hasSearch and $searchPage) {
+									?>
+		<form id="search-form-head" method="get"
+				action="<?php Template::escape(buildSEOURL($searchPage->systemname));?>">
+				<input type="search" required="required" name="q"
+					value="<?php  Template::escape($q);?>" results="10"
+					autosave="<?php echo md5 ( $_SERVER ["SERVER_NAME"] );?>"
+					placeholder="<?php translate("search");?>">
+					
+			</form>
+        <?php }?>
 	</header>
 	<div id="root-container">
 		<nav><?php menu("top");?></nav>

@@ -279,3 +279,11 @@ div.socialshareprivacy {
 	margin-top: 20px;
 	margin-bottom: 20px;
 }
+
+#search-form-head{
+	margin-top:14px;
+}
+
+#search-form-head input[name="q"]{
+	width:100%;
+}
