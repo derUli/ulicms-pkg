@@ -51,13 +51,13 @@ function subscribe_newsletter($mail)
             
             db_query("INSERT INTO " . tbname("newsletter_subscribers") . "(email, subscribe_date) VALUES('$mail', " . $subscribe_date . ")");
             
-            $headers = "From: " . getconfig("email") . "\n" . "Content-Type: text/plain; charset=UTF-8";
+            $headers = "From: " . getconfig("email") . "\r\n" . "Content-Type: text/plain; charset=UTF-8";
             
             $url = rootDirectory() . buildSEOUrl(get_requested_pagename()) . "?code=" . $code;
             
             $mailtext = "Vielen Dank für das Abonnieren, des E-Mail Newsletters von \"" . getconfig("homepage_title") . "\"!\n\n" . "Bitte klicken Sie auf folgenden Link, um den Empfang des Newsletters zu bestätigen:\n" . $url . "\n\n" . "Sollten Sie diese E-Mail ungewünscht empfangen haben, ignorieren Sie sie einfach.";
             
-            if (@mail($unescaped_mail, "Bestätigung des Email-Newsletters", $mailtext, $headers)) {
+            if (@Mailer::send($unescaped_mail, "Bestätigung des Email-Newsletters", $mailtext, $headers)) {
                 $html_output .= "<p>$translation_thank_you_for_subscribing</p>";
             } else {
                 $html_output .= "Der Versand der Bestätigungs E-Mail ist aus technischen Gründen fehlgeschlagen.<br/>
@@ -109,16 +109,16 @@ function newsletter_render()
     }
     
     if (! empty($_POST["newsletter_email_adress"]) and ! empty($_POST["newsletter_subscribe"])) {
-        if ($subscribe == "yes") {
-            $subscribe = $_POST["newsletter_subscribe"];
-            if (class_exists("PrivacyCheckbox")) {
-                $checkbox = new PrivacyCheckbox(getCurrentLanguage(true));
-                if ($checkbox->isEnabled()) {
-                    if (! $checkbox->isChecked()) {
-                        return "<p>" . get_translation("please_accept_privacy_conditions") . "</p>";
-                    }
+        if (class_exists("PrivacyCheckbox")) {
+            $checkbox = new PrivacyCheckbox(getCurrentLanguage(true));
+            if ($checkbox->isEnabled()) {
+                if (! $checkbox->isChecked()) {
+                    return "<p>" . get_translation("please_accept_privacy_conditions") . "</p>";
                 }
             }
+        }
+        $subscribe = $_POST["newsletter_subscribe"];
+        if ($subscribe == "yes") {
             return subscribe_newsletter($_POST["newsletter_email_adress"]);
         } else if ($subscribe == "no") {
             return cancel_newsletter($_POST["newsletter_email_adress"]);
@@ -161,13 +161,13 @@ function newsletter_render()
     if (class_exists("PrivacyCheckbox")) {
         $checkbox = new PrivacyCheckbox(getCurrentLanguage(true));
         if ($checkbox->isEnabled()) {
-            $html_output .= '<div class="newsletter_privacy_checkbox">';
+            $html_output .= '<p class="newsletter_privacy_checkbox">';
             $html_output .= $checkbox->render();
-            $html_output .= '</div>';
+            $html_output .= '</p>';
         }
     }
     
-    $html_output .= "<br/><br/><input type=\"submit\" class=\"btn btn-primary\" value=\"$translation_submit\">";
+    $html_output .= "<br/><input type=\"submit\" class=\"btn btn-primary\" value=\"$translation_submit\">";
     
     $html_output .= "</form>";
     
