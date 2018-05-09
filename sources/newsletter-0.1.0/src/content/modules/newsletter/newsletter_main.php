@@ -8,8 +8,7 @@ function cancel_newsletter($mail)
     if ($_SESSION["language"] == "de") {
         $translation_newsletter_canceled = "Ihre E-Mail Adresse wurde aus der Liste entfernt.";
         $translation_email_not_subscribed = "Diese E-Mail Adresse befindet sich nicht in der Liste";
-    } 
-    else {
+    } else {
         $translation_newsletter_canceled = "Your mail adress was removed from the list";
         $translation_email_not_subscribed = "This mail adress is not in the list.";
     }
@@ -31,8 +30,7 @@ function subscribe_newsletter($mail)
         $translation_thank_you_for_subscribing = "Danke für das Abonnieren des Newsletters.<br/>Sie müssen den Empfang des Newsletters noch bestätigen, in dem Sie den Link in der E-Mail die wir an Sie versandt haben anklicken.";
         $translation_already_subscribed = "Sie haben den Newsletter bereits abonniert!";
         $translation_email_adress_invalid = "Diese E-Mail Adresse ist ungültig.";
-    } 
-    else {
+    } else {
         $translation_thank_you_for_subscribing = "Thank you for subscribing! You have to confirm the newsletter by clicking on the link that we sent in an email to you";
         $translation_already_subscribed = "You've Subscribed the newsletter.";
         $translation_email_adress_invalid = "This mail adress is invalid.";
@@ -43,8 +41,7 @@ function subscribe_newsletter($mail)
         
         if (checkIfSubscribed($mail)) {
             $html_output .= "<p>$translation_already_subscribed</p>";
-        } 
-        else {
+        } else {
             
             $subscribe_date = time();
             
@@ -111,16 +108,24 @@ function newsletter_render()
         $email = $userdata["email"];
     }
     
-    if (! empty($_GET["newsletter_email_adress"]) and ! empty($_GET["newsletter_subscribe"])) {
-        $subscribe = $_GET["newsletter_subscribe"];
+    if (! empty($_POST["newsletter_email_adress"]) and ! empty($_POST["newsletter_subscribe"])) {
         if ($subscribe == "yes") {
-            return subscribe_newsletter($_GET["newsletter_email_adress"]);
+            $subscribe = $_POST["newsletter_subscribe"];
+            if (class_exists("PrivacyCheckbox")) {
+                $checkbox = new PrivacyCheckbox(getCurrentLanguage(true));
+                if ($checkbox->isEnabled()) {
+                    if (! $checkbox->isChecked()) {
+                        return "<p>" . get_translation("please_accept_privacy_conditions") . "</p>";
+                    }
+                }
+            }
+            return subscribe_newsletter($_POST["newsletter_email_adress"]);
         } else if ($subscribe == "no") {
-            return cancel_newsletter($_GET["newsletter_email_adress"]);
+            return cancel_newsletter($_POST["newsletter_email_adress"]);
         }
     }
     
-    $html_output .= "<form class=\"newsletter_form\" action=\"" . get_requested_pagename() . ".html\" method=\"get\">";
+    $html_output .= "<form class=\"newsletter_form\" action=\"" . get_requested_pagename() . ".html\" method=\"post\">";
     
     $html_output .= get_csrf_token_html();
     
@@ -128,8 +133,8 @@ function newsletter_render()
         $html_output .= "<input name=\"newsletter_email_adress\" type=\"hidden\" value=\"$email\">";
     } else {
         
-        if (isset($_GET["newsletter_email_adress"])) {
-            $email = htmlspecialchars($_GET["newsletter_email_adress"]);
+        if (isset($_POST["newsletter_email_adress"])) {
+            $email = htmlspecialchars($_POST["newsletter_email_adress"]);
         } else {
             $email = "";
         }
@@ -147,14 +152,22 @@ function newsletter_render()
     if (! $subscribed or empty($email)) {
         $html_output .= "<input type=\"radio\" name=\"newsletter_subscribe\" checked value=\"yes\"> $translation_subscribe_newsletter<br/>";
         $html_output .= "<input type=\"radio\" name=\"newsletter_subscribe\" value=\"no\"> $translation_cancel_newsletter";
-    } 
-    else {
+    } else {
         
         $html_output .= "<input type=\"radio\" name=\"newsletter_subscribe\" value=\"yes\"> $translation_subscribe_newsletter<br/>";
         $html_output .= "<input type=\"radio\" name=\"newsletter_subscribe\" checked value=\"no\"> $translation_cancel_newsletter";
     }
     
-    $html_output .= "<br/><br/><input type=\"submit\" value=\"$translation_submit\">";
+    if (class_exists("PrivacyCheckbox")) {
+        $checkbox = new PrivacyCheckbox(getCurrentLanguage(true));
+        if ($checkbox->isEnabled()) {
+            $html_output .= '<div class="newsletter_privacy_checkbox">';
+            $html_output .= $checkbox->render();
+            $html_output .= '</div>';
+        }
+    }
+    
+    $html_output .= "<br/><br/><input type=\"submit\" class=\"btn btn-primary\" value=\"$translation_submit\">";
     
     $html_output .= "</form>";
     

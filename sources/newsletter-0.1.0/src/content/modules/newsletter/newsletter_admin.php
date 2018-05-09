@@ -84,7 +84,7 @@ function newsletter_admin()
     } else {
         echo "<br/>";
         echo "<p>(C) 2013 - 2018 by Ulrich Schmidt<br/>";
-        echo "Version " . NEWSLETTER_MODULE_VERSION . "</p>";
+        echo "Version " . getModuleMeta("newsletter", "version") . "</p>";
     }
 }
 
