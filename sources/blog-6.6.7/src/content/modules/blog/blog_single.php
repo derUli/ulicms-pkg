@@ -106,10 +106,12 @@ function comment_form($post_id)
             $html .= '<p class="newsletter_privacy_checkbox">';
             $html .= $checkbox->render();
             $html .= '</p>';
+        } else {
+            $html .= "<br/><br/>";
         }
     }
     
-    $html .= "<br/><br/><div class=\"ulicms_publish_comment\"><input type='submit' value='" . $submit . "'></div>";
+    $html .= "<div class=\"ulicms_publish_comment\"><input type='submit' value='" . $submit . "'></div>";
     $html .= "</form></div>";
     
     return $html;
@@ -191,7 +193,7 @@ function post_comments()
 }
 
 if (! function_exists("stringcontainsbadwords")) {
-    
+
     function stringcontainsbadwords($str)
     {
         $words_blacklist = getconfig("spamfilter_words_blacklist");
@@ -256,8 +258,7 @@ function blog_display_comments($post_id)
         $checkbox = new PrivacyCheckbox(getCurrentLanguage(true));
         if (Request::isPost() and $checkbox->isEnabled() and ! $checkbox->isChecked()) {
             $html .= "<p class='ulicms_error'>" . get_translation("please_accept_privacy_conditions") . "</p>";
-        }
-        else {
+        } else {
             
             if (post_comments($post->id)) {
                 $html .= "<script type='text/javascript'>
