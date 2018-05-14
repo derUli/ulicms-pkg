@@ -1,10 +1,6 @@
 <?php
-if (containsModule(null, "blog")) {
-    
-    if (! function_exists("get_requested_pagename") and ! is_admin_dir()) {
-        include_once "templating.php";
-    }
-    
+include_once ULICMS_ROOT . "/templating.php";
+if (containsModule(null, "blog")) {  
     if (! function_exists("rootDirectory")) {
 
         function rootDirectory()
