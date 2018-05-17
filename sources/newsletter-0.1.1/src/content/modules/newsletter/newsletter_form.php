@@ -1,7 +1,7 @@
 <?php
 $acl = new ACL ();
-if (! $acl->hasPermission ( "guestbook" )) {
-	define ( "Access denied!" );
+if (! $acl->hasPermission ( "newsletter" )) {
+	die ( "Access denied!" );
 }
 
 if (isset ( $_POST ["submit"] )) {
