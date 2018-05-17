@@ -56,6 +56,8 @@ if (! function_exists("send_html_mail")) {
         // $header .= "Cc: $cc\n"; // falls an CC gesendet werden soll
         $header .= "X-Mailer: PHP " . phpversion();
         
+		// Use mail_queue module for mail delivery if installed
+		// https://github.com/derUli/mail_queue
         if (class_exists('\MailQueue\MailQueue')) {
             $queue = \MailQueue\MailQueue::getInstance();
             $mail = new \MailQueue\Mail();
