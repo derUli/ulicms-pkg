@@ -8,5 +8,5 @@ if ($language != "de") {
 if (! isset ( $data ["disable_socialshare"] ) and ! isset ( $data ["disable_facebook_like"] ) and ! isset ( $data ["disable_google_plusone"] ) and is_200 ()) {
 	?>
 <script type="text/javascript"
-	src="<?php echo getModulePath("shariff");?>shariff.min.js"></script><?php
+	src="<?php echo getModulePath("shariff");?>shariff.complete.js"></script><?php
 }
