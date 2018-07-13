@@ -24,7 +24,7 @@ function sql_console_admin()
     }
     
     include getModulePath("sql_console", true) . "sql_console_form.php";
-    $config = new config();
+    $config = new CMSConfig();
     db_select_db($config->db_database);
 }
 
