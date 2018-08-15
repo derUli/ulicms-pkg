@@ -7,9 +7,13 @@
 	"authors": [
 		{
 			"name": "David Grudl",
-			"homepage": "http://davidgrudl.com"
+			"homepage": "https://davidgrudl.com"
 		}
 	],
+	"require": {
+		"php": ">=5.4.0",
+		"ext-curl": "*"
+	},
 	"autoload": {
 		"classmap": ["src/"]
 	}
