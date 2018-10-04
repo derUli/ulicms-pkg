@@ -162,10 +162,9 @@ function post_comments()
             // dieses Feld wird darauf geprüft, ob es nicht leer ist
             if (! empty($_POST["phone"])) {
                 Settings::set("contact_form_refused_spam_mails", Settings::get("contact_form_refused_spam_mails") + 1);
-                echo ("Die motherfucking spammers!");
                 return false;
             }
-            if (stringcontainsbadwords($_POST["name"]) or stringcontainsbadwords($_POST["comment"])) {
+            if (AntiSpamHelper::containsBadwords($_POST["name"]) or AntiSpamHelper::containsBadwords($_POST["comment"])) {
                 return false;
             }
         }
