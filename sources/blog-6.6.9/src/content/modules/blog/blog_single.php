@@ -164,7 +164,7 @@ function post_comments()
                 Settings::set("contact_form_refused_spam_mails", Settings::get("contact_form_refused_spam_mails") + 1);
                 return false;
             }
-            if (AntiSpamHelper::containsBadwords($_POST["name"]) or AntiSpamHelper::containsBadwords($_POST["comment"])) {
+            if (AntiSpamHelper::containsBadwords($_POST["name"]) or AntiSpamHelper::containsBadwords($_POST["comment"]) or AntiSpamHelper::containsBadwords($_POST["url"])) {
                 return false;
             }
         }
