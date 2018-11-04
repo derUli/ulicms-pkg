@@ -46,14 +46,14 @@ if (containsModule ( get_requested_pagename (), "google_maps" )) {
           marker:{
             address: "<?php
 		
-		echo real_htmlspecialchars ( $google_maps_marker );
+		esc( $google_maps_marker );
 		?>"
           },
           map:{
             options:{
               zoom: <?php
 		
-		echo real_htmlspecialchars ( $google_maps_zoom_level );
+		esc( $google_maps_zoom_level );
 		?>
             }
           }
