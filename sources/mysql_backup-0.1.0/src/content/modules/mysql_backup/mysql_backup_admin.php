@@ -28,7 +28,7 @@ function mysql_backup_admin()
     $mysql_backup_last_time = getconfig("mysql_backup_last_time");
     $mysql_backup_every_days = getconfig("mysql_backup_every_days");
     
-    $backup_folder = ULICMS_ROOT . DIRECTORY_SEPERATOR . "backup";
+    $backup_folder = ULICMS_ROOT . "/backup";
     
     $backup_files = array();
     
@@ -41,7 +41,7 @@ function mysql_backup_admin()
     $reset = false;
     
     if (! empty($_POST["backup_file"]) and $_POST["backup_file"] != "-") {
-        $file = $backup_folder . DIRECTORY_SEPERATOR . basename($_POST["backup_file"]);
+        $file = $backup_folder . "/" . basename($_POST["backup_file"]);
         
         if (file_exists($file)) {
             
@@ -94,6 +94,10 @@ function mysql_backup_admin()
     echo date("d.m.Y", $mysql_backup_last_time);
     ?>
 
+		
+		
+		
+		
 		
 		
 		
