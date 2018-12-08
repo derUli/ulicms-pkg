@@ -1,0 +1,7 @@
+{
+	 "version" : "2.0.5b",
+	 "admin_permission" : "jquery_tablesorter_settings",
+	 "custom_acl" : ["jquery_tablesorter_settings"],
+	 "embed" : true
+}
+
