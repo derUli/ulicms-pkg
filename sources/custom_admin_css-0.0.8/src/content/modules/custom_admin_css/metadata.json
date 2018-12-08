@@ -1,0 +1,9 @@
+{
+	"version": "0.0.8",
+	"custom_acl": [
+		"custom_admin_css"
+	],
+	"embed": false,
+	"admin_permission": "custom_admin_css"
+}
+

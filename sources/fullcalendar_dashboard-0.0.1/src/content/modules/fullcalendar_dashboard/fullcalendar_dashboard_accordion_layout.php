@@ -32,7 +32,7 @@ if (in_array ( "fullcalendar", getAllModules () )) {
 			echo "<td>";
 			if (! empty ( $row->url ) and $row->url != "http://")
 				echo "<a href=\"" . $row->url . "\" style=\"font-weight:normal\" target=\"_blank\">";
-			echo real_htmlspecialchars ( $row->title );
+			esc( $row->title );
 			if (! empty ( $row->url ) and $row->url != "http://")
 				echo "</a>";
 			echo "</td>";
