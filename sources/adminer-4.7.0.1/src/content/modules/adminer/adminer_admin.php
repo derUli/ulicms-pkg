@@ -11,7 +11,7 @@ function adminer_admin() {
 	<input type="hidden" name="auth[password]" value="<?php esc($cfg->db_password);?>">
 	<input type="hidden" name="auth[db]" value="<?php esc($cfg->db_database);?>">
 	<input type="hidden" name="auth[driver]" value="server">
-	<!--<button type="submit" class="btn btn-primary"><?php translate("open_adminer");?></button>-->
+	<!-- <button type="submit" class="btn btn-primary"><?php translate("open_adminer");?></button> -->
 	</form>
 <script>
 	$(function(){
