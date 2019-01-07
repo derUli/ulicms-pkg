@@ -5,11 +5,10 @@ define("MODULE_ADMIN_REQUIRED_PERMISSION", "custom_admin_css");
 function custom_admin_css_admin()
 {
     if (isset($_POST["submit"])) {
-        setconfig("custom_admin_css", db_escape($_POST["custom_admin_css"]));
+        Settings::set("custom_admin_css", $_POST["custom_admin_css"]);
     }
     
-    $custom_admin_css = getconfig("custom_admin_css");
-    $custom_admin_css = StringHelper::realHtmlSpecialchars($custom_admin_css);
+    $custom_admin_css = Settings::get("custom_admin_css");
     ?>
 
 <form action="<?php echo getModuleAdminSelfPath()?>" method="post">
@@ -24,7 +23,7 @@ function custom_admin_css_admin()
 		<textarea rows="30" cols="80" style="width: 100%"
 			name="custom_admin_css" class="codemirror" data-mimetype="text/css"><?php
     
-    echo $custom_admin_css;
+    esc($custom_admin_css);
     ?></textarea>
 	
 	
