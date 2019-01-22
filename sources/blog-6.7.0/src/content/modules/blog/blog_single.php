@@ -221,7 +221,7 @@ function blog_display_comments($post_id)
     
     $spamfilter_enabled = getconfig("spamfilter_enabled") == "yes";
     
-    if (isCountryBlocked() and $spamfilter_enabled) {
+    if (AntiSpamHelper::isCountryBlocked() and $spamfilter_enabled) {
         Settings::set("contact_form_refused_spam_mails", Settings::get("contact_form_refused_spam_mails") + 1);
         if ($_SESSION["language"] == "de") {
             $html .= "<p class='ulicms_error'>

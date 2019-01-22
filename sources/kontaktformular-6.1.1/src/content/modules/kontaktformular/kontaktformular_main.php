@@ -82,7 +82,7 @@ function kontaktformular_render()
             }
             
             // Filter nach chinesisch
-            if (getconfig("disallow_chinese_chars") and (is_chinese($_POST["betreff"]) or is_chinese($_POST["nachricht"]))) {
+            if (getconfig("disallow_chinese_chars") and (AntiSpamHelper::isChinese($_POST["betreff"]) or AntiSpamHelper::isChinese($_POST["nachricht"]))) {
                 
                 setconfig("contact_form_refused_spam_mails", getconfig("contact_form_refused_spam_mails") + 1);
                 
@@ -93,7 +93,7 @@ function kontaktformular_render()
                 }
             }
             // Filter nach russisch
-            if (getconfig("disallow_cyrillic_chars") and (AntispamHelper::isCyrillic($_POST["betreff"]) or is_chinese($_POST["nachricht"]))) {
+            if (getconfig("disallow_cyrillic_chars") and (AntispamHelper::isCyrillic($_POST["betreff"]) or AntiSpamHelper::isChinese($_POST["nachricht"]))) {
                 
                 setconfig("contact_form_refused_spam_mails", getconfig("contact_form_refused_spam_mails") + 1);
                 
@@ -105,7 +105,7 @@ function kontaktformular_render()
             }
             // Filter nach Land
             if (function_exists("isCountryBlocked")) {
-                if (isCountryBlocked()) {
+                if (AntiSpamHelper::isCountryBlocked()) {
                     
                     if (! $fehler) {
                         setconfig("contact_form_refused_spam_mails", getconfig("contact_form_refused_spam_mails") + 1);
