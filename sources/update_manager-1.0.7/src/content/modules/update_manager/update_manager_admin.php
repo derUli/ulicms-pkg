@@ -14,7 +14,6 @@ function update_manager_admin()
     if (count($updates) > 0) {
         ?>
 <p><?php
-        
         if (count($updates) == 1) {
             translate("UPDATES_AVAILABLE_SINGULAR");
         } else {
@@ -43,7 +42,7 @@ function update_manager_admin()
         
         ?>
 	<p>
-		<button type="submit" class="btn btn-warning"><?php translate("install_updates");?></button>
+		<button type="submit" class="btn btn-warning"><i class="fas fa-sync"></i> <?php translate("install_updates");?></button>
 	</p>
 	<?php
     } else {
