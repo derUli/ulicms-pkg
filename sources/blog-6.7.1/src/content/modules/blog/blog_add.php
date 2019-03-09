@@ -138,15 +138,6 @@ function blog_add_form() {
 	$html_output .= "<td>";
 	$html_output .= "</td>";
 	$html_output .= "<td align='center'>";
-	
-	$html_output .= "<input type='checkbox' name='spellcheck' value='spellcheck' /> Häufige Rechtschreibfehler korrigieren";
-	$html_output .= "</td>";
-	$html_output .= "</tr>";
-	
-	$html_output .= "<tr>";
-	$html_output .= "<td>";
-	$html_output .= "</td>";
-	$html_output .= "<td align='center' style='padding-top:50px;'>";
 	$html_output .= "<input type='submit' value='Speichern'>";
 	$html_output .= "</td>";
 	$html_output .= "</tr>";
