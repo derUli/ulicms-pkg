@@ -81,11 +81,17 @@ function generate_sitemap()
     $xml_file = ULICMS_DATA_STORAGE_ROOT . "/sitemap.xml";
     
     $url = defined("ULICMS_DATA_STORAGE_URL") ? ULICMS_DATA_STORAGE_URL . "/sitemap.xml" : "../sitemap.xml";
-    
+	
+	    
     $handle = @fopen($xml_file, "w");
     if ($handle) {
         fwrite($handle, $xml_string);
         fclose($handle);
+		
+		$xml_sitemap_url = Settings::get("xml_sitemap_url");
+		if($xml_sitemap_url){
+			file_get_contents_wrapper("https://google.com/ping?sitemap=".urlencode($xml_sitemap_url), true);
+		}
         
         translate("GENERATE_XML_SITEMAP_SUCCESS", array(
             "%url%" => $url
