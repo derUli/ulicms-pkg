@@ -118,7 +118,7 @@ function xml_sitemap_admin()
     
     csrf_token_html();
     ?>
-<button type="submit" name="submit" class="btn btn-success"><?php translate("generate_xml_sitemap");?></button>
+<button type="submit" name="submit" class="btn btn-success"><i class="fas fa-sitemap"></i> <?php translate("generate_xml_sitemap");?></button>
 </form>
 <?php
 }
