@@ -199,17 +199,17 @@ editor2.on(\"instanceReady\", function()
 );
 
 function CKCHANGED() { 
-	formchanged = 1;
+	formChanged = 1;
 }					
 			
-var formchanged = 0;
+var formChanged = 0;
 var submitted = 0;
  
 $(document).ready(function() {
 	$('form').each(function(i,n){
-		$('input', n).change(function(){formchanged = 1});
-		$('textarea', n).change(function(){formchanged = 1});
-		$('select', n).change(function(){formchanged = 1}); 
+		$('input', n).change(function(){formChanged = 1});
+		$('textarea', n).change(function(){formChanged = 1});
+		$('select', n).change(function(){formChanged = 1}); 
 		$(n).submit(function(){submitted=1});
 	});
 });
@@ -217,7 +217,7 @@ $(document).ready(function() {
 window.onbeforeunload = confirmExit;
 function confirmExit()
 {
-	if(formchanged == 1 && submitted == 0)
+	if(formChanged == 1 && submitted == 0)
 		return \"Wenn Sie diese Seite verlassen gehen nicht gespeicherte Änderungen verloren.\";
 	else 
 		return;
