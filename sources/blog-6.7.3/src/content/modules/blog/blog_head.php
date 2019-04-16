@@ -1,5 +1,5 @@
 <?php
-if (is_logged_in()) {
+if (is_logged_in() and containsModule(get_requested_pagename(), "blog")) {
     ?>
 <script type="text/javascript" src="admin/ckeditor/ckeditor.js"></script>
 <?php
