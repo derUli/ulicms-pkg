@@ -29,6 +29,9 @@ function custom_css_admin() {
 	</p>
 </form>
 <?php
+BackendHelper::enqueueEditorScripts();
+combinedScriptHtml();
+
 }
 
 ?>

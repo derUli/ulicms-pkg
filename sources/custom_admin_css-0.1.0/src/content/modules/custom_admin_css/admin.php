@@ -33,6 +33,9 @@ function custom_admin_css_admin()
 	</p>
 </form>
 <?php
+BackendHelper::enqueueEditorScripts();
+combinedScriptHtml();
+
 }
 
 ?>
