@@ -1,5 +1,3 @@
-<?php
-?>
 <form action="<?php echo getModuleAdminSelfPath()?>" method="post">
 <?php csrf_token_html();?>
 <p>
@@ -14,3 +12,7 @@
 	</p>
 	<input type="submit" value="<?php translate("sql_console_execute");?>">
 </form>
+<?php 
+BackendHelper::enqueueEditorScripts();
+combinedScriptHtml();
+?>
