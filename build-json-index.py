@@ -11,10 +11,12 @@ output_dir = os.path.join(root_cwd, "packages")
 data = []
 
 for package in os.listdir(list_files):
-	package_data = package.rsplit('-', 1)
+	if not "-" in package:
+		continue
+	package_data = package.rsplit("-", 1)
 		
 	package_name = package_data[0]
-	package_version = package_data[-1]
+	package_version = package_data[1]
 	
 	
 	type = "theme" if package.startswith("theme") else "module"
