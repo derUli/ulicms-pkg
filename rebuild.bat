@@ -1,2 +1,2 @@
-ulicms-pkg.py clean
-ulicms-pkg.py build
+python ulicms-pkg.py clean
+python ulicms-pkg.py build

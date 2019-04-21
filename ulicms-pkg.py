@@ -56,7 +56,7 @@ if sys.argv[1] == "init":
 elif sys.argv[1] == "src-folder-create":
    if len(sys.argv) > 2:
       target = sys.argv[2]
-      print "making src folder for " + target
+      print("making src folder for " + target)
       targetDir = os.path.join("sources", target)
       if os.path.exists(targetDir):
          print("Folder exists")
@@ -264,11 +264,15 @@ elif sys.argv[1] == "build":
             print("copy description...")
             shutil.copy(pkgDescFile, descFile)
             print("done.")
-      if len(packagesToBuild) > 0:
-         end_time = time.time()
-         print("Duration of build process: ")
-         duration = time.gmtime(end_time - start_time)
-         print(time.strftime("%H:%M:%S", duration))
+			
+		
+   exec(open("./build-json-index.py").read())
+	
+   if len(packagesToBuild) > 0:
+      end_time = time.time()
+      print("Duration of build process: ")
+      duration = time.gmtime(end_time - start_time)
+      print(time.strftime("%H:%M:%S", duration))
 elif sys.argv[1] == "moo":
    print("         (__) ")
    print("         (oo) ")

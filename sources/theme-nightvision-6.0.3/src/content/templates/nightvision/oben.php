@@ -51,15 +51,4 @@ echo getCurrentLanguage ();
 				<div class="post">
 					<div class="title">
 						<?php Template::headline("<h2>%title%</h2>");?>
-				<?php
-				
-if (! is_404 () and ! is_403) {
-     ?>
-				<p>
-							<small>
-
-				<?php autor();?></small>
-						</p>
-				<?php }
-?>
 			</div>
