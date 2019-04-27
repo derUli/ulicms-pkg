@@ -273,11 +273,6 @@ elif sys.argv[1] == "build":
       print("Duration of build process: ")
       duration = time.gmtime(end_time - start_time)
       print(time.strftime("%H:%M:%S", duration))
-      if len(packagesToBuild) > 0:
-         end_time = time.time()
-         print("Duration of build process: ")
-         duration = time.gmtime(end_time - start_time)
-         print(time.strftime("%H:%M:%S", duration))
 
 elif sys.argv[1] == "push":
     if len(sys.argv) < 3:
