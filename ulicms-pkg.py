@@ -273,6 +273,23 @@ elif sys.argv[1] == "build":
       print("Duration of build process: ")
       duration = time.gmtime(end_time - start_time)
       print(time.strftime("%H:%M:%S", duration))
+
+elif sys.argv[1] == "push":
+    if len(sys.argv) < 3:
+        print("Please specify version number")
+        sys.exit()
+    if not "ULICMS_PACKAGES_FTP" in os.environ:
+        print("Please set ULICMS_PACKAGES_FTP environment variable.")
+        sys.exit()
+    version = sys.argv[2]
+
+    ftp_url = os.environ["ULICMS_PACKAGES_FTP"].replace("ULICMS_VERSION", version)
+    ftp_url += "/"
+    
+    command = "wput --basename packages/ -u -nc packages/* "+ ftp_url
+    os.system(command)
+    sys.exit()
+
 elif sys.argv[1] == "moo":
    print("         (__) ")
    print("         (oo) ")
