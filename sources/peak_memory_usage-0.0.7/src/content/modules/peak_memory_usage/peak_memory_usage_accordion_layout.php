@@ -4,14 +4,14 @@ include_once getModulePath ( "peak_memory_usage", true ) . "/objects/peak_memory
 $acl = new ACL ();
 if ($acl->hasPermission ( "peak_memory_usage" )) {
 	
-	$min = formatSizeUnits ( PeakMemoryUsage::getMinimalUsage () );
-	$average = formatSizeUnits ( PeakMemoryUsage::getAverageMemoryUsage () );
-	$max = formatSizeUnits ( PeakMemoryUsage::getMaximalUsage () );
+	$min = NumberFormatHelper::formatSizeUnits ( PeakMemoryUsage::getMinimalUsage () );
+	$average = NumberFormatHelper::formatSizeUnits ( PeakMemoryUsage::getAverageMemoryUsage () );
+	$max = NumberFormatHelper::formatSizeUnits ( PeakMemoryUsage::getMaximalUsage () );
 	?>
 
 <h2 class="accordion-header"><?php translate("PEAK_MEMORY_USAGE");?></h2>
 <div class="accordion-content">
-	<table border=0>
+	<table>
 		<tr>
 			<td><strong><?php translate("MINIMAL");?></strong></td>
 			<td style="text-align: right">
