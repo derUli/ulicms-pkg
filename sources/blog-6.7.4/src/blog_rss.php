@@ -33,9 +33,9 @@ echo '<rss version="2.0">';
 echo "\n";
 
 echo "<channel>";
-echo "<title>" . getconfig("homepage_title") . "</title>\n";
+echo "<title>" . Settings::getLang("homepage_title", $lang) . "</title>\n";
 echo "<link>" . rootDirectory() . "</link>\n";
-echo "<description>" . getconfig("motto") . "</description>\n";
+echo "<description>" .  Settings::getLang("motto", $lang) . "</description>\n";
 
 if (! getconfig("hide_meta_generator")) {
     $generator = "UliCMS " . cms_version();
