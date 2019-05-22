@@ -40,10 +40,11 @@ function blog_edit_form($post_id) {
 		$html_output .= "<select name='language'>";
 		for($i = 0; $i < count ( $all_languages ); $i ++) {
 			$this_language = $all_languages [$i];
+			$translatedLanguage = getLanguageNameByCode ( $this_language );
 			if ($post->language == $this_language) {
-				$html_output .= "<option value='$this_language' selected>$this_language</option>";
+				$html_output .= "<option value='$this_language' selected>$translatedLanguage</option>";
 			} else {
-				$html_output .= "<option value='$this_language'>$this_language</option>";
+				$html_output .= "<option value='$this_language'>$translatedLanguage</option>";
 			}
 		}
 		
