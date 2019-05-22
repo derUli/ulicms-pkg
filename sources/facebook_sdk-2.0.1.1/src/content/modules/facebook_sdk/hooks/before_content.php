@@ -19,5 +19,3 @@ echo $facebook_app_id;
 
 <?php
 }
-
-?>
