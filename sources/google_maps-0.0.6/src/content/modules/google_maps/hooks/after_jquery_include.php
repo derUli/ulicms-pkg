@@ -22,7 +22,7 @@ if (containsModule ( get_requested_pagename (), "google_maps" )) {
 	if ($google_maps_marker and $google_maps_zoom_level) {
 		?>
 <script type="text/javascript"
-	src="http://maps.googleapis.com/maps/api/js?key=<?php Template::escape($google_maps_api_key);?>"></script>
+	src="https://maps.googleapis.com/maps/api/js?key=<?php Template::escape($google_maps_api_key);?>"></script>
 
 <script type="text/javascript"
 	src="<?php
