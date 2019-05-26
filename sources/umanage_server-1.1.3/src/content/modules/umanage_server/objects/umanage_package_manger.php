@@ -3,8 +3,7 @@ class uManagePackageManager extends PackageManager {
 	public function installRemotePackage($package) {
 		$pkg_src = Settings::get ( "pkg_src" );
 		@set_time_limit ( 0 );
-		include_once ULICMS_ROOT . "/version.php";
-		$version = new ulicms_version ();
+		$version = new UliCMSVersion ();
 		$internalVersion = implode ( ".", $version->getInternalVersion () );
 		$pkg_src = str_replace ( "{version}", $internalVersion, $pkg_src );
 		
