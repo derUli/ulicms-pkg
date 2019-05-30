@@ -36,7 +36,7 @@ function sitemap_menu($name) {
 	$html_output .= "<h2>" . $menu_in_german . "</h2>";
 	
 	$language = $_SESSION ["language"];
-	$query = db_query ( "SELECT * FROM " . tbname ( "content" ) . " WHERE menu ='$name' AND language = '$language' AND active = 1 AND `deleted_at` IS NULL AND parent IS NULL and `type` <> 'node' and `type` <> 'snippet' and `type` <> 'link' ORDER by position" );
+	$query = db_query ( "SELECT * FROM " . tbname ( "content" ) . " WHERE menu ='$name' AND language = '$language' AND active = 1 AND `deleted_at` IS NULL AND parent_id IS NULL and `type` <> 'node' and `type` <> 'snippet' and `type` <> 'link' ORDER by position" );
 	$html_output .= "<ul>\n";
 	while ( $row = db_fetch_object ( $query ) ) {
 		$html_output .= "  <li>";
@@ -55,7 +55,7 @@ function sitemap_menu($name) {
 		}
 		
 		// Unterebene 1
-		$query2 = db_query ( "SELECT * FROM " . tbname ( "content" ) . " WHERE active = 1 AND `deleted_at` IS NULL AND language = '$language' AND parent=" . $row->id . " and `type` <> 'node' and `type` <> 'snippet' and `type` <> 'link' ORDER by position" );
+		$query2 = db_query ( "SELECT * FROM " . tbname ( "content" ) . " WHERE active = 1 AND `deleted_at` IS NULL AND language = '$language' AND parent_id=" . $row->id . " and `type` <> 'node' and `type` <> 'snippet' and `type` <> 'link' ORDER by position" );
 		if (db_num_rows ( $query2 ) > 0) {
 			$html_output .= "<ul>\n";
 			while ( $row2 = db_fetch_object ( $query2 ) ) {
@@ -76,7 +76,7 @@ function sitemap_menu($name) {
 				}
 				
 				// Unterebene 2
-				$query3 = db_query ( "SELECT * FROM " . tbname ( "content" ) . " WHERE active = 1 AND `deleted_at` IS NULL AND language = '$language' AND parent=" . $row2->id . " and `type` <> 'node' and `type` <> 'snippet' and `type` <> 'link' ORDER by position" );
+				$query3 = db_query ( "SELECT * FROM " . tbname ( "content" ) . " WHERE active = 1 AND `deleted_at` IS NULL AND language = '$language' AND parent_id=" . $row2->id . " and `type` <> 'node' and `type` <> 'snippet' and `type` <> 'link' ORDER by position" );
 				if (db_num_rows ( $query3 ) > 0) {
 					$html_output .= "  <ul>\n";
 					while ( $row3 = db_fetch_object ( $query3 ) ) {
@@ -96,7 +96,7 @@ function sitemap_menu($name) {
 						}
 						
 						// Unterebene 3
-						$query4 = db_query ( "SELECT * FROM " . tbname ( "content" ) . " WHERE active = 1 AND `deleted_at` IS NULL AND language = '$language' AND parent=" . $row3->id . " and `type` <> 'node' and `type` <> 'snippet' and `type` <> 'link' ORDER by position" );
+						$query4 = db_query ( "SELECT * FROM " . tbname ( "content" ) . " WHERE active = 1 AND `deleted_at` IS NULL AND language = '$language' AND parent_id=" . $row3->id . " and `type` <> 'node' and `type` <> 'snippet' and `type` <> 'link' ORDER by position" );
 						if (db_num_rows ( $query4 ) > 0) {
 							$html_output .= "  <ul>\n";
 							while ( $row4 = db_fetch_object ( $query4 ) ) {
