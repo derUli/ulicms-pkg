@@ -1,6 +1,7 @@
 <?php
 include "init.php";
-include "templating.php";
+
+use UliCMS\Utils\CacheUtil;
 
 $events = array();
 
