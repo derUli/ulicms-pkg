@@ -1,5 +1,4 @@
 <?php
-include_once ULICMS_ROOT . "/templating.php";
 
 define("MODULE_ADMIN_HEADLINE", "XML Sitemap");
 
