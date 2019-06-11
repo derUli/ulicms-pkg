@@ -1,7 +1,0 @@
-{
-	"source" : "pkgsrc",
-	"version" : "4.7.0.1",
-	"admin_permission" : "adminer",
-	"embed" : false,
-	"custom_acl" : ["adminer"]
-}

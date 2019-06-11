@@ -1,0 +1,10 @@
+{
+    "source": "pkgsrc",
+    "version": "2.0.1.1",
+    "embed": false,
+    "custom_acl": [
+        "facebook_sdk_settings"
+    ],
+    "admin_permission": "facebook_sdk_settings"
+}
+
