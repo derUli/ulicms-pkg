@@ -39,4 +39,5 @@ thumbs.db
 
 .svn
 .DS_Store
-/nbproject/private/
+nbproject
+/sources/nbproject/private/
