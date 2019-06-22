@@ -1,4 +1,5 @@
 <?php
+
 define("TRANSLATION_LIST_OF_REMOTE_SITES", "List of remote sites");
 define("TRANSLATION_UNKNOWN", "unknown");
 define("TRANSLATION_DOMAIN", "Domain");

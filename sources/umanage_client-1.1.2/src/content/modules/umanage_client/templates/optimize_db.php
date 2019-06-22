@@ -3,8 +3,8 @@ $acl = new ACL();
 if ($acl->hasPermission("umanage_client")) {
     if (StringHelper::isNotNullOrWhitespace(Request::getVar("sites"))) {
         ?>
-<h1><?php translate("optimize_database");?></h1>
-<?php
+        <h1><?php translate("optimize_database"); ?></h1>
+        <?php
         foreach (explode(",", $_REQUEST["sites"]) as $id) {
             $nid = intval($id);
             $site = Sites::getSiteByID($nid);
@@ -13,35 +13,35 @@ if ($acl->hasPermission("umanage_client")) {
             $result = $con->optimizeDB();
             if ($result and isset($result["result"]) and $result["result"] == "ok") {
                 ?>
-<span style="color: green">
-		<?php Template::escape($site["domain"]);?> ✓</span>
-<?php
+                <span style="color: green">
+                    <?php Template::escape($site["domain"]); ?> ✓</span>
+                <?php
             } else {
                 ?>
-<span style="color: red">
-		<?php Template::escape($site["domain"]);?> ×</span>
-<?php
-            }
-            ?>
+                <span style="color: red">
+                    <?php Template::escape($site["domain"]); ?> ×</span>
+                    <?php
+                }
+                ?>
 
-<br />
+            <br />
 
-<?php
+            <?php
             fcflush();
         }
         ?>
-	
-	<?php if(count($_GET["sites"]) > 0){?>
-<br />
-<?php
+
+        <?php if (count($_GET["sites"]) > 0) { ?>
+            <br />
+            <?php
         }
         ?>
-	<?php
+        <?php
     }
 } else {
     noperms();
 }
 ?>
 <p>
-	<a href="#" onclick="history.back();"><?php translate("back")?></a>
+    <a href="#" onclick="history.back();"><?php translate("back") ?></a>
 </p>

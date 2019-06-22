@@ -1,4 +1,5 @@
 <?php
+
 define("TRANSLATION_LIST_OF_REMOTE_SITES", "Liste der entfernten Sites");
 define("TRANSLATION_UNKNOWN", "Unbekannt");
 define("TRANSLATION_DOMAIN", "Domäne");
