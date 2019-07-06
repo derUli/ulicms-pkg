@@ -1,5 +1,4 @@
 <?php
-include_once ULICMS_ROOT . "/templating.php";
 $pkg = new PackageManager();
 $installed_patches = $pkg->getInstalledPatchNames();
 $installed_patches = implode(";", $installed_patches);
@@ -15,7 +14,7 @@ class UManageController
 
     public static function handleRequest()
     {
-        $response = array();
+        $response = [];
         $key = $_REQUEST["key"];
         if ($key != Settings::get("umanage_api_key")) {
             $response["error"] = "invalid_api_key";
@@ -92,14 +91,14 @@ class UManageController
 
     private static function installPackages()
     {
-        $result = array();
+        $result = [];
         if (isset($_REQUEST["packages"]) and ! empty($_REQUEST["packages"])) {
             $packages = explode(";", $_REQUEST["packages"]);
             $packages = array_map("trim", $packages);
             $pkg = new uManagePackageManager();
             $result = array(
-                "ok" => array(),
-                "failed" => array()
+                "ok" => [],
+                "failed" => []
             );
             foreach ($packages as $package) {
                 ob_start();
@@ -157,7 +156,7 @@ class UManageController
     private static function checkForPatches()
     {
         $result = array(
-            "patches" => array()
+            "patches" => []
         );
         $text = file_get_contents_wrapper(PATCH_CHECK_URL, true);
         $available = str_ireplace("\r\n", "\n", $text);
@@ -178,14 +177,14 @@ class UManageController
     {
         $available_patches = self::checkForPatches();
         $available_patches = $available_patches["patches"];
-        $result = array();
+        $result = [];
         if (isset($_REQUEST["patches"]) and ! empty($_REQUEST["patches"])) {
             $patches = explode(";", $_REQUEST["patches"]);
             $patches = array_map("trim", $patches);
             $pkg = new uManagePackageManager();
             $result = array(
-                "ok" => array(),
-                "failed" => array()
+                "ok" => [],
+                "failed" => []
             );
             foreach ($patches as $patch) {
                 foreach ($available_patches as $avpatch) {
