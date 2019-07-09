@@ -191,29 +191,6 @@ function post_comments()
     }
 }
 
-if (! function_exists("stringcontainsbadwords")) {
-
-    function stringcontainsbadwords($str)
-    {
-        $words_blacklist = getconfig("spamfilter_words_blacklist");
-        $str = strtolower($str);
-        
-        if ($words_blacklist !== false) {
-            $words_blacklist = explode("||", $words_blacklist);
-        } else {
-            return false;
-        }
-        
-        for ($i = 0; $i < count($words_blacklist); $i ++) {
-            $word = strtolower($words_blacklist[$i]);
-            if (strpos($str, $word) !== false)
-                return true;
-        }
-        
-        return false;
-    }
-}
-
 function blog_display_comments($post_id)
 {
     $html = "";
@@ -246,7 +223,10 @@ function blog_display_comments($post_id)
         }
     } // disallow_cyrillic_chars
     
-    else if ($spamfilter_enabled and (stringcontainsbadwords($_POST["name"]) or stringcontainsbadwords($_POST["comment"]))) {
+    else if ($spamfilter_enabled and 
+	(AntiSpamHelper::containsBadwords($_POST["name"])
+	or AntiSpamHelper::containsBadwords($_POST["url"])
+	or AntiSpamHelper::containsBadwords($_POST["comment"]))) {
         Settings::set("contact_form_refused_spam_mails", Settings::get("contact_form_refused_spam_mails") + 1);
         if ($_SESSION["language"] == "de") {
             $html .= "<p class='ulicms_error'>" . "Ihr Kommentar enthält nicht erlaubte Wörter.</p>";

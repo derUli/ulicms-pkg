@@ -15,7 +15,7 @@ function polls_render()
         if (is_null($question->getID())) {
             $html = get_translation("poll_not_found");
         } else {
-            // @FIXME: Prüfen, auf $question->isEnabled()
+            // FIXME: Prüfen, auf $question->isEnabled()
             // Wenn Poll deaktiviert, dann Meldung, dass Poll nicht mehr aktiv ist
             $already_voted = PollFactory::userHasAlreadyVotedForPoll($id);
             if (! $already_voted) {

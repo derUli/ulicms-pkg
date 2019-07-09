@@ -1,19 +1,18 @@
 <?php
+
 $pkg = new PackageManager();
 $installed_patches = $pkg->getInstalledPatchNames();
 $installed_patches = implode(";", $installed_patches);
 $version = new ulicms_version();
-if (! defined("PATCH_CHECK_URL")) {
+if (!defined("PATCH_CHECK_URL")) {
     define("PATCH_CHECK_URL", "http://patches.ulicms.de/?v=" . urlencode(implode(".", $version->getInternalVersion())) . "&installed_patches=" . urlencode($installed_patches));
 }
 
 include_once getModulePath("umanage_server", true) . "/objects/umanage_package_manger.php";
 
-class UManageController
-{
+class UManageController {
 
-    public static function handleRequest()
-    {
+    public static function handleRequest() {
         $response = [];
         $key = $_REQUEST["key"];
         if ($key != Settings::get("umanage_api_key")) {
@@ -50,16 +49,15 @@ class UManageController
             }
             $response = apply_filter($response, "umanage_response");
         }
-        
+
         return json_encode($response);
     }
 
-    private static function upgradeCore()
-    {
+    private static function upgradeCore() {
         $controller = ControllerRegistry::get("CoreUpgradeController");
         if ($controller) {
             if ($controller->checkForUpgrades()) {
-                if (! $controller->runUpgrade(true)) {
+                if (!$controller->runUpgrade(true)) {
                     TextResult("upgrade_failed", 500);
                 }
             } else {
@@ -69,18 +67,15 @@ class UManageController
         TextResult("oneclick_upgrade_not_available", 503);
     }
 
-    // @TODO: Funktion implementieren, zum Abfragen von Systeminfos (UliCMS Release Version, usw.)
-    private static function getInfos()
-    {
-        $version = new ulicms_version();
+    private static function getInfos() {
         $umanage_server_version = getModuleMeta("umanage_server", "version");
-        
+
         $isCoreCurrent = true;
         $controller = ControllerRegistry::get("CoreUpgradeController");
         if ($controller) {
             $isCoreCurrent = is_null($controller->checkForUpgrades());
         }
-        
+
         $info = array(
             "version" => cms_version(),
             "is_core_current" => $isCoreCurrent,
@@ -89,8 +84,7 @@ class UManageController
         return $info;
     }
 
-    private static function installPackages()
-    {
+    private static function installPackages() {
         $result = [];
         if (isset($_REQUEST["packages"]) and ! empty($_REQUEST["packages"])) {
             $packages = explode(";", $_REQUEST["packages"]);
@@ -117,8 +111,7 @@ class UManageController
         return $result;
     }
 
-    private static function checkForPackageUpdates()
-    {
+    private static function checkForPackageUpdates() {
         include_once getModulePath("update_manager", true) . "/objects/update_manager.php";
         $result = UpdateManager::getAllUpdateablePackages();
         $response = array(
@@ -127,16 +120,14 @@ class UManageController
         return $response;
     }
 
-    private static function clearLog()
-    {
+    private static function clearLog() {
         Database::query("TRUNCATE TABLE " . tbname("log"));
         return array(
             "result" => "ok"
         );
     }
 
-    private static function optimizeDB()
-    {
+    private static function optimizeDB() {
         @include_once getModulePath("mysql_optimize", true) . "mysql_optimize_lib.php";
         $cfg = new config();
         if (function_exists("db_optimize")) {
@@ -153,8 +144,7 @@ class UManageController
         }
     }
 
-    private static function checkForPatches()
-    {
+    private static function checkForPatches() {
         $result = array(
             "patches" => []
         );
@@ -163,7 +153,7 @@ class UManageController
         $available = explode("\n", $available);
         foreach ($available as $line) {
             $line = trim($line);
-            if (! empty($line)) {
+            if (!empty($line)) {
                 $splitted = explode("|", $line);
                 if (count($splitted) >= 3) {
                     $result["patches"][] = $splitted;
@@ -173,8 +163,7 @@ class UManageController
         return $result;
     }
 
-    private static function installPatches()
-    {
+    private static function installPatches() {
         $available_patches = self::checkForPatches();
         $available_patches = $available_patches["patches"];
         $result = [];
@@ -204,4 +193,5 @@ class UManageController
         }
         return $result;
     }
+
 }
