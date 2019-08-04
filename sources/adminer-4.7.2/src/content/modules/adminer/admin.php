@@ -1,6 +1,6 @@
 <?php
 define ( "MODULE_ADMIN_HEADLINE", get_translation ( "adminer" ) );
-define ( MODULE_ADMIN_REQUIRED_PERMISSION, "adminer" );
+define ( "MODULE_ADMIN_REQUIRED_PERMISSION", "adminer" );
 
 function adminer_admin() {
 	$cfg = new CMSConfig();
