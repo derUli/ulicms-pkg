@@ -5,11 +5,10 @@ define("MODULE_ADMIN_REQUIRED_PERMISSION", "block_ips");
 function block_ips_admin()
 {
     if (isset($_POST["submit"])) {
-        setconfig("blocked_ips", db_escape($_POST["blocked_ips"]));
+        Settings::set("blocked_ips", $_POST["blocked_ips"]);
     }
     
     $blocked_ips = getconfig("blocked_ips");
-    $blocked_ips = StringHelper::realHtmlSpecialchars($blocked_ips);
     ?>
 
 <form action="<?php echo getModuleAdminSelfPath()?>" method="post">
@@ -26,7 +25,7 @@ function block_ips_admin()
 	<p>
 		<textarea rows="10" cols="40" name="blocked_ips"><?php
     
-    echo $blocked_ips;
+    echo esc($blocked_ips);
     ?></textarea>
 	
 	
