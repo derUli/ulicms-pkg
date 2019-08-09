@@ -1,1 +1,0 @@
-Pseudo Cronjobs nur in der Nacht (zwischen 0 und 4 Uhr ausführen).
