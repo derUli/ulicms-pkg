@@ -1,37 +1,46 @@
 <?php
 define("MODULE_ADMIN_HEADLINE", "Platzhalter");
-$required_permission = "placeholders";
-define("MODULE_ADMIN_REQUIRED_PERMISSION", $required_permission);
+define("MODULE_ADMIN_REQUIRED_PERMISSION", "placeholders");
 
 function placeholders_list()
 {
     $query = db_query("SELECT * FROM `" . tbname("placeholders") . "` ORDER by `id` ASC");
     
     if (db_num_rows($query) > 0) {
-        echo "<table style=\"outline:4px solid #d4d4d4; background-color:#f0f0f0;width:96%; margin:auto;\">";
+        echo "<table class=\"tablesorter\">";
+		echo "<thead>";
         echo "<tr style=\"background-color:#f0f0f0;font-weight:bold;\">";
-        echo "<td>";
+        echo "<th>";
         echo "ID";
-        echo "</td>";
-        echo "<td>";
+        echo "</th>";
+        echo "<th>";
         echo "Ersetze";
-        echo "</td>";
-        echo "<td>";
+        echo "</th>";
+        echo "<th>";
         echo "Durch";
-        echo "</td>";
-        echo "<td></td>";
-        echo "<td></td>";
+        echo "</th>";
+        echo "<th class=\"no-sort\"></th>";
+        echo "<th class=\"no-sort\"></th>";
         echo "</tr>";
+		echo "</thead>";
+		echo "<tbody>";
         
         while ($row = db_fetch_object($query)) {
             echo "<tr>";
             echo "<td>" . $row->id . "</strong></td>";
             echo "<td>" . $row->name . "</strong></td>";
             echo "<td>" . $row->value . "</strong></td>";
-            echo "<td><a href=\"?action=module_settings&module=placeholders&placeholders_action=edit&id=" . $row->id . "\">Bearbeiten</a></td>";
-            echo "<td><a href=\"?action=module_settings&module=placeholders&placeholders_action=delete&id=" . $row->id . "\" onclick=\"return confirm('Diesen Platzhalter wirklich löschen?');\">Löschen</a></td>";
+            echo "<td><a href=\"?action=module_settings&module=placeholders&placeholders_action=edit&id=" . $row->id . "\">";
+			echo '<img src="gfx/edit.png" class="mobile-big-image" alt="Edit" title="Edit">';
+			
+			echo "</a></td>";
+            echo "<td><a href=\"?action=module_settings&module=placeholders&placeholders_action=delete&id=" . $row->id . "\" onclick=\"return confirm('Diesen Platzhalter wirklich löschen?');\">"; 
+			echo '<img class="mobile-big-image" src="gfx/delete.gif" alt="'._t("delete").'" title="'._t("delete").'">';
+			echo "</a></td>";
             echo "</tr>";
         }
+		
+		echo "</tbody>";
         
         echo "</table>";
     }
@@ -66,7 +75,7 @@ function placeholders_admin()
     if (! isset($action)) {
         ?>
 <a
-	href="?action=module_settings&module=placeholders&placeholders_action=add">Platzhalter
+	href="?action=module_settings&module=placeholders&placeholders_action=add" class="btn btn-default"><i class="fas fa-plus"></i> Platzhalter
 	erstellen</a>
 <br />
 <br />

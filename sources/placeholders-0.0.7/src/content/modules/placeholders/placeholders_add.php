@@ -71,7 +71,7 @@ form input[type="text"], textarea {
 <?php
     }
     ?>
-<input type="submit" name="save" value="Eintragen" />
+	<button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Eintragen</button>
 			</td>
 		</tr>
 	</table>
