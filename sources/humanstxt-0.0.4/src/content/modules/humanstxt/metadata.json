@@ -1,0 +1,6 @@
+{
+	"version": "0.0.4",
+	"admin_permission": "humans_txt_edit",
+	"custom_acl" : ["humans_txt_edit"],
+	"embed" : false
+}

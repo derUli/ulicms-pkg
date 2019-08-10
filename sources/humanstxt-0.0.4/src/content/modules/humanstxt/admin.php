@@ -1,6 +1,6 @@
 <?php
 define("MODULE_ADMIN_HEADLINE", "humans.txt");
-define("MODULE_ADMIN_REQUIRED_PERMISSION", "humans.txt_edit");
+define("MODULE_ADMIN_REQUIRED_PERMISSION", "humans_txt_edit");
 
 function humanstxt_admin()
 {
@@ -11,13 +11,15 @@ function humanstxt_admin()
     }
     if (file_exists($file)) {
         $text = file_get_contents($file);
-        $text = StringHelper::realHtmlSpecialchars($text);
     } else {
         $text = "";
     }
     ?>
 <script type="text/javascript">
-function fillTemplate(){
+fillTemplate = () => {
+	
+	bootbox.confirm("Vorlage laden?", () => {
+	
      $("#message").html("Lade Vorlage");
      $("#loading").show();
      $("#message").show();
@@ -35,7 +37,7 @@ function fillTemplate(){
                 $("#message").hide();
             }
         });
-   
+	});  
 }
 </script>
 <form action="<?php echo getModuleAdminSelfPath()?>" method="post">
@@ -43,23 +45,32 @@ function fillTemplate(){
     
     csrf_token_html();
     ?>
-<p>
-		<a href="http://humanstxt.org">Über humans.txt</a><br />
+	<p>
+		<a href="http://humanstxt.org"
+		class="btn btn-info"
+		target="_blank"><i class="fa fa-info-circle" aria-hidden="true"></i>
+		Über humans.txt
+		</a>
 	</p>
-	<input type="button" value="Vorlage einfügen" onclick="fillTemplate();">
+	<p>
+		<button type="button" onclick="fillTemplate();" class="btn btn-default">
+			<i class="fas fa-file-alt"></i>
+			Vorlage einfügen
+		</button>
+	</p>
 	<p>
 		<textarea id="text" rows="30" cols="80" style="width: 100%"
-			name="text"><?php
-    
-    echo $text;
-    ?></textarea>
-	
-	
+			name="text"><?php esc($text);?></textarea>
+	</p>
 	<p>
-		<input type="submit" name="submit" value="Datei Speichern" />
+		<button
+		type="submit"
+		name="submit"
+		class="btn btn-default">
+			<i class="fa fa-save"></i>
+			Datei Speichern
+		</button>
 	</p>
 </form>
 <?php
 }
-
-?>
