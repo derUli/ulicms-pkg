@@ -8,8 +8,7 @@ function block_useragents_admin()
         setconfig("blocked_useragents", db_escape($_POST["blocked_useragents"]));
     }
     
-    $blocked_useragents = getconfig("blocked_useragents");
-    $blocked_useragents = StringHelper::realHtmlSpecialchars($blocked_useragents);
+    $blocked_useragents = Settings::get("blocked_useragents");
     ?>
 
 <form action="<?php echo getModuleAdminSelfPath()?>" method="post">
@@ -26,12 +25,16 @@ function block_useragents_admin()
 		<textarea rows="10" cols="80" style="width: 100%"
 			name="blocked_useragents"><?php
     
-    echo $blocked_useragents;
+    esc($blocked_useragents);
     ?></textarea>
 	
 	
 	<p>
-		<input type="submit" name="submit" value="Einstellungen speichern" />
+		<button
+		type="submit"
+		name="submit"
+		class="btn btn-primary">
+		<i class="fa fa-save"></i> Einstellungen speichern</button>
 	</p>
 </form>
 <?php
