@@ -1,0 +1,6 @@
+{
+	"version" : "0.0.3",
+	"admin_permission" : "faq_edit",
+	"custom_acl" : ["faq_edit"]
+}
+
