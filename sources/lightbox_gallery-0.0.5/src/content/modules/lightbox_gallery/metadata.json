@@ -1,9 +1,0 @@
-{
-	"embed": true,
-	"version": "0.0.5",
-	"admin_permission": "gallery_settings",
-	"custom_acl": [
-		"gallery_settings"
-	]
-}
-
