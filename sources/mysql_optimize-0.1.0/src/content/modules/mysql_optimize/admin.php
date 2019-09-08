@@ -1,4 +1,5 @@
 <?php
+use function UliCMS\HTML\icon;
 define("MODULE_ADMIN_HEADLINE", get_translation("OPTIMIZE_DATABASE"));
 define("MODULE_ADMIN_REQUIRED_PERMISSION", "mysql_optimize");
 
@@ -13,7 +14,8 @@ function mysql_optimize_admin() {
         <?php
         csrf_token_html();
         ?>
-        <button type="submit" name="submit" class="btn btn-success"><?php translate("OPTIMIZE_AND_UPDATE_DATABASE"); ?></button>
+        <button type="submit" name="submit" class="btn btn-success">
+		<?php echo icon("fas fa-broom");?> <?php translate("OPTIMIZE_AND_UPDATE_DATABASE"); ?></button>
     </form>
     <?php
 }
