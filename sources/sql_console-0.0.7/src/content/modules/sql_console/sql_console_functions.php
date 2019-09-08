@@ -1,4 +1,5 @@
 <?php
+use UliCMS\Exceptions\SqlException;
 ini_set('memory_limit', '5120M');
 set_time_limit(0);
 
@@ -169,9 +170,9 @@ function split_sql_file($sql, $delimiter)
     return $output;
 }
 
-function display_error()
+function display_error($error)
 {
-    echo "<p class=\"sql_error\">" . db_error() . "</p>";
+    echo "<p class=\"sql_error\">{$error}</p>";
 }
 
 function sqlQueryFromString($sql_query)
@@ -183,11 +184,10 @@ function sqlQueryFromString($sql_query)
     $sql_query = split_sql_file($sql_query, ';');
     
     foreach ($sql_query as $sql) {
-        $query = false;
-        $query = Database::query($sql, $_SESSION["sql_console_replace_placeholders"]);
-        
-        if (! $query) {
-            display_error();
+		try{
+			$query = Database::query($sql, $_SESSION["sql_console_replace_placeholders"]);
+        } catch(SqlException $e){
+            display_error($e->getMessage());
             return false;
         }
         
