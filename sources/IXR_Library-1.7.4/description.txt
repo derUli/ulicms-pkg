@@ -1,1 +1,0 @@
-The Incutio XML-RPC Library for PHP
