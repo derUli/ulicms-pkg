@@ -1,0 +1,1 @@
+ALTER TABLE `{prefix}blog` ADD `src_link` TEXT;
