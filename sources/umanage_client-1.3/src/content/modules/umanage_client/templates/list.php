@@ -14,7 +14,7 @@ if ($acl->hasPermission("umanage_client")) {
         <a href="index.php?action=umanage_new" class="btn btn-default"><?php echo icon("fa fa-plus"); ?> <?php translate("add_site"); ?></a>
     </p>
 
-    <?php if (count($sites) > 0) { ?>
+    <?php if (Database::any($sites)) { ?>
 
         <form action="#" method="get" id="list-form">
             <?php csrf_token_html(); ?>
@@ -25,7 +25,6 @@ if ($acl->hasPermission("umanage_client")) {
                     <option value="upgrade_core"><?php translate("upgrade_core"); ?></option>
                     <option value="umanage_check_for_patches"><?php translate("check_for_patches"); ?></option>
                     <option value="check_for_package_updates"><?php translate("check_for_package_updates"); ?></option>
-                    <option value="umanage_clear_log"><?php translate("clear_log"); ?></option>
                     <option value="optimize_db"><?php translate("OPTIMIZE_DATABASE"); ?></option>
                 </select>
 
