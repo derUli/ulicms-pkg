@@ -16,7 +16,12 @@ if ($acl->hasPermission("umanage_client")) {
             }
         }
         ?>
-
+        <p>
+            <a href="<?php echo ModuleHelper::buildActionUrl("umanage_list"); ?>" class="btn btn-default">
+                <i class="fa fa-arrow-left"></i>
+                <?php translate("black"); ?>
+            </a>
+        </p>
         <h1><?php translate("check_for_patches"); ?></h1>
         <?php if ($data_here) { ?>
             <form action="index.php?action=umanage_install_patches" method="post"
@@ -52,11 +57,11 @@ if ($acl->hasPermission("umanage_client")) {
                                     <?php foreach ($patches as $patch) { ?>
                                         <tr>
                                             <td><input type="checkbox" name="patches[]" class="patch-checkbox"
-                                                       value="<?php Template::escape($site["id"]); ?>/<?php Template::escape($patch[0]); ?>"
+                                                       value="<?php esc($site["id"]); ?>/<?php esc($patch[0]); ?>"
                                                        checked></td>
-                                            <td><?php Template::escape($site["domain"]); ?></td>
-                                            <td><?php Template::escape($patch[0]); ?></td>
-                                            <td><?php Template::escape($patch[1]); ?></td>
+                                            <td><?php esc($site["domain"]); ?></td>
+                                            <td><?php esc($patch[0]); ?></td>
+                                            <td><?php esc($patch[1]); ?></td>
                                         </tr>
                                         <?php
                                         fcflush();
@@ -87,8 +92,5 @@ if ($acl->hasPermission("umanage_client")) {
     noperms();
 }
 ?>
-<p>
-    <a href="index.php?action=umanage_list"><?php translate("back") ?></a>
-</p>
 <script type="text/javascript"
 src="<?php echo getModulePath("umanage_client") ?>scripts/patches.js"></script>

@@ -3,6 +3,12 @@ $acl = new ACL();
 if ($acl->hasPermission("umanage_client")) {
     if (StringHelper::isNotNullOrWhitespace(Request::getVar("sites"))) {
         ?>
+        <p>
+            <a href="<?php echo ModuleHelper::buildActionUrl("umanage_list"); ?>" class="btn btn-default">
+                <i class="fa fa-arrow-left"></i>
+                <?php translate("back"); ?>
+            </a>
+        </p>
         <h1><?php translate("clear_log"); ?></h1>
         <?php
         foreach ($_POST["patches"] as $p) {
@@ -20,12 +26,12 @@ if ($acl->hasPermission("umanage_client")) {
             if ($result and isset($result["ok"]) and count($result["ok"]) > 0) {
                 ?>
                 <span style="color: green">
-                    <?php Template::escape($patchName); ?> =&gt; <?php Template::escape($site["domain"]); ?> ✓</span>
+                    <?php esc($patchName); ?> =&gt; <?php esc($site["domain"]); ?> ✓</span>
                 <?php
             } else {
                 ?>
                 <span style="color: red">
-                    <?php Template::escape($patchName); ?> =&gt; <?php Template::escape($site["domain"]); ?> ×</span>
+                    <?php esc($patchName); ?> =&gt; <?php esc($site["domain"]); ?> ×</span>
                     <?php
                 }
                 ?>
@@ -47,7 +53,3 @@ if ($acl->hasPermission("umanage_client")) {
 } else {
     noperms();
 }
-?>
-<p>
-    <a href="index.php?action=umanage_list"><?php translate("back") ?></a>
-</p>

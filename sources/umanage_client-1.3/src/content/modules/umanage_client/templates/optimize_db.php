@@ -3,6 +3,12 @@ $acl = new ACL();
 if ($acl->hasPermission("umanage_client")) {
     if (StringHelper::isNotNullOrWhitespace(Request::getVar("sites"))) {
         ?>
+        <p>
+            <a href="<?php echo ModuleHelper::buildActionUrl("umanage_list"); ?>" class="btn btn-default">
+                <i class="fa fa-arrow-left"></i>
+                <?php translate("back"); ?>
+            </a>
+        </p>
         <h1><?php translate("optimize_database"); ?></h1>
         <?php
         foreach (explode(",", $_REQUEST["sites"]) as $id) {
@@ -14,12 +20,12 @@ if ($acl->hasPermission("umanage_client")) {
             if ($result and isset($result["result"]) and $result["result"] == "ok") {
                 ?>
                 <span style="color: green">
-                    <?php Template::escape($site["domain"]); ?> ✓</span>
+                    <?php esc($site["domain"]); ?> ✓</span>
                 <?php
             } else {
                 ?>
                 <span style="color: red">
-                    <?php Template::escape($site["domain"]); ?> ×</span>
+                    <?php esc($site["domain"]); ?> ×</span>
                     <?php
                 }
                 ?>
@@ -31,7 +37,7 @@ if ($acl->hasPermission("umanage_client")) {
         }
         ?>
 
-        <?php if (count($_GET["sites"]) > 0) { ?>
+        <?php if (is_array($_GET["sites"]) and count($_GET["sites"]) > 0) { ?>
             <br />
             <?php
         }
@@ -41,7 +47,3 @@ if ($acl->hasPermission("umanage_client")) {
 } else {
     noperms();
 }
-?>
-<p>
-    <a href="#" onclick="history.back();"><?php translate("back") ?></a>
-</p>

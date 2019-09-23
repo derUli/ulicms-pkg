@@ -1,5 +1,6 @@
-$(function () {
-    $('.checkall').on('click', function () {
-        $(".package-checkbox").prop('checked', this.checked);
+$(() => {
+    $('.checkall').on('click', (event) => {
+        const target = event.currentTarget;
+        $(".package-checkbox").prop('checked', target.checked);
     });
 });

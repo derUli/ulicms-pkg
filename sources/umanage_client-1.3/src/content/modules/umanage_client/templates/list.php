@@ -76,13 +76,13 @@ if ($acl->hasPermission("umanage_client")) {
                                 <td><input type="checkbox" name="sites"
                                            id="site-<?php echo $site["id"]; ?>"
                                            value="<?php echo $site["id"]; ?>" checked class="site-checkbox"></td>
-                                <td><a href="<?php Template::escape($site["url"]); ?>"
-                                       target="_blank"><?php Template::escape($site["domain"]); ?></a></td>
+                                <td><a href="<?php esc($site["url"]); ?>"
+                                       target="_blank"><?php esc($site["domain"]); ?></a></td>
                                 <td><span  style="color: <?php echo $ulicms_version_color; ?>"><?php
-                                        Template::escape($ulicms_version);
+                                        esc($ulicms_version);
                                         echo $char;
                                         ?></span></td>
-                                <td><?php Template::escape($client_version); ?></td>
+                                <td><?php esc($client_version); ?></td>
                                 <td style="text-align: center;"><a
                                         href="index.php?action=umanage_edit&id=<?php echo $site["id"]; ?>"><img
                                             src="gfx/edit.png" alt="<?php translate("edit") ?>"

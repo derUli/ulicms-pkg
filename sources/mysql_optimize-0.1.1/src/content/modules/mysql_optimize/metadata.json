@@ -1,5 +1,5 @@
 {
-    "version": "0.1.0",
+    "version": "0.1.1",
     "admin_permission": "mysql_optimize",
     "custom_acl": [
         "mysql_optimize"

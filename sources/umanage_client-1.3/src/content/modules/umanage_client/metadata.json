@@ -11,7 +11,6 @@
     },
     "actions": {
         "umanage_list": "templates/list.php",
-        "umanage_clear_log": "templates/clear_log.php",
         "umanage_new": "templates/new.php",
         "umanage_edit": "templates/edit.php",
         "umanage_check_for_patches": "templates/check_for_patches.php",

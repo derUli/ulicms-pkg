@@ -1,0 +1,1 @@
+DROP TABLE `{prefix}umanage_sites`;

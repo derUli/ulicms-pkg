@@ -1,18 +1,17 @@
-$(function () {
-    $('.checkall').on('click', function () {
-        $(".site-checkbox").prop('checked', this.checked);
+$(() => {
+    $('.checkall').on('click', (event) => {
+        const target = event.currentTarget;
+        $(".site-checkbox").prop('checked', target.checked);
     });
-    $("#list-form").on("submit", function (event) {
+    $("#list-form").on("submit", (event) => {
         event.preventDefault();
-        var action = $("select[name='action']").val();
-        var url = "index.php?action=" + action;
-        var val = [];
-        $('.site-checkbox:checked').each(function (i) {
-            val[i] = $(this).val();
+        const action = $("select[name='action']").val();
+        let url = "index.php?action=" + action;
+        const values = [];
+        $('.site-checkbox:checked').each(function (i, element) {
+            values.push($(element).val());
         });
-
-        url = url + "&sites=" + val.join(",");
+        url = url + "&sites=" + values.join(",");
         location.href = url;
-
     });
 });

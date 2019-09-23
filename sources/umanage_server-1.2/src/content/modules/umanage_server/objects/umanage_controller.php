@@ -4,6 +4,7 @@ $pkg = new PackageManager();
 $installed_patches = $pkg->getInstalledPatchNames();
 $installed_patches = implode(";", $installed_patches);
 $version = new ulicms_version();
+
 if (!defined("PATCH_CHECK_URL")) {
     define("PATCH_CHECK_URL", "http://patches.ulicms.de/?v=" . urlencode(implode(".", $version->getInternalVersion())) . "&installed_patches=" . urlencode($installed_patches));
 }
@@ -13,15 +14,14 @@ include_once getModulePath("umanage_server", true) . "/objects/umanage_package_m
 class UManageController {
 
     public static function handleRequest() {
+        set_time_limit(0);
+
         $response = [];
         $key = $_REQUEST["key"];
         if ($key != Settings::get("umanage_api_key")) {
             $response["error"] = "invalid_api_key";
         } else {
             switch ($_REQUEST["umanage"]) {
-                case "clear_log":
-                    $response = self::clearLog();
-                    break;
                 case "check_for_package_updates":
                     $response = self::checkForPackageUpdates();
                     break;
@@ -120,20 +120,10 @@ class UManageController {
         return $response;
     }
 
-    private static function clearLog() {
-        Database::query("TRUNCATE TABLE " . tbname("log"));
-        return array(
-            "result" => "ok"
-        );
-    }
-
     private static function optimizeDB() {
-        @include_once getModulePath("mysql_optimize", true) . "mysql_optimize_lib.php";
         $cfg = new config();
         if (function_exists("db_optimize")) {
-            ob_start();
-            db_optimize($cfg->db_database);
-            ob_get_clean();
+            db_optimize($cfg->db_database, false);
             return array(
                 "result" => "ok"
             );

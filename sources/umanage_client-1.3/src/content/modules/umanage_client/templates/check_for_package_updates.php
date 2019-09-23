@@ -15,7 +15,12 @@ if ($acl->hasPermission("umanage_client")) {
             }
         }
         ?>
-
+        <p>
+            <a href="<?php echo ModuleHelper::buildActionUrl("umanage_list"); ?>" class="btn btn-default">
+                <i class="fa fa-arrow-left"></i>
+                <?php translate("back"); ?>
+            </a>
+        </p>
         <h1><?php translate("CHECK_FOR_PACKAGE_UPDATES"); ?></h1>
         <?php if ($data_here) { ?>
             <form action="index.php?action=umanage_install_packages" method="post"
@@ -51,10 +56,10 @@ if ($acl->hasPermission("umanage_client")) {
                                         <tr>
                                             <td><input type="checkbox" name="packages[]"
                                                        class="package-checkbox"
-                                                       value="<?php Template::escape($site["id"]); ?>/<?php Template::escape($package); ?>"
+                                                       value="<?php esc($site["id"]); ?>/<?php esc($package); ?>"
                                                        checked></td>
-                                            <td><?php Template::escape($site["domain"]); ?></td>
-                                            <td><?php Template::escape($package); ?></td>
+                                            <td><?php esc($site["domain"]); ?></td>
+                                            <td><?php esc($package); ?></td>
                                         </tr>
                                         <?php
                                         fcflush();
@@ -84,8 +89,7 @@ if ($acl->hasPermission("umanage_client")) {
     noperms();
 }
 ?>
-<p>
-    <a href="index.php?action=umanage_list"><?php translate("back") ?></a>
-</p>
 <script type="text/javascript"
 src="<?php echo getModulePath("umanage_client") ?>scripts/packages.js"></script>
+
+

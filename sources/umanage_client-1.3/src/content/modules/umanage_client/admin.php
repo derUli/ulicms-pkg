@@ -4,14 +4,16 @@ define("MODULE_ADMIN_HEADLINE", get_translation("LIST_OF_REMOTE_SITES"));
 define("MODULE_ADMIN_REQUIRED_PERMISSION", "umanage_client");
 
 function umanage_create_site() {
-    $sql = "insert into " . tbname("umanage_sites") . " (protocol, domain, path, api_key) values(?, ?, ?, ?)";
+    $sql = "insert into {prefix}umanage_sites "
+            . "(protocol, domain, path, api_key) "
+            . "values(?, ?, ?, ?)";
     $args = array(
         $_REQUEST ["protocol"],
         $_REQUEST ["domain"],
         $_REQUEST ["path"],
         $_REQUEST ["api_key"]
     );
-    return Database::pQuery($sql, $args);
+    return Database::pQuery($sql, $args, true);
 }
 
 function umanage_delete_site() {
