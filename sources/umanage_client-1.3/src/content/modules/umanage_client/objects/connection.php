@@ -8,20 +8,12 @@ class uManageConnection {
     public function __construct($api_key, $url) {
         $this->api_key = $api_key;
         $this->url = $url;
+		
+		set_time_limit(0);
     }
 
     public function getInfo() {
         $uri = $this->url . "?umanage=get_info&key=" . $this->api_key;
-        $result = file_get_contents_wrapper($uri, true);
-        $data = json_decode($result, true);
-        if (!$data) {
-            return null;
-        }
-        return $data;
-    }
-
-    public function clearLog() {
-        $uri = $this->url . "?umanage=clear_log&key=" . $this->api_key;
         $result = file_get_contents_wrapper($uri, true);
         $data = json_decode($result, true);
         if (!$data) {
