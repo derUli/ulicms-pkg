@@ -1,0 +1,9 @@
+{
+	"version": "0.0.8",
+	"admin_permission": "block_ips",
+	"custom_acl" : ["block_ips"],
+	"embed": false,
+	"settings" : {
+		"blocked_ips" : ""
+	}
+}

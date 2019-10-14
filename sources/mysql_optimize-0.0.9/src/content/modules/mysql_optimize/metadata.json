@@ -1,9 +1,0 @@
-{
-	"version": "0.0.9",
-	"admin_permission": "mysql_optimize",
-	"custom_acl": [
-		"mysql_optimize"
-	],
-	"embed": false
-}
-

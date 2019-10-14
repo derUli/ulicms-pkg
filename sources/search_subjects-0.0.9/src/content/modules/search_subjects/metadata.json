@@ -1,0 +1,8 @@
+{
+	"version" : "0.0.9",
+	"admin_permission" : "search_subjects",
+	"embed" : false,
+	"custom_acl" : ["search_subjects"],
+	"admin_permission" : "search_subjects"
+}
+

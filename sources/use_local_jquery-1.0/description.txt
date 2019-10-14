@@ -1,1 +1,0 @@
-use local jquery instead of cloud hosted

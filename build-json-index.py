@@ -60,5 +60,10 @@ for package in os.listdir(list_files):
 
 output_file = os.path.join(root_cwd, "packages", "index.json")
 
-json = json.dump(data, open(output_file, "w",encoding='utf-8'), sort_keys=True, 
-				 indent=4, ensure_ascii = False)
+json = json.dumps(data, sort_keys=True, indent=0, separators = (',', ':'), ensure_ascii = False)
+
+json = json.replace("\n", "")
+
+handle = open(output_file, "w",encoding='utf-8')
+handle.write(json)
+handle.close()

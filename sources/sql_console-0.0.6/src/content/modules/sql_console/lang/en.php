@@ -1,3 +1,0 @@
-<?php
-define("TRANSLATION_SQL_CONSOLE_REPLACE_PLACEHOLDERS", "Replace Placeholders");
-define("TRANSLATION_SQL_CONSOLE_EXECUTE", "Execute");

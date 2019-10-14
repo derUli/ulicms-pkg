@@ -1,3 +1,0 @@
-UliCMS uses HTML5 required Attribute for validation of required fields.
-Since Safari doesn't support this attribute form validation doesn't work in Safari.
-This module fixes form validation in Safari with jQuery

@@ -1,9 +1,0 @@
- {
-	"version": "0.0.4",
-	"embed": false,
-	"custom_acl": [
-		"statistics"
-	],
-	"admin_permission": "statistics"
-}
-
