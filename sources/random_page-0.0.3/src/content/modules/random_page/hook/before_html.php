@@ -6,7 +6,7 @@ if (containsModule ( get_requested_pagename (), "random_page" ) or isset ( $_GET
 		$random = array_rand ( $allpages, 1 );
 		$random = $allpages [$random];
 		$page = get_page ( $random );
-		$redirection = $page ["redirection"];
+		$redirection = $page ["link_url"];
 	} while ( startsWith ( $redirection, "#" ) or containsModule ( $random ) );
 	// Todo, keine Seiten mit Hash-URL dürfen ausgewählt werden.
 	header ( "Location: " . buildSEOUrl ( $random ) );
