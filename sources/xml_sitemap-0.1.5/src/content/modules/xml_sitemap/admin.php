@@ -46,7 +46,7 @@ function generate_sitemap() {
 ';
     $query_pages = db_query("SELECT * FROM " . tbname("content") . " WHERE active = 1 AND `deleted_at` IS NULL and `type` <> 'node' and `type` <> 'snippet' and `type` <> 'link' ORDER by lastmodified DESC");
     while ($row = db_fetch_object($query_pages)) {
-        if (!($row->redirection && startsWith($row->redirection, "#"))) {
+        if (!($row->link_url && startsWith($row->link_url, "#"))) {
             $xml_string .= "<url>\r\n";
             $xml_string .= "\t<loc>" . xmlspecialchars(getBaseURL($row->language) . $row->slug . ".html") . "</loc>\r\n";
             $xml_string .= "\t<lastmod>" . date("Y-m-d", $row->lastmodified) . "</lastmod>\r\n";
