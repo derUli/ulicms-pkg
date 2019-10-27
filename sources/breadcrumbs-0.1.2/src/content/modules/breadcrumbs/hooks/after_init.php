@@ -9,13 +9,13 @@ if (!function_exists("get_breadcrumbs")) {
         $page = get_page();
         $parent = $page ["parent_id"];
         $parent_name = getPageSlugByID($parent);
-        $html = "<a href=\"" . buildSEOUrl($page ["slug"], $page ["redirection"]) . "\" class=\"crumb-active-page\">" . htmlspecialchars($page ["title"]) . "</a>";
+        $html = "<a href=\"" . buildSEOUrl($page ["slug"], $page ["link_url"]) . "\" class=\"crumb-active-page\">" . htmlspecialchars($page ["title"]) . "</a>";
         while ($parent != null) {
 
             $page = get_page($parent_name);
             $parent = $page ["parent_id"];
             $parent_name = getPageSlugByID($parent);
-            $html = "<a href=\"" . buildSEOUrl($page ["slug"], $page ["redirection"]) . "\" class=\"crumb-page\">" . htmlspecialchars($page ["title"]) . "</a>" . " &gt; " . $html;
+            $html = "<a href=\"" . buildSEOUrl($page ["slug"], $page ["link_url"]) . "\" class=\"crumb-page\">" . htmlspecialchars($page ["title"]) . "</a>" . " &gt; " . $html;
         }
 
         $html = "<a href=\"" . buildSEOUrl(get_frontpage()) . "\" class=\"crumb-frontpage\">" . get_translation("frontpage") . "</a>" . " &gt; " . $html;
