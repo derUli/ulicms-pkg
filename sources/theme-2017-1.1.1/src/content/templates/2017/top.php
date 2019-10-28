@@ -1,10 +1,10 @@
 <?php
 html5_doctype ();
 og_html_prefix ();
-$motto = get_motto ();
+$site_slogan = get_motto ();
 $data = get_custom_data ();
-if (isset ( $data ["motto"] )) {
-	$motto = $data ["motto"];
+if (isset ( $data ["site_slogan"] )) {
+	$site_slogan = $data ["site_slogan"];
 }
 ?>
 <head>
@@ -67,9 +67,9 @@ echo getconfig ( "header-background-color" );
 		<?php }?>
 
 		<div class="row marketing">
-			<?php if($motto){?>
+			<?php if($site_slogan){?>
 			<blockquote>
-		<?php echo $motto;?></blockquote>
+		<?php echo $site_slogan;?></blockquote>
 		<?php }?>
 			<main>
 		<?php Template::headline();?>
