@@ -1,9 +1,0 @@
-{
-	"version": "0.2.0",
-	"embed": false,
-	"custom_acl": [
-		"blog2twitter_settings",
-		"blog2twitter_show_status"
-	],
-	"admin_permission": "blog2twitter_settings"
-}
