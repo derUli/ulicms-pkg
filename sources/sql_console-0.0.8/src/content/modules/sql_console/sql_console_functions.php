@@ -178,7 +178,7 @@ function display_error($error)
 function sqlQueryFromString($sql_query)
 {
     $sql_query = remove_remarks($sql_query);
-    if (! str_contains(";", $sql_query)) {
+    if (! str_contains( $sql_query, ";")) {
         $sql_query .= ";";
     }
     $sql_query = split_sql_file($sql_query, ';');
