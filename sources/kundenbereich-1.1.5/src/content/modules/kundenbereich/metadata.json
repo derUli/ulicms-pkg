@@ -1,0 +1,5 @@
+{
+	"version" : "1.1.5",
+	"admin_permission" : "kundenbereich_upload",
+	"embed": true
+}
