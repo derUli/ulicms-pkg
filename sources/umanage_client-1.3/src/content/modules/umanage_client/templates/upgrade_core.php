@@ -27,15 +27,13 @@ if ($acl->hasPermission("umanage_client")) {
                 <span style="color: red">
                     <?php esc($site["domain"]); ?> × (<?php secure_translate($result); ?>)</span>
                     <?php
-                }
-                fcflush();
-                ?>
+            }
+            fcflush(); ?>
 
             <br />
 
             <?php
-        }
-        ?>
+        } ?>
 
         <?php
         if (is_array($_GET["sites"]) and
@@ -43,8 +41,7 @@ if ($acl->hasPermission("umanage_client")) {
             ?>
             <br />
             <?php
-        }
-        ?>
+        } ?>
         <?php
     }
 } else {

@@ -2,7 +2,6 @@
 $acl = new ACL();
 if ($acl->hasPermission("umanage_client")) {
     if (StringHelper::isNotNullOrWhitespace(Request::getVar("sites"))) {
-
         $data_here = false;
         foreach (explode(",", $_REQUEST["sites"]) as $id) {
             $nid = intval($id);
@@ -14,8 +13,7 @@ if ($acl->hasPermission("umanage_client")) {
                 $data_here = true;
                 break;
             }
-        }
-        ?>
+        } ?>
         <p>
             <a href="<?php echo ModuleHelper::buildActionUrl("umanage_list"); ?>" class="btn btn-default">
                 <i class="fa fa-arrow-left"></i>
@@ -52,8 +50,7 @@ if ($acl->hasPermission("umanage_client")) {
                                 $con = new uManageConnection($site["api_key"], $site["url"]);
                                 $result = $con->checkForPatches();
                                 if ($result and isset($result["patches"])) {
-                                    $patches = $result["patches"];
-                                    ?>
+                                    $patches = $result["patches"]; ?>
                                     <?php foreach ($patches as $patch) { ?>
                                         <tr>
                                             <td><input type="checkbox" name="patches[]" class="patch-checkbox"
@@ -65,8 +62,7 @@ if ($acl->hasPermission("umanage_client")) {
                                         </tr>
                                         <?php
                                         fcflush();
-                                    }
-                                    ?>
+                                    } ?>
                                     <?php
                                 }
 
@@ -84,7 +80,8 @@ if ($acl->hasPermission("umanage_client")) {
         } else {
             ?>
             <p><?php translate("NO_PATCHES_AVAILABLE"); ?></p>
-        <?php } ?>
+        <?php
+        } ?>
 
         <?php
     }

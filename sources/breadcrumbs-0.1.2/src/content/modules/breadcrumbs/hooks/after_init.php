@@ -1,8 +1,8 @@
 <?php
 
 if (!function_exists("get_breadcrumbs")) {
-
-    function get_breadcrumbs() {
+    function get_breadcrumbs()
+    {
         if (!is_200()) {
             return "";
         }
@@ -11,7 +11,6 @@ if (!function_exists("get_breadcrumbs")) {
         $parent_name = getPageSlugByID($parent);
         $html = "<a href=\"" . buildSEOUrl($page ["slug"], $page ["link_url"]) . "\" class=\"crumb-active-page\">" . htmlspecialchars($page ["title"]) . "</a>";
         while ($parent != null) {
-
             $page = get_page($parent_name);
             $parent = $page ["parent_id"];
             $parent_name = getPageSlugByID($parent);
@@ -23,13 +22,11 @@ if (!function_exists("get_breadcrumbs")) {
         $html = '<div class="breadcrumb_nav">' . $html . "</div>";
         return $html;
     }
-
 }
 
 if (!function_exists("breadcrumbs")) {
-
-    function breadcrumbs() {
+    function breadcrumbs()
+    {
         echo get_breadcrumbs();
     }
-
 }

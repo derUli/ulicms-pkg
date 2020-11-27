@@ -59,7 +59,8 @@ if ($action == 'tbl_create.php') {
 } else {
     if ($action == 'tbl_addfield.php') {
         $form_params = array_merge(
-            $form_params, array(
+            $form_params,
+            array(
             'field_where' => Util::getValueByKey($_POST, 'field_where'))
         );
         if (isset($_POST['field_where'])) {
@@ -130,7 +131,6 @@ if ($GLOBALS['dbi']->getVersion() < 50606) {
 }
 
 for ($columnNumber = 0; $columnNumber < $num_fields; $columnNumber++) {
-
     $type = '';
     $length = '';
     $columnMeta = array();
@@ -138,43 +138,62 @@ for ($columnNumber = 0; $columnNumber < $num_fields; $columnNumber++) {
     $extracted_columnspec = array();
 
     if (!empty($regenerate)) {
-
         $columnMeta = array_merge(
             $columnMeta,
             array(
                 'Field'        => Util::getValueByKey(
-                    $_POST, "field_name.${columnNumber}", false
+                    $_POST,
+                    "field_name.${columnNumber}",
+                    false
                 ),
                 'Type'         => Util::getValueByKey(
-                    $_POST, "field_type.${columnNumber}", false
+                    $_POST,
+                    "field_type.${columnNumber}",
+                    false
                 ),
                 'Collation'    => Util::getValueByKey(
-                    $_POST, "field_collation.${columnNumber}", ''
+                    $_POST,
+                    "field_collation.${columnNumber}",
+                    ''
                 ),
                 'Null'         => Util::getValueByKey(
-                    $_POST, "field_null.${columnNumber}", ''
+                    $_POST,
+                    "field_null.${columnNumber}",
+                    ''
                 ),
                 'DefaultType'  => Util::getValueByKey(
-                    $_POST, "field_default_type.${columnNumber}", 'NONE'
+                    $_POST,
+                    "field_default_type.${columnNumber}",
+                    'NONE'
                 ),
                 'DefaultValue' => Util::getValueByKey(
-                    $_POST, "field_default_value.${columnNumber}", ''
+                    $_POST,
+                    "field_default_value.${columnNumber}",
+                    ''
                 ),
                 'Extra'        => Util::getValueByKey(
-                    $_POST, "field_extra.${columnNumber}", false
+                    $_POST,
+                    "field_extra.${columnNumber}",
+                    false
                 ),
                 'Virtuality'   => Util::getValueByKey(
-                    $_POST, "field_virtuality.${columnNumber}", ''
+                    $_POST,
+                    "field_virtuality.${columnNumber}",
+                    ''
                 ),
                 'Expression'   => Util::getValueByKey(
-                    $_POST, "field_expression.${columnNumber}", ''
+                    $_POST,
+                    "field_expression.${columnNumber}",
+                    ''
                 ),
             )
         );
 
         $columnMeta['Key'] = '';
         $parts = explode(
-            '_', Util::getValueByKey($_POST, "field_key.${columnNumber}", ''), 2
+            '_',
+            Util::getValueByKey($_POST, "field_key.${columnNumber}", ''),
+            2
         );
         if (count($parts) == 2 && $parts[1] == $columnNumber) {
             $columnMeta['Key'] = Util::getValueByKey(
@@ -185,7 +204,8 @@ for ($columnNumber = 0; $columnNumber < $num_fields; $columnNumber++) {
                     'fulltext' => 'FULLTEXT',
                     'spatial' => 'SPATIAL'
                 ),
-                $parts[0], ''
+                $parts[0],
+                ''
             );
         }
 
@@ -210,10 +230,13 @@ for ($columnNumber = 0; $columnNumber < $num_fields; $columnNumber++) {
 
         $length = Util::getValueByKey($_POST, "field_length.${columnNumber}", $length);
         $submit_attribute = Util::getValueByKey(
-            $_POST, "field_attribute.${columnNumber}", false
+            $_POST,
+            "field_attribute.${columnNumber}",
+            false
         );
         $comments_map[$columnMeta['Field']] = Util::getValueByKey(
-            $_POST, "field_comments.${columnNumber}"
+            $_POST,
+            "field_comments.${columnNumber}"
         );
 
         $mime_map[$columnMeta['Field']] = array_merge(
@@ -221,14 +244,15 @@ for ($columnNumber = 0; $columnNumber < $num_fields; $columnNumber++) {
             array(
                 'mimetype' => Util::getValueByKey($_POST, "field_mimetype.${$columnNumber}"),
                 'transformation' => Util::getValueByKey(
-                    $_POST, "field_transformation.${$columnNumber}"
+                    $_POST,
+                    "field_transformation.${$columnNumber}"
                 ),
                 'transformation_options' => Util::getValueByKey(
-                    $_POST, "field_transformation_options.${$columnNumber}"
+                    $_POST,
+                    "field_transformation_options.${$columnNumber}"
                 ),
             )
         );
-
     } elseif (isset($fields_meta[$columnNumber])) {
         $columnMeta = $fields_meta[$columnNumber];
         $virtual = array(
@@ -354,31 +378,47 @@ for ($columnNumber = 0; $columnNumber < $num_fields; $columnNumber++) {
             $form_params,
             array(
                 "field_default_value_orig[${columnNumber}]" => Util::getValueByKey(
-                    $columnMeta, 'Default', ''
+                    $columnMeta,
+                    'Default',
+                    ''
                 ),
                 "field_default_type_orig[${columnNumber}]"  => Util::getValueByKey(
-                    $columnMeta, 'DefaultType', ''
+                    $columnMeta,
+                    'DefaultType',
+                    ''
                 ),
                 "field_collation_orig[${columnNumber}]"     => Util::getValueByKey(
-                    $columnMeta, 'Collation', ''
+                    $columnMeta,
+                    'Collation',
+                    ''
                 ),
                 "field_attribute_orig[${columnNumber}]"     => trim(
                     Util::getValueByKey($extracted_columnspec, 'attribute', '')
                 ),
                 "field_null_orig[${columnNumber}]"          => Util::getValueByKey(
-                    $columnMeta, 'Null', ''
+                    $columnMeta,
+                    'Null',
+                    ''
                 ),
                 "field_extra_orig[${columnNumber}]"         => Util::getValueByKey(
-                    $columnMeta, 'Extra', ''
+                    $columnMeta,
+                    'Extra',
+                    ''
                 ),
                 "field_comments_orig[${columnNumber}]"      => Util::getValueByKey(
-                    $columnMeta, 'Comment', ''
+                    $columnMeta,
+                    'Comment',
+                    ''
                 ),
                 "field_virtuality_orig[${columnNumber}]"    => Util::getValueByKey(
-                    $columnMeta, 'Virtuality', ''
+                    $columnMeta,
+                    'Virtuality',
+                    ''
                 ),
                 "field_expression_orig[${columnNumber}]"    => Util::getValueByKey(
-                    $columnMeta, 'Expression', ''
+                    $columnMeta,
+                    'Expression',
+                    ''
                 ),
             )
         );
@@ -428,7 +468,8 @@ $html = Template::get('columns_definitions/column_definitions_form')->render([
     'max_rows' => intval($GLOBALS['cfg']['MaxRows']),
     'char_editing' => isset($GLOBALS['cfg']['CharEditing']) ? $GLOBALS['cfg']['CharEditing'] : null,
     'attribute_types' => $GLOBALS['dbi']->types->getAttributes(),
-    'privs_available' => (isset($GLOBALS['col_priv']) ? $GLOBALS['col_priv'] : false
+    'privs_available' => (
+        isset($GLOBALS['col_priv']) ? $GLOBALS['col_priv'] : false
         && isset($GLOBALS['is_reload_priv']) ? $GLOBALS['is_reload_priv'] : false
     ),
     'max_length' => $GLOBALS['dbi']->getVersion() >= 50503 ? 1024 : 255,

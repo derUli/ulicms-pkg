@@ -1,2 +1,2 @@
 <?php
-Settings::register ( "blocked_useragents", "" );
+Settings::register("blocked_useragents", "");

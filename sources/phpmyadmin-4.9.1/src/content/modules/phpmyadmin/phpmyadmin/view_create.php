@@ -129,7 +129,8 @@ if (isset($_POST['createview']) || isset($_POST['alterview'])) {
     }
 
     $column_map = $GLOBALS['dbi']->getColumnMapFromSql(
-        $_POST['view']['as'], $view_columns
+        $_POST['view']['as'],
+        $view_columns
     );
 
     $systemDb = $GLOBALS['dbi']->getSystemDatabase();
@@ -141,15 +142,16 @@ if (isset($_POST['createview']) || isset($_POST['alterview'])) {
 
         // SQL for store new transformation details of VIEW
         $new_transformations_sql = $systemDb->getNewTransformationDataSql(
-            $pma_transformation_data, $column_map,
-            $_POST['view']['name'], $GLOBALS['db']
+            $pma_transformation_data,
+            $column_map,
+            $_POST['view']['name'],
+            $GLOBALS['db']
         );
 
         // Store new transformations
         if ($new_transformations_sql != '') {
             $GLOBALS['dbi']->tryQuery($new_transformations_sql);
         }
-
     }
     unset($pma_transformation_data);
 
@@ -213,7 +215,6 @@ if (isset($_GET['db']) && isset($_GET['table'])) {
     $view['as'] = $item['VIEW_DEFINITION'];
     $view['with'] = $item['CHECK_OPTION'];
     $view['algorithm'] = $item['ALGORITHM'];
-
 }
 
 if (Core::isValid($_POST['view'], 'array')) {

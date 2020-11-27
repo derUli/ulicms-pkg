@@ -2,11 +2,13 @@
 define("MODULE_ADMIN_HEADLINE", "XML Sitemap");
 define("MODULE_ADMIN_REQUIRED_PERMISSION", "xml_sitemap");
 
-function xmlspecialchars($text) {
+function xmlspecialchars($text)
+{
     return str_replace('&#039;', '&apos;', htmlspecialchars($text, ENT_QUOTES));
 }
 
-function getBaseURL($language = null) {
+function getBaseURL($language = null)
+{
     $pageURL = 'http';
     if ($_SERVER["HTTPS"] == "on") {
         $pageURL .= "s";
@@ -23,7 +25,6 @@ function getBaseURL($language = null) {
     if (is_null($language)) {
         $domain = $_SERVER["HTTP_HOST"];
     } else {
-
         $domain = getDomainByLanguage($language);
         if (!$domain) {
             $domain = $_SERVER["HTTP_HOST"];
@@ -37,7 +38,8 @@ function getBaseURL($language = null) {
     return $pageURL;
 }
 
-function generate_sitemap() {
+function generate_sitemap()
+{
     @set_time_limit(0);
     @ini_set('max_execution_time', 0);
 
@@ -99,15 +101,14 @@ function generate_sitemap() {
 // Konfiguration checken
 $send_comments_via_email = getconfig("blog_send_comments_via_email") == "yes";
 
-function xml_sitemap_admin() {
+function xml_sitemap_admin()
+{
     if (isset($_POST["submit"])) {
         generate_sitemap();
-    }
-    ?>
+    } ?>
     <form action="<?php echo getModuleAdminSelfPath() ?>" method="post">
         <?php
-        csrf_token_html();
-        ?>
+        csrf_token_html(); ?>
         <button type="submit" name="submit" class="btn btn-success"><i class="fas fa-sitemap"></i> <?php translate("generate_xml_sitemap"); ?></button>
     </form>
     <?php

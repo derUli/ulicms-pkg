@@ -138,14 +138,20 @@ class TableRelationController extends TableController
         // If we did an update, refresh our data
         if (isset($_POST['destination_db']) && $this->cfgRelation['relwork']) {
             $this->existrel = $this->relation->getForeigners(
-                $this->db, $this->table, '', 'internal'
+                $this->db,
+                $this->table,
+                '',
+                'internal'
             );
         }
         if (isset($_POST['destination_foreign_db'])
             && Util::isForeignKeySupported($this->tbl_storage_engine)
         ) {
             $this->existrel_foreign = $this->relation->getForeigners(
-                $this->db, $this->table, '', 'foreign'
+                $this->db,
+                $this->table,
+                '',
+                'foreign'
             );
         }
 
@@ -220,13 +226,15 @@ class TableRelationController extends TableController
     public function updateForDisplayField()
     {
         if ($this->upd_query->updateDisplayField(
-            $_POST['display_field'], $this->cfgRelation
+            $_POST['display_field'],
+            $this->cfgRelation
         )
         ) {
             $this->response->addHTML(
                 Util::getMessage(
                     __('Display column was successfully updated.'),
-                    '', 'success'
+                    '',
+                    'success'
                 )
             );
         }
@@ -253,8 +261,10 @@ class TableRelationController extends TableController
             list($html, $preview_sql_data, $display_query, $seen_error)
                 = $this->upd_query->updateForeignKeys(
                     $_POST['destination_foreign_db'],
-                    $multi_edit_columns_name, $_POST['destination_foreign_table'],
-                    $_POST['destination_foreign_column'], $this->options_array,
+                    $multi_edit_columns_name,
+                    $_POST['destination_foreign_table'],
+                    $_POST['destination_foreign_column'],
+                    $this->options_array,
                     $this->table,
                     isset($this->existrel_foreign)
                     ? $this->existrel_foreign['foreign_keys_data']
@@ -273,7 +283,8 @@ class TableRelationController extends TableController
             $this->response->addHTML(
                 Util::getMessage(
                     __('Your SQL query has been executed successfully.'),
-                    null, 'success'
+                    null,
+                    'success'
                 )
             );
         }
@@ -302,7 +313,8 @@ class TableRelationController extends TableController
             $this->response->addHTML(
                 Util::getMessage(
                     __('Internal relationships were successfully updated.'),
-                    '', 'success'
+                    '',
+                    'success'
                 )
             );
         }

@@ -29,4 +29,3 @@ if (containsModule(get_slug(), "kundenbereich")) {
         }
     }
 }
-?>

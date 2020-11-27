@@ -1,5 +1,5 @@
 <?php
-function jquery_tablesorter_render() {
-	return "";
+function jquery_tablesorter_render()
+{
+    return "";
 }
-?>

@@ -1,11 +1,11 @@
 <?php
-$modules = getAllModules ();
-if (isset ( $_GET ["q"] ) and !empty ( $_GET ["q"] )) {
-	$q = $_GET ["q"];
-	$q = trim ( $q );
-	$q = strtolower ( $q );
-	if ($q == "do a barrel roll") {
-		?>
+$modules = getAllModules();
+if (isset($_GET ["q"]) and !empty($_GET ["q"])) {
+    $q = $_GET ["q"];
+    $q = trim($q);
+    $q = strtolower($q);
+    if ($q == "do a barrel roll") {
+        ?>
 <style type="text/css">
 .barrel_roll {
 	-webkit-transition: -webkit-transform 4s ease;
@@ -31,6 +31,6 @@ window.onload = function(){
 
 </script>
 <?php
-	}
+    }
 }
 ?>

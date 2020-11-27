@@ -10,7 +10,7 @@
  */
 
 $i=0;
-$hosts = array (
+$hosts = array(
     "foo.example.com",
     "bar.example.com",
     "baz.example.com",

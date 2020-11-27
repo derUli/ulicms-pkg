@@ -84,4 +84,3 @@ class Myisam extends StorageEngine
         );
     }
 }
-

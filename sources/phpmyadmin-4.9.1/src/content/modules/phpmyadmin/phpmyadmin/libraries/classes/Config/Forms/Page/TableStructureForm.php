@@ -19,4 +19,3 @@ class TableStructureForm extends BaseForm
         ];
     }
 }
-

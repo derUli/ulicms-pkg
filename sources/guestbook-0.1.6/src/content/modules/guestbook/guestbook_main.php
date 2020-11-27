@@ -1,6 +1,5 @@
 <?php
 if (! function_exists("stringcontainsbadwords")) {
-
     function stringcontainsbadwords($str)
     {
         $words_blacklist = getconfig("spamfilter_words_blacklist");
@@ -14,8 +13,9 @@ if (! function_exists("stringcontainsbadwords")) {
         
         for ($i = 0; $i < count($words_blacklist); $i ++) {
             $word = strtolower($words_blacklist[$i]);
-            if (strpos($str, $word) !== false)
+            if (strpos($str, $word) !== false) {
                 return true;
+            }
         }
         
         return false;
@@ -39,7 +39,6 @@ function guestbook_render()
         case "delete":
             $acl = new ACL();
             if ($acl->hasPermission("guestbook") and isset($_GET["delete"])) {
-                
                 $delete = $_GET["delete"];
                 $delete = intval($delete);
                 db_query("DELETE FROM `" . tbname("guestbook_entries") . "` WHERE id = " . $delete);
@@ -96,7 +95,6 @@ function guestbook_render()
                 $badwords = explode("\n", $badwords);
                 
                 for ($i = 0; $i < count($badwords); $i ++) {
-                    
                     if (strpos($_POST["gb_content"], $badwords[$i]) !== false) {
                         if ($_SESSION["language"] == "de") {
                             $html_output .= "<p class='ulicms-error'>Sie haben ein nicht erlaubtes Wort in Ihrer Nachricht verwendet.</p>";
@@ -121,7 +119,6 @@ function guestbook_render()
                 
                 // Filter nach chinesisch
                 if (getconfig("disallow_chinese_chars") and $spamfilter_enabled and (AntispamHelper::isChinese($_POST["gb_content"]))) {
-                    
                     $errors = true;
                     
                     if ($_SESSION["language"] == "de") {
@@ -132,7 +129,6 @@ function guestbook_render()
                 }
                 // Filter nach chinesisch
                 if (getconfig("disallow_cyrillic_chars") and $spamfilter_enabled and (AntispamHelper::isCyrillic($_POST["gb_content"]))) {
-                    
                     $errors = true;
                     
                     if ($_SESSION["language"] == "de") {
@@ -144,7 +140,6 @@ function guestbook_render()
                 if ($_POST["phone"] != "" and $spamfilter_enabled) {
                     $errors = true;
                     if ($_SESSION["language"] == "de") {
-                        
                         $html_output .= "<p class='ulicms-error'>Spamschutz-Feld bitte leer lassen.</p>";
                     } else {
                         $html_output .= "<p class='ulicms-error'>Please let the field for spam protection empty</p>";
@@ -224,7 +219,6 @@ function guestbook_list()
     $entries_query = db_query("SELECT * FROM " . tbname("guestbook_entries") . " ORDER by date DESC LIMIT $limit");
     
     while ($row = db_fetch_object($entries_query)) {
-        
         if (! empty($row->homepage)) {
             $html_output .= "<a href=\"" . $row->homepage . "\" target=\"_blank\" rel=\"nofollow\">Homepage von " . $row->name . "</a>";
             
@@ -272,5 +266,3 @@ function check_installation()
         guestbook_install();
     }
 }
-
-?>

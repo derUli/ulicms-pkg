@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <?php
-base_metas ();
+base_metas();
 ?>
 </head>
 
@@ -12,20 +12,20 @@ base_metas ();
 
 		<div id="header">
 			<h1><?php
-			
-			homepage_title ();
-			?></h1>
+            
+            homepage_title();
+            ?></h1>
 			<h2><?php
-			
-			motto ();
-			?></h2>
+            
+            motto();
+            ?></h2>
 		</div>
 
 
 		<div id="linkbar">
 			<div id="navcontainer">
 <?php
-language_selection ();
+language_selection();
 ?>
 </div>
 		</div>
@@ -40,7 +40,7 @@ language_selection ();
 				<div class="navcontainer">
 <?php
 
-menu ( "right" );
+menu("right");
 ?>
 </div>
 			</div>

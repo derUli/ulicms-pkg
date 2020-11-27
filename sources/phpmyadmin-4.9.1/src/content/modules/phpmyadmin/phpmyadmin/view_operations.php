@@ -42,7 +42,6 @@ $operations = new Operations();
 $_message = new Message;
 $_type = 'success';
 if (isset($_POST['submitoptions'])) {
-
     if (isset($_POST['new_name'])) {
         if ($pma_table->rename($_POST['new_name'])) {
             $_message->addText($pma_table->getLastMessage());
@@ -80,7 +79,9 @@ if (isset($result)) {
         unset($warning_messages);
     }
     echo Util::getMessage(
-        $_message, $sql_query, $_type
+        $_message,
+        $sql_query,
+        $_type
     );
 }
 unset($_message, $_type);

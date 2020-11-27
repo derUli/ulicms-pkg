@@ -104,7 +104,9 @@ class UserPassword
             $orig_auth_plugin = $_POST['authentication_plugin'];
         } else {
             $orig_auth_plugin = Privileges::getCurrentAuthenticationPlugin(
-                'change', $username, $hostname
+                'change',
+                $username,
+                $hostname
             );
         }
 
@@ -135,8 +137,12 @@ class UserPassword
         }
 
         $this->changePassUrlParamsAndSubmitQuery(
-            $username, $hostname, $password,
-            $sql_query, $hashing_function, $orig_auth_plugin
+            $username,
+            $hostname,
+            $password,
+            $sql_query,
+            $hashing_function,
+            $orig_auth_plugin
         );
 
         $auth_plugin->handlePasswordChange($password);
@@ -152,7 +158,9 @@ class UserPassword
     private function changePassHashingFunction()
     {
         if (Core::isValid(
-            $_POST['authentication_plugin'], 'identical', 'mysql_old_password'
+            $_POST['authentication_plugin'],
+            'identical',
+            'mysql_old_password'
         )) {
             $hashing_function = 'OLD_PASSWORD';
         } else {
@@ -174,7 +182,12 @@ class UserPassword
      * @return void
      */
     private function changePassUrlParamsAndSubmitQuery(
-        $username, $hostname, $password, $sql_query, $hashing_function, $orig_auth_plugin
+        $username,
+        $hostname,
+        $password,
+        $sql_query,
+        $hashing_function,
+        $orig_auth_plugin
     ) {
         $err_url = 'user_password.php' . Url::getCommon();
 
@@ -241,7 +254,9 @@ class UserPassword
     {
         echo '<h1>' , __('Change password') , '</h1>' , "\n\n";
         echo Util::getMessage(
-            $message, $sql_query, 'success'
+            $message,
+            $sql_query,
+            'success'
         );
         echo '<a href="index.php' , Url::getCommon()
             , ' target="_parent">' , "\n"

@@ -4,17 +4,17 @@
 	<div class="menu_title">Hauptmenü</div>
 <?php
 
-menu ( "right" );
+menu("right");
 ?>
 <div class="menu_title">Sprachen</div>
 <?php
 
-language_selection ();
+language_selection();
 ?>
 <div class="menu_title">Partnerseiten</div>
 <?php
 
-menu ( "partner" );
+menu("partner");
 ?>
 </div>
 
@@ -26,11 +26,11 @@ menu ( "partner" );
 
 <div id="footer">
 	<strong>Copyright &copy; <?php
-	
-year ();
-	?></strong> | <a href="./"><?php
+    
+year();
+    ?></strong> | <a href="./"><?php
 
-homepage_title ();
+homepage_title();
 ?></a> | <b>Design by</b> <a href="http://www.pikanai.com">Pikanai.com</a>
 </div>
 

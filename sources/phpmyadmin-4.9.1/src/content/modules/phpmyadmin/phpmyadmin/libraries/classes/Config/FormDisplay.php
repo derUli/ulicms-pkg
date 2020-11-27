@@ -128,7 +128,10 @@ class FormDisplay
     public function registerForm($form_name, array $form, $server_id = null)
     {
         $this->_forms[$form_name] = new Form(
-            $form_name, $form, $this->_configFile, $server_id
+            $form_name,
+            $form,
+            $this->_configFile,
+            $server_id
         );
         $this->_isValidated = false;
         foreach ($this->_forms[$form_name]->fields as $path) {
@@ -188,7 +191,10 @@ class FormDisplay
 
         // run validation
         $errors = Validator::validate(
-            $this->_configFile, $paths, $values, false
+            $this->_configFile,
+            $paths,
+            $values,
+            false
         );
 
         // change error keys from canonical paths to work paths
@@ -220,7 +226,10 @@ class FormDisplay
      * @return string $htmlOutput
      */
     private function _displayForms(
-        $show_restore_default, array &$js_default, array &$js, $show_buttons
+        $show_restore_default,
+        array &$js_default,
+        array &$js,
+        $show_buttons
     ) {
         $htmlOutput = '';
         $validators = Validator::getValidators($this->_configFile);
@@ -320,7 +329,10 @@ class FormDisplay
 
         // display forms
         $htmlOutput .= $this->_displayForms(
-            $show_restore_default, $js_default, $js, $show_buttons
+            $show_restore_default,
+            $js_default,
+            $js,
+            $show_buttons
         );
 
         if ($tabbed_form) {
@@ -366,8 +378,14 @@ class FormDisplay
      * @return string HTML for input field
      */
     private function _displayFieldInput(
-        Form $form, $field, $system_path, $work_path,
-        $translated_path, $show_restore_default, $userprefs_allow, array &$js_default
+        Form $form,
+        $field,
+        $system_path,
+        $work_path,
+        $translated_path,
+        $show_restore_default,
+        $userprefs_allow,
+        array &$js_default
     ) {
         $name = Descriptions::get($system_path);
         $description = Descriptions::get($system_path, 'desc');
@@ -479,8 +497,13 @@ class FormDisplay
         $js_default[] = $js_line;
 
         return FormDisplayTemplate::displayInput(
-            $translated_path, $name, $type, $value,
-            $description, $value_is_default, $opts
+            $translated_path,
+            $name,
+            $type,
+            $value,
+            $description,
+            $value_is_default,
+            $opts
         );
     }
 
@@ -678,7 +701,8 @@ class FormDisplay
                 if ($change_index !== false) {
                     $work_path = str_replace(
                         "Servers/$form->index/",
-                        "Servers/$change_index/", $work_path
+                        "Servers/$change_index/",
+                        $work_path
                     );
                 }
                 $to_save[$work_path] = $system_path;
@@ -700,7 +724,9 @@ class FormDisplay
                 foreach ($values[$path] as $value) {
                     $matches = array();
                     $match = preg_match(
-                        "/^(.+):(?:[ ]?)(\\w+)$/", $value, $matches
+                        "/^(.+):(?:[ ]?)(\\w+)$/",
+                        $value,
+                        $matches
                     );
                     if ($match) {
                         // correct 'IP: HTTP header' pair
@@ -806,14 +832,17 @@ class FormDisplay
             if (!function_exists('iconv')) {
                 $opts['values']['iconv'] .= ' (' . __('unavailable') . ')';
                 $comment = sprintf(
-                    __('"%s" requires %s extension'), 'iconv', 'iconv'
+                    __('"%s" requires %s extension'),
+                    'iconv',
+                    'iconv'
                 );
             }
             if (!function_exists('recode_string')) {
                 $opts['values']['recode'] .= ' (' . __('unavailable') . ')';
                 $comment .= ($comment ? ", " : '') . sprintf(
                     __('"%s" requires %s extension'),
-                    'recode', 'recode'
+                    'recode',
+                    'recode'
                 );
             }
             /* mbstring is always there thanks to polyfill */
@@ -854,7 +883,8 @@ class FormDisplay
                 || $system_path == 'QueryHistoryMax')
             ) {
                 $opts['comment'] = sprintf(
-                    __('maximum %s'), $GLOBALS['cfg'][$system_path]
+                    __('maximum %s'),
+                    $GLOBALS['cfg'][$system_path]
                 );
             }
         }

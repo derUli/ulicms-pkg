@@ -14,15 +14,12 @@ function rss2blog_admin()
         $list = file_get_contents($srclist);
     } else {
         $list = "";
-    }
-    
-    ?>
+    } ?>
 
 <form action="<?php echo getModuleAdminSelfPath()?>" method="post">
 <?php
     
-    csrf_token_html();
-    ?>
+    csrf_token_html(); ?>
 <p>Hier können Sie Ihren Blog automatisch aus externen RSS-Feeds mit
 		Inhalten befüllen.</p>
 	<p>
@@ -37,8 +34,7 @@ function rss2blog_admin()
 	<p>
 		<textarea rows="10" cols="80" style="width: 100%" name="list"><?php
     
-    echo htmlspecialchars($list);
-    ?></textarea>
+    echo htmlspecialchars($list); ?></textarea>
 	</p>
 
 	<p>

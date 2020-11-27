@@ -44,7 +44,7 @@ class Template
     /**
      * Twig environment
      */
-    static protected $twig;
+    protected static $twig;
 
     const BASE_PATH = 'templates/';
 

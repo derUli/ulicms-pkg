@@ -49,14 +49,11 @@ list(
 ) = Util::getDbInfo($db, isset($sub_part) ? $sub_part : '');
 
 if (isset($_POST['delete_tracking']) && isset($_POST['table'])) {
-
     Tracker::deleteTracking($GLOBALS['db'], $_POST['table']);
     Message::success(
         __('Tracking data deleted successfully.')
     )->display();
-
 } elseif (isset($_POST['submit_create_version'])) {
-
     Tracking::createTrackingForMultipleTables($_POST['selected']);
     Message::success(
         sprintf(
@@ -67,21 +64,16 @@ if (isset($_POST['delete_tracking']) && isset($_POST['table'])) {
             htmlspecialchars($_POST['version'])
         )
     )->display();
-
 } elseif (isset($_POST['submit_mult'])) {
-
     if (! empty($_POST['selected_tbl'])) {
         if ($_POST['submit_mult'] == 'delete_tracking') {
-
             foreach ($_POST['selected_tbl'] as $table) {
                 Tracker::deleteTracking($GLOBALS['db'], $table);
             }
             Message::success(
                 __('Tracking data deleted successfully.')
             )->display();
-
         } elseif ($_POST['submit_mult'] == 'track') {
-
             echo Tracking::getHtmlForDataDefinitionAndManipulationStatements(
                 'db_tracking.php' . $url_query,
                 0,
@@ -130,8 +122,12 @@ if (is_object($all_tables_result)
     && $GLOBALS['dbi']->numRows($all_tables_result) > 0
 ) {
     echo Tracking::getHtmlForTrackedTables(
-        $GLOBALS['db'], $all_tables_result, $url_query, $pmaThemeImage,
-        $text_dir, $cfgRelation
+        $GLOBALS['db'],
+        $all_tables_result,
+        $url_query,
+        $pmaThemeImage,
+        $text_dir,
+        $cfgRelation
     );
 }
 
@@ -140,7 +136,11 @@ $untracked_tables = Tracking::getUntrackedTables($GLOBALS['db']);
 // If untracked tables exist
 if (count($untracked_tables) > 0) {
     echo Tracking::getHtmlForUntrackedTables(
-        $GLOBALS['db'], $untracked_tables, $url_query, $pmaThemeImage, $text_dir
+        $GLOBALS['db'],
+        $untracked_tables,
+        $url_query,
+        $pmaThemeImage,
+        $text_dir
     );
 }
 // If available print out database log

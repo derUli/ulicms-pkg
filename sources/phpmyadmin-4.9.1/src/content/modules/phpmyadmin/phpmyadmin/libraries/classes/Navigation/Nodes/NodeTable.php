@@ -302,4 +302,3 @@ class NodeTable extends NodeDatabaseChild
         }
     }
 }
-

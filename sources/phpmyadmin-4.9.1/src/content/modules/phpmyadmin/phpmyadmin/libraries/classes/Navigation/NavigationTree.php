@@ -1171,7 +1171,8 @@ class NavigationTree
 
             if (isset($node->links['text'])) {
                 $args = array();
-                foreach ($node->parents(true) as $parent) {;
+                foreach ($node->parents(true) as $parent) {
+                    ;
                     $args[] = urlencode($parent->real_name);
                 }
                 $link = vsprintf($node->links['text'], $args);
@@ -1519,7 +1520,7 @@ class NavigationTree
      *
      * @return int See strnatcmp() and strcmp()
      */
-    static public function sortNode($a, $b)
+    public static function sortNode($a, $b)
     {
         if ($a->isNew) {
             return -1;

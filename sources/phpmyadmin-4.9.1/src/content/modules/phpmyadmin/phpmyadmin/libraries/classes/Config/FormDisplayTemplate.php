@@ -142,8 +142,14 @@ class FormDisplayTemplate
      *
      * @return string
      */
-    public static function displayInput($path, $name, $type, $value, $description = '',
-        $value_is_default = true, $opts = null
+    public static function displayInput(
+        $path,
+        $name,
+        $type,
+        $value,
+        $description = '',
+        $value_is_default = true,
+        $opts = null
     ) {
         global $_FormDisplayGroup;
         static $icons;    // An array of IMG tags used further below in the function
@@ -185,7 +191,8 @@ class FormDisplayTemplate
                 // In this case we just use getImage() because it's available
                 foreach ($icon_init as $k => $v) {
                     $icons[$k] = Util::getImage(
-                        $v[0], $v[1]
+                        $v[0],
+                        $v[1]
                     );
                 }
             }

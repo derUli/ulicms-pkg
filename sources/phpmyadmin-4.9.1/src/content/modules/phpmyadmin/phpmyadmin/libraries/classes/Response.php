@@ -249,7 +249,6 @@ class Response
                 $this->_JSON[$json] = $value;
             }
         }
-
     }
 
     /**
@@ -405,6 +404,7 @@ class Response
                 break;
                 case JSON_ERROR_UNSUPPORTED_TYPE:
                     $error = 'A value of a type that cannot be encoded was given';
+                    // no break
                 default:
                     $error = 'Unknown error';
                 break;
@@ -530,13 +530,13 @@ class Response
         }
     }
 
-   /**
-     * Generate header for 303
-     *
-     * @param string $location will set location to redirect.
-     *
-     * @return void
-     */
+    /**
+      * Generate header for 303
+      *
+      * @param string $location will set location to redirect.
+      *
+      * @return void
+      */
     public function generateHeader303($location)
     {
         $this->setHttpResponseCode(303);

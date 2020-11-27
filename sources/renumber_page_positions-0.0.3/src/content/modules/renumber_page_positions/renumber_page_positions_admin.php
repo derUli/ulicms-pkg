@@ -8,15 +8,12 @@ function renumber_page_positions_admin()
         include_once getModulePath("renumber_page_positions", true) . "renumber_page_positions_lib.php";
         renumber_page_positions();
         echo "<p style='color:green'>Die Seitenpositionen wurden neu organisiert.</p>";
-    }
-    
-    ?>
+    } ?>
 
 <form action="<?php echo getModuleAdminSelfPath()?>" method="post">
 <?php
     
-    csrf_token_html();
-    ?>
+    csrf_token_html(); ?>
 <p>Falls Sie eine neue Seite erstellen möchten, aber Sie keinen Abstand
 		zwischen den Positionen gelassen haben, können Sie diese Funktion
 		nutzen, um die Positionsnummern der Seiten neu zu organisieren.</p>

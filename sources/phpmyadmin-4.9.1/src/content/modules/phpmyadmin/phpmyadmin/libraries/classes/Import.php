@@ -66,7 +66,7 @@ class Import
             return false;
         } elseif ($timeout_passed) {
             return true;
-            /* 5 in next row might be too much */
+        /* 5 in next row might be too much */
         } elseif ((time() - $timestamp) > ($maximum_time - 5)) {
             $timeout_passed = true;
             return true;
@@ -184,7 +184,9 @@ class Import
         if (!isset($import_run_buffer)) {
             // Do we have something to push into buffer?
             $import_run_buffer = self::runQueryPost(
-                $import_run_buffer, $sql, $full
+                $import_run_buffer,
+                $sql,
+                $full
             );
             return;
         }
@@ -194,7 +196,9 @@ class Import
             $skip_queries--;
             // Do we have something to push into buffer?
             $import_run_buffer = self::runQueryPost(
-                $import_run_buffer, $sql, $full
+                $import_run_buffer,
+                $sql,
+                $full
             );
             return;
         }
@@ -405,7 +409,7 @@ class Import
             // UTF-8
             if (strncmp($result, "\xEF\xBB\xBF", 3) == 0) {
                 $result = mb_substr($result, 3);
-                // UTF-16 BE, LE
+            // UTF-16 BE, LE
             } elseif (strncmp($result, "\xFE\xFF", 2) == 0
                 || strncmp($result, "\xFF\xFE", 2) == 0
             ) {
@@ -585,8 +589,11 @@ class Import
      *
      * @todo    Handle the error cases more elegantly
      */
-    public static function detectSize($last_cumulative_size, $last_cumulative_type,
-        $curr_type, $cell
+    public static function detectSize(
+        $last_cumulative_size,
+        $last_cumulative_type,
+        $curr_type,
+        $cell
     ) {
         $curr_size = mb_strlen((string)$cell);
 
@@ -935,8 +942,13 @@ class Import
      *
      * @link https://wiki.phpmyadmin.net/pma/Import
      */
-    public static function buildSql($db_name, array &$tables, &$analyses = null,
-        &$additional_sql = null, $options = null, array &$sql_data
+    public static function buildSql(
+        $db_name,
+        array &$tables,
+        &$analyses = null,
+        &$additional_sql = null,
+        $options = null,
+        array &$sql_data
     ) {
         /* Needed to quell the beast that is Message */
         $import_notice = null;
@@ -1465,7 +1477,7 @@ class Import
         foreach ($analyzed_sql_results['statement']->set as $set) {
             $columns[] = $set->column;
             $not_equal_operator = ' <> ';
-            if(strtoupper($set->value) == 'NULL'){
+            if (strtoupper($set->value) == 'NULL') {
                 $not_equal_operator = ' IS NOT ';
             }
             $diff[] = $set->column . $not_equal_operator . $set->value;

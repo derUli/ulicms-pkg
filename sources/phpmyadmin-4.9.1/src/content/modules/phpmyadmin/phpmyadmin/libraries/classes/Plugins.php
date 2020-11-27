@@ -104,7 +104,7 @@ class Plugins
             }
         }
 
-        usort($plugin_list, function($cmp_name_1, $cmp_name_2) {
+        usort($plugin_list, function ($cmp_name_1, $cmp_name_2) {
             return strcasecmp(
                 $cmp_name_1->getProperties()->getText(),
                 $cmp_name_2->getProperties()->getText()
@@ -225,7 +225,7 @@ class Plugins
                 )
             );
             $ret .= '<option';
-             // If the form is being repopulated using $_GET data, that is priority
+            // If the form is being repopulated using $_GET data, that is priority
             if (isset($_GET[$name])
                 && $plugin_name == $_GET[$name]
                 || ! isset($_GET[$name])
@@ -344,7 +344,9 @@ class Plugins
 
                 // single property item
                 $ret .= self::getHtmlForProperty(
-                    $section, $plugin_name, $propertyItem
+                    $section,
+                    $plugin_name,
+                    $propertyItem
                 );
             }
         }
@@ -403,7 +405,9 @@ class Plugins
      * @return string
      */
     public static function getHtmlForProperty(
-        $section, $plugin_name, $propertyItem
+        $section,
+        $plugin_name,
+        $propertyItem
     ) {
         $ret = null;
         $property_class = get_class($propertyItem);

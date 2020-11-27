@@ -94,8 +94,13 @@ class ServerDatabasesController extends Controller
          */
         if ($GLOBALS['server'] > 0) {
             $this->_databases = $this->dbi->getDatabasesFull(
-                null, $this->_dbstats, DatabaseInterface::CONNECT_USER, $this->_sort_by,
-                $this->_sort_order, $this->_pos, true
+                null,
+                $this->_dbstats,
+                DatabaseInterface::CONNECT_USER,
+                $this->_sort_by,
+                $this->_sort_order,
+                $this->_pos,
+                true
             );
             $this->_database_count = count($GLOBALS['dblist']->databases);
         } else {
@@ -170,13 +175,15 @@ class ServerDatabasesController extends Controller
             $message->addParam($_POST['new_db']);
             $this->response->addJSON('message', $message);
             $this->response->addJSON(
-                'sql_query', Util::getMessage(null, $sql_query, 'success')
+                'sql_query',
+                Util::getMessage(null, $sql_query, 'success')
             );
 
             $this->response->addJSON(
                 'url_query',
                 Util::getScriptNameForOption(
-                    $GLOBALS['cfg']['DefaultTabDatabase'], 'database'
+                    $GLOBALS['cfg']['DefaultTabDatabase'],
+                    'database'
                 )
                 . Url::getCommon(array('db' => $_POST['new_db']))
             );
@@ -412,9 +419,12 @@ class ServerDatabasesController extends Controller
      *
      * @return array $column_order, $out
      */
-    function _buildHtmlForDb(
-        array $current, array $column_order,
-        array $replication_types, array $replication_info, $tr_class = ''
+    public function _buildHtmlForDb(
+        array $current,
+        array $column_order,
+        array $replication_types,
+        array $replication_info,
+        $tr_class = ''
     ) {
         $master_replication = $slave_replication = '';
         foreach ($replication_types as $type) {
@@ -431,7 +441,8 @@ class ServerDatabasesController extends Controller
                     );
                 } else {
                     $key = array_search(
-                        $current["SCHEMA_NAME"], $replication_info[$type]['Do_DB']
+                        $current["SCHEMA_NAME"],
+                        $replication_info[$type]['Do_DB']
                     );
 
                     if (strlen($key) > 0

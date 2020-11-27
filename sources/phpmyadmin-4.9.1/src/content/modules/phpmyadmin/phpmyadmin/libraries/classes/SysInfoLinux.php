@@ -24,7 +24,7 @@ class SysInfoLinux extends SysInfoBase
      *
      * @return array with load data
      */
-    function loadavg()
+    public function loadavg()
     {
         $buf = file_get_contents('/proc/stat');
         $nums = preg_split(
@@ -36,7 +36,7 @@ class SysInfoLinux extends SysInfoBase
             )
         );
 
-        return Array(
+        return array(
             'busy' => $nums[1] + $nums[2] + $nums[3],
             'idle' => intval($nums[4]),
         );
@@ -57,7 +57,7 @@ class SysInfoLinux extends SysInfoBase
      *
      * @return array with memory usage data
      */
-    function memory()
+    public function memory()
     {
         preg_match_all(
             SysInfo::MEMORY_REGEXP,

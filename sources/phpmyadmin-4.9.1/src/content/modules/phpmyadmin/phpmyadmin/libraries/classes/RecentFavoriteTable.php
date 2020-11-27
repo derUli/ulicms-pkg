@@ -170,7 +170,8 @@ class RecentFavoriteTable
     public function trim()
     {
         $max = max(
-            $GLOBALS['cfg']['Num' . ucfirst($this->_tableType) . 'Tables'], 0
+            $GLOBALS['cfg']['Num' . ucfirst($this->_tableType) . 'Tables'],
+            0
         );
         $trimming_occurred = count($this->_tables) > $max;
         while (count($this->_tables) > $max) {

@@ -1,22 +1,22 @@
 <!doctype html>
 <html lang="<?php
 
-echo getCurrentLanguage ();
+echo getCurrentLanguage();
 ?>">
 <head>
 <?php base_metas()?>
 <link rel="stylesheet"
 	href="<?php
-	
-echo getTemplateDirPath ( "cloudy_dropdown" );
-	?>mobile.css"
+    
+echo getTemplateDirPath("cloudy_dropdown");
+    ?>mobile.css"
 	type="text/css" media="only screen and (max-device-width:800px)" />
 
 <link rel="stylesheet"
 	href="<?php
-	
-echo getTemplateDirPath ( "cloudy_dropdown" );
-	?>mobile.css"
+    
+echo getTemplateDirPath("cloudy_dropdown");
+    ?>mobile.css"
 	type="text/css" media="handheld" />
 
 </head>
@@ -27,16 +27,14 @@ echo getTemplateDirPath ( "cloudy_dropdown" );
 			<p>
 				<a href="./">
 <?php
-if (getconfig ( "logo_disabled" ) == "no") {
-	logo ();
-	?>
+if (getconfig("logo_disabled") == "no") {
+        logo(); ?>
 <br />
 <?php
-} else {
-	?><strong><?php homepage_title()?></strong>
+    } else {
+        ?><strong><?php homepage_title()?></strong>
 <?php
-
-}
+    }
 ?>
 </a>
 			</p>
@@ -46,7 +44,7 @@ if (getconfig ( "logo_disabled" ) == "no") {
 		</div>
 <?php
 
-menu ( "top" );
+menu("top");
 ?>
 
 <div class="content">

@@ -1,17 +1,17 @@
 <div id="advertisement">
 <?php
 
-random_banner ();
+random_banner();
 ?>
 </div>
 </div>
 <div class="footer">
 	&copy; <?php
-	
-year ();
-	?> by <?php
+    
+year();
+    ?> by <?php
 
-homepage_owner ();
+homepage_owner();
 ?>
 </div>
 </div>

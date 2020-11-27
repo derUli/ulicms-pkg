@@ -1,4 +1,5 @@
 <?php
-function lessphp_render(){
-   return "";
+function lessphp_render()
+{
+    return "";
 }

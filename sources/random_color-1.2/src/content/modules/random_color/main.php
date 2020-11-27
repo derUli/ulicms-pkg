@@ -1,4 +1,5 @@
 <?php
-function random_color_render() {
-	return RandomColor::get ();
+function random_color_render()
+{
+    return RandomColor::get();
 }

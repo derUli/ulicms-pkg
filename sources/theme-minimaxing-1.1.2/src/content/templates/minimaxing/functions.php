@@ -1,8 +1,9 @@
 <?php
 
-class Minimaxing_Theme {
-
-    public static function get_menu($name = "top", $parent_id = null, $recursive = true, $order = "position") {
+class Minimaxing_Theme
+{
+    public static function get_menu($name = "top", $parent_id = null, $recursive = true, $order = "position")
+    {
         $html = "";
         $name = db_escape($name);
         $language = $_SESSION ["language"];
@@ -38,13 +39,15 @@ class Minimaxing_Theme {
                 $containsCurrentItem = parent_item_contains_current_page($row->id);
 
                 $additional_classes = " menu-link-to-" . $row->id . " ";
-                if ($containsCurrentItem)
+                if ($containsCurrentItem) {
                     $additional_classes .= "current-page-item ";
+                }
 
-                if (!empty($row->alternate_title))
+                if (!empty($row->alternate_title)) {
                     $title = $row->alternate_title;
-                else
+                } else {
                     $title = $row->title;
+                }
                 if (get_slug() != $row->slug) {
                     $html .= "<a href='" . buildSEOUrl($row->slug, $row->link_url) . "' target='" . $row->target . "' class='" . trim($additional_classes) . "'>";
                 } else {
@@ -66,8 +69,8 @@ class Minimaxing_Theme {
         return $html;
     }
 
-    public static function menu() {
+    public static function menu()
+    {
         echo self::get_menu();
     }
-
 }

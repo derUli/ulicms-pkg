@@ -43,7 +43,8 @@ $query_to_show = isset($_GET['sql_query']) ? $_GET['sql_query'] : true;
  */
 $response->addHTML(
     SqlQueryForm::getHtml(
-        $query_to_show, false,
+        $query_to_show,
+        false,
         isset($_POST['delimiter'])
         ? htmlspecialchars($_POST['delimiter'])
         : ';'

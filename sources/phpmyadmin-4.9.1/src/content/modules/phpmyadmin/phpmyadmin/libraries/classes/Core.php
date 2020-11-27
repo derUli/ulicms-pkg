@@ -179,22 +179,22 @@ class Core
         // allow some aliases of var types
         $type = strtolower($type);
         switch ($type) {
-        case 'identic' :
+        case 'identic':
             $type = 'identical';
             break;
-        case 'len' :
+        case 'len':
             $type = 'length';
             break;
-        case 'bool' :
+        case 'bool':
             $type = 'boolean';
             break;
-        case 'float' :
+        case 'float':
             $type = 'double';
             break;
-        case 'int' :
+        case 'int':
             $type = 'integer';
             break;
-        case 'null' :
+        case 'null':
             $type = 'NULL';
             break;
         }
@@ -267,7 +267,8 @@ class Core
      *
      * @return void
      */
-    public static function fatalError($error_message, $message_args = null) {
+    public static function fatalError($error_message, $message_args = null)
+    {
         /* Use format string if applicable */
         if (is_string($message_args)) {
             $error_message = sprintf($error_message, $message_args);
@@ -942,9 +943,11 @@ class Core
         }
 
         $path = [];
-        foreach(explode('/', $PMA_PHP_SELF) as $part) {
+        foreach (explode('/', $PMA_PHP_SELF) as $part) {
             // ignore parts that have no value
-            if (empty($part) || $part === '.') continue;
+            if (empty($part) || $part === '.') {
+                continue;
+            }
 
             if ($part !== '..') {
                 // cool, we found a new part
@@ -1102,8 +1105,7 @@ class Core
         for ($i = 0; $i < $length; $i++) {
             $value = $data[$i];
 
-            switch ($value)
-            {
+            switch ($value) {
                 case '}':
                     /* end of array */
                     if ($depth <= 0) {
@@ -1250,8 +1252,14 @@ class Core
      *
      * @return void
      */
-    public static function printListItem($name, $listId = null, $url = null,
-        $mysql_help_page = null, $target = null, $a_id = null, $class = null,
+    public static function printListItem(
+        $name,
+        $listId = null,
+        $url = null,
+        $mysql_help_page = null,
+        $target = null,
+        $a_id = null,
+        $class = null,
         $a_class = null
     ) {
         echo Template::get('list/item')

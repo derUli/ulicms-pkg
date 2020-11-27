@@ -11,25 +11,23 @@
 			<section id="logo">
 				<a href="./">
 <?php
-if (getconfig ( "logo_disabled" ) == "no") {
-	logo ();
-	?>
+if (getconfig("logo_disabled") == "no") {
+    logo(); ?>
 <br />  
 <?php
 } else {
-	?><strong><?php
-	
-	homepage_title ();
-	?></strong>
+        ?><strong><?php
+    
+    homepage_title(); ?></strong>
 <?php
-}
+    }
 ?>
 </a>
 			</section>
 			<nav><?php
-			
-			menu ( "top" );
-			?></nav>
+            
+            menu("top");
+            ?></nav>
 		</header>
 		<main>
-<?php Template::headline (); ?>
+<?php Template::headline(); ?>

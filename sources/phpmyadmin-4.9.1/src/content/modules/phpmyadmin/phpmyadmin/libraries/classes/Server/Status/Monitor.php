@@ -295,7 +295,7 @@ class Monitor
         $retval .= Data::getHtmlForRefreshList(
             'gridChartRefresh',
             5,
-            Array(2, 3, 4, 5, 10, 20, 40, 60, 120, 300, 600, 1200)
+            array(2, 3, 4, 5, 10, 20, 40, 60, 120, 300, 600, 1200)
         );
         $retval .= '<br />';
         $retval .= '</div>';
@@ -386,7 +386,12 @@ class Monitor
 
         /* Accumulate all required variables and data */
         list($serverVars, $statusVars, $ret) = self::getJsonForChartingDataGet(
-            $ret, $serverVars, $statusVars, $sysinfo, $cpuload, $memory
+            $ret,
+            $serverVars,
+            $statusVars,
+            $sysinfo,
+            $cpuload,
+            $memory
         );
 
         // Retrieve all required status variables
@@ -463,7 +468,12 @@ class Monitor
      * @return array
      */
     public static function getJsonForChartingDataGet(
-        array $ret, array $serverVars, array $statusVars, $sysinfo, $cpuload, $memory
+        array $ret,
+        array $serverVars,
+        array $statusVars,
+        $sysinfo,
+        $cpuload,
+        $memory
     ) {
         // For each chart
         foreach ($ret as $chart_id => $chartNodes) {
@@ -473,9 +483,14 @@ class Monitor
                 foreach ($nodeDataPoints as $point_id => $dataPoint) {
                     list($serverVars, $statusVars, $ret[$chart_id][$node_id][$point_id])
                         = self::getJsonForChartingDataSwitch(
-                            $dataPoint['type'], $dataPoint['name'], $serverVars,
-                            $statusVars, $ret[$chart_id][$node_id][$point_id],
-                            $sysinfo, $cpuload, $memory
+                            $dataPoint['type'],
+                            $dataPoint['name'],
+                            $serverVars,
+                            $statusVars,
+                            $ret[$chart_id][$node_id][$point_id],
+                            $sysinfo,
+                            $cpuload,
+                            $memory
                         );
                 } /* foreach */
             } /* foreach */
@@ -498,8 +513,14 @@ class Monitor
      * @return array
      */
     public static function getJsonForChartingDataSwitch(
-        $type, $pName, array $serverVars, array $statusVars, array $ret,
-        $sysinfo, $cpuload, $memory
+        $type,
+        $pName,
+        array $serverVars,
+        array $statusVars,
+        array $ret,
+        $sysinfo,
+        $cpuload,
+        $memory
     ) {
         switch ($type) {
         /* We only collect the status and server variables here to
@@ -589,7 +610,7 @@ class Monitor
                 )
             );
 
-            switch($type) {
+            switch ($type) {
             case 'insert':
             case 'update':
                 //Cut off big inserts and updates, but append byte count instead
@@ -597,7 +618,9 @@ class Monitor
                     $implode_sql_text = implode(
                         ' ',
                         Util::formatByteDown(
-                            mb_strlen($row['sql_text']), 2, 2
+                            mb_strlen($row['sql_text']),
+                            2,
+                            2
                         )
                     );
                     $row['sql_text'] = mb_substr($row['sql_text'], 0, 200)
@@ -664,14 +687,15 @@ class Monitor
             }
             $return['sum'][$type] += $row['#'];
 
-            switch($type) {
+            switch ($type) {
             /** @noinspection PhpMissingBreakStatementInspection */
             case 'insert':
                 // Group inserts if selected
                 if ($removeVars
                     && preg_match(
                         '/^INSERT INTO (`|\'|"|)([^\s\\1]+)\\1/i',
-                        $row['argument'], $matches
+                        $row['argument'],
+                        $matches
                     )
                 ) {
                     $insertTables[$matches[2]]++;
@@ -694,7 +718,7 @@ class Monitor
                         $insertTables[$matches[2]] += $row['#'] - 1;
                     }
                 }
-                // No break here
+                // no break here
 
             case 'update':
                 // Cut off big inserts and updates,
@@ -764,7 +788,6 @@ class Monitor
                     'SET GLOBAL ' . $_POST['varName'] . ' = ' . $value
                 );
             }
-
         }
 
         $loggingVars = $GLOBALS['dbi']->fetchResult(

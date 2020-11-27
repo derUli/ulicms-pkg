@@ -66,7 +66,7 @@ if (! defined('PHPMYADMIN') && ! defined('TESTSUITE')) {
 }
 
 #pma_navigation div#pmalogo {
-    <?php //better echo $GLOBALS['cfg']['logoBGC']; ?>
+    <?php //better echo $GLOBALS['cfg']['logoBGC'];?>
 }
 
 #pma_navigation #pmalogo,

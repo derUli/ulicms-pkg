@@ -1,2 +1,2 @@
 <?php
-Settings::register ( "blocked_ips", "" );
+Settings::register("blocked_ips", "");

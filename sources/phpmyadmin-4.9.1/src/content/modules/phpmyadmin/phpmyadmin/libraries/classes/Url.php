@@ -30,8 +30,11 @@ class Url
      *
      * @access  public
      */
-    public static function getHiddenInputs($db = '', $table = '',
-        $indent = 0, $skip = array()
+    public static function getHiddenInputs(
+        $db = '',
+        $table = '',
+        $indent = 0,
+        $skip = array()
     ) {
         if (is_array($db)) {
             $params  =& $db;
@@ -258,9 +261,9 @@ class Url
         switch ($encode) {
         case 'html':
             return $html_separator;
-        case 'text' :
-        case 'none' :
-        default :
+        case 'text':
+        case 'none':
+        default:
             return $separator;
         }
     }

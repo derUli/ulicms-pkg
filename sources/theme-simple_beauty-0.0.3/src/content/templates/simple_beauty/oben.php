@@ -4,14 +4,14 @@
 <head>
 <?php
 
-base_metas ();
+base_metas();
 ?>
 <style type="text/css" rel="stylesheet">
 #header, #sub_header {
 	background-color: <?php
-	
-echo getconfig ( "header-background-color" );
-	?>
+    
+echo getconfig("header-background-color");
+    ?>
 }
 </style>
 </head>
@@ -22,24 +22,22 @@ echo getconfig ( "header-background-color" );
 
 		<div id="header">
 <?php
-if (getconfig ( "logo_disabled" ) == "no") {
-	logo ();
-} else {
-	?>
+if (getconfig("logo_disabled") == "no") {
+        logo();
+    } else {
+        ?>
 <h1><?php
-	
-homepage_title ();
-	?></h1>
+    
+homepage_title(); ?></h1>
 <?php
-
-}
+    }
 ?>
 </div>
 
 		<div id="sub_header"><?php
-		
-motto ();
-		?></div>
+        
+motto();
+        ?></div>
 
 		<div id="main_content_top"></div>
 

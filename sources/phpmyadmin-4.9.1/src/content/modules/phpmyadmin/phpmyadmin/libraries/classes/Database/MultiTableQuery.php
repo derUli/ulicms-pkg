@@ -78,7 +78,7 @@ class MultiTableQuery
     public function getFormHtml()
     {
         $tables = [];
-        foreach($this->tables as $table) {
+        foreach ($this->tables as $table) {
             $tables[$table]['hash'] = md5($table);
             $tables[$table]['columns'] = array_keys(
                 $this->dbi->getColumns($this->db, $table)

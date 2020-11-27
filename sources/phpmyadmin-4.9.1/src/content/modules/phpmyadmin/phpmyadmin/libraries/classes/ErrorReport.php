@@ -99,7 +99,7 @@ class ErrorReport
                 $exception["uri"] = $uri;
                 $report["script_name"] = $scriptName;
                 unset($exception["url"]);
-            } else if (isset($_POST["url"])) {
+            } elseif (isset($_POST["url"])) {
                 list($uri, $scriptName) = $this->sanitizeUrl($_POST["url"]);
                 $exception["uri"] = $uri;
                 $report["script_name"] = $scriptName;

@@ -247,7 +247,7 @@ class ExportRelationSchema
     {
         $tables = [];
         if (isset($_POST['t_tbl'])) {
-            foreach($_POST['t_tbl'] as $table) {
+            foreach ($_POST['t_tbl'] as $table) {
                 $tables[] = rawurldecode($table);
             }
         }

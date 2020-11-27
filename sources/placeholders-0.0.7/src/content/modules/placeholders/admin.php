@@ -8,7 +8,7 @@ function placeholders_list()
     
     if (db_num_rows($query) > 0) {
         echo "<table class=\"tablesorter\">";
-		echo "<thead>";
+        echo "<thead>";
         echo "<tr style=\"background-color:#f0f0f0;font-weight:bold;\">";
         echo "<th>";
         echo "ID";
@@ -22,8 +22,8 @@ function placeholders_list()
         echo "<th class=\"no-sort\"></th>";
         echo "<th class=\"no-sort\"></th>";
         echo "</tr>";
-		echo "</thead>";
-		echo "<tbody>";
+        echo "</thead>";
+        echo "<tbody>";
         
         while ($row = db_fetch_object($query)) {
             echo "<tr>";
@@ -31,16 +31,16 @@ function placeholders_list()
             echo "<td>" . $row->name . "</strong></td>";
             echo "<td>" . $row->value . "</strong></td>";
             echo "<td><a href=\"?action=module_settings&module=placeholders&placeholders_action=edit&id=" . $row->id . "\">";
-			echo '<img src="gfx/edit.png" class="mobile-big-image" alt="Edit" title="Edit">';
-			
-			echo "</a></td>";
-            echo "<td><a href=\"?action=module_settings&module=placeholders&placeholders_action=delete&id=" . $row->id . "\" onclick=\"return confirm('Diesen Platzhalter wirklich löschen?');\">"; 
-			echo '<img class="mobile-big-image" src="gfx/delete.gif" alt="'._t("delete").'" title="'._t("delete").'">';
-			echo "</a></td>";
+            echo '<img src="gfx/edit.png" class="mobile-big-image" alt="Edit" title="Edit">';
+            
+            echo "</a></td>";
+            echo "<td><a href=\"?action=module_settings&module=placeholders&placeholders_action=delete&id=" . $row->id . "\" onclick=\"return confirm('Diesen Platzhalter wirklich löschen?');\">";
+            echo '<img class="mobile-big-image" src="gfx/delete.gif" alt="'._t("delete").'" title="'._t("delete").'">';
+            echo "</a></td>";
             echo "</tr>";
         }
-		
-		echo "</tbody>";
+        
+        echo "</tbody>";
         
         echo "</table>";
     }
@@ -48,8 +48,9 @@ function placeholders_list()
 
 function placeholders_admin()
 {
-    if (isset($_GET["placeholders_action"]))
+    if (isset($_GET["placeholders_action"])) {
         $action = $_GET["placeholders_action"];
+    }
     
     if ($action == "delete") {
         $id = intval($_GET["id"]);
@@ -57,7 +58,6 @@ function placeholders_admin()
         unset($action);
     }
     if (isset($_POST["save"])) {
-        
         $name = db_escape(trim($_POST["name"]));
         $value = db_escape(trim($_POST["value"]));
         $match_case = intval(isset($_POST["match_case"]));
@@ -68,8 +68,7 @@ function placeholders_admin()
         } else {
             db_query("UPDATE `" . tbname("placeholders") . "` SET name='$name', value='$value', `match_case`='$match_case' WHERE id=$id");
         }
-    }
-    ?>
+    } ?>
 <?php
     
     if (! isset($action)) {
@@ -81,12 +80,10 @@ function placeholders_admin()
 <br />
 <?php
         
-        placeholders_list();
-        ?>
+        placeholders_list(); ?>
 
 <?php
-    } 
-    else if ($action == "add" or $action == "edit") {
+    } elseif ($action == "add" or $action == "edit") {
         include getModulePath("placeholders", true) . "placeholders_add.php";
     }
 }

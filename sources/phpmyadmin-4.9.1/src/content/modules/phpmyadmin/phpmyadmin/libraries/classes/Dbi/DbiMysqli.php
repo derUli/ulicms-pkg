@@ -50,7 +50,7 @@ if (! defined('MYSQLI_TYPE_JSON')) {
  */
 class DbiMysqli implements DbiExtension
 {
-    static private $pma_mysqli_flag_names = array(
+    private static $pma_mysqli_flag_names = array(
         MYSQLI_NUM_FLAG => 'num',
         MYSQLI_PART_KEY_FLAG => 'part_key',
         MYSQLI_SET_FLAG => 'set',
@@ -76,7 +76,9 @@ class DbiMysqli implements DbiExtension
      * @return mixed false on error or a mysqli object on success
      */
     public function connect(
-        $user, $password, array $server
+        $user,
+        $password,
+        array $server
     ) {
         if ($server) {
             $server['host'] = (empty($server['host']))
@@ -159,12 +161,12 @@ class DbiMysqli implements DbiExtension
             if (! $server['ssl'] && ($error_number == 3159 ||
                 (($error_number == 2001 || $error_number == 9002) && stripos($error_message, 'SSL Connection is required') !== false))
             ) {
-                    trigger_error(
-                        __('SSL connection enforced by server, automatically enabling it.'),
-                        E_USER_WARNING
-                    );
-                    $server['ssl'] = true;
-                    return self::connect($user, $password, $server);
+                trigger_error(
+                    __('SSL connection enforced by server, automatically enabling it.'),
+                    E_USER_WARNING
+                );
+                $server['ssl'] = true;
+                return self::connect($user, $password, $server);
             }
             return false;
         }

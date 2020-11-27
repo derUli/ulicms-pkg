@@ -104,7 +104,8 @@ class ExportPdf extends ExportPlugin
 
         // what to dump (structure/data/both) main group
         $dumpWhat = new OptionsPropertyMainGroup(
-            "dump_what", __('Dump table')
+            "dump_what",
+            __('Dump table')
         );
         $leaf = new RadioPropertyItem("structure_or_data");
         $leaf->setValues(

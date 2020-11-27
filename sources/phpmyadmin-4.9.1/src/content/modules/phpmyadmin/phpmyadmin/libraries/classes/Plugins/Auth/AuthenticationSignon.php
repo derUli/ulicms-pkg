@@ -78,8 +78,8 @@ class AuthenticationSignon extends AuthenticationPlugin
 
         if (isset($sessionCookieParams['samesite'])
             && ! in_array($sessionCookieParams['samesite'], array('Lax', 'Strict'))) {
-                // Not a valid value for samesite
-                unset($sessionCookieParams['samesite']);
+            // Not a valid value for samesite
+            unset($sessionCookieParams['samesite']);
         }
 
         if (version_compare(phpversion(), '7.3.0', '>=')) {
@@ -138,7 +138,7 @@ class AuthenticationSignon extends AuthenticationPlugin
             }
             include $script_name;
 
-            list ($this->user, $this->password)
+            list($this->user, $this->password)
                 = get_login_credentials($GLOBALS['cfg']['Server']['user']);
         } elseif (isset($_COOKIE[$session_name])) { /* Does session exist? */
             /* End current session */

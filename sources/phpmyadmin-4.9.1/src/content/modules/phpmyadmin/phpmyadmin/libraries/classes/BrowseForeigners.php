@@ -284,7 +284,9 @@ class BrowseForeigners
             );
             $description = htmlspecialchars(
                 mb_substr(
-                    $description, 0, $this->limitChars
+                    $description,
+                    0,
+                    $this->limitChars
                 )
                 . '...'
             );

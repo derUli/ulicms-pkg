@@ -81,7 +81,9 @@ switch ($action_done) {
 case 'config_saved':
     /* Use uniqid to display this message every time configuration is saved */
     SetupIndex::messagesSet(
-        'notice', uniqid('config_saved'), __('Configuration saved.'),
+        'notice',
+        uniqid('config_saved'),
+        __('Configuration saved.'),
         Sanitize::sanitize(
             __(
                 'Configuration saved to file config/config.inc.php in phpMyAdmin '
@@ -94,7 +96,9 @@ case 'config_saved':
 case 'config_not_saved':
     /* Use uniqid to display this message every time configuration is saved */
     SetupIndex::messagesSet(
-        'notice', uniqid('config_not_saved'), __('Configuration not saved!'),
+        'notice',
+        uniqid('config_not_saved'),
+        __('Configuration not saved!'),
         Sanitize::sanitize(
             __(
                 'Please create web server writable folder [em]config[/em] in '
@@ -127,7 +131,8 @@ echo '</legend>';
 // Display server list
 //
 echo FormDisplayTemplate::displayFormTop(
-    'index.php', 'get',
+    'index.php',
+    'get',
     array(
         'page' => 'servers',
         'mode' => 'add'
@@ -206,8 +211,13 @@ foreach ($all_languages as $each_lang) {
     $opts['values'][$each_lang->getCode()] = $each_lang->getName();
 }
 echo FormDisplayTemplate::displayInput(
-    'DefaultLang', __('Default language'), 'select',
-    $cf->getValue('DefaultLang'), '', true, $opts
+    'DefaultLang',
+    __('Default language'),
+    'select',
+    $cf->getValue('DefaultLang'),
+    '',
+    true,
+    $opts
 );
 
 // Display server list
@@ -231,8 +241,13 @@ if ($cf->getServerCount() > 0) {
     $opts['values_escaped'] = true;
 }
 echo FormDisplayTemplate::displayInput(
-    'ServerDefault', __('Default server'), 'select',
-    $cf->getValue('ServerDefault'), '', true, $opts
+    'ServerDefault',
+    __('Default server'),
+    'select',
+    $cf->getValue('ServerDefault'),
+    '',
+    true,
+    $opts
 );
 
 // Display EOL list
@@ -243,8 +258,13 @@ $opts = array(
     'values_escaped' => true);
 $eol = Core::ifSetOr($_SESSION['eol'], (PMA_IS_WINDOWS ? 'win' : 'unix'));
 echo FormDisplayTemplate::displayInput(
-    'eol', __('End of line'), 'select',
-    $eol, '', true, $opts
+    'eol',
+    __('End of line'),
+    'select',
+    $eol,
+    '',
+    true,
+    $opts
 );
 
 echo '<tr>';

@@ -13,8 +13,7 @@ if ($acl->hasPermission("umanage_client")) {
                 $data_here = true;
                 break;
             }
-        }
-        ?>
+        } ?>
         <p>
             <a href="<?php echo ModuleHelper::buildActionUrl("umanage_list"); ?>" class="btn btn-default">
                 <i class="fa fa-arrow-left"></i>
@@ -50,8 +49,7 @@ if ($acl->hasPermission("umanage_client")) {
                                 $con = new uManageConnection($site["api_key"], $site["url"]);
                                 $result = $con->checkForPackageUpdates();
                                 if ($result and isset($result["packages"])) {
-                                    $packages = $result["packages"];
-                                    ?>
+                                    $packages = $result["packages"]; ?>
                                     <?php foreach ($packages as $package) { ?>
                                         <tr>
                                             <td><input type="checkbox" name="packages[]"
@@ -63,8 +61,7 @@ if ($acl->hasPermission("umanage_client")) {
                                         </tr>
                                         <?php
                                         fcflush();
-                                    }
-                                    ?>
+                                    } ?>
                                     <?php
                                 }
                                 fcflush();
@@ -81,7 +78,8 @@ if ($acl->hasPermission("umanage_client")) {
         } else {
             ?>
             <p><?php translate("NO_UPDATES_AVAILABLE"); ?></p>
-        <?php } ?>
+        <?php
+        } ?>
 
         <?php
     }

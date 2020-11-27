@@ -1,4 +1,5 @@
 <?php
-function seo_title_tag_render() {
-	return "Kein Embed Modul";
+function seo_title_tag_render()
+{
+    return "Kein Embed Modul";
 }

@@ -3,7 +3,6 @@ define('THOUSAND_SEPARATOR', true);
 
 class OpCacheDataModel
 {
-
     private $_configuration;
 
     private $_status;
@@ -102,8 +101,9 @@ class OpCacheDataModel
         
         $basename = '';
         while (true) {
-            if (count($this->_d3Scripts) != 1)
+            if (count($this->_d3Scripts) != 1) {
                 break;
+            }
             $basename .= DIRECTORY_SEPARATOR . key($this->_d3Scripts);
             $this->_d3Scripts = reset($this->_d3Scripts);
         }
@@ -265,8 +265,9 @@ class OpCacheDataModel
     // Borrowed from Laravel
     private function _arrayPset(&$array, $key, $value)
     {
-        if (is_null($key))
+        if (is_null($key)) {
             return $array = $value;
+        }
         $keys = explode(DIRECTORY_SEPARATOR, ltrim($key, DIRECTORY_SEPARATOR));
         while (count($keys) > 1) {
             $key = array_shift($keys);
@@ -293,8 +294,7 @@ function opcache_status_admin()
         require getModulePath("opcache_status", true) . 'data-sample.php';
     }
     
-    $dataModel = new OpCacheDataModel();
-    ?>
+    $dataModel = new OpCacheDataModel(); ?>
 
 <style>
 body {
@@ -734,4 +734,5 @@ label {
 
         });
     </script>
-<?php } ?>
+<?php
+} ?>

@@ -366,7 +366,6 @@ class Relation
             $retval .= '</table>' . "\n";
 
             if (! $cfgRelation['allworks']) {
-
                 $retval .= '<p>' . __('Quick steps to set up advanced features:')
                     . '</p>';
 
@@ -408,8 +407,11 @@ class Relation
      *
      * @return string
      */
-    public function getDiagMessageForFeature($feature_name,
-        $relation_parameter, array $messages, $skip_line = true
+    public function getDiagMessageForFeature(
+        $feature_name,
+        $relation_parameter,
+        array $messages,
+        $skip_line = true
     ) {
         $retval = '    <tr><td colspan=2 class="right">' . $feature_name . ': ';
         if (isset($GLOBALS['cfgRelation'][$relation_parameter])
@@ -436,8 +438,11 @@ class Relation
      *
      * @return string
      */
-    public function getDiagMessageForParameter($parameter,
-        $relationParameterSet, array $messages, $docAnchor
+    public function getDiagMessageForParameter(
+        $parameter,
+        $relationParameterSet,
+        array $messages,
+        $docAnchor
     ) {
         $retval = '<tr><th class="left">';
         $retval .= '$cfg[\'Servers\'][$i][\'' . $parameter . '\']  ... ';
@@ -498,7 +503,8 @@ class Relation
         if ($GLOBALS['server'] == 0
             || empty($GLOBALS['cfg']['Server']['pmadb'])
             || ! $GLOBALS['dbi']->selectDb(
-                $GLOBALS['cfg']['Server']['pmadb'], DatabaseInterface::CONNECT_CONTROL
+                $GLOBALS['cfg']['Server']['pmadb'],
+                DatabaseInterface::CONNECT_CONTROL
             )
         ) {
             // No server selected -> no bookmark table
@@ -521,7 +527,9 @@ class Relation
                 $GLOBALS['cfg']['Server']['pmadb']
             );
         $tab_rs = $this->queryAsControlUser(
-            $tab_query, false, DatabaseInterface::QUERY_STORE
+            $tab_query,
+            false,
+            DatabaseInterface::QUERY_STORE
         );
 
         if (! $tab_rs) {
@@ -699,7 +707,9 @@ class Relation
             )
             . ' WHERE Field IN (\'' . implode('\', \'', $new_cols) . '\')';
         $result = $this->queryAsControlUser(
-            $query, false, DatabaseInterface::QUERY_STORE
+            $query,
+            false,
+            DatabaseInterface::QUERY_STORE
         );
         if ($result) {
             $rows = $GLOBALS['dbi']->numRows($result);
@@ -777,7 +787,10 @@ class Relation
                     . '\'' . $GLOBALS['dbi']->escapeString($column) . '\'';
             }
             $foreign = $GLOBALS['dbi']->fetchResult(
-                $rel_query, 'master_field', null, DatabaseInterface::CONNECT_CONTROL
+                $rel_query,
+                'master_field',
+                null,
+                DatabaseInterface::CONNECT_CONTROL
             );
         }
 
@@ -800,7 +813,7 @@ class Relation
          * Emulating relations for some information_schema tables
          */
         $isInformationSchema = mb_strtolower($db) == 'information_schema';
-            $isMysql = mb_strtolower($db) == 'mysql';
+        $isMysql = mb_strtolower($db) == 'mysql';
         if (($isInformationSchema || $isMysql)
             && ($source == 'internal' || $source == 'both')
         ) {
@@ -853,7 +866,9 @@ class Relation
                 . '\'';
 
             $row = $GLOBALS['dbi']->fetchSingleRow(
-                $disp_query, 'ASSOC', DatabaseInterface::CONNECT_CONTROL
+                $disp_query,
+                'ASSOC',
+                DatabaseInterface::CONNECT_CONTROL
             );
             if (isset($row['display_field'])) {
                 return $row['display_field'];
@@ -942,7 +957,9 @@ class Relation
                     AND table_name  = ''
                     AND column_name = '(db_comment)'";
             $com_rs = $this->queryAsControlUser(
-                $com_qry, true, DatabaseInterface::QUERY_STORE
+                $com_qry,
+                true,
+                DatabaseInterface::QUERY_STORE
             );
 
             if ($com_rs && $GLOBALS['dbi']->numRows($com_rs) > 0) {
@@ -976,7 +993,9 @@ class Relation
                     . "
                 WHERE `column_name` = '(db_comment)'";
             $com_rs = $this->queryAsControlUser(
-                $com_qry, true, DatabaseInterface::QUERY_STORE
+                $com_qry,
+                true,
+                DatabaseInterface::QUERY_STORE
             );
 
             if ($com_rs && $GLOBALS['dbi']->numRows($com_rs) > 0) {
@@ -1139,7 +1158,10 @@ class Relation
            ORDER BY `id` DESC';
 
         return $GLOBALS['dbi']->fetchResult(
-            $hist_query, null, null, DatabaseInterface::CONNECT_CONTROL
+            $hist_query,
+            null,
+            null,
+            DatabaseInterface::CONNECT_CONTROL
         );
     }
 
@@ -1175,7 +1197,10 @@ class Relation
             LIMIT ' . $GLOBALS['cfg']['QueryHistoryMax'] . ', 1';
 
         if ($max_time = $GLOBALS['dbi']->fetchValue(
-            $search_query, 0, 0, DatabaseInterface::CONNECT_CONTROL
+            $search_query,
+            0,
+            0,
+            DatabaseInterface::CONNECT_CONTROL
         )) {
             $this->queryAsControlUser(
                 'DELETE FROM '
@@ -1230,7 +1255,9 @@ class Relation
                 $vtitle  = htmlspecialchars($value);
                 $value  = htmlspecialchars(
                     mb_substr(
-                        $value, 0, $GLOBALS['cfg']['LimitChars']
+                        $value,
+                        0,
+                        $GLOBALS['cfg']['LimitChars']
                     ) . '...'
                 );
             }
@@ -1272,7 +1299,11 @@ class Relation
      *
      * @access  public
      */
-    public function foreignDropdown(array $disp_row, $foreign_field, $foreign_display, $data,
+    public function foreignDropdown(
+        array $disp_row,
+        $foreign_field,
+        $foreign_display,
+        $data,
         $max = null
     ) {
         if (null === $max) {
@@ -1357,8 +1388,12 @@ class Relation
      * @access  public
      */
     public function getForeignData(
-        $foreigners, $field, $override_total,
-        $foreign_filter, $foreign_limit, $get_total=false
+        $foreigners,
+        $field,
+        $override_total,
+        $foreign_filter,
+        $foreign_limit,
+        $get_total=false
     ) {
         // we always show the foreign field in the drop-down; if a display
         // field is defined, we show it besides the foreign field
@@ -1407,7 +1442,7 @@ class Relation
                     . Util::backquote($foreign_field)
                     . ' LIKE "%' . $GLOBALS['dbi']->escapeString($foreign_filter) . '%"'
                     . (
-                    ($foreign_display == false)
+                        ($foreign_display == false)
                         ? ''
                         : ' OR ' . Util::backquote($foreign_display)
                         . ' LIKE "%' . $GLOBALS['dbi']->escapeString($foreign_filter)
@@ -1549,10 +1584,14 @@ class Relation
      *
      * @return void
      */
-    public function renameSingleTable($table,
-        $source_db, $target_db,
-        $source_table, $target_table,
-        $db_field, $table_field
+    public function renameSingleTable(
+        $table,
+        $source_db,
+        $target_db,
+        $source_table,
+        $target_table,
+        $db_field,
+        $table_field
     ) {
         $query = 'UPDATE '
             . Util::backquote($GLOBALS['cfgRelation']['db']) . '.'
@@ -1589,9 +1628,12 @@ class Relation
         if ($GLOBALS['cfgRelation']['commwork']) {
             $this->renameSingleTable(
                 'column_info',
-                $source_db, $target_db,
-                $source_table, $target_table,
-                'db_name', 'table_name'
+                $source_db,
+                $target_db,
+                $source_table,
+                $target_table,
+                'db_name',
+                'table_name'
             );
         }
 
@@ -1601,25 +1643,34 @@ class Relation
         if ($GLOBALS['cfgRelation']['displaywork']) {
             $this->renameSingleTable(
                 'table_info',
-                $source_db, $target_db,
-                $source_table, $target_table,
-                'db_name', 'table_name'
+                $source_db,
+                $target_db,
+                $source_table,
+                $target_table,
+                'db_name',
+                'table_name'
             );
         }
 
         if ($GLOBALS['cfgRelation']['relwork']) {
             $this->renameSingleTable(
                 'relation',
-                $source_db, $target_db,
-                $source_table, $target_table,
-                'foreign_db', 'foreign_table'
+                $source_db,
+                $target_db,
+                $source_table,
+                $target_table,
+                'foreign_db',
+                'foreign_table'
             );
 
             $this->renameSingleTable(
                 'relation',
-                $source_db, $target_db,
-                $source_table, $target_table,
-                'master_db', 'master_table'
+                $source_db,
+                $target_db,
+                $source_table,
+                $target_table,
+                'master_db',
+                'master_table'
             );
         }
 
@@ -1628,9 +1679,12 @@ class Relation
                 // rename within the database can be handled
                 $this->renameSingleTable(
                     'table_coords',
-                    $source_db, $target_db,
-                    $source_table, $target_table,
-                    'db_name', 'table_name'
+                    $source_db,
+                    $target_db,
+                    $source_table,
+                    $target_table,
+                    'db_name',
+                    'table_name'
                 );
             } else {
                 // if the table is moved out of the database we can no loger keep the
@@ -1648,9 +1702,12 @@ class Relation
         if ($GLOBALS['cfgRelation']['uiprefswork']) {
             $this->renameSingleTable(
                 'table_uiprefs',
-                $source_db, $target_db,
-                $source_table, $target_table,
-                'db_name', 'table_name'
+                $source_db,
+                $target_db,
+                $source_table,
+                $target_table,
+                'db_name',
+                'table_name'
             );
         }
 
@@ -1658,9 +1715,12 @@ class Relation
             // update hidden items inside table
             $this->renameSingleTable(
                 'navigationhiding',
-                $source_db, $target_db,
-                $source_table, $target_table,
-                'db_name', 'table_name'
+                $source_db,
+                $target_db,
+                $source_table,
+                $target_table,
+                'db_name',
+                'table_name'
             );
 
             // update data for hidden table
@@ -1735,7 +1795,8 @@ class Relation
             }
 
             $child_references = $GLOBALS['dbi']->fetchResult(
-                $rel_query, array('referenced_column_name', null)
+                $rel_query,
+                array('referenced_column_name', null)
             );
         }
         return $child_references;
@@ -1753,7 +1814,11 @@ class Relation
      * @return array $column_status telling about references if foreign key.
      */
     public function checkChildForeignReferences(
-        $db, $table, $column, $foreigners_full = null, $child_references_full = null
+        $db,
+        $table,
+        $column,
+        $foreigners_full = null,
+        $child_references_full = null
     ) {
         $column_status = array();
         $column_status['isEditable'] = false;

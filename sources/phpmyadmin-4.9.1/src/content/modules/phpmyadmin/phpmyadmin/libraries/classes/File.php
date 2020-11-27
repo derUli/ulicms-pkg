@@ -26,56 +26,56 @@ class File
      * @var string the temporary file name
      * @access protected
      */
-    var $_name = null;
+    public $_name = null;
 
     /**
      * @var string the content
      * @access protected
      */
-    var $_content = null;
+    public $_content = null;
 
     /**
      * @var Message|null the error message
      * @access protected
      */
-    var $_error_message = null;
+    public $_error_message = null;
 
     /**
      * @var bool whether the file is temporary or not
      * @access protected
      */
-    var $_is_temp = false;
+    public $_is_temp = false;
 
     /**
      * @var string type of compression
      * @access protected
      */
-    var $_compression = null;
+    public $_compression = null;
 
     /**
      * @var integer
      */
-    var $_offset = 0;
+    public $_offset = 0;
 
     /**
      * @var integer size of chunk to read with every step
      */
-    var $_chunk_size = 32768;
+    public $_chunk_size = 32768;
 
     /**
      * @var resource file handle
      */
-    var $_handle = null;
+    public $_handle = null;
 
     /**
      * @var boolean whether to decompress content before returning
      */
-    var $_decompress = false;
+    public $_decompress = false;
 
     /**
      * @var string charset of file
      */
-    var $_charset = null;
+    public $_charset = null;
 
     /**
      * @var ZipExtension
@@ -352,7 +352,9 @@ class File
      * @static
      */
     public function fetchUploadedFromTblChangeRequestMultiple(
-        array $file, $rownumber, $key
+        array $file,
+        $rownumber,
+        $key
     ) {
         $new_file = array(
             'name' => $file['name']['multi_edit'][$rownumber][$key],

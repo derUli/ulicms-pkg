@@ -113,7 +113,7 @@ if (! empty($sql_query)) {
                 ),
                 array(
                     new PhpMyAdmin\SqlParser\Token($table),
-                    new PhpMyAdmin\SqlParser\Token('.',PhpMyAdmin\SqlParser\Token::TYPE_OPERATOR)
+                    new PhpMyAdmin\SqlParser\Token('.', PhpMyAdmin\SqlParser\Token::TYPE_OPERATOR)
                 )
             );
         }
@@ -138,7 +138,12 @@ if (! isset($multi_values)) {
 $response = Response::getInstance();
 $response->addHTML(
     $displayExport->getDisplay(
-        'table', $db, $table, $sql_query, $num_tables,
-        $unlim_num_rows, $multi_values
+        'table',
+        $db,
+        $table,
+        $sql_query,
+        $num_tables,
+        $unlim_num_rows,
+        $multi_values
     )
 );

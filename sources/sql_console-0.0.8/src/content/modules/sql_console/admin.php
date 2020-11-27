@@ -27,5 +27,3 @@ function sql_console_admin()
     $config = new CMSConfig();
     db_select_db($config->db_database);
 }
-
-?>

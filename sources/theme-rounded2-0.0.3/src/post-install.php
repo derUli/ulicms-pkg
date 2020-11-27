@@ -1,2 +1,2 @@
 <?php
-setconfig ( "body-background-color", "#000099" );
+setconfig("body-background-color", "#000099");

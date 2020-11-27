@@ -47,16 +47,16 @@ echo getCurrentLanguage();
                 <div id="logo">
 <?php
 if (getconfig("logo_disabled") != "yes") {
-    echo '<a href="./">';
-    logo();
-    echo "</a>";
-} else {
-    echo "<h1 class=\"website_name\">";
-    echo '<a href="./">';
-    homepage_title();
-    echo "</a>";
-    echo "</h1>";
-}
+            echo '<a href="./">';
+            logo();
+            echo "</a>";
+        } else {
+            echo "<h1 class=\"website_name\">";
+            echo '<a href="./">';
+            homepage_title();
+            echo "</a>";
+            echo "</h1>";
+        }
 ?>
                     <p class="site-slogan"><?php
                     motto();
@@ -69,8 +69,7 @@ if (getconfig("logo_disabled") != "yes") {
                         <form action="suche.html" method="get">
                             <input type="search" results=10
                                    autosave="<?php
-                        echo md5($_SERVER ["SERVER_NAME"]);
-                        ?>"
+                        echo md5($_SERVER ["SERVER_NAME"]); ?>"
                                    id="qHead" name="q" value="">
                                    <?php
                                    if (in_array("blog", getAllModules())) {
@@ -82,8 +81,7 @@ if (getconfig("logo_disabled") != "yes") {
                                 <input type="hidden" name="type" value="pages">
 
                                 <?php
-                            }
-                            ?>
+                                   } ?>
 
                         </form>
                     </div>

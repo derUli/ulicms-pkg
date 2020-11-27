@@ -93,8 +93,12 @@ class PdfRelationSchema extends ExportRelationSchema
         parent::__construct(
             $db,
             new Pdf(
-                $this->orientation, 'mm', $this->paper,
-                $this->pageNumber, $this->_withDoc, $db
+                $this->orientation,
+                'mm',
+                $this->paper,
+                $this->pageNumber,
+                $this->_withDoc,
+                $db
             )
         );
         $this->diagram->SetTitle(
@@ -337,7 +341,10 @@ class PdfRelationSchema extends ExportRelationSchema
      *
      * @see _setMinMax
      */
-    private function _addRelation($masterTable, $masterField, $foreignTable,
+    private function _addRelation(
+        $masterTable,
+        $masterField,
+        $foreignTable,
         $foreignField
     ) {
         if (! isset($this->_tables[$masterTable])) {
@@ -405,8 +412,10 @@ class PdfRelationSchema extends ExportRelationSchema
             $l++
         ) {
             $this->diagram->line(
-                0, $l * $gridSize + $topSpace,
-                $this->diagram->getPageWidth(), $l * $gridSize + $topSpace
+                0,
+                $l * $gridSize + $topSpace,
+                $this->diagram->getPageWidth(),
+                $l * $gridSize + $topSpace
             );
             // Avoid duplicates
             if ($l > 0
@@ -481,7 +490,7 @@ class PdfRelationSchema extends ExportRelationSchema
      */
     public function dataDictionaryDoc(array $alltables)
     {
-         // TOC
+        // TOC
         $this->diagram->addpage($this->orientation);
         $this->diagram->Cell(0, 9, __('Table of contents'), 1, 0, 'C');
         $this->diagram->Ln(15);
@@ -492,13 +501,25 @@ class PdfRelationSchema extends ExportRelationSchema
             $this->diagram->SetX(10);
             // $this->diagram->Ln(1);
             $this->diagram->Cell(
-                0, 6, __('Page number:') . ' {' . sprintf("%02d", $i) . '}', 0, 0,
-                'R', 0, $this->diagram->PMA_links['doc'][$table]['-']
+                0,
+                6,
+                __('Page number:') . ' {' . sprintf("%02d", $i) . '}',
+                0,
+                0,
+                'R',
+                0,
+                $this->diagram->PMA_links['doc'][$table]['-']
             );
             $this->diagram->SetX(10);
             $this->diagram->Cell(
-                0, 6, $i . ' ' . $table, 0, 1,
-                'L', 0, $this->diagram->PMA_links['doc'][$table]['-']
+                0,
+                6,
+                $i . ' ' . $table,
+                0,
+                1,
+                'L',
+                0,
+                $this->diagram->PMA_links['doc'][$table]['-']
             );
             // $this->diagram->Ln(1);
             $fields = $GLOBALS['dbi']->getColumns($this->db, $table);
@@ -517,13 +538,25 @@ class PdfRelationSchema extends ExportRelationSchema
         $this->diagram->PMA_links['RT']['-'] = $this->diagram->AddLink();
         $this->diagram->SetX(10);
         $this->diagram->Cell(
-            0, 6, __('Page number:') . ' {00}', 0, 0,
-            'R', 0, $this->diagram->PMA_links['RT']['-']
+            0,
+            6,
+            __('Page number:') . ' {00}',
+            0,
+            0,
+            'R',
+            0,
+            $this->diagram->PMA_links['RT']['-']
         );
         $this->diagram->SetX(10);
         $this->diagram->Cell(
-            0, 6, $i . ' ' . __('Relational schema'), 0, 1,
-            'L', 0, $this->diagram->PMA_links['RT']['-']
+            0,
+            6,
+            $i . ' ' . __('Relational schema'),
+            0,
+            1,
+            'L',
+            0,
+            $this->diagram->PMA_links['RT']['-']
         );
         $z = 0;
         foreach ($alltables as $table) {
@@ -532,17 +565,25 @@ class PdfRelationSchema extends ExportRelationSchema
             $this->diagram->addpage($this->orientation);
             $this->diagram->Bookmark($table);
             $this->diagram->setAlias(
-                '{' . sprintf("%02d", $z) . '}', $this->diagram->PageNo()
+                '{' . sprintf("%02d", $z) . '}',
+                $this->diagram->PageNo()
             );
             $this->diagram->PMA_links['RT'][$table]['-']
                 = $this->diagram->AddLink();
             $this->diagram->SetLink(
-                $this->diagram->PMA_links['doc'][$table]['-'], -1
+                $this->diagram->PMA_links['doc'][$table]['-'],
+                -1
             );
             $this->diagram->SetFont($this->_ff, 'B', 18);
             $this->diagram->Cell(
-                0, 8, $z . ' ' . $table, 1, 1,
-                'C', 0, $this->diagram->PMA_links['RT'][$table]['-']
+                0,
+                8,
+                $z . ' ' . $table,
+                1,
+                1,
+                'C',
+                0,
+                $this->diagram->PMA_links['RT'][$table]['-']
             );
             $this->diagram->SetFont($this->_ff, '', 8);
             $this->diagram->ln();
@@ -593,28 +634,44 @@ class PdfRelationSchema extends ExportRelationSchema
             $break = false;
             if (! empty($show_comment)) {
                 $this->diagram->Cell(
-                    0, 3, __('Table comments:') . ' ' . $show_comment, 0, 1
+                    0,
+                    3,
+                    __('Table comments:') . ' ' . $show_comment,
+                    0,
+                    1
                 );
                 $break = true;
             }
 
             if (! empty($create_time)) {
                 $this->diagram->Cell(
-                    0, 3, __('Creation:') . ' ' . $create_time, 0, 1
+                    0,
+                    3,
+                    __('Creation:') . ' ' . $create_time,
+                    0,
+                    1
                 );
                 $break = true;
             }
 
             if (! empty($update_time)) {
                 $this->diagram->Cell(
-                    0, 3, __('Last update:') . ' ' . $update_time, 0, 1
+                    0,
+                    3,
+                    __('Last update:') . ' ' . $update_time,
+                    0,
+                    1
                 );
                 $break = true;
             }
 
             if (! empty($check_time)) {
                 $this->diagram->Cell(
-                    0, 3, __('Last check:') . ' ' . $check_time, 0, 1
+                    0,
+                    3,
+                    __('Last check:') . ' ' . $check_time,
+                    0,
+                    1
                 );
                 $break = true;
             }
@@ -678,7 +735,8 @@ class PdfRelationSchema extends ExportRelationSchema
                     = $this->diagram->AddLink();
                 $this->diagram->Bookmark($field_name, 1, -1);
                 $this->diagram->SetLink(
-                    $this->diagram->PMA_links['doc'][$table][$field_name], -1
+                    $this->diagram->PMA_links['doc'][$table][$field_name],
+                    -1
                 );
                 $foreigner = $this->relation->searchColumnInForeigners($res_rel, $field_name);
 

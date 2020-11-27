@@ -46,49 +46,56 @@ class Advisor
          */
         $this->expression->register(
             'round',
-            function (){},
+            function () {
+            },
             function ($arguments, $num) {
                 return round($num);
             }
         );
         $this->expression->register(
             'substr',
-            function (){},
+            function () {
+            },
             function ($arguments, $string, $start, $length) {
                 return substr($string, $start, $length);
             }
         );
         $this->expression->register(
             'preg_match',
-            function (){},
-            function ($arguments, $pattern , $subject) {
+            function () {
+            },
+            function ($arguments, $pattern, $subject) {
                 return preg_match($pattern, $subject);
             }
         );
         $this->expression->register(
             'ADVISOR_bytime',
-            function (){},
+            function () {
+            },
             function ($arguments, $num, $precision) {
                 return self::byTime($num, $precision);
             }
         );
         $this->expression->register(
             'ADVISOR_timespanFormat',
-            function (){},
+            function () {
+            },
             function ($arguments, $seconds) {
                 return self::timespanFormat($seconds);
             }
         );
         $this->expression->register(
             'ADVISOR_formatByteDown',
-            function (){},
+            function () {
+            },
             function ($arguments, $value, $limes = 6, $comma = 0) {
                 return self::formatByteDown($value, $limes, $comma);
             }
         );
         $this->expression->register(
             'fired',
-            function (){},
+            function () {
+            },
             function ($arguments, $value) {
                 if (!isset($this->runResult['fired'])) {
                     return 0;
@@ -108,7 +115,6 @@ class Advisor
         $this->globals = array(
             'PMA_MYSQL_INT_VERSION' => $this->dbi->getVersion(),
         );
-
     }
 
     /**
@@ -273,7 +279,7 @@ class Advisor
 
             if (isset($rule['precondition'])) {
                 try {
-                     $precond = $this->ruleExprEvaluate($rule['precondition']);
+                    $precond = $this->ruleExprEvaluate($rule['precondition']);
                 } catch (Exception $e) {
                     $this->storeError(
                         sprintf(
@@ -599,7 +605,7 @@ class Advisor
         } elseif ($num * 60 >= 1) { // per minute
             $num = $num * 60;
             $per = __('per minute');
-        } elseif ($num * 60 * 60 >= 1 ) { // per hour
+        } elseif ($num * 60 * 60 >= 1) { // per hour
             $num = $num * 60 * 60;
             $per = __('per hour');
         } else {

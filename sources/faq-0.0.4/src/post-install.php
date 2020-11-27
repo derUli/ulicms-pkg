@@ -1,6 +1,7 @@
 <?php
-$migrator = new DBMigrator("module/faq",
-	ModuleHelper::buildModuleRessourcePath("faq", "sql/up")
+$migrator = new DBMigrator(
+    "module/faq",
+    ModuleHelper::buildModuleRessourcePath("faq", "sql/up")
 );
 $migrator->migrate();
 ?>

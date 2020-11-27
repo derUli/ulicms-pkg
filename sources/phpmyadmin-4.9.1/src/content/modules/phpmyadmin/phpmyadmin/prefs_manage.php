@@ -268,21 +268,21 @@ echo '</div>'
     , '</form>'
     , '</div>';
 if (@file_exists('setup/index.php') && ! @file_exists(CONFIG_FILE)) {
-            // show only if setup script is available, allows to disable this message
-            // by simply removing setup directory
-            // Also do not show in config exists (and setup would refuse to work)
-            ?>
+    // show only if setup script is available, allows to disable this message
+    // by simply removing setup directory
+    // Also do not show in config exists (and setup would refuse to work) ?>
             <div class="group">
             <h2><?php echo __('More settings') ?></h2>
             <div class="group-cnt">
                 <?php
                 echo sprintf(
-                    __(
+        __(
                         'You can set more settings by modifying config.inc.php, eg. '
                         . 'by using %sSetup script%s.'
-                    ), '<a href="setup/index.php" target="_blank">', '</a>'
-                ) , PhpMyAdmin\Util::showDocu('setup', 'setup-script');
-                ?>
+                    ),
+        '<a href="setup/index.php" target="_blank">',
+        '</a>'
+    ) , PhpMyAdmin\Util::showDocu('setup', 'setup-script'); ?>
             </div>
             </div>
         <?php
@@ -295,8 +295,8 @@ if (@file_exists('setup/index.php') && ! @file_exists(CONFIG_FILE)) {
             <div class="click-hide-message group-cnt hide">
                 <?php
                 Message::rawSuccess(
-                    __('Configuration has been saved.')
-                )->display();
+            __('Configuration has been saved.')
+        )->display();
                 ?>
             </div>
             <form class="group-cnt prefs-form disableAjax" name="prefs_export"
@@ -323,16 +323,16 @@ if (@file_exists('setup/index.php') && ! @file_exists(CONFIG_FILE)) {
                     <span class="localStorage-supported">
                         <?php
                         echo __(
-                            'Settings will be saved in your browser\'s local '
+                    'Settings will be saved in your browser\'s local '
                             . 'storage.'
-                        );
+                );
                         ?>
                         <div class="localStorage-exists">
                             <b>
                                 <?php
                                 echo __(
-                                    'Existing settings will be overwritten!'
-                                );
+                            'Existing settings will be overwritten!'
+                        );
                                 ?>
                             </b>
                         </div>
@@ -340,16 +340,16 @@ if (@file_exists('setup/index.php') && ! @file_exists(CONFIG_FILE)) {
                     <div class="localStorage-unsupported">
                         <?php
                         Message::notice(
-                            __('This feature is not supported by your web browser')
-                        )->display();
+                                    __('This feature is not supported by your web browser')
+                                )->display();
                         ?>
                     </div>
                 </div>
                 <br />
                 <?php
                 echo '<input type="submit" name="submit_export" value="' , __(
-                    'Go'
-                ) , '" />';
+                            'Go'
+                        ) , '" />';
                 ?>
             </form>
         </div>
@@ -374,7 +374,7 @@ if (@file_exists('setup/index.php') && ! @file_exists(CONFIG_FILE)) {
 
 <?php
 if ($response->isAjax()) {
-    $response->addJSON('_disableNaviSettings', true);
-} else {
-    define('PMA_DISABLE_NAVI_SETTINGS', true);
-}
+                    $response->addJSON('_disableNaviSettings', true);
+                } else {
+                    define('PMA_DISABLE_NAVI_SETTINGS', true);
+                }

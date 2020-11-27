@@ -9,13 +9,11 @@ function redirections301_admin()
     }
     
     $redirections301 = getconfig("redirections301");
-    $redirections301 = StringHelper::realHtmlSpecialchars($redirections301);
-    ?>
+    $redirections301 = StringHelper::realHtmlSpecialchars($redirections301); ?>
 
 <form action="<?php echo getModuleAdminSelfPath()?>" method="post">
 <?php
-    csrf_token_html();
-    ?>
+    csrf_token_html(); ?>
 <p>
 		Hier können Sie permanente Weiterleitungen (HTTP Status 301)
 		einrichten.<br /> Sie können je einen Eintrag pro Zeile eingeben.
@@ -29,8 +27,7 @@ function redirections301_admin()
 	<p>
 		<textarea rows="10" cols="80" style="width: 100%"
 			name="redirections301"><?php
-    echo $redirections301;
-    ?></textarea>
+    echo $redirections301; ?></textarea>
 	
 	
 	<p>

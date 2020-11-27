@@ -11,9 +11,10 @@ if (!defined("PATCH_CHECK_URL")) {
 
 include_once getModulePath("umanage_server", true) . "/objects/umanage_package_manger.php";
 
-class UManageController {
-
-    public static function handleRequest() {
+class UManageController
+{
+    public static function handleRequest()
+    {
         set_time_limit(0);
 
         $response = [];
@@ -53,7 +54,8 @@ class UManageController {
         return json_encode($response);
     }
 
-    private static function upgradeCore() {
+    private static function upgradeCore()
+    {
         $controller = ControllerRegistry::get("CoreUpgradeController");
         if ($controller) {
             if ($controller->checkForUpgrades()) {
@@ -67,7 +69,8 @@ class UManageController {
         TextResult("oneclick_upgrade_not_available", 503);
     }
 
-    private static function getInfos() {
+    private static function getInfos()
+    {
         $umanage_server_version = getModuleMeta("umanage_server", "version");
 
         $isCoreCurrent = true;
@@ -84,7 +87,8 @@ class UManageController {
         return $info;
     }
 
-    private static function installPackages() {
+    private static function installPackages()
+    {
         $result = [];
         if (isset($_REQUEST["packages"]) and ! empty($_REQUEST["packages"])) {
             $packages = explode(";", $_REQUEST["packages"]);
@@ -111,7 +115,8 @@ class UManageController {
         return $result;
     }
 
-    private static function checkForPackageUpdates() {
+    private static function checkForPackageUpdates()
+    {
         include_once getModulePath("update_manager", true) . "/objects/update_manager.php";
         $result = UpdateManager::getAllUpdateablePackages();
         $response = array(
@@ -120,7 +125,8 @@ class UManageController {
         return $response;
     }
 
-    private static function optimizeDB() {
+    private static function optimizeDB()
+    {
         $cfg = new config();
         if (function_exists("db_optimize")) {
             db_optimize($cfg->db_database, false);
@@ -134,7 +140,8 @@ class UManageController {
         }
     }
 
-    private static function checkForPatches() {
+    private static function checkForPatches()
+    {
         $result = array(
             "patches" => []
         );
@@ -153,7 +160,8 @@ class UManageController {
         return $result;
     }
 
-    private static function installPatches() {
+    private static function installPatches()
+    {
         $available_patches = self::checkForPatches();
         $available_patches = $available_patches["patches"];
         $result = [];
@@ -183,5 +191,4 @@ class UManageController {
         }
         return $result;
     }
-
 }

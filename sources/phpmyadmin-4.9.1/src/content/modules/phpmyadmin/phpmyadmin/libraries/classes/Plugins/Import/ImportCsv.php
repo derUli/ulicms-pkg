@@ -122,7 +122,7 @@ class ImportCsv extends AbstractImportCsv
             $message->addParam(__('Columns terminated with'));
             $error = true;
             $param_error = true;
-            // The default dialog of MS Excel when generating a CSV produces a
+        // The default dialog of MS Excel when generating a CSV produces a
             // semi-colon-separated file with no chance of specifying the
             // enclosing character. Thus, users who want to import this file
             // tend to remove the enclosing character on the Import dialog.
@@ -137,7 +137,7 @@ class ImportCsv extends AbstractImportCsv
             $message->addParam(__('Columns enclosed with'));
             $error = true;
             $param_error = true;
-            // I could not find a test case where having no escaping characters
+        // I could not find a test case where having no escaping characters
             // confuses this script.
             // But the parser won't work correctly with strings so we allow just
             // one character.

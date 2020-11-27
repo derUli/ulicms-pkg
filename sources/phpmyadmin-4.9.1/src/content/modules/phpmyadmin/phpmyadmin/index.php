@@ -48,7 +48,7 @@ unset($drops, $each_drop);
  * Such scripts must not be loaded on home page.
  *
  */
-$target_blacklist = array (
+$target_blacklist = array(
     'import.php', 'export.php'
 );
 
@@ -110,11 +110,13 @@ if (! empty($_REQUEST['db'])) {
     $page = null;
     if (! empty($_REQUEST['table'])) {
         $page = Util::getScriptNameForOption(
-            $GLOBALS['cfg']['DefaultTabTable'], 'table'
+            $GLOBALS['cfg']['DefaultTabTable'],
+            'table'
         );
     } else {
         $page = Util::getScriptNameForOption(
-            $GLOBALS['cfg']['DefaultTabDatabase'], 'database'
+            $GLOBALS['cfg']['DefaultTabDatabase'],
+            'database'
         );
     }
     include $page;
@@ -335,7 +337,6 @@ echo '<div id="main_pane_right">';
 
 
 if ($server > 0 && $GLOBALS['cfg']['ShowServerInfo']) {
-
     echo '<div class="group">';
     echo '<h2>' , __('Database server') , '</h2>';
     echo '<ul>' , "\n";
@@ -537,7 +538,7 @@ if ($cfg['LoginCookieValidityDisableWarning'] == false) {
      * Check whether session.gc_maxlifetime limits session validity.
      */
     $gc_time = (int)ini_get('session.gc_maxlifetime');
-    if ($gc_time < $GLOBALS['cfg']['LoginCookieValidity'] ) {
+    if ($gc_time < $GLOBALS['cfg']['LoginCookieValidity']) {
         trigger_error(
             __(
                 'Your PHP parameter [a@https://secure.php.net/manual/en/session.' .

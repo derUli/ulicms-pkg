@@ -213,7 +213,8 @@ class Menu
         $retval .= sprintf(
             $item,
             Util::getScriptNameForOption(
-                $GLOBALS['cfg']['DefaultTabServer'], 'server'
+                $GLOBALS['cfg']['DefaultTabServer'],
+                'server'
             ),
             Url::getCommon(),
             htmlspecialchars($server_info),
@@ -232,7 +233,8 @@ class Menu
             $retval .= sprintf(
                 $item,
                 Util::getScriptNameForOption(
-                    $GLOBALS['cfg']['DefaultTabDatabase'], 'database'
+                    $GLOBALS['cfg']['DefaultTabDatabase'],
+                    'database'
                 ),
                 Url::getCommon(array('db' => $this->_db)),
                 htmlspecialchars($this->_db),
@@ -266,7 +268,8 @@ class Menu
                 $retval .= sprintf(
                     $item,
                     Util::getScriptNameForOption(
-                        $GLOBALS['cfg']['DefaultTabTable'], 'table'
+                        $GLOBALS['cfg']['DefaultTabTable'],
+                        'table'
                     ),
                     Url::getCommon(
                         array(
@@ -293,7 +296,8 @@ class Menu
                     $retval .= '<span class="table_comment"';
                     $retval .= ' id="span_table_comment">';
                     $retval .= sprintf(
-                        __('“%s”'), htmlspecialchars($show_comment)
+                        __('“%s”'),
+                        htmlspecialchars($show_comment)
                     );
                     $retval .= '</span>';
                 } // end if

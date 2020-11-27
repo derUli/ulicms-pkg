@@ -132,7 +132,10 @@ class UserPreferences
             . '\'';
 
         $has_config = $GLOBALS['dbi']->fetchValue(
-            $query, 0, 0, DatabaseInterface::CONNECT_CONTROL
+            $query,
+            0,
+            0,
+            DatabaseInterface::CONNECT_CONTROL
         );
         $config_data = json_encode($config_array);
         if ($has_config) {
@@ -229,8 +232,10 @@ class UserPreferences
      *
      * @return void
      */
-    public function redirect($file_name,
-        $params = null, $hash = null
+    public function redirect(
+        $file_name,
+        $params = null,
+        $hash = null
     ) {
         // redirect
         $url_params = array('saved' => 1);
@@ -240,7 +245,8 @@ class UserPreferences
         if ($hash) {
             $hash = '#' . urlencode($hash);
         }
-        Core::sendHeaderLocation('./' . $file_name
+        Core::sendHeaderLocation(
+            './' . $file_name
             . Url::getCommonRaw($url_params) . $hash
         );
     }

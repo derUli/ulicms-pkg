@@ -99,7 +99,10 @@ class Navigation
      * @return void
      */
     public function hideNavigationItem(
-        $itemName, $itemType, $dbName, $tableName = null
+        $itemName,
+        $itemType,
+        $dbName,
+        $tableName = null
     ) {
         $navTable = Util::backquote($GLOBALS['cfgRelation']['db'])
             . "." . Util::backquote($GLOBALS['cfgRelation']['navigationhiding']);
@@ -110,7 +113,7 @@ class Navigation
             . "'" . $GLOBALS['dbi']->escapeString($itemName) . "',"
             . "'" . $GLOBALS['dbi']->escapeString($itemType) . "',"
             . "'" . $GLOBALS['dbi']->escapeString($dbName) . "',"
-            . "'" . (! empty($tableName)? $GLOBALS['dbi']->escapeString($tableName) : "" )
+            . "'" . (! empty($tableName)? $GLOBALS['dbi']->escapeString($tableName) : "")
             . "')";
         $this->relation->queryAsControlUser($sqlQuery, false);
     }
@@ -148,7 +151,10 @@ class Navigation
      * @return void
      */
     public function unhideNavigationItem(
-        $itemName, $itemType, $dbName, $tableName = null
+        $itemName,
+        $itemType,
+        $dbName,
+        $tableName = null
     ) {
         $navTable = Util::backquote($GLOBALS['cfgRelation']['db'])
             . "." . Util::backquote($GLOBALS['cfgRelation']['navigationhiding']);
@@ -159,7 +165,8 @@ class Navigation
             . " AND `item_name`='" . $GLOBALS['dbi']->escapeString($itemName) . "'"
             . " AND `item_type`='" . $GLOBALS['dbi']->escapeString($itemType) . "'"
             . " AND `db_name`='" . $GLOBALS['dbi']->escapeString($dbName) . "'"
-            . (! empty($tableName)
+            . (
+                ! empty($tableName)
                 ? " AND `table_name`='" . $GLOBALS['dbi']->escapeString($tableName) . "'"
                 : ""
             );
