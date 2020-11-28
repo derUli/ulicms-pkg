@@ -41,3 +41,5 @@ thumbs.db
 .DS_Store
 nbproject
 /sources/nbproject/private/
+
+.php_cs.cache
