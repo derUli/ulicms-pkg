@@ -57,8 +57,8 @@ class InputTest extends PHPUnit_Framework_TestCase
     {
         return array_map(
             function ($a) {
-            return array($a);
-        },
+                return array($a);
+            },
             self::findInputNames()
         );
     }

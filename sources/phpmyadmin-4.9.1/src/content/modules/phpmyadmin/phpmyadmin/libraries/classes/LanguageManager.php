@@ -794,8 +794,8 @@ class LanguageManager
         uasort(
             $this->_available_languages,
             function ($a, $b) {
-            return $a->cmp($b);
-        }
+                return $a->cmp($b);
+            }
         );
         return $this->_available_languages;
     }

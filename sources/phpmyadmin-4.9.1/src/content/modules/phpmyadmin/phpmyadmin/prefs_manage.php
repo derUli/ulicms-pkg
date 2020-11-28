@@ -270,16 +270,16 @@ echo '</div>'
 if (@file_exists('setup/index.php') && ! @file_exists(CONFIG_FILE)) {
     // show only if setup script is available, allows to disable this message
     // by simply removing setup directory
-    // Also do not show in config exists (and setup would refuse to work) ?>
+    // Also do not show in config exists (and setup would refuse to work)?>
             <div class="group">
             <h2><?php echo __('More settings') ?></h2>
             <div class="group-cnt">
                 <?php
                 echo sprintf(
         __(
-                        'You can set more settings by modifying config.inc.php, eg. '
+            'You can set more settings by modifying config.inc.php, eg. '
                         . 'by using %sSetup script%s.'
-                    ),
+        ),
         '<a href="setup/index.php" target="_blank">',
         '</a>'
     ) , PhpMyAdmin\Util::showDocu('setup', 'setup-script'); ?>

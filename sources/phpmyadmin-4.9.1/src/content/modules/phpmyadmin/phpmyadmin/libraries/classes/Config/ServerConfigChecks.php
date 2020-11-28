@@ -517,9 +517,9 @@ class ServerConfigChecks
                 Sanitize::sanitize(
                     sprintf(
                         __(
-                             '%1$sBzip2 compression and decompression%2$s requires functions (%3$s) which '
+                            '%1$sBzip2 compression and decompression%2$s requires functions (%3$s) which '
                             . 'are unavailable on this system.'
-                         ),
+                        ),
                         '[a@' . Url::getCommon(array('page' => 'form', 'formset' => 'Features')) . '#tab_Import_export]',
                         '[/a]',
                         $functions

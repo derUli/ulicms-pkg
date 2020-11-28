@@ -35,7 +35,7 @@ function placeholders_list()
             
             echo "</a></td>";
             echo "<td><a href=\"?action=module_settings&module=placeholders&placeholders_action=delete&id=" . $row->id . "\" onclick=\"return confirm('Diesen Platzhalter wirklich löschen?');\">";
-            echo '<img class="mobile-big-image" src="gfx/delete.gif" alt="'._t("delete").'" title="'._t("delete").'">';
+            echo '<img class="mobile-big-image" src="gfx/delete.png" alt="'._t("delete").'" title="'._t("delete").'">';
             echo "</a></td>";
             echo "</tr>";
         }
