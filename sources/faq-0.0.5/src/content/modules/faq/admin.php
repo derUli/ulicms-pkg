@@ -135,7 +135,7 @@ while ($row = db_fetch_object($sql)) {
     echo '<tr>';
     echo '<td>' . htmlspecialchars($row->question) . '</td>';
     echo '<td>' . nl2br(htmlspecialchars($row->answer), 60) . '</td>';
-    echo '<td style="text-align:center">' . '<a href="?action=module_settings&module=faq&do=edit&edit=' . $row->id . '"><img src="gfx/edit.gif" alt="Bearbeiten" title="Bearbeiten"></a>' . '</td>';
+    echo '<td style="text-align:center">' . '<a href="?action=module_settings&module=faq&do=edit&edit=' . $row->id . '"><img src="gfx/edit.png" alt="Bearbeiten" title="Bearbeiten"></a>' . '</td>';
                 
     echo '<td style="text-align:center">' . '<a href="?action=module_settings&module=faq&do=delete&delete=' . $row->id . '" onclick="return confirm(\'Wirklich löschen?\')"><img src="gfx/delete.gif" alt="Löschen" title="Löschen"></a>' . '</td>';
     echo '</tr>';
