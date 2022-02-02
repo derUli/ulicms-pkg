@@ -1,6 +1,5 @@
 <?php
 if (! logged_in() and ! is_admin_dir() and ! is_crawler()) {
-    
     $heute = mktime(0, 0, 0, date("m"), date("d"), date("Y"));
     
     $visitorHash = md5(get_ip() . get_useragent());
@@ -14,5 +13,3 @@ if (! logged_in() and ! is_admin_dir() and ! is_crawler()) {
      " . time() . ", 1)");
     }
 }
-
-?>

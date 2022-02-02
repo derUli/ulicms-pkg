@@ -10,20 +10,25 @@ function countdown_admin()
         setconfig("countdown_to_date", strval(strtotime($_POST["countdown_to_date"])));
     }
     
-    if (isset($_POST["countdown_width"]))
+    if (isset($_POST["countdown_width"])) {
         setconfig("countdown_width", intval($_POST["countdown_width"]));
+    }
     
-    if (isset($_POST["countdown_height"]))
+    if (isset($_POST["countdown_height"])) {
         setconfig("countdown_height", intval($_POST["countdown_height"]));
+    }
     
-    if (isset($_POST["countdown_style"]))
+    if (isset($_POST["countdown_style"])) {
         setconfig("countdown_style", db_escape($_POST["countdown_style"]));
+    }
     
-    if (isset($_POST["countdown_target"]))
+    if (isset($_POST["countdown_target"])) {
         setconfig("countdown_target", db_escape($_POST["countdown_target"]));
+    }
     
-    if (isset($_POST["countdown_oncomplete"]))
+    if (isset($_POST["countdown_oncomplete"])) {
         setconfig("countdown_oncomplete", db_escape($_POST["countdown_oncomplete"]));
+    }
     
     // get current options
     $countdown_to_date = getconfig("countdown_to_date");
@@ -31,35 +36,29 @@ function countdown_admin()
     $countdown_height = getconfig("countdown_height");
     $countdown_style = getconfig("countdown_style");
     $countdown_target = getconfig("countdown_target");
-    $countdown_oncomplete = getconfig("countdown_oncomplete");
-    
-    ?>
+    $countdown_oncomplete = getconfig("countdown_oncomplete"); ?>
 <form method="post" action="<?php echo getModuleAdminSelfPath()?>">
 <?php
     
-    csrf_token_html();
-    ?>
+    csrf_token_html(); ?>
 <table style="border: 0px">
 		<tr>
 			<td><strong>Countdown bis</strong></td>
 			<td><input name="countdown_to_date" type="datetime-local"
 				value="<?php
-    echo date("Y-m-d\TH:i:s", $countdown_to_date);
-    ?>"></td>
+    echo date("Y-m-d\TH:i:s", $countdown_to_date); ?>"></td>
 		</tr>
 		<tr>
 			<td><strong>Breite</strong></td>
 			<td><input name="countdown_width" type="number" step="any"
 				value="<?php
-    echo $countdown_width;
-    ?>"></td>
+    echo $countdown_width; ?>"></td>
 		</tr>
 		<tr>
 			<td><strong>Höhe</strong></td>
 			<td><input name="countdown_height" type="number" step="any"
 				value="<?php
-    echo $countdown_height;
-    ?>"></td>
+    echo $countdown_height; ?>"></td>
 		</tr>
 		<tr>
 			<td><strong>Zielelement</strong></td>
@@ -77,15 +76,15 @@ function countdown_admin()
 					<option value="boring"
 						<?php
     
-    if ($countdown_style == "boring")
+    if ($countdown_style == "boring") {
         echo "selected";
-    ?>>boring</option>
+    } ?>>boring</option>
 					<option value="flip"
 						<?php
     
-    if ($countdown_style == "flip")
+    if ($countdown_style == "flip") {
         echo "selected";
-    ?>>flip</option>
+    } ?>>flip</option>
 			</select></td>
 		</tr>
 	</table>
@@ -95,6 +94,5 @@ function countdown_admin()
 
 
 <?php
-
 }
 ?>

@@ -130,7 +130,7 @@ class Index
      *
      * @return Index corresponding Index object
      */
-    static public function singleton($schema, $table, $index_name = '')
+    public static function singleton($schema, $table, $index_name = '')
     {
         Index::_loadIndexes($table, $schema);
         if (! isset(Index::$_registry[$schema][$table][$index_name])) {
@@ -153,7 +153,7 @@ class Index
      *
      * @return Index[]  array of indexes
      */
-    static public function getFromTable($table, $schema)
+    public static function getFromTable($table, $schema)
     {
         Index::_loadIndexes($table, $schema);
 
@@ -173,7 +173,7 @@ class Index
      *
      * @return Index[] array of indexes
      */
-    static public function getFromTableByChoice($table, $schema, $choices = 31)
+    public static function getFromTableByChoice($table, $schema, $choices = 31)
     {
         $indexes = array();
         foreach (self::getFromTable($table, $schema) as $index) {
@@ -214,7 +214,7 @@ class Index
      *
      * @return mixed primary index or false if no one exists
      */
-    static public function getPrimary($table, $schema)
+    public static function getPrimary($table, $schema)
     {
         Index::_loadIndexes($table, $schema);
 
@@ -233,7 +233,7 @@ class Index
      *
      * @return boolean whether loading was successful
      */
-    static private function _loadIndexes($table, $schema)
+    private static function _loadIndexes($table, $schema)
     {
         if (isset(Index::$_registry[$schema][$table])) {
             return true;
@@ -472,7 +472,7 @@ class Index
      *
      * @return string[] index choices
      */
-    static public function getIndexChoices()
+    public static function getIndexChoices()
     {
         return array(
             'PRIMARY',
@@ -488,7 +488,7 @@ class Index
      *
      * @return string[] index types
      */
-    static public function getIndexTypes()
+    public static function getIndexTypes()
     {
         return array(
             'BTREE',
@@ -541,8 +541,10 @@ class Index
         }
 
         return Util::getDropdown(
-            "index[Index_type]", $types,
-            $this->_type, "select_index_type"
+            "index[Index_type]",
+            $types,
+            $this->_type,
+            "select_index_type"
         );
     }
 
@@ -652,7 +654,8 @@ class Index
         $html_output .= '<fieldset class="tblFooters print_ignore" style="text-align: '
             . 'left;"><form action="tbl_indexes.php" method="post">';
         $html_output .= Url::getHiddenInputs(
-            $GLOBALS['db'], $GLOBALS['table']
+            $GLOBALS['db'],
+            $GLOBALS['table']
         );
         $html_output .= sprintf(
             __('Create an index on &nbsp;%s&nbsp;columns'),
@@ -681,7 +684,7 @@ class Index
      *
      * @access  public
      */
-    static public function getHtmlForIndexes($table, $schema, $print_mode = false)
+    public static function getHtmlForIndexes($table, $schema, $print_mode = false)
     {
         $indexes = Index::getFromTable($table, $schema);
 
@@ -757,7 +760,8 @@ class Index
                         . Util::backquote($table) . ' DROP INDEX '
                         . Util::backquote($index->getName()) . ';';
                     $this_params['message_to_show'] = sprintf(
-                        __('Index %s has been dropped.'), htmlspecialchars($index->getName())
+                        __('Index %s has been dropped.'),
+                        htmlspecialchars($index->getName())
                     );
                     $js_msg = Sanitize::jsFormat($this_params['sql_query'], false);
                 }
@@ -818,10 +822,8 @@ class Index
                         . htmlspecialchars($index->getComments()) . '</td>';
                 }
                 $r .= '</tr>';
-
             } // end foreach $index['Sequences']
             $r .= '</tbody>';
-
         } // end while
         $r .= '</table>';
         $r .= '</div>';
@@ -861,7 +863,7 @@ class Index
      * @return string  Output HTML
      * @access  public
      */
-    static public function findDuplicates($table, $schema)
+    public static function findDuplicates($table, $schema)
     {
         $indexes = Index::getFromTable($table, $schema);
 

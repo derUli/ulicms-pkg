@@ -17,4 +17,3 @@ use PhpMyAdmin\StorageEngine;
 class Merge extends StorageEngine
 {
 }
-

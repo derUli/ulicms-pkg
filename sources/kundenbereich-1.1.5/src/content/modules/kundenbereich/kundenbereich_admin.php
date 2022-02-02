@@ -12,7 +12,6 @@ function new_file($uid)
     for ($i = 0; $i < count($users); $i ++) {
         $data = getUserByName($users[$i]);
         if ($data["id"] == $uid) {
-            
             echo "<option value=\"" . $data["id"] . "\" selected=\"selected\">" . $data["username"] . "</option>";
         } else {
             echo "<option value=\"" . $data["id"] . "\">" . $data["username"] . "</option>";
@@ -39,7 +38,6 @@ function new_file($uid)
 function do_upload()
 {
     if (! empty($_FILES['file']['name'])) {
-        
         @set_time_limit(0); // Kein Zeitlimit;
         $filename = db_escape($_FILES['file']['name']);
         $content = file_get_contents($_FILES['file']["tmp_name"]);
@@ -57,21 +55,17 @@ function list_files($uid)
     echo "<p><a href=\"index.php?action=module_settings&module=kundenbereich&new&user=" . intval($uid) . "\">[Datei hochladen]</a></p>";
     
     if (isset($_REQUEST["delete"])) {
-        
         db_query("DELETE FROM `" . tbname("shared_files") . "` WHERE id=" . intval($_REQUEST["delete"]));
     }
     $files = db_query("SELECT id, title, filename FROM `" . tbname("shared_files") . "` WHERE `user_id` = " . intval($uid) . " ORDER by id");
     if (db_num_rows($files) > 0) {
-        
         $html = "<ol class='shared_files_list'>";
         
         while ($row = db_fetch_object($files)) {
             $html .= '<li>';
             if (is_null($row->title) or empty($row->title)) {
-                
                 $html .= $row->filename;
             } else {
-                
                 $html .= $row->title;
             }
             $html .= " <a href=\"index.php?action=module_settings&module=kundenbereich&user=" . intval($uid) . "&delete=" . $row->id . "\" onclick=\"return confirm('Wirklich löschen?');\">[Löschen]</a>";
@@ -105,15 +99,12 @@ function kundenbereich_admin()
         if (! empty($_FILES['file']['name'])) {
             do_upload();
             list_files($_REQUEST["user"]);
-        } else if (isset($_REQUEST["new"])) {
+        } elseif (isset($_REQUEST["new"])) {
             new_file($_REQUEST["user"]);
         } else {
             list_files($_REQUEST["user"]);
         }
     } else {
-        
         customer_list();
     }
 }
-
-?>

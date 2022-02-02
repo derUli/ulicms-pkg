@@ -45,7 +45,9 @@ $url_params['back'] = 'tbl_tracking.php';
 // Init vars for tracking report
 if (isset($_POST['report']) || isset($_POST['report_export'])) {
     $data = Tracker::getTrackedData(
-        $GLOBALS['db'], $GLOBALS['table'], $_POST['version']
+        $GLOBALS['db'],
+        $GLOBALS['table'],
+        $_POST['version']
     );
 
     $selection_schema = false;
@@ -164,8 +166,15 @@ if (isset($_POST['report'])
 
 if (isset($_POST['report']) || isset($_POST['report_export'])) {
     $html .= Tracking::getHtmlForTrackingReport(
-        $url_query, $data, $url_params, $selection_schema, $selection_data,
-        $selection_both, $filter_ts_to, $filter_ts_from, $filter_users
+        $url_query,
+        $data,
+        $url_params,
+        $selection_schema,
+        $selection_data,
+        $selection_both,
+        $filter_ts_to,
+        $filter_ts_from,
+        $filter_users
     );
 } // end of report
 
@@ -175,7 +184,8 @@ if (isset($_POST['report']) || isset($_POST['report_export'])) {
 $selectable_tables_sql_result = Tracking::getSqlResultForSelectableTables();
 if ($GLOBALS['dbi']->numRows($selectable_tables_sql_result) > 0) {
     $html .= Tracking::getHtmlForSelectableTables(
-        $selectable_tables_sql_result, $url_query
+        $selectable_tables_sql_result,
+        $url_query
     );
 }
 $html .= '<br />';
@@ -187,8 +197,12 @@ $sql_result = Tracking::getListOfVersionsOfTable();
 $last_version = Tracking::getTableLastVersionNumber($sql_result);
 if ($last_version > 0) {
     $html .= Tracking::getHtmlForTableVersionDetails(
-        $sql_result, $last_version, $url_params,
-        $url_query, $pmaThemeImage, $text_dir
+        $sql_result,
+        $last_version,
+        $url_params,
+        $url_query,
+        $pmaThemeImage,
+        $text_dir
     );
 }
 

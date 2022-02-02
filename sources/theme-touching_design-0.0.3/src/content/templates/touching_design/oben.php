@@ -5,9 +5,9 @@
 <style type="text/css">
 #banner {
 	background-color: <?php
-	
-echo getconfig ( "header-background-color" );
-	?>;
+    
+echo getconfig("header-background-color");
+    ?>;
 }
 </style>
 </head>
@@ -17,9 +17,9 @@ echo getconfig ( "header-background-color" );
 	<div id="container">
 		<div id="banner">
 			<div id='bannertitle'><?php
-			
-homepage_title ();
-			?></div>
+            
+homepage_title();
+            ?></div>
 		</div>
 
 		<div id="outer">
@@ -27,9 +27,9 @@ homepage_title ();
 				<div id="left">
 					<div class="verticalmenu">
   <?php
-		
-menu ( "left" );
-		?>
+        
+menu("left");
+        ?>
  </div>
 
 				</div>

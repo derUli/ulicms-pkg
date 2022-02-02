@@ -55,7 +55,7 @@ class SvgRelationSchema extends ExportRelationSchema
      *
      * @see PMA_SVG
      */
-    function __construct($db)
+    public function __construct($db)
     {
         parent::__construct($db, new Svg());
 
@@ -80,10 +80,15 @@ class SvgRelationSchema extends ExportRelationSchema
         foreach ($alltables as $table) {
             if (!isset($this->_tables[$table])) {
                 $this->_tables[$table] = new TableStatsSvg(
-                    $this->diagram, $this->db,
-                    $table, $this->diagram->getFont(),
-                    $this->diagram->getFontSize(), $this->pageNumber,
-                    $this->_tablewidth, $this->showKeys, $this->tableDimension,
+                    $this->diagram,
+                    $this->db,
+                    $table,
+                    $this->diagram->getFont(),
+                    $this->diagram->getFontSize(),
+                    $this->pageNumber,
+                    $this->_tablewidth,
+                    $this->showKeys,
+                    $this->tableDimension,
                     $this->offline
                 );
             }
@@ -213,17 +218,29 @@ class SvgRelationSchema extends ExportRelationSchema
     ) {
         if (!isset($this->_tables[$masterTable])) {
             $this->_tables[$masterTable] = new TableStatsSvg(
-                $this->diagram, $this->db,
-                $masterTable, $font, $fontSize, $this->pageNumber,
-                $this->_tablewidth, false, $tableDimension
+                $this->diagram,
+                $this->db,
+                $masterTable,
+                $font,
+                $fontSize,
+                $this->pageNumber,
+                $this->_tablewidth,
+                false,
+                $tableDimension
             );
             $this->_setMinMax($this->_tables[$masterTable]);
         }
         if (!isset($this->_tables[$foreignTable])) {
             $this->_tables[$foreignTable] = new TableStatsSvg(
-                $this->diagram, $this->db,
-                $foreignTable, $font, $fontSize, $this->pageNumber,
-                $this->_tablewidth, false, $tableDimension
+                $this->diagram,
+                $this->db,
+                $foreignTable,
+                $font,
+                $fontSize,
+                $this->pageNumber,
+                $this->_tablewidth,
+                false,
+                $tableDimension
             );
             $this->_setMinMax($this->_tables[$foreignTable]);
         }

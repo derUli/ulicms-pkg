@@ -1,3 +1,2 @@
 <?php
-recompile_all_less_files ();
-?>
+recompile_all_less_files();

@@ -5,4 +5,3 @@ function proxy_real_ip_render()
 {
     return $_SERVER["REMOTE_ADDR"];
 }
-?>

@@ -2,7 +2,6 @@
 
 class FontAwesome extends Controller
 {
-
     private $moduleName = "font_awesome";
 
     public function head()

@@ -20,13 +20,12 @@ if (!defined('TESTSUITE')) {
     // non-js-compatible stuff like DOCTYPE
     define('PMA_MINIMUM_COMMON', true);
     define('PMA_PATH_TO_BASEDIR', '../');
-    define('PMA_NO_SESSION' , true);
+    define('PMA_NO_SESSION', true);
     require_once './libraries/common.inc.php';
 }
 
 // But this one is needed for Sanitize::escapeJsString()
 use PhpMyAdmin\Sanitize;
-
 
 $buffer = PhpMyAdmin\OutputBuffering::getInstance();
 $buffer->start();

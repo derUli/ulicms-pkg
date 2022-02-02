@@ -27,4 +27,3 @@ class Binlog extends StorageEngine
         return 'binary-log';
     }
 }
-

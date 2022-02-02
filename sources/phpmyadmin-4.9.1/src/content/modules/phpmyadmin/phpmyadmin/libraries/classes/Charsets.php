@@ -135,13 +135,13 @@ class Charsets
         }
     }
 
-     /**
-     * Get current MySQL server charset.
-     *
-     * @param DatabaseInterface $dbi DatabaseInterface instance
-     *
-     * @return string
-     */
+    /**
+    * Get current MySQL server charset.
+    *
+    * @param DatabaseInterface $dbi DatabaseInterface instance
+    *
+    * @return string
+    */
     public static function getServerCharset(DatabaseInterface $dbi)
     {
         if (self::$_charset_server) {
@@ -352,6 +352,7 @@ class Charsets
                     case 'utf8mb4':
                         $variant = 'UCA 4.0.0';
                         // Fall through to other unicode
+                        // no break
                     case 'ucs2':
                     case 'utf8':
                     case 'utf16':

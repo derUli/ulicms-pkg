@@ -35,7 +35,7 @@ class DatabaseList
     public function __get($param)
     {
         switch ($param) {
-        case 'databases' :
+        case 'databases':
             return $this->getDatabaseList();
         }
 

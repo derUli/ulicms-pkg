@@ -54,7 +54,8 @@ class ChangePassword
         }
         $html .= '<fieldset id="fieldset_change_password">'
             . '<legend'
-            . ($is_privileges
+            . (
+                $is_privileges
                 ? ' data-submenu-label="' . __('Change password') . '"'
                 : ''
             )
@@ -111,7 +112,9 @@ class ChangePassword
                 || ($GLOBALS['dbi']->isSuperuser() && $mode == 'edit_other')
             ) {
                 $auth_plugin_dropdown = Privileges::getHtmlForAuthPluginsDropdown(
-                    $orig_auth_plugin, 'change_pw', 'new'
+                    $orig_auth_plugin,
+                    'change_pw',
+                    'new'
                 );
 
                 $html .= '<tr class="vmiddle">'
@@ -144,7 +147,9 @@ class ChangePassword
             }
         } else {
             $auth_plugin_dropdown = Privileges::getHtmlForAuthPluginsDropdown(
-                $orig_auth_plugin, 'change_pw', 'old'
+                $orig_auth_plugin,
+                'change_pw',
+                'old'
             );
 
             $html .= '<tr class="vmiddle">'

@@ -36,7 +36,8 @@ if ($db_is_system_schema) {
 $err_url_0 = 'index.php' . Url::getCommon();
 
 $err_url = PhpMyAdmin\Util::getScriptNameForOption(
-    $GLOBALS['cfg']['DefaultTabDatabase'], 'database'
+    $GLOBALS['cfg']['DefaultTabDatabase'],
+    'database'
 )
     . Url::getCommon(array('db' => $db));
 
@@ -99,8 +100,8 @@ if (isset($_POST['submitcollation'])
         isset($_POST['change_all_tables_collations']) &&
         $_POST['change_all_tables_collations'] === 'on'
     ) {
-        list($tables, , , , , , , ,) = PhpMyAdmin\Util::getDbInfo($db, null);
-        foreach($tables as $tableName => $data) {
+        list($tables, , , , , , , , ) = PhpMyAdmin\Util::getDbInfo($db, null);
+        foreach ($tables as $tableName => $data) {
             if ($GLOBALS['dbi']->getTable($db, $tableName)->isView()) {
                 // Skip views, we can not change the collation of a view.
                 // issue #15283
@@ -124,7 +125,6 @@ if (isset($_POST['submitcollation'])
                 $operations = new Operations();
                 $operations->changeAllColumnsCollation($db, $tableName, $_POST['db_collation']);
             }
-
         }
     }
     unset($db_charset);

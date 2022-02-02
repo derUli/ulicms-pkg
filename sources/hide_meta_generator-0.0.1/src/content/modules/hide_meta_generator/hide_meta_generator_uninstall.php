@@ -1,3 +1,2 @@
 <?php
-deleteconfig ( "hide_meta_generator" );
-?>
+deleteconfig("hide_meta_generator");

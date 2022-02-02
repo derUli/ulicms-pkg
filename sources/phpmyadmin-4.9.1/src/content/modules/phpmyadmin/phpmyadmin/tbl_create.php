@@ -24,7 +24,10 @@ Util::checkParameters(array('db'));
 /* Check if database name is empty */
 if (strlen($db) === 0) {
     Util::mysqlDie(
-        __('The database name is empty!'), '', false, 'index.php'
+        __('The database name is empty!'),
+        '',
+        false,
+        'index.php'
     );
 }
 
@@ -91,8 +94,10 @@ if (isset($_POST['do_save_data'])) {
                     && strlen($_POST['field_name'][$fieldindex]) > 0
                 ) {
                     Transformations::setMIME(
-                        $db, $table,
-                        $_POST['field_name'][$fieldindex], $mimetype,
+                        $db,
+                        $table,
+                        $_POST['field_name'][$fieldindex],
+                        $mimetype,
                         $_POST['field_transformation'][$fieldindex],
                         $_POST['field_transformation_options'][$fieldindex],
                         $_POST['field_input_transformation'][$fieldindex],

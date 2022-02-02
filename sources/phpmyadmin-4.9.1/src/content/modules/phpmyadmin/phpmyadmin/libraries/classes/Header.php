@@ -230,7 +230,8 @@ class Header
         $params = array(
             'common_query' => Url::getCommonRaw(),
             'opendb_url' => Util::getScriptNameForOption(
-                $GLOBALS['cfg']['DefaultTabDatabase'], 'database'
+                $GLOBALS['cfg']['DefaultTabDatabase'],
+                'database'
             ),
             'lang' => $GLOBALS['lang'],
             'server' => $GLOBALS['server'],

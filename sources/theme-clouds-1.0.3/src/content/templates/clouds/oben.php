@@ -1,15 +1,15 @@
 <!doctype html>
 <html lang="<?php
 
-echo getCurrentLanguage ();
+echo getCurrentLanguage();
 ?>">
 <head>
 <?php base_metas()?>
 <script
 	src="<?php
-	
-echo getTemplateDirPath ( "clouds" );
-	?>js/jquery.spritely.js"
+    
+echo getTemplateDirPath("clouds");
+    ?>js/jquery.spritely.js"
 	type="text/javascript"></script>
 <script type="text/javascript">
             $(document).ready(function() {
@@ -60,7 +60,7 @@ $('#menucontainer a').click(function(e){
 		<div id="menucontent">
 <?php
 
-menu ( "left" );
+menu("left");
 ?>
 </div>
 	</div>
@@ -70,13 +70,11 @@ menu ( "left" );
 
 		<div class="mainContent">
 <?php
-if (getconfig ( "logo_disabled" ) == "no") {
-	?>
+if (getconfig("logo_disabled") == "no") {
+    ?>
 <p style="margin-bottom: 10px;"><?php
-	
-logo ();
-	?></p>
+    
+logo(); ?></p>
 	 <?php
-
 }
 ?>

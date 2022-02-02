@@ -30,9 +30,9 @@ define('PMA_ENGINE_SUPPORT_YES', 2);
 define('PMA_ENGINE_SUPPORT_DEFAULT', 3);
 
 define('PMA_ENGINE_DETAILS_TYPE_PLAINTEXT', 0);
-define('PMA_ENGINE_DETAILS_TYPE_SIZE',      1);
-define('PMA_ENGINE_DETAILS_TYPE_NUMERIC',   2); //Has no effect yet...
-define('PMA_ENGINE_DETAILS_TYPE_BOOLEAN',   3); // 'ON' or 'OFF'
+define('PMA_ENGINE_DETAILS_TYPE_SIZE', 1);
+define('PMA_ENGINE_DETAILS_TYPE_NUMERIC', 2); //Has no effect yet...
+define('PMA_ENGINE_DETAILS_TYPE_BOOLEAN', 3); // 'ON' or 'OFF'
 
 /**
  * Base Storage Engine Class
@@ -44,23 +44,23 @@ class StorageEngine
     /**
      * @var string engine name
      */
-    var $engine  = 'dummy';
+    public $engine  = 'dummy';
 
     /**
      * @var string engine title/description
      */
-    var $title   = 'PMA Dummy Engine Class';
+    public $title   = 'PMA Dummy Engine Class';
 
     /**
      * @var string engine lang description
      */
-    var $comment
+    public $comment
         = 'If you read this text inside phpMyAdmin, something went wrong...';
 
     /**
      * @var integer engine supported by current server
      */
-    var $support = PMA_ENGINE_SUPPORT_NO;
+    public $support = PMA_ENGINE_SUPPORT_NO;
 
     /**
      * Constructor
@@ -101,7 +101,7 @@ class StorageEngine
      * @access public
      * @return string[] array of storage engines
      */
-    static public function getStorageEngines()
+    public static function getStorageEngines()
     {
         static $storage_engines = null;
 
@@ -141,9 +141,11 @@ class StorageEngine
      * @static
      * @return string html selectbox
      */
-    static public function getHtmlSelect(
-        $name = 'engine', $id = null,
-        $selected = null, $offerUnavailableEngines = false,
+    public static function getHtmlSelect(
+        $name = 'engine',
+        $id = null,
+        $selected = null,
+        $offerUnavailableEngines = false,
         $addEmpty = false
     ) {
         $selected   = mb_strtolower($selected);
@@ -186,9 +188,9 @@ class StorageEngine
      * @return StorageEngine The engine plugin
      * @static
      */
-    static public function getEngine($engine)
+    public static function getEngine($engine)
     {
-        switch(mb_strtolower($engine)) {
+        switch (mb_strtolower($engine)) {
         case 'bdb':
             return new Bdb($engine);
         case 'berkeleydb':
@@ -226,7 +228,7 @@ class StorageEngine
      * @static
      * @return boolean whether $engine is valid or not
      */
-    static public function isValid($engine)
+    public static function isValid($engine)
     {
         if ($engine == "PBMS") {
             return true;

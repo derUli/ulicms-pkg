@@ -46,7 +46,8 @@ class DesignerTable
      *
      * @return bool
      */
-    public function supportsForeignkeys() {
+    public function supportsForeignkeys()
+    {
         return Util::isForeignKeySupported($this->tableEngine);
     }
 
@@ -55,7 +56,8 @@ class DesignerTable
      *
      * @return string
      */
-    public function getDatabaseName() {
+    public function getDatabaseName()
+    {
         return $this->databaseName;
     }
 
@@ -64,7 +66,8 @@ class DesignerTable
      *
      * @return string
      */
-    public function getTableName() {
+    public function getTableName()
+    {
         return $this->tableName;
     }
 
@@ -73,7 +76,8 @@ class DesignerTable
      *
      * @return string
      */
-    public function getTableEngine() {
+    public function getTableEngine()
+    {
         return $this->tableEngine;
     }
 
@@ -82,7 +86,8 @@ class DesignerTable
      *
      * @return string
      */
-    public function getDbTableString() {
+    public function getDbTableString()
+    {
         return $this->databaseName . '.' . $this->tableName;
     }
 }

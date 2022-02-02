@@ -1,8 +1,6 @@
 <?php
-if (! getconfig ( "custom_admin_css" )) {
-	$default = "/* Insert your css codes here */
+if (! getconfig("custom_admin_css")) {
+    $default = "/* Insert your css codes here */
 ";
-	setconfig ( "custom_admin_css", db_escape ( $default ) );
+    setconfig("custom_admin_css", db_escape($default));
 }
-
-?>

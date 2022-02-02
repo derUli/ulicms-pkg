@@ -33,7 +33,9 @@ list(
     $insert_mode, $where_clause, $where_clause_array, $where_clauses,
     $result, $rows, $found_unique_key, $after_insert
 ) = $insertEdit->determineInsertOrEdit(
-    isset($where_clause) ? $where_clause : null, $db, $table
+    isset($where_clause) ? $where_clause : null,
+    $db,
+    $table
 );
 // Increase number of rows if unsaved rows are more
 if (!empty($unsaved_values) && count($rows) < count($unsaved_values)) {
@@ -92,7 +94,11 @@ $foreigners = $relation->getForeigners($db, $table);
 
 // Retrieve form parameters for insert/edit form
 $_form_params = $insertEdit->getFormParametersForInsertForm(
-    $db, $table, $where_clauses, $where_clause_array, $err_url
+    $db,
+    $table,
+    $where_clauses,
+    $where_clause_array,
+    $err_url
 );
 
 /**
@@ -119,7 +125,9 @@ $biggest_max_file_size = 0;
 $url_params['db'] = $db;
 $url_params['table'] = $table;
 $url_params = $insertEdit->urlParamsInEditMode(
-    $url_params, $where_clause_array, $where_clause
+    $url_params,
+    $where_clause_array,
+    $where_clause
 );
 
 $has_blob_field = false;
@@ -178,12 +186,32 @@ foreach ($rows as $row_id => $current_row) {
     }
 
     $html_output .= $insertEdit->getHtmlForInsertEditRow(
-        $url_params, $table_columns, $comments_map, $timestamp_seen,
-        $current_result, $chg_evt_handler, $jsvkey, $vkey, $insert_mode,
-        $current_row, $o_rows, $tabindex, $columns_cnt,
-        $is_upload, $tabindex_for_function, $foreigners, $tabindex_for_null,
-        $tabindex_for_value, $table, $db, $row_id, $titles,
-        $biggest_max_file_size, $text_dir, $repopulate, $where_clause_array
+        $url_params,
+        $table_columns,
+        $comments_map,
+        $timestamp_seen,
+        $current_result,
+        $chg_evt_handler,
+        $jsvkey,
+        $vkey,
+        $insert_mode,
+        $current_row,
+        $o_rows,
+        $tabindex,
+        $columns_cnt,
+        $is_upload,
+        $tabindex_for_function,
+        $foreigners,
+        $tabindex_for_null,
+        $tabindex_for_value,
+        $table,
+        $db,
+        $row_id,
+        $titles,
+        $biggest_max_file_size,
+        $text_dir,
+        $repopulate,
+        $where_clause_array
     );
 } // end foreach on multi-edit
 $scripts->addFiles($GLOBALS['plugin_scripts']);
@@ -195,8 +223,11 @@ if (! isset($after_insert)) {
 
 //action panel
 $html_output .= $insertEdit->getActionsPanel(
-    $where_clause, $after_insert, $tabindex,
-    $tabindex_for_value, $found_unique_key
+    $where_clause,
+    $after_insert,
+    $tabindex,
+    $tabindex_for_value,
+    $found_unique_key
 );
 
 if ($biggest_max_file_size > 0) {
@@ -213,7 +244,10 @@ $html_output .= $insertEdit->getHtmlForGisEditor();
 if ($insert_mode) {
     //Continue insertion form
     $html_output .= $insertEdit->getContinueInsertionForm(
-        $table, $db, $where_clause_array, $err_url
+        $table,
+        $db,
+        $where_clause_array,
+        $err_url
     );
 }
 

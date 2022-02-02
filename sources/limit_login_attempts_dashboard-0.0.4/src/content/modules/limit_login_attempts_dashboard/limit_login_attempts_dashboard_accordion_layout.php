@@ -1,15 +1,12 @@
 <?php
 $acl = new ACL();
 if (in_array("limit_login_attempts", getAllModules()) and $acl->hasPermission("limit_login_attempts")) {
-    
-    $alreadyDisplayed = Array();
+    $alreadyDisplayed = array();
     
     $max_login_attempts = getconfig("max_login_attempts");
     if (! $max_login_attempts) {
         $max_login_attempts = 5;
-    }
-    
-    ?>
+    } ?>
 
 <h2 class="accordion-header">Fehlgeschlagene Anmeldeversuche</h2>
 <div class="accordion-content">
@@ -19,7 +16,6 @@ if (in_array("limit_login_attempts", getAllModules()) and $acl->hasPermission("l
     if (db_num_rows($query) === 0) {
         echo "<p>Es gab keine fehlerhaften Loginversuche</p>";
     } else {
-        
         echo "<table style=\"outline:4px solid #d4d4d4; background-color:#f0f0f0;width:96%; margin:auto;\">";
         echo "<tr style=\"background-color:#f0f0f0;font-weight:bold;\">";
         echo "<td>";
@@ -38,10 +34,11 @@ if (in_array("limit_login_attempts", getAllModules()) and $acl->hasPermission("l
             $result = db_fetch_assoc($query2);
             
             if (! in_array($row->ip, $alreadyDisplayed)) {
-                if (db_num_rows($query2) >= $max_login_attempts)
+                if (db_num_rows($query2) >= $max_login_attempts) {
                     echo "<tr style=\"color:red;\">";
-                else
+                } else {
                     echo "<tr>";
+                }
                 echo "<td style=\"width:200px;\">" . db_num_rows($query2) . "</td>";
                 echo "<td style=\"width:300px;\">" . $result["ip"] . "</td>";
                 echo "<td>";
@@ -55,13 +52,11 @@ if (in_array("limit_login_attempts", getAllModules()) and $acl->hasPermission("l
             }
         }
         
-        echo "</table>";
-        ?>
+        echo "</table>"; ?>
 
 
 <?php
-    }
-    ?>
+    } ?>
 </div>
 
 <?php

@@ -1,4 +1,5 @@
 <?php
-function MediaElement_js_render() {
-	return "";
+function MediaElement_js_render()
+{
+    return "";
 }

@@ -39,7 +39,7 @@ class Processes
         $retval .= Data::getHtmlForRefreshList(
             'refreshRate',
             5,
-            Array(2, 3, 4, 5, 10, 20, 40, 60, 120, 300, 600, 1200)
+            array(2, 3, 4, 5, 10, 20, 40, 60, 120, 300, 600, 1200)
         );
         $retval .= '</label>';
         $retval .= '<a id="toggleRefresh" href="#">';
@@ -127,7 +127,6 @@ class Processes
         $retval .= '<tr>';
         $retval .= '<th>' . __('Processes') . '</th>';
         foreach ($sortable_columns as $column) {
-
             $is_sorted = ! empty($_POST['order_by_field'])
                 && ! empty($_POST['sort_order'])
                 && ($_POST['order_by_field'] == $column['order_by_field']);
@@ -181,11 +180,17 @@ class Processes
                 }
                 $retval .= '<a href="server_status_processes.php" data-post="' . Url::getCommon($url_params, '') . '" >';
                 if ($show_full_sql) {
-                    $retval .= Util::getImage('s_partialtext',
-                        __('Truncate Shown Queries'), ['class' => 'icon_fulltext']);
+                    $retval .= Util::getImage(
+                        's_partialtext',
+                        __('Truncate Shown Queries'),
+                        ['class' => 'icon_fulltext']
+                    );
                 } else {
-                    $retval .= Util::getImage('s_fulltext',
-                        __('Show Full Queries'), ['class' => 'icon_fulltext']);
+                    $retval .= Util::getImage(
+                        's_fulltext',
+                        __('Show Full Queries'),
+                        ['class' => 'icon_fulltext']
+                    );
                 }
                 $retval .= '</a>';
             }

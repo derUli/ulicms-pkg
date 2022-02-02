@@ -35,32 +35,32 @@ class ThemeManager
     /**
      * @var array available themes
      */
-    var $themes = array();
+    public $themes = array();
 
     /**
      * @var string  cookie name
      */
-    var $cookie_name = 'pma_theme';
+    public $cookie_name = 'pma_theme';
 
     /**
      * @var boolean
      */
-    var $per_server = false;
+    public $per_server = false;
 
     /**
      * @var string name of active theme
      */
-    var $active_theme = '';
+    public $active_theme = '';
 
     /**
      * @var Theme Theme active theme
      */
-    var $theme = null;
+    public $theme = null;
 
     /**
      * @var string
      */
-    var $theme_default;
+    public $theme_default;
 
     /**
      * @const string The name of the fallback theme

@@ -3,23 +3,25 @@ flush();
 
 $beginn = microtime(true);
 
-if (is_admin_dir())
+if (is_admin_dir()) {
     die();
+}
 
 @include_once "lib/string_functions.php";
 
 $default_bot_user_id = getconfig("rss2blog_bot_user_id");
 
-if (! $bot_user_id)
+if (! $bot_user_id) {
     $bot_user_id = 1;
+}
 
 $rss2blog_src_link_format = getconfig("rss2blog_src_link_format");
 
-if (! $rss2blog_src_link_format)
+if (! $rss2blog_src_link_format) {
     $rss2blog_src_link_format = "Quelle: %title%";
+}
 
 if (! function_exists("rsstotime")) {
-
     function rsstotime($rss_time)
     {
         return strtotime($rss_time);
@@ -39,7 +41,6 @@ if (! function_exists("rsstotime")) {
  */
 
 if (! function_exists("cleanString")) {
-
     function cleanString($string, $separator = '-')
     {
         $accents = array(
@@ -124,8 +125,9 @@ if (! function_exists("cleanString")) {
 
 @include_once "lib/file_get_contents_wrapper.php";
 $srclist = getModulePath("rss2blog") . "etc/sources.ini";
-if (! is_file($srclist))
+if (! is_file($srclist)) {
     die();
+}
 
 if (! class_exists("lastRSS")) {
     @include_once getModulePath("lastRSS", true) . "lib/lastRSS.php";
@@ -145,13 +147,13 @@ while ($row = db_fetch_object($query)) {
 }
 
 $cache_time = getconfig("cache_period");
-if (! $cache_time)
-    $cache_time = 60 * 60 * 24; // 24 Stunden
+if (! $cache_time) {
+    $cache_time = 60 * 60 * 24;
+} // 24 Stunden
 
 for ($n = 0; $n < count($srclist); $n ++) {
     $currentLine = trim($srclist[$n]);
     if (! startsWith($currentLine, "#") and ! empty($currentLine)) {
-        
         $splittedLine = explode(" ", $currentLine);
         if (count($splittedLine) > 1) {
             $currentLine = $splittedLine[0];
@@ -172,7 +174,6 @@ for ($n = 0; $n < count($srclist); $n ++) {
             $page_title = $rssdata["title"];
             $items = $rssdata["items"];
             for ($a = 0; $a < count($items); $a ++) {
-                
                 $article = $items[$a];
                 $title = db_escape($article["title"]);
                 $link = $article["link"];
@@ -189,7 +190,6 @@ for ($n = 0; $n < count($srclist); $n ++) {
                 $seo_shortname = cleanString($title) . "-" . uniqid();
                 
                 if (! in_array($link, $allLinks)) {
-                    
                     array_push($allLinks, $link);
                     
                     $insert_query = "INSERT INTO `" . tbname("blog") . "` (datum, " . "title, seo_shortname, comments_enabled, language, 
@@ -204,8 +204,9 @@ for ($n = 0; $n < count($srclist); $n ++) {
                     $laufdauer = microtime(true) - $beginn;
                     $max = intval(ini_get("max_execution_time")) - 4;
                     
-                    if ($max < 1)
+                    if ($max < 1) {
                         $max = 60;
+                    }
                     if ($imported >= $max_import_amount || $laufdauer > $max) {
                         $n = count($srclist);
                         $a = count($items);
@@ -215,5 +216,3 @@ for ($n = 0; $n < count($srclist); $n ++) {
         }
     }
 }
-
-?>

@@ -7,5 +7,3 @@ function phpinfo_admin()
     include_once getModulePath("phpinfo", true) . "phpinfo_main.php";
     echo phpinfo_render();
 }
-
-?>

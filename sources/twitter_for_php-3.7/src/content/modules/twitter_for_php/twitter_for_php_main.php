@@ -7,4 +7,3 @@ function twitter_for_php_render()
     }
     return "";
 }
-?>

@@ -2,7 +2,6 @@
 include_once ULICMS_ROOT . "/lib/string_functions.php";
 $acl = new ACL();
 if ($acl->hasPermission(MODULE_ADMIN_REQUIRED_PERMISSION)) {
-    
     if (isset($_REQUEST["id"])) {
         $placeholder_id = intval($_REQUEST["id"]);
         $query = db_query("SELECT * FROM `" . tbname("placeholders") . "` WHERE id = $placeholder_id");
@@ -18,9 +17,7 @@ if ($acl->hasPermission(MODULE_ADMIN_REQUIRED_PERMISSION)) {
     
     $name = real_htmlspecialchars($name);
     $value = real_htmlspecialchars($value);
-    $match_case = intval($match_case);
-    
-    ?>
+    $match_case = intval($match_case); ?>
 <style type="text/css">
 form input[type="text"], textarea {
 	min-width: 200px;
@@ -30,31 +27,28 @@ form input[type="text"], textarea {
 	method="post">
 <?php
     
-    csrf_token_html();
-    ?>
+    csrf_token_html(); ?>
 <table>
 		<tr>
 			<td>Ersetze</td>
 			<td><input type="text" name="name"
 				value="<?php
     
-    echo $name;
-    ?>"></td>
+    echo $name; ?>"></td>
 		</tr>
 		<tr>
 			<td>Durch</td>
 			<td><textarea name="value" rows=5><?php
     
-    echo $value;
-    ?></textarea></td>
+    echo $value; ?></textarea></td>
 		</tr>
 		<tr>
 			<td>Zwischen Groß- und Kleinschreibung unterscheiden</td>
 			<td><input type="checkbox" name="match_case" value="1"
 				<?php
-    if ($match_case)
+    if ($match_case) {
         echo " checked=\"checked\"";
-    ?>></td>
+    } ?>></td>
 		</tr>
 		<tr>
 			<td></td>
@@ -66,11 +60,9 @@ form input[type="text"], textarea {
 <input type="hidden" name="id"
 				value="<?php
         
-        echo $placeholder_id;
-        ?>">
+        echo $placeholder_id; ?>">
 <?php
-    }
-    ?>
+    } ?>
 	<button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Eintragen</button>
 			</td>
 		</tr>

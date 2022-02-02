@@ -19,4 +19,3 @@ class DbStructureForm extends BaseForm
         ];
     }
 }
-

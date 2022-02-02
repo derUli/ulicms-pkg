@@ -103,7 +103,6 @@ class GisPolygon extends GisGeometry
         $polygon = mb_substr(
             $spatial,
             9,
-
             mb_strlen($spatial) - 11
         );
 
@@ -294,7 +293,6 @@ class GisPolygon extends GisGeometry
             mb_substr(
                 $spatial,
                 9,
-
                 mb_strlen($spatial) - 11
             );
 
@@ -396,7 +394,6 @@ class GisPolygon extends GisGeometry
      */
     public static function area(array $ring)
     {
-
         $no_of_points = count($ring);
 
         // If the last point is same as the first point ignore it

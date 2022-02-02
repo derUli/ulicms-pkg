@@ -11,9 +11,9 @@
 <style type="text/css">
 #header {
 	background-color: <?php
-	
-echo getconfig ( "header-background-color" );
-	?>;
+    
+echo getconfig("header-background-color");
+    ?>;
 }
 </style>
 </head>
@@ -29,9 +29,9 @@ echo getconfig ( "header-background-color" );
 			<div id="header">
 				<h1><?php homepage_title()?></h1>
 				<h2>by <?php
-				
-homepage_owner ();
-				?></h2>
+                
+homepage_owner();
+                ?></h2>
 			</div>
 
 			<div id="splash"></div>
@@ -39,9 +39,9 @@ homepage_owner ();
 			<div id="menu">
 				<ul>
 				<?php
-				
-menu ( "top" );
-				?>
+                
+menu("top");
+                ?>
 			</ul>
 
 				<div id="date"><?php echo date("d.m.Y - H:i")?> Uhr</div>

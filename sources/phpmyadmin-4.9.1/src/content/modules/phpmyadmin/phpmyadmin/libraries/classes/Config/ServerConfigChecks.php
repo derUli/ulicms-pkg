@@ -53,11 +53,14 @@ class ServerConfigChecks
 
         list($cookieAuthUsed, $blowfishSecret, $blowfishSecretSet)
             = $this->performConfigChecksServers(
-                $cookieAuthUsed, $blowfishSecret, $blowfishSecretSet
+                $cookieAuthUsed,
+                $blowfishSecret,
+                $blowfishSecretSet
             );
 
         $this->performConfigChecksCookieAuthUsed(
-            $cookieAuthUsed, $blowfishSecretSet,
+            $cookieAuthUsed,
+            $blowfishSecretSet,
             $blowfishSecret
         );
 
@@ -137,7 +140,8 @@ class ServerConfigChecks
      * @return array
      */
     protected function performConfigChecksServers(
-        $cookieAuthUsed, $blowfishSecret,
+        $cookieAuthUsed,
+        $blowfishSecret,
         $blowfishSecretSet
     ) {
         $serverCnt = $this->cfg->getServerCount();
@@ -146,13 +150,16 @@ class ServerConfigChecks
                 = ($this->cfg->getValue("Servers/$i/auth_type") == 'cookie');
             $cookieAuthUsed |= $cookieAuthServer;
             $serverName = $this->performConfigChecksServersGetServerName(
-                $this->cfg->getServerName($i), $i
+                $this->cfg->getServerName($i),
+                $i
             );
             $serverName = htmlspecialchars($serverName);
 
             list($blowfishSecret, $blowfishSecretSet)
                 = $this->performConfigChecksServersSetBlowfishSecret(
-                    $blowfishSecret, $cookieAuthServer, $blowfishSecretSet
+                    $blowfishSecret,
+                    $cookieAuthServer,
+                    $blowfishSecretSet
                 );
 
             //
@@ -245,7 +252,9 @@ class ServerConfigChecks
      * @return array
      */
     protected function performConfigChecksServersSetBlowfishSecret(
-        $blowfishSecret, $cookieAuthServer, $blowfishSecretSet
+        $blowfishSecret,
+        $cookieAuthServer,
+        $blowfishSecretSet
     ) {
         if ($cookieAuthServer && $blowfishSecret === null) {
             $blowfishSecretSet = true;
@@ -263,7 +272,8 @@ class ServerConfigChecks
      * @return string Server name
      */
     protected function performConfigChecksServersGetServerName(
-        $serverName, $serverId
+        $serverName,
+        $serverId
     ) {
         if ($serverName == 'localhost') {
             $serverName .= " [$serverId]";
@@ -277,7 +287,8 @@ class ServerConfigChecks
      *
      * @return void
      */
-    protected function performConfigChecksZips() {
+    protected function performConfigChecksZips()
+    {
         $this->performConfigChecksServerGZipdump();
         $this->performConfigChecksServerBZipdump();
         $this->performConfigChecksServersZipdump();
@@ -288,7 +299,8 @@ class ServerConfigChecks
      *
      * @return void
      */
-    protected function performConfigChecksServersZipdump() {
+    protected function performConfigChecksServersZipdump()
+    {
         //
         // $cfg['ZipDump']
         // requires zip_open in import
@@ -342,7 +354,8 @@ class ServerConfigChecks
      * @return array
      */
     protected function performConfigChecksCookieAuthUsed(
-        $cookieAuthUsed, $blowfishSecretSet,
+        $cookieAuthUsed,
+        $blowfishSecretSet,
         $blowfishSecret
     ) {
         //
@@ -401,7 +414,8 @@ class ServerConfigChecks
      *
      * @return void
      */
-    protected function performConfigChecksLoginCookie() {
+    protected function performConfigChecksLoginCookie()
+    {
         //
         // $cfg['LoginCookieValidity']
         // value greater than session.gc_maxlifetime will cause
@@ -502,7 +516,7 @@ class ServerConfigChecks
                 Descriptions::get('BZipDump'),
                 Sanitize::sanitize(
                     sprintf(
-                         __(
+                        __(
                             '%1$sBzip2 compression and decompression%2$s requires functions (%3$s) which '
                             . 'are unavailable on this system.'
                         ),

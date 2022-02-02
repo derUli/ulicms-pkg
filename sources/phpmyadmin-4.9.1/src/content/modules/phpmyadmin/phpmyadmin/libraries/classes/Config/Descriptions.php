@@ -248,7 +248,8 @@ class Descriptions
                 return __('Maximum execution time');
             case 'Export_lock_tables_name':
                 return sprintf(
-                    __('Use %s statement'), htmlspecialchars('<code>LOCK TABLES</code>')
+                    __('Use %s statement'),
+                    htmlspecialchars('<code>LOCK TABLES</code>')
                 );
             case 'Export_asfile_name':
                 return __('Save as file');
@@ -372,7 +373,8 @@ class Descriptions
                 return sprintf(__('Add %s'), 'DROP DATABASE');
             case 'Export_sql_drop_table_name':
                 return sprintf(
-                    __('Add %s'), 'DROP TABLE / VIEW / PROCEDURE / FUNCTION / EVENT / TRIGGER'
+                    __('Add %s'),
+                    'DROP TABLE / VIEW / PROCEDURE / FUNCTION / EVENT / TRIGGER'
                 );
             case 'Export_sql_create_table_name':
                 return sprintf(__('Add %s'), 'CREATE TABLE');
@@ -1490,4 +1492,3 @@ class Descriptions
         return null;
     }
 }
-

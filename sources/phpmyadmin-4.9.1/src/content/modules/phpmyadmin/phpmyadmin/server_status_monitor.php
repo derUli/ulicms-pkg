@@ -25,7 +25,7 @@ if ($response->isAjax()) {
 
     // real-time charting data
     if (isset($_POST['chart_data'])) {
-        switch($_POST['type']) {
+        switch ($_POST['type']) {
         case 'chartgrid': // Data for the monitor
             $ret = Monitor::getJsonForChartingData();
             $response->addJSON('message', $ret);
@@ -34,7 +34,6 @@ if ($response->isAjax()) {
     }
 
     if (isset($_POST['log_data'])) {
-
         $start = intval($_POST['time_start']);
         $end = intval($_POST['time_end']);
 

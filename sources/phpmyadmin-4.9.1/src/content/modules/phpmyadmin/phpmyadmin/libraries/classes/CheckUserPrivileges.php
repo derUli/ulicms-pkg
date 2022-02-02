@@ -105,8 +105,9 @@ class CheckUserPrivileges
         if ($show_grants_str == 'ALL'
             || $show_grants_str == 'ALL PRIVILEGES'
             || (mb_strpos(
-                    $show_grants_str, 'SELECT, INSERT, UPDATE, DELETE'
-                ) !== false)
+                $show_grants_str,
+                'SELECT, INSERT, UPDATE, DELETE'
+            ) !== false)
         ) {
             if ($show_grants_dbname == '*'
                 && $show_grants_tblname == '*'
@@ -240,7 +241,7 @@ class CheckUserPrivileges
             }
 
             if (
-                mb_strpos($show_grants_str,'RELOAD') !== false
+                mb_strpos($show_grants_str, 'RELOAD') !== false
             ) {
                 $GLOBALS['is_reload_priv'] = true;
             }
@@ -286,7 +287,9 @@ class CheckUserPrivileges
                         && ! preg_match('/\\\\%|\\\\_/', $show_grants_dbname))
                         || (! $this->dbi->tryQuery(
                             'USE ' .  preg_replace(
-                                '/' . $re1 . '(%|_)/', '\\1\\3', $dbname_to_test
+                                '/' . $re1 . '(%|_)/',
+                                '\\1\\3',
+                                $dbname_to_test
                             )
                         )
                         && mb_substr($this->dbi->getError(), 1, 4) != 1044)
@@ -296,11 +299,13 @@ class CheckUserPrivileges
                          * (this case must be rare anyway)
                          */
                         $GLOBALS['db_to_create'] = preg_replace(
-                            '/' . $re0 . '%/',     '\\1',
+                            '/' . $re0 . '%/',
+                            '\\1',
                             $show_grants_dbname
                         );
                         $GLOBALS['db_to_create'] = preg_replace(
-                            '/' . $re1 . '(%|_)/', '\\1\\3',
+                            '/' . $re1 . '(%|_)/',
+                            '\\1\\3',
                             $GLOBALS['db_to_create']
                         );
                         $GLOBALS['is_create_db_priv'] = true;
@@ -314,7 +319,6 @@ class CheckUserPrivileges
                     } // end if
                 } // end elseif
             } // end if
-
         } // end while
 
         $this->dbi->freeResult($rs_usr);

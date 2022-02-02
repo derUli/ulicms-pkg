@@ -20,7 +20,8 @@ if (! function_exists('hash_equals')) {
      *
      * @return boolean whether they are equal
      */
-    function hash_equals($a, $b) {
+    function hash_equals($a, $b)
+    {
         $ret = strlen($a) ^ strlen($b);
         $ret |= array_sum(unpack("C*", $a ^ $b));
         return ! $ret;

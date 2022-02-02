@@ -4,7 +4,7 @@
 <head>
 <?php
 
-base_metas ();
+base_metas();
 ?>
 </head>
 
@@ -15,18 +15,18 @@ base_metas ();
 			<div id="header">
 
 			<?php
-			if (getconfig ( "logo_disabled" ) == "no") {
-				logo ();
-			} else {
-				homepage_title ();
-			}
-			?>
+            if (getconfig("logo_disabled") == "no") {
+                logo();
+            } else {
+                homepage_title();
+            }
+            ?>
 
 			</div>
 			<div id="menu">
 				<?php
-				
-menu ( "left" );
-				?>
+                
+menu("left");
+                ?>
 			</div>
 			<div id="stuff">

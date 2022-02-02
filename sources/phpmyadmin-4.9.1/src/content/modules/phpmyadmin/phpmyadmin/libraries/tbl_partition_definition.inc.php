@@ -9,7 +9,6 @@
 use PhpMyAdmin\Core;
 
 if (!isset($partitionDetails)) {
-
     $partitionDetails = array();
 
     // Extract some partitioning and subpartitioning parameters from the request

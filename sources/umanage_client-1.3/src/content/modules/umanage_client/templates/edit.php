@@ -7,8 +7,7 @@ if ($acl->hasPermission("umanage_client")) {
     if ($id > 0) {
         $site = Sites::getSiteByID($id);
         if ($site and Database::getNumRows($site) > 0) {
-            $site = Database::fetchAssoc($site);
-            ?>    <p>
+            $site = Database::fetchAssoc($site); ?>    <p>
                 <a href="<?php echo ModuleHelper::buildActionUrl("umanage_list"); ?>" class="btn btn-default">
                     <i class="fa fa-arrow-left"></i>
                     <?php translate("back"); ?>
@@ -21,9 +20,13 @@ if ($acl->hasPermission("umanage_client")) {
                 <strong><?php translate("protocol") ?></strong> <br /> <select
                     name="protocol">
                     <option value="http://"
-                            <?php if ($site["protocol"] == "http://") echo "selected"; ?>>http://</option>
+                            <?php if ($site["protocol"] == "http://") {
+                echo "selected";
+            } ?>>http://</option>
                     <option value="https://"
-                            <?php if ($site["protocol"] == "https://") echo "selected"; ?>>https://</option>
+                            <?php if ($site["protocol"] == "https://") {
+                echo "selected";
+            } ?>>https://</option>
                 </select> <br /> <br /> <strong><?php translate("domain"); ?></strong><br />
                 <input type="text" name="domain"
                        value="<?php esc($site["domain"]); ?>" maxlength="255"

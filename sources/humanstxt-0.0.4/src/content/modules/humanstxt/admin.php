@@ -13,8 +13,7 @@ function humanstxt_admin()
         $text = file_get_contents($file);
     } else {
         $text = "";
-    }
-    ?>
+    } ?>
 <script type="text/javascript">
 fillTemplate = () => {
 	
@@ -26,8 +25,7 @@ fillTemplate = () => {
      $.ajax({
             url: "<?php
     
-    echo getModulePath("humanstxt");
-    ?>template.txt",
+    echo getModulePath("humanstxt"); ?>template.txt",
             async: true,
             success: function (data){
                 $("textarea#text").val(data);
@@ -43,8 +41,7 @@ fillTemplate = () => {
 <form action="<?php echo getModuleAdminSelfPath()?>" method="post">
 <?php
     
-    csrf_token_html();
-    ?>
+    csrf_token_html(); ?>
 	<p>
 		<a href="http://humanstxt.org"
 		class="btn btn-info"
@@ -60,7 +57,7 @@ fillTemplate = () => {
 	</p>
 	<p>
 		<textarea id="text" rows="30" cols="80" style="width: 100%"
-			name="text"><?php esc($text);?></textarea>
+			name="text"><?php esc($text); ?></textarea>
 	</p>
 	<p>
 		<button

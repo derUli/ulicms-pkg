@@ -597,7 +597,8 @@ class Qbe
             }
 
             $html_output .= $this->_getSortSelectCell(
-                $new_column_count, $selected
+                $new_column_count,
+                $selected
             );
             $new_column_count++;
         } // end for
@@ -626,7 +627,8 @@ class Qbe
                 && $this->_criteriaColumnInsert[$colInd] == 'on'
             ) {
                 $html_output .= $this->_getSortOrderSelectCell(
-                    $new_column_count, null
+                    $new_column_count,
+                    null
                 );
                 $new_column_count++;
             } // end if
@@ -646,7 +648,8 @@ class Qbe
             }
 
             $html_output .= $this->_getSortOrderSelectCell(
-                $new_column_count, $sortOrder
+                $new_column_count,
+                $sortOrder
             );
             $new_column_count++;
         } // end for
@@ -843,7 +846,9 @@ class Qbe
      * @return string HTML for modification cell
      */
     private function _getAndOrColCell(
-        $column_number, $selected = null, $last_column = false
+        $column_number,
+        $selected = null,
+        $last_column = false
     ) {
         $html_output = '<td class="center">';
         if (! $last_column) {
@@ -1050,7 +1055,8 @@ class Qbe
                 $checked_options['and'] = '';
                 $html_output .= '<tr class="noclick">';
                 $html_output .= $this->_getInsDelAndOrCell(
-                    $new_row_count, $checked_options
+                    $new_row_count,
+                    $checked_options
                 );
                 $html_output .= $this->_getInputboxRow(
                     $new_row_count
@@ -1078,7 +1084,8 @@ class Qbe
             }
             $html_output .= '<tr class="noclick">';
             $html_output .= $this->_getInsDelAndOrCell(
-                $new_row_count, $checked_options
+                $new_row_count,
+                $checked_options
             );
             $html_output .= $this->_getInputboxRow(
                 $new_row_count
@@ -1278,7 +1285,9 @@ class Qbe
      *
      * @return array having UNIQUE and INDEX columns
      */
-    private function _getIndexes(array $search_tables, array $search_columns,
+    private function _getIndexes(
+        array $search_tables,
+        array $search_columns,
         array $where_clause_columns
     ) {
         $unique_columns = array();
@@ -1321,14 +1330,18 @@ class Qbe
      *
      * @return array having UNIQUE and INDEX columns
      */
-    private function _getLeftJoinColumnCandidates(array $search_tables, array $search_columns,
+    private function _getLeftJoinColumnCandidates(
+        array $search_tables,
+        array $search_columns,
         array $where_clause_columns
     ) {
         $GLOBALS['dbi']->selectDb($this->_db);
 
         // Get unique columns and index columns
         $indexes = $this->_getIndexes(
-            $search_tables, $search_columns, $where_clause_columns
+            $search_tables,
+            $search_columns,
+            $where_clause_columns
         );
         $unique_columns = $indexes['unique'];
         $index_columns = $indexes['index'];
@@ -1362,7 +1375,7 @@ class Qbe
         }
         if (count($very_good) > 0) {
             $candidate_columns = $very_good;
-            // Candidates restricted in index+where
+        // Candidates restricted in index+where
         } else {
             $candidate_columns = $still_good;
             // None of the candidates where in a where-clause
@@ -1381,8 +1394,11 @@ class Qbe
      *
      * @return string table name
      */
-    private function _getMasterTable(array $search_tables, array $search_columns,
-        array $where_clause_columns, array $where_clause_tables
+    private function _getMasterTable(
+        array $search_tables,
+        array $search_columns,
+        array $where_clause_columns,
+        array $where_clause_tables
     ) {
         if (count($where_clause_tables) == 1) {
             // If there is exactly one column that has a decent where-clause
@@ -1396,7 +1412,9 @@ class Qbe
         // because he is using one of his databases as pmadb,
         // the last db selected is not always the one where we need to work)
         $candidate_columns = $this->_getLeftJoinColumnCandidates(
-            $search_tables, $search_columns, $where_clause_columns
+            $search_tables,
+            $search_columns,
+            $where_clause_columns
         );
 
         // Generally, we need to display all the rows of foreign (referenced)
@@ -1519,14 +1537,17 @@ class Qbe
                 $table = str_replace('`', '', $parts[0]);
                 $search_tables[$table] = $table;
                 $search_columns[] = $table . '.' . str_replace(
-                    '`', '', $parts[1]
+                    '`',
+                    '',
+                    $parts[1]
                 );
             }
         } // end while
 
         // Create LEFT JOINS out of Relations
         $from_clause = $this->_getJoinForFromClause(
-            $search_tables, $search_columns
+            $search_tables,
+            $search_columns
         );
 
         // In case relations are not defined, just generate the FROM clause
@@ -1534,7 +1555,8 @@ class Qbe
         if (empty($from_clause)) {
             // Create cartesian product
             $from_clause = implode(
-                ", ", array_map(array('PhpMyAdmin\Util', 'backquote'), $search_tables)
+                ", ",
+                array_map(array('PhpMyAdmin\Util', 'backquote'), $search_tables)
             );
         }
 
@@ -1566,8 +1588,10 @@ class Qbe
 
         // Get master table
         $master = $this->_getMasterTable(
-            $searchTables, $searchColumns,
-            $whereClauseColumns, $whereClauseTables
+            $searchTables,
+            $searchColumns,
+            $whereClauseColumns,
+            $whereClauseTables
         );
 
         // Will include master tables and all tables that can be combined into
@@ -1592,7 +1616,6 @@ class Qbe
             // Heuristic to chose intermediary tables is to look for tables
             // having relationships with unfinalized tables
             foreach ($unfinalized as $oneTable) {
-
                 $references = $this->relation->getChildReferences($this->_db, $oneTable);
                 foreach ($references as $column => $columnReferences) {
                     foreach ($columnReferences as $reference) {
@@ -1613,11 +1636,14 @@ class Qbe
 
                         // Try joining with the added table
                         $this->_fillJoinClauses(
-                            $tempFinalized, $relations, $tempSearchTables
+                            $tempFinalized,
+                            $relations,
+                            $tempSearchTables
                         );
 
                         $tempUnfinalized = array_diff(
-                            $tempSearchTables, array_keys($tempFinalized)
+                            $tempSearchTables,
+                            array_keys($tempFinalized)
                         );
                         // Take greedy approach.
                         // If the unfinalized count drops we keep the new table
@@ -1640,7 +1666,8 @@ class Qbe
             if (count($unfinalized) > 0) {
                 // Add these tables as cartesian product before joined tables
                 $join .= implode(
-                    ', ', array_map(array('PhpMyAdmin\Util', 'backquote'), $unfinalized)
+                    ', ',
+                    array_map(array('PhpMyAdmin\Util', 'backquote'), $unfinalized)
                 );
             }
         }
@@ -1868,7 +1895,7 @@ class Qbe
         foreach ($this->_savedSearchList as $id => $name) {
             $html_output .= '<option value="' . htmlspecialchars($id)
                 . '" ' . (
-                $id == $currentSearchId
+                    $id == $currentSearchId
                     ? 'selected="selected" '
                     : ''
                 )
@@ -1937,7 +1964,10 @@ class Qbe
      * @return array
      */
     private function _getLeftJoinColumnCandidatesBest(
-        array $search_tables, array $where_clause_columns, array $unique_columns, array $index_columns
+        array $search_tables,
+        array $where_clause_columns,
+        array $unique_columns,
+        array $index_columns
     ) {
         // now we want to find the best.
         if (isset($unique_columns) && count($unique_columns) > 0) {

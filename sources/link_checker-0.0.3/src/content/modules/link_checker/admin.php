@@ -5,8 +5,9 @@ define("MODULE_ADMIN_REQUIRED_PERMISSION", "link_checker");
 function get_http_response_code($theURL)
 {
     @$headers = get_headers($theURL);
-    if (! $headers)
+    if (! $headers) {
         return false;
+    }
     return substr($headers[0], 9);
 }
 
@@ -40,16 +41,16 @@ function link_checker_admin()
                     // Kein Status weil Fehler bei get_headers
                     $hasLinks = true;
                     echo "<p>" . $links[0][$i] . " [Der Hostname kann nicht aufgelöst werden]</p>";
-                } else if ($_GET["show"] == "all") {
+                } elseif ($_GET["show"] == "all") {
                     $hasLinks = true;
                     echo "<p>" . $links[0][$i] . " [" . htmlspecialchars($status, ENT_QUOTES, "UTF-8") . "]" . "</p>";
-                } else if ($_GET["show"] == "redirection" and startsWith($status, "3")) {
+                } elseif ($_GET["show"] == "redirection" and startsWith($status, "3")) {
                     $hasLinks = true;
                     echo "<p>" . $links[0][$i] . " [" . htmlspecialchars($status, ENT_QUOTES, "UTF-8") . "]" . "</p>";
-                } else if ($_GET["show"] == "404" and $status === "404 Not Found") {
+                } elseif ($_GET["show"] == "404" and $status === "404 Not Found") {
                     $hasLinks = true;
                     echo "<p>" . $links[0][$i] . " [" . htmlspecialchars($status, ENT_QUOTES, "UTF-8") . "]" . "</p>";
-                } else if ($_GET["show"] == "errors" and (startsWith($status, "4") or startsWith($status, "5"))) {
+                } elseif ($_GET["show"] == "errors" and (startsWith($status, "4") or startsWith($status, "5"))) {
                     $hasLinks = true;
                     echo "<p>" . $links[0][$i] . " [" . htmlspecialchars($status, ENT_QUOTES, "UTF-8") . "]" . "</p>";
                 }

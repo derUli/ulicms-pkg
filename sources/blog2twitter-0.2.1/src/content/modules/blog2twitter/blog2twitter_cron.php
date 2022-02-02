@@ -1,7 +1,6 @@
 <?php
-if (containsModule(null, "blog")) {  
+if (containsModule(null, "blog")) {
     if (! function_exists("rootDirectory")) {
-
         function rootDirectory()
         {
             $pageURL = 'http';
@@ -60,4 +59,3 @@ if (containsModule(null, "blog")) {
         setconfig("blog2twitter_status", "<strong>Fehlende Zugangsdaten.</strong>\nMehr Informationen siehe liesmich.txt im Modulordner.");
     }
 }
-?>

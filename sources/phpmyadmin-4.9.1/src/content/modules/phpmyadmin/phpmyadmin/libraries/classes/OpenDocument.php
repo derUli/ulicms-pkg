@@ -16,7 +16,6 @@ use PhpMyAdmin\ZipExtension;
  */
 class OpenDocument
 {
-
     const NS = <<<EOT
 xmlns:office="urn:oasis:names:tc:opendocument:xmlns:office:1.0"
 xmlns:text="urn:oasis:names:tc:opendocument:xmlns:text:1.0"

@@ -57,7 +57,7 @@ class Message
      *
      * @var array
      */
-    static public $level = array (
+    public static $level = array(
         Message::SUCCESS => 'success',
         Message::NOTICE  => 'notice',
         Message::ERROR   => 'error',
@@ -136,8 +136,11 @@ class Message
      * @param integer $sanitize A flag to indicate what to sanitize, see
      *                          constant definitions above
      */
-    public function __construct($string = '', $number = Message::NOTICE,
-        array $params = array(), $sanitize = Message::SANITIZE_NONE
+    public function __construct(
+        $string = '',
+        $number = Message::NOTICE,
+        array $params = array(),
+        $sanitize = Message::SANITIZE_NONE
     ) {
         $this->setString($string, $sanitize & Message::SANITIZE_STRING);
         $this->setNumber($number);
@@ -166,7 +169,7 @@ class Message
      * @return Message
      * @static
      */
-    static public function success($string = '')
+    public static function success($string = '')
     {
         if (empty($string)) {
             $string = __('Your SQL query has been executed successfully.');
@@ -185,7 +188,7 @@ class Message
      * @return Message
      * @static
      */
-    static public function error($string = '')
+    public static function error($string = '')
     {
         if (empty($string)) {
             $string = __('Error');
@@ -207,7 +210,7 @@ class Message
      * @return Message
      * @static
      */
-    static public function notice($string)
+    public static function notice($string)
     {
         return new Message($string, Message::NOTICE);
     }
@@ -223,7 +226,7 @@ class Message
      * @return Message
      * @static
      */
-    static public function raw($message, $type = Message::NOTICE)
+    public static function raw($message, $type = Message::NOTICE)
     {
         $r = new Message('', $type);
         $r->setMessage($message);
@@ -241,7 +244,7 @@ class Message
      * @return Message
      * @static
      */
-    static public function getMessageForAffectedRows($rows)
+    public static function getMessageForAffectedRows($rows)
     {
         $message = Message::success(
             _ngettext('%1$d row affected.', '%1$d rows affected.', $rows)
@@ -260,7 +263,7 @@ class Message
      * @return Message
      * @static
      */
-    static public function getMessageForDeletedRows($rows)
+    public static function getMessageForDeletedRows($rows)
     {
         $message = Message::success(
             _ngettext('%1$d row deleted.', '%1$d rows deleted.', $rows)
@@ -279,7 +282,7 @@ class Message
      * @return Message
      * @static
      */
-    static public function getMessageForInsertedRows($rows)
+    public static function getMessageForInsertedRows($rows)
     {
         $message = Message::success(
             _ngettext('%1$d row inserted.', '%1$d rows inserted.', $rows)
@@ -298,7 +301,7 @@ class Message
      * @return Message
      * @static
      */
-    static public function rawError($message)
+    public static function rawError($message)
     {
         return Message::raw($message, Message::ERROR);
     }
@@ -313,7 +316,7 @@ class Message
      * @return Message
      * @static
      */
-    static public function rawNotice($message)
+    public static function rawNotice($message)
     {
         return Message::raw($message, Message::NOTICE);
     }
@@ -328,7 +331,7 @@ class Message
      * @return Message
      * @static
      */
-    static public function rawSuccess($message)
+    public static function rawSuccess($message)
     {
         return Message::raw($message, Message::SUCCESS);
     }
@@ -617,7 +620,7 @@ class Message
      * @access  public
      * @static
      */
-    static public function sanitize($message)
+    public static function sanitize($message)
     {
         if (is_array($message)) {
             foreach ($message as $key => $val) {
@@ -640,7 +643,7 @@ class Message
      * @access  public
      * @static
      */
-    static public function decodeBB($message)
+    public static function decodeBB($message)
     {
         return Sanitize::sanitize($message, false, true);
     }
@@ -650,7 +653,7 @@ class Message
      *
      * @return string formatted
      */
-    static public function format()
+    public static function format()
     {
         $params = func_get_args();
         if (isset($params[1]) && is_array($params[1])) {

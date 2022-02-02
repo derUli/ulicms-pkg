@@ -9,14 +9,12 @@ function redirections302_admin()
     }
     
     $redirections302 = getconfig("redirections302");
-    $redirections302 = StringHelper::realHtmlSpecialchars($redirections302);
-    ?>
+    $redirections302 = StringHelper::realHtmlSpecialchars($redirections302); ?>
 
 <form action="<?php echo getModuleAdminSelfPath()?>" method="post">
 <?php
     
-    csrf_token_html();
-    ?>
+    csrf_token_html(); ?>
 <p>
 		Hier können Sie temporäre Weiterleitungen (HTTP Status 302)
 		einrichten.<br /> Sie können je einen Eintrag pro Zeile eingeben.
@@ -31,8 +29,7 @@ function redirections302_admin()
 		<textarea rows="10" cols="80" style="width: 100%"
 			name="redirections302"><?php
     
-    echo $redirections302;
-    ?></textarea>
+    echo $redirections302; ?></textarea>
 	
 	
 	<p>

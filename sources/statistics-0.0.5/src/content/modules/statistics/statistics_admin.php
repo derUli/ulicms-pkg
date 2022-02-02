@@ -44,40 +44,34 @@ function statistics_admin()
         if ($row->date >= $monatserster and $row->date < $monatsletzter) {
             $visitors_month += 1;
         }
-    }
-    
-    ?>
+    } ?>
 <table>
 	<tr>
 		<td style="width: 200px;"><strong>Besucher gesamt</strong></td>
 		<td style="text-align: right;"><?php
     
-    echo intval($visitor_total);
-    ?>
+    echo intval($visitor_total); ?>
 </td>
 	</tr>
 	<tr>
 		<td style="width: 200px;"><strong>Besucher heute</strong></td>
 		<td style="text-align: right;"><?php
     
-    echo intval($visitors_today);
-    ?>
+    echo intval($visitors_today); ?>
 </td>
 	</tr>
 	<tr>
 		<td style="width: 200px;"><strong>Besucher gestern</strong></td>
 		<td style="text-align: right;"><?php
     
-    echo intval($visitors_yesterday);
-    ?>
+    echo intval($visitors_yesterday); ?>
 </td>
 	</tr>
 	<tr>
 		<td style="width: 200px;"><strong>Aufrufe gesamt</strong></td>
 		<td style="text-align: right;"><?php
     
-    echo intval($views_total);
-    ?>
+    echo intval($views_total); ?>
 </td>
 	</tr>
 </table>
@@ -108,8 +102,7 @@ function statistics_admin()
             }
             echo "</table>";
         }
-    }
-    ?>
+    } ?>
 
 <?php
 }

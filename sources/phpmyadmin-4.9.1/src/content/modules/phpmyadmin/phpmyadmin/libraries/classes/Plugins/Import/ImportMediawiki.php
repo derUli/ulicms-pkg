@@ -200,7 +200,7 @@ class ImportMediawiki extends ImportPlugin
                     // Helps us differentiate the header columns
                     // from the normal columns
                     $in_table_header = false;
-                    // End processing because the current line does not
+                // End processing because the current line does not
                     // contain any column information
                 } elseif (mb_substr($cur_buffer_line, 0, 2) === '|-'
                     || mb_substr($cur_buffer_line, 0, 2) === '|+'
@@ -240,7 +240,6 @@ class ImportMediawiki extends ImportPlugin
                         $cur_table_name = "";
                     }
                     // What's after the row tag is now only attributes
-
                 } elseif (($first_character === '|') || ($first_character === '!')) {
                     // Check cell elements
 

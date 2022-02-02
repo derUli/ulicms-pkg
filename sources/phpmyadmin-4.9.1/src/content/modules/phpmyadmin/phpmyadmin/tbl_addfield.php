@@ -79,7 +79,8 @@ if (isset($_POST['do_save_data'])) {
                     && strlen($_POST['field_name'][$fieldindex]) > 0
                 ) {
                     Transformations::setMIME(
-                        $db, $table,
+                        $db,
+                        $table,
                         $_POST['field_name'][$fieldindex],
                         $mimetype,
                         $_POST['field_transformation'][$fieldindex],

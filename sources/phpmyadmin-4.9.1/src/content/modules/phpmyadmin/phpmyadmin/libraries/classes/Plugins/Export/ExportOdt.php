@@ -73,7 +73,8 @@ class ExportOdt extends ExportPlugin
 
         // what to dump (structure/data/both) main group
         $dumpWhat = new OptionsPropertyMainGroup(
-            "general_opts", __('Dump table')
+            "general_opts",
+            __('Dump table')
         );
         // create primary items and add them to the group
         $leaf = new RadioPropertyItem("structure_or_data");
@@ -91,7 +92,8 @@ class ExportOdt extends ExportPlugin
         // structure options main group
         if (!$hide_structure) {
             $structureOptions = new OptionsPropertyMainGroup(
-                "structure", __('Object creation options')
+                "structure",
+                __('Object creation options')
             );
             $structureOptions->setForce('data');
             // create primary items and add them to the group
@@ -120,7 +122,8 @@ class ExportOdt extends ExportPlugin
 
         // data options main group
         $dataOptions = new OptionsPropertyMainGroup(
-            "data", __('Data dump options')
+            "data",
+            __('Data dump options')
         );
         $dataOptions->setForce('structure');
         // create primary items and add them to the group

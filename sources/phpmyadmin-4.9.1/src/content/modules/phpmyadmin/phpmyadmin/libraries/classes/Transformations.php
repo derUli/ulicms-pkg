@@ -144,7 +144,6 @@ class Transformations
                         $stack['input_transformation'][] = $mimetype . ': ' . $parts[2];
                         $stack['input_transformation_file'][] = $sd . $file;
                     }
-
                 } elseif (preg_match('|^[^.].*\.php$|', $file)) {
                     // File is a plain mimetype, no functions.
                     $base = str_replace('.php', '', $file);
@@ -224,10 +223,12 @@ class Transformations
      *
      * @return string
      */
-    static function fixupMIME($value)
+    public static function fixupMIME($value)
     {
         $value = str_replace(
-            array("jpeg", "png"), array("JPEG", "PNG"), $value
+            array("jpeg", "png"),
+            array("JPEG", "PNG"),
+            $value
         );
         return str_replace(
             ' ',
@@ -282,7 +283,10 @@ class Transformations
                   OR `input_transformation` != \'\'
                   OR `input_transformation_options` != \'\'' : '') . ')';
         $result = $GLOBALS['dbi']->fetchResult(
-            $com_qry, 'column_name', null, DatabaseInterface::CONNECT_CONTROL
+            $com_qry,
+            'column_name',
+            null,
+            DatabaseInterface::CONNECT_CONTROL
         );
 
         foreach ($result as $column => $values) {
@@ -327,8 +331,16 @@ class Transformations
      *
      * @return boolean  true, if comment-query was made.
      */
-    public static function setMIME($db, $table, $key, $mimetype, $transformation,
-        $transformationOpts, $inputTransform, $inputTransformOpts, $forcedelete = false
+    public static function setMIME(
+        $db,
+        $table,
+        $key,
+        $mimetype,
+        $transformation,
+        $transformationOpts,
+        $inputTransform,
+        $inputTransformOpts,
+        $forcedelete = false
     ) {
         $relation = new Relation();
         $cfgRelation = $relation->getRelationsParam();
@@ -360,7 +372,9 @@ class Transformations
                 AND `column_name` = \'' . $GLOBALS['dbi']->escapeString($key) . '\'';
 
         $test_rs = $relation->queryAsControlUser(
-            $test_qry, true, DatabaseInterface::QUERY_STORE
+            $test_qry,
+            true,
+            DatabaseInterface::QUERY_STORE
         );
 
         if ($test_rs && $GLOBALS['dbi']->numRows($test_rs) > 0) {
@@ -394,7 +408,6 @@ class Transformations
                   AND `column_name` = \'' . $GLOBALS['dbi']->escapeString($key)
                     . '\'';
         } elseif ($has_value) {
-
             $upd_query = 'INSERT INTO '
                 . Util::backquote($cfgRelation['db'])
                 . '.' . Util::backquote($cfgRelation['column_info'])
@@ -449,21 +462,16 @@ class Transformations
             . ' WHERE ';
 
         if (($column != '') && ($table != '')) {
-
             $delete_sql .= '`db_name` = \'' . $db . '\' AND '
                 . '`table_name` = \'' . $table . '\' AND '
                 . '`column_name` = \'' . $column . '\' ';
-
         } elseif ($table != '') {
-
             $delete_sql .= '`db_name` = \'' . $db . '\' AND '
                 . '`table_name` = \'' . $table . '\' ';
-
         } else {
             $delete_sql .= '`db_name` = \'' . $db . '\' ';
         }
 
         return $GLOBALS['dbi']->tryQuery($delete_sql);
-
     }
 }

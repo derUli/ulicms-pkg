@@ -44,13 +44,13 @@ if (! getconfig("hide_meta_generator")) {
 echo "<pubDate>" . date("r") . "</pubDate>\n";
 
 while ($row = db_fetch_object($query)) {
-    
     $servername = $_SERVER["SERVER_NAME"];
     
-    if ($_SERVER['HTTPS'])
+    if ($_SERVER['HTTPS']) {
         $url = "https://";
-    else
+    } else {
         $url = "http://";
+    }
     
     $url .= $servername;
     
@@ -82,5 +82,3 @@ while ($row = db_fetch_object($query)) {
 
 echo "</channel>\n";
 echo "</rss>";
-
-?>

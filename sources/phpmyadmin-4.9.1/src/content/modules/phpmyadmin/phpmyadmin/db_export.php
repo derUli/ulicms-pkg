@@ -87,25 +87,29 @@ if (!empty($_POST['selected_tbl']) && empty($table_select)) {
 foreach ($tables as $each_table) {
     if (isset($_POST['table_select']) && is_array($_POST['table_select'])) {
         $is_checked = Export::getCheckedClause(
-            $each_table['Name'], $_POST['table_select']
+            $each_table['Name'],
+            $_POST['table_select']
         );
     } elseif (isset($table_select)) {
         $is_checked = Export::getCheckedClause(
-            $each_table['Name'], $table_select
+            $each_table['Name'],
+            $table_select
         );
     } else {
         $is_checked = ' checked="checked"';
     }
     if (isset($_POST['table_structure']) && is_array($_POST['table_structure'])) {
         $structure_checked = Export::getCheckedClause(
-            $each_table['Name'], $_POST['table_structure']
+            $each_table['Name'],
+            $_POST['table_structure']
         );
     } else {
         $structure_checked = $is_checked;
     }
     if (isset($_POST['table_data']) && is_array($_POST['table_data'])) {
         $data_checked = Export::getCheckedClause(
-            $each_table['Name'], $_POST['table_data']
+            $each_table['Name'],
+            $_POST['table_data']
         );
     } else {
         $data_checked = $is_checked;
@@ -144,7 +148,12 @@ $response = Response::getInstance();
 $displayExport = new DisplayExport();
 $response->addHTML(
     $displayExport->getDisplay(
-        'database', $db, $table, $sql_query, $num_tables,
-        $unlim_num_rows, $multi_values
+        'database',
+        $db,
+        $table,
+        $sql_query,
+        $num_tables,
+        $unlim_num_rows,
+        $multi_values
     )
 );

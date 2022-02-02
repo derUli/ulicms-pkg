@@ -1,4 +1,5 @@
 <?php
-function shariff_render() {
-	return "";
+function shariff_render()
+{
+    return "";
 }

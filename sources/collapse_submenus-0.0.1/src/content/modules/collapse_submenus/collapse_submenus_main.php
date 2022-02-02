@@ -1,4 +1,5 @@
 <?php
-function collapse_submenus_render() {
-	return "Nichts zu sehen.";
+function collapse_submenus_render()
+{
+    return "Nichts zu sehen.";
 }

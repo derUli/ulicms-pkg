@@ -32,21 +32,18 @@ if ($acl->hasPermission("umanage_client")) {
                 ?>
                 <span style="color: red"><?php esc($packageName); ?> =&gt; <?php esc($site["domain"]); ?> ×</span>
                 <?php
-            }
-            ?>
+            } ?>
 
             <br />
 
             <?php
             fcflush();
-        }
-        ?>
+        } ?>
 
         <?php if (count($_GET["sites"]) > 0) { ?>
             <br />
             <?php
-        }
-        ?>
+        } ?>
         <?php
     }
 } else {

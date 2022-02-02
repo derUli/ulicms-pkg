@@ -1,4 +1,5 @@
 <?php
-function facebook_like_render() {
-	return "";
+function facebook_like_render()
+{
+    return "";
 }

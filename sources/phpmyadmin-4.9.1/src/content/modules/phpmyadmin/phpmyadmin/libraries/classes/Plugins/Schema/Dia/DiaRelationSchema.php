@@ -76,8 +76,12 @@ class DiaRelationSchema extends ExportRelationSchema
         foreach ($alltables as $table) {
             if (!isset($this->tables[$table])) {
                 $this->_tables[$table] = new TableStatsDia(
-                    $this->diagram, $this->db, $table, $this->pageNumber,
-                    $this->showKeys, $this->offline
+                    $this->diagram,
+                    $this->db,
+                    $table,
+                    $this->pageNumber,
+                    $this->showKeys,
+                    $this->offline
                 );
             }
         }
@@ -168,7 +172,11 @@ class DiaRelationSchema extends ExportRelationSchema
     ) {
         if (!isset($this->_tables[$masterTable])) {
             $this->_tables[$masterTable] = new TableStatsDia(
-                $this->diagram, $this->db, $masterTable, $this->pageNumber, $showKeys
+                $this->diagram,
+                $this->db,
+                $masterTable,
+                $this->pageNumber,
+                $showKeys
             );
         }
         if (!isset($this->_tables[$foreignTable])) {

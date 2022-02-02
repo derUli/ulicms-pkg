@@ -1,7 +1,7 @@
 <?php
-$language = getCurrentLanguage ();
-$jquery_cookiebar_message = Settings::getLang ( "jquery_cookiebar_message", $language );
-$jquery_accept_text = Settings::getLang ( "jquery_accept_text", $language );
+$language = getCurrentLanguage();
+$jquery_cookiebar_message = Settings::getLang("jquery_cookiebar_message", $language);
+$jquery_accept_text = Settings::getLang("jquery_accept_text", $language);
 ?>
 
 <script type="text/javascript"

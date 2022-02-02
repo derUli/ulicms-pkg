@@ -164,12 +164,18 @@ class RteList
                     )
                 );
             $retval .= Util::getButtonOrImage(
-                'submit_mult', 'mult_submit',
-                __('Export'), 'b_export', 'export'
+                'submit_mult',
+                'mult_submit',
+                __('Export'),
+                'b_export',
+                'export'
             );
             $retval .= Util::getButtonOrImage(
-                'submit_mult', 'mult_submit',
-                __('Drop'), 'b_drop', 'drop'
+                'submit_mult',
+                'mult_submit',
+                __('Drop'),
+                'b_drop',
+                'drop'
             );
             $retval .= '</div>';
         }
@@ -259,7 +265,9 @@ class RteList
         // otherwise we can execute it directly.
 
         $definition = $GLOBALS['dbi']->getDefinition(
-            $db, $routine['type'], $routine['name']
+            $db,
+            $routine['type'],
+            $routine['name']
         );
         if ($definition !== false) {
             $parser = new Parser($definition);

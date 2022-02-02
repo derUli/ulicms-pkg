@@ -8,14 +8,12 @@ function block_ips_admin()
         Settings::set("blocked_ips", $_POST["blocked_ips"]);
     }
     
-    $blocked_ips = getconfig("blocked_ips");
-    ?>
+    $blocked_ips = getconfig("blocked_ips"); ?>
 
 <form action="<?php echo getModuleAdminSelfPath()?>" method="post">
 <?php
     
-    csrf_token_html();
-    ?>
+    csrf_token_html(); ?>
 <p>
 		Hier können Sie den Zugriff von bestimmten IP-Adressen auf das System
 		blockieren.<br /> Sie können je einen Eintrag pro Zeile eingeben. <br />
@@ -25,12 +23,11 @@ function block_ips_admin()
 	<p>
 		<textarea rows="10" cols="40" name="blocked_ips"><?php
     
-    echo esc($blocked_ips);
-    ?></textarea>
+    echo esc($blocked_ips); ?></textarea>
 	
 	
 	<p>
-		<input type="submit" name="submit" value="<?php translate("save");?>" />
+		<input type="submit" name="submit" value="<?php translate("save"); ?>" />
 	</p>
 </form>
 <?php

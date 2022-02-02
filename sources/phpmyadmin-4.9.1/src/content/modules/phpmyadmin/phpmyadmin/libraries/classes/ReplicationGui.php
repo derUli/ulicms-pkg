@@ -147,7 +147,8 @@ class ReplicationGui
      * @return String HTML code
      */
     public static function getHtmlForSlaveConfiguration(
-        $server_slave_status, array $server_slave_replication
+        $server_slave_status,
+        array $server_slave_replication
     ) {
         $html  = '<fieldset>';
         $html .= '<legend>' . __('Slave replication') . '</legend>';
@@ -282,7 +283,6 @@ class ReplicationGui
             $html .=  __('Change or reconfigure master server') . '</a></li>';
             $html .= '</ul>';
             $html .= '</div>';
-
         } elseif (! isset($_POST['sl_configure'])) {
             $_url_params = $GLOBALS['url_params'];
             $_url_params['sl_configure'] = true;
@@ -566,7 +566,6 @@ class ReplicationGui
                 && ${"{$type}_variables_alerts"}[$variable] == ${"server_{$type}_replication"}[0][$variable]
             ) {
                 $html .= '<span class="attention">';
-
             } elseif (isset(${"{$type}_variables_oks"}[$variable])
                 && ${"{$type}_variables_oks"}[$variable] == ${"server_{$type}_replication"}[0][$variable]
             ) {
@@ -983,7 +982,10 @@ class ReplicationGui
 
         // Attempt to connect to the new master server
         $link_to_master = Replication::connectToMaster(
-            $sr['username'], $sr['pma_pw'], $sr['hostname'], $sr['port']
+            $sr['username'],
+            $sr['pma_pw'],
+            $sr['hostname'],
+            $sr['port']
         );
 
         if (! $link_to_master) {

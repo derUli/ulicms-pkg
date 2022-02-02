@@ -7,9 +7,9 @@
 <!-- end outer -->
 <div id="footer">
 	<h1>&copy; <?php year()?> by <?php homepage_owner()?> | Powered by UliCMS <?php
-	
-echo cms_version ();
-	?></h1>
+    
+echo cms_version();
+    ?></h1>
 </div>
 
 </div>

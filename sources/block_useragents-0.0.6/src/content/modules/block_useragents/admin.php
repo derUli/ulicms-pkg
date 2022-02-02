@@ -8,14 +8,12 @@ function block_useragents_admin()
         setconfig("blocked_useragents", db_escape($_POST["blocked_useragents"]));
     }
     
-    $blocked_useragents = Settings::get("blocked_useragents");
-    ?>
+    $blocked_useragents = Settings::get("blocked_useragents"); ?>
 
 <form action="<?php echo getModuleAdminSelfPath()?>" method="post">
 <?php
     
-    csrf_token_html();
-    ?>
+    csrf_token_html(); ?>
 <p>
 		Hier können Sie den Zugriff von Clients mit bestimmten Useragents auf
 		das System blockieren.<br /> Sie können einen Eintrag pro Zeile
@@ -25,8 +23,7 @@ function block_useragents_admin()
 		<textarea rows="10" cols="80" style="width: 100%"
 			name="blocked_useragents"><?php
     
-    esc($blocked_useragents);
-    ?></textarea>
+    esc($blocked_useragents); ?></textarea>
 	
 	
 	<p>

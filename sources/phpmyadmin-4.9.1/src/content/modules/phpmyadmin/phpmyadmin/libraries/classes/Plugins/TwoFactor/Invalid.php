@@ -62,4 +62,3 @@ class Invalid extends TwoFactorPlugin
         return 'Error fallback only!';
     }
 }
-

@@ -180,7 +180,8 @@ class TableStructureController extends TableController
                     $this->response->setRequestStatus(false);
                 }
                 $this->response->addJSON(
-                    'message', sprintf(
+                    'message',
+                    sprintf(
                         _ngettext(
                             'The name \'%s\' is a MySQL reserved keyword.',
                             'The names \'%s\' are MySQL reserved keywords.',
@@ -224,7 +225,8 @@ class TableStructureController extends TableController
                 if ($submit_mult == 'browse') {
                     // browsing the table displaying only selected columns
                     $this->displayTableBrowseForSelectedColumns(
-                        $GLOBALS['goto'], $GLOBALS['pmaThemeImage']
+                        $GLOBALS['goto'],
+                        $GLOBALS['pmaThemeImage']
                     );
                 } else {
                     // handle multiple field commands
@@ -236,7 +238,9 @@ class TableStructureController extends TableController
                         $mult_btn_ret, $centralColsError
                         )
                             = $this->getDataForSubmitMult(
-                                $submit_mult, $_POST['selected_fld'], $action
+                                $submit_mult,
+                                $_POST['selected_fld'],
+                                $action
                             );
                     //update the existing variables
                     // todo: refactor mult_submits.inc.php such as
@@ -368,7 +372,10 @@ class TableStructureController extends TableController
 
         // 3. Get fields
         $fields = (array)$this->dbi->getColumns(
-            $this->db, $this->table, null, true
+            $this->db,
+            $this->table,
+            null,
+            true
         );
 
         foreach ($fields as $key => $row) {
@@ -380,8 +387,12 @@ class TableStructureController extends TableController
         //display table structure
         $this->response->addHTML(
             $this->displayStructure(
-                $cfgRelation, $columns_with_unique_index, $url_params,
-                $primary, $fields, $columns_with_index
+                $cfgRelation,
+                $columns_with_unique_index,
+                $url_params,
+                $primary,
+                $fields,
+                $columns_with_index
             )
         );
 
@@ -524,7 +535,10 @@ class TableStructureController extends TableController
         $fields_meta = array();
         for ($i = 0; $i < $selected_cnt; $i++) {
             $value = $this->dbi->getColumns(
-                $this->db, $this->table, $this->dbi->escapeString($selected[$i]), true
+                $this->db,
+                $this->table,
+                $this->dbi->escapeString($selected[$i]),
+                true
             );
             if (count($value) == 0) {
                 $message = Message::error(
@@ -532,7 +546,6 @@ class TableStructureController extends TableController
                 );
                 $message->addParam($selected[$i]);
                 $this->response->addHTML($message);
-
             } else {
                 $fields_meta[] = $value;
             }
@@ -655,7 +668,6 @@ class TableStructureController extends TableController
         $partitionDetails['partitions'] = array();
 
         for ($i = 0; $i < intval($partitionDetails['partition_count']); $i++) {
-
             if (! isset($stmt->partitions[$i])) {
                 $partitionDetails['partitions'][$i] = array(
                     'name' => 'p' . $i,
@@ -962,7 +974,7 @@ class TableStructureController extends TableController
             $changedToBlob = array();
             // While changing the Column Collation
             // First change to BLOB
-            for ($i = 0; $i < $field_cnt; $i++ ) {
+            for ($i = 0; $i < $field_cnt; $i++) {
                 if (isset($_POST['field_collation'][$i])
                     && isset($_POST['field_collation_orig'][$i])
                     && $_POST['field_collation'][$i] !== $_POST['field_collation_orig'][$i]
@@ -1072,7 +1084,9 @@ class TableStructureController extends TableController
             foreach ($_POST['field_orig'] as $fieldindex => $fieldcontent) {
                 if ($_POST['field_name'][$fieldindex] != $fieldcontent) {
                     $this->relation->renameField(
-                        $this->db, $this->table, $fieldcontent,
+                        $this->db,
+                        $this->table,
+                        $fieldcontent,
                         $_POST['field_name'][$fieldindex]
                     );
                 }
@@ -1089,7 +1103,8 @@ class TableStructureController extends TableController
                     && strlen($_POST['field_name'][$fieldindex]) > 0
                 ) {
                     Transformations::setMIME(
-                        $this->db, $this->table,
+                        $this->db,
+                        $this->table,
                         $_POST['field_name'][$fieldindex],
                         $mimetype,
                         $_POST['field_transformation'][$fieldindex],
@@ -1123,7 +1138,6 @@ class TableStructureController extends TableController
 
             // For Column specific privileges
             foreach ($adjust_privileges as $oldCol => $newCol) {
-
                 $this->dbi->query(
                     sprintf(
                         'UPDATE %s SET Column_name = "%s"
@@ -1131,7 +1145,10 @@ class TableStructureController extends TableController
                         AND Table_name = "%s"
                         AND Column_name = "%s";',
                         Util::backquote('columns_priv'),
-                        $newCol, $this->db, $this->table, $oldCol
+                        $newCol,
+                        $this->db,
+                        $this->table,
+                        $oldCol
                     )
                 );
 
@@ -1200,8 +1217,12 @@ class TableStructureController extends TableController
      * @return string
      */
     protected function displayStructure(
-        array $cfgRelation, array $columns_with_unique_index, $url_params,
-        $primary_index, array $fields, array $columns_with_index
+        array $cfgRelation,
+        array $columns_with_unique_index,
+        $url_params,
+        $primary_index,
+        array $fields,
+        array $columns_with_index
     ) {
         // prepare comments
         $comments_map = array();
@@ -1308,7 +1329,8 @@ class TableStructureController extends TableController
     {
         if (empty($this->_showtable)) {
             $this->_showtable = $this->dbi->getTable(
-                $this->db, $this->table
+                $this->db,
+                $this->table
             )->getStatusInfo(null, true);
         }
 
@@ -1328,11 +1350,15 @@ class TableStructureController extends TableController
         $max_digits = 3;
         $decimals = 1;
         list($data_size, $data_unit) = Util::formatByteDown(
-            $this->_showtable['Data_length'], $max_digits, $decimals
+            $this->_showtable['Data_length'],
+            $max_digits,
+            $decimals
         );
         if ($mergetable == false) {
             list($index_size, $index_unit) = Util::formatByteDown(
-                $this->_showtable['Index_length'], $max_digits, $decimals
+                $this->_showtable['Index_length'],
+                $max_digits,
+                $decimals
             );
         }
         // InnoDB returns a huge value in Data_free, do not use it
@@ -1340,24 +1366,29 @@ class TableStructureController extends TableController
             && $this->_showtable['Data_free'] > 0
         ) {
             list($free_size, $free_unit) = Util::formatByteDown(
-                $this->_showtable['Data_free'], $max_digits, $decimals
+                $this->_showtable['Data_free'],
+                $max_digits,
+                $decimals
             );
             list($effect_size, $effect_unit) = Util::formatByteDown(
                 $this->_showtable['Data_length']
                 + $this->_showtable['Index_length']
                 - $this->_showtable['Data_free'],
-                $max_digits, $decimals
+                $max_digits,
+                $decimals
             );
         } else {
             list($effect_size, $effect_unit) = Util::formatByteDown(
                 $this->_showtable['Data_length']
                 + $this->_showtable['Index_length'],
-                $max_digits, $decimals
+                $max_digits,
+                $decimals
             );
         }
         list($tot_size, $tot_unit) = Util::formatByteDown(
             $this->_showtable['Data_length'] + $this->_showtable['Index_length'],
-            $max_digits, $decimals
+            $max_digits,
+            $decimals
         );
         if ($this->_table_info_num_rows > 0) {
             list($avg_size, $avg_unit) = Util::formatByteDown(

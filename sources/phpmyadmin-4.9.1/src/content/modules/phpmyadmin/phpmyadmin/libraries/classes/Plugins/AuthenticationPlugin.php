@@ -233,8 +233,8 @@ abstract class AuthenticationPlugin
      *
      * @return void
      */
-     public function authenticate()
-     {
+    public function authenticate()
+    {
         $success = $this->readCredentials();
 
         /* Show login form (this exits) */

@@ -1,1 +1,1 @@
-<?php echo Template::executeModuleTemplate("jquery_cookiebar", "cookiebar");?>
+<?php echo Template::executeModuleTemplate("jquery_cookiebar", "cookiebar");

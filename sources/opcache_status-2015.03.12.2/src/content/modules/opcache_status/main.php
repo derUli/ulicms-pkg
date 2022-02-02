@@ -1,4 +1,5 @@
 <?php
-function opcache_status_render() {
-	return "";
+function opcache_status_render()
+{
+    return "";
 }

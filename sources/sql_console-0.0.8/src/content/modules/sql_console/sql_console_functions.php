@@ -1,5 +1,6 @@
 <?php
 use UliCMS\Exceptions\SqlException;
+
 ini_set('memory_limit', '5120M');
 set_time_limit(0);
 
@@ -178,15 +179,15 @@ function display_error($error)
 function sqlQueryFromString($sql_query)
 {
     $sql_query = remove_remarks($sql_query);
-    if (! str_contains( $sql_query, ";")) {
+    if (! str_contains($sql_query, ";")) {
         $sql_query .= ";";
     }
     $sql_query = split_sql_file($sql_query, ';');
     
     foreach ($sql_query as $sql) {
-		try{
-			$query = Database::query($sql, $_SESSION["sql_console_replace_placeholders"]);
-        } catch(SqlException $e){
+        try {
+            $query = Database::query($sql, $_SESSION["sql_console_replace_placeholders"]);
+        } catch (SqlException $e) {
             display_error($e->getMessage());
             return false;
         }
@@ -228,5 +229,3 @@ function sqlQueryFromString($sql_query)
     
     return true;
 }
-
-?>

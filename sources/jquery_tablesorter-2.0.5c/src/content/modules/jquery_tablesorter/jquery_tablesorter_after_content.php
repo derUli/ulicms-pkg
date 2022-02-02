@@ -1,6 +1,6 @@
 <?php
-if (containsModule ( get_slug (), "jquery_tablesorter" )) {
-	?>
+if (containsModule(get_slug(), "jquery_tablesorter")) {
+    ?>
 <script type="text/javascript">
 $(document).ready(function() 
     { 

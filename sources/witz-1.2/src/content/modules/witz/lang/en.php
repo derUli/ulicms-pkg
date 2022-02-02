@@ -1,2 +1,2 @@
 <?php
-define ( "TRANSLATION_JOKE", "Joke" );
+define("TRANSLATION_JOKE", "Joke");

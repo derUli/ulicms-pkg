@@ -122,7 +122,9 @@ class ImportShp extends ImportPlugin
                             // Replace the .dbf with .*, as required
                             // by the bsShapeFiles library.
                             $file_name = substr(
-                                $dbf_file_path, 0, strlen($dbf_file_path) - 4
+                                $dbf_file_path,
+                                0,
+                                strlen($dbf_file_path) - 4
                             ) . '.*';
                             $shp->FileName = $file_name;
                         }

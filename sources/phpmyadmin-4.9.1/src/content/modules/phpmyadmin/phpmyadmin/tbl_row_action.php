@@ -17,7 +17,7 @@ require_once 'libraries/common.inc.php';
 
 if (isset($_POST['submit_mult'])) {
     $submit_mult = $_POST['submit_mult'];
-    // workaround for IE problem:
+// workaround for IE problem:
 } elseif (isset($_POST['submit_mult_delete_x'])) {
     $submit_mult = 'row_delete';
 } elseif (isset($_POST['submit_mult_change_x'])) {
@@ -36,7 +36,7 @@ if (! isset($submit_mult)) {
     $submit_mult = 'row_edit';
 }
 
-switch($submit_mult) {
+switch ($submit_mult) {
 case 'row_delete':
 case 'row_edit':
 case 'row_copy':
@@ -63,7 +63,6 @@ default:
 }
 
 if (!empty($submit_mult)) {
-
     if (isset($_POST['goto'])
         && (! isset($_POST['rows_to_delete'])
         || ! is_array($_POST['rows_to_delete']))
@@ -73,7 +72,7 @@ if (!empty($submit_mult)) {
         $response->addJSON('message', __('No row selected.'));
     }
 
-    switch($submit_mult) {
+    switch ($submit_mult) {
     /** @noinspection PhpMissingBreakStatementInspection */
     case 'row_copy':
         $_POST['default_action'] = 'insert';

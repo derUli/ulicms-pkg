@@ -85,13 +85,4 @@ $CONFIG['extensions'][] = 'pl';
  $CONFIG['extensions'][] = 'cgi';
  $CONFIG['extensions'][] = '';
 
- @set_time_limit(0); // run script forever 
-
-
-
-
-
-
-
-
-?>
+ @set_time_limit(0); // run script forever

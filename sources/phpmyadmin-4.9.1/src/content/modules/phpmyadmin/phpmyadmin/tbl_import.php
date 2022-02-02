@@ -29,6 +29,9 @@ $url_query .= '&amp;goto=tbl_import.php&amp;back=tbl_import.php';
 
 $response->addHTML(
     Import::get(
-        'table', $db, $table, $max_upload_size
+        'table',
+        $db,
+        $table,
+        $max_upload_size
     )
 );

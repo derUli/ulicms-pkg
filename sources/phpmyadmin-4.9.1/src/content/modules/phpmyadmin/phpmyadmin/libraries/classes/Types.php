@@ -262,13 +262,15 @@ class Types
             return __('An alias for BIGINT UNSIGNED NOT NULL AUTO_INCREMENT UNIQUE');
         case 'DATE':
             return sprintf(
-                __('A date, supported range is %1$s to %2$s'), '1000-01-01',
+                __('A date, supported range is %1$s to %2$s'),
+                '1000-01-01',
                 '9999-12-31'
             );
         case 'DATETIME':
             return sprintf(
                 __('A date and time combination, supported range is %1$s to %2$s'),
-                '1000-01-01 00:00:00', '9999-12-31 23:59:59'
+                '1000-01-01 00:00:00',
+                '9999-12-31 23:59:59'
             );
         case 'TIMESTAMP':
             return __(
@@ -278,7 +280,9 @@ class Types
             );
         case 'TIME':
             return sprintf(
-                __('A time, range is %1$s to %2$s'), '-838:59:59', '838:59:59'
+                __('A time, range is %1$s to %2$s'),
+                '-838:59:59',
+                '838:59:59'
             );
         case 'YEAR':
             return __(
@@ -296,7 +300,8 @@ class Types
                 __(
                     'A variable-length (%s) string, the effective maximum length ' .
                     'is subject to the maximum row size'
-                ), '0-65,535'
+                ),
+                '0-65,535'
             );
         case 'TINYTEXT':
             return __(
@@ -638,7 +643,6 @@ class Types
                     'PolyFromWKB',
                     'MPolyFromWKB',
                 );
-
             }
         }
         return array();
@@ -776,7 +780,7 @@ class Types
 
         if (($isMariaDB && $serverVersion > 100207)
             || (!$isMariaDB && $serverVersion >= 50708)) {
-          $ret['JSON'] = array(
+            $ret['JSON'] = array(
               'JSON',
           );
         }

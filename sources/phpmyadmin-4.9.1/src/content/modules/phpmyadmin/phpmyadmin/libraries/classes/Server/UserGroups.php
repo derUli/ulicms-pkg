@@ -286,13 +286,19 @@ class UserGroups
         }
 
         $html_output .= self::getTabList(
-            __('Server-level tabs'), 'server', $allowedTabs['server']
+            __('Server-level tabs'),
+            'server',
+            $allowedTabs['server']
         );
         $html_output .= self::getTabList(
-            __('Database-level tabs'), 'db', $allowedTabs['db']
+            __('Database-level tabs'),
+            'db',
+            $allowedTabs['db']
         );
         $html_output .= self::getTabList(
-            __('Table-level tabs'), 'table', $allowedTabs['table']
+            __('Table-level tabs'),
+            'table',
+            $allowedTabs['table']
         );
 
         $html_output .= '</fieldset>';

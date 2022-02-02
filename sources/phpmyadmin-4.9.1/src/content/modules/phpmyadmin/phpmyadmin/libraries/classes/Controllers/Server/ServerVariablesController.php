@@ -85,7 +85,6 @@ class ServerVariablesController extends Controller
         $serverVarsResult = $this->dbi->tryQuery('SHOW SESSION VARIABLES;');
 
         if ($serverVarsResult !== false) {
-
             $serverVarsSession = array();
             while ($arr = $this->dbi->fetchRow($serverVarsResult)) {
                 $serverVarsSession[$arr[0]] = $arr[1];
@@ -150,7 +149,8 @@ class ServerVariablesController extends Controller
             $this->response->addJSON(
                 'message',
                 implode(
-                    ' ', Util::formatByteDown($varValue[1], 3, 3)
+                    ' ',
+                    Util::formatByteDown($varValue[1], 3, 3)
                 )
             );
         } else {
@@ -208,10 +208,12 @@ class ServerVariablesController extends Controller
             $varValue = $this->dbi->fetchSingleRow(
                 'SHOW GLOBAL VARIABLES WHERE Variable_name="'
                 . $GLOBALS['dbi']->escapeString($_POST['varName'])
-                . '";', 'NUM'
+                . '";',
+                'NUM'
             );
             list($formattedValue, $isHtmlFormatted) = $this->_formatVariable(
-                $_POST['varName'], $varValue[1]
+                $_POST['varName'],
+                $varValue[1]
             );
 
             if ($isHtmlFormatted == false) {
@@ -304,7 +306,8 @@ class ServerVariablesController extends Controller
         $output .= '<tbody>';
 
         $output .= $this->_getHtmlForServerVariablesItems(
-            $serverVars, $serverVarsSession
+            $serverVars,
+            $serverVarsSession
         );
 
         $output .= '</tbody>';
@@ -324,7 +327,8 @@ class ServerVariablesController extends Controller
      * @return string
      */
     private function _getHtmlForServerVariablesItems(
-        array $serverVars, array $serverVarsSession
+        array $serverVars,
+        array $serverVarsSession
     ) {
         // list of static (i.e. non-editable) system variables
         $static_variables = $this->_getStaticSystemVariables();
@@ -354,7 +358,8 @@ class ServerVariablesController extends Controller
 
             if ($has_session_value) {
                 list($formattedValue, $isHtmlFormatted)= $this->_formatVariable(
-                    $name, $serverVarsSession[$name]
+                    $name,
+                    $serverVarsSession[$name]
                 );
                 $output .= Template::get('server/variables/session_variable_row')
                     ->render(
@@ -365,7 +370,6 @@ class ServerVariablesController extends Controller
                         )
                     );
             }
-
         }
 
         return $output;
@@ -2833,5 +2837,4 @@ class ServerVariablesController extends Controller
 
         return $static_variables;
     }
-
 }

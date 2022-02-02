@@ -1,7 +1,8 @@
 <?php
-function guestbook_install() {
-	// install database tables
-	db_query ( "CREATE TABLE IF NOT EXISTS `" . tbname ( "guestbook_entries" ) . "` (
+function guestbook_install()
+{
+    // install database tables
+    db_query("CREATE TABLE IF NOT EXISTS `" . tbname("guestbook_entries") . "` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(500) NOT NULL,
   `ort` varchar(500) NOT NULL,
@@ -10,6 +11,5 @@ function guestbook_install() {
   `homepage` varchar(500) NOT NULL,
   `content` varchar(500) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=1 ;" );
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=1 ;");
 }
-?>

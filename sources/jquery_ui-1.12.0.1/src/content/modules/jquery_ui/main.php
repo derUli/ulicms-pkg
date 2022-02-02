@@ -1,4 +1,5 @@
 <?php
-function jquery_ui_render() {
-	return "";
+function jquery_ui_render()
+{
+    return "";
 }

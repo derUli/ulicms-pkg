@@ -17,7 +17,6 @@ $databaseDesigner = new Designer();
 $designerCommon = new Common();
 
 if (isset($_POST['dialog'])) {
-
     if ($_POST['dialog'] == 'edit') {
         $html = $databaseDesigner->getHtmlForEditOrDeletePages($_POST['db'], 'editPage');
     } elseif ($_POST['dialog'] == 'delete') {
@@ -26,7 +25,8 @@ if (isset($_POST['dialog'])) {
         $html = $databaseDesigner->getHtmlForPageSaveAs($_POST['db']);
     } elseif ($_POST['dialog'] == 'export') {
         $html = $databaseDesigner->getHtmlForSchemaExport(
-            $_POST['db'], $_POST['selected_page']
+            $_POST['db'],
+            $_POST['selected_page']
         );
     } elseif ($_POST['dialog'] == 'add_table') {
         // Pass the db and table to the getTablesInfo so we only have the table we asked for
@@ -38,8 +38,11 @@ if (isset($_POST['dialog'])) {
         $html = $databaseDesigner->getDatabaseTables(
             $_POST['db'],
             $script_display_field,
-            array(), -1, $tab_column,
-            $tables_all_keys, $tables_pk_or_unique_keys
+            array(),
+            -1,
+            $tab_column,
+            $tables_all_keys,
+            $tables_pk_or_unique_keys
         );
     }
 
@@ -50,7 +53,6 @@ if (isset($_POST['dialog'])) {
 }
 
 if (isset($_POST['operation'])) {
-
     if ($_POST['operation'] == 'deletePage') {
         $success = $designerCommon->deletePage($_POST['selected_page']);
         $response->setRequestStatus($success);
@@ -65,7 +67,9 @@ if (isset($_POST['operation'])) {
         $response->setRequestStatus($success);
     } elseif ($_POST['operation'] == 'setDisplayField') {
         $designerCommon->saveDisplayField(
-            $_POST['db'], $_POST['table'], $_POST['field']
+            $_POST['db'],
+            $_POST['table'],
+            $_POST['field']
         );
         $response->setRequestStatus(true);
     } elseif ($_POST['operation'] == 'addNewRelation') {
@@ -122,13 +126,13 @@ $tab_pos = $designerCommon->getTablePositions($display_page);
 
 $fullTableNames = [];
 
-foreach($script_display_field as $designerTable) {
+foreach ($script_display_field as $designerTable) {
     $fullTableNames[] = $designerTable->getDbTableString();
 }
 
-foreach($tab_pos as $position) {
+foreach ($tab_pos as $position) {
     if (! in_array($position['dbName'] . '.' . $position['tableName'], $fullTableNames)) {
-        foreach($designerCommon->getTablesInfo($position['dbName'], $position['tableName']) as $designerTable) {
+        foreach ($designerCommon->getTablesInfo($position['dbName'], $position['tableName']) as $designerTable) {
             $script_display_field[] = $designerTable;
         }
     }
@@ -179,7 +183,10 @@ list(
 // by designer/init.js and converted to JS variables.
 $response->addHTML(
     $databaseDesigner->getHtmlForJsFields(
-        $script_tables, $script_contr, $script_display_field, $display_page
+        $script_tables,
+        $script_contr,
+        $script_display_field,
+        $display_page
     )
 );
 $response->addHTML(
@@ -204,8 +211,11 @@ $response->addHTML(
     $databaseDesigner->getDatabaseTables(
         $_GET['db'],
         $script_display_field,
-        $tab_pos, $display_page, $tab_column,
-        $tables_all_keys, $tables_pk_or_unique_keys
+        $tab_pos,
+        $display_page,
+        $tab_column,
+        $tables_all_keys,
+        $tables_pk_or_unique_keys
     )
 );
 $response->addHTML('</form>');

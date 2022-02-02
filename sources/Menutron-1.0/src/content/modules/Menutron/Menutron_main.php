@@ -1,4 +1,5 @@
 <?php
-function Menutron_render() {
-	return "";
+function Menutron_render()
+{
+    return "";
 }

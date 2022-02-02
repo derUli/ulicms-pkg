@@ -6,8 +6,7 @@ if (isset($page ["lastmodified"]) and $page ["lastmodified"] > 0) {
         <?php
         translate("last_updated", array(
             "%date%" => strftime("%X %x", $page ["lastmodified"])
-        ));
-        ?>
+        )); ?>
     </div>
     <?php
 }

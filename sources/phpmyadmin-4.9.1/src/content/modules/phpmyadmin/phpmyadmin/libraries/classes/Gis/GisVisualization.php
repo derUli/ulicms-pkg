@@ -482,7 +482,12 @@ class GisVisualization
 
         // create pdf
         $pdf = new TCPDF(
-            '', 'pt', $GLOBALS['cfg']['PDFDefaultPageSize'], true, 'UTF-8', false
+            '',
+            'pt',
+            $GLOBALS['cfg']['PDFDefaultPageSize'],
+            true,
+            'UTF-8',
+            false
         );
 
         // disable header and footer

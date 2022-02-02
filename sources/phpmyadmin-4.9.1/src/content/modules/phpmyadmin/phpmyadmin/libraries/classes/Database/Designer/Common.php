@@ -59,11 +59,11 @@ class Common
             $DF = is_string($DF) ? $DF : '';
             $DF = ($DF !== '') ? $DF : null;
             $designerTables[] = new DesignerTable(
-                                    $db,
-                                    $one_table['TABLE_NAME'],
-                                    $one_table['ENGINE'],
-                                    $DF
-                                );
+                $db,
+                $one_table['TABLE_NAME'],
+                $one_table['ENGINE'],
+                $DF
+            );
         }
 
         return $designerTables;
@@ -80,7 +80,7 @@ class Common
         //$GLOBALS['dbi']->selectDb($GLOBALS['db']);
         $tabColumn = array();
 
-        foreach($designerTables as $designerTable) {
+        foreach ($designerTables as $designerTable) {
             $fieldsRs = $GLOBALS['dbi']->query(
                 $GLOBALS['dbi']->getColumnsSql(
                     $designerTable->getDatabaseName(),
@@ -161,7 +161,7 @@ class Common
         }
 
         $tableDbNames = [];
-        foreach($designerTables as $designerTable) {
+        foreach ($designerTables as $designerTable) {
             $tableDbNames[] = $designerTable->getDbTableString();
         }
 
@@ -236,7 +236,7 @@ class Common
             'h_tabs' => array()
         );
 
-        foreach($designerTables as $designerTable) {
+        foreach ($designerTables as $designerTable) {
             $key = rawurlencode($designerTable->getDbTableString());
             $retval['j_tabs'][$key] = $designerTable->supportsForeignkeys() ? 1 : 0;
             $retval['h_tabs'][$key] = 1;
@@ -305,7 +305,7 @@ class Common
             DatabaseInterface::CONNECT_CONTROL,
             DatabaseInterface::QUERY_STORE
         );
-        return ( is_array($page_name) && isset($page_name[0]) ) ? $page_name[0] : null;
+        return (is_array($page_name) && isset($page_name[0])) ? $page_name[0] : null;
     }
 
     /**
@@ -326,7 +326,9 @@ class Common
             . "." . Util::backquote($cfgRelation['table_coords'])
             . " WHERE " . Util::backquote('pdf_page_number') . " = " . intval($pg);
         $success = $this->relation->queryAsControlUser(
-            $query, true, DatabaseInterface::QUERY_STORE
+            $query,
+            true,
+            DatabaseInterface::QUERY_STORE
         );
 
         if ($success) {
@@ -334,7 +336,9 @@ class Common
                 . "." . Util::backquote($cfgRelation['pdf_pages'])
                 . " WHERE " . Util::backquote('page_nr') . " = " . intval($pg);
             $success = $this->relation->queryAsControlUser(
-                $query, true, DatabaseInterface::QUERY_STORE
+                $query,
+                true,
+                DatabaseInterface::QUERY_STORE
             );
         }
 
@@ -492,7 +496,9 @@ class Common
                 . "'" . $GLOBALS['dbi']->escapeString($_POST['t_y'][$key]) . "')";
 
             $res = $this->relation->queryAsControlUser(
-                $query,  true, DatabaseInterface::QUERY_STORE
+                $query,
+                true,
+                DatabaseInterface::QUERY_STORE
             );
         }
 
@@ -735,7 +741,6 @@ class Common
         $cfgRelation = $this->relation->getRelationsParam();
         $success = true;
         if ($GLOBALS['cfgRelation']['designersettingswork']) {
-
             $cfgDesigner = array(
                 'user'  => $GLOBALS['cfg']['Server']['user'],
                 'db'    => $cfgRelation['db'],
@@ -749,7 +754,9 @@ class Common
                 . $GLOBALS['dbi']->escapeString($cfgDesigner['user']) . "';";
 
             $orig_data = $GLOBALS['dbi']->fetchSingleRow(
-                $orig_data_query, 'ASSOC', DatabaseInterface::CONNECT_CONTROL
+                $orig_data_query,
+                'ASSOC',
+                DatabaseInterface::CONNECT_CONTROL
             );
 
             if (! empty($orig_data)) {

@@ -61,7 +61,8 @@ class ExportHtmlword extends ExportPlugin
 
         // what to dump (structure/data/both)
         $dumpWhat = new OptionsPropertyMainGroup(
-            "dump_what", __('Dump table')
+            "dump_what",
+            __('Dump table')
         );
         // create primary items and add them to the group
         $leaf = new RadioPropertyItem("structure_or_data");
@@ -78,7 +79,8 @@ class ExportHtmlword extends ExportPlugin
 
         // data options main group
         $dataOptions = new OptionsPropertyMainGroup(
-            "dump_what", __('Data dump options')
+            "dump_what",
+            __('Data dump options')
         );
         $dataOptions->setForce('structure');
         // create primary items and add them to the group

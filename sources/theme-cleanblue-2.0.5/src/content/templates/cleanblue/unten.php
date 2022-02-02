@@ -1,20 +1,20 @@
 <section class="advertisement">
 <?php
 
-random_banner ();
+random_banner();
 ?>
 </section>
 </main>
 <footer>
 <?php
 
-poweredByUliCMS ();
+poweredByUliCMS();
 ?> | &copy; <?php
 
-year ();
+year();
 ?> <?php
 
-homepage_owner ();
+homepage_owner();
 ?>
 </footer>
 </div>

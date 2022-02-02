@@ -13,7 +13,7 @@ Description: Three-column blog design with the third column allocated for ads. F
 -->
 <html lang="<?php
 
-echo getCurrentLanguage ();
+echo getCurrentLanguage();
 ?>">
 <head>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />

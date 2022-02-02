@@ -127,7 +127,10 @@ class TableSearchController extends TableController
     {
         // Gets the list and number of columns
         $columns = $this->dbi->getColumns(
-            $this->db, $this->table, null, true
+            $this->db,
+            $this->table,
+            null,
+            true
         );
         // Get details about the geometry functions
         $geom_types = Util::getGISDatatypes();
@@ -295,7 +298,8 @@ class TableSearchController extends TableController
             ) {
                 if (! isset($goto)) {
                     $goto = Util::getScriptNameForOption(
-                        $GLOBALS['cfg']['DefaultTabTable'], 'table'
+                        $GLOBALS['cfg']['DefaultTabTable'],
+                        'table'
                     );
                 }
                 $this->zoomSubmitAction($dataLabel, $goto);
@@ -405,7 +409,8 @@ class TableSearchController extends TableController
 
         $properties = $this->getColumnProperties($search_index, $key);
         $this->response->addJSON(
-            'field_type', htmlspecialchars($properties['type'])
+            'field_type',
+            htmlspecialchars($properties['type'])
         );
         $this->response->addJSON('field_collation', $properties['collation']);
         $this->response->addJSON('field_operators', $properties['func']);
@@ -434,7 +439,8 @@ class TableSearchController extends TableController
             foreach ($row as $col => $val) {
                 if ($fields_meta[$i]->type == 'bit') {
                     $row[$col] = Util::printableBitValue(
-                        $val, $fields_meta[$i]->length
+                        $val,
+                        $fields_meta[$i]->length
                     );
                 }
                 $i++;
@@ -496,7 +502,8 @@ class TableSearchController extends TableController
         $this->url_query .= '&amp;goto=tbl_select.php&amp;back=tbl_select.php';
         if (! isset($goto)) {
             $goto = Util::getScriptNameForOption(
-                $GLOBALS['cfg']['DefaultTabTable'], 'table'
+                $GLOBALS['cfg']['DefaultTabTable'],
+                'table'
             );
         }
         // Displays the table search form
@@ -583,7 +590,8 @@ class TableSearchController extends TableController
         $this->response->addHTML(
             Util::getMessage(
                 __('Your SQL query has been executed successfully.'),
-                null, 'success'
+                null,
+                'success'
             )
         );
     }
@@ -599,13 +607,20 @@ class TableSearchController extends TableController
      *
      * @return string HTML for previewing strings found and their replacements
      */
-    function getReplacePreview(
-        $columnIndex, $find, $replaceWith, $useRegex, $charSet
+    public function getReplacePreview(
+        $columnIndex,
+        $find,
+        $replaceWith,
+        $useRegex,
+        $charSet
     ) {
         $column = $this->_columnNames[$columnIndex];
         if ($useRegex) {
             $result = $this->_getRegexReplaceRows(
-                $columnIndex, $find, $replaceWith, $charSet
+                $columnIndex,
+                $find,
+                $replaceWith,
+                $charSet
             );
         } else {
             $sql_query = "SELECT "
@@ -652,7 +667,10 @@ class TableSearchController extends TableController
      * @return array Array containing original values, replaced values and count
      */
     private function _getRegexReplaceRows(
-        $columnIndex, $find, $replaceWith, $charSet
+        $columnIndex,
+        $find,
+        $replaceWith,
+        $charSet
     ) {
         $column = $this->_columnNames[$columnIndex];
         $sql_query = "SELECT "
@@ -707,13 +725,20 @@ class TableSearchController extends TableController
      *
      * @return void
      */
-    public function replace($columnIndex, $find, $replaceWith, $useRegex,
+    public function replace(
+        $columnIndex,
+        $find,
+        $replaceWith,
+        $useRegex,
         $charSet
     ) {
         $column = $this->_columnNames[$columnIndex];
         if ($useRegex) {
             $toReplace = $this->_getRegexReplaceRows(
-                $columnIndex, $find, $replaceWith, $charSet
+                $columnIndex,
+                $find,
+                $replaceWith,
+                $charSet
             );
             $sql_query = "UPDATE " . Util::backquote($this->table)
                 . " SET " . Util::backquote($column) . " = CASE";
@@ -858,7 +883,8 @@ class TableSearchController extends TableController
             ? $_POST['criteriaValues'] : '');
         $titles = array(
             'Browse' => Util::getIcon(
-                'b_browse', __('Browse foreign values')
+                'b_browse',
+                __('Browse foreign values')
             )
         );
         //Gets column's type and collation
@@ -867,7 +893,8 @@ class TableSearchController extends TableController
         //Gets column's comparison operators depending on column type
         $typeOperators = $GLOBALS['dbi']->types->getTypeOperatorsHtml(
             preg_replace('@\(.*@s', '', $this->_columnTypes[$column_index]),
-            $this->_columnNullFlags[$column_index], $selected_operator
+            $this->_columnNullFlags[$column_index],
+            $selected_operator
         );
         $func = Template::get('table/search/column_comparison_operators')->render(
             array(
@@ -877,7 +904,11 @@ class TableSearchController extends TableController
         );
         //Gets link to browse foreign data(if any) and criteria inputbox
         $foreignData = $this->relation->getForeignData(
-            $this->_foreigners, $this->_columnNames[$column_index], false, '', ''
+            $this->_foreigners,
+            $this->_columnNames[$column_index],
+            false,
+            '',
+            ''
         );
         $value = Template::get('table/search/input_box')->render(
             array(
@@ -973,12 +1004,10 @@ class TableSearchController extends TableController
             $func_type    = 'IN';
             $parens_open  = '(';
             $parens_close = ')';
-
         } elseif ($func_type == '!=' && $enum_selected_count > 1) {
             $func_type    = 'NOT IN';
             $parens_open  = '(';
             $parens_close = ')';
-
         } else {
             $parens_open  = '';
             $parens_close = '';
@@ -1005,8 +1034,12 @@ class TableSearchController extends TableController
      *
      * @return string part of where clause.
      */
-    private function _getGeomWhereClause($criteriaValues, $names,
-        $func_type, $types, $geom_func = null
+    private function _getGeomWhereClause(
+        $criteriaValues,
+        $names,
+        $func_type,
+        $types,
+        $geom_func = null
     ) {
         $geom_unary_functions = array(
             'IsEmpty' => 1,
@@ -1020,7 +1053,7 @@ class TableSearchController extends TableController
         $geom_funcs = Util::getGISFunctions($types, true, false);
 
         // If the function takes multiple parameters
-        if(strpos($func_type, "IS NULL") !== false || strpos($func_type, "IS NOT NULL") !== false) {
+        if (strpos($func_type, "IS NULL") !== false || strpos($func_type, "IS NOT NULL") !== false) {
             $where = Util::backquote($names) . " " . $func_type;
             return $where;
         } elseif ($geom_funcs[$geom_func]['params'] > 1) {
@@ -1041,14 +1074,12 @@ class TableSearchController extends TableController
             && trim($criteriaValues) == ''
         ) {
             $where = $geom_function_applied;
-
         } elseif (in_array($type, Util::getGISDatatypes())
             && ! empty($criteriaValues)
         ) {
             // create gis data from the criteria input
             $gis_data = Util::createGISData($criteriaValues, $this->dbi->getVersion());
             $where = $geom_function_applied . " " . $func_type . " " . $gis_data;
-
         } elseif (strlen($criteriaValues) > 0) {
             $where = $geom_function_applied . " "
                 . $func_type . " '" . $criteriaValues . "'";
@@ -1068,13 +1099,22 @@ class TableSearchController extends TableController
      *
      * @return string generated where clause.
      */
-    private function _getWhereClause($criteriaValues, $names, $types,
-        $func_type, $unaryFlag, $geom_func = null
+    private function _getWhereClause(
+        $criteriaValues,
+        $names,
+        $types,
+        $func_type,
+        $unaryFlag,
+        $geom_func = null
     ) {
         // If geometry function is set
         if (! empty($geom_func)) {
             return $this->_getGeomWhereClause(
-                $criteriaValues, $names, $func_type, $types, $geom_func
+                $criteriaValues,
+                $names,
+                $func_type,
+                $types,
+                $geom_func
             );
         }
 
@@ -1085,7 +1125,6 @@ class TableSearchController extends TableController
         } elseif (strncasecmp($types, 'enum', 4) == 0 && (! empty($criteriaValues) || $criteriaValues[0] === '0')) {
             $where = $backquoted_name;
             $where .= $this->_getEnumWhereClause($criteriaValues, $func_type);
-
         } elseif ($criteriaValues != '') {
             // For these types we quote the value. Even if it's another type
             // (like INT), for a LIKE we always quote the value. MySQL converts
