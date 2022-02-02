@@ -95,7 +95,7 @@ function statistics_admin()
 	and date < $monatsletzter ORDER by date ASC");
                 if (db_num_rows($data) > 0) {
                     echo "<tr>";
-                    echo "<td>" . strftime("%B", $monatserster) . "</td>";
+                    echo "<td>" . PHP81_BC\strftime("%B", $monatserster) . "</td>";
                     echo "<td style=\"text-align:right\">" . db_num_rows($data) . "</td>";
                     echo "</tr>";
                 }
