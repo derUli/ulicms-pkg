@@ -2,13 +2,11 @@
 define("MODULE_ADMIN_HEADLINE", "XML Sitemap");
 define("MODULE_ADMIN_REQUIRED_PERMISSION", "xml_sitemap");
 
-function xmlspecialchars($text)
-{
+function xmlspecialchars($text) {
     return str_replace('&#039;', '&apos;', htmlspecialchars($text, ENT_QUOTES));
 }
 
-function getBaseURL($language = null)
-{
+function getBaseURL($language = null) {
     $pageURL = 'http';
     if ($_SERVER["HTTPS"] == "on") {
         $pageURL .= "s";
@@ -38,8 +36,7 @@ function getBaseURL($language = null)
     return $pageURL;
 }
 
-function generate_sitemap()
-{
+function generate_sitemap() {
     @set_time_limit(0);
     @ini_set('max_execution_time', 0);
 
@@ -72,10 +69,9 @@ function generate_sitemap()
     $xml_string = str_replace("\r", "\n", $xml_string);
     $xml_string = str_replace("\n", "\r\n", $xml_string);
 
-    $xml_file = ULICMS_DATA_STORAGE_ROOT . "/sitemap.xml";
+    $xml_file = ULICMS_ROOT . "/sitemap.xml";
 
-    $url = defined("ULICMS_DATA_STORAGE_URL") ? ULICMS_DATA_STORAGE_URL . "/sitemap.xml" : "../sitemap.xml";
-
+    $url = "../sitemap.xml";
 
     $handle = @fopen($xml_file, "w");
     if ($handle) {
@@ -101,14 +97,13 @@ function generate_sitemap()
 // Konfiguration checken
 $send_comments_via_email = getconfig("blog_send_comments_via_email") == "yes";
 
-function xml_sitemap_admin()
-{
+function xml_sitemap_admin() {
     if (isset($_POST["submit"])) {
         generate_sitemap();
-    } ?>
+    }
+    ?>
     <form action="<?php echo getModuleAdminSelfPath() ?>" method="post">
-        <?php
-        csrf_token_html(); ?>
+        <?php csrf_token_html(); ?>
         <button type="submit" name="submit" class="btn btn-success"><i class="fas fa-sitemap"></i> <?php translate("generate_xml_sitemap"); ?></button>
     </form>
     <?php
