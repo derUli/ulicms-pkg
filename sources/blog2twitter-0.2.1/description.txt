@@ -1,1 +1,0 @@
-﻿Auto post blog entries to Twitter (requires twitter_for_php)
