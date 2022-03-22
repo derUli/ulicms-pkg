@@ -1,9 +1,9 @@
 <?php
+
 /**
  * HTTP Authentication plugin for phpMyAdmin.
  * NOTE: Requires PHP loaded as a Apache module.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Plugins\Auth;
@@ -25,15 +25,14 @@ use function substr;
 /**
  * Handles the HTTP authentication methods
  */
-class AuthenticationHttp extends AuthenticationPlugin
-{
+class AuthenticationHttp extends AuthenticationPlugin {
+
     /**
      * Displays authentication form and redirect as necessary
      *
      * @return bool always true (no return indeed)
      */
-    public function showLoginForm()
-    {
+    public function showLoginForm() {
         $response = Response::getInstance();
         if ($response->isAjax()) {
             $response->setRequestStatus(false);
@@ -54,8 +53,7 @@ class AuthenticationHttp extends AuthenticationPlugin
      *
      * @return bool
      */
-    public function authForm()
-    {
+    public function authForm() {
         if (empty($GLOBALS['cfg']['Server']['auth_http_realm'])) {
             if (empty($GLOBALS['cfg']['Server']['verbose'])) {
                 $server_message = $GLOBALS['cfg']['Server']['host'];
@@ -87,15 +85,15 @@ class AuthenticationHttp extends AuthenticationPlugin
         $response->addHTML('</h1>');
         $response->addHTML('<h3>');
         $response->addHTML(
-            Message::error(
-                __('Wrong username/password. Access denied.')
-            )
+                Message::error(
+                        __('Wrong username/password. Access denied.')
+                )
         );
         $response->addHTML('</h3>');
 
         $response->addHTML(Config::renderFooter());
 
-        if (! defined('TESTSUITE')) {
+        if (!defined('TESTSUITE')) {
             exit;
         }
 
@@ -107,8 +105,7 @@ class AuthenticationHttp extends AuthenticationPlugin
      *
      * @return bool whether we get authentication settings or not
      */
-    public function readCredentials()
-    {
+    public function readCredentials() {
         // Grabs the $PHP_AUTH_USER variable
         if (isset($GLOBALS['PHP_AUTH_USER'])) {
             $this->user = $GLOBALS['PHP_AUTH_USER'];
@@ -160,7 +157,7 @@ class AuthenticationHttp extends AuthenticationPlugin
         // (do not use explode() because a user might have a colon in their password
         if (strcmp(substr($this->user, 0, 6), 'Basic ') == 0) {
             $usr_pass = base64_decode(substr($this->user, 6));
-            if (! empty($usr_pass)) {
+            if (!empty($usr_pass)) {
                 $colon = strpos($usr_pass, ':');
                 if ($colon) {
                     $this->user = substr($usr_pass, 0, $colon);
@@ -176,14 +173,13 @@ class AuthenticationHttp extends AuthenticationPlugin
 
         // User logged out -> ensure the new username is not the same
         $old_usr = $_REQUEST['old_usr'] ?? '';
-        if (! empty($old_usr)
-            && (isset($this->user) && hash_equals($old_usr, $this->user))
+        if (!empty($old_usr) && (isset($this->user) && hash_equals($old_usr, $this->user))
         ) {
             $this->user = '';
         }
 
         // Returns whether we get authentication settings or not
-        return ! empty($this->user);
+        return !empty($this->user);
     }
 
     /**
@@ -193,8 +189,7 @@ class AuthenticationHttp extends AuthenticationPlugin
      *
      * @return void
      */
-    public function showFailure($failure)
-    {
+    public function showFailure($failure) {
         global $dbi;
 
         parent::showFailure($failure);
@@ -211,8 +206,8 @@ class AuthenticationHttp extends AuthenticationPlugin
      *
      * @return string
      */
-    public function getLoginFormURL()
-    {
+    public function getLoginFormURL() {
         return './index.php?route=/&old_usr=' . $this->user;
     }
+
 }

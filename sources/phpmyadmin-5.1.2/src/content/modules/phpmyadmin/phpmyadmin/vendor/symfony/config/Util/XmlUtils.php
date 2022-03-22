@@ -23,13 +23,13 @@ use Symfony\Component\Config\Util\Exception\XmlParsingException;
  * @author Martin Hasoň <martin.hason@gmail.com>
  * @author Ole Rößner <ole@roessner.it>
  */
-class XmlUtils
-{
+class XmlUtils {
+
     /**
      * This class should not be instantiated.
      */
-    private function __construct()
-    {
+    private function __construct() {
+        
     }
 
     /**
@@ -44,8 +44,7 @@ class XmlUtils
      * @throws InvalidXmlException When parsing of XML with schema or callable produces any errors unrelated to the XML parsing itself
      * @throws \RuntimeException   When DOM extension is missing
      */
-    public static function parse($content, $schemaOrCallable = null)
-    {
+    public static function parse($content, $schemaOrCallable = null) {
         if (!\extension_loaded('dom')) {
             throw new \LogicException('Extension DOM is required.');
         }
@@ -126,8 +125,7 @@ class XmlUtils
      * @throws XmlParsingException       When XML parsing returns any errors
      * @throws \RuntimeException         When DOM extension is missing
      */
-    public static function loadFile($file, $schemaOrCallable = null)
-    {
+    public static function loadFile($file, $schemaOrCallable = null) {
         if (!is_file($file)) {
             throw new \InvalidArgumentException(sprintf('Resource "%s" is not a file.', $file));
         }
@@ -169,8 +167,7 @@ class XmlUtils
      *
      * @return mixed
      */
-    public static function convertDomElementToArray(\DOMElement $element, $checkPrefix = true)
-    {
+    public static function convertDomElementToArray(\DOMElement $element, $checkPrefix = true) {
         $prefix = (string) $element->prefix;
         $empty = true;
         $config = [];
@@ -227,8 +224,7 @@ class XmlUtils
      *
      * @return mixed
      */
-    public static function phpize($value)
-    {
+    public static function phpize($value) {
         $value = (string) $value;
         $lowercaseValue = strtolower($value);
 
@@ -245,10 +241,10 @@ class XmlUtils
                 return true;
             case 'false' === $lowercaseValue:
                 return false;
-            case isset($value[1]) && '0b' == $value[0].$value[1] && preg_match('/^0b[01]*$/', $value):
+            case isset($value[1]) && '0b' == $value[0] . $value[1] && preg_match('/^0b[01]*$/', $value):
                 return bindec($value);
             case is_numeric($value):
-                return '0x' === $value[0].$value[1] ? hexdec($value) : (float) $value;
+                return '0x' === $value[0] . $value[1] ? hexdec($value) : (float) $value;
             case preg_match('/^0x[0-9a-f]++$/i', $value):
                 return hexdec($value);
             case preg_match('/^[+-]?[0-9]+(\.[0-9]+)?$/', $value):
@@ -258,17 +254,16 @@ class XmlUtils
         }
     }
 
-    protected static function getXmlErrors($internalErrors)
-    {
+    protected static function getXmlErrors($internalErrors) {
         $errors = [];
         foreach (libxml_get_errors() as $error) {
             $errors[] = sprintf('[%s %s] %s (in %s - line %d, column %d)',
-                \LIBXML_ERR_WARNING == $error->level ? 'WARNING' : 'ERROR',
-                $error->code,
-                trim($error->message),
-                $error->file ?: 'n/a',
-                $error->line,
-                $error->column
+                    \LIBXML_ERR_WARNING == $error->level ? 'WARNING' : 'ERROR',
+                    $error->code,
+                    trim($error->message),
+                    $error->file ?: 'n/a',
+                    $error->line,
+                    $error->column
             );
         }
 
@@ -278,12 +273,12 @@ class XmlUtils
         return $errors;
     }
 
-    private static function isOctal(string $str): bool
-    {
+    private static function isOctal(string $str): bool {
         if ('-' === $str[0]) {
             $str = substr($str, 1);
         }
 
-        return $str === '0'.decoct(\intval($str, 8));
+        return $str === '0' . decoct(\intval($str, 8));
     }
+
 }

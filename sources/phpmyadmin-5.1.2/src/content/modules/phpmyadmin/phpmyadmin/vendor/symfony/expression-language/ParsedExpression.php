@@ -18,19 +18,18 @@ use Symfony\Component\ExpressionLanguage\Node\Node;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class ParsedExpression extends Expression
-{
+class ParsedExpression extends Expression {
+
     private $nodes;
 
-    public function __construct(string $expression, Node $nodes)
-    {
+    public function __construct(string $expression, Node $nodes) {
         parent::__construct($expression);
 
         $this->nodes = $nodes;
     }
 
-    public function getNodes()
-    {
+    public function getNodes() {
         return $this->nodes;
     }
+
 }

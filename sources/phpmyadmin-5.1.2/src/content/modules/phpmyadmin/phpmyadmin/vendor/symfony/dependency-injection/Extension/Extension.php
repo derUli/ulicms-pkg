@@ -23,24 +23,22 @@ use Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-abstract class Extension implements ExtensionInterface, ConfigurationExtensionInterface
-{
+abstract class Extension implements ExtensionInterface, ConfigurationExtensionInterface {
+
     private $processedConfigs = [];
 
     /**
      * {@inheritdoc}
      */
-    public function getXsdValidationBasePath()
-    {
+    public function getXsdValidationBasePath() {
         return false;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getNamespace()
-    {
-        return 'http://example.org/schema/dic/'.$this->getAlias();
+    public function getNamespace() {
+        return 'http://example.org/schema/dic/' . $this->getAlias();
     }
 
     /**
@@ -63,8 +61,7 @@ abstract class Extension implements ExtensionInterface, ConfigurationExtensionIn
      *
      * @throws BadMethodCallException When the extension name does not follow conventions
      */
-    public function getAlias()
-    {
+    public function getAlias() {
         $className = static::class;
         if (!str_ends_with($className, 'Extension')) {
             throw new BadMethodCallException('This extension does not follow the naming convention; you must overwrite the getAlias() method.');
@@ -77,8 +74,7 @@ abstract class Extension implements ExtensionInterface, ConfigurationExtensionIn
     /**
      * {@inheritdoc}
      */
-    public function getConfiguration(array $config, ContainerBuilder $container)
-    {
+    public function getConfiguration(array $config, ContainerBuilder $container) {
         $class = static::class;
 
         if (str_contains($class, "\0")) {
@@ -106,8 +102,7 @@ abstract class Extension implements ExtensionInterface, ConfigurationExtensionIn
         return null;
     }
 
-    final protected function processConfiguration(ConfigurationInterface $configuration, array $configs): array
-    {
+    final protected function processConfiguration(ConfigurationInterface $configuration, array $configs): array {
         $processor = new Processor();
 
         return $this->processedConfigs[] = $processor->processConfiguration($configuration, $configs);
@@ -116,8 +111,7 @@ abstract class Extension implements ExtensionInterface, ConfigurationExtensionIn
     /**
      * @internal
      */
-    final public function getProcessedConfigs(): array
-    {
+    final public function getProcessedConfigs(): array {
         try {
             return $this->processedConfigs;
         } finally {
@@ -130,12 +124,12 @@ abstract class Extension implements ExtensionInterface, ConfigurationExtensionIn
      *
      * @throws InvalidArgumentException When the config is not enableable
      */
-    protected function isConfigEnabled(ContainerBuilder $container, array $config)
-    {
+    protected function isConfigEnabled(ContainerBuilder $container, array $config) {
         if (!\array_key_exists('enabled', $config)) {
             throw new InvalidArgumentException("The config array has no 'enabled' key.");
         }
 
         return (bool) $container->getParameterBag()->resolveValue($config['enabled']);
     }
+
 }

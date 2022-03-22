@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Form management class, displays and processes forms
  *
@@ -9,7 +10,6 @@
  * o translated_path - work_path modified for HTML field name, a path with
  *                     slashes changed to hyphens, eg. Servers-4-verbose
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Config;
@@ -41,8 +41,8 @@ use function trim;
 /**
  * Form management class, displays and processes forms
  */
-class FormDisplay
-{
+class FormDisplay {
+
     /**
      * ConfigFile instance
      *
@@ -116,8 +116,7 @@ class FormDisplay
     /**
      * @param ConfigFile $cf Config file instance
      */
-    public function __construct(ConfigFile $cf)
-    {
+    public function __construct(ConfigFile $cf) {
         $this->formDisplayTemplate = new FormDisplayTemplate($GLOBALS['PMA_Config']);
         $this->jsLangStrings = [
             'error_nan_p' => __('Not a positive number!'),
@@ -136,8 +135,7 @@ class FormDisplay
      *
      * @return ConfigFile
      */
-    public function getConfigFile()
-    {
+    public function getConfigFile() {
         return $this->configFile;
     }
 
@@ -150,19 +148,16 @@ class FormDisplay
      *
      * @return void
      */
-    public function registerForm($formName, array $form, $serverId = null)
-    {
+    public function registerForm($formName, array $form, $serverId = null) {
         $this->forms[$formName] = new Form(
-            $formName,
-            $form,
-            $this->configFile,
-            $serverId
+                $formName,
+                $form,
+                $this->configFile,
+                $serverId
         );
         $this->isValidated = false;
         foreach ($this->forms[$formName]->fields as $path) {
-            $workPath = $serverId === null
-                ? $path
-                : str_replace('Servers/1/', 'Servers/' . $serverId . '/', $path);
+            $workPath = $serverId === null ? $path : str_replace('Servers/1/', 'Servers/' . $serverId . '/', $path);
             $this->systemPaths[$workPath] = $path;
             $this->translatedPaths[$workPath] = str_replace('/', '-', $workPath);
         }
@@ -177,9 +172,8 @@ class FormDisplay
      *
      * @return bool whether processing was successful
      */
-    public function process($allowPartialSave = true, $checkFormSubmit = true)
-    {
-        if ($checkFormSubmit && ! isset($_POST['submit_save'])) {
+    public function process($allowPartialSave = true, $checkFormSubmit = true) {
+        if ($checkFormSubmit && !isset($_POST['submit_save'])) {
             return false;
         }
 
@@ -196,8 +190,7 @@ class FormDisplay
      *
      * @return void
      */
-    private function validate()
-    {
+    private function validate() {
         if ($this->isValidated) {
             return;
         }
@@ -217,10 +210,10 @@ class FormDisplay
 
         // run validation
         $errors = Validator::validate(
-            $this->configFile,
-            $paths,
-            $values,
-            false
+                        $this->configFile,
+                        $paths,
+                        $values,
+                        false
         );
 
         // change error keys from canonical paths to work paths
@@ -229,7 +222,7 @@ class FormDisplay
             foreach ($errors as $path => $errorList) {
                 $workPath = array_search($path, $this->systemPaths);
                 // field error
-                if (! $workPath) {
+                if (!$workPath) {
                     // form error, fix path
                     $workPath = $path;
                 }
@@ -252,10 +245,10 @@ class FormDisplay
      * @return string
      */
     private function displayForms(
-        $showRestoreDefault,
-        array &$jsDefault,
-        array &$js,
-        $showButtons
+            $showRestoreDefault,
+            array &$jsDefault,
+            array &$js,
+            $showButtons
     ) {
         $htmlOutput = '';
         $validators = Validator::getValidators($this->configFile);
@@ -264,10 +257,10 @@ class FormDisplay
             /** @var Form $form */
             $formErrors = $this->errors[$form->name] ?? null;
             $htmlOutput .= $this->formDisplayTemplate->displayFieldsetTop(
-                Descriptions::get('Form_' . $form->name),
-                Descriptions::get('Form_' . $form->name, 'desc'),
-                $formErrors,
-                ['id' => $form->name]
+                    Descriptions::get('Form_' . $form->name),
+                    Descriptions::get('Form_' . $form->name, 'desc'),
+                    $formErrors,
+                    ['id' => $form->name]
             );
 
             foreach ($form->fields as $field => $path) {
@@ -275,22 +268,20 @@ class FormDisplay
                 $translatedPath = $this->translatedPaths[$workPath];
                 // always true/false for user preferences display
                 // otherwise null
-                $userPrefsAllow = isset($this->userprefsKeys[$path])
-                    ? ! isset($this->userprefsDisallow[$path])
-                    : null;
+                $userPrefsAllow = isset($this->userprefsKeys[$path]) ? !isset($this->userprefsDisallow[$path]) : null;
                 // display input
                 $htmlOutput .= $this->displayFieldInput(
-                    $form,
-                    $field,
-                    $path,
-                    $workPath,
-                    $translatedPath,
-                    $showRestoreDefault,
-                    $userPrefsAllow,
-                    $jsDefault
+                        $form,
+                        $field,
+                        $path,
+                        $workPath,
+                        $translatedPath,
+                        $showRestoreDefault,
+                        $userPrefsAllow,
+                        $jsDefault
                 );
                 // register JS validators for this field
-                if (! isset($validators[$path])) {
+                if (!isset($validators[$path])) {
                     continue;
                 }
 
@@ -316,11 +307,11 @@ class FormDisplay
      * @return string HTML for forms
      */
     public function getDisplay(
-        $tabbedForm = false,
-        $showRestoreDefault = false,
-        $showButtons = true,
-        $formAction = null,
-        $hiddenFields = null
+            $tabbedForm = false,
+            $showRestoreDefault = false,
+            $showButtons = true,
+            $formAction = null,
+            $hiddenFields = null
     ) {
         static $jsLangSent = false;
 
@@ -348,7 +339,7 @@ class FormDisplay
                 break;
             }
         }
-        if (! $isNewServer) {
+        if (!$isNewServer) {
             $this->validate();
         }
 
@@ -357,10 +348,10 @@ class FormDisplay
 
         // display forms
         $htmlOutput .= $this->displayForms(
-            $showRestoreDefault,
-            $jsDefault,
-            $js,
-            $showButtons
+                $showRestoreDefault,
+                $jsDefault,
+                $js,
+                $showButtons
         );
 
         if ($tabbedForm) {
@@ -369,18 +360,18 @@ class FormDisplay
         $htmlOutput .= $this->formDisplayTemplate->displayFormBottom();
 
         // if not already done, send strings used for validation to JavaScript
-        if (! $jsLangSent) {
+        if (!$jsLangSent) {
             $jsLangSent = true;
             $jsLang = [];
             foreach ($this->jsLangStrings as $strName => $strValue) {
                 $jsLang[] = "'" . $strName . "': '" . Sanitize::jsFormat($strValue, false) . '\'';
             }
             $js[] = "$.extend(Messages, {\n\t"
-                . implode(",\n\t", $jsLang) . '})';
+                    . implode(",\n\t", $jsLang) . '})';
         }
 
         $js[] = "$.extend(defaultValues, {\n\t"
-            . implode(",\n\t", $jsDefault) . '})';
+                . implode(",\n\t", $jsDefault) . '})';
 
         return $htmlOutput . $this->formDisplayTemplate->displayJavascript($js);
     }
@@ -405,14 +396,14 @@ class FormDisplay
      * @return string|null HTML for input field
      */
     private function displayFieldInput(
-        Form $form,
-        $field,
-        $systemPath,
-        $workPath,
-        $translatedPath,
-        $showRestoreDefault,
-        $userPrefsAllow,
-        array &$jsDefault
+            Form $form,
+            $field,
+            $systemPath,
+            $workPath,
+            $translatedPath,
+            $showRestoreDefault,
+            $userPrefsAllow,
+            array &$jsDefault
     ) {
         $name = Descriptions::get($systemPath);
         $description = Descriptions::get($systemPath, 'desc');
@@ -468,7 +459,7 @@ class FormDisplay
                 $htmlOutput = '';
                 if (mb_substr($field, 7, 4) !== 'end:') {
                     $htmlOutput .= $this->formDisplayTemplate->displayGroupHeader(
-                        mb_substr($field, 7)
+                            mb_substr($field, 7)
                     );
                 } else {
                     $this->formDisplayTemplate->displayGroupFooter();
@@ -482,10 +473,7 @@ class FormDisplay
         }
 
         // detect password fields
-        if ($type === 'text'
-            && (mb_substr($translatedPath, -9) === '-password'
-               || mb_substr($translatedPath, -4) === 'pass'
-               || mb_substr($translatedPath, -4) === 'Pass')
+        if ($type === 'text' && (mb_substr($translatedPath, -9) === '-password' || mb_substr($translatedPath, -4) === 'pass' || mb_substr($translatedPath, -4) === 'Pass')
         ) {
             $type = 'password';
         }
@@ -515,9 +503,7 @@ class FormDisplay
                 $jsLine .= $valueDefault ? 'true' : 'false';
                 break;
             case 'select':
-                $valueDefaultJs = is_bool($valueDefault)
-                ? (int) $valueDefault
-                : $valueDefault;
+                $valueDefaultJs = is_bool($valueDefault) ? (int) $valueDefault : $valueDefault;
                 $jsLine .= '[\'' . Sanitize::escapeJsString($valueDefaultJs) . '\']';
                 break;
             case 'list':
@@ -526,19 +512,19 @@ class FormDisplay
                     unset($val['wrapper_params']);
                 }
                 $jsLine .= '\'' . Sanitize::escapeJsString(implode("\n", $val))
-                . '\'';
+                        . '\'';
                 break;
         }
         $jsDefault[] = $jsLine;
 
         return $this->formDisplayTemplate->displayInput(
-            $translatedPath,
-            $name,
-            $type,
-            $value,
-            $description,
-            $valueIsDefault,
-            $opts
+                        $translatedPath,
+                        $name,
+                        $type,
+                        $value,
+                        $description,
+                        $valueIsDefault,
+                        $opts
         );
     }
 
@@ -547,8 +533,7 @@ class FormDisplay
      *
      * @return string|null HTML for errors
      */
-    public function displayErrors()
-    {
+    public function displayErrors() {
         $this->validate();
         if (count($this->errors) === 0) {
             return null;
@@ -573,8 +558,7 @@ class FormDisplay
      *
      * @return void
      */
-    public function fixErrors()
-    {
+    public function fixErrors() {
         $this->validate();
         if (count($this->errors) === 0) {
             return;
@@ -582,7 +566,7 @@ class FormDisplay
 
         $cf = $this->configFile;
         foreach (array_keys($this->errors) as $workPath) {
-            if (! isset($this->systemPaths[$workPath])) {
+            if (!isset($this->systemPaths[$workPath])) {
                 continue;
             }
             $canonicalPath = $this->systemPaths[$workPath];
@@ -596,23 +580,19 @@ class FormDisplay
      * @param string|bool $value   Current value
      * @param array       $allowed List of allowed values
      */
-    private function validateSelect(&$value, array $allowed): bool
-    {
-        $valueCmp = is_bool($value)
-            ? (int) $value
-            : $value;
+    private function validateSelect(&$value, array $allowed): bool {
+        $valueCmp = is_bool($value) ? (int) $value : $value;
         foreach ($allowed as $vk => $v) {
             // equality comparison only if both values are numeric or not numeric
             // (allows to skip 0 == 'string' equalling to true)
             // or identity (for string-string)
-            if (! (($vk == $value && ! (is_numeric($valueCmp) xor is_numeric($vk)))
-                || $vk === $value)
+            if (!(($vk == $value && !(is_numeric($valueCmp) xor is_numeric($vk))) || $vk === $value)
             ) {
                 continue;
             }
 
             // keep boolean value as boolean
-            if (! is_bool($value)) {
+            if (!is_bool($value)) {
                 // phpcs:ignore Generic.PHP.ForbiddenFunctions
                 settype($value, gettype($vk));
             }
@@ -632,8 +612,7 @@ class FormDisplay
      *
      * @return bool true on success (no errors and all saved)
      */
-    public function save($forms, $allowPartialSave = true)
-    {
+    public function save($forms, $allowPartialSave = true) {
         $result = true;
         $forms = (array) $forms;
 
@@ -646,16 +625,14 @@ class FormDisplay
 
         $this->errors = [];
         foreach ($forms as $formName) {
-            if (! isset($this->forms[$formName])) {
+            if (!isset($this->forms[$formName])) {
                 continue;
             }
 
             /** @var Form $form */
             $form = $this->forms[$formName];
             // get current server id
-            $changeIndex = $form->index === 0
-                ? $this->configFile->getServerCount() + 1
-                : false;
+            $changeIndex = $form->index === 0 ? $this->configFile->getServerCount() + 1 : false;
             // grab POST values
             foreach ($form->fields as $field => $systemPath) {
                 $workPath = array_search($systemPath, $this->systemPaths);
@@ -668,12 +645,12 @@ class FormDisplay
                 }
 
                 // ensure the value is set
-                if (! isset($_POST[$key])) {
+                if (!isset($_POST[$key])) {
                     // checkboxes aren't set by browsers if they're off
                     if ($type !== 'boolean') {
                         $this->errors[$form->name][] = sprintf(
-                            __('Missing data for %s'),
-                            '<i>' . Descriptions::get($systemPath) . '</i>'
+                                __('Missing data for %s'),
+                                '<i>' . Descriptions::get($systemPath) . '</i>'
                         );
                         $result = false;
                         continue;
@@ -683,13 +660,12 @@ class FormDisplay
                 }
 
                 // user preferences allow/disallow
-                if ($isSetupScript
-                    && isset($this->userprefsKeys[$systemPath])
+                if ($isSetupScript && isset($this->userprefsKeys[$systemPath])
                 ) {
                     if (isset($this->userprefsDisallow[$systemPath], $_POST[$key . '-userprefs-allow'])
                     ) {
                         unset($this->userprefsDisallow[$systemPath]);
-                    } elseif (! isset($_POST[$key . '-userprefs-allow'])) {
+                    } elseif (!isset($_POST[$key . '-userprefs-allow'])) {
                         $this->userprefsDisallow[$systemPath] = true;
                     }
                 }
@@ -711,10 +687,10 @@ class FormDisplay
                         break;
                     case 'select':
                         $successfullyValidated = $this->validateSelect(
-                            $_POST[$key],
-                            $form->getOptionValueList($systemPath)
+                                $_POST[$key],
+                                $form->getOptionValueList($systemPath)
                         );
-                        if (! $successfullyValidated) {
+                        if (!$successfullyValidated) {
                             $this->errors[$workPath][] = __('Incorrect value!');
                             $result = false;
                             // "continue" for the $form->fields foreach-loop
@@ -727,9 +703,7 @@ class FormDisplay
                         break;
                     case 'array':
                         // eliminate empty values and ensure we have an array
-                        $postValues = is_array($_POST[$key])
-                        ? $_POST[$key]
-                        : explode("\n", $_POST[$key]);
+                        $postValues = is_array($_POST[$key]) ? $_POST[$key] : explode("\n", $_POST[$key]);
                         $_POST[$key] = [];
                         $this->fillPostArrayParameters($postValues, $key);
                         break;
@@ -739,9 +713,9 @@ class FormDisplay
                 $values[$systemPath] = $_POST[$key];
                 if ($changeIndex !== false) {
                     $workPath = str_replace(
-                        'Servers/' . $form->index . '/',
-                        'Servers/' . $changeIndex . '/',
-                        $workPath
+                            'Servers/' . $form->index . '/',
+                            'Servers/' . $changeIndex . '/',
+                            $workPath
                     );
                 }
                 $toSave[$workPath] = $systemPath;
@@ -749,7 +723,7 @@ class FormDisplay
         }
 
         // save forms
-        if (! $allowPartialSave && ! empty($this->errors)) {
+        if (!$allowPartialSave && !empty($this->errors)) {
             // don't look for non-critical errors
             $this->validate();
 
@@ -764,9 +738,9 @@ class FormDisplay
                 foreach ($values[$path] as $value) {
                     $matches = [];
                     $match = preg_match(
-                        '/^(.+):(?:[ ]?)(\\w+)$/',
-                        $value,
-                        $matches
+                            '/^(.+):(?:[ ]?)(\\w+)$/',
+                            $value,
+                            $matches
                     );
                     if ($match) {
                         // correct 'IP: HTTP header' pair
@@ -784,8 +758,8 @@ class FormDisplay
         }
         if ($isSetupScript) {
             $this->configFile->set(
-                'UserprefsDisallow',
-                array_keys($this->userprefsDisallow)
+                    'UserprefsDisallow',
+                    array_keys($this->userprefsDisallow)
             );
         }
 
@@ -800,8 +774,7 @@ class FormDisplay
      *
      * @return bool
      */
-    public function hasErrors()
-    {
+    public function hasErrors() {
         return count($this->errors) > 0;
     }
 
@@ -812,17 +785,16 @@ class FormDisplay
      *
      * @return string
      */
-    public function getDocLink($path)
-    {
+    public function getDocLink($path) {
         $test = mb_substr($path, 0, 6);
         if ($test === 'Import' || $test === 'Export') {
             return '';
         }
 
         return MySQLDocumentation::getDocumentationLink(
-            'config',
-            'cfg_' . $this->getOptName($path),
-            Sanitize::isSetup() ? '../' : './'
+                        'config',
+                        'cfg_' . $this->getOptName($path),
+                        Sanitize::isSetup() ? '../' : './'
         );
     }
 
@@ -833,8 +805,7 @@ class FormDisplay
      *
      * @return string
      */
-    private function getOptName($path)
-    {
+    private function getOptName($path) {
         return str_replace(['Servers/1/', '/'], ['Servers/', '_'], $path);
     }
 
@@ -843,17 +814,14 @@ class FormDisplay
      *
      * @return void
      */
-    private function loadUserprefsInfo()
-    {
+    private function loadUserprefsInfo() {
         if ($this->userprefsKeys !== null) {
             return;
         }
 
         $this->userprefsKeys = array_flip(UserFormList::getFields());
         // read real config for user preferences display
-        $userPrefsDisallow = $GLOBALS['PMA_Config']->get('is_setup')
-            ? $this->configFile->get('UserprefsDisallow', [])
-            : $GLOBALS['cfg']['UserprefsDisallow'];
+        $userPrefsDisallow = $GLOBALS['PMA_Config']->get('is_setup') ? $this->configFile->get('UserprefsDisallow', []) : $GLOBALS['cfg']['UserprefsDisallow'];
         $this->userprefsDisallow = array_flip($userPrefsDisallow ?? []);
     }
 
@@ -865,25 +833,24 @@ class FormDisplay
      *
      * @return void
      */
-    private function setComments($systemPath, array &$opts)
-    {
+    private function setComments($systemPath, array &$opts) {
         // RecodingEngine - mark unavailable types
         if ($systemPath === 'RecodingEngine') {
             $comment = '';
-            if (! function_exists('iconv')) {
+            if (!function_exists('iconv')) {
                 $opts['values']['iconv'] .= ' (' . __('unavailable') . ')';
                 $comment = sprintf(
-                    __('"%s" requires %s extension'),
-                    'iconv',
-                    'iconv'
+                        __('"%s" requires %s extension'),
+                        'iconv',
+                        'iconv'
                 );
             }
-            if (! function_exists('recode_string')) {
+            if (!function_exists('recode_string')) {
                 $opts['values']['recode'] .= ' (' . __('unavailable') . ')';
                 $comment .= ($comment ? ', ' : '') . sprintf(
-                    __('"%s" requires %s extension'),
-                    'recode',
-                    'recode'
+                                __('"%s" requires %s extension'),
+                                'recode',
+                                'recode'
                 );
             }
             /* mbstring is always there thanks to polyfill */
@@ -891,13 +858,11 @@ class FormDisplay
             $opts['comment_warning'] = true;
         }
         // ZipDump, GZipDump, BZipDump - check function availability
-        if ($systemPath === 'ZipDump'
-            || $systemPath === 'GZipDump'
-            || $systemPath === 'BZipDump'
+        if ($systemPath === 'ZipDump' || $systemPath === 'GZipDump' || $systemPath === 'BZipDump'
         ) {
             $comment = '';
             $funcs = [
-                'ZipDump'  => [
+                'ZipDump' => [
                     'zip_open',
                     'gzcompress',
                 ],
@@ -910,20 +875,20 @@ class FormDisplay
                     'bzcompress',
                 ],
             ];
-            if (! function_exists($funcs[$systemPath][0])) {
+            if (!function_exists($funcs[$systemPath][0])) {
                 $comment = sprintf(
-                    __(
-                        'Compressed import will not work due to missing function %s.'
-                    ),
-                    $funcs[$systemPath][0]
+                        __(
+                                'Compressed import will not work due to missing function %s.'
+                        ),
+                        $funcs[$systemPath][0]
                 );
             }
-            if (! function_exists($funcs[$systemPath][1])) {
+            if (!function_exists($funcs[$systemPath][1])) {
                 $comment .= ($comment ? '; ' : '') . sprintf(
-                    __(
-                        'Compressed export will not work due to missing function %s.'
-                    ),
-                    $funcs[$systemPath][1]
+                                __(
+                                        'Compressed export will not work due to missing function %s.'
+                                ),
+                                $funcs[$systemPath][1]
                 );
             }
             $opts['comment'] = $comment;
@@ -933,15 +898,14 @@ class FormDisplay
             return;
         }
 
-        if ($systemPath !== 'MaxDbList' && $systemPath !== 'MaxTableList'
-            && $systemPath !== 'QueryHistoryMax'
+        if ($systemPath !== 'MaxDbList' && $systemPath !== 'MaxTableList' && $systemPath !== 'QueryHistoryMax'
         ) {
             return;
         }
 
         $opts['comment'] = sprintf(
-            __('maximum %s'),
-            $GLOBALS['cfg'][$systemPath]
+                __('maximum %s'),
+                $GLOBALS['cfg'][$systemPath]
         );
     }
 
@@ -953,8 +917,7 @@ class FormDisplay
      *
      * @return void
      */
-    private function fillPostArrayParameters(array $postValues, $key)
-    {
+    private function fillPostArrayParameters(array $postValues, $key) {
         foreach ($postValues as $v) {
             $v = Util::requestString($v);
             if ($v === '') {
@@ -964,4 +927,5 @@ class FormDisplay
             $_POST[$key][] = $v;
         }
     }
+
 }

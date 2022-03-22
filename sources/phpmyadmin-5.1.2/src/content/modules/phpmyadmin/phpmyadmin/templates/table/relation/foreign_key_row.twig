@@ -21,7 +21,7 @@
         {% endif %}
         {% if one_key['constraint'] is defined %}
             <input type="hidden" class="drop_foreign_key_msg" value="
-                {{- js_msg }}">
+                   {{- js_msg }}">
             {% set drop_str = get_icon('b_drop', 'Drop'|trans) %}
             {{ link_or_button(url('/sql'), this_params, drop_str, {'class': 'drop_foreign_key_anchor ajax'}) }}
         {% endif %}
@@ -29,8 +29,8 @@
     <td>
         <span class="formelement clearfloat">
             <input type="text" name="constraint_name[{{ i }}]" value="
-                {{- one_key['constraint'] is defined ? one_key['constraint'] -}}
-                " placeholder="{% trans 'Constraint name' %}" maxlength="64">
+                   {{- one_key['constraint'] is defined ? one_key['constraint'] -}}
+                   " placeholder="{% trans 'Constraint name' %}" maxlength="64">
         </span>
         <div class="floatleft">
             {# For ON DELETE and ON UPDATE, the default action
@@ -81,7 +81,7 @@
             </span>
         {% endif %}
         <a class="formelement clearfloat add_foreign_key_field" data-index="
-            {{- i }}" href="">
+           {{- i }}" href="">
             {% trans '+ Add column' %}
         </a>
     </td>

@@ -1,8 +1,8 @@
 <?php
+
 /**
  * PDF schema export code
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Plugins\Schema;
@@ -18,10 +18,9 @@ use PhpMyAdmin\Properties\Plugins\SchemaPluginProperties;
 /**
  * Handles the schema export for the PDF format
  */
-class SchemaPdf extends SchemaPlugin
-{
-    public function __construct()
-    {
+class SchemaPdf extends SchemaPlugin {
+
+    public function __construct() {
         $this->setProperties();
     }
 
@@ -30,8 +29,7 @@ class SchemaPdf extends SchemaPlugin
      *
      * @return void
      */
-    protected function setProperties()
-    {
+    protected function setProperties() {
         $schemaPluginProperties = new SchemaPluginProperties();
         $schemaPluginProperties->setText('PDF');
         $schemaPluginProperties->setExtension('pdf');
@@ -41,7 +39,7 @@ class SchemaPdf extends SchemaPlugin
         // $schemaPluginProperties
         // this will be shown as "Format specific options"
         $exportSpecificOptions = new OptionsPropertyRootGroup(
-            'Format Specific Options'
+                'Format Specific Options'
         );
 
         // specific options main group
@@ -51,52 +49,52 @@ class SchemaPdf extends SchemaPlugin
 
         // create leaf items and add them to the group
         $leaf = new BoolPropertyItem(
-            'all_tables_same_width',
-            __('Same width for all tables')
+                'all_tables_same_width',
+                __('Same width for all tables')
         );
         $specificOptions->addProperty($leaf);
 
         $leaf = new SelectPropertyItem(
-            'orientation',
-            __('Orientation')
+                'orientation',
+                __('Orientation')
         );
         $leaf->setValues(
-            [
-                'L' => __('Landscape'),
-                'P' => __('Portrait'),
-            ]
+                [
+                    'L' => __('Landscape'),
+                    'P' => __('Portrait'),
+                ]
         );
         $specificOptions->addProperty($leaf);
 
         $leaf = new SelectPropertyItem(
-            'paper',
-            __('Paper size')
+                'paper',
+                __('Paper size')
         );
         $leaf->setValues($this->getPaperSizeArray());
         $specificOptions->addProperty($leaf);
 
         $leaf = new BoolPropertyItem(
-            'show_grid',
-            __('Show grid')
+                'show_grid',
+                __('Show grid')
         );
         $specificOptions->addProperty($leaf);
 
         $leaf = new BoolPropertyItem(
-            'with_doc',
-            __('Data dictionary')
+                'with_doc',
+                __('Data dictionary')
         );
         $specificOptions->addProperty($leaf);
 
         $leaf = new SelectPropertyItem(
-            'table_order',
-            __('Order of the tables')
+                'table_order',
+                __('Order of the tables')
         );
         $leaf->setValues(
-            [
-                ''          => __('None'),
-                'name_asc'  => __('Name (Ascending)'),
-                'name_desc' => __('Name (Descending)'),
-            ]
+                [
+                    '' => __('None'),
+                    'name_asc' => __('Name (Ascending)'),
+                    'name_desc' => __('Name (Descending)'),
+                ]
         );
         $specificOptions->addProperty($leaf);
 
@@ -115,11 +113,11 @@ class SchemaPdf extends SchemaPlugin
      *
      * @return bool Whether it succeeded
      */
-    public function exportSchema($db)
-    {
+    public function exportSchema($db) {
         $export = new PdfRelationSchema($db);
         $export->showOutput();
 
         return true;
     }
+
 }

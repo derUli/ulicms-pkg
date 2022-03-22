@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Formset processing library
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Setup;
@@ -18,8 +18,8 @@ use function is_numeric;
 /**
  * PhpMyAdmin\Setup\FormProcessing class
  */
-class FormProcessing
-{
+class FormProcessing {
+
     /**
      * Processes forms registered in $form_display, handles error correction
      *
@@ -27,8 +27,7 @@ class FormProcessing
      *
      * @return void
      */
-    public static function process(FormDisplay $form_display)
-    {
+    public static function process(FormDisplay $form_display) {
         if (isset($_GET['mode']) && $_GET['mode'] === 'revert') {
             // revert erroneous fields to their default values
             $form_display->fixErrors();
@@ -37,7 +36,7 @@ class FormProcessing
             $response->generateHeader303('index.php' . Url::getCommonRaw());
         }
 
-        if (! $form_display->process(false)) {
+        if (!$form_display->process(false)) {
             // handle form view and failed POST
             echo $form_display->getDisplay(true, true);
 
@@ -45,7 +44,7 @@ class FormProcessing
         }
 
         // check for form errors
-        if (! $form_display->hasErrors()) {
+        if (!$form_display->hasErrors()) {
             $response = Response::getInstance();
             $response->disable();
             $response->generateHeader303('index.php' . Url::getCommonRaw());
@@ -78,4 +77,5 @@ class FormProcessing
             'errors' => $form_display->displayErrors(),
         ]);
     }
+
 }

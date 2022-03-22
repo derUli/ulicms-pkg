@@ -11,10 +11,9 @@
 
 namespace Symfony\Component\ExpressionLanguage;
 
-class SyntaxError extends \LogicException
-{
-    public function __construct(string $message, int $cursor = 0, string $expression = '', string $subject = null, array $proposals = null)
-    {
+class SyntaxError extends \LogicException {
+
+    public function __construct(string $message, int $cursor = 0, string $expression = '', string $subject = null, array $proposals = null) {
         $message = sprintf('%s around position %d', rtrim($message, '.'), $cursor);
         if ($expression) {
             $message = sprintf('%s for expression `%s`', $message, $expression);
@@ -38,4 +37,5 @@ class SyntaxError extends \LogicException
 
         parent::__construct($message);
     }
+
 }

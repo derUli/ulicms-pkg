@@ -9,16 +9,15 @@ use function array_merge;
 use function array_splice;
 use function min;
 
-class TablePartitionDefinition
-{
+class TablePartitionDefinition {
+
     /**
      * @param array|null $details Details that may be pre-filled
      *
      * @return array
      */
-    public static function getDetails(?array $details = null): array
-    {
-        if (! isset($details)) {
+    public static function getDetails(?array $details = null): array {
+        if (!isset($details)) {
             $details = self::generateDetails();
         }
 
@@ -28,24 +27,14 @@ class TablePartitionDefinition
     /**
      * @return array
      */
-    protected static function generateDetails(): array
-    {
+    protected static function generateDetails(): array {
         $partitionDetails = self::extractDetailsFromRequest();
 
         // Only LIST and RANGE type parameters allow subpartitioning
-        $partitionDetails['can_have_subpartitions'] = $partitionDetails['partition_count'] > 1
-            && isset($partitionDetails['partition_by'])
-            && ($partitionDetails['partition_by'] === 'RANGE'
-                || $partitionDetails['partition_by'] === 'RANGE COLUMNS'
-                || $partitionDetails['partition_by'] === 'LIST'
-                || $partitionDetails['partition_by'] === 'LIST COLUMNS');
+        $partitionDetails['can_have_subpartitions'] = $partitionDetails['partition_count'] > 1 && isset($partitionDetails['partition_by']) && ($partitionDetails['partition_by'] === 'RANGE' || $partitionDetails['partition_by'] === 'RANGE COLUMNS' || $partitionDetails['partition_by'] === 'LIST' || $partitionDetails['partition_by'] === 'LIST COLUMNS');
 
         // Values are specified only for LIST and RANGE type partitions
-        $partitionDetails['value_enabled'] = isset($partitionDetails['partition_by'])
-            && ($partitionDetails['partition_by'] === 'RANGE'
-                || $partitionDetails['partition_by'] === 'RANGE COLUMNS'
-                || $partitionDetails['partition_by'] === 'LIST'
-                || $partitionDetails['partition_by'] === 'LIST COLUMNS');
+        $partitionDetails['value_enabled'] = isset($partitionDetails['partition_by']) && ($partitionDetails['partition_by'] === 'RANGE' || $partitionDetails['partition_by'] === 'RANGE COLUMNS' || $partitionDetails['partition_by'] === 'LIST' || $partitionDetails['partition_by'] === 'LIST COLUMNS');
 
         return self::extractPartitions($partitionDetails);
     }
@@ -55,8 +44,7 @@ class TablePartitionDefinition
      *
      * @return array
      */
-    protected static function extractDetailsFromRequest(): array
-    {
+    protected static function extractDetailsFromRequest(): array {
         $partitionParams = [
             'partition_by' => null,
             'partition_expr' => null,
@@ -65,9 +53,9 @@ class TablePartitionDefinition
         ];
         //Initialize details with values to "null" if not in request
         $details = array_merge(
-            $partitionParams,
-            //Keep $_POST values, but only for keys that are in $partitionParams
-            array_intersect_key($_POST, $partitionParams)
+                $partitionParams,
+                //Keep $_POST values, but only for keys that are in $partitionParams
+                array_intersect_key($_POST, $partitionParams)
         );
 
         $details['partition_count'] = self::extractPartitionCount('partition_count') ?: '';
@@ -79,8 +67,7 @@ class TablePartitionDefinition
     /**
      * @param string $paramLabel Label searched in request
      */
-    protected static function extractPartitionCount(string $paramLabel): int
-    {
+    protected static function extractPartitionCount(string $paramLabel): int {
         if (Core::isValid($_POST[$paramLabel], 'numeric')) {
             // MySQL's limit is 8192, so do not allow more
             $count = min((int) $_POST[$paramLabel], 8192);
@@ -96,8 +83,7 @@ class TablePartitionDefinition
      *
      * @return array
      */
-    protected static function extractPartitions(array $partitionDetails): array
-    {
+    protected static function extractPartitions(array $partitionDetails): array {
         $partitionCount = $partitionDetails['partition_count'];
         $subpartitionCount = $partitionDetails['subpartition_count'];
 
@@ -114,7 +100,7 @@ class TablePartitionDefinition
         array_splice($partitions, $partitionCount);
 
         for ($i = 0; $i < $partitionCount; $i++) {
-            if (! isset($partitions[$i])) { // Newly added partition
+            if (!isset($partitions[$i])) { // Newly added partition
                 $partitions[$i] = [
                     'name' => 'p' . $i,
                     'value_type' => '',
@@ -130,15 +116,15 @@ class TablePartitionDefinition
                 ];
             }
 
-            $partition =& $partitions[$i];
+            $partition = & $partitions[$i];
             $partition['prefix'] = 'partitions[' . $i . ']';
 
             // Changing from HASH/KEY to RANGE/LIST
-            if (! isset($partition['value_type'])) {
+            if (!isset($partition['value_type'])) {
                 $partition['value_type'] = '';
                 $partition['value'] = '';
             }
-            if (! isset($partition['engine'])) { // When removing subpartitioning
+            if (!isset($partition['engine'])) { // When removing subpartitioning
                 $partition['engine'] = '';
                 $partition['comment'] = '';
                 $partition['data_directory'] = '';
@@ -158,17 +144,17 @@ class TablePartitionDefinition
             // Has subpartitions
             $partition['subpartition_count'] = $subpartitionCount;
 
-            if (! isset($partition['subpartitions'])) {
+            if (!isset($partition['subpartitions'])) {
                 $partition['subpartitions'] = [];
             }
-            $subpartitions =& $partition['subpartitions'];
+            $subpartitions = & $partition['subpartitions'];
 
             // Remove details of the additional subpartitions
             // when number of subpartitions have been reduced
             array_splice($subpartitions, $subpartitionCount);
 
             for ($j = 0; $j < $subpartitionCount; $j++) {
-                if (! isset($subpartitions[$j])) { // Newly added subpartition
+                if (!isset($subpartitions[$j])) { // Newly added subpartition
                     $subpartitions[$j] = [
                         'name' => $partition['name'] . '_s' . $j,
                         'engine' => '',
@@ -183,11 +169,12 @@ class TablePartitionDefinition
                 }
 
                 $subpartitions[$j]['prefix'] = 'partitions[' . $i . ']'
-                    . '[subpartitions][' . $j . ']';
+                        . '[subpartitions][' . $j . ']';
             }
         }
         $partitionDetails['partitions'] = $partitions;
 
         return $partitionDetails;
     }
+
 }

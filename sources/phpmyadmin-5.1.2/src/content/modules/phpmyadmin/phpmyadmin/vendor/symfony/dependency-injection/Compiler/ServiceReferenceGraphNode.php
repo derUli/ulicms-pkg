@@ -21,8 +21,8 @@ use Symfony\Component\DependencyInjection\Definition;
  *
  * @author Johannes M. Schmitt <schmittjoh@gmail.com>
  */
-class ServiceReferenceGraphNode
-{
+class ServiceReferenceGraphNode {
+
     private $id;
     private $inEdges = [];
     private $outEdges = [];
@@ -32,19 +32,16 @@ class ServiceReferenceGraphNode
      * @param string $id    The node identifier
      * @param mixed  $value The node value
      */
-    public function __construct(string $id, $value)
-    {
+    public function __construct(string $id, $value) {
         $this->id = $id;
         $this->value = $value;
     }
 
-    public function addInEdge(ServiceReferenceGraphEdge $edge)
-    {
+    public function addInEdge(ServiceReferenceGraphEdge $edge) {
         $this->inEdges[] = $edge;
     }
 
-    public function addOutEdge(ServiceReferenceGraphEdge $edge)
-    {
+    public function addOutEdge(ServiceReferenceGraphEdge $edge) {
         $this->outEdges[] = $edge;
     }
 
@@ -53,8 +50,7 @@ class ServiceReferenceGraphNode
      *
      * @return bool True if the value is an Alias instance
      */
-    public function isAlias()
-    {
+    public function isAlias() {
         return $this->value instanceof Alias;
     }
 
@@ -63,8 +59,7 @@ class ServiceReferenceGraphNode
      *
      * @return bool True if the value is a Definition instance
      */
-    public function isDefinition()
-    {
+    public function isDefinition() {
         return $this->value instanceof Definition;
     }
 
@@ -73,8 +68,7 @@ class ServiceReferenceGraphNode
      *
      * @return string
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -83,8 +77,7 @@ class ServiceReferenceGraphNode
      *
      * @return ServiceReferenceGraphEdge[]
      */
-    public function getInEdges()
-    {
+    public function getInEdges() {
         return $this->inEdges;
     }
 
@@ -93,8 +86,7 @@ class ServiceReferenceGraphNode
      *
      * @return ServiceReferenceGraphEdge[]
      */
-    public function getOutEdges()
-    {
+    public function getOutEdges() {
         return $this->outEdges;
     }
 
@@ -103,16 +95,15 @@ class ServiceReferenceGraphNode
      *
      * @return mixed The value
      */
-    public function getValue()
-    {
+    public function getValue() {
         return $this->value;
     }
 
     /**
      * Clears all edges.
      */
-    public function clear()
-    {
+    public function clear() {
         $this->inEdges = $this->outEdges = [];
     }
+
 }

@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Transaction statement.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\SqlParser\Statements;
@@ -15,8 +15,8 @@ use PhpMyAdmin\SqlParser\TokensList;
 /**
  * Transaction statement.
  */
-class TransactionStatement extends Statement
-{
+class TransactionStatement extends Statement {
+
     /**
      * START TRANSACTION and BEGIN.
      */
@@ -70,8 +70,7 @@ class TransactionStatement extends Statement
      * @param Parser     $parser the instance that requests parsing
      * @param TokensList $list   the list of tokens to be parsed
      */
-    public function parse(Parser $parser, TokensList $list)
-    {
+    public function parse(Parser $parser, TokensList $list) {
         parent::parse($parser, $list);
 
         // Checks the type of this query.
@@ -85,8 +84,7 @@ class TransactionStatement extends Statement
     /**
      * @return string
      */
-    public function build()
-    {
+    public function build() {
         $ret = OptionsArray::build($this->options);
         if ($this->type === self::TYPE_BEGIN) {
             foreach ($this->statements as $statement) {
@@ -101,4 +99,5 @@ class TransactionStatement extends Statement
 
         return $ret;
     }
+
 }

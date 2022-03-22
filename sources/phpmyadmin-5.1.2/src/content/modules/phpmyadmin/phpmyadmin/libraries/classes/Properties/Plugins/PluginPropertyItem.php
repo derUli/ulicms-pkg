@@ -1,9 +1,9 @@
 <?php
+
 /**
  * The top-level class of the "Plugin" subtree of the object-oriented
  * properties system (the other subtree is "Options").
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Properties\Plugins;
@@ -17,38 +17,43 @@ use PhpMyAdmin\Properties\PropertyItem;
  *  - PhpMyAdmin\Properties\Plugins\ImportPluginProperties and
  *  - TransformationsPluginProperties
  */
-abstract class PluginPropertyItem extends PropertyItem
-{
+abstract class PluginPropertyItem extends PropertyItem {
+
     /**
      * Text
      *
      * @var string
      */
     private $text;
+
     /**
      * Extension
      *
      * @var string
      */
     private $extension;
+
     /**
      * Options
      *
      * @var OptionsPropertyRootGroup
      */
     private $options;
+
     /**
      * Options text
      *
      * @var string
      */
     private $optionsText;
+
     /**
      * MIME Type
      *
      * @var string
      */
     private $mimeType;
+
     /* ~~~~~~~~~~~~~~~~~~~~ Getters and Setters ~~~~~~~~~~~~~~~~~~~~ */
 
     /**
@@ -56,8 +61,7 @@ abstract class PluginPropertyItem extends PropertyItem
      *
      * @return string
      */
-    public function getText()
-    {
+    public function getText() {
         return $this->text;
     }
 
@@ -68,8 +72,7 @@ abstract class PluginPropertyItem extends PropertyItem
      *
      * @return void
      */
-    public function setText($text)
-    {
+    public function setText($text) {
         $this->text = $text;
     }
 
@@ -78,8 +81,7 @@ abstract class PluginPropertyItem extends PropertyItem
      *
      * @return string
      */
-    public function getExtension()
-    {
+    public function getExtension() {
         return $this->extension;
     }
 
@@ -90,8 +92,7 @@ abstract class PluginPropertyItem extends PropertyItem
      *
      * @return void
      */
-    public function setExtension($extension)
-    {
+    public function setExtension($extension) {
         $this->extension = $extension;
     }
 
@@ -100,8 +101,7 @@ abstract class PluginPropertyItem extends PropertyItem
      *
      * @return OptionsPropertyRootGroup
      */
-    public function getOptions()
-    {
+    public function getOptions() {
         return $this->options;
     }
 
@@ -112,8 +112,7 @@ abstract class PluginPropertyItem extends PropertyItem
      *
      * @return void
      */
-    public function setOptions($options)
-    {
+    public function setOptions($options) {
         $this->options = $options;
     }
 
@@ -122,8 +121,7 @@ abstract class PluginPropertyItem extends PropertyItem
      *
      * @return string
      */
-    public function getOptionsText()
-    {
+    public function getOptionsText() {
         return $this->optionsText;
     }
 
@@ -134,8 +132,7 @@ abstract class PluginPropertyItem extends PropertyItem
      *
      * @return void
      */
-    public function setOptionsText($optionsText)
-    {
+    public function setOptionsText($optionsText) {
         $this->optionsText = $optionsText;
     }
 
@@ -144,8 +141,7 @@ abstract class PluginPropertyItem extends PropertyItem
      *
      * @return string
      */
-    public function getMimeType()
-    {
+    public function getMimeType() {
         return $this->mimeType;
     }
 
@@ -156,8 +152,7 @@ abstract class PluginPropertyItem extends PropertyItem
      *
      * @return void
      */
-    public function setMimeType($mimeType)
-    {
+    public function setMimeType($mimeType) {
         $this->mimeType = $mimeType;
     }
 
@@ -166,8 +161,8 @@ abstract class PluginPropertyItem extends PropertyItem
      *
      * @return string
      */
-    public function getPropertyType()
-    {
+    public function getPropertyType() {
         return 'plugin';
     }
+
 }

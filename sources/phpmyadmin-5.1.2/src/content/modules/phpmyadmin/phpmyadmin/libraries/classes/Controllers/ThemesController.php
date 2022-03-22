@@ -10,10 +10,9 @@ use function preg_replace;
 /**
  * Displays list of themes.
  */
-class ThemesController extends AbstractController
-{
-    public function index(): void
-    {
+class ThemesController extends AbstractController {
+
+    public function index(): void {
         $this->response->getFooter()->setMinimal();
         $header = $this->response->getHeader();
         $header->setBodyId('bodythemes');
@@ -22,11 +21,12 @@ class ThemesController extends AbstractController
 
         $this->render('themes', [
             'version' => preg_replace(
-                '/([0-9]*)\.([0-9]*)\..*/',
-                '\1_\2',
-                PMA_VERSION
+                    '/([0-9]*)\.([0-9]*)\..*/',
+                    '\1_\2',
+                    PMA_VERSION
             ),
             'previews' => ThemeManager::getInstance()->getPrintPreviews(),
         ]);
     }
+
 }

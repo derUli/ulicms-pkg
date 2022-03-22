@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace BaconQrCode\Renderer\Module;
 
@@ -11,8 +12,8 @@ use BaconQrCode\Renderer\Path\Path;
 /**
  * Rounds the corners of module groups.
  */
-final class RoundnessModule implements ModuleInterface
-{
+final class RoundnessModule implements ModuleInterface {
+
     public const STRONG = 1;
     public const MEDIUM = .5;
     public const SOFT = .25;
@@ -22,8 +23,7 @@ final class RoundnessModule implements ModuleInterface
      */
     private $intensity;
 
-    public function __construct(float $intensity)
-    {
+    public function __construct(float $intensity) {
         if ($intensity <= 0 || $intensity > 1) {
             throw new InvalidArgumentException('Intensity must between 0 (exclusive) and 1 (inclusive)');
         }
@@ -31,8 +31,7 @@ final class RoundnessModule implements ModuleInterface
         $this->intensity = $intensity / 2;
     }
 
-    public function createPath(ByteMatrix $matrix) : Path
-    {
+    public function createPath(ByteMatrix $matrix): Path {
         $path = new Path();
 
         foreach (new EdgeIterator($matrix) as $edge) {
@@ -46,14 +45,14 @@ final class RoundnessModule implements ModuleInterface
             if ($horizontal) {
                 $right = $nextPoint[0] > $currentPoint[0];
                 $path = $path->move(
-                    $currentPoint[0] + ($right ? $this->intensity : -$this->intensity),
-                    $currentPoint[1]
+                        $currentPoint[0] + ($right ? $this->intensity : -$this->intensity),
+                        $currentPoint[1]
                 );
             } else {
                 $up = $nextPoint[0] < $currentPoint[0];
                 $path = $path->move(
-                    $currentPoint[0],
-                    $currentPoint[1] + ($up ? -$this->intensity : $this->intensity)
+                        $currentPoint[0],
+                        $currentPoint[1] + ($up ? -$this->intensity : $this->intensity)
                 );
             }
 
@@ -75,48 +74,44 @@ final class RoundnessModule implements ModuleInterface
                     $up = $nextPoint[1] < $currentPoint[1];
                     $sweep = ($up xor $right);
 
-                    if ($this->intensity < 0.5
-                        || ($right && $previousPoint[0] !== $currentPoint[0] - 1)
-                        || (! $right && $previousPoint[0] - 1 !== $currentPoint[0])
+                    if ($this->intensity < 0.5 || ($right && $previousPoint[0] !== $currentPoint[0] - 1) || (!$right && $previousPoint[0] - 1 !== $currentPoint[0])
                     ) {
                         $path = $path->line(
-                            $currentPoint[0] + ($right ? -$this->intensity : $this->intensity),
-                            $currentPoint[1]
+                                $currentPoint[0] + ($right ? -$this->intensity : $this->intensity),
+                                $currentPoint[1]
                         );
                     }
 
                     $path = $path->ellipticArc(
-                        $this->intensity,
-                        $this->intensity,
-                        0,
-                        false,
-                        $sweep,
-                        $currentPoint[0],
-                        $currentPoint[1] + ($up ? -$this->intensity : $this->intensity)
+                            $this->intensity,
+                            $this->intensity,
+                            0,
+                            false,
+                            $sweep,
+                            $currentPoint[0],
+                            $currentPoint[1] + ($up ? -$this->intensity : $this->intensity)
                     );
                 } else {
                     $up = $previousPoint[1] > $currentPoint[1];
                     $right = $nextPoint[0] > $currentPoint[0];
-                    $sweep = ! ($up xor $right);
+                    $sweep = !($up xor $right);
 
-                    if ($this->intensity < 0.5
-                        || ($up && $previousPoint[1] !== $currentPoint[1] + 1)
-                        || (! $up && $previousPoint[0] + 1 !== $currentPoint[0])
+                    if ($this->intensity < 0.5 || ($up && $previousPoint[1] !== $currentPoint[1] + 1) || (!$up && $previousPoint[0] + 1 !== $currentPoint[0])
                     ) {
                         $path = $path->line(
-                            $currentPoint[0],
-                            $currentPoint[1] + ($up ? $this->intensity : -$this->intensity)
+                                $currentPoint[0],
+                                $currentPoint[1] + ($up ? $this->intensity : -$this->intensity)
                         );
                     }
 
                     $path = $path->ellipticArc(
-                        $this->intensity,
-                        $this->intensity,
-                        0,
-                        false,
-                        $sweep,
-                        $currentPoint[0] + ($right ? $this->intensity : -$this->intensity),
-                        $currentPoint[1]
+                            $this->intensity,
+                            $this->intensity,
+                            0,
+                            false,
+                            $sweep,
+                            $currentPoint[0] + ($right ? $this->intensity : -$this->intensity),
+                            $currentPoint[1]
                     );
                 }
             }
@@ -126,4 +121,5 @@ final class RoundnessModule implements ModuleInterface
 
         return $path;
     }
+
 }

@@ -16,50 +16,45 @@ namespace Symfony\Component\Cache\Traits;
  *
  * @internal
  */
-class RedisProxy
-{
+class RedisProxy {
+
     private $redis;
     private $initializer;
     private $ready = false;
 
-    public function __construct(\Redis $redis, \Closure $initializer)
-    {
+    public function __construct(\Redis $redis, \Closure $initializer) {
         $this->redis = $redis;
         $this->initializer = $initializer;
     }
 
-    public function __call($method, array $args)
-    {
+    public function __call($method, array $args) {
         $this->ready ?: $this->ready = $this->initializer->__invoke($this->redis);
 
         return $this->redis->{$method}(...$args);
     }
 
-    public function hscan($strKey, &$iIterator, $strPattern = null, $iCount = null)
-    {
+    public function hscan($strKey, &$iIterator, $strPattern = null, $iCount = null) {
         $this->ready ?: $this->ready = $this->initializer->__invoke($this->redis);
 
         return $this->redis->hscan($strKey, $iIterator, $strPattern, $iCount);
     }
 
-    public function scan(&$iIterator, $strPattern = null, $iCount = null)
-    {
+    public function scan(&$iIterator, $strPattern = null, $iCount = null) {
         $this->ready ?: $this->ready = $this->initializer->__invoke($this->redis);
 
         return $this->redis->scan($iIterator, $strPattern, $iCount);
     }
 
-    public function sscan($strKey, &$iIterator, $strPattern = null, $iCount = null)
-    {
+    public function sscan($strKey, &$iIterator, $strPattern = null, $iCount = null) {
         $this->ready ?: $this->ready = $this->initializer->__invoke($this->redis);
 
         return $this->redis->sscan($strKey, $iIterator, $strPattern, $iCount);
     }
 
-    public function zscan($strKey, &$iIterator, $strPattern = null, $iCount = null)
-    {
+    public function zscan($strKey, &$iIterator, $strPattern = null, $iCount = null) {
         $this->ready ?: $this->ready = $this->initializer->__invoke($this->redis);
 
         return $this->redis->zscan($strKey, $iIterator, $strPattern, $iCount);
     }
+
 }

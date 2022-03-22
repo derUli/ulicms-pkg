@@ -1,4 +1,5 @@
 <?php
+
 /**
  * phpMyAdmin ShapeFile library
  * <https://github.com/phpmyadmin/shapefile/>.
@@ -22,10 +23,9 @@
 
 namespace PhpMyAdmin\ShapeFile;
 
-class Util
-{
-    private static $little_endian = null;
+class Util {
 
+    private static $little_endian = null;
     private static $shape_names = array(
         0 => 'Null Shape',
         1 => 'Point',
@@ -51,8 +51,7 @@ class Util
      *
      * @return mixed
      */
-    public static function loadData($type, $data)
-    {
+    public static function loadData($type, $data) {
         if ($data === false || strlen($data) == 0) {
             return false;
         }
@@ -68,8 +67,7 @@ class Util
      *
      * @return string
      */
-    public static function swap($binValue)
-    {
+    public static function swap($binValue) {
         $result = $binValue[strlen($binValue) - 1];
         for ($i = strlen($binValue) - 2; $i >= 0; --$i) {
             $result .= $binValue[$i];
@@ -85,8 +83,7 @@ class Util
      *
      * @return string
      */
-    public static function packDouble($value)
-    {
+    public static function packDouble($value) {
         $bin = pack('d', (float) $value);
 
         if (is_null(self::$little_endian)) {
@@ -107,12 +104,12 @@ class Util
      *
      * @return string
      */
-    public static function nameShape($type)
-    {
+    public static function nameShape($type) {
         if (isset(self::$shape_names[$type])) {
             return self::$shape_names[$type];
         }
 
         return sprintf('Shape %d', $type);
     }
+
 }

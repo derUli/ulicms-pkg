@@ -94,8 +94,8 @@ use function version_compare;
 /**
  * Misc functions used all over the scripts.
  */
-class Util
-{
+class Util {
+
     /**
      * Checks whether configuration value tells to show icons.
      *
@@ -103,8 +103,7 @@ class Util
      *
      * @return bool Whether to show icons.
      */
-    public static function showIcons($value): bool
-    {
+    public static function showIcons($value): bool {
         return in_array($GLOBALS['cfg'][$value], ['icons', 'both']);
     }
 
@@ -115,8 +114,7 @@ class Util
      *
      * @return bool Whether to show text.
      */
-    public static function showText($value): bool
-    {
+    public static function showText($value): bool {
         return in_array($GLOBALS['cfg'][$value], ['text', 'both']);
     }
 
@@ -129,8 +127,7 @@ class Util
      *
      * @access public
      */
-    public static function getFormattedMaximumUploadSize($max_upload_size): string
-    {
+    public static function getFormattedMaximumUploadSize($max_upload_size): string {
         // I have to reduce the second parameter (sensitiveness) from 6 to 4
         // to avoid weird results like 512 kKib
         [$max_size, $max_unit] = self::formatByteDown($max_upload_size, 4);
@@ -149,8 +146,7 @@ class Util
      *
      * @access public
      */
-    public static function escapeMysqlWildcards($name): string
-    {
+    public static function escapeMysqlWildcards($name): string {
         return strtr($name, ['_' => '\\_', '%' => '\\%']);
     }
 
@@ -164,8 +160,7 @@ class Util
      *
      * @access public
      */
-    public static function unescapeMysqlWildcards($name): string
-    {
+    public static function unescapeMysqlWildcards($name): string {
         return strtr($name, ['\\_' => '_', '\\%' => '%']);
     }
 
@@ -179,8 +174,7 @@ class Util
      *
      * @return string unquoted string
      */
-    public static function unQuote(string $quoted_string, ?string $quote = null): string
-    {
+    public static function unQuote(string $quoted_string, ?string $quote = null): string {
         $quotes = [];
 
         if ($quote === null) {
@@ -192,15 +186,14 @@ class Util
         }
 
         foreach ($quotes as $quote) {
-            if (mb_substr($quoted_string, 0, 1) === $quote
-                && mb_substr($quoted_string, -1, 1) === $quote
+            if (mb_substr($quoted_string, 0, 1) === $quote && mb_substr($quoted_string, -1, 1) === $quote
             ) {
                 $unquoted_string = mb_substr($quoted_string, 1, -1);
                 // replace escaped quotes
                 $unquoted_string = str_replace(
-                    $quote . $quote,
-                    $quote,
-                    $unquoted_string
+                        $quote . $quote,
+                        $quote,
+                        $unquoted_string
                 );
 
                 return $unquoted_string;
@@ -220,8 +213,7 @@ class Util
      *
      * @access public
      */
-    public static function getMySQLDocuURL(string $link, string $anchor = ''): string
-    {
+    public static function getMySQLDocuURL(string $link, string $anchor = ''): string {
         global $dbi;
 
         // Fixup for newly used names:
@@ -245,8 +237,8 @@ class Util
             }
         }
         $url = 'https://dev.mysql.com/doc/refman/'
-            . $mysql . '/' . $lang . '/' . $link . '.html';
-        if (! empty($anchor)) {
+                . $mysql . '/' . $lang . '/' . $link . '.html';
+        if (!empty($anchor)) {
             $url .= '#' . $anchor;
         }
 
@@ -262,8 +254,7 @@ class Util
      *
      * @return string The URL link
      */
-    public static function getDocuURL(bool $isMariaDB = false): string
-    {
+    public static function getDocuURL(bool $isMariaDB = false): string {
         if ($isMariaDB) {
             $url = 'https://mariadb.com/kb/en/documentation/';
 
@@ -281,8 +272,7 @@ class Util
      *
      * @return int the possibly modified row count
      */
-    private static function checkRowCount($db, array $table)
-    {
+    private static function checkRowCount($db, array $table) {
         global $dbi;
 
         $rowCount = 0;
@@ -295,14 +285,13 @@ class Util
             // information_schema database
             // since Table::countRecords() returns a limited row count
             // in this case.
-
             // set this because Table::countRecords() can use it
             $tbl_is_view = $table['TABLE_TYPE'] === 'VIEW';
 
             if ($tbl_is_view || Utilities::isSystemSchema($db)) {
                 $rowCount = $dbi
-                    ->getTable($db, $table['Name'])
-                    ->countRecords();
+                        ->getTable($db, $table['Name'])
+                        ->countRecords();
             }
         }
 
@@ -316,8 +305,7 @@ class Util
      *
      * @return array (recursive) grouped table list
      */
-    public static function getTableList($db): array
-    {
+    public static function getTableList($db): array {
         global $dbi;
 
         $sep = $GLOBALS['cfg']['NavigationTreeTableSeparator'];
@@ -333,9 +321,9 @@ class Util
         }
 
         $default = [
-            'Name'      => '',
-            'Rows'      => 0,
-            'Comment'   => '',
+            'Name' => '',
+            'Rows' => 0,
+            'Comment' => '',
             'disp_name' => '',
         ];
 
@@ -346,48 +334,44 @@ class Util
 
             // in $group we save the reference to the place in $table_groups
             // where to store the table info
-            if ($GLOBALS['cfg']['NavigationTreeEnableGrouping']
-                && $sep && mb_strstr($table_name, $sep)
+            if ($GLOBALS['cfg']['NavigationTreeEnableGrouping'] && $sep && mb_strstr($table_name, $sep)
             ) {
                 $parts = explode($sep, $table_name);
 
-                $group =& $table_groups;
+                $group = & $table_groups;
                 $i = 0;
                 $group_name_full = '';
                 $parts_cnt = count($parts) - 1;
 
-                while (($i < $parts_cnt)
-                    && ($i < $GLOBALS['cfg']['NavigationTreeTableLevel'])
+                while (($i < $parts_cnt) && ($i < $GLOBALS['cfg']['NavigationTreeTableLevel'])
                 ) {
                     $group_name = $parts[$i] . $sep;
                     $group_name_full .= $group_name;
 
-                    if (! isset($group[$group_name])) {
+                    if (!isset($group[$group_name])) {
                         $group[$group_name] = [];
                         $group[$group_name]['is' . $sep . 'group'] = true;
                         $group[$group_name]['tab' . $sep . 'count'] = 1;
-                        $group[$group_name]['tab' . $sep . 'group']
-                            = $group_name_full;
-                    } elseif (! isset($group[$group_name]['is' . $sep . 'group'])) {
+                        $group[$group_name]['tab' . $sep . 'group'] = $group_name_full;
+                    } elseif (!isset($group[$group_name]['is' . $sep . 'group'])) {
                         $table = $group[$group_name];
                         $group[$group_name] = [];
                         $group[$group_name][$group_name] = $table;
                         $group[$group_name]['is' . $sep . 'group'] = true;
                         $group[$group_name]['tab' . $sep . 'count'] = 1;
-                        $group[$group_name]['tab' . $sep . 'group']
-                            = $group_name_full;
+                        $group[$group_name]['tab' . $sep . 'group'] = $group_name_full;
                     } else {
                         $group[$group_name]['tab' . $sep . 'count']++;
                     }
 
-                    $group =& $group[$group_name];
+                    $group = & $group[$group_name];
                     $i++;
                 }
             } else {
-                if (! isset($table_groups[$table_name])) {
+                if (!isset($table_groups[$table_name])) {
                     $table_groups[$table_name] = [];
                 }
-                $group =& $table_groups;
+                $group = & $table_groups;
             }
 
             $table['disp_name'] = $table['Name'];
@@ -418,8 +402,7 @@ class Util
      *
      * @access public
      */
-    public static function backquote($a_name, $do_it = true)
-    {
+    public static function backquote($a_name, $do_it = true) {
         return static::backquoteCompat($a_name, 'NONE', $do_it);
     }
 
@@ -445,9 +428,9 @@ class Util
      * @access public
      */
     public static function backquoteCompat(
-        $a_name,
-        string $compatibility = 'MSSQL',
-        $do_it = true
+            $a_name,
+            string $compatibility = 'MSSQL',
+            $do_it = true
     ) {
         if (is_array($a_name)) {
             foreach ($a_name as &$data) {
@@ -457,8 +440,8 @@ class Util
             return $a_name;
         }
 
-        if (! $do_it) {
-            if (! (Context::isKeyword($a_name) & Token::FLAG_KEYWORD_RESERVED)) {
+        if (!$do_it) {
+            if (!(Context::isKeyword($a_name) & Token::FLAG_KEYWORD_RESERVED)) {
                 return $a_name;
             }
         }
@@ -494,8 +477,7 @@ class Util
      *
      * @access public
      */
-    public static function formatByteDown($value, $limes = 6, $comma = 0): ?array
-    {
+    public static function formatByteDown($value, $limes = 6, $comma = 0): ?array {
         if ($value === null) {
             return null;
         }
@@ -577,11 +559,11 @@ class Util
      * @access public
      */
     public static function formatNumber(
-        $value,
-        $digits_left = 3,
-        $digits_right = 0,
-        $only_down = false,
-        $noTrailingZero = true
+            $value,
+            $digits_left = 3,
+            $digits_right = 0,
+            $only_down = false,
+            $noTrailingZero = true
     ) {
         if ($value == 0) {
             return '0';
@@ -595,12 +577,12 @@ class Util
         //number_format is not multibyte safe, str_replace is safe
         if ($digits_left === 0) {
             $value = number_format(
-                (float) $value,
-                $digits_right,
-                /* l10n: Decimal separator */
-                __('.'),
-                /* l10n: Thousands separator */
-                __(',')
+                    (float) $value,
+                    $digits_right,
+                    /* l10n: Decimal separator */
+                    __('.'),
+                    /* l10n: Thousands separator */
+                    __(',')
             );
             if (($originalValue != 0) && (floatval($value) == 0)) {
                 $value = ' <' . (1 / pow(10, $digits_right));
@@ -668,10 +650,10 @@ class Util
 
         // number_format is not multibyte safe, str_replace is safe
         $formattedValue = number_format(
-            $value,
-            $digits_right,
-            $decimal_sep,
-            $thousands_sep
+                $value,
+                $digits_right,
+                $decimal_sep,
+                $thousands_sep
         );
         // If we don't want any zeros, remove them now
         if ($noTrailingZero && strpos($formattedValue, $decimal_sep) !== false) {
@@ -680,12 +662,12 @@ class Util
 
         if ($originalValue != 0 && floatval($value) == 0) {
             return ' <' . number_format(
-                1 / pow(10, $digits_right),
-                $digits_right,
-                $decimal_sep,
-                $thousands_sep
-            )
-            . ' ' . $unit;
+                            1 / pow(10, $digits_right),
+                            $digits_right,
+                            $decimal_sep,
+                            $thousands_sep
+                    )
+                    . ' ' . $unit;
         }
 
         return $sign . $formattedValue . ' ' . $unit;
@@ -698,30 +680,29 @@ class Util
      *
      * @return int|float The numerical part of the expression (for example 8)
      */
-    public static function extractValueFromFormattedSize($formatted_size)
-    {
+    public static function extractValueFromFormattedSize($formatted_size) {
         $return_value = -1;
 
         $formatted_size = (string) $formatted_size;
 
         if (preg_match('/^[0-9]+GB$/', $formatted_size)) {
             $return_value = (int) mb_substr(
-                $formatted_size,
-                0,
-                -2
-            ) * pow(1024, 3);
+                            $formatted_size,
+                            0,
+                            -2
+                    ) * pow(1024, 3);
         } elseif (preg_match('/^[0-9]+MB$/', $formatted_size)) {
             $return_value = (int) mb_substr(
-                $formatted_size,
-                0,
-                -2
-            ) * pow(1024, 2);
+                            $formatted_size,
+                            0,
+                            -2
+                    ) * pow(1024, 2);
         } elseif (preg_match('/^[0-9]+K$/', $formatted_size)) {
             $return_value = (int) mb_substr(
-                $formatted_size,
-                0,
-                -1
-            ) * pow(1024, 1);
+                            $formatted_size,
+                            0,
+                            -1
+                    ) * pow(1024, 1);
         }
 
         return $return_value;
@@ -737,8 +718,7 @@ class Util
      *
      * @access public
      */
-    public static function localisedDate($timestamp = -1, $format = '')
-    {
+    public static function localisedDate($timestamp = -1, $format = '') {
         $month = [
             /* l10n: Short month name */
             __('Jan'),
@@ -792,14 +772,14 @@ class Util
         }
 
         $date = (string) preg_replace(
-            '@%[aA]@',
-            $day_of_week[(int) @strftime('%w', (int) $timestamp)],
-            $format
+                        '@%[aA]@',
+                        $day_of_week[(int) @strftime('%w', (int) $timestamp)],
+                        $format
         );
         $date = (string) preg_replace(
-            '@%[bB]@',
-            $month[(int) @strftime('%m', (int) $timestamp) - 1],
-            $date
+                        '@%[bB]@',
+                        $month[(int) @strftime('%m', (int) $timestamp) - 1],
+                        $date
         );
 
         /* Fill in AM/PM */
@@ -816,8 +796,7 @@ class Util
         $ret = @strftime($date, (int) $timestamp);
         // Some OSes such as Win8.1 Traditional Chinese version did not produce UTF-8
         // output here. See https://github.com/phpmyadmin/phpmyadmin/issues/10598
-        if ($ret === false
-            || mb_detect_encoding($ret, 'UTF-8', true) !== 'UTF-8'
+        if ($ret === false || mb_detect_encoding($ret, 'UTF-8', true) !== 'UTF-8'
         ) {
             $ret = date('Y-m-d H:i:s', (int) $timestamp);
         }
@@ -832,8 +811,7 @@ class Util
      *
      * @return array<int, string> the parameter/value pairs, for example [0] db=sakila
      */
-    public static function splitURLQuery($url): array
-    {
+    public static function splitURLQuery($url): array {
         // decode encoded url separators
         $separator = Url::getArgSeparator();
         // on most places separator is still hard coded ...
@@ -863,8 +841,7 @@ class Util
      *
      * @return string the formatted value
      */
-    public static function timespanFormat($seconds): string
-    {
+    public static function timespanFormat($seconds): string {
         $days = floor($seconds / 86400);
         if ($days > 0) {
             $seconds -= $days * 86400;
@@ -881,11 +858,11 @@ class Util
         }
 
         return sprintf(
-            __('%s days, %s hours, %s minutes and %s seconds'),
-            (string) $days,
-            (string) $hours,
-            (string) $minutes,
-            (string) $seconds
+                __('%s days, %s hours, %s minutes and %s seconds'),
+                (string) $days,
+                (string) $hours,
+                (string) $minutes,
+                (string) $seconds
         );
     }
 
@@ -900,8 +877,7 @@ class Util
      *
      * @access public
      */
-    public static function checkParameters($params, $request = false): void
-    {
+    public static function checkParameters($params, $request = false): void {
         $reported_script_name = basename($GLOBALS['PMA_PHP_SELF']);
         $found_error = false;
         $error_message = '';
@@ -917,13 +893,13 @@ class Util
             }
 
             $error_message .= $reported_script_name
-                . ': ' . __('Missing parameter:') . ' '
-                . $param
-                . MySQLDocumentation::showDocumentation('faq', 'faqmissingparameters', true)
-                . '[br]';
+                    . ': ' . __('Missing parameter:') . ' '
+                    . $param
+                    . MySQLDocumentation::showDocumentation('faq', 'faqmissingparameters', true)
+                    . '[br]';
             $found_error = true;
         }
-        if (! $found_error) {
+        if (!$found_error) {
             return;
         }
 
@@ -943,12 +919,12 @@ class Util
      * @return array<int,string|null>
      */
     private static function getConditionValue(
-        $row,
-        stdClass $meta,
-        string $fieldFlags,
-        int $fieldsCount,
-        string $conditionKey,
-        string $condition
+            $row,
+            stdClass $meta,
+            string $fieldFlags,
+            int $fieldsCount,
+            string $conditionKey,
+            string $condition
     ): array {
         global $dbi;
 
@@ -962,14 +938,11 @@ class Util
         $isBlobAndIsBinaryCharset = $meta->type === 'blob' && $meta->charsetnr === 63;
         // timestamp is numeric on some MySQL 4.1
         // for real we use CONCAT above and it should compare to string
-        if ($meta->numeric
-            && ($meta->type !== 'timestamp')
-            && ($meta->type !== 'real')
+        if ($meta->numeric && ($meta->type !== 'timestamp') && ($meta->type !== 'real')
         ) {
             $conditionValue = '= ' . $row;
-        } elseif ($isBlobAndIsBinaryCharset || (! empty($row) && $isBinaryString)) {
+        } elseif ($isBlobAndIsBinaryCharset || (!empty($row) && $isBinaryString)) {
             // hexify only if this is a true not empty BLOB or a BINARY
-
             // do not waste memory building a too big condition
             $rowLength = mb_strlen((string) $row);
             if ($rowLength > 0 && $rowLength < 1000) {
@@ -985,8 +958,7 @@ class Util
                 // this blob won't be part of the final condition
                 $conditionValue = null;
             }
-        } elseif (in_array($meta->type, self::getGISDatatypes())
-            && ! empty($row)
+        } elseif (in_array($meta->type, self::getGISDatatypes()) && !empty($row)
         ) {
             // do not build a too big condition
             if (mb_strlen((string) $row) < 5000) {
@@ -996,10 +968,10 @@ class Util
             }
         } elseif ($meta->type === 'bit') {
             $conditionValue = "= b'"
-                . self::printableBitValue((int) $row, (int) $meta->length) . "'";
+                    . self::printableBitValue((int) $row, (int) $meta->length) . "'";
         } else {
             $conditionValue = '= \''
-                . $dbi->escapeString($row) . '\'';
+                    . $dbi->escapeString($row) . '\'';
         }
 
         return [$conditionValue, $condition];
@@ -1019,30 +991,30 @@ class Util
      * @return array the calculated condition and whether condition is unique
      */
     public static function getUniqueCondition(
-        $handle,
-        $fields_cnt,
-        array $fields_meta,
-        array $row,
-        $force_unique = false,
-        $restrict_to_table = false,
-        array $expressions = []
+            $handle,
+            $fields_cnt,
+            array $fields_meta,
+            array $row,
+            $force_unique = false,
+            $restrict_to_table = false,
+            array $expressions = []
     ): array {
         global $dbi;
 
-        $primary_key          = '';
-        $unique_key           = '';
+        $primary_key = '';
+        $unique_key = '';
         $nonprimary_condition = '';
         $preferred_condition = '';
-        $primary_key_array    = [];
-        $unique_key_array     = [];
+        $primary_key_array = [];
+        $unique_key_array = [];
         $nonprimary_condition_array = [];
         $condition_array = [];
 
         for ($i = 0; $i < $fields_cnt; ++$i) {
-            $meta        = $fields_meta[$i];
+            $meta = $fields_meta[$i];
 
             // do not use a column alias in a condition
-            if (! isset($meta->orgname) || strlen($meta->orgname) === 0) {
+            if (!isset($meta->orgname) || strlen($meta->orgname) === 0) {
                 $meta->orgname = $meta->name;
 
                 foreach ($expressions as $expression) {
@@ -1067,9 +1039,7 @@ class Util
             // a view because this view might be updatable.
             // (The isView() verification should not be costly in most cases
             // because there is some caching in the function).
-            if (isset($meta->orgtable)
-                && ($meta->table != $meta->orgtable)
-                && ! $dbi->getTable($GLOBALS['db'], $meta->table)->isView()
+            if (isset($meta->orgtable) && ($meta->table != $meta->orgtable) && !$dbi->getTable($GLOBALS['db'], $meta->table)->isView()
             ) {
                 $meta->table = $meta->orgtable;
             }
@@ -1087,20 +1057,20 @@ class Util
             // that we need on the next "if" will work)
             if ($meta->type === 'real') {
                 $con_key = 'CONCAT(' . self::backquote($meta->table) . '.'
-                    . self::backquote($meta->orgname) . ')';
+                        . self::backquote($meta->orgname) . ')';
             } else {
                 $con_key = self::backquote($meta->table) . '.'
-                    . self::backquote($meta->orgname);
+                        . self::backquote($meta->orgname);
             }
             $condition = ' ' . $con_key . ' ';
 
             [$con_val, $condition] = self::getConditionValue(
-                $row[$i] ?? null,
-                $meta,
-                $dbi->fieldFlags($handle, $i),
-                $fields_cnt,
-                $con_key,
-                $condition
+                            $row[$i] ?? null,
+                            $meta,
+                            $dbi->fieldFlags($handle, $i),
+                            $fields_cnt,
+                            $con_key,
+                            $condition
             );
 
             if ($con_val === null) {
@@ -1113,7 +1083,7 @@ class Util
                 $primary_key .= $condition;
                 $primary_key_array[$con_key] = $con_val;
             } elseif ($meta->unique_key > 0) {
-                $unique_key  .= $condition;
+                $unique_key .= $condition;
                 $unique_key_array[$con_key] = $con_val;
             }
 
@@ -1132,7 +1102,7 @@ class Util
         } elseif ($unique_key) {
             $preferred_condition = $unique_key;
             $condition_array = $unique_key_array;
-        } elseif (! $force_unique) {
+        } elseif (!$force_unique) {
             $preferred_condition = $nonprimary_condition;
             $condition_array = $nonprimary_condition_array;
             $clause_is_unique = false;
@@ -1153,8 +1123,7 @@ class Util
      * @param string $collation Collation
      * @param bool   $override  (optional) force 'CHARACTER SET' keyword
      */
-    public static function getCharsetQueryPart(string $collation, bool $override = false): string
-    {
+    public static function getCharsetQueryPart(string $collation, bool $override = false): string {
         [$charset] = explode('_', $collation);
         $keyword = ' CHARSET=';
 
@@ -1163,7 +1132,7 @@ class Util
         }
 
         return $keyword . $charset
-            . ($charset == $collation ? '' : ' COLLATE ' . $collation);
+                . ($charset == $collation ? '' : ' COLLATE ' . $collation);
     }
 
     /**
@@ -1187,16 +1156,16 @@ class Util
      * @access public
      */
     public static function pageselector(
-        $name,
-        $rows,
-        $pageNow = 1,
-        $nbTotalPage = 1,
-        $showAll = 200,
-        $sliceStart = 5,
-        $sliceEnd = 5,
-        $percent = 20,
-        $range = 10,
-        $prompt = ''
+            $name,
+            $rows,
+            $pageNow = 1,
+            $nbTotalPage = 1,
+            $showAll = 200,
+            $sliceStart = 5,
+            $sliceEnd = 5,
+            $percent = 20,
+            $range = 10,
+            $prompt = ''
     ): string {
         $increment = floor($nbTotalPage / $percent);
         $pageNowMinusRange = $pageNow - $range;
@@ -1242,7 +1211,7 @@ class Util
                     $i += $increment;
 
                     // Make sure that we do not cross our boundaries.
-                    if ($i > $pageNowMinusRange && ! $met_boundary) {
+                    if ($i > $pageNowMinusRange && !$met_boundary) {
                         $i = $pageNowMinusRange;
                     }
                 }
@@ -1255,19 +1224,19 @@ class Util
             }
 
             /*
-            Add page numbers with "geometrically increasing" distances.
+              Add page numbers with "geometrically increasing" distances.
 
-            This helps me a lot when navigating through giant tables.
+              This helps me a lot when navigating through giant tables.
 
-            Test case: table with 2.28 million sets, 76190 pages. Page of interest
-            is between 72376 and 76190.
-            Selecting page 72376.
-            Now, old version enumerated only +/- 10 pages around 72376 and the
-            percentage increment produced steps of about 3000.
+              Test case: table with 2.28 million sets, 76190 pages. Page of interest
+              is between 72376 and 76190.
+              Selecting page 72376.
+              Now, old version enumerated only +/- 10 pages around 72376 and the
+              percentage increment produced steps of about 3000.
 
-            The following code adds page numbers +/- 2,4,8,16,32,64,128,256 etc.
-            around the current page.
-            */
+              The following code adds page numbers +/- 2,4,8,16,32,64,128,256 etc.
+              around the current page.
+             */
             $i = $pageNow;
             $dist = 1;
             while ($i < $x) {
@@ -1309,7 +1278,7 @@ class Util
                 $selected = '';
             }
             $gotopage .= '                <option ' . $selected
-                . ' value="' . (($i - 1) * $rows) . '">' . $i . '</option>' . "\n";
+                    . ' value="' . (($i - 1) * $rows) . '">' . $i . '</option>' . "\n";
         }
 
         $gotopage .= ' </select>';
@@ -1327,8 +1296,7 @@ class Util
      *
      * @access public
      */
-    public static function getPageFromPosition($pos, $max_count)
-    {
+    public static function getPageFromPosition($pos, $max_count) {
         return (int) floor($pos / $max_count) + 1;
     }
 
@@ -1345,8 +1313,7 @@ class Util
      *
      * @return string per user directory
      */
-    public static function userDir(string $dir): string
-    {
+    public static function userDir(string $dir): string {
         // add trailing slash
         if (mb_substr($dir, -1) !== '/') {
             $dir .= '/';
@@ -1358,8 +1325,7 @@ class Util
     /**
      * Clears cache content which needs to be refreshed on user change.
      */
-    public static function clearUserCache(): void
-    {
+    public static function clearUserCache(): void {
         SessionCache::remove('is_superuser');
         SessionCache::remove('is_createuser');
         SessionCache::remove('is_grantuser');
@@ -1376,8 +1342,7 @@ class Util
      *
      * @return string the printable value
      */
-    public static function printableBitValue(int $value, int $length): string
-    {
+    public static function printableBitValue(int $value, int $length): string {
         // if running on a 64-bit server or the length is safe for decbin()
         if (PHP_INT_SIZE == 8 || $length < 33) {
             $printable = decbin($value);
@@ -1416,13 +1381,12 @@ class Util
      *
      * @return string the converted value
      */
-    public static function convertBitDefaultValue(?string $bitDefaultValue): string
-    {
+    public static function convertBitDefaultValue(?string $bitDefaultValue): string {
         return (string) preg_replace(
-            "/^b'(\d*)'?$/",
-            '$1',
-            htmlspecialchars_decode((string) $bitDefaultValue, ENT_QUOTES),
-            1
+                        "/^b'(\d*)'?$/",
+                        '$1',
+                        htmlspecialchars_decode((string) $bitDefaultValue, ENT_QUOTES),
+                        1
         );
     }
 
@@ -1434,20 +1398,19 @@ class Util
      * @return array associative array containing type, spec_in_brackets
      *          and possibly enum_set_values (another array)
      */
-    public static function extractColumnSpec($columnspec)
-    {
+    public static function extractColumnSpec($columnspec) {
         $first_bracket_pos = mb_strpos($columnspec, '(');
         if ($first_bracket_pos) {
             $spec_in_brackets = rtrim(
-                mb_substr(
-                    $columnspec,
-                    $first_bracket_pos + 1,
-                    mb_strrpos($columnspec, ')') - $first_bracket_pos - 1
-                )
+                    mb_substr(
+                            $columnspec,
+                            $first_bracket_pos + 1,
+                            mb_strrpos($columnspec, ')') - $first_bracket_pos - 1
+                    )
             );
             // convert to lowercase just to be sure
             $type = mb_strtolower(
-                rtrim(mb_substr($columnspec, 0, $first_bracket_pos))
+                    rtrim(mb_substr($columnspec, 0, $first_bracket_pos))
             );
         } else {
             // Split trailing attributes such as unsigned,
@@ -1461,7 +1424,7 @@ class Util
             // Define our working vars
             $enum_set_values = self::parseEnumSetValues($columnspec, false);
             $printtype = $type
-                . '(' . str_replace("','", "', '", $spec_in_brackets) . ')';
+                    . '(' . str_replace("','", "', '", $spec_in_brackets) . ')';
             $binary = false;
             $unsigned = false;
             $zerofill = false;
@@ -1475,8 +1438,7 @@ class Util
             // this would be a BINARY or VARBINARY column type;
             // by the way, a BLOB should not show the BINARY attribute
             // because this is not accepted in MySQL syntax.
-            if (strpos($printtype, 'binary') !== false
-                && ! preg_match('@binary[\(]@', $printtype)
+            if (strpos($printtype, 'binary') !== false && !preg_match('@binary[\(]@', $printtype)
             ) {
                 $printtype = str_replace('binary', '', $printtype);
                 $binary = true;
@@ -1485,25 +1447,25 @@ class Util
             }
 
             $printtype = (string) preg_replace(
-                '@zerofill@',
-                '',
-                $printtype,
-                -1,
-                $zerofill_cnt
+                            '@zerofill@',
+                            '',
+                            $printtype,
+                            -1,
+                            $zerofill_cnt
             );
             $zerofill = ($zerofill_cnt > 0);
             $printtype = (string) preg_replace(
-                '@unsigned@',
-                '',
-                $printtype,
-                -1,
-                $unsigned_cnt
+                            '@unsigned@',
+                            '',
+                            $printtype,
+                            -1,
+                            $unsigned_cnt
             );
             $unsigned = ($unsigned_cnt > 0);
             $printtype = trim($printtype);
         }
 
-        $attribute     = ' ';
+        $attribute = ' ';
         if ($binary) {
             $attribute = 'BINARY';
         }
@@ -1515,11 +1477,10 @@ class Util
         }
 
         $can_contain_collation = false;
-        if (! $binary
-            && preg_match(
-                '@^(char|varchar|text|tinytext|mediumtext|longtext|set|enum)@',
-                $type
-            )
+        if (!$binary && preg_match(
+                        '@^(char|varchar|text|tinytext|mediumtext|longtext|set|enum)@',
+                        $type
+                )
         ) {
             $can_contain_collation = true;
         }
@@ -1527,14 +1488,14 @@ class Util
         // for the case ENUM('&#8211;','&ldquo;')
         $displayed_type = htmlspecialchars($printtype, ENT_COMPAT);
         if (mb_strlen($printtype) > $GLOBALS['cfg']['LimitChars']) {
-            $displayed_type  = '<abbr title="' . htmlspecialchars($printtype) . '">';
+            $displayed_type = '<abbr title="' . htmlspecialchars($printtype) . '">';
             $displayed_type .= htmlspecialchars(
-                mb_substr(
-                    $printtype,
-                    0,
-                    (int) $GLOBALS['cfg']['LimitChars']
-                ) . '...',
-                ENT_COMPAT
+                    mb_substr(
+                            $printtype,
+                            0,
+                            (int) $GLOBALS['cfg']['LimitChars']
+                    ) . '...',
+                    ENT_COMPAT
             );
             $displayed_type .= '</abbr>';
         }
@@ -1542,7 +1503,7 @@ class Util
         return [
             'type' => $type,
             'spec_in_brackets' => $spec_in_brackets,
-            'enum_set_values'  => $enum_set_values,
+            'enum_set_values' => $enum_set_values,
             'print_type' => $printtype,
             'binary' => $binary,
             'unsigned' => $unsigned,
@@ -1558,8 +1519,7 @@ class Util
      *
      * @param string $engine engine
      */
-    public static function isForeignKeySupported($engine): bool
-    {
+    public static function isForeignKeySupported($engine): bool {
         global $dbi;
 
         $engine = strtoupper((string) $engine);
@@ -1569,7 +1529,7 @@ class Util
 
         if ($engine === 'NDBCLUSTER' || $engine === 'NDB') {
             $ndbver = strtolower(
-                $dbi->fetchValue('SELECT @@ndb_version_string')
+                    $dbi->fetchValue('SELECT @@ndb_version_string')
             );
             if (substr($ndbver, 0, 4) === 'ndb-') {
                 $ndbver = substr($ndbver, 4);
@@ -1584,8 +1544,7 @@ class Util
     /**
      * Is Foreign key check enabled?
      */
-    public static function isForeignKeyCheck(): bool
-    {
+    public static function isForeignKeyCheck(): bool {
         global $dbi;
 
         if ($GLOBALS['cfg']['DefaultForeignKeyChecks'] === 'enable') {
@@ -1604,8 +1563,7 @@ class Util
      *
      * @return bool Default foreign key checks value
      */
-    public static function handleDisableFKCheckInit(): bool
-    {
+    public static function handleDisableFKCheckInit(): bool {
         /** @var DatabaseInterface $dbi */
         global $dbi;
 
@@ -1628,14 +1586,13 @@ class Util
      *
      * @param bool $default_fk_check_value original value for 'FOREIGN_KEY_CHECKS'
      */
-    public static function handleDisableFKCheckCleanup(bool $default_fk_check_value): void
-    {
+    public static function handleDisableFKCheckCleanup(bool $default_fk_check_value): void {
         /** @var DatabaseInterface $dbi */
         global $dbi;
 
         $dbi->setVariable(
-            'FOREIGN_KEY_CHECKS',
-            $default_fk_check_value ? 'ON' : 'OFF'
+                'FOREIGN_KEY_CHECKS',
+                $default_fk_check_value ? 'ON' : 'OFF'
         );
     }
 
@@ -1647,8 +1604,7 @@ class Util
      *
      * @return string GIS data in Well Know Text format
      */
-    public static function asWKT($data, $includeSRID = false)
-    {
+    public static function asWKT($data, $includeSRID = false) {
         global $dbi;
 
         // Convert to WKT format
@@ -1662,20 +1618,20 @@ class Util
             $spatialSrid = 'ST_SRID';
         }
 
-        if ($mysqlVersionInt >= 80001 && ! $dbi->isMariaDb()) {
+        if ($mysqlVersionInt >= 80001 && !$dbi->isMariaDb()) {
             $axisOrder = ', \'axis-order=long-lat\'';
         }
 
-        $wktsql     = 'SELECT ' . $spatialAsText . "(x'" . $hex . "'" . $axisOrder . ')';
+        $wktsql = 'SELECT ' . $spatialAsText . "(x'" . $hex . "'" . $axisOrder . ')';
         if ($includeSRID) {
             $wktsql .= ', ' . $spatialSrid . "(x'" . $hex . "')";
         }
 
-        $wktresult  = $dbi->tryQuery(
-            $wktsql
+        $wktresult = $dbi->tryQuery(
+                $wktsql
         );
-        $wktarr     = $dbi->fetchRow($wktresult);
-        $wktval     = $wktarr[0] ?? null;
+        $wktarr = $dbi->fetchRow($wktresult);
+        $wktval = $wktarr[0] ?? null;
 
         if ($includeSRID) {
             $srid = $wktarr[1] ?? null;
@@ -1693,8 +1649,7 @@ class Util
      *
      * @return string with the chars replaced
      */
-    public static function duplicateFirstNewline(string $string): string
-    {
+    public static function duplicateFirstNewline(string $string): string {
         $first_occurence = mb_strpos($string, "\r\n");
         if ($first_occurence === 0) {
             $string = "\n" . $string;
@@ -1713,10 +1668,9 @@ class Util
      *
      * @return string|bool Title for the $cfg value
      */
-    public static function getTitleForTarget($target)
-    {
+    public static function getTitleForTarget($target) {
         $mapping = [
-            'structure' =>  __('Structure'),
+            'structure' => __('Structure'),
             'sql' => __('SQL'),
             'search' => __('Search'),
             'insert' => __('Insert'),
@@ -1740,8 +1694,7 @@ class Util
      *
      * @return string script name corresponding to the config word
      */
-    public static function getScriptNameForOption($target, string $location): string
-    {
+    public static function getScriptNameForOption($target, string $location): string {
         $url = self::getUrlForOption($target, $location);
         if ($url === null) {
             return './';
@@ -1763,8 +1716,7 @@ class Util
      *
      * @return string The URL corresponding to the config word or null if nothing was found
      */
-    public static function getUrlForOption($target, string $location): ?string
-    {
+    public static function getUrlForOption($target, string $location): ?string {
         if ($location === 'server') {
             // Values for $cfg['DefaultTabServer']
             switch ($target) {
@@ -1842,9 +1794,9 @@ class Util
      * @return string
      */
     public static function expandUserString(
-        $string,
-        $escape = null,
-        array $updates = []
+            $string,
+            $escape = null,
+            array $updates = []
     ) {
         global $dbi;
 
@@ -1912,8 +1864,8 @@ class Util
         /* Fetch columns list if required */
         if (mb_strpos($string, '@COLUMNS@') !== false) {
             $columns_list = $dbi->getColumns(
-                $GLOBALS['db'],
-                $GLOBALS['table']
+                    $GLOBALS['db'],
+                    $GLOBALS['table']
             );
 
             // sometimes the table no longer exists at this point
@@ -1947,8 +1899,7 @@ class Util
      *
      * @return mixed   An HTML snippet or an array of datatypes.
      */
-    public static function getSupportedDatatypes($html = false, $selected = '')
-    {
+    public static function getSupportedDatatypes($html = false, $selected = '') {
         global $dbi;
 
         if ($html) {
@@ -1981,8 +1932,7 @@ class Util
      *
      * @return array list of datatypes
      */
-    public static function unsupportedDatatypes(): array
-    {
+    public static function unsupportedDatatypes(): array {
         return [];
     }
 
@@ -1993,8 +1943,7 @@ class Util
      *
      * @return string[] GIS data types
      */
-    public static function getGISDatatypes($upper_case = false): array
-    {
+    public static function getGISDatatypes($upper_case = false): array {
         $gis_data_types = [
             'geometry',
             'point',
@@ -2020,12 +1969,11 @@ class Util
      *
      * @return string GIS data enclosed in 'ST_GeomFromText' or 'GeomFromText' function
      */
-    public static function createGISData($gis_string, $mysqlVersion)
-    {
+    public static function createGISData($gis_string, $mysqlVersion) {
         $geomFromText = $mysqlVersion >= 50600 ? 'ST_GeomFromText' : 'GeomFromText';
         $gis_string = trim($gis_string);
         $geom_types = '(POINT|MULTIPOINT|LINESTRING|MULTILINESTRING|'
-            . 'POLYGON|MULTIPOLYGON|GEOMETRYCOLLECTION)';
+                . 'POLYGON|MULTIPOLYGON|GEOMETRYCOLLECTION)';
         if (preg_match("/^'" . $geom_types . "\(.*\)',[0-9]*$/i", $gis_string)) {
             return $geomFromText . '(' . $gis_string . ')';
         }
@@ -2052,9 +2000,9 @@ class Util
      *                                                    geometry data types.
      */
     public static function getGISFunctions(
-        $geom_type = null,
-        $binary = true,
-        $display = false
+            $geom_type = null,
+            $binary = true,
+            $display = false
     ): array {
         global $dbi;
 
@@ -2064,11 +2012,11 @@ class Util
         }
 
         // Unary functions common to all geometry types
-        $funcs['Dimension']    = [
+        $funcs['Dimension'] = [
             'params' => 1,
             'type' => 'int',
         ];
-        $funcs['Envelope']     = [
+        $funcs['Envelope'] = [
             'params' => 1,
             'type' => 'Polygon',
         ];
@@ -2076,15 +2024,15 @@ class Util
             'params' => 1,
             'type' => 'text',
         ];
-        $funcs['SRID']         = [
+        $funcs['SRID'] = [
             'params' => 1,
             'type' => 'int',
         ];
-        $funcs['IsEmpty']      = [
+        $funcs['IsEmpty'] = [
             'params' => 1,
             'type' => 'int',
         ];
-        $funcs['IsSimple']     = [
+        $funcs['IsSimple'] = [
             'params' => 1,
             'type' => 'int',
         ];
@@ -2105,15 +2053,15 @@ class Util
                 'type' => 'float',
             ];
         } elseif ($geom_type === 'linestring') {
-            $funcs['EndPoint']   = [
+            $funcs['EndPoint'] = [
                 'params' => 1,
                 'type' => 'point',
             ];
-            $funcs['GLength']    = [
+            $funcs['GLength'] = [
                 'params' => 1,
                 'type' => 'float',
             ];
-            $funcs['NumPoints']  = [
+            $funcs['NumPoints'] = [
                 'params' => 1,
                 'type' => 'int',
             ];
@@ -2121,12 +2069,12 @@ class Util
                 'params' => 1,
                 'type' => 'point',
             ];
-            $funcs['IsRing']     = [
+            $funcs['IsRing'] = [
                 'params' => 1,
                 'type' => 'int',
             ];
         } elseif ($geom_type === 'multilinestring') {
-            $funcs['GLength']  = [
+            $funcs['GLength'] = [
                 'params' => 1,
                 'type' => 'float',
             ];
@@ -2135,7 +2083,7 @@ class Util
                 'type' => 'int',
             ];
         } elseif ($geom_type === 'polygon') {
-            $funcs['Area']         = [
+            $funcs['Area'] = [
                 'params' => 1,
                 'type' => 'float',
             ];
@@ -2148,7 +2096,7 @@ class Util
                 'type' => 'int',
             ];
         } elseif ($geom_type === 'multipolygon') {
-            $funcs['Area']     = [
+            $funcs['Area'] = [
                 'params' => 1,
                 'type' => 'float',
             ];
@@ -2178,19 +2126,19 @@ class Util
                 // use the ST_ prefix.
                 $spatialPrefix = 'ST_';
             }
-            $funcs[$spatialPrefix . 'Crosses']    = [
+            $funcs[$spatialPrefix . 'Crosses'] = [
                 'params' => 2,
                 'type' => 'int',
             ];
-            $funcs[$spatialPrefix . 'Contains']   = [
+            $funcs[$spatialPrefix . 'Contains'] = [
                 'params' => 2,
                 'type' => 'int',
             ];
-            $funcs[$spatialPrefix . 'Disjoint']   = [
+            $funcs[$spatialPrefix . 'Disjoint'] = [
                 'params' => 2,
                 'type' => 'int',
             ];
-            $funcs[$spatialPrefix . 'Equals']     = [
+            $funcs[$spatialPrefix . 'Equals'] = [
                 'params' => 2,
                 'type' => 'int',
             ];
@@ -2198,15 +2146,15 @@ class Util
                 'params' => 2,
                 'type' => 'int',
             ];
-            $funcs[$spatialPrefix . 'Overlaps']   = [
+            $funcs[$spatialPrefix . 'Overlaps'] = [
                 'params' => 2,
                 'type' => 'int',
             ];
-            $funcs[$spatialPrefix . 'Touches']    = [
+            $funcs[$spatialPrefix . 'Touches'] = [
                 'params' => 2,
                 'type' => 'int',
             ];
-            $funcs[$spatialPrefix . 'Within']     = [
+            $funcs[$spatialPrefix . 'Within'] = [
                 'params' => 2,
                 'type' => 'int',
             ];
@@ -2215,15 +2163,15 @@ class Util
                 $funcs[] = ['display' => '--------'];
             }
             // Minimum bounding rectangle functions
-            $funcs['MBRContains']   = [
+            $funcs['MBRContains'] = [
                 'params' => 2,
                 'type' => 'int',
             ];
-            $funcs['MBRDisjoint']   = [
+            $funcs['MBRDisjoint'] = [
                 'params' => 2,
                 'type' => 'int',
             ];
-            $funcs['MBREquals']     = [
+            $funcs['MBREquals'] = [
                 'params' => 2,
                 'type' => 'int',
             ];
@@ -2231,15 +2179,15 @@ class Util
                 'params' => 2,
                 'type' => 'int',
             ];
-            $funcs['MBROverlaps']   = [
+            $funcs['MBROverlaps'] = [
                 'params' => 2,
                 'type' => 'int',
             ];
-            $funcs['MBRTouches']    = [
+            $funcs['MBRTouches'] = [
                 'params' => 2,
                 'type' => 'int',
             ];
-            $funcs['MBRWithin']     = [
+            $funcs['MBRWithin'] = [
                 'params' => 2,
                 'type' => 'int',
             ];
@@ -2267,8 +2215,7 @@ class Util
      *                          string, table name where to also check
      *                          for privileges
      */
-    public static function currentUserHasPrivilege(string $priv, ?string $db = null, ?string $tbl = null): bool
-    {
+    public static function currentUserHasPrivilege(string $priv, ?string $db = null, ?string $tbl = null): bool {
         global $dbi;
 
         // Get the username for the current user in the format
@@ -2280,7 +2227,7 @@ class Util
             return true;
         }
 
-        $username  = "''";
+        $username = "''";
         $username .= str_replace("'", "''", $user);
         $username .= "''@''";
         $username .= str_replace("'", "''", $host);
@@ -2288,16 +2235,16 @@ class Util
 
         // Prepare the query
         $query = 'SELECT `PRIVILEGE_TYPE` FROM `INFORMATION_SCHEMA`.`%s` '
-               . "WHERE GRANTEE='%s' AND PRIVILEGE_TYPE='%s'";
+                . "WHERE GRANTEE='%s' AND PRIVILEGE_TYPE='%s'";
 
         // Check global privileges first.
         $user_privileges = $dbi->fetchValue(
-            sprintf(
-                $query,
-                'USER_PRIVILEGES',
-                $username,
-                $priv
-            )
+                sprintf(
+                        $query,
+                        'USER_PRIVILEGES',
+                        $username,
+                        $priv
+                )
         );
         if ($user_privileges) {
             return true;
@@ -2312,13 +2259,13 @@ class Util
 
         $query .= " AND '%s' LIKE `TABLE_SCHEMA`";
         $schema_privileges = $dbi->fetchValue(
-            sprintf(
-                $query,
-                'SCHEMA_PRIVILEGES',
-                $username,
-                $priv,
-                $dbi->escapeString($db)
-            )
+                sprintf(
+                        $query,
+                        'SCHEMA_PRIVILEGES',
+                        $username,
+                        $priv,
+                        $dbi->escapeString($db)
+                )
         );
         if ($schema_privileges) {
             return true;
@@ -2328,14 +2275,14 @@ class Util
         if ($tbl !== null) {
             $query .= " AND TABLE_NAME='%s'";
             $table_privileges = $dbi->fetchValue(
-                sprintf(
-                    $query,
-                    'TABLE_PRIVILEGES',
-                    $username,
-                    $priv,
-                    $dbi->escapeString($db),
-                    $dbi->escapeString($tbl)
-                )
+                    sprintf(
+                            $query,
+                            'TABLE_PRIVILEGES',
+                            $username,
+                            $priv,
+                            $dbi->escapeString($db),
+                            $dbi->escapeString($tbl)
+                    )
             );
             if ($table_privileges) {
                 return true;
@@ -2356,8 +2303,7 @@ class Util
      *
      * @return string
      */
-    public static function getServerType()
-    {
+    public static function getServerType() {
         global $dbi;
 
         if ($dbi->isMariaDB()) {
@@ -2380,8 +2326,7 @@ class Util
      *
      * @return array
      */
-    public static function parseEnumSetValues($definition, $escapeHtml = true)
-    {
+    public static function parseEnumSetValues($definition, $escapeHtml = true) {
         $values_string = htmlentities($definition, ENT_COMPAT, 'UTF-8');
         // There is a JS port of the below parser in functions.js
         // If you are fixing something here,
@@ -2392,17 +2337,14 @@ class Util
 
         for ($i = 0, $length = mb_strlen($values_string); $i < $length; $i++) {
             $curr = mb_substr($values_string, $i, 1);
-            $next = $i == mb_strlen($values_string) - 1
-                ? ''
-                : mb_substr($values_string, $i + 1, 1);
+            $next = $i == mb_strlen($values_string) - 1 ? '' : mb_substr($values_string, $i + 1, 1);
 
-            if (! $in_string && $curr == "'") {
+            if (!$in_string && $curr == "'") {
                 $in_string = true;
             } elseif (($in_string && $curr === '\\') && $next === '\\') {
                 $buffer .= '&#92;';
                 $i++;
-            } elseif (($in_string && $next == "'")
-                && ($curr == "'" || $curr === '\\')
+            } elseif (($in_string && $next == "'") && ($curr == "'" || $curr === '\\')
             ) {
                 $buffer .= '&#39;';
                 $i++;
@@ -2411,7 +2353,7 @@ class Util
                 $values[] = $buffer;
                 $buffer = '';
             } elseif ($in_string) {
-                 $buffer .= $curr;
+                $buffer .= $curr;
             }
         }
 
@@ -2420,7 +2362,7 @@ class Util
             $values[] = $buffer;
         }
 
-        if (! $escapeHtml) {
+        if (!$escapeHtml) {
             foreach ($values as $key => $value) {
                 $values[$key] = html_entity_decode($value, ENT_QUOTES, 'UTF-8');
             }
@@ -2437,18 +2379,16 @@ class Util
      *
      * @return string Matching regular expression.
      */
-    public static function getFirstOccurringRegularExpression(array $regex_array, $query): string
-    {
+    public static function getFirstOccurringRegularExpression(array $regex_array, $query): string {
         $minimum_first_occurence_index = null;
         $regex = null;
 
         foreach ($regex_array as $test_regex) {
-            if (! preg_match($test_regex, $query, $matches, PREG_OFFSET_CAPTURE)) {
+            if (!preg_match($test_regex, $query, $matches, PREG_OFFSET_CAPTURE)) {
                 continue;
             }
 
-            if ($minimum_first_occurence_index !== null
-                && ($matches[0][1] >= $minimum_first_occurence_index)
+            if ($minimum_first_occurence_index !== null && ($matches[0][1] >= $minimum_first_occurence_index)
             ) {
                 continue;
             }
@@ -2467,52 +2407,51 @@ class Util
      *
      * @return array|null list of tabs for the menu
      */
-    public static function getMenuTabList($level = null)
-    {
+    public static function getMenuTabList($level = null) {
         $tabList = [
             'server' => [
-                'databases'   => __('Databases'),
-                'sql'         => __('SQL'),
-                'status'      => __('Status'),
-                'rights'      => __('Users'),
-                'export'      => __('Export'),
-                'import'      => __('Import'),
-                'settings'    => __('Settings'),
-                'binlog'      => __('Binary log'),
+                'databases' => __('Databases'),
+                'sql' => __('SQL'),
+                'status' => __('Status'),
+                'rights' => __('Users'),
+                'export' => __('Export'),
+                'import' => __('Import'),
+                'settings' => __('Settings'),
+                'binlog' => __('Binary log'),
                 'replication' => __('Replication'),
-                'vars'        => __('Variables'),
-                'charset'     => __('Charsets'),
-                'plugins'     => __('Plugins'),
-                'engine'      => __('Engines'),
+                'vars' => __('Variables'),
+                'charset' => __('Charsets'),
+                'plugins' => __('Plugins'),
+                'engine' => __('Engines'),
             ],
-            'db'     => [
-                'structure'   => __('Structure'),
-                'sql'         => __('SQL'),
-                'search'      => __('Search'),
-                'query'       => __('Query'),
-                'export'      => __('Export'),
-                'import'      => __('Import'),
-                'operation'   => __('Operations'),
-                'privileges'  => __('Privileges'),
-                'routines'    => __('Routines'),
-                'events'      => __('Events'),
-                'triggers'    => __('Triggers'),
-                'tracking'    => __('Tracking'),
-                'designer'    => __('Designer'),
+            'db' => [
+                'structure' => __('Structure'),
+                'sql' => __('SQL'),
+                'search' => __('Search'),
+                'query' => __('Query'),
+                'export' => __('Export'),
+                'import' => __('Import'),
+                'operation' => __('Operations'),
+                'privileges' => __('Privileges'),
+                'routines' => __('Routines'),
+                'events' => __('Events'),
+                'triggers' => __('Triggers'),
+                'tracking' => __('Tracking'),
+                'designer' => __('Designer'),
                 'central_columns' => __('Central columns'),
             ],
-            'table'  => [
-                'browse'      => __('Browse'),
-                'structure'   => __('Structure'),
-                'sql'         => __('SQL'),
-                'search'      => __('Search'),
-                'insert'      => __('Insert'),
-                'export'      => __('Export'),
-                'import'      => __('Import'),
-                'privileges'  => __('Privileges'),
-                'operation'   => __('Operations'),
-                'tracking'    => __('Tracking'),
-                'triggers'    => __('Triggers'),
+            'table' => [
+                'browse' => __('Browse'),
+                'structure' => __('Structure'),
+                'sql' => __('SQL'),
+                'search' => __('Search'),
+                'insert' => __('Insert'),
+                'export' => __('Export'),
+                'import' => __('Import'),
+                'privileges' => __('Privileges'),
+                'operation' => __('Operations'),
+                'tracking' => __('Tracking'),
+                'triggers' => __('Triggers'),
             ],
         ];
 
@@ -2536,10 +2475,8 @@ class Util
      *
      * @return string time, datetime or timestamp strings with fractional seconds
      */
-    public static function addMicroseconds($value)
-    {
-        if (empty($value) || $value === 'CURRENT_TIMESTAMP'
-            || $value === 'current_timestamp()'
+    public static function addMicroseconds($value) {
+        if (empty($value) || $value === 'CURRENT_TIMESTAMP' || $value === 'current_timestamp()'
         ) {
             return $value;
         }
@@ -2551,9 +2488,9 @@ class Util
         $value .= '000000';
 
         return mb_substr(
-            $value,
-            0,
-            mb_strpos($value, '.') + 7
+                $value,
+                0,
+                mb_strpos($value, '.') + 7
         );
     }
 
@@ -2565,8 +2502,7 @@ class Util
      *
      * @return string the MIME type for compression, or 'none'
      */
-    public static function getCompressionMimeType($file)
-    {
+    public static function getCompressionMimeType($file) {
         $test = fread($file, 4);
 
         if ($test === false) {
@@ -2596,8 +2532,7 @@ class Util
      *
      * @return string COLLATE clause if needed or empty string.
      */
-    public static function getCollateForIS()
-    {
+    public static function getCollateForIS() {
         global $dbi;
 
         $names = $dbi->getLowerCaseNames();
@@ -2619,12 +2554,11 @@ class Util
      *
      * @return array processes index data
      */
-    public static function processIndexData(array $indexes)
-    {
-        $lastIndex    = '';
+    public static function processIndexData(array $indexes) {
+        $lastIndex = '';
 
-        $primary      = '';
-        $pk_array     = []; // will be use to emphasis prim. keys in the table
+        $primary = '';
+        $pk_array = []; // will be use to emphasis prim. keys in the table
         $indexes_info = [];
         $indexes_data = [];
 
@@ -2632,7 +2566,7 @@ class Util
         foreach ($indexes as $row) {
             // Backups the list of primary keys
             if ($row['Key_name'] === 'PRIMARY') {
-                $primary   .= $row['Column_name'] . ', ';
+                $primary .= $row['Column_name'] . ', ';
                 $pk_array[$row['Column_name']] = 1;
             }
             // Retains keys informations
@@ -2650,14 +2584,12 @@ class Util
 
             $indexes_info[$row['Key_name']]['Comment'] = $row['Comment'];
 
-            $indexes_data[$row['Key_name']][$row['Seq_in_index']]['Column_name']
-                = $row['Column_name'];
-            if (! isset($row['Sub_part'])) {
+            $indexes_data[$row['Key_name']][$row['Seq_in_index']]['Column_name'] = $row['Column_name'];
+            if (!isset($row['Sub_part'])) {
                 continue;
             }
 
-            $indexes_data[$row['Key_name']][$row['Seq_in_index']]['Sub_part']
-                = $row['Sub_part'];
+            $indexes_data[$row['Key_name']][$row['Seq_in_index']]['Sub_part'] = $row['Sub_part'];
         }
 
         return [
@@ -2673,15 +2605,13 @@ class Util
      *
      * @return bool
      */
-    public static function isVirtualColumnsSupported()
-    {
+    public static function isVirtualColumnsSupported() {
         global $dbi;
 
         $serverType = self::getServerType();
         $serverVersion = $dbi->getVersion();
 
-        return in_array($serverType, ['MySQL', 'Percona Server']) && $serverVersion >= 50705
-             || ($serverType === 'MariaDB' && $serverVersion >= 50200);
+        return in_array($serverType, ['MySQL', 'Percona Server']) && $serverVersion >= 50705 || ($serverType === 'MariaDB' && $serverVersion >= 50200);
     }
 
     /**
@@ -2693,15 +2623,13 @@ class Util
      *
      * @return array
      */
-    public static function getDbInfo($db, ?string $sub_part)
-    {
+    public static function getDbInfo($db, ?string $sub_part) {
         global $cfg, $dbi;
 
         /**
          * limits for table list
          */
-        if (! isset($_SESSION['tmpval']['table_limit_offset'])
-            || $_SESSION['tmpval']['table_limit_offset_db'] != $db
+        if (!isset($_SESSION['tmpval']['table_limit_offset']) || $_SESSION['tmpval']['table_limit_offset_db'] != $db
         ) {
             $_SESSION['tmpval']['table_limit_offset'] = 0;
             $_SESSION['tmpval']['table_limit_offset_db'] = $db;
@@ -2737,7 +2665,7 @@ class Util
         // Special speedup for newer MySQL Versions (in 4.0 format changed)
         if ($cfg['SkipLockedTables'] === true) {
             $db_info_result = $dbi->query(
-                'SHOW OPEN TABLES FROM ' . self::backquote($db) . ' WHERE In_use > 0;'
+                    'SHOW OPEN TABLES FROM ' . self::backquote($db) . ' WHERE In_use > 0;'
             );
 
             // Blending out tables in use
@@ -2755,16 +2683,16 @@ class Util
 
             if (isset($_REQUEST['sort'])) {
                 $sortable_name_mappings = [
-                    'table'       => 'Name',
-                    'records'     => 'Rows',
-                    'type'        => 'Engine',
-                    'collation'   => 'Collation',
-                    'size'        => 'Data_length',
-                    'overhead'    => 'Data_free',
-                    'creation'    => 'Create_time',
+                    'table' => 'Name',
+                    'records' => 'Rows',
+                    'type' => 'Engine',
+                    'collation' => 'Collation',
+                    'size' => 'Data_length',
+                    'overhead' => 'Data_free',
+                    'creation' => 'Create_time',
                     'last_update' => 'Update_time',
-                    'last_check'  => 'Check_time',
-                    'comment'     => 'Comment',
+                    'last_check' => 'Check_time',
+                    'comment' => 'Comment',
                 ];
 
                 // Make sure the sort type is implemented
@@ -2782,28 +2710,28 @@ class Util
             $limit_count = false;
             $groupTable = [];
 
-            if (! empty($_REQUEST['tbl_group']) || ! empty($_REQUEST['tbl_type'])) {
-                if (! empty($_REQUEST['tbl_type'])) {
+            if (!empty($_REQUEST['tbl_group']) || !empty($_REQUEST['tbl_type'])) {
+                if (!empty($_REQUEST['tbl_type'])) {
                     // only tables for selected type
                     $tbl_type = $_REQUEST['tbl_type'];
                 }
-                if (! empty($_REQUEST['tbl_group'])) {
+                if (!empty($_REQUEST['tbl_group'])) {
                     // only tables for selected group
                     $tbl_group = $_REQUEST['tbl_group'];
                     // include the table with the exact name of the group if such
                     // exists
                     $groupTable = $dbi->getTablesFull(
-                        $db,
-                        $tbl_group,
-                        false,
-                        $limit_offset,
-                        $limit_count,
-                        $sort,
-                        $sort_order,
-                        $tbl_type
+                            $db,
+                            $tbl_group,
+                            false,
+                            $limit_offset,
+                            $limit_count,
+                            $sort,
+                            $sort_order,
+                            $tbl_type
                     );
                     $groupWithSeparator = $tbl_group
-                        . $GLOBALS['cfg']['NavigationTreeTableSeparator'];
+                            . $GLOBALS['cfg']['NavigationTreeTableSeparator'];
                 }
             } else {
                 // all tables in db
@@ -2811,30 +2739,30 @@ class Util
                 //  (needed for proper working of the MaxTableList feature)
                 $tables = $dbi->getTables($db);
                 $total_num_tables = count($tables);
-                if (! (isset($sub_part) && $sub_part === '_export')) {
+                if (!(isset($sub_part) && $sub_part === '_export')) {
                     // fetch the details for a possible limited subset
                     $limit_offset = $pos;
                     $limit_count = true;
                 }
             }
             $tables = array_merge(
-                $groupTable,
-                $dbi->getTablesFull(
-                    $db,
-                    $groupWithSeparator !== false ? $groupWithSeparator : '',
-                    $groupWithSeparator !== false,
-                    $limit_offset,
-                    $limit_count,
-                    $sort,
-                    $sort_order,
-                    $tbl_type
-                )
+                    $groupTable,
+                    $dbi->getTablesFull(
+                            $db,
+                            $groupWithSeparator !== false ? $groupWithSeparator : '',
+                            $groupWithSeparator !== false,
+                            $limit_offset,
+                            $limit_count,
+                            $sort,
+                            $sort_order,
+                            $tbl_type
+                    )
             );
         }
 
         $num_tables = count($tables);
         //  (needed for proper working of the MaxTableList feature)
-        if (! isset($total_num_tables)) {
+        if (!isset($total_num_tables)) {
             $total_num_tables = $num_tables;
         }
 
@@ -2868,8 +2796,7 @@ class Util
      *
      * @return array list of tables
      */
-    public static function getTablesWhenOpen($db, $db_info_result): array
-    {
+    public static function getTablesWhenOpen($db, $db_info_result): array {
         global $dbi;
 
         $sot_cache = [];
@@ -2887,15 +2814,15 @@ class Util
             if (Core::isValid($_REQUEST['tbl_group'])) {
                 $group = self::escapeMysqlWildcards($_REQUEST['tbl_group']);
                 $groupWithSeparator = self::escapeMysqlWildcards(
-                    $_REQUEST['tbl_group']
-                    . $GLOBALS['cfg']['NavigationTreeTableSeparator']
+                                $_REQUEST['tbl_group']
+                                . $GLOBALS['cfg']['NavigationTreeTableSeparator']
                 );
                 $tblGroupSql .= ' WHERE ('
-                    . self::backquote('Tables_in_' . $db)
-                    . " LIKE '" . $groupWithSeparator . "%'"
-                    . ' OR '
-                    . self::backquote('Tables_in_' . $db)
-                    . " LIKE '" . $group . "')";
+                        . self::backquote('Tables_in_' . $db)
+                        . " LIKE '" . $groupWithSeparator . "%'"
+                        . ' OR '
+                        . self::backquote('Tables_in_' . $db)
+                        . " LIKE '" . $group . "')";
                 $whereAdded = true;
             }
             if (Core::isValid($_REQUEST['tbl_type'], ['table', 'view'])) {
@@ -2907,16 +2834,16 @@ class Util
                 }
             }
             $db_info_result = $dbi->query(
-                'SHOW FULL TABLES FROM ' . self::backquote($db) . $tblGroupSql,
-                DatabaseInterface::CONNECT_USER,
-                DatabaseInterface::QUERY_STORE
+                    'SHOW FULL TABLES FROM ' . self::backquote($db) . $tblGroupSql,
+                    DatabaseInterface::CONNECT_USER,
+                    DatabaseInterface::QUERY_STORE
             );
             unset($tblGroupSql, $whereAdded);
 
             if ($db_info_result && $dbi->numRows($db_info_result) > 0) {
                 $names = [];
                 while ($tmp = $dbi->fetchRow($db_info_result)) {
-                    if (! isset($sot_cache[$tmp[0]])) {
+                    if (!isset($sot_cache[$tmp[0]])) {
                         $names[] = $tmp[0];
                     } else { // table in use
                         $tables[$tmp[0]] = [
@@ -2930,8 +2857,8 @@ class Util
                 }
                 if (count($names) > 0) {
                     $tables = array_merge(
-                        $tables,
-                        $dbi->getTablesFull($db, $names)
+                            $tables,
+                            $dbi->getTablesFull($db, $names)
                     );
                 }
                 if ($GLOBALS['cfg']['NaturalOrder']) {
@@ -2951,8 +2878,7 @@ class Util
      *
      * @param string $extension mysql extension to check
      */
-    public static function checkDbExtension(string $extension = 'mysqli'): bool
-    {
+    public static function checkDbExtension(string $extension = 'mysqli'): bool {
         return function_exists($extension . '_connect');
     }
 
@@ -2961,8 +2887,7 @@ class Util
      *
      * @return string[]
      */
-    public static function listPHPExtensions(): array
-    {
+    public static function listPHPExtensions(): array {
         $result = [];
         if (self::checkDbExtension('mysqli')) {
             $result[] = 'mysqli';
@@ -2984,8 +2909,7 @@ class Util
      *
      * @param mixed $value Value to convert
      */
-    public static function requestString($value): string
-    {
+    public static function requestString($value): string {
         while (is_array($value) || is_object($value)) {
             if (is_object($value)) {
                 $value = (array) $value;
@@ -3002,8 +2926,7 @@ class Util
      * @param int  $length Length of string
      * @param bool $asHex  (optional) Send the result as hex
      */
-    public static function generateRandom(int $length, bool $asHex = false): string
-    {
+    public static function generateRandom(int $length, bool $asHex = false): string {
         $result = '';
         if (class_exists(Random::class)) {
             $random_func = [
@@ -3035,8 +2958,7 @@ class Util
      *
      * @return string
      */
-    public static function date($format)
-    {
+    public static function date($format) {
         if (defined('TESTSUITE')) {
             return '0000-00-00 00:00:00';
         }
@@ -3047,10 +2969,9 @@ class Util
     /**
      * Wrapper around php's set_time_limit
      */
-    public static function setTimeLimit(): void
-    {
+    public static function setTimeLimit(): void {
         // The function can be disabled in php.ini
-        if (! function_exists('set_time_limit')) {
+        if (!function_exists('set_time_limit')) {
             return;
         }
 
@@ -3066,14 +2987,13 @@ class Util
      *
      * @return mixed Searched value
      */
-    public static function getValueByKey(array $array, $path, $default = null)
-    {
+    public static function getValueByKey(array $array, $path, $default = null) {
         if (is_string($path)) {
             $path = explode('.', $path);
         }
         $p = array_shift($path);
         while (isset($p)) {
-            if (! isset($array[$p])) {
+            if (!isset($array[$p])) {
                 return $default;
             }
             $array = $array[$p];
@@ -3093,8 +3013,7 @@ class Util
      *
      * @return string Link to be displayed in the table header
      */
-    public static function sortableTableHeader($title, $sort, $initialSortOrder = 'ASC')
-    {
+    public static function sortableTableHeader($title, $sort, $initialSortOrder = 'ASC') {
         $requestedSort = 'table';
         $requestedSortOrder = $futureSortOrder = $initialSortOrder;
         // If the user requested a sort
@@ -3113,20 +3032,20 @@ class Util
                 $futureSortOrder = 'DESC';
                 // current sort order is ASC
                 $orderImg = ' ' . Generator::getImage(
-                    's_asc',
-                    __('Ascending'),
-                    [
-                        'class' => 'sort_arrow',
-                        'title' => '',
-                    ]
+                                's_asc',
+                                __('Ascending'),
+                                [
+                                    'class' => 'sort_arrow',
+                                    'title' => '',
+                                ]
                 );
                 $orderImg .= ' ' . Generator::getImage(
-                    's_desc',
-                    __('Descending'),
-                    [
-                        'class' => 'sort_arrow hide',
-                        'title' => '',
-                    ]
+                                's_desc',
+                                __('Descending'),
+                                [
+                                    'class' => 'sort_arrow hide',
+                                    'title' => '',
+                                ]
                 );
                 // but on mouse over, show the reverse order (DESC)
                 $orderLinkParams['onmouseover'] = "$('.sort_arrow').toggle();";
@@ -3136,20 +3055,20 @@ class Util
                 $futureSortOrder = 'ASC';
                 // current sort order is DESC
                 $orderImg = ' ' . Generator::getImage(
-                    's_asc',
-                    __('Ascending'),
-                    [
-                        'class' => 'sort_arrow hide',
-                        'title' => '',
-                    ]
+                                's_asc',
+                                __('Ascending'),
+                                [
+                                    'class' => 'sort_arrow hide',
+                                    'title' => '',
+                                ]
                 );
                 $orderImg .= ' ' . Generator::getImage(
-                    's_desc',
-                    __('Descending'),
-                    [
-                        'class' => 'sort_arrow',
-                        'title' => '',
-                    ]
+                                's_desc',
+                                __('Descending'),
+                                [
+                                    'class' => 'sort_arrow',
+                                    'title' => '',
+                                ]
                 );
                 // but on mouse over, show the reverse order (ASC)
                 $orderLinkParams['onmouseover'] = "$('.sort_arrow').toggle();";
@@ -3167,7 +3086,7 @@ class Util
         if (Core::isValid($_REQUEST['tbl_type'], ['view', 'table'])) {
             $urlParams['tbl_type'] = $_REQUEST['tbl_type'];
         }
-        if (! empty($_REQUEST['tbl_group'])) {
+        if (!empty($_REQUEST['tbl_group'])) {
             $urlParams['tbl_group'] = $_REQUEST['tbl_group'];
         }
 
@@ -3181,8 +3100,7 @@ class Util
      *
      * @param mixed $input input to check
      */
-    public static function isInteger($input): bool
-    {
+    public static function isInteger($input): bool {
         return ctype_digit((string) $input);
     }
 
@@ -3193,8 +3111,7 @@ class Util
      *
      * @return string the protocol http/https
      */
-    public static function getProtoFromForwardedHeader(string $headerContents): string
-    {
+    public static function getProtoFromForwardedHeader(string $headerContents): string {
         if (strpos($headerContents, '=') !== false) {// does not contain any equal sign
             $hops = explode(',', $headerContents);
             $parts = explode(';', $hops[0]);
@@ -3205,9 +3122,9 @@ class Util
                 }
 
                 [
-                    $keyName,
-                    $value,
-                ] = $keyValueArray;
+                        $keyName,
+                        $value,
+                        ] = $keyValueArray;
                 $value = trim(strtolower($value));
                 if (strtolower(trim($keyName)) === 'proto' && in_array($value, ['http', 'https'])) {
                     return $value;
@@ -3221,8 +3138,7 @@ class Util
     /**
      * Check if error reporting is available
      */
-    public static function isErrorReportingAvailable(): bool
-    {
+    public static function isErrorReportingAvailable(): bool {
         // issue #16256 - PHP 7.x does not return false for a core function
         if (PHP_MAJOR_VERSION < 8) {
             $disabled = ini_get('disable_functions');
@@ -3232,10 +3148,11 @@ class Util
                     return trim($part);
                 }, $disabled);
 
-                return ! in_array('error_reporting', $disabled);
+                return !in_array('error_reporting', $disabled);
             }
         }
 
         return function_exists('error_reporting');
     }
+
 }

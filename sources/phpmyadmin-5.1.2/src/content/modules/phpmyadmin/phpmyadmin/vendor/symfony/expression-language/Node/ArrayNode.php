@@ -18,17 +18,15 @@ use Symfony\Component\ExpressionLanguage\Compiler;
  *
  * @internal
  */
-class ArrayNode extends Node
-{
+class ArrayNode extends Node {
+
     protected $index;
 
-    public function __construct()
-    {
+    public function __construct() {
         $this->index = -1;
     }
 
-    public function addElement(Node $value, Node $key = null)
-    {
+    public function addElement(Node $value, Node $key = null) {
         if (null === $key) {
             $key = new ConstantNode(++$this->index);
         }
@@ -39,15 +37,13 @@ class ArrayNode extends Node
     /**
      * Compiles the node to PHP.
      */
-    public function compile(Compiler $compiler)
-    {
+    public function compile(Compiler $compiler) {
         $compiler->raw('[');
         $this->compileArguments($compiler);
         $compiler->raw(']');
     }
 
-    public function evaluate($functions, $values)
-    {
+    public function evaluate($functions, $values) {
         $result = [];
         foreach ($this->getKeyValuePairs() as $pair) {
             $result[$pair['key']->evaluate($functions, $values)] = $pair['value']->evaluate($functions, $values);
@@ -56,8 +52,7 @@ class ArrayNode extends Node
         return $result;
     }
 
-    public function toArray()
-    {
+    public function toArray() {
         $value = [];
         foreach ($this->getKeyValuePairs() as $pair) {
             $value[$pair['key']->attributes['value']] = $pair['value'];
@@ -86,8 +81,7 @@ class ArrayNode extends Node
         return $array;
     }
 
-    protected function getKeyValuePairs()
-    {
+    protected function getKeyValuePairs() {
         $pairs = [];
         foreach (array_chunk($this->nodes, 2) as $pair) {
             $pairs[] = ['key' => $pair[0], 'value' => $pair[1]];
@@ -96,8 +90,7 @@ class ArrayNode extends Node
         return $pairs;
     }
 
-    protected function compileArguments(Compiler $compiler, $withKeys = true)
-    {
+    protected function compileArguments(Compiler $compiler, $withKeys = true) {
         $first = true;
         foreach ($this->getKeyValuePairs() as $pair) {
             if (!$first) {
@@ -107,12 +100,13 @@ class ArrayNode extends Node
 
             if ($withKeys) {
                 $compiler
-                    ->compile($pair['key'])
-                    ->raw(' => ')
+                        ->compile($pair['key'])
+                        ->raw(' => ')
                 ;
             }
 
             $compiler->compile($pair['value']);
         }
     }
+
 }

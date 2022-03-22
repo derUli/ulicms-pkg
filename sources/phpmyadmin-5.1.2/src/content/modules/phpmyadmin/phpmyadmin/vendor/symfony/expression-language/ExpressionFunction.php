@@ -28,8 +28,8 @@ namespace Symfony\Component\ExpressionLanguage;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class ExpressionFunction
-{
+class ExpressionFunction {
+
     private $name;
     private $compiler;
     private $evaluator;
@@ -39,25 +39,21 @@ class ExpressionFunction
      * @param callable $compiler  A callable able to compile the function
      * @param callable $evaluator A callable able to evaluate the function
      */
-    public function __construct(string $name, callable $compiler, callable $evaluator)
-    {
+    public function __construct(string $name, callable $compiler, callable $evaluator) {
         $this->name = $name;
         $this->compiler = $compiler;
         $this->evaluator = $evaluator;
     }
 
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
-    public function getCompiler()
-    {
+    public function getCompiler() {
         return $this->compiler;
     }
 
-    public function getEvaluator()
-    {
+    public function getEvaluator() {
         return $this->evaluator;
     }
 
@@ -73,8 +69,7 @@ class ExpressionFunction
      * @throws \InvalidArgumentException if given PHP function name is in namespace
      *                                   and expression function name is not defined
      */
-    public static function fromPhp($phpFunctionName, $expressionFunctionName = null)
-    {
+    public static function fromPhp($phpFunctionName, $expressionFunctionName = null) {
         $phpFunctionName = ltrim($phpFunctionName, '\\');
         if (!\function_exists($phpFunctionName)) {
             throw new \InvalidArgumentException(sprintf('PHP function "%s" does not exist.', $phpFunctionName));
@@ -95,4 +90,5 @@ class ExpressionFunction
 
         return new self($expressionFunctionName ?: end($parts), $compiler, $evaluator);
     }
+
 }

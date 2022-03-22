@@ -2,10 +2,10 @@
     <div>
         <label for="pos">{% trans "Start row:" %}</label>
         <input type="number" name="pos" min="0" required="required"
-            {% if unlim_num_rows > 0 -%}
-                max="{{ unlim_num_rows - 1 }}"
-            {%- endif %}
-            value="{{ pos }}">
+               {% if unlim_num_rows > 0 -%}
+                   max="{{ unlim_num_rows - 1 }}"
+               {%- endif %}
+               value="{{ pos }}">
 
         <label for="session_max_rows">{% trans "Number of rows:" %}</label>
         <input type="number" name="session_max_rows" min="1"

@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Functionality for the navigation tree
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Navigation\Nodes;
@@ -14,13 +14,12 @@ use PhpMyAdmin\Url;
 /**
  * Represents a container for functions nodes in the navigation tree
  */
-class NodeFunctionContainer extends NodeDatabaseChildContainer
-{
+class NodeFunctionContainer extends NodeDatabaseChildContainer {
+
     /**
      * Initialises the class
      */
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct(__('Functions'), Node::CONTAINER);
         $this->icon = Generator::getImage('b_routines', __('Functions'));
         $this->links = [
@@ -37,8 +36,8 @@ class NodeFunctionContainer extends NodeDatabaseChildContainer
 
         $newLabel = _pgettext('Create new function', 'New');
         $new = NodeFactory::getInstanceForNewNode(
-            $newLabel,
-            'new_function italics'
+                        $newLabel,
+                        'new_function italics'
         );
         $new->icon = Generator::getImage('b_routine_add', $newLabel);
         $new->links = [
@@ -55,4 +54,5 @@ class NodeFunctionContainer extends NodeDatabaseChildContainer
         ];
         $this->addChild($new);
     }
+
 }

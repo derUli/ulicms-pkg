@@ -19,13 +19,12 @@ use Symfony\Component\Config\Definition\NodeInterface;
  *
  * @author Johannes M. Schmitt <schmittjoh@gmail.com>
  */
-class TreeBuilder implements NodeParentInterface
-{
+class TreeBuilder implements NodeParentInterface {
+
     protected $tree;
     protected $root;
 
-    public function __construct(string $name = null, string $type = 'array', NodeBuilder $builder = null)
-    {
+    public function __construct(string $name = null, string $type = 'array', NodeBuilder $builder = null) {
         if (null === $name) {
             @trigger_error('A tree builder without a root node is deprecated since Symfony 4.2 and will not be supported anymore in 5.0.', \E_USER_DEPRECATED);
         } else {
@@ -46,8 +45,7 @@ class TreeBuilder implements NodeParentInterface
      *
      * @deprecated since Symfony 4.3, pass the root name to the constructor instead
      */
-    public function root($name, $type = 'array', NodeBuilder $builder = null)
-    {
+    public function root($name, $type = 'array', NodeBuilder $builder = null) {
         @trigger_error(sprintf('The "%s()" method called for the "%s" configuration is deprecated since Symfony 4.3, pass the root name to the constructor instead.', __METHOD__, $name), \E_USER_DEPRECATED);
 
         $builder = $builder ?? new NodeBuilder();
@@ -58,8 +56,7 @@ class TreeBuilder implements NodeParentInterface
     /**
      * @return NodeDefinition|ArrayNodeDefinition The root node (as an ArrayNodeDefinition when the type is 'array')
      */
-    public function getRootNode(): NodeDefinition
-    {
+    public function getRootNode(): NodeDefinition {
         if (null === $this->root) {
             throw new \RuntimeException(sprintf('Calling "%s()" before creating the root node is not supported, migrate to the new constructor signature instead.', __METHOD__));
         }
@@ -74,8 +71,7 @@ class TreeBuilder implements NodeParentInterface
      *
      * @throws \RuntimeException
      */
-    public function buildTree()
-    {
+    public function buildTree() {
         $this->assertTreeHasRootNode();
         if (null !== $this->tree) {
             return $this->tree;
@@ -84,8 +80,7 @@ class TreeBuilder implements NodeParentInterface
         return $this->tree = $this->root->getNode(true);
     }
 
-    public function setPathSeparator(string $separator)
-    {
+    public function setPathSeparator(string $separator) {
         $this->assertTreeHasRootNode();
 
         // unset last built as changing path separator changes all nodes
@@ -97,10 +92,10 @@ class TreeBuilder implements NodeParentInterface
     /**
      * @throws \RuntimeException if root node is not defined
      */
-    private function assertTreeHasRootNode()
-    {
+    private function assertTreeHasRootNode() {
         if (null === $this->root) {
             throw new TreeWithoutRootNodeException('The configuration tree has no root node.');
         }
     }
+
 }

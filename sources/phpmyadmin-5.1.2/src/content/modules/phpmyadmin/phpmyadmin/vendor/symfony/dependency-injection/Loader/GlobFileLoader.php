@@ -16,13 +16,12 @@ namespace Symfony\Component\DependencyInjection\Loader;
  *
  * @author Nicolas Grekas <p@tchwork.com>
  */
-class GlobFileLoader extends FileLoader
-{
+class GlobFileLoader extends FileLoader {
+
     /**
      * {@inheritdoc}
      */
-    public function load($resource, $type = null)
-    {
+    public function load($resource, $type = null) {
         foreach ($this->glob($resource, false, $globResource) as $path => $info) {
             $this->import($path);
         }
@@ -33,8 +32,8 @@ class GlobFileLoader extends FileLoader
     /**
      * {@inheritdoc}
      */
-    public function supports($resource, $type = null)
-    {
+    public function supports($resource, $type = null) {
         return 'glob' === $type;
     }
+
 }

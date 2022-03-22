@@ -7,8 +7,8 @@ namespace PhpMyAdmin;
 /**
  * Index column wrapper
  */
-class IndexColumn
-{
+class IndexColumn {
+
     /** @var string The column name */
     private $name = '';
 
@@ -58,24 +58,21 @@ class IndexColumn
     /**
      * @param array $params an array containing the parameters of the index column
      */
-    public function __construct(array $params = [])
-    {
+    public function __construct(array $params = []) {
         $this->set($params);
     }
 
     /**
      * If the Index has an expression
      */
-    public function hasExpression(): bool
-    {
+    public function hasExpression(): bool {
         return $this->expression !== null;
     }
 
     /**
      * The Index expression if it has one
      */
-    public function getExpression(): ?string
-    {
+    public function getExpression(): ?string {
         return $this->expression;
     }
 
@@ -86,8 +83,7 @@ class IndexColumn
      *
      * @return void
      */
-    public function set(array $params)
-    {
+    public function set(array $params) {
         if (isset($params['Column_name'])) {
             $this->name = $params['Column_name'];
         }
@@ -106,7 +102,7 @@ class IndexColumn
         if (isset($params['Expression'])) {
             $this->expression = $params['Expression'];
         }
-        if (! isset($params['Null'])) {
+        if (!isset($params['Null'])) {
             return;
         }
 
@@ -118,8 +114,7 @@ class IndexColumn
      *
      * @return string column name
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -128,8 +123,7 @@ class IndexColumn
      *
      * @return string column collation
      */
-    public function getCollation()
-    {
+    public function getCollation() {
         return $this->collation;
     }
 
@@ -138,8 +132,7 @@ class IndexColumn
      *
      * @return int cardinality of the column
      */
-    public function getCardinality()
-    {
+    public function getCardinality() {
         return $this->cardinality;
     }
 
@@ -151,10 +144,9 @@ class IndexColumn
      * @return string nullability of the column. True/false or Yes/No depending
      *                on the value of the $as_text parameter
      */
-    public function getNull($as_text = false): string
-    {
+    public function getNull($as_text = false): string {
         if ($as_text) {
-            if (! $this->null || $this->null === 'NO') {
+            if (!$this->null || $this->null === 'NO') {
                 return __('No');
             }
 
@@ -169,8 +161,7 @@ class IndexColumn
      *
      * @return int sequence number of the column in the index
      */
-    public function getSeqInIndex()
-    {
+    public function getSeqInIndex() {
         return $this->seqInIndex;
     }
 
@@ -180,8 +171,7 @@ class IndexColumn
      *
      * @return int the number of indexed characters
      */
-    public function getSubPart()
-    {
+    public function getSubPart() {
         return $this->subPart;
     }
 
@@ -190,14 +180,14 @@ class IndexColumn
      *
      * @return array an array containing the properties of the index column
      */
-    public function getCompareData()
-    {
+    public function getCompareData() {
         return [
-            'Column_name'   => $this->name,
-            'Seq_in_index'  => $this->seqInIndex,
-            'Collation'     => $this->collation,
-            'Sub_part'      => $this->subPart,
-            'Null'          => $this->null,
+            'Column_name' => $this->name,
+            'Seq_in_index' => $this->seqInIndex,
+            'Collation' => $this->collation,
+            'Sub_part' => $this->subPart,
+            'Null' => $this->null,
         ];
     }
+
 }

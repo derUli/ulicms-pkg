@@ -20,8 +20,8 @@ use Symfony\Component\DependencyInjection\Definition;
  *
  * @author Marco Pivetta <ocramius@gmail.com>
  */
-interface InstantiatorInterface
-{
+interface InstantiatorInterface {
+
     /**
      * Instantiates a proxy object.
      *

@@ -19,13 +19,12 @@ use Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class IniFileLoader extends FileLoader
-{
+class IniFileLoader extends FileLoader {
+
     /**
      * {@inheritdoc}
      */
-    public function load($resource, $type = null)
-    {
+    public function load($resource, $type = null) {
         $path = $this->locator->locate($resource);
 
         $this->container->fileExists($path);
@@ -49,8 +48,7 @@ class IniFileLoader extends FileLoader
     /**
      * {@inheritdoc}
      */
-    public function supports($resource, $type = null)
-    {
+    public function supports($resource, $type = null) {
         if (!\is_string($resource)) {
             return false;
         }
@@ -69,8 +67,7 @@ class IniFileLoader extends FileLoader
      *
      * @return mixed
      */
-    private function phpize(string $value)
-    {
+    private function phpize(string $value) {
         // trim on the right as comments removal keep whitespaces
         if ($value !== $v = rtrim($value)) {
             $value = '""' === substr_replace($v, '', 1, -1) ? substr($v, 1, -1) : $v;
@@ -85,8 +82,8 @@ class IniFileLoader extends FileLoader
             case 'no' === $lowercaseValue || 'off' === $lowercaseValue || 'none' === $lowercaseValue:
                 return false;
             case isset($value[1]) && (
-                ("'" === $value[0] && "'" === $value[\strlen($value) - 1]) ||
-                ('"' === $value[0] && '"' === $value[\strlen($value) - 1])
+            ("'" === $value[0] && "'" === $value[\strlen($value) - 1]) ||
+            ('"' === $value[0] && '"' === $value[\strlen($value) - 1])
             ):
                 // quoted string
                 return substr($value, 1, -1);
@@ -94,4 +91,5 @@ class IniFileLoader extends FileLoader
                 return XmlUtils::phpize($value);
         }
     }
+
 }

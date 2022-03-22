@@ -11,8 +11,8 @@
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator\Traits;
 
-trait ConfiguratorTrait
-{
+trait ConfiguratorTrait {
+
     /**
      * Sets a configurator to call after the service is fully initialized.
      *
@@ -20,10 +20,10 @@ trait ConfiguratorTrait
      *
      * @return $this
      */
-    final public function configurator($configurator): self
-    {
+    final public function configurator($configurator): self {
         $this->definition->setConfigurator(static::processValue($configurator, true));
 
         return $this;
     }
+
 }

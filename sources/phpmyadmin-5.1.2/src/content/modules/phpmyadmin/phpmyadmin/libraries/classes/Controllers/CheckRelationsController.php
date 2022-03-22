@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Displays status of phpMyAdmin configuration storage
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Controllers;
@@ -11,22 +11,20 @@ use PhpMyAdmin\Relation;
 use PhpMyAdmin\Response;
 use PhpMyAdmin\Template;
 
-class CheckRelationsController extends AbstractController
-{
+class CheckRelationsController extends AbstractController {
+
     /** @var Relation */
     private $relation;
 
     /**
      * @param Response $response
      */
-    public function __construct($response, Template $template, Relation $relation)
-    {
+    public function __construct($response, Template $template, Relation $relation) {
         parent::__construct($response, $template);
         $this->relation = $relation;
     }
 
-    public function index(): void
-    {
+    public function index(): void {
         global $db;
 
         $params = [
@@ -57,4 +55,5 @@ class CheckRelationsController extends AbstractController
         $cfgRelation = $this->relation->getRelationsParam();
         $this->response->addHTML($this->relation->getRelationsParamDiagnostic($cfgRelation));
     }
+
 }

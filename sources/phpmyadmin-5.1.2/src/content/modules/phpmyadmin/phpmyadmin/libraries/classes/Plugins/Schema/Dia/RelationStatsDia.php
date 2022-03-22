@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Contains PhpMyAdmin\Plugins\Schema\Dia\RelationStatsDia class
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Plugins\Schema\Dia;
@@ -22,8 +22,8 @@ use function shuffle;
  *
  * @name    Relation_Stats_Dia
  */
-class RelationStatsDia
-{
+class RelationStatsDia {
+
     /** @var Dia */
     protected $diagram;
 
@@ -64,14 +64,14 @@ class RelationStatsDia
      * @param string        $foreign_field The relation field in the foreign table
      */
     public function __construct(
-        $diagram,
-        $master_table,
-        $master_field,
-        $foreign_table,
-        $foreign_field
+            $diagram,
+            $master_table,
+            $master_field,
+            $foreign_table,
+            $foreign_field
     ) {
         $this->diagram = $diagram;
-        $src_pos  = $this->getXy($master_table, $master_field);
+        $src_pos = $this->getXy($master_table, $master_field);
         $dest_pos = $this->getXy($foreign_table, $foreign_field);
         $this->srcConnPointsLeft = $src_pos[0];
         $this->srcConnPointsRight = $src_pos[1];
@@ -97,8 +97,7 @@ class RelationStatsDia
      *
      * @access private
      */
-    private function getXy($table, $column)
-    {
+    private function getXy($table, $column) {
         $pos = array_search($column, $table->fields);
         // left, right, position
         $value = 12;
@@ -138,14 +137,13 @@ class RelationStatsDia
      *
      * @access public
      */
-    public function relationDraw($showColor)
-    {
+    public function relationDraw($showColor) {
         ++DiaRelationSchema::$objectId;
         /*
          * if source connection points and destination connection
-        * points are same then return it false and don't draw that
-        * relation
-        */
+         * points are same then return it false and don't draw that
+         * relation
+         */
         if ($this->srcConnPointsRight == $this->destConnPointsRight) {
             if ($this->srcConnPointsLeft == $this->destConnPointsLeft) {
                 return false;
@@ -165,8 +163,8 @@ class RelationStatsDia
         }
 
         $this->diagram->writeRaw(
-            '<dia:object type="Database - Reference" version="0" id="'
-            . DiaRelationSchema::$objectId . '">
+                '<dia:object type="Database - Reference" version="0" id="'
+                . DiaRelationSchema::$objectId . '">
             <dia:attribute name="obj_pos">
                 <dia:point val="3.27,18.9198"/>
             </dia:attribute>
@@ -233,13 +231,14 @@ class RelationStatsDia
             </dia:attribute>
             <dia:connections>
                 <dia:connection handle="0" to="'
-            . $this->masterTableId . '" connection="'
-            . $this->srcConnPointsRight . '"/>
+                . $this->masterTableId . '" connection="'
+                . $this->srcConnPointsRight . '"/>
                 <dia:connection handle="1" to="'
-            . $this->foreignTableId . '" connection="'
-            . $this->destConnPointsRight . '"/>
+                . $this->foreignTableId . '" connection="'
+                . $this->destConnPointsRight . '"/>
             </dia:connections>
             </dia:object>'
         );
     }
+
 }

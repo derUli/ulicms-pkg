@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Error related utilities.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\SqlParser\Utils;
@@ -11,15 +11,14 @@ use PhpMyAdmin\SqlParser\Exceptions\LexerException;
 use PhpMyAdmin\SqlParser\Exceptions\ParserException;
 use PhpMyAdmin\SqlParser\Lexer;
 use PhpMyAdmin\SqlParser\Parser;
-
 use function htmlspecialchars;
 use function sprintf;
 
 /**
  * Error related utilities.
  */
-class Error
-{
+class Error {
+
     /**
      * Gets the errors of a lexer and a parser.
      *
@@ -32,8 +31,7 @@ class Error
      *               `$err[3]` holds the position of the string.
      *               (i.e. `[$msg, $code, $str, $pos]`)
      */
-    public static function get($objs)
-    {
+    public static function get($objs) {
         $ret = [];
 
         foreach ($objs as $obj) {
@@ -78,23 +76,24 @@ class Error
      * @return array
      */
     public static function format(
-        $errors,
-        $format = '#%1$d: %2$s (near "%4$s" at position %5$d)'
+            $errors,
+            $format = '#%1$d: %2$s (near "%4$s" at position %5$d)'
     ) {
         $ret = [];
 
         $i = 0;
         foreach ($errors as $key => $err) {
             $ret[$key] = sprintf(
-                $format,
-                ++$i,
-                $err[0],
-                $err[1],
-                htmlspecialchars((string) $err[2]),
-                $err[3]
+                    $format,
+                    ++$i,
+                    $err[0],
+                    $err[1],
+                    htmlspecialchars((string) $err[2]),
+                    $err[3]
             );
         }
 
         return $ret;
     }
+
 }

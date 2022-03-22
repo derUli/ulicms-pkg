@@ -1,14 +1,14 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Williamdes\MariaDBMySQLKBS;
 
 use stdClass;
 use JsonSerializable;
 
-class KBDocumentation extends stdClass implements JsonSerializable
-{
+class KBDocumentation extends stdClass implements JsonSerializable {
+
     /**
      * The URL
      *
@@ -29,8 +29,7 @@ class KBDocumentation extends stdClass implements JsonSerializable
      * @param string      $url    The url
      * @param string|null $anchor The anchor
      */
-    public function __construct(string $url, ?string $anchor = null)
-    {
+    public function __construct(string $url, ?string $anchor = null) {
         $this->url = $url;
         if ($anchor !== null) {
             $this->anchor = $anchor;
@@ -42,8 +41,7 @@ class KBDocumentation extends stdClass implements JsonSerializable
      *
      * @return string
      */
-    public function getUrl(): string
-    {
+    public function getUrl(): string {
         return $this->url;
     }
 
@@ -52,8 +50,7 @@ class KBDocumentation extends stdClass implements JsonSerializable
      *
      * @return string|null
      */
-    public function getAnchor(): ?string
-    {
+    public function getAnchor(): ?string {
         return $this->anchor;
     }
 
@@ -63,9 +60,8 @@ class KBDocumentation extends stdClass implements JsonSerializable
      *
      * @return array<string,string>
      */
-    public function jsonSerialize(): array
-    {
-        $outObj        = [];
+    public function jsonSerialize(): array {
+        $outObj = [];
         $outObj['url'] = $this->url;
         if ($this->anchor !== null) {
             $outObj['anchor'] = $this->anchor;

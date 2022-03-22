@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Front controller for config view / download and clear
  */
-
 declare(strict_types=1);
 
 use PhpMyAdmin\Config\Forms\Setup\ConfigForm;
@@ -11,7 +11,7 @@ use PhpMyAdmin\Response;
 use PhpMyAdmin\Setup\ConfigGenerator;
 use PhpMyAdmin\Url;
 
-if (! defined('ROOT_PATH')) {
+if (!defined('ROOT_PATH')) {
     // phpcs:disable PSR1.Files.SideEffects
     define('ROOT_PATH', dirname(__DIR__) . DIRECTORY_SEPARATOR);
     // phpcs:enable

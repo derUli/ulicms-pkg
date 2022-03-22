@@ -18,8 +18,8 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  *
  * @author Johannes M. Schmitt <schmittjoh@gmail.com>
  */
-interface CompilerPassInterface
-{
+interface CompilerPassInterface {
+
     /**
      * You can modify the container here before it is dumped to PHP code.
      */

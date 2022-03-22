@@ -17,8 +17,8 @@ use PhpMyAdmin\Util;
 /**
  * View manipulations
  */
-class ViewOperationsController extends AbstractController
-{
+class ViewOperationsController extends AbstractController {
+
     /** @var Operations */
     private $operations;
 
@@ -29,15 +29,13 @@ class ViewOperationsController extends AbstractController
      * @param Response          $response
      * @param DatabaseInterface $dbi
      */
-    public function __construct($response, Template $template, Operations $operations, $dbi)
-    {
+    public function __construct($response, Template $template, Operations $operations, $dbi) {
         parent::__construct($response, $template);
         $this->operations = $operations;
         $this->dbi = $dbi;
     }
 
-    public function index(): void
-    {
+    public function index(): void {
         global $sql_query, $url_params, $reload, $result, $warning_messages;
         global $db, $table, $cfg, $err_url;
 
@@ -81,7 +79,7 @@ class ViewOperationsController extends AbstractController
             if (empty($message->getString())) {
                 if ($result) {
                     $message->addText(
-                        __('Your SQL query has been executed successfully.')
+                            __('Your SQL query has been executed successfully.')
                     );
                 } else {
                     $message->addText(__('Error'));
@@ -89,14 +87,14 @@ class ViewOperationsController extends AbstractController
                 // $result should exist, regardless of $_message
                 $type = $result ? 'success' : 'error';
             }
-            if (! empty($warning_messages)) {
+            if (!empty($warning_messages)) {
                 $message->addMessagesString($warning_messages);
                 $message->isError(true);
             }
             $this->response->addHTML(Generator::getMessage(
-                $message,
-                $sql_query,
-                $type
+                            $message,
+                            $sql_query,
+                            $type
             ));
         }
 
@@ -106,4 +104,5 @@ class ViewOperationsController extends AbstractController
             'url_params' => $url_params,
         ]);
     }
+
 }

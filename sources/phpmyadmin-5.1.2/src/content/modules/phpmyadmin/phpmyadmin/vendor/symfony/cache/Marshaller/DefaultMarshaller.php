@@ -18,12 +18,11 @@ use Symfony\Component\Cache\Exception\CacheException;
  *
  * @author Nicolas Grekas <p@tchwork.com>
  */
-class DefaultMarshaller implements MarshallerInterface
-{
+class DefaultMarshaller implements MarshallerInterface {
+
     private $useIgbinarySerialize = true;
 
-    public function __construct(bool $useIgbinarySerialize = null)
-    {
+    public function __construct(bool $useIgbinarySerialize = null) {
         if (null === $useIgbinarySerialize) {
             $useIgbinarySerialize = \extension_loaded('igbinary') && (\PHP_VERSION_ID < 70400 || version_compare('3.1.6', phpversion('igbinary'), '<='));
         } elseif ($useIgbinarySerialize && (!\extension_loaded('igbinary') || (\PHP_VERSION_ID >= 70400 && version_compare('3.1.6', phpversion('igbinary'), '>')))) {
@@ -35,8 +34,7 @@ class DefaultMarshaller implements MarshallerInterface
     /**
      * {@inheritdoc}
      */
-    public function marshall(array $values, ?array &$failed): array
-    {
+    public function marshall(array $values, ?array &$failed): array {
         $serialized = $failed = [];
 
         foreach ($values as $id => $value) {
@@ -57,8 +55,7 @@ class DefaultMarshaller implements MarshallerInterface
     /**
      * {@inheritdoc}
      */
-    public function unmarshall(string $value)
-    {
+    public function unmarshall(string $value) {
         if ('b:0;' === $value) {
             return false;
         }
@@ -69,7 +66,7 @@ class DefaultMarshaller implements MarshallerInterface
         if ($value === ($igbinaryNull ?? $igbinaryNull = \extension_loaded('igbinary') ? igbinary_serialize(null) : false)) {
             return null;
         }
-        $unserializeCallbackHandler = ini_set('unserialize_callback_func', __CLASS__.'::handleUnserializeCallback');
+        $unserializeCallbackHandler = ini_set('unserialize_callback_func', __CLASS__ . '::handleUnserializeCallback');
         try {
             if (':' === ($value[1] ?? ':')) {
                 if (false !== $value = unserialize($value)) {
@@ -92,8 +89,8 @@ class DefaultMarshaller implements MarshallerInterface
     /**
      * @internal
      */
-    public static function handleUnserializeCallback($class)
-    {
-        throw new \DomainException('Class not found: '.$class);
+    public static function handleUnserializeCallback($class) {
+        throw new \DomainException('Class not found: ' . $class);
     }
+
 }

@@ -1,5 +1,5 @@
 <?php
-function random_page_render()
-{
+
+function random_page_render() {
     return "";
 }

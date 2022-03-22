@@ -8,22 +8,20 @@ use PhpMyAdmin\DatabaseInterface;
 use PhpMyAdmin\Util;
 use function sprintf;
 
-final class Partition
-{
+final class Partition {
+
     /** @var DatabaseInterface */
     private $dbi;
 
-    public function __construct(DatabaseInterface $dbi)
-    {
+    public function __construct(DatabaseInterface $dbi) {
         $this->dbi = $dbi;
     }
 
-    public function analyze(string $db, string $table, string $partition): array
-    {
+    public function analyze(string $db, string $table, string $partition): array {
         $query = sprintf(
-            'ALTER TABLE %s ANALYZE PARTITION %s;',
-            Util::backquote($table),
-            Util::backquote($partition)
+                'ALTER TABLE %s ANALYZE PARTITION %s;',
+                Util::backquote($table),
+                Util::backquote($partition)
         );
 
         $this->dbi->selectDb($db);
@@ -37,12 +35,11 @@ final class Partition
         return [$rows, $query];
     }
 
-    public function check(string $db, string $table, string $partition): array
-    {
+    public function check(string $db, string $table, string $partition): array {
         $query = sprintf(
-            'ALTER TABLE %s CHECK PARTITION %s;',
-            Util::backquote($table),
-            Util::backquote($partition)
+                'ALTER TABLE %s CHECK PARTITION %s;',
+                Util::backquote($table),
+                Util::backquote($partition)
         );
 
         $this->dbi->selectDb($db);
@@ -56,12 +53,11 @@ final class Partition
         return [$rows, $query];
     }
 
-    public function drop(string $db, string $table, string $partition): array
-    {
+    public function drop(string $db, string $table, string $partition): array {
         $query = sprintf(
-            'ALTER TABLE %s DROP PARTITION %s;',
-            Util::backquote($table),
-            Util::backquote($partition)
+                'ALTER TABLE %s DROP PARTITION %s;',
+                Util::backquote($table),
+                Util::backquote($partition)
         );
 
         $this->dbi->selectDb($db);
@@ -70,12 +66,11 @@ final class Partition
         return [(bool) $result, $query];
     }
 
-    public function optimize(string $db, string $table, string $partition): array
-    {
+    public function optimize(string $db, string $table, string $partition): array {
         $query = sprintf(
-            'ALTER TABLE %s OPTIMIZE PARTITION %s;',
-            Util::backquote($table),
-            Util::backquote($partition)
+                'ALTER TABLE %s OPTIMIZE PARTITION %s;',
+                Util::backquote($table),
+                Util::backquote($partition)
         );
 
         $this->dbi->selectDb($db);
@@ -89,12 +84,11 @@ final class Partition
         return [$rows, $query];
     }
 
-    public function rebuild(string $db, string $table, string $partition): array
-    {
+    public function rebuild(string $db, string $table, string $partition): array {
         $query = sprintf(
-            'ALTER TABLE %s REBUILD PARTITION %s;',
-            Util::backquote($table),
-            Util::backquote($partition)
+                'ALTER TABLE %s REBUILD PARTITION %s;',
+                Util::backquote($table),
+                Util::backquote($partition)
         );
 
         $this->dbi->selectDb($db);
@@ -103,12 +97,11 @@ final class Partition
         return [(bool) $result, $query];
     }
 
-    public function repair(string $db, string $table, string $partition): array
-    {
+    public function repair(string $db, string $table, string $partition): array {
         $query = sprintf(
-            'ALTER TABLE %s REPAIR PARTITION %s;',
-            Util::backquote($table),
-            Util::backquote($partition)
+                'ALTER TABLE %s REPAIR PARTITION %s;',
+                Util::backquote($table),
+                Util::backquote($partition)
         );
 
         $this->dbi->selectDb($db);
@@ -122,12 +115,11 @@ final class Partition
         return [$rows, $query];
     }
 
-    public function truncate(string $db, string $table, string $partition): array
-    {
+    public function truncate(string $db, string $table, string $partition): array {
         $query = sprintf(
-            'ALTER TABLE %s TRUNCATE PARTITION %s;',
-            Util::backquote($table),
-            Util::backquote($partition)
+                'ALTER TABLE %s TRUNCATE PARTITION %s;',
+                Util::backquote($table),
+                Util::backquote($partition)
         );
 
         $this->dbi->selectDb($db);
@@ -135,4 +127,5 @@ final class Partition
 
         return [(bool) $result, $query];
     }
+
 }

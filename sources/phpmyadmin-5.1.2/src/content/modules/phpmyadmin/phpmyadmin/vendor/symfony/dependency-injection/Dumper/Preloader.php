@@ -16,10 +16,9 @@ namespace Symfony\Component\DependencyInjection\Dumper;
  *
  * @internal
  */
-class Preloader
-{
-    public static function preload(array $classes)
-    {
+class Preloader {
+
+    public static function preload(array $classes) {
         set_error_handler(function ($t, $m, $f, $l) {
             if (error_reporting() & $t) {
                 if (__FILE__ !== $f) {
@@ -48,8 +47,7 @@ class Preloader
         }
     }
 
-    private static function doPreload(string $class, array &$preloaded): void
-    {
+    private static function doPreload(string $class, array &$preloaded): void {
         if (isset($preloaded[$class]) || \in_array($class, ['self', 'static', 'parent'], true)) {
             return;
         }
@@ -92,8 +90,7 @@ class Preloader
         }
     }
 
-    private static function preloadType(?\ReflectionType $t, array &$preloaded): void
-    {
+    private static function preloadType(?\ReflectionType $t, array &$preloaded): void {
         if (!$t) {
             return;
         }
@@ -104,4 +101,5 @@ class Preloader
             }
         }
     }
+
 }

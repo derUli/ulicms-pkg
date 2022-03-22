@@ -17,16 +17,15 @@ namespace Twig\Error;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class SyntaxError extends Error
-{
+class SyntaxError extends Error {
+
     /**
      * Tweaks the error message to include suggestions.
      *
      * @param string $name  The original name of the item that does not exist
      * @param array  $items An array of possible items
      */
-    public function addSuggestions($name, array $items)
-    {
+    public function addSuggestions($name, array $items) {
         $alternatives = [];
         foreach ($items as $item) {
             $lev = levenshtein($name, $item);
@@ -43,6 +42,7 @@ class SyntaxError extends Error
 
         $this->appendMessage(sprintf(' Did you mean "%s"?', implode('", "', array_keys($alternatives))));
     }
+
 }
 
 class_alias('Twig\Error\SyntaxError', 'Twig_Error_Syntax');

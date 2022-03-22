@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Text Plain Prepend/Append Transformations plugin for phpMyAdmin
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Plugins\Transformations;
@@ -14,15 +14,14 @@ use PhpMyAdmin\Plugins\Transformations\Abs\PreApPendTransformationsPlugin;
  * Has two options: the text to be prepended and appended (if any, default '')
  */
 // @codingStandardsIgnoreLine
-class Text_Plain_PreApPend extends PreApPendTransformationsPlugin
-{
+class Text_Plain_PreApPend extends PreApPendTransformationsPlugin {
+
     /**
      * Gets the plugin`s MIME type
      *
      * @return string
      */
-    public static function getMIMEType()
-    {
+    public static function getMIMEType() {
         return 'Text';
     }
 
@@ -31,8 +30,8 @@ class Text_Plain_PreApPend extends PreApPendTransformationsPlugin
      *
      * @return string
      */
-    public static function getMIMESubtype()
-    {
+    public static function getMIMESubtype() {
         return 'Plain';
     }
+
 }

@@ -19,10 +19,9 @@ use Twig\Token;
 /**
  * Embeds a template.
  */
-final class EmbedTokenParser extends IncludeTokenParser
-{
-    public function parse(Token $token)
-    {
+final class EmbedTokenParser extends IncludeTokenParser {
+
+    public function parse(Token $token) {
         $stream = $this->parser->getStream();
 
         $parent = $this->parser->getExpressionParser()->parseExpression();
@@ -58,15 +57,14 @@ final class EmbedTokenParser extends IncludeTokenParser
         return new EmbedNode($module->getTemplateName(), $module->getAttribute('index'), $variables, $only, $ignoreMissing, $token->getLine(), $this->getTag());
     }
 
-    public function decideBlockEnd(Token $token)
-    {
+    public function decideBlockEnd(Token $token) {
         return $token->test('endembed');
     }
 
-    public function getTag()
-    {
+    public function getTag() {
         return 'embed';
     }
+
 }
 
 class_alias('Twig\TokenParser\EmbedTokenParser', 'Twig_TokenParser_Embed');

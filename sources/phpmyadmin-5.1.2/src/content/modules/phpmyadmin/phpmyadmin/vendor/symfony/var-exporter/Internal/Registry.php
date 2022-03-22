@@ -19,24 +19,21 @@ use Symfony\Component\VarExporter\Exception\NotInstantiableTypeException;
  *
  * @internal
  */
-class Registry
-{
+class Registry {
+
     public static $reflectors = [];
     public static $prototypes = [];
     public static $factories = [];
     public static $cloneable = [];
     public static $instantiableWithoutConstructor = [];
-
     public $classes = [];
 
-    public function __construct(array $classes)
-    {
+    public function __construct(array $classes) {
         $this->classes = $classes;
     }
 
-    public static function unserialize($objects, $serializables)
-    {
-        $unserializeCallback = ini_set('unserialize_callback_func', __CLASS__.'::getClassReflector');
+    public static function unserialize($objects, $serializables) {
+        $unserializeCallback = ini_set('unserialize_callback_func', __CLASS__ . '::getClassReflector');
 
         try {
             foreach ($serializables as $k => $v) {
@@ -49,22 +46,19 @@ class Registry
         return $objects;
     }
 
-    public static function p($class)
-    {
+    public static function p($class) {
         self::getClassReflector($class, true, true);
 
         return self::$prototypes[$class];
     }
 
-    public static function f($class)
-    {
+    public static function f($class) {
         $reflector = self::$reflectors[$class] ?? self::getClassReflector($class, true, false);
 
         return self::$factories[$class] = \Closure::fromCallable([$reflector, 'newInstanceWithoutConstructor']);
     }
 
-    public static function getClassReflector($class, $instantiableWithoutConstructor = false, $cloneable = null)
-    {
+    public static function getClassReflector($class, $instantiableWithoutConstructor = false, $cloneable = null) {
         if (!($isClass = class_exists($class)) && !interface_exists($class, false) && !trait_exists($class, false)) {
             throw new ClassNotFoundException($class);
         }
@@ -91,7 +85,7 @@ class Registry
                     $proto = null;
                 } else {
                     try {
-                        $proto = @unserialize($proto.\strlen($class).':"'.$class.'":0:{}');
+                        $proto = @unserialize($proto . \strlen($class) . ':"' . $class . '":0:{}');
                     } catch (\Exception $e) {
                         if (__FILE__ !== $e->getFile()) {
                             throw $e;
@@ -143,4 +137,5 @@ class Registry
 
         return self::$reflectors[$class] = $reflector;
     }
+
 }

@@ -19,8 +19,8 @@ use function urldecode;
 /**
  * Set of functions with the operations section in phpMyAdmin
  */
-class Operations
-{
+class Operations {
+
     /** @var Relation */
     private $relation;
 
@@ -31,8 +31,7 @@ class Operations
      * @param DatabaseInterface $dbi      DatabaseInterface object
      * @param Relation          $relation Relation object
      */
-    public function __construct(DatabaseInterface $dbi, Relation $relation)
-    {
+    public function __construct(DatabaseInterface $dbi, Relation $relation) {
         $this->dbi = $dbi;
         $this->relation = $relation;
     }
@@ -48,16 +47,15 @@ class Operations
      *
      * @return void
      */
-    public function runProcedureAndFunctionDefinitions($db)
-    {
+    public function runProcedureAndFunctionDefinitions($db) {
         $procedure_names = $this->dbi->getProceduresOrFunctions($db, 'PROCEDURE');
         if ($procedure_names) {
             foreach ($procedure_names as $procedure_name) {
                 $this->dbi->selectDb($db);
                 $tmp_query = $this->dbi->getDefinition(
-                    $db,
-                    'PROCEDURE',
-                    $procedure_name
+                        $db,
+                        'PROCEDURE',
+                        $procedure_name
                 );
                 if ($tmp_query === null) {
                     continue;
@@ -71,16 +69,16 @@ class Operations
         }
 
         $function_names = $this->dbi->getProceduresOrFunctions($db, 'FUNCTION');
-        if (! $function_names) {
+        if (!$function_names) {
             return;
         }
 
         foreach ($function_names as $function_name) {
             $this->dbi->selectDb($db);
             $tmp_query = $this->dbi->getDefinition(
-                $db,
-                'FUNCTION',
-                $function_name
+                    $db,
+                    'FUNCTION',
+                    $function_name
             );
             if ($tmp_query === null) {
                 continue;
@@ -98,13 +96,12 @@ class Operations
      *
      * @return void
      */
-    public function createDbBeforeCopy()
-    {
+    public function createDbBeforeCopy() {
         $local_query = 'CREATE DATABASE IF NOT EXISTS '
-            . Util::backquote($_POST['newname']);
+                . Util::backquote($_POST['newname']);
         if (isset($_POST['db_collation'])) {
             $local_query .= ' DEFAULT'
-                . Util::getCharsetQueryPart($_POST['db_collation'] ?? '');
+                    . Util::getCharsetQueryPart($_POST['db_collation'] ?? '');
         }
         $local_query .= ';';
         $GLOBALS['sql_query'] .= $local_query;
@@ -136,27 +133,25 @@ class Operations
      * @return array
      */
     public function getViewsAndCreateSqlViewStandIn(
-        array $tables_full,
-        $export_sql_plugin,
-        $db
+            array $tables_full,
+            $export_sql_plugin,
+            $db
     ) {
         $views = [];
         foreach ($tables_full as $each_table => $tmp) {
             // to be able to rename a db containing views,
             // first all the views are collected and a stand-in is created
             // the real views are created after the tables
-            if (! $this->dbi->getTable($db, (string) $each_table)->isView()) {
+            if (!$this->dbi->getTable($db, (string) $each_table)->isView()) {
                 continue;
             }
 
             // If view exists, and 'add drop view' is selected: Drop it!
-            if ($_POST['what'] !== 'nocopy'
-                && isset($_POST['drop_if_exists'])
-                && $_POST['drop_if_exists'] === 'true'
+            if ($_POST['what'] !== 'nocopy' && isset($_POST['drop_if_exists']) && $_POST['drop_if_exists'] === 'true'
             ) {
                 $drop_query = 'DROP VIEW IF EXISTS '
-                    . Util::backquote($_POST['newname']) . '.'
-                    . Util::backquote($each_table);
+                        . Util::backquote($_POST['newname']) . '.'
+                        . Util::backquote($each_table);
                 $this->dbi->query($drop_query);
 
                 $GLOBALS['sql_query'] .= "\n" . $drop_query . ';';
@@ -165,9 +160,9 @@ class Operations
             $views[] = $each_table;
             // Create stand-in definition to resolve view dependencies
             $sql_view_standin = $export_sql_plugin->getTableDefStandIn(
-                $db,
-                $each_table,
-                "\n"
+                    $db,
+                    $each_table,
+                    "\n"
             );
             $this->dbi->selectDb($_POST['newname']);
             $this->dbi->query($sql_view_standin);
@@ -186,8 +181,7 @@ class Operations
      *
      * @return array SQL queries for the constraints
      */
-    public function copyTables(array $tables_full, $move, $db)
-    {
+    public function copyTables(array $tables_full, $move, $db) {
         $sqlContraints = [];
         foreach ($tables_full as $each_table => $tmp) {
             // skip the views; we have created stand-in definitions
@@ -218,15 +212,15 @@ class Operations
             //  for importing via the mysql client or our Import feature)
             $triggers = $this->dbi->getTriggers($db, (string) $each_table, '');
 
-            if (! Table::moveCopy(
-                $db,
-                $each_table,
-                $_POST['newname'],
-                $each_table,
-                ($this_what ?? 'data'),
-                $move,
-                'db_copy'
-            )) {
+            if (!Table::moveCopy(
+                            $db,
+                            $each_table,
+                            $_POST['newname'],
+                            $each_table,
+                            ($this_what ?? 'data'),
+                            $move,
+                            'db_copy'
+                    )) {
                 $GLOBALS['_error'] = true;
                 break;
             }
@@ -240,8 +234,7 @@ class Operations
             }
 
             // this does not apply to a rename operation
-            if (! isset($_POST['add_constraints'])
-                || empty($GLOBALS['sql_constraints_query'])
+            if (!isset($_POST['add_constraints']) || empty($GLOBALS['sql_constraints_query'])
             ) {
                 continue;
             }
@@ -264,13 +257,12 @@ class Operations
      *
      * @return void
      */
-    public function runEventDefinitionsForDb($db)
-    {
+    public function runEventDefinitionsForDb($db) {
         $event_names = $this->dbi->fetchResult(
-            'SELECT EVENT_NAME FROM information_schema.EVENTS WHERE EVENT_SCHEMA= \''
-            . $this->dbi->escapeString($db) . '\';'
+                'SELECT EVENT_NAME FROM information_schema.EVENTS WHERE EVENT_SCHEMA= \''
+                . $this->dbi->escapeString($db) . '\';'
         );
-        if (! $event_names) {
+        if (!$event_names) {
             return;
         }
 
@@ -293,8 +285,7 @@ class Operations
      *
      * @return void
      */
-    public function handleTheViews(array $views, $move, $db)
-    {
+    public function handleTheViews(array $views, $move, $db) {
         // temporarily force to add DROP IF EXIST to CREATE VIEW query,
         // to remove stand-in VIEW that was created earlier
         // ( $_POST['drop_if_exists'] is used in moveCopy() )
@@ -305,22 +296,22 @@ class Operations
         $_POST['drop_if_exists'] = 'true';
         foreach ($views as $view) {
             $copying_succeeded = Table::moveCopy(
-                $db,
-                $view,
-                $_POST['newname'],
-                $view,
-                'structure',
-                $move,
-                'db_copy'
+                            $db,
+                            $view,
+                            $_POST['newname'],
+                            $view,
+                            'structure',
+                            $move,
+                            'db_copy'
             );
-            if (! $copying_succeeded) {
+            if (!$copying_succeeded) {
                 $GLOBALS['_error'] = true;
                 break;
             }
         }
         unset($_POST['drop_if_exists']);
 
-        if (! isset($temp_drop_if_exists)) {
+        if (!isset($temp_drop_if_exists)) {
             return;
         }
 
@@ -336,11 +327,8 @@ class Operations
      *
      * @return void
      */
-    public function adjustPrivilegesMoveDb($oldDb, $newname)
-    {
-        if (! $GLOBALS['db_priv'] || ! $GLOBALS['table_priv']
-            || ! $GLOBALS['col_priv'] || ! $GLOBALS['proc_priv']
-            || ! $GLOBALS['is_reload_priv']
+    public function adjustPrivilegesMoveDb($oldDb, $newname) {
+        if (!$GLOBALS['db_priv'] || !$GLOBALS['table_priv'] || !$GLOBALS['col_priv'] || !$GLOBALS['proc_priv'] || !$GLOBALS['is_reload_priv']
         ) {
             return;
         }
@@ -351,26 +339,26 @@ class Operations
 
         // For Db specific privileges
         $query_db_specific = 'UPDATE ' . Util::backquote('db')
-            . 'SET Db = \'' . $this->dbi->escapeString($newname)
-            . '\' where Db = \'' . $this->dbi->escapeString($oldDb) . '\';';
+                . 'SET Db = \'' . $this->dbi->escapeString($newname)
+                . '\' where Db = \'' . $this->dbi->escapeString($oldDb) . '\';';
         $this->dbi->query($query_db_specific);
 
         // For table specific privileges
         $query_table_specific = 'UPDATE ' . Util::backquote('tables_priv')
-            . 'SET Db = \'' . $this->dbi->escapeString($newname)
-            . '\' where Db = \'' . $this->dbi->escapeString($oldDb) . '\';';
+                . 'SET Db = \'' . $this->dbi->escapeString($newname)
+                . '\' where Db = \'' . $this->dbi->escapeString($oldDb) . '\';';
         $this->dbi->query($query_table_specific);
 
         // For column specific privileges
         $query_col_specific = 'UPDATE ' . Util::backquote('columns_priv')
-            . 'SET Db = \'' . $this->dbi->escapeString($newname)
-            . '\' where Db = \'' . $this->dbi->escapeString($oldDb) . '\';';
+                . 'SET Db = \'' . $this->dbi->escapeString($newname)
+                . '\' where Db = \'' . $this->dbi->escapeString($oldDb) . '\';';
         $this->dbi->query($query_col_specific);
 
         // For procedures specific privileges
         $query_proc_specific = 'UPDATE ' . Util::backquote('procs_priv')
-            . 'SET Db = \'' . $this->dbi->escapeString($newname)
-            . '\' where Db = \'' . $this->dbi->escapeString($oldDb) . '\';';
+                . 'SET Db = \'' . $this->dbi->escapeString($newname)
+                . '\' where Db = \'' . $this->dbi->escapeString($oldDb) . '\';';
         $this->dbi->query($query_proc_specific);
 
         // Finally FLUSH the new privileges
@@ -386,11 +374,8 @@ class Operations
      *
      * @return void
      */
-    public function adjustPrivilegesCopyDb($oldDb, $newname)
-    {
-        if (! $GLOBALS['db_priv'] || ! $GLOBALS['table_priv']
-            || ! $GLOBALS['col_priv'] || ! $GLOBALS['proc_priv']
-            || ! $GLOBALS['is_reload_priv']
+    public function adjustPrivilegesCopyDb($oldDb, $newname) {
+        if (!$GLOBALS['db_priv'] || !$GLOBALS['table_priv'] || !$GLOBALS['col_priv'] || !$GLOBALS['proc_priv'] || !$GLOBALS['is_reload_priv']
         ) {
             return;
         }
@@ -400,81 +385,81 @@ class Operations
         $oldDb = str_replace('_', '\_', $oldDb);
 
         $query_db_specific_old = 'SELECT * FROM '
-            . Util::backquote('db') . ' WHERE '
-            . 'Db = "' . $oldDb . '";';
+                . Util::backquote('db') . ' WHERE '
+                . 'Db = "' . $oldDb . '";';
 
         $old_privs_db = $this->dbi->fetchResult($query_db_specific_old, 0);
 
         foreach ($old_privs_db as $old_priv) {
             $newDb_db_privs_query = 'INSERT INTO ' . Util::backquote('db')
-                . ' VALUES("' . $old_priv[0] . '", "' . $newname . '"';
+                    . ' VALUES("' . $old_priv[0] . '", "' . $newname . '"';
             $privCount = count($old_priv);
             for ($i = 2; $i < $privCount; $i++) {
                 $newDb_db_privs_query .= ', "' . $old_priv[$i] . '"';
             }
-                $newDb_db_privs_query .= ')';
+            $newDb_db_privs_query .= ')';
 
             $this->dbi->query($newDb_db_privs_query);
         }
 
         // For Table Specific privileges
         $query_table_specific_old = 'SELECT * FROM '
-            . Util::backquote('tables_priv') . ' WHERE '
-            . 'Db = "' . $oldDb . '";';
+                . Util::backquote('tables_priv') . ' WHERE '
+                . 'Db = "' . $oldDb . '";';
 
         $old_privs_table = $this->dbi->fetchResult(
-            $query_table_specific_old,
-            0
+                $query_table_specific_old,
+                0
         );
 
         foreach ($old_privs_table as $old_priv) {
             $newDb_table_privs_query = 'INSERT INTO ' . Util::backquote(
-                'tables_priv'
-            ) . ' VALUES("' . $old_priv[0] . '", "' . $newname . '", "'
-            . $old_priv[2] . '", "' . $old_priv[3] . '", "' . $old_priv[4]
-            . '", "' . $old_priv[5] . '", "' . $old_priv[6] . '", "'
-            . $old_priv[7] . '");';
+                            'tables_priv'
+                    ) . ' VALUES("' . $old_priv[0] . '", "' . $newname . '", "'
+                    . $old_priv[2] . '", "' . $old_priv[3] . '", "' . $old_priv[4]
+                    . '", "' . $old_priv[5] . '", "' . $old_priv[6] . '", "'
+                    . $old_priv[7] . '");';
 
             $this->dbi->query($newDb_table_privs_query);
         }
 
         // For Column Specific privileges
         $query_col_specific_old = 'SELECT * FROM '
-            . Util::backquote('columns_priv') . ' WHERE '
-            . 'Db = "' . $oldDb . '";';
+                . Util::backquote('columns_priv') . ' WHERE '
+                . 'Db = "' . $oldDb . '";';
 
         $old_privs_col = $this->dbi->fetchResult(
-            $query_col_specific_old,
-            0
+                $query_col_specific_old,
+                0
         );
 
         foreach ($old_privs_col as $old_priv) {
             $newDb_col_privs_query = 'INSERT INTO ' . Util::backquote(
-                'columns_priv'
-            ) . ' VALUES("' . $old_priv[0] . '", "' . $newname . '", "'
-            . $old_priv[2] . '", "' . $old_priv[3] . '", "' . $old_priv[4]
-            . '", "' . $old_priv[5] . '", "' . $old_priv[6] . '");';
+                            'columns_priv'
+                    ) . ' VALUES("' . $old_priv[0] . '", "' . $newname . '", "'
+                    . $old_priv[2] . '", "' . $old_priv[3] . '", "' . $old_priv[4]
+                    . '", "' . $old_priv[5] . '", "' . $old_priv[6] . '");';
 
             $this->dbi->query($newDb_col_privs_query);
         }
 
         // For Procedure Specific privileges
         $query_proc_specific_old = 'SELECT * FROM '
-            . Util::backquote('procs_priv') . ' WHERE '
-            . 'Db = "' . $oldDb . '";';
+                . Util::backquote('procs_priv') . ' WHERE '
+                . 'Db = "' . $oldDb . '";';
 
         $old_privs_proc = $this->dbi->fetchResult(
-            $query_proc_specific_old,
-            0
+                $query_proc_specific_old,
+                0
         );
 
         foreach ($old_privs_proc as $old_priv) {
             $newDb_proc_privs_query = 'INSERT INTO ' . Util::backquote(
-                'procs_priv'
-            ) . ' VALUES("' . $old_priv[0] . '", "' . $newname . '", "'
-            . $old_priv[2] . '", "' . $old_priv[3] . '", "' . $old_priv[4]
-            . '", "' . $old_priv[5] . '", "' . $old_priv[6] . '", "'
-            . $old_priv[7] . '");';
+                            'procs_priv'
+                    ) . ' VALUES("' . $old_priv[0] . '", "' . $newname . '", "'
+                    . $old_priv[2] . '", "' . $old_priv[3] . '", "' . $old_priv[4]
+                    . '", "' . $old_priv[5] . '", "' . $old_priv[6] . '", "'
+                    . $old_priv[7] . '");';
 
             $this->dbi->query($newDb_proc_privs_query);
         }
@@ -491,8 +476,7 @@ class Operations
      *
      * @return void
      */
-    public function createAllAccumulatedConstraints(array $sqlConstratints)
-    {
+    public function createAllAccumulatedConstraints(array $sqlConstratints) {
         $this->dbi->selectDb($_POST['newname']);
         foreach ($sqlConstratints as $one_query) {
             $this->dbi->query($one_query);
@@ -509,8 +493,7 @@ class Operations
      *
      * @return void
      */
-    public function duplicateBookmarks($_error, $db)
-    {
+    public function duplicateBookmarks($_error, $db) {
         if ($_error || $db == $_POST['newname']) {
             return;
         }
@@ -523,11 +506,11 @@ class Operations
         $where_fields = ['dbase' => $db];
         $new_fields = ['dbase' => $_POST['newname']];
         Table::duplicateInfo(
-            'bookmarkwork',
-            'bookmark',
-            $get_fields,
-            $where_fields,
-            $new_fields
+                'bookmarkwork',
+                'bookmark',
+                $get_fields,
+                $where_fields,
+                $new_fields
         );
     }
 
@@ -536,33 +519,32 @@ class Operations
      *
      * @return array
      */
-    public function getPossibleRowFormat()
-    {
+    public function getPossibleRowFormat() {
         // the outer array is for engines, the inner array contains the dropdown
         // option values as keys then the dropdown option labels
 
         $possible_row_formats = [
             'ARCHIVE' => ['COMPRESSED' => 'COMPRESSED'],
-            'ARIA'  => [
-                'FIXED'     => 'FIXED',
-                'DYNAMIC'   => 'DYNAMIC',
-                'PAGE'      => 'PAGE',
+            'ARIA' => [
+                'FIXED' => 'FIXED',
+                'DYNAMIC' => 'DYNAMIC',
+                'PAGE' => 'PAGE',
             ],
-            'MARIA'  => [
-                'FIXED'     => 'FIXED',
-                'DYNAMIC'   => 'DYNAMIC',
-                'PAGE'      => 'PAGE',
+            'MARIA' => [
+                'FIXED' => 'FIXED',
+                'DYNAMIC' => 'DYNAMIC',
+                'PAGE' => 'PAGE',
             ],
             'MYISAM' => [
-                'FIXED'    => 'FIXED',
-                'DYNAMIC'  => 'DYNAMIC',
+                'FIXED' => 'FIXED',
+                'DYNAMIC' => 'DYNAMIC',
             ],
-            'PBXT'   => [
-                'FIXED'    => 'FIXED',
-                'DYNAMIC'  => 'DYNAMIC',
+            'PBXT' => [
+                'FIXED' => 'FIXED',
+                'DYNAMIC' => 'DYNAMIC',
             ],
             'INNODB' => [
-                'COMPACT'  => 'COMPACT',
+                'COMPACT' => 'COMPACT',
                 'REDUNDANT' => 'REDUNDANT',
             ],
         ];
@@ -571,7 +553,7 @@ class Operations
         $innodbEnginePlugin = StorageEngine::getEngine('Innodb');
         $innodbPluginVersion = $innodbEnginePlugin->getInnodbPluginVersion();
         $innodb_file_format = '';
-        if (! empty($innodbPluginVersion)) {
+        if (!empty($innodbPluginVersion)) {
             $innodb_file_format = $innodbEnginePlugin->getInnodbFileFormat() ?? '';
         }
         /**
@@ -579,8 +561,7 @@ class Operations
          * old versions of MySQL/MariaDB must be returning something or not empty.
          * This patch is to support newer MySQL/MariaDB while also for backward compatibilities.
          */
-        if ((strtolower($innodb_file_format)  === 'barracuda') || ($innodb_file_format == '')
-            && $innodbEnginePlugin->supportsFilePerTable()
+        if ((strtolower($innodb_file_format) === 'barracuda') || ($innodb_file_format == '') && $innodbEnginePlugin->supportsFilePerTable()
         ) {
             $possible_row_formats['INNODB']['DYNAMIC'] = 'DYNAMIC';
             $possible_row_formats['INNODB']['COMPRESSED'] = 'COMPRESSED';
@@ -592,8 +573,7 @@ class Operations
     /**
      * @return array<string, string>
      */
-    public function getPartitionMaintenanceChoices(): array
-    {
+    public function getPartitionMaintenanceChoices(): array {
         global $db, $table;
 
         $choices = [
@@ -608,10 +588,7 @@ class Operations
         $partitionMethod = Partition::getPartitionMethod($db, $table);
 
         // add COALESCE or DROP option to choices array depending on Partition method
-        if ($partitionMethod === 'RANGE'
-            || $partitionMethod === 'RANGE COLUMNS'
-            || $partitionMethod === 'LIST'
-            || $partitionMethod === 'LIST COLUMNS'
+        if ($partitionMethod === 'RANGE' || $partitionMethod === 'RANGE COLUMNS' || $partitionMethod === 'LIST' || $partitionMethod === 'LIST COLUMNS'
         ) {
             $choices['DROP'] = __('Drop');
         } else {
@@ -628,12 +605,12 @@ class Operations
      * @return array
      */
     public function getForeignersForReferentialIntegrityCheck(
-        array $urlParams,
-        $hasRelationFeature
+            array $urlParams,
+            $hasRelationFeature
     ): array {
         global $db, $table;
 
-        if (! $hasRelationFeature) {
+        if (!$hasRelationFeature) {
             return [];
         }
 
@@ -642,13 +619,13 @@ class Operations
         $foreign = $this->relation->getForeigners($db, $table, '', 'internal');
 
         foreach ($foreign as $master => $arr) {
-            $joinQuery  = 'SELECT '
-                . Util::backquote($table) . '.*'
-                . ' FROM ' . Util::backquote($table)
-                . ' LEFT JOIN '
-                . Util::backquote($arr['foreign_db'])
-                . '.'
-                . Util::backquote($arr['foreign_table']);
+            $joinQuery = 'SELECT '
+                    . Util::backquote($table) . '.*'
+                    . ' FROM ' . Util::backquote($table)
+                    . ' LEFT JOIN '
+                    . Util::backquote($arr['foreign_db'])
+                    . '.'
+                    . Util::backquote($arr['foreign_table']);
 
             if ($arr['foreign_table'] == $table) {
                 $foreignTable = $table . '1';
@@ -658,28 +635,28 @@ class Operations
             }
 
             $joinQuery .= ' ON '
-                . Util::backquote($table) . '.'
-                . Util::backquote($master)
-                . ' = '
-                . Util::backquote($arr['foreign_db'])
-                . '.'
-                . Util::backquote($foreignTable) . '.'
-                . Util::backquote($arr['foreign_field'])
-                . ' WHERE '
-                . Util::backquote($arr['foreign_db'])
-                . '.'
-                . Util::backquote($foreignTable) . '.'
-                . Util::backquote($arr['foreign_field'])
-                . ' IS NULL AND '
-                . Util::backquote($table) . '.'
-                . Util::backquote($master)
-                . ' IS NOT NULL';
+                    . Util::backquote($table) . '.'
+                    . Util::backquote($master)
+                    . ' = '
+                    . Util::backquote($arr['foreign_db'])
+                    . '.'
+                    . Util::backquote($foreignTable) . '.'
+                    . Util::backquote($arr['foreign_field'])
+                    . ' WHERE '
+                    . Util::backquote($arr['foreign_db'])
+                    . '.'
+                    . Util::backquote($foreignTable) . '.'
+                    . Util::backquote($arr['foreign_field'])
+                    . ' IS NULL AND '
+                    . Util::backquote($table) . '.'
+                    . Util::backquote($master)
+                    . ' IS NOT NULL';
             $thisUrlParams = array_merge(
-                $urlParams,
-                [
-                    'sql_query' => $joinQuery,
-                    'sql_signature' => Core::signSqlQuery($joinQuery),
-                ]
+                    $urlParams,
+                    [
+                        'sql_query' => $joinQuery,
+                        'sql_signature' => Core::signSqlQuery($joinQuery),
+                    ]
             );
 
             $foreigners[] = [
@@ -699,14 +676,12 @@ class Operations
      *
      * @return array SQL query and result
      */
-    public function getQueryAndResultForReorderingTable()
-    {
+    public function getQueryAndResultForReorderingTable() {
         $sql_query = 'ALTER TABLE '
-            . Util::backquote($GLOBALS['table'])
-            . ' ORDER BY '
-            . Util::backquote(urldecode($_POST['order_field']));
-        if (isset($_POST['order_order'])
-            && $_POST['order_order'] === 'desc'
+                . Util::backquote($GLOBALS['table'])
+                . ' ORDER BY '
+                . Util::backquote(urldecode($_POST['order_field']));
+        if (isset($_POST['order_order']) && $_POST['order_order'] === 'desc'
         ) {
             $sql_query .= ' DESC';
         } else {
@@ -737,96 +712,78 @@ class Operations
      * @return array
      */
     public function getTableAltersArray(
-        $pma_table,
-        $pack_keys,
-        $checksum,
-        $page_checksum,
-        $delay_key_write,
-        $row_format,
-        $newTblStorageEngine,
-        $transactional,
-        $tbl_collation
+            $pma_table,
+            $pack_keys,
+            $checksum,
+            $page_checksum,
+            $delay_key_write,
+            $row_format,
+            $newTblStorageEngine,
+            $transactional,
+            $tbl_collation
     ) {
         global $auto_increment;
 
         $table_alters = [];
 
-        if (isset($_POST['comment'])
-            && urldecode($_POST['prev_comment']) !== $_POST['comment']
+        if (isset($_POST['comment']) && urldecode($_POST['prev_comment']) !== $_POST['comment']
         ) {
             $table_alters[] = 'COMMENT = \''
-                . $this->dbi->escapeString($_POST['comment']) . '\'';
+                    . $this->dbi->escapeString($_POST['comment']) . '\'';
         }
 
-        if (! empty($newTblStorageEngine)
-            && mb_strtolower($newTblStorageEngine) !== mb_strtolower($GLOBALS['tbl_storage_engine'])
+        if (!empty($newTblStorageEngine) && mb_strtolower($newTblStorageEngine) !== mb_strtolower($GLOBALS['tbl_storage_engine'])
         ) {
             $table_alters[] = 'ENGINE = ' . $newTblStorageEngine;
         }
-        if (! empty($_POST['tbl_collation'])
-            && $_POST['tbl_collation'] !== $tbl_collation
+        if (!empty($_POST['tbl_collation']) && $_POST['tbl_collation'] !== $tbl_collation
         ) {
             $table_alters[] = 'DEFAULT '
-                . Util::getCharsetQueryPart($_POST['tbl_collation'] ?? '');
+                    . Util::getCharsetQueryPart($_POST['tbl_collation'] ?? '');
         }
 
-        if ($pma_table->isEngine(['MYISAM', 'ARIA', 'ISAM'])
-            && isset($_POST['new_pack_keys'])
-            && $_POST['new_pack_keys'] != (string) $pack_keys
+        if ($pma_table->isEngine(['MYISAM', 'ARIA', 'ISAM']) && isset($_POST['new_pack_keys']) && $_POST['new_pack_keys'] != (string) $pack_keys
         ) {
             $table_alters[] = 'pack_keys = ' . $_POST['new_pack_keys'];
         }
 
         $_POST['new_checksum'] = empty($_POST['new_checksum']) ? '0' : '1';
-        if ($pma_table->isEngine(['MYISAM', 'ARIA'])
-            && $_POST['new_checksum'] !== $checksum
+        if ($pma_table->isEngine(['MYISAM', 'ARIA']) && $_POST['new_checksum'] !== $checksum
         ) {
             $table_alters[] = 'checksum = ' . $_POST['new_checksum'];
         }
 
-        $_POST['new_transactional']
-            = empty($_POST['new_transactional']) ? '0' : '1';
-        if ($pma_table->isEngine('ARIA')
-            && $_POST['new_transactional'] !== $transactional
+        $_POST['new_transactional'] = empty($_POST['new_transactional']) ? '0' : '1';
+        if ($pma_table->isEngine('ARIA') && $_POST['new_transactional'] !== $transactional
         ) {
             $table_alters[] = 'TRANSACTIONAL = ' . $_POST['new_transactional'];
         }
 
-        $_POST['new_page_checksum']
-            = empty($_POST['new_page_checksum']) ? '0' : '1';
-        if ($pma_table->isEngine('ARIA')
-            && $_POST['new_page_checksum'] !== $page_checksum
+        $_POST['new_page_checksum'] = empty($_POST['new_page_checksum']) ? '0' : '1';
+        if ($pma_table->isEngine('ARIA') && $_POST['new_page_checksum'] !== $page_checksum
         ) {
             $table_alters[] = 'PAGE_CHECKSUM = ' . $_POST['new_page_checksum'];
         }
 
-        $_POST['new_delay_key_write']
-            = empty($_POST['new_delay_key_write']) ? '0' : '1';
-        if ($pma_table->isEngine(['MYISAM', 'ARIA'])
-            && $_POST['new_delay_key_write'] !== $delay_key_write
+        $_POST['new_delay_key_write'] = empty($_POST['new_delay_key_write']) ? '0' : '1';
+        if ($pma_table->isEngine(['MYISAM', 'ARIA']) && $_POST['new_delay_key_write'] !== $delay_key_write
         ) {
             $table_alters[] = 'delay_key_write = ' . $_POST['new_delay_key_write'];
         }
 
-        if ($pma_table->isEngine(['MYISAM', 'ARIA', 'INNODB', 'PBXT', 'ROCKSDB'])
-            && ! empty($_POST['new_auto_increment'])
-            && (! isset($auto_increment)
-            || $_POST['new_auto_increment'] !== $auto_increment)
-            && $_POST['new_auto_increment'] !== $_POST['hidden_auto_increment']
+        if ($pma_table->isEngine(['MYISAM', 'ARIA', 'INNODB', 'PBXT', 'ROCKSDB']) && !empty($_POST['new_auto_increment']) && (!isset($auto_increment) || $_POST['new_auto_increment'] !== $auto_increment) && $_POST['new_auto_increment'] !== $_POST['hidden_auto_increment']
         ) {
             $table_alters[] = 'auto_increment = '
-                . $this->dbi->escapeString($_POST['new_auto_increment']);
+                    . $this->dbi->escapeString($_POST['new_auto_increment']);
         }
 
-        if (! empty($_POST['new_row_format'])) {
+        if (!empty($_POST['new_row_format'])) {
             $newRowFormat = $_POST['new_row_format'];
             $newRowFormatLower = mb_strtolower($newRowFormat);
-            if ($pma_table->isEngine(['MYISAM', 'ARIA', 'INNODB', 'PBXT'])
-                && (strlen($row_format) === 0
-                || $newRowFormatLower !== mb_strtolower($row_format))
+            if ($pma_table->isEngine(['MYISAM', 'ARIA', 'INNODB', 'PBXT']) && (strlen($row_format) === 0 || $newRowFormatLower !== mb_strtolower($row_format))
             ) {
                 $table_alters[] = 'ROW_FORMAT = '
-                    . $this->dbi->escapeString($newRowFormat);
+                        . $this->dbi->escapeString($newRowFormat);
             }
         }
 
@@ -838,8 +795,7 @@ class Operations
      *
      * @return array
      */
-    public function getWarningMessagesArray()
-    {
+    public function getWarningMessagesArray() {
         $warning_messages = [];
         foreach ($this->dbi->getWarnings() as $warning) {
             // In MariaDB 5.1.44, when altering a table from Maria to MyISAM
@@ -848,16 +804,13 @@ class Operations
             // should not be reported with a Level of Error, so here
             // I just ignore it. But there are other 1478 messages
             // that it's better to show.
-            if (isset($_POST['new_tbl_storage_engine'])
-                && $_POST['new_tbl_storage_engine'] === 'MyISAM'
-                && $warning['Code'] == '1478'
-                && $warning['Level'] === 'Error'
+            if (isset($_POST['new_tbl_storage_engine']) && $_POST['new_tbl_storage_engine'] === 'MyISAM' && $warning['Code'] == '1478' && $warning['Level'] === 'Error'
             ) {
                 continue;
             }
 
             $warning_messages[] = $warning['Level'] . ': #' . $warning['Code']
-                . ' ' . $warning['Message'];
+                    . ' ' . $warning['Message'];
         }
 
         return $warning_messages;
@@ -869,12 +822,11 @@ class Operations
      *
      * @return array $sql_query, $result
      */
-    public function getQueryAndResultForPartition()
-    {
+    public function getQueryAndResultForPartition() {
         $sql_query = 'ALTER TABLE '
-            . Util::backquote($GLOBALS['table']) . ' '
-            . $_POST['partition_operation']
-            . ' PARTITION ';
+                . Util::backquote($GLOBALS['table']) . ' '
+                . $_POST['partition_operation']
+                . ' PARTITION ';
 
         if ($_POST['partition_operation'] === 'COALESCE') {
             $sql_query .= count($_POST['partition_name']);
@@ -900,10 +852,8 @@ class Operations
      *
      * @return void
      */
-    public function adjustPrivilegesRenameOrMoveTable($oldDb, $oldTable, $newDb, $newTable)
-    {
-        if (! $GLOBALS['table_priv'] || ! $GLOBALS['col_priv']
-            || ! $GLOBALS['is_reload_priv']
+    public function adjustPrivilegesRenameOrMoveTable($oldDb, $oldTable, $newDb, $newTable) {
+        if (!$GLOBALS['table_priv'] || !$GLOBALS['col_priv'] || !$GLOBALS['is_reload_priv']
         ) {
             return;
         }
@@ -912,20 +862,20 @@ class Operations
 
         // For table specific privileges
         $query_table_specific = 'UPDATE ' . Util::backquote('tables_priv')
-            . 'SET Db = \'' . $this->dbi->escapeString($newDb)
-            . '\', Table_name = \'' . $this->dbi->escapeString($newTable)
-            . '\' where Db = \'' . $this->dbi->escapeString($oldDb)
-            . '\' AND Table_name = \'' . $this->dbi->escapeString($oldTable)
-            . '\';';
+                . 'SET Db = \'' . $this->dbi->escapeString($newDb)
+                . '\', Table_name = \'' . $this->dbi->escapeString($newTable)
+                . '\' where Db = \'' . $this->dbi->escapeString($oldDb)
+                . '\' AND Table_name = \'' . $this->dbi->escapeString($oldTable)
+                . '\';';
         $this->dbi->query($query_table_specific);
 
         // For column specific privileges
         $query_col_specific = 'UPDATE ' . Util::backquote('columns_priv')
-            . 'SET Db = \'' . $this->dbi->escapeString($newDb)
-            . '\', Table_name = \'' . $this->dbi->escapeString($newTable)
-            . '\' where Db = \'' . $this->dbi->escapeString($oldDb)
-            . '\' AND Table_name = \'' . $this->dbi->escapeString($oldTable)
-            . '\';';
+                . 'SET Db = \'' . $this->dbi->escapeString($newDb)
+                . '\', Table_name = \'' . $this->dbi->escapeString($newTable)
+                . '\' where Db = \'' . $this->dbi->escapeString($oldDb)
+                . '\' AND Table_name = \'' . $this->dbi->escapeString($oldTable)
+                . '\';';
         $this->dbi->query($query_col_specific);
 
         // Finally FLUSH the new privileges
@@ -943,10 +893,8 @@ class Operations
      *
      * @return void
      */
-    public function adjustPrivilegesCopyTable($oldDb, $oldTable, $newDb, $newTable)
-    {
-        if (! $GLOBALS['table_priv'] || ! $GLOBALS['col_priv']
-            || ! $GLOBALS['is_reload_priv']
+    public function adjustPrivilegesCopyTable($oldDb, $oldTable, $newDb, $newTable) {
+        if (!$GLOBALS['table_priv'] || !$GLOBALS['col_priv'] || !$GLOBALS['is_reload_priv']
         ) {
             return;
         }
@@ -955,40 +903,40 @@ class Operations
 
         // For Table Specific privileges
         $query_table_specific_old = 'SELECT * FROM '
-            . Util::backquote('tables_priv') . ' where '
-            . 'Db = "' . $oldDb . '" AND Table_name = "' . $oldTable . '";';
+                . Util::backquote('tables_priv') . ' where '
+                . 'Db = "' . $oldDb . '" AND Table_name = "' . $oldTable . '";';
 
         $old_privs_table = $this->dbi->fetchResult(
-            $query_table_specific_old,
-            0
+                $query_table_specific_old,
+                0
         );
 
         foreach ($old_privs_table as $old_priv) {
             $newDb_table_privs_query = 'INSERT INTO '
-                . Util::backquote('tables_priv') . ' VALUES("'
-                . $old_priv[0] . '", "' . $newDb . '", "' . $old_priv[2] . '", "'
-                . $newTable . '", "' . $old_priv[4] . '", "' . $old_priv[5]
-                . '", "' . $old_priv[6] . '", "' . $old_priv[7] . '");';
+                    . Util::backquote('tables_priv') . ' VALUES("'
+                    . $old_priv[0] . '", "' . $newDb . '", "' . $old_priv[2] . '", "'
+                    . $newTable . '", "' . $old_priv[4] . '", "' . $old_priv[5]
+                    . '", "' . $old_priv[6] . '", "' . $old_priv[7] . '");';
 
             $this->dbi->query($newDb_table_privs_query);
         }
 
         // For Column Specific privileges
         $query_col_specific_old = 'SELECT * FROM '
-            . Util::backquote('columns_priv') . ' WHERE '
-            . 'Db = "' . $oldDb . '" AND Table_name = "' . $oldTable . '";';
+                . Util::backquote('columns_priv') . ' WHERE '
+                . 'Db = "' . $oldDb . '" AND Table_name = "' . $oldTable . '";';
 
         $old_privs_col = $this->dbi->fetchResult(
-            $query_col_specific_old,
-            0
+                $query_col_specific_old,
+                0
         );
 
         foreach ($old_privs_col as $old_priv) {
             $newDb_col_privs_query = 'INSERT INTO '
-                . Util::backquote('columns_priv') . ' VALUES("'
-                . $old_priv[0] . '", "' . $newDb . '", "' . $old_priv[2] . '", "'
-                . $newTable . '", "' . $old_priv[4] . '", "' . $old_priv[5]
-                . '", "' . $old_priv[6] . '");';
+                    . Util::backquote('columns_priv') . ' VALUES("'
+                    . $old_priv[0] . '", "' . $newDb . '", "' . $old_priv[2] . '", "'
+                    . $newTable . '", "' . $old_priv[4] . '", "' . $old_priv[5]
+                    . '", "' . $old_priv[6] . '");';
 
             $this->dbi->query($newDb_col_privs_query);
         }
@@ -1007,18 +955,17 @@ class Operations
      *
      * @return void
      */
-    public function changeAllColumnsCollation($db, $table, $tbl_collation)
-    {
+    public function changeAllColumnsCollation($db, $table, $tbl_collation) {
         $this->dbi->selectDb($db);
 
         $change_all_collations_query = 'ALTER TABLE '
-            . Util::backquote($table)
-            . ' CONVERT TO';
+                . Util::backquote($table)
+                . ' CONVERT TO';
 
         [$charset] = explode('_', $tbl_collation);
 
         $change_all_collations_query .= ' CHARACTER SET ' . $charset
-            . ($charset == $tbl_collation ? '' : ' COLLATE ' . $tbl_collation);
+                . ($charset == $tbl_collation ? '' : ' COLLATE ' . $tbl_collation);
 
         $this->dbi->query($change_all_collations_query);
     }
@@ -1029,8 +976,7 @@ class Operations
      * @param string $db    current database name
      * @param string $table current table name
      */
-    public function moveOrCopyTable($db, $table): Message
-    {
+    public function moveOrCopyTable($db, $table): Message {
         /**
          * Selects the database to work with
          */
@@ -1056,63 +1002,62 @@ class Operations
                 }
             } else {
                 Table::moveCopy(
-                    $db,
-                    $table,
-                    $_POST['target_db'],
-                    $_POST['new_name'],
-                    $_POST['what'],
-                    isset($_POST['submit_move']),
-                    'one_table'
+                        $db,
+                        $table,
+                        $_POST['target_db'],
+                        $_POST['new_name'],
+                        $_POST['what'],
+                        isset($_POST['submit_move']),
+                        'one_table'
                 );
 
-                if (isset($_POST['adjust_privileges'])
-                    && ! empty($_POST['adjust_privileges'])
+                if (isset($_POST['adjust_privileges']) && !empty($_POST['adjust_privileges'])
                 ) {
                     if (isset($_POST['submit_move'])) {
                         $this->adjustPrivilegesRenameOrMoveTable(
-                            $db,
-                            $table,
-                            $_POST['target_db'],
-                            $_POST['new_name']
+                                $db,
+                                $table,
+                                $_POST['target_db'],
+                                $_POST['new_name']
                         );
                     } else {
                         $this->adjustPrivilegesCopyTable(
-                            $db,
-                            $table,
-                            $_POST['target_db'],
-                            $_POST['new_name']
+                                $db,
+                                $table,
+                                $_POST['target_db'],
+                                $_POST['new_name']
                         );
                     }
 
                     if (isset($_POST['submit_move'])) {
                         $message = Message::success(
-                            __(
-                                'Table %s has been moved to %s. Privileges have been '
-                                . 'adjusted.'
-                            )
+                                        __(
+                                                'Table %s has been moved to %s. Privileges have been '
+                                                . 'adjusted.'
+                                        )
                         );
                     } else {
                         $message = Message::success(
-                            __(
-                                'Table %s has been copied to %s. Privileges have been '
-                                . 'adjusted.'
-                            )
+                                        __(
+                                                'Table %s has been copied to %s. Privileges have been '
+                                                . 'adjusted.'
+                                        )
                         );
                     }
                 } else {
                     if (isset($_POST['submit_move'])) {
                         $message = Message::success(
-                            __('Table %s has been moved to %s.')
+                                        __('Table %s has been moved to %s.')
                         );
                     } else {
                         $message = Message::success(
-                            __('Table %s has been copied to %s.')
+                                        __('Table %s has been copied to %s.')
                         );
                     }
                 }
 
                 $old = Util::backquote($db) . '.'
-                    . Util::backquote($table);
+                        . Util::backquote($table);
                 $message->addParam($old);
 
                 $new_name = $_POST['new_name'];
@@ -1123,7 +1068,7 @@ class Operations
                 $GLOBALS['table'] = $new_name;
 
                 $new = Util::backquote($_POST['target_db']) . '.'
-                    . Util::backquote($new_name);
+                        . Util::backquote($new_name);
                 $message->addParam($new);
             }
         } else {
@@ -1135,4 +1080,5 @@ class Operations
 
         return $message;
     }
+
 }

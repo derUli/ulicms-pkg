@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Superclass for the single Property Item classes.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Properties\Options;
@@ -11,38 +11,43 @@ namespace PhpMyAdmin\Properties\Options;
  * Parents only single property items (not groups).
  * Defines possible options and getters and setters for them.
  */
-abstract class OptionsPropertyOneItem extends OptionsPropertyItem
-{
+abstract class OptionsPropertyOneItem extends OptionsPropertyItem {
+
     /**
      * Whether to force or not
      *
      * @var bool|string
      */
     private $forceOne;
+
     /**
      * Values
      *
      * @var array
      */
     private $values;
+
     /**
      * Doc
      *
      * @var string
      */
     private $doc;
+
     /**
      * Length
      *
      * @var int
      */
     private $len;
+
     /**
      * Size
      *
      * @var int
      */
     private $size;
+
     /* ~~~~~~~~~~~~~~~~~~~~ Getters and Setters ~~~~~~~~~~~~~~~~~~~~ */
 
     /**
@@ -50,8 +55,7 @@ abstract class OptionsPropertyOneItem extends OptionsPropertyItem
      *
      * @return bool|string
      */
-    public function getForce()
-    {
+    public function getForce() {
         return $this->forceOne;
     }
 
@@ -62,8 +66,7 @@ abstract class OptionsPropertyOneItem extends OptionsPropertyItem
      *
      * @return void
      */
-    public function setForce($force)
-    {
+    public function setForce($force) {
         $this->forceOne = $force;
     }
 
@@ -72,8 +75,7 @@ abstract class OptionsPropertyOneItem extends OptionsPropertyItem
      *
      * @return array
      */
-    public function getValues()
-    {
+    public function getValues() {
         return $this->values;
     }
 
@@ -84,8 +86,7 @@ abstract class OptionsPropertyOneItem extends OptionsPropertyItem
      *
      * @return void
      */
-    public function setValues(array $values)
-    {
+    public function setValues(array $values) {
         $this->values = $values;
     }
 
@@ -94,8 +95,7 @@ abstract class OptionsPropertyOneItem extends OptionsPropertyItem
      *
      * @return string
      */
-    public function getDoc()
-    {
+    public function getDoc() {
         return $this->doc;
     }
 
@@ -106,8 +106,7 @@ abstract class OptionsPropertyOneItem extends OptionsPropertyItem
      *
      * @return void
      */
-    public function setDoc($doc)
-    {
+    public function setDoc($doc) {
         $this->doc = $doc;
     }
 
@@ -116,8 +115,7 @@ abstract class OptionsPropertyOneItem extends OptionsPropertyItem
      *
      * @return int
      */
-    public function getLen()
-    {
+    public function getLen() {
         return $this->len;
     }
 
@@ -128,8 +126,7 @@ abstract class OptionsPropertyOneItem extends OptionsPropertyItem
      *
      * @return void
      */
-    public function setLen($len)
-    {
+    public function setLen($len) {
         $this->len = $len;
     }
 
@@ -138,8 +135,7 @@ abstract class OptionsPropertyOneItem extends OptionsPropertyItem
      *
      * @return int
      */
-    public function getSize()
-    {
+    public function getSize() {
         return $this->size;
     }
 
@@ -150,8 +146,8 @@ abstract class OptionsPropertyOneItem extends OptionsPropertyItem
      *
      * @return void
      */
-    public function setSize($size)
-    {
+    public function setSize($size) {
         $this->size = $size;
     }
+
 }

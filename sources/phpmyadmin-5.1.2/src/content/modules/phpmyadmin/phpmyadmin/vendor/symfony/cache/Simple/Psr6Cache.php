@@ -18,6 +18,6 @@ use Symfony\Component\Cache\Psr16Cache;
 /**
  * @deprecated since Symfony 4.3, use Psr16Cache instead.
  */
-class Psr6Cache extends Psr16Cache
-{
+class Psr6Cache extends Psr16Cache {
+    
 }

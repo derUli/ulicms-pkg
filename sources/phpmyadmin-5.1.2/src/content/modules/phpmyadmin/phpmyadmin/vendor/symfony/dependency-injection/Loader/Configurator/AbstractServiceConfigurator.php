@@ -14,22 +14,20 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 
-abstract class AbstractServiceConfigurator extends AbstractConfigurator
-{
+abstract class AbstractServiceConfigurator extends AbstractConfigurator {
+
     protected $parent;
     protected $id;
     private $defaultTags = [];
 
-    public function __construct(ServicesConfigurator $parent, Definition $definition, string $id = null, array $defaultTags = [])
-    {
+    public function __construct(ServicesConfigurator $parent, Definition $definition, string $id = null, array $defaultTags = []) {
         $this->parent = $parent;
         $this->definition = $definition;
         $this->id = $id;
         $this->defaultTags = $defaultTags;
     }
 
-    public function __destruct()
-    {
+    public function __destruct() {
         // default tags should be added last
         foreach ($this->defaultTags as $name => $attributes) {
             foreach ($attributes as $attribute) {
@@ -42,8 +40,7 @@ abstract class AbstractServiceConfigurator extends AbstractConfigurator
     /**
      * Registers a service.
      */
-    final public function set(?string $id, string $class = null): ServiceConfigurator
-    {
+    final public function set(?string $id, string $class = null): ServiceConfigurator {
         $this->__destruct();
 
         return $this->parent->set($id, $class);
@@ -52,8 +49,7 @@ abstract class AbstractServiceConfigurator extends AbstractConfigurator
     /**
      * Creates an alias.
      */
-    final public function alias(string $id, string $referencedId): AliasConfigurator
-    {
+    final public function alias(string $id, string $referencedId): AliasConfigurator {
         $this->__destruct();
 
         return $this->parent->alias($id, $referencedId);
@@ -62,8 +58,7 @@ abstract class AbstractServiceConfigurator extends AbstractConfigurator
     /**
      * Registers a PSR-4 namespace using a glob pattern.
      */
-    final public function load(string $namespace, string $resource): PrototypeConfigurator
-    {
+    final public function load(string $namespace, string $resource): PrototypeConfigurator {
         $this->__destruct();
 
         return $this->parent->load($namespace, $resource);
@@ -74,8 +69,7 @@ abstract class AbstractServiceConfigurator extends AbstractConfigurator
      *
      * @throws ServiceNotFoundException if the service definition does not exist
      */
-    final public function get(string $id): ServiceConfigurator
-    {
+    final public function get(string $id): ServiceConfigurator {
         $this->__destruct();
 
         return $this->parent->get($id);
@@ -84,10 +78,10 @@ abstract class AbstractServiceConfigurator extends AbstractConfigurator
     /**
      * Registers a service.
      */
-    final public function __invoke(string $id, string $class = null): ServiceConfigurator
-    {
+    final public function __invoke(string $id, string $class = null): ServiceConfigurator {
         $this->__destruct();
 
         return $this->parent->set($id, $class);
     }
+
 }

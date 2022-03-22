@@ -22,8 +22,8 @@ use function json_decode;
 /**
  * Displays index edit/creation form and handles it.
  */
-class IndexesController extends AbstractController
-{
+class IndexesController extends AbstractController {
+
     /** @var DatabaseInterface */
     private $dbi;
 
@@ -33,17 +33,15 @@ class IndexesController extends AbstractController
      * @param string            $table    Table name.
      * @param DatabaseInterface $dbi
      */
-    public function __construct($response, Template $template, $db, $table, $dbi)
-    {
+    public function __construct($response, Template $template, $db, $table, $dbi) {
         parent::__construct($response, $template, $db, $table);
         $this->dbi = $dbi;
     }
 
-    public function index(): void
-    {
+    public function index(): void {
         global $db, $table, $url_params, $cfg, $err_url;
 
-        if (! isset($_POST['create_edit_table'])) {
+        if (!isset($_POST['create_edit_table'])) {
             Util::checkParameters(['db', 'table']);
 
             $url_params = ['db' => $db, 'table' => $table];
@@ -72,11 +70,10 @@ class IndexesController extends AbstractController
         $this->displayForm($index);
     }
 
-    public function indexRename(): void
-    {
+    public function indexRename(): void {
         global $db, $table, $url_params, $cfg, $err_url;
 
-        if (! isset($_POST['create_edit_table'])) {
+        if (!isset($_POST['create_edit_table'])) {
             Util::checkParameters(['db', 'table']);
 
             $url_params = ['db' => $db, 'table' => $table];
@@ -110,8 +107,7 @@ class IndexesController extends AbstractController
      *
      * @param Index $index An Index instance.
      */
-    public function displayRenameForm(Index $index): void
-    {
+    public function displayRenameForm(Index $index): void {
         $this->dbi->selectDb($GLOBALS['db']);
 
         $formParams = [
@@ -138,15 +134,13 @@ class IndexesController extends AbstractController
      *
      * @param Index $index An Index instance.
      */
-    public function displayForm(Index $index): void
-    {
+    public function displayForm(Index $index): void {
         $this->dbi->selectDb($GLOBALS['db']);
         $add_fields = 0;
         if (isset($_POST['index']) && is_array($_POST['index'])) {
             // coming already from form
             if (isset($_POST['index']['columns']['names'])) {
-                $add_fields = count($_POST['index']['columns']['names'])
-                    - $index->getColumnCount();
+                $add_fields = count($_POST['index']['columns']['names']) - $index->getColumnCount();
             }
             if (isset($_POST['add_fields'])) {
                 $add_fields += $_POST['added_fields'];
@@ -159,14 +153,13 @@ class IndexesController extends AbstractController
         if (isset($_POST['create_edit_table'])) {
             $fields = json_decode($_POST['columns'], true);
             $index_params = [
-                'Non_unique' => $_POST['index']['Index_choice'] === 'UNIQUE'
-                    ? '0' : '1',
+                'Non_unique' => $_POST['index']['Index_choice'] === 'UNIQUE' ? '0' : '1',
             ];
             $index->set($index_params);
             $add_fields = count($fields);
         } else {
             $fields = $this->dbi->getTable($this->db, $this->table)
-                ->getNameAndTypeOfTheColumns();
+                    ->getNameAndTypeOfTheColumns();
         }
 
         $form_params = [
@@ -202,8 +195,7 @@ class IndexesController extends AbstractController
      * @param Index $index      An Index instance.
      * @param bool  $renameMode Rename the Index mode
      */
-    public function doSaveData(Index $index, bool $renameMode): void
-    {
+    public function doSaveData(Index $index, bool $renameMode): void {
         global $containerBuilder;
 
         $error = false;
@@ -216,54 +208,54 @@ class IndexesController extends AbstractController
                     $index->setName('PRIMARY');
                 } elseif ($index->getName() !== 'PRIMARY') {
                     $error = Message::error(
-                        __('The name of the primary key must be "PRIMARY"!')
+                                    __('The name of the primary key must be "PRIMARY"!')
                     );
                 }
             }
 
             $sql_query = QueryGenerator::getSqlQueryForIndexRename(
-                $this->db,
-                $this->table,
-                $oldIndexName,
-                $index->getName()
+                            $this->db,
+                            $this->table,
+                            $oldIndexName,
+                            $index->getName()
             );
         } else {
             $sql_query = $this->dbi->getTable($this->db, $this->table)
-                ->getSqlQueryForIndexCreateOrEdit($index, $error);
+                    ->getSqlQueryForIndexCreateOrEdit($index, $error);
         }
 
         // If there is a request for SQL previewing.
         if (isset($_POST['preview_sql'])) {
             $this->response->addJSON(
-                'sql_data',
-                $this->template->render('preview_sql', ['query_data' => $sql_query])
+                    'sql_data',
+                    $this->template->render('preview_sql', ['query_data' => $sql_query])
             );
-        } elseif (! $error) {
+        } elseif (!$error) {
             $this->dbi->query($sql_query);
             $response = Response::getInstance();
             if ($response->isAjax()) {
                 $message = Message::success(
-                    __('Table %1$s has been altered successfully.')
+                                __('Table %1$s has been altered successfully.')
                 );
                 $message->addParam($this->table);
                 $this->response->addJSON(
-                    'message',
-                    Generator::getMessage($message, $sql_query, 'success')
+                        'message',
+                        Generator::getMessage($message, $sql_query, 'success')
                 );
 
                 $indexes = Index::getFromTable($this->table, $this->db);
                 $indexesDuplicates = Index::findDuplicates($this->table, $this->db);
 
                 $this->response->addJSON(
-                    'index_table',
-                    $this->template->render('indexes', [
-                        'url_params' => [
-                            'db' => $this->db,
-                            'table' => $this->table,
-                        ],
-                        'indexes' => $indexes,
-                        'indexes_duplicates' => $indexesDuplicates,
-                    ])
+                        'index_table',
+                        $this->template->render('indexes', [
+                            'url_params' => [
+                                'db' => $this->db,
+                                'table' => $this->table,
+                            ],
+                            'indexes' => $indexes,
+                            'indexes_duplicates' => $indexesDuplicates,
+                        ])
                 );
             } else {
                 /** @var StructureController $controller */
@@ -275,4 +267,5 @@ class IndexesController extends AbstractController
             $this->response->addJSON('message', $error);
         }
     }
+
 }

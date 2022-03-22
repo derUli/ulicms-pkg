@@ -39,7 +39,7 @@ var CommonParams = (function () {
             }
             if (updateNavigation &&
                     $('#pma_navigation_tree').hasClass('synced')
-            ) {
+                    ) {
                 Navigation.showCurrent();
             }
         },
@@ -65,14 +65,14 @@ var CommonParams = (function () {
         set: function (name, value) {
             var updateNavigation = false;
             if (name === 'db' || name === 'table' &&
-                params[name] !== value
-            ) {
+                    params[name] !== value
+                    ) {
                 updateNavigation = true;
             }
             params[name] = value;
             if (updateNavigation &&
                     $('#pma_navigation_tree').hasClass('synced')
-            ) {
+                    ) {
                 Navigation.showCurrent();
             }
             return this;
@@ -95,13 +95,13 @@ var CommonParams = (function () {
             }
 
             return Functions.sprintf(
-                '%s%sserver=%s' + argsep + 'db=%s' + argsep + 'table=%s',
-                sep,
-                common,
-                encodeURIComponent(this.get('server')),
-                encodeURIComponent(this.get('db')),
-                encodeURIComponent(this.get('table'))
-            );
+                    '%s%sserver=%s' + argsep + 'db=%s' + argsep + 'table=%s',
+                    sep,
+                    common,
+                    encodeURIComponent(this.get('server')),
+                    encodeURIComponent(this.get('db')),
+                    encodeURIComponent(this.get('table'))
+                    );
         }
     };
 }());
@@ -124,7 +124,7 @@ var CommonActions = {
      */
     setDb: function (newDb) {
         if (newDb !== CommonParams.get('db')) {
-            CommonParams.setAll({ 'db': newDb, 'table': '' });
+            CommonParams.setAll({'db': newDb, 'table': ''});
         }
     },
     /**
@@ -136,11 +136,11 @@ var CommonActions = {
      */
     openDb: function (newDb) {
         CommonParams
-            .set('db', newDb)
-            .set('table', '');
+                .set('db', newDb)
+                .set('table', '');
         this.refreshMain(
-            CommonParams.get('opendb_url')
-        );
+                CommonParams.get('opendb_url')
+                );
     },
     /**
      * Refreshes the main frame
@@ -152,7 +152,7 @@ var CommonActions = {
      */
     refreshMain: function (url, callback) {
         var newUrl = url;
-        if (! newUrl) {
+        if (!newUrl) {
             newUrl = $('#selflink').find('a').attr('href') || window.location.pathname;
             newUrl = newUrl.substring(0, newUrl.indexOf('?'));
         }
@@ -161,10 +161,10 @@ var CommonActions = {
         } else {
             newUrl += CommonParams.getUrlQuery('?');
         }
-        $('<a></a>', { href: newUrl })
-            .appendTo('body')
-            .trigger('click')
-            .remove();
+        $('<a></a>', {href: newUrl})
+                .appendTo('body')
+                .trigger('click')
+                .remove();
         AJAX.callback = callback;
     }
 };

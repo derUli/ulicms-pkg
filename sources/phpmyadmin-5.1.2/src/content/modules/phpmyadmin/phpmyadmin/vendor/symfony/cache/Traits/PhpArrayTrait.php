@@ -22,14 +22,13 @@ use Symfony\Component\VarExporter\VarExporter;
  *
  * @internal
  */
-trait PhpArrayTrait
-{
+trait PhpArrayTrait {
+
     use ProxyTrait;
 
     private $file;
     private $keys;
     private $values;
-
     private static $valuesCache = [];
 
     /**
@@ -37,8 +36,7 @@ trait PhpArrayTrait
      *
      * @param array $values The cached values
      */
-    public function warmUp(array $values)
-    {
+    public function warmUp(array $values) {
         if (file_exists($this->file)) {
             if (!is_file($this->file)) {
                 throw new InvalidArgumentException(sprintf('Cache path exists and is not a file: "%s".', $this->file));
@@ -106,7 +104,7 @@ EOF;
                 $dumpedValues .= "{$id} => {$value},\n";
             }
 
-            $dump .= var_export($key, true)." => {$id},\n";
+            $dump .= var_export($key, true) . " => {$id},\n";
         }
 
         $dump .= "\n], [\n\n{$dumpedValues}\n]];\n";
@@ -130,8 +128,7 @@ EOF;
      *
      * @return bool
      */
-    public function clear(/*string $prefix = ''*/)
-    {
+    public function clear(/* string $prefix = '' */) {
         $prefix = 0 < \func_num_args() ? (string) func_get_arg(0) : '';
         $this->keys = $this->values = [];
 
@@ -148,8 +145,7 @@ EOF;
     /**
      * Load the cache file.
      */
-    private function initialize()
-    {
+    private function initialize() {
         if (isset(self::$valuesCache[$this->file])) {
             $values = self::$valuesCache[$this->file];
         } elseif (!file_exists($this->file)) {
@@ -166,4 +162,5 @@ EOF;
             [$this->keys, $this->values] = $values;
         }
     }
+
 }

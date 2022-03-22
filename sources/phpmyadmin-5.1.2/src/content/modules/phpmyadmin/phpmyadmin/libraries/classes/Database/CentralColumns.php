@@ -26,8 +26,8 @@ use function mb_strtoupper;
 use function sprintf;
 use function trim;
 
-class CentralColumns
-{
+class CentralColumns {
+
     /**
      * DatabaseInterface instance
      *
@@ -72,8 +72,7 @@ class CentralColumns
     /**
      * @param DatabaseInterface $dbi DatabaseInterface instance
      */
-    public function __construct(DatabaseInterface $dbi)
-    {
+    public function __construct(DatabaseInterface $dbi) {
         $this->dbi = $dbi;
 
         $this->user = $GLOBALS['cfg']['Server']['user'];
@@ -92,8 +91,7 @@ class CentralColumns
      *
      * @access public
      */
-    public function getParams()
-    {
+    public function getParams() {
         static $cfgCentralColumns = null;
 
         if ($cfgCentralColumns !== null) {
@@ -104,8 +102,8 @@ class CentralColumns
 
         if ($cfgRelation['centralcolumnswork']) {
             $cfgCentralColumns = [
-                'user'  => $this->user,
-                'db'    => $cfgRelation['db'],
+                'user' => $this->user,
+                'db' => $cfgRelation['db'],
                 'table' => $cfgRelation['central_columns'],
             ];
         } else {
@@ -126,10 +124,9 @@ class CentralColumns
      * @return array list of $num columns present in central columns list
      * starting at offset $from for the given database
      */
-    public function getColumnsList(string $db, int $from = 0, int $num = 25): array
-    {
+    public function getColumnsList(string $db, int $from = 0, int $num = 25): array {
         $cfgCentralColumns = $this->getParams();
-        if (! is_array($cfgCentralColumns)) {
+        if (!is_array($cfgCentralColumns)) {
             return [];
         }
         $pmadb = $cfgCentralColumns['db'];
@@ -138,17 +135,17 @@ class CentralColumns
         //get current values of $db from central column list
         if ($num == 0) {
             $query = 'SELECT * FROM ' . Util::backquote($central_list_table) . ' '
-                . 'WHERE db_name = \'' . $this->dbi->escapeString($db) . '\';';
+                    . 'WHERE db_name = \'' . $this->dbi->escapeString($db) . '\';';
         } else {
             $query = 'SELECT * FROM ' . Util::backquote($central_list_table) . ' '
-                . 'WHERE db_name = \'' . $this->dbi->escapeString($db) . '\' '
-                . 'LIMIT ' . $from . ', ' . $num . ';';
+                    . 'WHERE db_name = \'' . $this->dbi->escapeString($db) . '\' '
+                    . 'LIMIT ' . $from . ', ' . $num . ';';
         }
         $has_list = (array) $this->dbi->fetchResult(
-            $query,
-            null,
-            null,
-            DatabaseInterface::CONNECT_CONTROL
+                        $query,
+                        null,
+                        null,
+                        DatabaseInterface::CONNECT_CONTROL
         );
         $this->handleColumnExtra($has_list);
 
@@ -162,23 +159,22 @@ class CentralColumns
      *
      * @return int number of columns in central list of columns for $db
      */
-    public function getCount(string $db): int
-    {
+    public function getCount(string $db): int {
         $cfgCentralColumns = $this->getParams();
-        if (! is_array($cfgCentralColumns)) {
+        if (!is_array($cfgCentralColumns)) {
             return 0;
         }
         $pmadb = $cfgCentralColumns['db'];
         $this->dbi->selectDb($pmadb, DatabaseInterface::CONNECT_CONTROL);
         $central_list_table = $cfgCentralColumns['table'];
         $query = 'SELECT count(db_name) FROM ' .
-            Util::backquote($central_list_table) . ' '
-            . 'WHERE db_name = \'' . $this->dbi->escapeString($db) . '\';';
+                Util::backquote($central_list_table) . ' '
+                . 'WHERE db_name = \'' . $this->dbi->escapeString($db) . '\';';
         $res = $this->dbi->fetchResult(
-            $query,
-            null,
-            null,
-            DatabaseInterface::CONNECT_CONTROL
+                $query,
+                null,
+                null,
+                DatabaseInterface::CONNECT_CONTROL
         );
         if (isset($res[0])) {
             return (int) $res[0];
@@ -198,12 +194,12 @@ class CentralColumns
      * @return array list of columns in central columns among given set of columns
      */
     private function findExistingColNames(
-        string $db,
-        string $cols,
-        bool $allFields = false
+            string $db,
+            string $cols,
+            bool $allFields = false
     ): array {
         $cfgCentralColumns = $this->getParams();
-        if (! is_array($cfgCentralColumns)) {
+        if (!is_array($cfgCentralColumns)) {
             return [];
         }
         $pmadb = $cfgCentralColumns['db'];
@@ -211,23 +207,23 @@ class CentralColumns
         $central_list_table = $cfgCentralColumns['table'];
         if ($allFields) {
             $query = 'SELECT * FROM ' . Util::backquote($central_list_table) . ' '
-                . 'WHERE db_name = \'' . $this->dbi->escapeString($db) . '\' AND col_name IN (' . $cols . ');';
+                    . 'WHERE db_name = \'' . $this->dbi->escapeString($db) . '\' AND col_name IN (' . $cols . ');';
             $has_list = (array) $this->dbi->fetchResult(
-                $query,
-                null,
-                null,
-                DatabaseInterface::CONNECT_CONTROL
+                            $query,
+                            null,
+                            null,
+                            DatabaseInterface::CONNECT_CONTROL
             );
             $this->handleColumnExtra($has_list);
         } else {
             $query = 'SELECT col_name FROM '
-                . Util::backquote($central_list_table) . ' '
-                . 'WHERE db_name = \'' . $this->dbi->escapeString($db) . '\' AND col_name IN (' . $cols . ');';
+                    . Util::backquote($central_list_table) . ' '
+                    . 'WHERE db_name = \'' . $this->dbi->escapeString($db) . '\' AND col_name IN (' . $cols . ');';
             $has_list = (array) $this->dbi->fetchResult(
-                $query,
-                null,
-                null,
-                DatabaseInterface::CONNECT_CONTROL
+                            $query,
+                            null,
+                            null,
+                            DatabaseInterface::CONNECT_CONTROL
             );
         }
 
@@ -247,10 +243,10 @@ class CentralColumns
      * with definition into central list
      */
     private function getInsertQuery(
-        string $column,
-        array $def,
-        string $db,
-        string $central_list_table
+            string $column,
+            array $def,
+            string $db,
+            string $central_list_table
     ): string {
         $type = '';
         $length = 0;
@@ -270,15 +266,15 @@ class CentralColumns
         $default = $def['Default'] ?? '';
 
         return 'INSERT INTO '
-            . Util::backquote($central_list_table) . ' '
-            . 'VALUES ( \'' . $this->dbi->escapeString($db) . '\' ,'
-            . '\'' . $this->dbi->escapeString($column) . '\',\''
-            . $this->dbi->escapeString($type) . '\','
-            . '\'' . $this->dbi->escapeString((string) $length) . '\',\''
-            . $this->dbi->escapeString($collation) . '\','
-            . '\'' . $this->dbi->escapeString($isNull) . '\','
-            . '\'' . implode(',', [$extra, $attribute])
-            . '\',\'' . $this->dbi->escapeString($default) . '\');';
+                . Util::backquote($central_list_table) . ' '
+                . 'VALUES ( \'' . $this->dbi->escapeString($db) . '\' ,'
+                . '\'' . $this->dbi->escapeString($column) . '\',\''
+                . $this->dbi->escapeString($type) . '\','
+                . '\'' . $this->dbi->escapeString((string) $length) . '\',\''
+                . $this->dbi->escapeString($collation) . '\','
+                . '\'' . $this->dbi->escapeString($isNull) . '\','
+                . '\'' . implode(',', [$extra, $attribute])
+                . '\',\'' . $this->dbi->escapeString($default) . '\');';
     }
 
     /**
@@ -295,14 +291,14 @@ class CentralColumns
      * @return true|Message
      */
     public function syncUniqueColumns(
-        array $field_select,
-        bool $isTable = true,
-        ?string $table = null
+            array $field_select,
+            bool $isTable = true,
+            ?string $table = null
     ) {
         $cfgCentralColumns = $this->getParams();
-        if (! is_array($cfgCentralColumns)) {
+        if (!is_array($cfgCentralColumns)) {
             return Message::error(
-                __('The configuration storage is not ready for the central list of columns feature.')
+                            __('The configuration storage is not ready for the central list of columns feature.')
             );
         }
         $db = $_POST['db'];
@@ -317,10 +313,10 @@ class CentralColumns
         if ($isTable) {
             foreach ($field_select as $table) {
                 $fields[$table] = (array) $this->dbi->getColumns(
-                    $db,
-                    $table,
-                    null,
-                    true
+                                $db,
+                                $table,
+                                null,
+                                true
                 );
                 foreach ($fields[$table] as $field => $def) {
                     $cols .= "'" . $this->dbi->escapeString($field) . "',";
@@ -330,13 +326,13 @@ class CentralColumns
             $has_list = $this->findExistingColNames($db, trim($cols, ','));
             foreach ($field_select as $table) {
                 foreach ($fields[$table] as $field => $def) {
-                    if (! in_array($field, $has_list)) {
+                    if (!in_array($field, $has_list)) {
                         $has_list[] = $field;
                         $insQuery[] = $this->getInsertQuery(
-                            $field,
-                            $def,
-                            $db,
-                            $central_list_table
+                                $field,
+                                $def,
+                                $db,
+                                $central_list_table
                         );
                     } else {
                         $existingCols[] = "'" . $field . "'";
@@ -352,51 +348,51 @@ class CentralColumns
             }
             $has_list = $this->findExistingColNames($db, trim($cols, ','));
             foreach ($field_select as $column) {
-                if (! in_array($column, $has_list)) {
+                if (!in_array($column, $has_list)) {
                     $has_list[] = $column;
                     $field = (array) $this->dbi->getColumns(
-                        $db,
-                        $table,
-                        $column,
-                        true
+                                    $db,
+                                    $table,
+                                    $column,
+                                    true
                     );
                     $insQuery[] = $this->getInsertQuery(
-                        $column,
-                        $field,
-                        $db,
-                        $central_list_table
+                            $column,
+                            $field,
+                            $db,
+                            $central_list_table
                     );
                 } else {
                     $existingCols[] = "'" . $column . "'";
                 }
             }
         }
-        if (! empty($existingCols)) {
+        if (!empty($existingCols)) {
             $existingCols = implode(',', array_unique($existingCols));
             $message = Message::notice(
-                sprintf(
-                    __(
-                        'Could not add %1$s as they already exist in central list!'
-                    ),
-                    htmlspecialchars($existingCols)
-                )
+                            sprintf(
+                                    __(
+                                            'Could not add %1$s as they already exist in central list!'
+                                    ),
+                                    htmlspecialchars($existingCols)
+                            )
             );
             $message->addMessage(
-                Message::notice(
-                    'Please remove them first '
-                    . 'from central list if you want to update above columns'
-                )
+                    Message::notice(
+                            'Please remove them first '
+                            . 'from central list if you want to update above columns'
+                    )
             );
         }
         $this->dbi->selectDb($pmadb, DatabaseInterface::CONNECT_CONTROL);
-        if (! empty($insQuery)) {
+        if (!empty($insQuery)) {
             foreach ($insQuery as $query) {
-                if (! $this->dbi->tryQuery($query, DatabaseInterface::CONNECT_CONTROL)) {
+                if (!$this->dbi->tryQuery($query, DatabaseInterface::CONNECT_CONTROL)) {
                     $message = Message::error(__('Could not add columns!'));
                     $message->addMessage(
-                        Message::rawError(
-                            (string) $this->dbi->getError(DatabaseInterface::CONNECT_CONTROL)
-                        )
+                            Message::rawError(
+                                    (string) $this->dbi->getError(DatabaseInterface::CONNECT_CONTROL)
+                            )
                     );
                     break;
                 }
@@ -419,14 +415,14 @@ class CentralColumns
      * @return true|Message
      */
     public function deleteColumnsFromList(
-        string $database,
-        array $field_select,
-        bool $isTable = true
+            string $database,
+            array $field_select,
+            bool $isTable = true
     ) {
         $cfgCentralColumns = $this->getParams();
-        if (! is_array($cfgCentralColumns)) {
+        if (!is_array($cfgCentralColumns)) {
             return Message::error(
-                __('The configuration storage is not ready for the central list of columns feature.')
+                            __('The configuration storage is not ready for the central list of columns feature.')
             );
         }
         $pmadb = $cfgCentralColumns['db'];
@@ -439,8 +435,8 @@ class CentralColumns
             $cols = '';
             foreach ($field_select as $table) {
                 $fields[$table] = (array) $this->dbi->getColumnNames(
-                    $database,
-                    $table
+                                $database,
+                                $table
                 );
                 foreach ($fields[$table] as $col_select) {
                     $cols .= '\'' . $this->dbi->escapeString($col_select) . '\',';
@@ -472,30 +468,30 @@ class CentralColumns
                 $colNotExist[] = "'" . $column . "'";
             }
         }
-        if (! empty($colNotExist)) {
+        if (!empty($colNotExist)) {
             $colNotExist = implode(',', array_unique($colNotExist));
             $message = Message::notice(
-                sprintf(
-                    __(
-                        'Couldn\'t remove Column(s) %1$s '
-                        . 'as they don\'t exist in central columns list!'
-                    ),
-                    htmlspecialchars($colNotExist)
-                )
+                            sprintf(
+                                    __(
+                                            'Couldn\'t remove Column(s) %1$s '
+                                            . 'as they don\'t exist in central columns list!'
+                                    ),
+                                    htmlspecialchars($colNotExist)
+                            )
             );
         }
         $this->dbi->selectDb($pmadb, DatabaseInterface::CONNECT_CONTROL);
 
         $query = 'DELETE FROM ' . Util::backquote($central_list_table) . ' '
-            . 'WHERE db_name = \'' . $this->dbi->escapeString($database) . '\' AND col_name IN (' . $cols . ');';
+                . 'WHERE db_name = \'' . $this->dbi->escapeString($database) . '\' AND col_name IN (' . $cols . ');';
 
-        if (! $this->dbi->tryQuery($query, DatabaseInterface::CONNECT_CONTROL)) {
+        if (!$this->dbi->tryQuery($query, DatabaseInterface::CONNECT_CONTROL)) {
             $message = Message::error(__('Could not remove columns!'));
             $message->addHtml('<br>' . htmlspecialchars($cols) . '<br>');
             $message->addMessage(
-                Message::rawError(
-                    (string) $this->dbi->getError(DatabaseInterface::CONNECT_CONTROL)
-                )
+                    Message::rawError(
+                            (string) $this->dbi->getError(DatabaseInterface::CONNECT_CONTROL)
+                    )
             );
         }
 
@@ -512,8 +508,8 @@ class CentralColumns
      * @return true|Message
      */
     public function makeConsistentWithList(
-        string $db,
-        array $selected_tables
+            string $db,
+            array $selected_tables
     ) {
         $message = true;
         foreach ($selected_tables as $table) {
@@ -522,18 +518,18 @@ class CentralColumns
             $this->dbi->selectDb($db);
             foreach ($has_list as $column) {
                 $column_status = $this->relation->checkChildForeignReferences(
-                    $db,
-                    $table,
-                    $column['col_name']
+                        $db,
+                        $table,
+                        $column['col_name']
                 );
                 //column definition can only be changed if
                 //it is not referenced by another column
-                if (! $column_status['isEditable']) {
+                if (!$column_status['isEditable']) {
                     continue;
                 }
 
                 $query .= ' MODIFY ' . Util::backquote($column['col_name']) . ' '
-                    . $this->dbi->escapeString($column['col_type']);
+                        . $this->dbi->escapeString($column['col_type']);
                 if ($column['col_length']) {
                     $query .= '(' . $column['col_length'] . ')';
                 }
@@ -547,15 +543,14 @@ class CentralColumns
 
                 $query .= ' ' . $column['col_extra'];
                 if ($column['col_default']) {
-                    if ($column['col_default'] !== 'CURRENT_TIMESTAMP'
-                        && $column['col_default'] !== 'current_timestamp()'
+                    if ($column['col_default'] !== 'CURRENT_TIMESTAMP' && $column['col_default'] !== 'current_timestamp()'
                     ) {
                         $query .= ' DEFAULT \'' . $this->dbi->escapeString(
-                            (string) $column['col_default']
-                        ) . '\'';
+                                        (string) $column['col_default']
+                                ) . '\'';
                     } else {
                         $query .= ' DEFAULT ' . $this->dbi->escapeString(
-                            $column['col_default']
+                                        $column['col_default']
                         );
                     }
                 }
@@ -568,12 +563,12 @@ class CentralColumns
 
             if ($message === true) {
                 $message = Message::error(
-                    (string) $this->dbi->getError()
+                                (string) $this->dbi->getError()
                 );
             } else {
                 $message->addText(
-                    $this->dbi->getError(),
-                    '<br>'
+                        $this->dbi->getError(),
+                        '<br>'
                 );
             }
         }
@@ -593,9 +588,9 @@ class CentralColumns
      * @return array columns present in central list from given table of given db.
      */
     public function getFromTable(
-        string $db,
-        string $table,
-        bool $allFields = false
+            string $db,
+            string $table,
+            bool $allFields = false
     ): array {
         $cfgCentralColumns = $this->getParams();
         if (empty($cfgCentralColumns)) {
@@ -603,8 +598,8 @@ class CentralColumns
         }
         $this->dbi->selectDb($db);
         $fields = (array) $this->dbi->getColumnNames(
-            $db,
-            $table
+                        $db,
+                        $table
         );
         $cols = '';
         foreach ($fields as $col_select) {
@@ -612,7 +607,7 @@ class CentralColumns
         }
         $cols = trim($cols, ',');
         $has_list = $this->findExistingColNames($db, $cols, $allFields);
-        if (! empty($has_list)) {
+        if (!empty($has_list)) {
             return (array) $has_list;
         }
 
@@ -636,21 +631,21 @@ class CentralColumns
      * @return true|Message
      */
     public function updateOneColumn(
-        string $db,
-        string $orig_col_name,
-        string $col_name,
-        string $col_type,
-        string $col_attribute,
-        string $col_length,
-        int $col_isNull,
-        string $collation,
-        string $col_extra,
-        string $col_default
+            string $db,
+            string $orig_col_name,
+            string $col_name,
+            string $col_type,
+            string $col_attribute,
+            string $col_length,
+            int $col_isNull,
+            string $collation,
+            string $col_extra,
+            string $col_default
     ) {
         $cfgCentralColumns = $this->getParams();
-        if (! is_array($cfgCentralColumns)) {
+        if (!is_array($cfgCentralColumns)) {
             return Message::error(
-                __('The configuration storage is not ready for the central list of columns feature.')
+                            __('The configuration storage is not ready for the central list of columns feature.')
             );
         }
         $centralTable = $cfgCentralColumns['table'];
@@ -669,21 +664,21 @@ class CentralColumns
             $query = $this->getInsertQuery($col_name, $def, $db, $centralTable);
         } else {
             $query = 'UPDATE ' . Util::backquote($centralTable)
-                . ' SET col_type = \'' . $this->dbi->escapeString($col_type) . '\''
-                . ', col_name = \'' . $this->dbi->escapeString($col_name) . '\''
-                . ', col_length = \'' . $this->dbi->escapeString($col_length) . '\''
-                . ', col_isNull = ' . $col_isNull
-                . ', col_collation = \'' . $this->dbi->escapeString($collation) . '\''
-                . ', col_extra = \''
-                . implode(',', [$col_extra, $col_attribute]) . '\''
-                . ', col_default = \'' . $this->dbi->escapeString($col_default) . '\''
-                . ' WHERE db_name = \'' . $this->dbi->escapeString($db) . '\' '
-                . 'AND col_name = \'' . $this->dbi->escapeString($orig_col_name)
-                . '\'';
+                    . ' SET col_type = \'' . $this->dbi->escapeString($col_type) . '\''
+                    . ', col_name = \'' . $this->dbi->escapeString($col_name) . '\''
+                    . ', col_length = \'' . $this->dbi->escapeString($col_length) . '\''
+                    . ', col_isNull = ' . $col_isNull
+                    . ', col_collation = \'' . $this->dbi->escapeString($collation) . '\''
+                    . ', col_extra = \''
+                    . implode(',', [$col_extra, $col_attribute]) . '\''
+                    . ', col_default = \'' . $this->dbi->escapeString($col_default) . '\''
+                    . ' WHERE db_name = \'' . $this->dbi->escapeString($db) . '\' '
+                    . 'AND col_name = \'' . $this->dbi->escapeString($orig_col_name)
+                    . '\'';
         }
-        if (! $this->dbi->tryQuery($query, DatabaseInterface::CONNECT_CONTROL)) {
+        if (!$this->dbi->tryQuery($query, DatabaseInterface::CONNECT_CONTROL)) {
             return Message::error(
-                (string) $this->dbi->getError(DatabaseInterface::CONNECT_CONTROL)
+                            (string) $this->dbi->getError(DatabaseInterface::CONNECT_CONTROL)
             );
         }
 
@@ -697,8 +692,7 @@ class CentralColumns
      *
      * @return true|Message
      */
-    public function updateMultipleColumn(array $params)
-    {
+    public function updateMultipleColumn(array $params) {
         $columnDefault = $params['field_default_type'];
         $columnIsNull = [];
         $columnExtra = [];
@@ -714,18 +708,18 @@ class CentralColumns
             }
 
             $message = $this->updateOneColumn(
-                $params['db'],
-                $params['orig_col_name'][$i],
-                $params['field_name'][$i],
-                $params['field_type'][$i],
-                $params['field_attribute'][$i],
-                $params['field_length'][$i],
-                $columnIsNull[$i],
-                $params['field_collation'][$i],
-                $columnExtra[$i],
-                $columnDefault[$i]
+                    $params['db'],
+                    $params['orig_col_name'][$i],
+                    $params['field_name'][$i],
+                    $params['field_type'][$i],
+                    $params['field_attribute'][$i],
+                    $params['field_length'][$i],
+                    $columnIsNull[$i],
+                    $params['field_collation'][$i],
+                    $columnExtra[$i],
+                    $columnDefault[$i]
             );
-            if (! is_bool($message)) {
+            if (!is_bool($message)) {
                 return $message;
             }
         }
@@ -742,10 +736,9 @@ class CentralColumns
      *
      * @return string html of a particular row in the central columns table.
      */
-    private function getHtmlForEditTableRow(array $row, int $row_num): string
-    {
+    private function getHtmlForEditTableRow(array $row, int $row_num): string {
         $meta = [];
-        if (! isset($row['col_default']) || $row['col_default'] == '') {
+        if (!isset($row['col_default']) || $row['col_default'] == '') {
             $meta['DefaultType'] = 'NONE';
         } elseif ($row['col_default'] === 'CURRENT_TIMESTAMP' || $row['col_default'] === 'current_timestamp()') {
             $meta['DefaultType'] = 'CURRENT_TIMESTAMP';
@@ -774,15 +767,15 @@ class CentralColumns
         $collations = Charsets::getCollations($this->dbi, $this->disableIs);
 
         return $this->template->render('database/central_columns/edit_table_row', [
-            'row_num' => $row_num,
-            'row' => $row,
-            'max_rows' => $this->maxRows,
-            'meta' => $meta,
-            'default_value' => $defaultValue,
-            'char_editing' => $this->charEditing,
-            'charsets' => $charsets,
-            'collations' => $collations,
-            'attribute_types' => $this->dbi->types->getAttributes(),
+                    'row_num' => $row_num,
+                    'row' => $row,
+                    'max_rows' => $this->maxRows,
+                    'meta' => $meta,
+                    'default_value' => $defaultValue,
+                    'char_editing' => $this->charEditing,
+                    'charsets' => $charsets,
+                    'collations' => $collations,
+                    'attribute_types' => $this->dbi->types->getAttributes(),
         ]);
     }
 
@@ -796,21 +789,20 @@ class CentralColumns
      * @return array encoded list of columns present in central list for the given
      *               database
      */
-    public function getListRaw(string $db, string $table): array
-    {
+    public function getListRaw(string $db, string $table): array {
         $cfgCentralColumns = $this->getParams();
-        if (! is_array($cfgCentralColumns)) {
+        if (!is_array($cfgCentralColumns)) {
             return [];
         }
         $centralTable = $cfgCentralColumns['table'];
         if (empty($table) || $table == '') {
             $query = 'SELECT * FROM ' . Util::backquote($centralTable) . ' '
-                . 'WHERE db_name = \'' . $this->dbi->escapeString($db) . '\';';
+                    . 'WHERE db_name = \'' . $this->dbi->escapeString($db) . '\';';
         } else {
             $this->dbi->selectDb($db);
             $columns = (array) $this->dbi->getColumnNames(
-                $db,
-                $table
+                            $db,
+                            $table
             );
             $cols = '';
             foreach ($columns as $col_select) {
@@ -818,7 +810,7 @@ class CentralColumns
             }
             $cols = trim($cols, ',');
             $query = 'SELECT * FROM ' . Util::backquote($centralTable) . ' '
-                . 'WHERE db_name = \'' . $this->dbi->escapeString($db) . '\'';
+                    . 'WHERE db_name = \'' . $this->dbi->escapeString($db) . '\'';
             if ($cols) {
                 $query .= ' AND col_name NOT IN (' . $cols . ')';
             }
@@ -826,10 +818,10 @@ class CentralColumns
         }
         $this->dbi->selectDb($cfgCentralColumns['db'], DatabaseInterface::CONNECT_CONTROL);
         $columns_list = (array) $this->dbi->fetchResult(
-            $query,
-            null,
-            null,
-            DatabaseInterface::CONNECT_CONTROL
+                        $query,
+                        null,
+                        null,
+                        DatabaseInterface::CONNECT_CONTROL
         );
         $this->handleColumnExtra($columns_list);
 
@@ -842,8 +834,7 @@ class CentralColumns
      *
      * @param array $columns_list columns list
      */
-    private function handleColumnExtra(array &$columns_list): void
-    {
+    private function handleColumnExtra(array &$columns_list): void {
         foreach ($columns_list as &$row) {
             $vals = explode(',', $row['col_extra']);
 
@@ -875,8 +866,7 @@ class CentralColumns
      *
      * @return string HTML for complete editing page for central columns
      */
-    public function getHtmlForEditingPage(array $selected_fld, string $selected_db): string
-    {
+    public function getHtmlForEditingPage(array $selected_fld, string $selected_db): string {
         $html = '';
         $selected_fld_safe = [];
         foreach ($selected_fld as $key) {
@@ -888,8 +878,8 @@ class CentralColumns
         $row_num = 0;
         foreach ($list_detail_cols as $row) {
             $tableHtmlRow = $this->getHtmlForEditTableRow(
-                $row,
-                $row_num
+                    $row,
+                    $row_num
             );
             $html .= $tableHtmlRow;
             $row_num++;
@@ -909,10 +899,9 @@ class CentralColumns
      * @return int count of $num columns present in central columns list
      * starting at offset $from for the given database
      */
-    public function getColumnsCount(string $db, int $from = 0, int $num = 25): int
-    {
+    public function getColumnsCount(string $db, int $from = 0, int $num = 25): int {
         $cfgCentralColumns = $this->getParams();
-        if (! is_array($cfgCentralColumns)) {
+        if (!is_array($cfgCentralColumns)) {
             return 0;
         }
         $pmadb = $cfgCentralColumns['db'];
@@ -920,13 +909,13 @@ class CentralColumns
         $central_list_table = $cfgCentralColumns['table'];
         //get current values of $db from central column list
         $query = 'SELECT COUNT(db_name) FROM ' . Util::backquote($central_list_table) . ' '
-            . 'WHERE db_name = \'' . $this->dbi->escapeString($db) . '\'' .
-            ($num === 0 ? '' : 'LIMIT ' . $from . ', ' . $num) . ';';
+                . 'WHERE db_name = \'' . $this->dbi->escapeString($db) . '\'' .
+                ($num === 0 ? '' : 'LIMIT ' . $from . ', ' . $num) . ';';
         $result = (array) $this->dbi->fetchResult(
-            $query,
-            null,
-            null,
-            DatabaseInterface::CONNECT_CONTROL
+                        $query,
+                        null,
+                        null,
+                        DatabaseInterface::CONNECT_CONTROL
         );
 
         if (isset($result[0])) {
@@ -939,8 +928,7 @@ class CentralColumns
     /**
      * @return string[]
      */
-    public function getColumnsNotInCentralList(string $db, string $table): array
-    {
+    public function getColumnsNotInCentralList(string $db, string $table): array {
         $existingColumns = $this->getFromTable($db, $table);
         $this->dbi->selectDb($db);
         $columnNames = (array) $this->dbi->getColumnNames($db, $table);
@@ -969,11 +957,11 @@ class CentralColumns
      * @return array
      */
     public function getTemplateVariablesForMain(
-        string $db,
-        int $total_rows,
-        int $pos,
-        string $themeImagePath,
-        string $text_dir
+            string $db,
+            int $total_rows,
+            int $pos,
+            string $themeImagePath,
+            string $text_dir
     ): array {
         $max_rows = $this->maxRows;
         $attribute_types = $this->dbi->types->getAttributes();
@@ -981,11 +969,11 @@ class CentralColumns
         $tn_pageNow = ($pos / $this->maxRows) + 1;
         $tn_nbTotalPage = (int) ceil($total_rows / $this->maxRows);
         $tn_page_selector = $tn_nbTotalPage > 1 ? Util::pageselector(
-            'pos',
-            $this->maxRows,
-            $tn_pageNow,
-            $tn_nbTotalPage
-        ) : '';
+                        'pos',
+                        $this->maxRows,
+                        $tn_pageNow,
+                        $tn_nbTotalPage
+                ) : '';
         $this->dbi->selectDb($db);
         $tables = $this->dbi->getTables($db);
         $rows_list = $this->getColumnsList($db, $pos, $max_rows);
@@ -996,7 +984,7 @@ class CentralColumns
         $row_num = 0;
         foreach ($rows_list as $row) {
             $rows_meta[$row_num] = [];
-            if (! isset($row['col_default']) || $row['col_default'] == '') {
+            if (!isset($row['col_default']) || $row['col_default'] == '') {
                 $rows_meta[$row_num]['DefaultType'] = 'NONE';
             } elseif ($row['col_default'] === 'CURRENT_TIMESTAMP' || $row['col_default'] === 'current_timestamp()') {
                 $rows_meta[$row_num]['DefaultType'] = 'CURRENT_TIMESTAMP';
@@ -1062,4 +1050,5 @@ class CentralColumns
             'charsets' => $charsetsList,
         ];
     }
+
 }

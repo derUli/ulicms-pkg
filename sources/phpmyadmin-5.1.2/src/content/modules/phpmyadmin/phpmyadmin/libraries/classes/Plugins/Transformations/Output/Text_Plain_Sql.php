@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Text Plain SQL Transformations plugin for phpMyAdmin
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Plugins\Transformations\Output;
@@ -14,17 +14,16 @@ use PhpMyAdmin\Response;
  * Handles the sql transformation for text plain
  */
 // @codingStandardsIgnoreLine
-class Text_Plain_Sql extends SQLTransformationsPlugin
-{
-    public function __construct()
-    {
+class Text_Plain_Sql extends SQLTransformationsPlugin {
+
+    public function __construct() {
         if (empty($GLOBALS['cfg']['CodemirrorEnable'])) {
             return;
         }
 
         $response = Response::getInstance();
         $scripts = $response->getHeader()
-            ->getScripts();
+                ->getScripts();
         $scripts->addFile('vendor/codemirror/lib/codemirror.js');
         $scripts->addFile('vendor/codemirror/mode/sql/sql.js');
         $scripts->addFile('vendor/codemirror/addon/runmode/runmode.js');
@@ -36,8 +35,7 @@ class Text_Plain_Sql extends SQLTransformationsPlugin
      *
      * @return string
      */
-    public static function getMIMEType()
-    {
+    public static function getMIMEType() {
         return 'Text';
     }
 
@@ -46,8 +44,8 @@ class Text_Plain_Sql extends SQLTransformationsPlugin
      *
      * @return string
      */
-    public static function getMIMESubtype()
-    {
+    public static function getMIMESubtype() {
         return 'Plain';
     }
+
 }

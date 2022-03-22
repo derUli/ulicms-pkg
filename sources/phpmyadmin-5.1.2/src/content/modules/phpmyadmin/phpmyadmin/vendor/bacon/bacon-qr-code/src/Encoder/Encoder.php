@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace BaconQrCode\Encoder;
 
@@ -15,8 +16,8 @@ use SplFixedArray;
 /**
  * Encoder.
  */
-final class Encoder
-{
+final class Encoder {
+
     /**
      * Default byte encoding.
      */
@@ -26,12 +27,12 @@ final class Encoder
      * The original table is defined in the table 5 of JISX0510:2004 (p.19).
      */
     private const ALPHANUMERIC_TABLE = [
-        -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,  // 0x00-0x0f
-        -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,  // 0x10-0x1f
-        36, -1, -1, -1, 37, 38, -1, -1, -1, -1, 39, 40, -1, 41, 42, 43,  // 0x20-0x2f
-        0,   1,  2,  3,  4,  5,  6,  7,  8,  9, 44, -1, -1, -1, -1, -1,  // 0x30-0x3f
-        -1, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24,  // 0x40-0x4f
-        25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, -1, -1, -1, -1, -1,  // 0x50-0x5f
+        -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, // 0x00-0x0f
+        -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, // 0x10-0x1f
+        36, -1, -1, -1, 37, 38, -1, -1, -1, -1, 39, 40, -1, 41, 42, 43, // 0x20-0x2f
+        0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 44, -1, -1, -1, -1, -1, // 0x30-0x3f
+        -1, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, // 0x40-0x4f
+        25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, -1, -1, -1, -1, -1, // 0x50-0x5f
     ];
 
     /**
@@ -45,10 +46,10 @@ final class Encoder
      * Encodes "content" with the error correction level "ecLevel".
      */
     public static function encode(
-        string $content,
-        ErrorCorrectionLevel $ecLevel,
-        string $encoding = self::DEFAULT_BYTE_MODE_ECODING
-    ) : QrCode {
+            string $content,
+            ErrorCorrectionLevel $ecLevel,
+            string $encoding = self::DEFAULT_BYTE_MODE_ECODING
+    ): QrCode {
         // Pick an encoding mode appropriate for the content. Note that this
         // will not attempt to use multiple modes / segments even if that were
         // more efficient. Would be nice.
@@ -78,16 +79,12 @@ final class Encoder
         // Hard part: need to know version to know how many bits length takes.
         // But need to know how many bits it takes to know version. First we
         // take a guess at version by assuming version will be the minimum, 1:
-        $provisionalBitsNeeded = $headerBits->getSize()
-            + $mode->getCharacterCountBits(Version::getVersionForNumber(1))
-            + $dataBits->getSize();
+        $provisionalBitsNeeded = $headerBits->getSize() + $mode->getCharacterCountBits(Version::getVersionForNumber(1)) + $dataBits->getSize();
         $provisionalVersion = self::chooseVersion($provisionalBitsNeeded, $ecLevel);
 
         // Use that guess to calculate the right version. I am still not sure
         // this works in 100% of cases.
-        $bitsNeeded = $headerBits->getSize()
-            + $mode->getCharacterCountBits($provisionalVersion)
-            + $dataBits->getSize();
+        $bitsNeeded = $headerBits->getSize() + $mode->getCharacterCountBits($provisionalVersion) + $dataBits->getSize();
         $version = self::chooseVersion($bitsNeeded, $ecLevel);
 
         $headerAndDataBits = new BitArray();
@@ -107,10 +104,10 @@ final class Encoder
 
         // Interleave data bits with error correction code.
         $finalBits = self::interleaveWithEcBytes(
-            $headerAndDataBits,
-            $version->getTotalCodewords(),
-            $numDataBytes,
-            $ecBlocks->getNumBlocks()
+                        $headerAndDataBits,
+                        $version->getTotalCodewords(),
+                        $numDataBytes,
+                        $ecBlocks->getNumBlocks()
         );
 
         // Choose the mask pattern.
@@ -127,8 +124,7 @@ final class Encoder
     /**
      * Gets the alphanumeric code for a byte.
      */
-    private static function getAlphanumericCode(int $code) : int
-    {
+    private static function getAlphanumericCode(int $code): int {
         if (isset(self::ALPHANUMERIC_TABLE[$code])) {
             return self::ALPHANUMERIC_TABLE[$code];
         }
@@ -139,8 +135,7 @@ final class Encoder
     /**
      * Chooses the best mode for a given content.
      */
-    private static function chooseMode(string $content, string $encoding = null) : Mode
-    {
+    private static function chooseMode(string $content, string $encoding = null): Mode {
         if (null !== $encoding && 0 === strcasecmp($encoding, 'SHIFT-JIS')) {
             return self::isOnlyDoubleByteKanji($content) ? Mode::KANJI() : Mode::BYTE();
         }
@@ -173,21 +168,16 @@ final class Encoder
     /**
      * Calculates the mask penalty for a matrix.
      */
-    private static function calculateMaskPenalty(ByteMatrix $matrix) : int
-    {
+    private static function calculateMaskPenalty(ByteMatrix $matrix): int {
         return (
-            MaskUtil::applyMaskPenaltyRule1($matrix)
-            + MaskUtil::applyMaskPenaltyRule2($matrix)
-            + MaskUtil::applyMaskPenaltyRule3($matrix)
-            + MaskUtil::applyMaskPenaltyRule4($matrix)
-        );
+                MaskUtil::applyMaskPenaltyRule1($matrix) + MaskUtil::applyMaskPenaltyRule2($matrix) + MaskUtil::applyMaskPenaltyRule3($matrix) + MaskUtil::applyMaskPenaltyRule4($matrix)
+                );
     }
 
     /**
      * Checks if content only consists of double-byte kanji characters.
      */
-    private static function isOnlyDoubleByteKanji(string $content) : bool
-    {
+    private static function isOnlyDoubleByteKanji(string $content): bool {
         $bytes = @iconv('utf-8', 'SHIFT-JIS', $content);
 
         if (false === $bytes) {
@@ -215,11 +205,11 @@ final class Encoder
      * Chooses the best mask pattern for a matrix.
      */
     private static function chooseMaskPattern(
-        BitArray $bits,
-        ErrorCorrectionLevel $ecLevel,
-        Version $version,
-        ByteMatrix $matrix
-    ) : int {
+            BitArray $bits,
+            ErrorCorrectionLevel $ecLevel,
+            Version $version,
+            ByteMatrix $matrix
+    ): int {
         $minPenalty = PHP_INT_MAX;
         $bestMaskPattern = -1;
 
@@ -241,8 +231,7 @@ final class Encoder
      *
      * @throws WriterException if data is too big
      */
-    private static function chooseVersion(int $numInputBits, ErrorCorrectionLevel $ecLevel) : Version
-    {
+    private static function chooseVersion(int $numInputBits, ErrorCorrectionLevel $ecLevel): Version {
         for ($versionNum = 1; $versionNum <= 40; ++$versionNum) {
             $version = Version::getVersionForNumber($versionNum);
             $numBytes = $version->getTotalCodewords();
@@ -267,8 +256,7 @@ final class Encoder
      * @throws WriterException if data bits cannot fit in the QR code
      * @throws WriterException if bits size does not equal the capacity
      */
-    private static function terminateBits(int $numDataBytes, BitArray $bits) : void
-    {
+    private static function terminateBits(int $numDataBytes, BitArray $bits): void {
         $capacity = $numDataBytes << 3;
 
         if ($bits->getSize() > $capacity) {
@@ -308,11 +296,11 @@ final class Encoder
      * @throws WriterException if total bytes mismatch
      */
     private static function getNumDataBytesAndNumEcBytesForBlockId(
-        int $numTotalBytes,
-        int $numDataBytes,
-        int $numRsBlocks,
-        int $blockId
-    ) : array {
+            int $numTotalBytes,
+            int $numDataBytes,
+            int $numRsBlocks,
+            int $blockId
+    ): array {
         if ($blockId >= $numRsBlocks) {
             throw new WriterException('Block ID too large');
         }
@@ -334,9 +322,7 @@ final class Encoder
             throw new WriterException('RS blocks mismatch');
         }
 
-        if ($numTotalBytes !==
-            (($numDataBytesInGroup1 + $numEcBytesInGroup1) * $numRsBlocksInGroup1)
-            + (($numDataBytesInGroup2 + $numEcBytesInGroup2) * $numRsBlocksInGroup2)
+        if ($numTotalBytes !== (($numDataBytesInGroup1 + $numEcBytesInGroup1) * $numRsBlocksInGroup1) + (($numDataBytesInGroup2 + $numEcBytesInGroup2) * $numRsBlocksInGroup2)
         ) {
             throw new WriterException('Total bytes mismatch');
         }
@@ -356,27 +342,27 @@ final class Encoder
      * @throws WriterException if an interleaving error occurs
      */
     private static function interleaveWithEcBytes(
-        BitArray $bits,
-        int $numTotalBytes,
-        int $numDataBytes,
-        int $numRsBlocks
-    ) : BitArray {
+            BitArray $bits,
+            int $numTotalBytes,
+            int $numDataBytes,
+            int $numRsBlocks
+    ): BitArray {
         if ($bits->getSizeInBytes() !== $numDataBytes) {
             throw new WriterException('Number of bits and data bytes does not match');
         }
 
         $dataBytesOffset = 0;
         $maxNumDataBytes = 0;
-        $maxNumEcBytes   = 0;
+        $maxNumEcBytes = 0;
 
         $blocks = new SplFixedArray($numRsBlocks);
 
         for ($i = 0; $i < $numRsBlocks; ++$i) {
             list($numDataBytesInBlock, $numEcBytesInBlock) = self::getNumDataBytesAndNumEcBytesForBlockId(
-                $numTotalBytes,
-                $numDataBytes,
-                $numRsBlocks,
-                $i
+                            $numTotalBytes,
+                            $numDataBytes,
+                            $numRsBlocks,
+                            $i
             );
 
             $size = $numDataBytesInBlock;
@@ -417,7 +403,7 @@ final class Encoder
 
         if ($numTotalBytes !== $result->getSizeInBytes()) {
             throw new WriterException(
-                'Interleaving error: ' . $numTotalBytes . ' and ' . $result->getSizeInBytes() . ' differ'
+                            'Interleaving error: ' . $numTotalBytes . ' and ' . $result->getSizeInBytes() . ' differ'
             );
         }
 
@@ -430,8 +416,7 @@ final class Encoder
      * @param  SplFixedArray<int> $dataBytes
      * @return SplFixedArray<int>
      */
-    private static function generateEcBytes(SplFixedArray $dataBytes, int $numEcBytesInBlock) : SplFixedArray
-    {
+    private static function generateEcBytes(SplFixedArray $dataBytes, int $numEcBytesInBlock): SplFixedArray {
         $numDataBytes = count($dataBytes);
         $toEncode = new SplFixedArray($numDataBytes + $numEcBytesInBlock);
 
@@ -449,8 +434,7 @@ final class Encoder
     /**
      * Gets an RS codec and caches it.
      */
-    private static function getCodec(int $numDataBytes, int $numEcBytesInBlock) : ReedSolomonCodec
-    {
+    private static function getCodec(int $numDataBytes, int $numEcBytesInBlock): ReedSolomonCodec {
         $cacheId = $numDataBytes . '-' . $numEcBytesInBlock;
 
         if (isset(self::$codecs[$cacheId])) {
@@ -458,20 +442,19 @@ final class Encoder
         }
 
         return self::$codecs[$cacheId] = new ReedSolomonCodec(
-            8,
-            0x11d,
-            0,
-            1,
-            $numEcBytesInBlock,
-            255 - $numDataBytes - $numEcBytesInBlock
+                8,
+                0x11d,
+                0,
+                1,
+                $numEcBytesInBlock,
+                255 - $numDataBytes - $numEcBytesInBlock
         );
     }
 
     /**
      * Appends mode information to a bit array.
      */
-    private static function appendModeInfo(Mode $mode, BitArray $bits) : void
-    {
+    private static function appendModeInfo(Mode $mode, BitArray $bits): void {
         $bits->appendBits($mode->getBits(), 4);
     }
 
@@ -480,8 +463,7 @@ final class Encoder
      *
      * @throws WriterException if num letters is bigger than expected
      */
-    private static function appendLengthInfo(int $numLetters, Version $version, Mode $mode, BitArray $bits) : void
-    {
+    private static function appendLengthInfo(int $numLetters, Version $version, Mode $mode, BitArray $bits): void {
         $numBits = $mode->getCharacterCountBits($version);
 
         if ($numLetters >= (1 << $numBits)) {
@@ -496,8 +478,7 @@ final class Encoder
      *
      * @throws WriterException if an invalid mode was supplied
      */
-    private static function appendBytes(string $content, Mode $mode, BitArray $bits, string $encoding) : void
-    {
+    private static function appendBytes(string $content, Mode $mode, BitArray $bits, string $encoding): void {
         switch ($mode) {
             case Mode::NUMERIC():
                 self::appendNumericBytes($content, $bits);
@@ -523,8 +504,7 @@ final class Encoder
     /**
      * Appends numeric bytes to a bit array.
      */
-    private static function appendNumericBytes(string $content, BitArray $bits) : void
-    {
+    private static function appendNumericBytes(string $content, BitArray $bits): void {
         $length = strlen($content);
         $i = 0;
 
@@ -555,8 +535,7 @@ final class Encoder
      *
      * @throws WriterException if an invalid alphanumeric code was found
      */
-    private static function appendAlphanumericBytes(string $content, BitArray $bits) : void
-    {
+    private static function appendAlphanumericBytes(string $content, BitArray $bits): void {
         $length = strlen($content);
         $i = 0;
 
@@ -590,8 +569,7 @@ final class Encoder
      *
      * @throws WriterException if content cannot be encoded to target encoding
      */
-    private static function append8BitBytes(string $content, BitArray $bits, string $encoding) : void
-    {
+    private static function append8BitBytes(string $content, BitArray $bits, string $encoding): void {
         $bytes = @iconv('utf-8', $encoding, $content);
 
         if (false === $bytes) {
@@ -611,8 +589,7 @@ final class Encoder
      * @throws WriterException if content does not seem to be encoded in SHIFT-JIS
      * @throws WriterException if an invalid byte sequence occurs
      */
-    private static function appendKanjiBytes(string $content, BitArray $bits) : void
-    {
+    private static function appendKanjiBytes(string $content, BitArray $bits): void {
         if (strlen($content) % 2 > 0) {
             // We just do a simple length check here. The for loop will check
             // individual characters.
@@ -643,10 +620,10 @@ final class Encoder
     /**
      * Appends ECI information to a bit array.
      */
-    private static function appendEci(CharacterSetEci $eci, BitArray $bits) : void
-    {
+    private static function appendEci(CharacterSetEci $eci, BitArray $bits): void {
         $mode = Mode::ECI();
         $bits->appendBits($mode->getBits(), 4);
         $bits->appendBits($eci->getValue(), 8);
     }
+
 }

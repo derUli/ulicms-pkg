@@ -14,11 +14,11 @@
                     <th scope="col">{{ type_label }}</th>
                     <th scope="col">{% trans 'Privileges' %}</th>
                     <th scope="col">{% trans 'Grant' %}</th>
-                    {% if type == 'database' %}
+                        {% if type == 'database' %}
                         <th scope="col">{% trans 'Table-specific privileges' %}</th>
-                    {% elseif type == 'table' %}
+                        {% elseif type == 'table' %}
                         <th scope="col">{% trans 'Column-specific privileges' %}</th>
-                    {% endif %}
+                        {% endif %}
                     <th scope="col" colspan="2">{% trans 'Action' %}</th>
                 </tr>
             </thead>

@@ -15,8 +15,8 @@ use function ucfirst;
  * This code is based on the OS Classes from the phpsysinfo project
  * (https://phpsysinfo.github.io/phpsysinfo/)
  */
-class SysInfo
-{
+class SysInfo {
+
     public const MEMORY_REGEXP = '/^(MemTotal|MemFree|Cached|Buffers|SwapCached|SwapTotal|SwapFree):\s+(.*)\s*kB/im';
 
     /**
@@ -26,8 +26,7 @@ class SysInfo
      *
      * @return string
      */
-    public static function getOs($php_os = PHP_OS)
-    {
+    public static function getOs($php_os = PHP_OS) {
         // look for common UNIX-like systems
         $unix_like = [
             'FreeBSD',
@@ -45,8 +44,7 @@ class SysInfo
      *
      * @return Base sysinfo class
      */
-    public static function get()
-    {
+    public static function get() {
         $php_os = self::getOs();
 
         switch ($php_os) {
@@ -72,4 +70,5 @@ class SysInfo
 
         return new Base();
     }
+
 }

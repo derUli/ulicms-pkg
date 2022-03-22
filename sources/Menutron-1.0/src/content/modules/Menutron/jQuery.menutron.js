@@ -7,108 +7,110 @@
  * Licensed under the MIT License
  */
 
-(function($){
-	$.fn.menutron = function(options) {
+(function ($) {
+    $.fn.menutron = function (options) {
 
-		var defaults = {
-			maxScreenWidth: 600,
-			menuTitle: 'Choose...'
-		};
+        var defaults = {
+            maxScreenWidth: 600,
+            menuTitle: 'Choose...'
+        };
 
-		var options = $.extend(defaults, options);
+        var options = $.extend(defaults, options);
 
-		return this.each(function() {
-			
-			var menu = $(this).children();		
-			var selectMenu = $('<select>').css("display", "none");
-			var optGroup = $('<optgroup>').css("display", "none");
+        return this.each(function () {
 
-			init();
+            var menu = $(this).children();
+            var selectMenu = $('<select>').css("display", "none");
+            var optGroup = $('<optgroup>').css("display", "none");
 
-			function init() {
-				checkWidth();
-				createMenu();
-				transformMenu();
-			}
-			
-			function checkWidth(){
-				
-				// Media query for device screens (default: 600px)
-				// *Note, I would like to use window.matchMedia(screenWidth).matches here, but it does not work on 		
-				// Android 2.3 (Gingerbread). https://developer.mozilla.org/en/DOM/window.matchMedia#section_4
-				if ($(window).width() < options.maxScreenWidth){
+            init();
 
-					// Hides the original menu list from the display
-					$(selectMenu).css("display", "inline-block");
+            function init() {
+                checkWidth();
+                createMenu();
+                transformMenu();
+            }
 
-					// Hides the original menu list from the display
-					$(menu).css("display", "none");				
-				} else {
+            function checkWidth() {
 
-					// Hides the select menu from the display
-					$(selectMenu).css("display", "none");
+                // Media query for device screens (default: 600px)
+                // *Note, I would like to use window.matchMedia(screenWidth).matches here, but it does not work on 		
+                // Android 2.3 (Gingerbread). https://developer.mozilla.org/en/DOM/window.matchMedia#section_4
+                if ($(window).width() < options.maxScreenWidth) {
 
-					// Show the original menu list
-					$(menu).css("display", "block");
-				}
-			}
+                    // Hides the original menu list from the display
+                    $(selectMenu).css("display", "inline-block");
 
-			function createMenu(){
+                    // Hides the original menu list from the display
+                    $(menu).css("display", "none");
+                } else {
 
-				// Loop through the current list menu & adds the li's text
-				// & the anchors url to the option & it's value respectively.
-				$(menu).children().each(function() {
-				
-					// If using a descriptive list, 'dl',
-					// this only adds 'dd' to selectMenu & skips over 'dt'
-					if($(this).get(0).tagName !== 'DT'){
-						
-						if($(this).find('ul,ol,dl').length){
-							
-							$(optGroup).attr("label",$(this).children(':first').text());
-							var option = $('<option>').text($(this).children(':first').text());
-							var link = $(this).children("a").attr("href");
-							$(option).attr("value", link);
-							$(option).appendTo(optGroup);
-							
-							var nestedList = $(this).children().not(':first');
-							
-							$(nestedList).children().each(function(){
-								var option = $('<option>').text($(this).text());
-								var link = $(this).children("a").attr("href");
-								$(option).attr("value", link);
-								$(option).appendTo(optGroup);
-							});
-							console.log(optGroup);
-							$(optGroup).appendTo(selectMenu);
-						} else {
-							var option = $('<option>').text($(this).text());
-							var link = $(this).children("a").attr("href");
-							$(option).attr("value", link);
-							$(option).appendTo(selectMenu);
-						}
-					} 
-				});
+                    // Hides the select menu from the display
+                    $(selectMenu).css("display", "none");
 
-				var menuTitle = '<option selected="selected" value>' + options.menuTitle + '</option>';
+                    // Show the original menu list
+                    $(menu).css("display", "block");
+                }
+            }
 
-				// Appends the newly created list to menu's container element
-				$(selectMenu).prepend(menuTitle);
-				selectMenu.appendTo($(menu).parent());
+            function createMenu() {
 
-				// Change Window.location, ie. the current url,
-				// to the value of the selected option
-				selectMenu.change(function(){
-					if($(this).val()!=''){
-						window.location.href=$(this).val();
-					}
-				});
-			}
+                // Loop through the current list menu & adds the li's text
+                // & the anchors url to the option & it's value respectively.
+                $(menu).children().each(function () {
 
-			function transformMenu() {
-				$(window).resize(function(){checkWidth();});	
-			}
+                    // If using a descriptive list, 'dl',
+                    // this only adds 'dd' to selectMenu & skips over 'dt'
+                    if ($(this).get(0).tagName !== 'DT') {
 
-		});
-	};
+                        if ($(this).find('ul,ol,dl').length) {
+
+                            $(optGroup).attr("label", $(this).children(':first').text());
+                            var option = $('<option>').text($(this).children(':first').text());
+                            var link = $(this).children("a").attr("href");
+                            $(option).attr("value", link);
+                            $(option).appendTo(optGroup);
+
+                            var nestedList = $(this).children().not(':first');
+
+                            $(nestedList).children().each(function () {
+                                var option = $('<option>').text($(this).text());
+                                var link = $(this).children("a").attr("href");
+                                $(option).attr("value", link);
+                                $(option).appendTo(optGroup);
+                            });
+                            console.log(optGroup);
+                            $(optGroup).appendTo(selectMenu);
+                        } else {
+                            var option = $('<option>').text($(this).text());
+                            var link = $(this).children("a").attr("href");
+                            $(option).attr("value", link);
+                            $(option).appendTo(selectMenu);
+                        }
+                    }
+                });
+
+                var menuTitle = '<option selected="selected" value>' + options.menuTitle + '</option>';
+
+                // Appends the newly created list to menu's container element
+                $(selectMenu).prepend(menuTitle);
+                selectMenu.appendTo($(menu).parent());
+
+                // Change Window.location, ie. the current url,
+                // to the value of the selected option
+                selectMenu.change(function () {
+                    if ($(this).val() != '') {
+                        window.location.href = $(this).val();
+                    }
+                });
+            }
+
+            function transformMenu() {
+                $(window).resize(function () {
+                    checkWidth();
+                });
+            }
+
+        });
+    };
 })(jQuery);

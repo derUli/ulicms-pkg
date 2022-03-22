@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Set of functions used to build OpenDocument Spreadsheet dumps of tables
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Plugins\Export;
@@ -26,10 +26,9 @@ use function strtotime;
 /**
  * Handles the export for the ODS class
  */
-class ExportOds extends ExportPlugin
-{
-    public function __construct()
-    {
+class ExportOds extends ExportPlugin {
+
+    public function __construct() {
         parent::__construct();
         $GLOBALS['ods_buffer'] = '';
         $this->setProperties();
@@ -40,13 +39,12 @@ class ExportOds extends ExportPlugin
      *
      * @return void
      */
-    protected function setProperties()
-    {
+    protected function setProperties() {
         $exportPluginProperties = new ExportPluginProperties();
         $exportPluginProperties->setText('OpenDocument Spreadsheet');
         $exportPluginProperties->setExtension('ods');
         $exportPluginProperties->setMimeType(
-            'application/vnd.oasis.opendocument.spreadsheet'
+                'application/vnd.oasis.opendocument.spreadsheet'
         );
         $exportPluginProperties->setForceFile(true);
         $exportPluginProperties->setOptionsText(__('Options'));
@@ -55,20 +53,20 @@ class ExportOds extends ExportPlugin
         // $exportPluginProperties
         // this will be shown as "Format specific options"
         $exportSpecificOptions = new OptionsPropertyRootGroup(
-            'Format Specific Options'
+                'Format Specific Options'
         );
 
         // general options main group
         $generalOptions = new OptionsPropertyMainGroup('general_opts');
         // create primary items and add them to the group
         $leaf = new TextPropertyItem(
-            'null',
-            __('Replace NULL with:')
+                'null',
+                __('Replace NULL with:')
         );
         $generalOptions->addProperty($leaf);
         $leaf = new BoolPropertyItem(
-            'columns',
-            __('Put columns names in the first row')
+                'columns',
+                __('Put columns names in the first row')
         );
         $generalOptions->addProperty($leaf);
         $leaf = new HiddenPropertyItem('structure_or_data');
@@ -86,53 +84,52 @@ class ExportOds extends ExportPlugin
      *
      * @return bool Whether it succeeded
      */
-    public function exportHeader()
-    {
+    public function exportHeader() {
         $GLOBALS['ods_buffer'] .= '<?xml version="1.0" encoding="utf-8"?' . '>'
-            . '<office:document-content '
-            . OpenDocument::NS . ' office:version="1.0">'
-            . '<office:automatic-styles>'
-            . '<number:date-style style:name="N37"'
-            . ' number:automatic-order="true">'
-            . '<number:month number:style="long"/>'
-            . '<number:text>/</number:text>'
-            . '<number:day number:style="long"/>'
-            . '<number:text>/</number:text>'
-            . '<number:year/>'
-            . '</number:date-style>'
-            . '<number:time-style style:name="N43">'
-            . '<number:hours number:style="long"/>'
-            . '<number:text>:</number:text>'
-            . '<number:minutes number:style="long"/>'
-            . '<number:text>:</number:text>'
-            . '<number:seconds number:style="long"/>'
-            . '<number:text> </number:text>'
-            . '<number:am-pm/>'
-            . '</number:time-style>'
-            . '<number:date-style style:name="N50"'
-            . ' number:automatic-order="true"'
-            . ' number:format-source="language">'
-            . '<number:month/>'
-            . '<number:text>/</number:text>'
-            . '<number:day/>'
-            . '<number:text>/</number:text>'
-            . '<number:year/>'
-            . '<number:text> </number:text>'
-            . '<number:hours number:style="long"/>'
-            . '<number:text>:</number:text>'
-            . '<number:minutes number:style="long"/>'
-            . '<number:text> </number:text>'
-            . '<number:am-pm/>'
-            . '</number:date-style>'
-            . '<style:style style:name="DateCell" style:family="table-cell"'
-            . ' style:parent-style-name="Default" style:data-style-name="N37"/>'
-            . '<style:style style:name="TimeCell" style:family="table-cell"'
-            . ' style:parent-style-name="Default" style:data-style-name="N43"/>'
-            . '<style:style style:name="DateTimeCell" style:family="table-cell"'
-            . ' style:parent-style-name="Default" style:data-style-name="N50"/>'
-            . '</office:automatic-styles>'
-            . '<office:body>'
-            . '<office:spreadsheet>';
+                . '<office:document-content '
+                . OpenDocument::NS . ' office:version="1.0">'
+                . '<office:automatic-styles>'
+                . '<number:date-style style:name="N37"'
+                . ' number:automatic-order="true">'
+                . '<number:month number:style="long"/>'
+                . '<number:text>/</number:text>'
+                . '<number:day number:style="long"/>'
+                . '<number:text>/</number:text>'
+                . '<number:year/>'
+                . '</number:date-style>'
+                . '<number:time-style style:name="N43">'
+                . '<number:hours number:style="long"/>'
+                . '<number:text>:</number:text>'
+                . '<number:minutes number:style="long"/>'
+                . '<number:text>:</number:text>'
+                . '<number:seconds number:style="long"/>'
+                . '<number:text> </number:text>'
+                . '<number:am-pm/>'
+                . '</number:time-style>'
+                . '<number:date-style style:name="N50"'
+                . ' number:automatic-order="true"'
+                . ' number:format-source="language">'
+                . '<number:month/>'
+                . '<number:text>/</number:text>'
+                . '<number:day/>'
+                . '<number:text>/</number:text>'
+                . '<number:year/>'
+                . '<number:text> </number:text>'
+                . '<number:hours number:style="long"/>'
+                . '<number:text>:</number:text>'
+                . '<number:minutes number:style="long"/>'
+                . '<number:text> </number:text>'
+                . '<number:am-pm/>'
+                . '</number:date-style>'
+                . '<style:style style:name="DateCell" style:family="table-cell"'
+                . ' style:parent-style-name="Default" style:data-style-name="N37"/>'
+                . '<style:style style:name="TimeCell" style:family="table-cell"'
+                . ' style:parent-style-name="Default" style:data-style-name="N43"/>'
+                . '<style:style style:name="DateTimeCell" style:family="table-cell"'
+                . ' style:parent-style-name="Default" style:data-style-name="N50"/>'
+                . '</office:automatic-styles>'
+                . '<office:body>'
+                . '<office:spreadsheet>';
 
         return true;
     }
@@ -142,17 +139,16 @@ class ExportOds extends ExportPlugin
      *
      * @return bool Whether it succeeded
      */
-    public function exportFooter()
-    {
+    public function exportFooter() {
         $GLOBALS['ods_buffer'] .= '</office:spreadsheet>'
-            . '</office:body>'
-            . '</office:document-content>';
+                . '</office:body>'
+                . '</office:document-content>';
 
         return $this->export->outputHandler(
-            OpenDocument::create(
-                'application/vnd.oasis.opendocument.spreadsheet',
-                $GLOBALS['ods_buffer']
-            )
+                        OpenDocument::create(
+                                'application/vnd.oasis.opendocument.spreadsheet',
+                                $GLOBALS['ods_buffer']
+                        )
         );
     }
 
@@ -164,8 +160,7 @@ class ExportOds extends ExportPlugin
      *
      * @return bool Whether it succeeded
      */
-    public function exportDBHeader($db, $db_alias = '')
-    {
+    public function exportDBHeader($db, $db_alias = '') {
         return true;
     }
 
@@ -176,8 +171,7 @@ class ExportOds extends ExportPlugin
      *
      * @return bool Whether it succeeded
      */
-    public function exportDBFooter($db)
-    {
+    public function exportDBFooter($db) {
         return true;
     }
 
@@ -190,8 +184,7 @@ class ExportOds extends ExportPlugin
      *
      * @return bool Whether it succeeded
      */
-    public function exportDBCreate($db, $export_type, $db_alias = '')
-    {
+    public function exportDBCreate($db, $export_type, $db_alias = '') {
         return true;
     }
 
@@ -208,12 +201,12 @@ class ExportOds extends ExportPlugin
      * @return bool Whether it succeeded
      */
     public function exportData(
-        $db,
-        $table,
-        $crlf,
-        $error_url,
-        $sql_query,
-        array $aliases = []
+            $db,
+            $table,
+            $crlf,
+            $error_url,
+            $sql_query,
+            array $aliases = []
     ) {
         global $what, $dbi;
 
@@ -222,9 +215,9 @@ class ExportOds extends ExportPlugin
         $this->initAlias($aliases, $db_alias, $table_alias);
         // Gets the data from the database
         $result = $dbi->query(
-            $sql_query,
-            DatabaseInterface::CONNECT_USER,
-            DatabaseInterface::QUERY_UNBUFFERED
+                $sql_query,
+                DatabaseInterface::CONNECT_USER,
+                DatabaseInterface::QUERY_UNBUFFERED
         );
         $fields_cnt = $dbi->numFields($result);
         $fields_meta = $dbi->getFieldsMeta($result);
@@ -233,25 +226,23 @@ class ExportOds extends ExportPlugin
             $field_flags[$j] = $dbi->fieldFlags($result, $j);
         }
 
-        $GLOBALS['ods_buffer']
-            .= '<table:table table:name="' . htmlspecialchars($table_alias) . '">';
+        $GLOBALS['ods_buffer'] .= '<table:table table:name="' . htmlspecialchars($table_alias) . '">';
 
         // If required, get fields name at the first line
         if (isset($GLOBALS[$what . '_columns'])) {
             $GLOBALS['ods_buffer'] .= '<table:table-row>';
             for ($i = 0; $i < $fields_cnt; $i++) {
                 $col_as = $dbi->fieldName($result, $i);
-                if (! empty($aliases[$db]['tables'][$table]['columns'][$col_as])) {
+                if (!empty($aliases[$db]['tables'][$table]['columns'][$col_as])) {
                     $col_as = $aliases[$db]['tables'][$table]['columns'][$col_as];
                 }
-                $GLOBALS['ods_buffer']
-                    .= '<table:table-cell office:value-type="string">'
-                    . '<text:p>'
-                    . htmlspecialchars(
-                        stripslashes($col_as)
-                    )
-                    . '</text:p>'
-                    . '</table:table-cell>';
+                $GLOBALS['ods_buffer'] .= '<table:table-cell office:value-type="string">'
+                        . '<text:p>'
+                        . htmlspecialchars(
+                                stripslashes($col_as)
+                        )
+                        . '</text:p>'
+                        . '</table:table-cell>';
             }
             $GLOBALS['ods_buffer'] .= '</table:table-row>';
         }
@@ -264,70 +255,59 @@ class ExportOds extends ExportPlugin
                     // export GIS types as hex
                     $row[$j] = '0x' . bin2hex($row[$j]);
                 }
-                if (! isset($row[$j]) || $row[$j] === null) {
-                    $GLOBALS['ods_buffer']
-                        .= '<table:table-cell office:value-type="string">'
-                        . '<text:p>'
-                        . htmlspecialchars($GLOBALS[$what . '_null'])
-                        . '</text:p>'
-                        . '</table:table-cell>';
-                } elseif (stripos($field_flags[$j], 'BINARY') !== false
-                    && $fields_meta[$j]->blob
+                if (!isset($row[$j]) || $row[$j] === null) {
+                    $GLOBALS['ods_buffer'] .= '<table:table-cell office:value-type="string">'
+                            . '<text:p>'
+                            . htmlspecialchars($GLOBALS[$what . '_null'])
+                            . '</text:p>'
+                            . '</table:table-cell>';
+                } elseif (stripos($field_flags[$j], 'BINARY') !== false && $fields_meta[$j]->blob
                 ) {
                     // ignore BLOB
-                    $GLOBALS['ods_buffer']
-                        .= '<table:table-cell office:value-type="string">'
-                        . '<text:p></text:p>'
-                        . '</table:table-cell>';
+                    $GLOBALS['ods_buffer'] .= '<table:table-cell office:value-type="string">'
+                            . '<text:p></text:p>'
+                            . '</table:table-cell>';
                 } elseif ($fields_meta[$j]->type === 'date') {
-                    $GLOBALS['ods_buffer']
-                        .= '<table:table-cell office:value-type="date"'
-                        . ' office:date-value="'
-                        . date('Y-m-d', strtotime($row[$j]))
-                        . '" table:style-name="DateCell">'
-                        . '<text:p>'
-                        . htmlspecialchars($row[$j])
-                        . '</text:p>'
-                        . '</table:table-cell>';
+                    $GLOBALS['ods_buffer'] .= '<table:table-cell office:value-type="date"'
+                            . ' office:date-value="'
+                            . date('Y-m-d', strtotime($row[$j]))
+                            . '" table:style-name="DateCell">'
+                            . '<text:p>'
+                            . htmlspecialchars($row[$j])
+                            . '</text:p>'
+                            . '</table:table-cell>';
                 } elseif ($fields_meta[$j]->type === 'time') {
-                    $GLOBALS['ods_buffer']
-                        .= '<table:table-cell office:value-type="time"'
-                        . ' office:time-value="'
-                        . date('\P\TH\Hi\Ms\S', strtotime($row[$j]))
-                        . '" table:style-name="TimeCell">'
-                        . '<text:p>'
-                        . htmlspecialchars($row[$j])
-                        . '</text:p>'
-                        . '</table:table-cell>';
+                    $GLOBALS['ods_buffer'] .= '<table:table-cell office:value-type="time"'
+                            . ' office:time-value="'
+                            . date('\P\TH\Hi\Ms\S', strtotime($row[$j]))
+                            . '" table:style-name="TimeCell">'
+                            . '<text:p>'
+                            . htmlspecialchars($row[$j])
+                            . '</text:p>'
+                            . '</table:table-cell>';
                 } elseif ($fields_meta[$j]->type === 'datetime') {
-                    $GLOBALS['ods_buffer']
-                        .= '<table:table-cell office:value-type="date"'
-                        . ' office:date-value="'
-                        . date('Y-m-d\TH:i:s', strtotime($row[$j]))
-                        . '" table:style-name="DateTimeCell">'
-                        . '<text:p>'
-                        . htmlspecialchars($row[$j])
-                        . '</text:p>'
-                        . '</table:table-cell>';
-                } elseif (($fields_meta[$j]->numeric
-                    && $fields_meta[$j]->type !== 'timestamp'
-                    && ! $fields_meta[$j]->blob)
-                    || $fields_meta[$j]->type === 'real'
+                    $GLOBALS['ods_buffer'] .= '<table:table-cell office:value-type="date"'
+                            . ' office:date-value="'
+                            . date('Y-m-d\TH:i:s', strtotime($row[$j]))
+                            . '" table:style-name="DateTimeCell">'
+                            . '<text:p>'
+                            . htmlspecialchars($row[$j])
+                            . '</text:p>'
+                            . '</table:table-cell>';
+                } elseif (($fields_meta[$j]->numeric && $fields_meta[$j]->type !== 'timestamp' && !$fields_meta[$j]->blob) || $fields_meta[$j]->type === 'real'
                 ) {
-                    $GLOBALS['ods_buffer']
-                        .= '<table:table-cell office:value-type="float"'
-                        . ' office:value="' . $row[$j] . '" >'
-                        . '<text:p>'
-                        . htmlspecialchars($row[$j])
-                        . '</text:p>'
-                        . '</table:table-cell>';
+                    $GLOBALS['ods_buffer'] .= '<table:table-cell office:value-type="float"'
+                            . ' office:value="' . $row[$j] . '" >'
+                            . '<text:p>'
+                            . htmlspecialchars($row[$j])
+                            . '</text:p>'
+                            . '</table:table-cell>';
                 } else {
-                    $GLOBALS['ods_buffer']
-                        .= '<table:table-cell office:value-type="string">'
-                        . '<text:p>'
-                        . htmlspecialchars($row[$j])
-                        . '</text:p>'
-                        . '</table:table-cell>';
+                    $GLOBALS['ods_buffer'] .= '<table:table-cell office:value-type="string">'
+                            . '<text:p>'
+                            . htmlspecialchars($row[$j])
+                            . '</text:p>'
+                            . '</table:table-cell>';
                 }
             }
             $GLOBALS['ods_buffer'] .= '</table:table-row>';
@@ -348,8 +328,8 @@ class ExportOds extends ExportPlugin
      *
      * @return bool if succeeded
      */
-    public function exportRawQuery(string $err_url, string $sql_query, string $crlf): bool
-    {
+    public function exportRawQuery(string $err_url, string $sql_query, string $crlf): bool {
         return $this->exportData('', '', $crlf, $err_url, $sql_query);
     }
+
 }

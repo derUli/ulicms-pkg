@@ -33,8 +33,8 @@ use function is_array;
 /**
  * Handle front end templating
  */
-class Template
-{
+class Template {
+
     /**
      * Twig environment
      *
@@ -44,8 +44,7 @@ class Template
 
     public const BASE_PATH = ROOT_PATH . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR;
 
-    public function __construct()
-    {
+    public function __construct() {
         global $cfg;
 
         /** @var Config|null $config */
@@ -93,8 +92,7 @@ class Template
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    private function load(string $templateName): TemplateWrapper
-    {
+    private function load(string $templateName): TemplateWrapper {
         try {
             $template = static::$twig->load($templateName . '.twig');
         } catch (RuntimeException $e) {
@@ -107,11 +105,11 @@ class Template
              * solve it.
              */
             trigger_error(
-                sprintf(
-                    __('Error while working with template cache: %s'),
-                    $e->getMessage()
-                ),
-                E_USER_WARNING
+                    sprintf(
+                            __('Error while working with template cache: %s'),
+                            $e->getMessage()
+                    ),
+                    E_USER_WARNING
             );
         }
 
@@ -127,8 +125,8 @@ class Template
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    public function render(string $template, array $data = []): string
-    {
+    public function render(string $template, array $data = []): string {
         return $this->load($template)->render($data);
     }
+
 }

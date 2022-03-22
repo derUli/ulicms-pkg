@@ -16,8 +16,8 @@ namespace Twig\Node;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-interface NodeCaptureInterface
-{
+interface NodeCaptureInterface {
+    
 }
 
 class_alias('Twig\Node\NodeCaptureInterface', 'Twig_NodeCaptureInterface');

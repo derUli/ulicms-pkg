@@ -44,8 +44,8 @@ use function is_bool;
 /**
  * Git class to manipulate Git data
  */
-class Git
-{
+class Git {
+
     /**
      * Build a Git class
      *
@@ -53,8 +53,7 @@ class Git
      */
     private $config;
 
-    public function __construct(Config $config)
-    {
+    public function __construct(Config $config) {
         $this->config = $config;
     }
 
@@ -63,16 +62,14 @@ class Git
      *
      * @param string $git_location (optional) verified git directory
      */
-    public function isGitRevision(&$git_location = null): bool
-    {
+    public function isGitRevision(&$git_location = null): bool {
         // PMA config check
-        if (! $this->config->get('ShowGitRevision')) {
+        if (!$this->config->get('ShowGitRevision')) {
             return false;
         }
 
         // caching
-        if (isset($_SESSION['is_git_revision'])
-            && array_key_exists('git_location', $_SESSION)
+        if (isset($_SESSION['is_git_revision']) && array_key_exists('git_location', $_SESSION)
         ) {
             // Define location using cached value
             $git_location = $_SESSION['git_location'];
@@ -84,7 +81,7 @@ class Git
         // or a .git file (--separate-git-dir)
         $git = '.git';
         if (is_dir($git)) {
-            if (! @is_file($git . '/config')) {
+            if (!@is_file($git . '/config')) {
                 $_SESSION['git_location'] = null;
                 $_SESSION['is_git_revision'] = false;
 
@@ -96,18 +93,18 @@ class Git
             $contents = (string) file_get_contents($git);
             $gitmatch = [];
             // Matches expected format
-            if (! preg_match(
-                '/^gitdir: (.*)$/',
-                $contents,
-                $gitmatch
-            )) {
+            if (!preg_match(
+                            '/^gitdir: (.*)$/',
+                            $contents,
+                            $gitmatch
+                    )) {
                 $_SESSION['git_location'] = null;
                 $_SESSION['is_git_revision'] = false;
 
                 return false;
             }
 
-            if (! @is_dir($gitmatch[1])) {
+            if (!@is_dir($gitmatch[1])) {
                 $_SESSION['git_location'] = null;
                 $_SESSION['is_git_revision'] = false;
 
@@ -129,12 +126,11 @@ class Git
         return true;
     }
 
-    private function readPackFile(string $packFile, int $packOffset): ?string
-    {
+    private function readPackFile(string $packFile, int $packOffset): ?string {
         // open pack file
         $packFileRes = fopen(
-            $packFile,
-            'rb'
+                $packFile,
+                'rb'
         );
         if ($packFileRes === false) {
             return null;
@@ -180,11 +176,10 @@ class Git
         return $commit;
     }
 
-    private function getPackOffset(string $packFile, string $hash): ?int
-    {
+    private function getPackOffset(string $packFile, string $hash): ?int {
         // load index
         $index_data = @file_get_contents(
-            $packFile
+                        $packFile
         );
         if ($index_data === false) {
             return null;
@@ -200,8 +195,8 @@ class Git
         }
         // parse fanout table
         $fanout = unpack(
-            'N*',
-            substr($index_data, 8, 256 * 4)
+                'N*',
+                substr($index_data, 8, 256 * 4)
         );
 
         // find where we should search
@@ -220,23 +215,23 @@ class Git
         $offset = 8 + (256 * 4);
         for ($position = $start; $position < $end; $position++) {
             $sha = strtolower(
-                bin2hex(
-                    substr($index_data, $offset + ($position * 20), 20)
-                )
+                    bin2hex(
+                            substr($index_data, $offset + ($position * 20), 20)
+                    )
             );
             if ($sha == $hash) {
                 $found = true;
                 break;
             }
         }
-        if (! $found) {
+        if (!$found) {
             return null;
         }
         // read pack offset
         $offset = 8 + (256 * 4) + (24 * $fanout[256]);
         $packOffsets = unpack(
-            'N',
-            substr($index_data, $offset + ($position * 4), 4)
+                'N',
+                substr($index_data, $offset + ($position * 4), 4)
         );
 
         return $packOffsets[1];
@@ -250,12 +245,11 @@ class Git
      *
      * @return array|false|null
      */
-    private function unPackGz(string $gitFolder, string $hash)
-    {
+    private function unPackGz(string $gitFolder, string $hash) {
         $commit = false;
 
         $gitFileName = $gitFolder . '/objects/'
-            . substr($hash, 0, 2) . '/' . substr($hash, 2);
+                . substr($hash, 0, 2) . '/' . substr($hash, 2);
         if (@file_exists($gitFileName)) {
             $commit = @file_get_contents($gitFileName);
 
@@ -305,12 +299,12 @@ class Git
                 // directory for all the .pack files and use that list of
                 // files instead
                 $dirIterator = new DirectoryIterator(
-                    $gitFolder . '/objects/pack'
+                        $gitFolder . '/objects/pack'
                 );
                 foreach ($dirIterator as $file_info) {
                     $file_name = $file_info->getFilename();
                     // if this is a .pack file
-                    if (! $file_info->isFile() || substr($file_name, -5) !== '.pack'
+                    if (!$file_info->isFile() || substr($file_name, -5) !== '.pack'
                     ) {
                         continue;
                     }
@@ -347,8 +341,7 @@ class Git
      *
      * @return array<int,array<string,string>|string>
      */
-    private function extractDataFormTextBody(array $commit): array
-    {
+    private function extractDataFormTextBody(array $commit): array {
         $author = [
             'name' => '',
             'email' => '',
@@ -364,7 +357,7 @@ class Git
             $dataline = array_shift($commit);
             $datalinearr = explode(' ', $dataline, 2);
             $linetype = $datalinearr[0];
-            if (! in_array($linetype, ['author', 'committer'])) {
+            if (!in_array($linetype, ['author', 'committer'])) {
                 continue;
             }
 
@@ -394,13 +387,11 @@ class Git
      *
      * @return stdClass|null The commit body from the GitHub API
      */
-    private function isRemoteCommit(&$commit, bool &$isRemoteCommit, string $hash): ?stdClass
-    {
+    private function isRemoteCommit(&$commit, bool &$isRemoteCommit, string $hash): ?stdClass {
         $httpRequest = new HttpRequest();
 
         // check if commit exists in Github
-        if ($commit !== false
-            && isset($_SESSION['PMA_VERSION_REMOTECOMMIT_' . $hash])
+        if ($commit !== false && isset($_SESSION['PMA_VERSION_REMOTECOMMIT_' . $hash])
         ) {
             $isRemoteCommit = $_SESSION['PMA_VERSION_REMOTECOMMIT_' . $hash];
 
@@ -432,8 +423,7 @@ class Git
         return null;
     }
 
-    private function getHashFromHeadRef(string $gitFolder, string $refHead): array
-    {
+    private function getHashFromHeadRef(string $gitFolder, string $refHead): array {
         $branch = false;
 
         // are we on any branch?
@@ -487,7 +477,7 @@ class Git
                 break;
             }
         }
-        if (! isset($hash)) {
+        if (!isset($hash)) {
             $this->config->set('PMA_VERSION_GIT', 0);
 
             // Could not find ref
@@ -497,9 +487,8 @@ class Git
         return [$hash, $branch];
     }
 
-    private function getCommonDirContents(string $gitFolder): ?string
-    {
-        if (! is_file($gitFolder . '/commondir')) {
+    private function getCommonDirContents(string $gitFolder): ?string {
+        if (!is_file($gitFolder . '/commondir')) {
             return null;
         }
         $commonDirContents = @file_get_contents($gitFolder . '/commondir');
@@ -513,11 +502,10 @@ class Git
     /**
      * detects Git revision, if running inside repo
      */
-    public function checkGitRevision(): ?array
-    {
+    public function checkGitRevision(): ?array {
         // find out if there is a .git folder
         $gitFolder = '';
-        if (! $this->isGitRevision($gitFolder)) {
+        if (!$this->isGitRevision($gitFolder)) {
             $this->config->set('PMA_VERSION_GIT', 0);
 
             return null;
@@ -525,7 +513,7 @@ class Git
 
         $ref_head = @file_get_contents($gitFolder . '/HEAD');
 
-        if (! $ref_head) {
+        if (!$ref_head) {
             $this->config->set('PMA_VERSION_GIT', 0);
 
             return null;
@@ -542,7 +530,7 @@ class Git
         }
 
         $commit = false;
-        if (! preg_match('/^[0-9a-f]{40}$/i', $hash)) {
+        if (!preg_match('/^[0-9a-f]{40}$/i', $hash)) {
             $commit = false;
         } elseif (isset($_SESSION['PMA_VERSION_COMMITDATA_' . $hash])) {
             $commit = $_SESSION['PMA_VERSION_COMMITDATA_' . $hash];
@@ -555,9 +543,9 @@ class Git
 
         $is_remote_commit = false;
         $commit_json = $this->isRemoteCommit(
-            $commit, // Will be modified if necessary by the function
-            $is_remote_commit, // Will be modified if necessary by the function
-            $hash
+                $commit, // Will be modified if necessary by the function
+                $is_remote_commit, // Will be modified if necessary by the function
+                $hash
         );
 
         $is_remote_branch = false;
@@ -612,4 +600,5 @@ class Git
             'is_remote_branch' => $is_remote_branch,
         ];
     }
+
 }

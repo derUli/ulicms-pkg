@@ -1,5 +1,5 @@
 <?php
-function redirections301_render()
-{
+
+function redirections301_render() {
     return "";
 }

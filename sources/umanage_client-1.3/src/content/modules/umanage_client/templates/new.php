@@ -35,5 +35,5 @@ if ($acl->hasPermission("umanage_client")) {
 
     <?php
 } else {
-        noperms();
-    }
+    noperms();
+}

@@ -22,13 +22,12 @@ use Symfony\Component\DependencyInjection\Exception\RuntimeException;
  *
  * @author Nicolas Grekas <p@tchwork.com>
  */
-class ResolveInstanceofConditionalsPass implements CompilerPassInterface
-{
+class ResolveInstanceofConditionalsPass implements CompilerPassInterface {
+
     /**
      * {@inheritdoc}
      */
-    public function process(ContainerBuilder $container)
-    {
+    public function process(ContainerBuilder $container) {
         foreach ($container->getAutoconfiguredInstanceof() as $interface => $definition) {
             if ($definition->getArguments()) {
                 throw new InvalidArgumentException(sprintf('Autoconfigured instanceof for type "%s" defines arguments but these are not supported and should be removed.', $interface));
@@ -54,8 +53,7 @@ class ResolveInstanceofConditionalsPass implements CompilerPassInterface
         }
     }
 
-    private function processDefinition(ContainerBuilder $container, string $id, Definition $definition, array $tagsToKeep): Definition
-    {
+    private function processDefinition(ContainerBuilder $container, string $id, Definition $definition, array $tagsToKeep): Definition {
         $instanceofConditionals = $definition->getInstanceofConditionals();
         $autoconfiguredInstanceof = $definition->isAutoconfigured() ? $container->getAutoconfiguredInstanceof() : [];
         if (!$instanceofConditionals && !$autoconfiguredInstanceof) {
@@ -87,8 +85,8 @@ class ResolveInstanceofConditionalsPass implements CompilerPassInterface
             foreach ($instanceofDefs as $key => $instanceofDef) {
                 /** @var ChildDefinition $instanceofDef */
                 $instanceofDef = clone $instanceofDef;
-                $instanceofDef->setAbstract(true)->setParent($parent ?: '.abstract.instanceof.'.$id);
-                $parent = '.instanceof.'.$interface.'.'.$key.'.'.$id;
+                $instanceofDef->setAbstract(true)->setParent($parent ?: '.abstract.instanceof.' . $id);
+                $parent = '.instanceof.' . $interface . '.' . $key . '.' . $id;
                 $container->setDefinition($parent, $instanceofDef);
                 $instanceofTags[] = $instanceofDef->getTags();
                 $instanceofBindings = $instanceofDef->getBindings() + $instanceofBindings;
@@ -109,7 +107,7 @@ class ResolveInstanceofConditionalsPass implements CompilerPassInterface
 
         if ($parent) {
             $bindings = $definition->getBindings();
-            $abstract = $container->setDefinition('.abstract.instanceof.'.$id, $definition);
+            $abstract = $container->setDefinition('.abstract.instanceof.' . $id, $definition);
 
             // cast Definition to ChildDefinition
             $definition->setBindings([]);
@@ -144,21 +142,22 @@ class ResolveInstanceofConditionalsPass implements CompilerPassInterface
 
             // reset fields with "merge" behavior
             $abstract
-                ->setBindings([])
-                ->setArguments([])
-                ->setMethodCalls([])
-                ->setDecoratedService(null)
-                ->setTags([])
-                ->setAbstract(true);
+                    ->setBindings([])
+                    ->setArguments([])
+                    ->setMethodCalls([])
+                    ->setDecoratedService(null)
+                    ->setTags([])
+                    ->setAbstract(true);
         }
 
         return $definition;
     }
 
-    private function mergeConditionals(array $autoconfiguredInstanceof, array $instanceofConditionals, ContainerBuilder $container): array
-    {
+    private function mergeConditionals(array $autoconfiguredInstanceof, array $instanceofConditionals, ContainerBuilder $container): array {
         // make each value an array of ChildDefinition
-        $conditionals = array_map(function ($childDef) { return [$childDef]; }, $autoconfiguredInstanceof);
+        $conditionals = array_map(function ($childDef) {
+            return [$childDef];
+        }, $autoconfiguredInstanceof);
 
         foreach ($instanceofConditionals as $interface => $instanceofDef) {
             // make sure the interface/class exists (but don't validate automaticInstanceofConditionals)
@@ -175,4 +174,5 @@ class ResolveInstanceofConditionalsPass implements CompilerPassInterface
 
         return $conditionals;
     }
+
 }

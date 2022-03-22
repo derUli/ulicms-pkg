@@ -19,8 +19,8 @@ use function array_merge;
 use function implode;
 use function is_array;
 
-class ExportController extends AbstractController
-{
+class ExportController extends AbstractController {
+
     /** @var Options */
     private $export;
 
@@ -30,18 +30,17 @@ class ExportController extends AbstractController
      * @param string   $table    Table name.
      */
     public function __construct(
-        $response,
-        Template $template,
-        $db,
-        $table,
-        Options $export
+            $response,
+            Template $template,
+            $db,
+            $table,
+            Options $export
     ) {
         parent::__construct($response, $template, $db, $table);
         $this->export = $export;
     }
 
-    public function index(): void
-    {
+    public function index(): void {
         global $db, $url_params, $table, $replaces, $cfg, $err_url;
         global $sql_query, $where_clause, $num_tables, $unlim_num_rows;
 
@@ -63,14 +62,13 @@ class ExportController extends AbstractController
         // When we have some query, we need to remove LIMIT from that and possibly
         // generate WHERE clause (if we are asked to export specific rows)
 
-        if (! empty($sql_query)) {
+        if (!empty($sql_query)) {
             $parser = new Parser($sql_query);
 
-            if (! empty($parser->statements[0])
-                && ($parser->statements[0] instanceof SelectStatement)
+            if (!empty($parser->statements[0]) && ($parser->statements[0] instanceof SelectStatement)
             ) {
                 // Checking if the WHERE clause has to be replaced.
-                if (! empty($where_clause) && is_array($where_clause)) {
+                if (!empty($where_clause) && is_array($where_clause)) {
                     $replaces[] = [
                         'WHERE',
                         'WHERE (' . implode(') OR (', $where_clause) . ')',
@@ -85,20 +83,20 @@ class ExportController extends AbstractController
 
                 // Replacing the clauses.
                 $sql_query = Query::replaceClauses(
-                    $parser->statements[0],
-                    $parser->list,
-                    $replaces
+                                $parser->statements[0],
+                                $parser->list,
+                                $replaces
                 );
             }
         }
 
-        if (! isset($sql_query)) {
+        if (!isset($sql_query)) {
             $sql_query = '';
         }
-        if (! isset($num_tables)) {
+        if (!isset($num_tables)) {
             $num_tables = 0;
         }
-        if (! isset($unlim_num_rows)) {
+        if (!isset($unlim_num_rows)) {
             $unlim_num_rows = 0;
         }
 
@@ -108,8 +106,8 @@ class ExportController extends AbstractController
 
         if (empty($exportList)) {
             $this->response->addHTML(Message::error(
-                __('Could not load export plugins, please check your installation!')
-            )->getDisplay());
+                            __('Could not load export plugins, please check your installation!')
+                    )->getDisplay());
 
             return;
         }
@@ -121,13 +119,13 @@ class ExportController extends AbstractController
         }
 
         $options = $this->export->getOptions(
-            $exportType,
-            $db,
-            $table,
-            $sql_query,
-            $num_tables,
-            $unlim_num_rows,
-            $exportList
+                $exportType,
+                $db,
+                $table,
+                $sql_query,
+                $num_tables,
+                $unlim_num_rows,
+                $exportList
         );
 
         $this->render('table/export/index', array_merge($options, [
@@ -137,11 +135,10 @@ class ExportController extends AbstractController
         ]));
     }
 
-    public function rows(): void
-    {
+    public function rows(): void {
         global $active_page, $single_table, $where_clause;
 
-        if (isset($_POST['goto']) && (! isset($_POST['rows_to_delete']) || ! is_array($_POST['rows_to_delete']))) {
+        if (isset($_POST['goto']) && (!isset($_POST['rows_to_delete']) || !is_array($_POST['rows_to_delete']))) {
             $this->response->setRequestStatus(false);
             $this->response->addJSON('message', __('No row selected.'));
 
@@ -166,4 +163,5 @@ class ExportController extends AbstractController
 
         $this->index();
     }
+
 }

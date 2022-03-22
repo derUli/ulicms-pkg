@@ -18,23 +18,21 @@ use Symfony\Component\Config\Exception\LoaderLoadException;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-abstract class Loader implements LoaderInterface
-{
+abstract class Loader implements LoaderInterface {
+
     protected $resolver;
 
     /**
      * {@inheritdoc}
      */
-    public function getResolver()
-    {
+    public function getResolver() {
         return $this->resolver;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function setResolver(LoaderResolverInterface $resolver)
-    {
+    public function setResolver(LoaderResolverInterface $resolver) {
         $this->resolver = $resolver;
     }
 
@@ -46,8 +44,7 @@ abstract class Loader implements LoaderInterface
      *
      * @return mixed
      */
-    public function import($resource, $type = null)
-    {
+    public function import($resource, $type = null) {
         return $this->resolve($resource, $type)->load($resource, $type);
     }
 
@@ -61,8 +58,7 @@ abstract class Loader implements LoaderInterface
      *
      * @throws LoaderLoadException If no loader is found
      */
-    public function resolve($resource, $type = null)
-    {
+    public function resolve($resource, $type = null) {
         if ($this->supports($resource, $type)) {
             return $this;
         }
@@ -75,4 +71,5 @@ abstract class Loader implements LoaderInterface
 
         return $loader;
     }
+
 }

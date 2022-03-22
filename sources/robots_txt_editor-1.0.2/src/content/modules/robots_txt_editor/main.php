@@ -1,5 +1,5 @@
 <?php
-function robots_txt_editor_render()
-{
+
+function robots_txt_editor_render() {
     return "";
 }

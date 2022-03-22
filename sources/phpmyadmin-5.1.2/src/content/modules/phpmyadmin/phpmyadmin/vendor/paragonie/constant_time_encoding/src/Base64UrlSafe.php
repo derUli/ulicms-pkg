@@ -1,5 +1,7 @@
 <?php
+
 declare(strict_types=1);
+
 namespace ParagonIE\ConstantTime;
 
 /**
@@ -31,8 +33,7 @@ namespace ParagonIE\ConstantTime;
  *
  * @package ParagonIE\ConstantTime
  */
-abstract class Base64UrlSafe extends Base64
-{
+abstract class Base64UrlSafe extends Base64 {
 
     /**
      * Uses bitwise operators instead of table-lookups to turn 6-bit integers
@@ -45,8 +46,7 @@ abstract class Base64UrlSafe extends Base64
      * @param int $src
      * @return int
      */
-    protected static function decode6Bits(int $src): int
-    {
+    protected static function decode6Bits(int $src): int {
         $ret = -1;
 
         // if ($src > 0x40 && $src < 0x5b) $ret += $src - 0x41 + 1; // -64
@@ -74,8 +74,7 @@ abstract class Base64UrlSafe extends Base64
      * @param int $src
      * @return string
      */
-    protected static function encode6Bits(int $src): string
-    {
+    protected static function encode6Bits(int $src): string {
         $diff = 0x41;
 
         // if ($src > 25) $diff += 0x61 - 0x41 - 26; // 6
@@ -92,4 +91,5 @@ abstract class Base64UrlSafe extends Base64
 
         return \pack('C', $src + $diff);
     }
+
 }

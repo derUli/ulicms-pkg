@@ -16,10 +16,9 @@ use Twig\Profiler\Profile;
 /**
  * @author Fabien Potencier <fabien@symfony.com>
  */
-final class BlackfireDumper
-{
-    public function dump(Profile $profile)
-    {
+final class BlackfireDumper {
+
+    public function dump(Profile $profile) {
         $data = [];
         $this->dumpProfile('main()', $profile, $data);
         $this->dumpChildren('main()', $profile, $data);
@@ -40,8 +39,7 @@ EOF;
         return $str;
     }
 
-    private function dumpChildren(string $parent, Profile $profile, &$data)
-    {
+    private function dumpChildren(string $parent, Profile $profile, &$data) {
         foreach ($profile as $p) {
             if ($p->isTemplate()) {
                 $name = $p->getTemplate();
@@ -53,8 +51,7 @@ EOF;
         }
     }
 
-    private function dumpProfile(string $edge, Profile $profile, &$data)
-    {
+    private function dumpProfile(string $edge, Profile $profile, &$data) {
         if (isset($data[$edge])) {
             ++$data[$edge]['ct'];
             $data[$edge]['wt'] += floor($profile->getDuration() * 1000000);
@@ -69,6 +66,7 @@ EOF;
             ];
         }
     }
+
 }
 
 class_alias('Twig\Profiler\Dumper\BlackfireDumper', 'Twig_Profiler_Dumper_Blackfire');

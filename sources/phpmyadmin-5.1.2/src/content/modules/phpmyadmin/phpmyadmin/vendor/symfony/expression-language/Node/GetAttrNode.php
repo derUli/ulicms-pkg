@@ -18,54 +18,51 @@ use Symfony\Component\ExpressionLanguage\Compiler;
  *
  * @internal
  */
-class GetAttrNode extends Node
-{
+class GetAttrNode extends Node {
+
     public const PROPERTY_CALL = 1;
     public const METHOD_CALL = 2;
     public const ARRAY_CALL = 3;
 
-    public function __construct(Node $node, Node $attribute, ArrayNode $arguments, int $type)
-    {
+    public function __construct(Node $node, Node $attribute, ArrayNode $arguments, int $type) {
         parent::__construct(
-            ['node' => $node, 'attribute' => $attribute, 'arguments' => $arguments],
-            ['type' => $type]
+                ['node' => $node, 'attribute' => $attribute, 'arguments' => $arguments],
+                ['type' => $type]
         );
     }
 
-    public function compile(Compiler $compiler)
-    {
+    public function compile(Compiler $compiler) {
         switch ($this->attributes['type']) {
             case self::PROPERTY_CALL:
                 $compiler
-                    ->compile($this->nodes['node'])
-                    ->raw('->')
-                    ->raw($this->nodes['attribute']->attributes['value'])
+                        ->compile($this->nodes['node'])
+                        ->raw('->')
+                        ->raw($this->nodes['attribute']->attributes['value'])
                 ;
                 break;
 
             case self::METHOD_CALL:
                 $compiler
-                    ->compile($this->nodes['node'])
-                    ->raw('->')
-                    ->raw($this->nodes['attribute']->attributes['value'])
-                    ->raw('(')
-                    ->compile($this->nodes['arguments'])
-                    ->raw(')')
+                        ->compile($this->nodes['node'])
+                        ->raw('->')
+                        ->raw($this->nodes['attribute']->attributes['value'])
+                        ->raw('(')
+                        ->compile($this->nodes['arguments'])
+                        ->raw(')')
                 ;
                 break;
 
             case self::ARRAY_CALL:
                 $compiler
-                    ->compile($this->nodes['node'])
-                    ->raw('[')
-                    ->compile($this->nodes['attribute'])->raw(']')
+                        ->compile($this->nodes['node'])
+                        ->raw('[')
+                        ->compile($this->nodes['attribute'])->raw(']')
                 ;
                 break;
         }
     }
 
-    public function evaluate($functions, $values)
-    {
+    public function evaluate($functions, $values) {
         switch ($this->attributes['type']) {
             case self::PROPERTY_CALL:
                 $obj = $this->nodes['node']->evaluate($functions, $values);
@@ -98,8 +95,7 @@ class GetAttrNode extends Node
         }
     }
 
-    public function toArray()
-    {
+    public function toArray() {
         switch ($this->attributes['type']) {
             case self::PROPERTY_CALL:
                 return [$this->nodes['node'], '.', $this->nodes['attribute']];
@@ -111,4 +107,5 @@ class GetAttrNode extends Node
                 return [$this->nodes['node'], '[', $this->nodes['attribute'], ']'];
         }
     }
+
 }

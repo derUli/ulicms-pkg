@@ -1,6 +1,6 @@
 {
-  "version" : "2015.03.12.2",
-  "embed" : false,
-  "custom_acl" : ["opcache_status"],
-  "admin_permission" : "opcache_status"
+    "version": "2015.03.12.2",
+    "embed": false,
+    "custom_acl": ["opcache_status"],
+    "admin_permission": "opcache_status"
 }

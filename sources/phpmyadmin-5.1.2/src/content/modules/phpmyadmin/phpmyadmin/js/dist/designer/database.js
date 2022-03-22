@@ -1,152 +1,152 @@
 "use strict";
 
 var designerTables = [{
-  name: 'pdf_pages',
-  key: 'pgNr',
-  autoIncrement: true
-}, {
-  name: 'table_coords',
-  key: 'id',
-  autoIncrement: true
-}]; // eslint-disable-next-line no-unused-vars
+        name: 'pdf_pages',
+        key: 'pgNr',
+        autoIncrement: true
+    }, {
+        name: 'table_coords',
+        key: 'id',
+        autoIncrement: true
+    }]; // eslint-disable-next-line no-unused-vars
 
 var DesignerOfflineDB = function () {
-  var designerDB = {};
-  var datastore = null;
+    var designerDB = {};
+    var datastore = null;
 
-  designerDB.open = function (callback) {
-    var version = 1;
-    var request = window.indexedDB.open('pma_designer', version);
+    designerDB.open = function (callback) {
+        var version = 1;
+        var request = window.indexedDB.open('pma_designer', version);
 
-    request.onupgradeneeded = function (e) {
-      var db = e.target.result;
-      e.target.transaction.onerror = designerDB.onerror;
-      var t;
+        request.onupgradeneeded = function (e) {
+            var db = e.target.result;
+            e.target.transaction.onerror = designerDB.onerror;
+            var t;
 
-      for (t in designerTables) {
-        if (db.objectStoreNames.contains(designerTables[t].name)) {
-          db.deleteObjectStore(designerTables[t].name);
-        }
-      }
+            for (t in designerTables) {
+                if (db.objectStoreNames.contains(designerTables[t].name)) {
+                    db.deleteObjectStore(designerTables[t].name);
+                }
+            }
 
-      for (t in designerTables) {
-        db.createObjectStore(designerTables[t].name, {
-          keyPath: designerTables[t].key,
-          autoIncrement: designerTables[t].autoIncrement
-        });
-      }
+            for (t in designerTables) {
+                db.createObjectStore(designerTables[t].name, {
+                    keyPath: designerTables[t].key,
+                    autoIncrement: designerTables[t].autoIncrement
+                });
+            }
+        };
+
+        request.onsuccess = function (e) {
+            datastore = e.target.result;
+
+            if (typeof callback !== 'undefined' && callback !== null) {
+                callback(true);
+            }
+        };
+
+        request.onerror = designerDB.onerror;
     };
 
-    request.onsuccess = function (e) {
-      datastore = e.target.result;
+    designerDB.loadObject = function (table, id, callback) {
+        var db = datastore;
+        var transaction = db.transaction([table], 'readwrite');
+        var objStore = transaction.objectStore(table);
+        var cursorRequest = objStore.get(parseInt(id));
 
-      if (typeof callback !== 'undefined' && callback !== null) {
-        callback(true);
-      }
+        cursorRequest.onsuccess = function (e) {
+            callback(e.target.result);
+        };
+
+        cursorRequest.onerror = designerDB.onerror;
     };
 
-    request.onerror = designerDB.onerror;
-  };
+    designerDB.loadAllObjects = function (table, callback) {
+        var db = datastore;
+        var transaction = db.transaction([table], 'readwrite');
+        var objStore = transaction.objectStore(table);
+        var keyRange = IDBKeyRange.lowerBound(0);
+        var cursorRequest = objStore.openCursor(keyRange);
+        var results = [];
 
-  designerDB.loadObject = function (table, id, callback) {
-    var db = datastore;
-    var transaction = db.transaction([table], 'readwrite');
-    var objStore = transaction.objectStore(table);
-    var cursorRequest = objStore.get(parseInt(id));
+        transaction.oncomplete = function () {
+            callback(results);
+        };
 
-    cursorRequest.onsuccess = function (e) {
-      callback(e.target.result);
+        cursorRequest.onsuccess = function (e) {
+            var result = e.target.result;
+
+            if (Boolean(result) === false) {
+                return;
+            }
+
+            results.push(result.value);
+            result.continue();
+        };
+
+        cursorRequest.onerror = designerDB.onerror;
     };
 
-    cursorRequest.onerror = designerDB.onerror;
-  };
+    designerDB.loadFirstObject = function (table, callback) {
+        var db = datastore;
+        var transaction = db.transaction([table], 'readwrite');
+        var objStore = transaction.objectStore(table);
+        var keyRange = IDBKeyRange.lowerBound(0);
+        var cursorRequest = objStore.openCursor(keyRange);
+        var firstResult = null;
 
-  designerDB.loadAllObjects = function (table, callback) {
-    var db = datastore;
-    var transaction = db.transaction([table], 'readwrite');
-    var objStore = transaction.objectStore(table);
-    var keyRange = IDBKeyRange.lowerBound(0);
-    var cursorRequest = objStore.openCursor(keyRange);
-    var results = [];
+        transaction.oncomplete = function () {
+            callback(firstResult);
+        };
 
-    transaction.oncomplete = function () {
-      callback(results);
+        cursorRequest.onsuccess = function (e) {
+            var result = e.target.result;
+
+            if (Boolean(result) === false) {
+                return;
+            }
+
+            firstResult = result.value;
+        };
+
+        cursorRequest.onerror = designerDB.onerror;
     };
 
-    cursorRequest.onsuccess = function (e) {
-      var result = e.target.result;
+    designerDB.addObject = function (table, obj, callback) {
+        var db = datastore;
+        var transaction = db.transaction([table], 'readwrite');
+        var objStore = transaction.objectStore(table);
+        var request = objStore.put(obj);
 
-      if (Boolean(result) === false) {
-        return;
-      }
+        request.onsuccess = function (e) {
+            if (typeof callback !== 'undefined' && callback !== null) {
+                callback(e.currentTarget.result);
+            }
+        };
 
-      results.push(result.value);
-      result.continue();
+        request.onerror = designerDB.onerror;
     };
 
-    cursorRequest.onerror = designerDB.onerror;
-  };
+    designerDB.deleteObject = function (table, id, callback) {
+        var db = datastore;
+        var transaction = db.transaction([table], 'readwrite');
+        var objStore = transaction.objectStore(table);
+        var request = objStore.delete(parseInt(id));
 
-  designerDB.loadFirstObject = function (table, callback) {
-    var db = datastore;
-    var transaction = db.transaction([table], 'readwrite');
-    var objStore = transaction.objectStore(table);
-    var keyRange = IDBKeyRange.lowerBound(0);
-    var cursorRequest = objStore.openCursor(keyRange);
-    var firstResult = null;
+        request.onsuccess = function () {
+            if (typeof callback !== 'undefined' && callback !== null) {
+                callback(true);
+            }
+        };
 
-    transaction.oncomplete = function () {
-      callback(firstResult);
+        request.onerror = designerDB.onerror;
     };
 
-    cursorRequest.onsuccess = function (e) {
-      var result = e.target.result;
-
-      if (Boolean(result) === false) {
-        return;
-      }
-
-      firstResult = result.value;
-    };
-
-    cursorRequest.onerror = designerDB.onerror;
-  };
-
-  designerDB.addObject = function (table, obj, callback) {
-    var db = datastore;
-    var transaction = db.transaction([table], 'readwrite');
-    var objStore = transaction.objectStore(table);
-    var request = objStore.put(obj);
-
-    request.onsuccess = function (e) {
-      if (typeof callback !== 'undefined' && callback !== null) {
-        callback(e.currentTarget.result);
-      }
-    };
-
-    request.onerror = designerDB.onerror;
-  };
-
-  designerDB.deleteObject = function (table, id, callback) {
-    var db = datastore;
-    var transaction = db.transaction([table], 'readwrite');
-    var objStore = transaction.objectStore(table);
-    var request = objStore.delete(parseInt(id));
-
-    request.onsuccess = function () {
-      if (typeof callback !== 'undefined' && callback !== null) {
-        callback(true);
-      }
-    };
-
-    request.onerror = designerDB.onerror;
-  };
-
-  designerDB.onerror = function (e) {
-    // eslint-disable-next-line no-console
-    console.log(e);
-  }; // Export the designerDB object.
+    designerDB.onerror = function (e) {
+        // eslint-disable-next-line no-console
+        console.log(e);
+    }; // Export the designerDB object.
 
 
-  return designerDB;
+    return designerDB;
 }();

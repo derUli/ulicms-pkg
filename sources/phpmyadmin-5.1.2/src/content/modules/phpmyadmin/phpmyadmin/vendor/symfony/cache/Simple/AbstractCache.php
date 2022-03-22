@@ -25,8 +25,8 @@ use Symfony\Contracts\Cache\CacheInterface;
 /**
  * @deprecated since Symfony 4.3, use AbstractAdapter and type-hint for CacheInterface instead.
  */
-abstract class AbstractCache implements Psr16CacheInterface, LoggerAwareInterface, ResettableInterface
-{
+abstract class AbstractCache implements Psr16CacheInterface, LoggerAwareInterface, ResettableInterface {
+
     use AbstractTrait {
         deleteItems as private;
         AbstractTrait::deleteItem as delete;
@@ -40,10 +40,9 @@ abstract class AbstractCache implements Psr16CacheInterface, LoggerAwareInterfac
 
     private $defaultLifetime;
 
-    protected function __construct(string $namespace = '', int $defaultLifetime = 0)
-    {
+    protected function __construct(string $namespace = '', int $defaultLifetime = 0) {
         $this->defaultLifetime = max(0, $defaultLifetime);
-        $this->namespace = '' === $namespace ? '' : CacheItem::validateKey($namespace).':';
+        $this->namespace = '' === $namespace ? '' : CacheItem::validateKey($namespace) . ':';
         if (null !== $this->maxIdLength && \strlen($namespace) > $this->maxIdLength - 24) {
             throw new InvalidArgumentException(sprintf('Namespace must be %d chars max, %d given ("%s").', $this->maxIdLength - 24, \strlen($namespace), $namespace));
         }
@@ -52,8 +51,7 @@ abstract class AbstractCache implements Psr16CacheInterface, LoggerAwareInterfac
     /**
      * {@inheritdoc}
      */
-    public function get($key, $default = null)
-    {
+    public function get($key, $default = null) {
         $id = $this->getId($key);
 
         try {
@@ -61,7 +59,7 @@ abstract class AbstractCache implements Psr16CacheInterface, LoggerAwareInterfac
                 return $value;
             }
         } catch (\Exception $e) {
-            CacheItem::log($this->logger, 'Failed to fetch key "{key}": '.$e->getMessage(), ['key' => $key, 'exception' => $e]);
+            CacheItem::log($this->logger, 'Failed to fetch key "{key}": ' . $e->getMessage(), ['key' => $key, 'exception' => $e]);
         }
 
         return $default;
@@ -72,8 +70,7 @@ abstract class AbstractCache implements Psr16CacheInterface, LoggerAwareInterfac
      *
      * @return bool
      */
-    public function set($key, $value, $ttl = null)
-    {
+    public function set($key, $value, $ttl = null) {
         CacheItem::validateKey($key);
 
         return $this->setMultiple([$key => $value], $ttl);
@@ -84,8 +81,7 @@ abstract class AbstractCache implements Psr16CacheInterface, LoggerAwareInterfac
      *
      * @return iterable
      */
-    public function getMultiple($keys, $default = null)
-    {
+    public function getMultiple($keys, $default = null) {
         if ($keys instanceof \Traversable) {
             $keys = iterator_to_array($keys, false);
         } elseif (!\is_array($keys)) {
@@ -99,7 +95,7 @@ abstract class AbstractCache implements Psr16CacheInterface, LoggerAwareInterfac
         try {
             $values = $this->doFetch($ids);
         } catch (\Exception $e) {
-            CacheItem::log($this->logger, 'Failed to fetch values: '.$e->getMessage(), ['keys' => $keys, 'exception' => $e]);
+            CacheItem::log($this->logger, 'Failed to fetch values: ' . $e->getMessage(), ['keys' => $keys, 'exception' => $e]);
             $values = [];
         }
         $ids = array_combine($ids, $keys);
@@ -112,8 +108,7 @@ abstract class AbstractCache implements Psr16CacheInterface, LoggerAwareInterfac
      *
      * @return bool
      */
-    public function setMultiple($values, $ttl = null)
-    {
+    public function setMultiple($values, $ttl = null) {
         if (!\is_array($values) && !$values instanceof \Traversable) {
             throw new InvalidArgumentException(sprintf('Cache values must be array or Traversable, "%s" given.', \is_object($values) ? \get_class($values) : \gettype($values)));
         }
@@ -132,6 +127,7 @@ abstract class AbstractCache implements Psr16CacheInterface, LoggerAwareInterfac
         try {
             $e = $this->doSave($valuesById, $ttl);
         } catch (\Exception $e) {
+            
         }
         if (true === $e || [] === $e) {
             return true;
@@ -140,7 +136,7 @@ abstract class AbstractCache implements Psr16CacheInterface, LoggerAwareInterfac
         foreach (\is_array($e) ? $e : array_keys($valuesById) as $id) {
             $keys[] = substr($id, \strlen($this->namespace));
         }
-        $message = 'Failed to save values'.($e instanceof \Exception ? ': '.$e->getMessage() : '.');
+        $message = 'Failed to save values' . ($e instanceof \Exception ? ': ' . $e->getMessage() : '.');
         CacheItem::log($this->logger, $message, ['keys' => $keys, 'exception' => $e instanceof \Exception ? $e : null]);
 
         return false;
@@ -151,8 +147,7 @@ abstract class AbstractCache implements Psr16CacheInterface, LoggerAwareInterfac
      *
      * @return bool
      */
-    public function deleteMultiple($keys)
-    {
+    public function deleteMultiple($keys) {
         if ($keys instanceof \Traversable) {
             $keys = iterator_to_array($keys, false);
         } elseif (!\is_array($keys)) {
@@ -162,8 +157,7 @@ abstract class AbstractCache implements Psr16CacheInterface, LoggerAwareInterfac
         return $this->deleteItems($keys);
     }
 
-    private function normalizeTtl($ttl)
-    {
+    private function normalizeTtl($ttl) {
         if (null === $ttl) {
             return $this->defaultLifetime;
         }
@@ -177,8 +171,7 @@ abstract class AbstractCache implements Psr16CacheInterface, LoggerAwareInterfac
         throw new InvalidArgumentException(sprintf('Expiration date must be an integer, a DateInterval or null, "%s" given.', \is_object($ttl) ? \get_class($ttl) : \gettype($ttl)));
     }
 
-    private function generateValues(iterable $values, array &$keys, $default): iterable
-    {
+    private function generateValues(iterable $values, array &$keys, $default): iterable {
         try {
             foreach ($values as $id => $value) {
                 if (!isset($keys[$id])) {
@@ -189,11 +182,12 @@ abstract class AbstractCache implements Psr16CacheInterface, LoggerAwareInterfac
                 yield $key => $value;
             }
         } catch (\Exception $e) {
-            CacheItem::log($this->logger, 'Failed to fetch values: '.$e->getMessage(), ['keys' => array_values($keys), 'exception' => $e]);
+            CacheItem::log($this->logger, 'Failed to fetch values: ' . $e->getMessage(), ['keys' => array_values($keys), 'exception' => $e]);
         }
 
         foreach ($keys as $key) {
             yield $key => $default;
         }
     }
+
 }

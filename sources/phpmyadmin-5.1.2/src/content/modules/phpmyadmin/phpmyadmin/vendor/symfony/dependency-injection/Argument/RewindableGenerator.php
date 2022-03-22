@@ -14,33 +14,31 @@ namespace Symfony\Component\DependencyInjection\Argument;
 /**
  * @internal
  */
-class RewindableGenerator implements \IteratorAggregate, \Countable
-{
+class RewindableGenerator implements \IteratorAggregate, \Countable {
+
     private $generator;
     private $count;
 
     /**
      * @param int|callable $count
      */
-    public function __construct(callable $generator, $count)
-    {
+    public function __construct(callable $generator, $count) {
         $this->generator = $generator;
         $this->count = $count;
     }
 
-    public function getIterator(): \Traversable
-    {
+    public function getIterator(): \Traversable {
         $g = $this->generator;
 
         return $g();
     }
 
-    public function count(): int
-    {
+    public function count(): int {
         if (\is_callable($count = $this->count)) {
             $this->count = $count();
         }
 
         return $this->count;
     }
+
 }

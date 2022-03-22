@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Statement utilities.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\SqlParser\Utils;
@@ -33,7 +33,6 @@ use PhpMyAdmin\SqlParser\Statements\TruncateStatement;
 use PhpMyAdmin\SqlParser\Statements\UpdateStatement;
 use PhpMyAdmin\SqlParser\Token;
 use PhpMyAdmin\SqlParser\TokensList;
-
 use function array_flip;
 use function array_keys;
 use function count;
@@ -44,8 +43,8 @@ use function trim;
 /**
  * Statement utilities.
  */
-class Query
-{
+class Query {
+
     /**
      * Functions that set the flag `is_func`.
      *
@@ -68,22 +67,18 @@ class Query
          * select ... DISTINCT ...
          */
         'distinct' => false,
-
         /*
          * drop ... DATABASE ...
          */
         'drop_database' => false,
-
         /*
          * ... GROUP BY ...
          */
         'group' => false,
-
         /*
          * ... HAVING ...
          */
         'having' => false,
-
         /*
          * INSERT ...
          * or
@@ -92,17 +87,14 @@ class Query
          * DELETE ...
          */
         'is_affected' => false,
-
         /*
          * select ... PROCEDURE ANALYSE( ... ) ...
          */
         'is_analyse' => false,
-
         /*
          * select COUNT( ... ) ...
          */
         'is_count' => false,
-
         /*
          * DELETE ...
          */
@@ -117,19 +109,16 @@ class Query
          * select ... INTO OUTFILE ...
          */
         'is_export' => false,
-
         /*
          * select FUNC( ... ) ...
          */
         'is_func' => false,
-
         /*
          * select ... GROUP BY ...
          * or
          * select ... HAVING ...
          */
         'is_group' => false,
-
         /*
          * INSERT ...
          * or
@@ -138,7 +127,6 @@ class Query
          * LOAD DATA ...
          */
         'is_insert' => false,
-
         /*
          * ANALYZE ...
          * or
@@ -151,12 +139,10 @@ class Query
          * REPAIR ...
          */
         'is_maint' => false,
-
         /*
          * CALL ...
          */
         'is_procedure' => false,
-
         /*
          * REPLACE ...
          */
@@ -176,43 +162,35 @@ class Query
          * Contains a subquery.
          */
         'is_subquery' => false,
-
         /*
          * ... JOIN ...
          */
         'join' => false,
-
         /*
          * ... LIMIT ...
          */
         'limit' => false,
-
         /*
          * TODO
          */
         'offset' => false,
-
         /*
          * ... ORDER ...
          */
         'order' => false,
-
         /*
          * The type of the query (which is usually the first keyword of
          * the statement).
          */
         'querytype' => false,
-
         /*
          * Whether a page reload is required.
          */
         'reload' => false,
-
         /*
          * SELECT ... FROM ...
          */
         'select_from' => false,
-
         /*
          * ... UNION ...
          */
@@ -227,12 +205,11 @@ class Query
      *
      * @return array
      */
-    private static function getFlagsSelect($statement, $flags)
-    {
+    private static function getFlagsSelect($statement, $flags) {
         $flags['querytype'] = 'SELECT';
         $flags['is_select'] = true;
 
-        if (! empty($statement->from)) {
+        if (!empty($statement->from)) {
             $flags['select_from'] = true;
         }
 
@@ -240,23 +217,23 @@ class Query
             $flags['distinct'] = true;
         }
 
-        if (! empty($statement->group) || ! empty($statement->having)) {
+        if (!empty($statement->group) || !empty($statement->having)) {
             $flags['is_group'] = true;
         }
 
-        if (! empty($statement->into) && ($statement->into->type === 'OUTFILE')) {
+        if (!empty($statement->into) && ($statement->into->type === 'OUTFILE')) {
             $flags['is_export'] = true;
         }
 
         $expressions = $statement->expr;
-        if (! empty($statement->join)) {
+        if (!empty($statement->join)) {
             foreach ($statement->join as $join) {
                 $expressions[] = $join->expr;
             }
         }
 
         foreach ($expressions as $expr) {
-            if (! empty($expr->function)) {
+            if (!empty($expr->function)) {
                 if ($expr->function === 'COUNT') {
                     $flags['is_count'] = true;
                 } elseif (in_array($expr->function, static::$FUNCTIONS)) {
@@ -271,23 +248,23 @@ class Query
             $flags['is_subquery'] = true;
         }
 
-        if (! empty($statement->procedure) && ($statement->procedure->name === 'ANALYSE')) {
+        if (!empty($statement->procedure) && ($statement->procedure->name === 'ANALYSE')) {
             $flags['is_analyse'] = true;
         }
 
-        if (! empty($statement->group)) {
+        if (!empty($statement->group)) {
             $flags['group'] = true;
         }
 
-        if (! empty($statement->having)) {
+        if (!empty($statement->having)) {
             $flags['having'] = true;
         }
 
-        if (! empty($statement->union)) {
+        if (!empty($statement->union)) {
             $flags['union'] = true;
         }
 
-        if (! empty($statement->join)) {
+        if (!empty($statement->join)) {
             $flags['join'] = true;
         }
 
@@ -302,8 +279,7 @@ class Query
      *
      * @return array
      */
-    public static function getFlags($statement, $all = false)
-    {
+    public static function getFlags($statement, $all = false) {
         $flags = ['querytype' => false];
         if ($all) {
             $flags = self::$ALLFLAGS;
@@ -373,15 +349,13 @@ class Query
         }
 
         if (
-            ($statement instanceof SelectStatement)
-            || ($statement instanceof UpdateStatement)
-            || ($statement instanceof DeleteStatement)
+                ($statement instanceof SelectStatement) || ($statement instanceof UpdateStatement) || ($statement instanceof DeleteStatement)
         ) {
-            if (! empty($statement->limit)) {
+            if (!empty($statement->limit)) {
                 $flags['limit'] = true;
             }
 
-            if (! empty($statement->order)) {
+            if (!empty($statement->order)) {
                 $flags['order'] = true;
             }
         }
@@ -404,8 +378,7 @@ class Query
      *               `FROM` expressions
      *               - select_expr - selected expressions
      */
-    public static function getAll($query)
-    {
+    public static function getAll($query) {
         $parser = new Parser($query);
 
         if (empty($parser->statements[0])) {
@@ -426,7 +399,7 @@ class Query
             // Finding tables' aliases and their associated real names.
             $tableAliases = [];
             foreach ($statement->from as $expr) {
-                if (! isset($expr->table, $expr->alias) || ($expr->table === '') || ($expr->alias === '')) {
+                if (!isset($expr->table, $expr->alias) || ($expr->table === '') || ($expr->alias === '')) {
                     continue;
                 }
 
@@ -447,11 +420,11 @@ class Query
                         $arr = [
                             $expr->table,
                             isset($expr->database) && ($expr->database !== '') ?
-                                $expr->database : null,
+                            $expr->database : null,
                         ];
                     }
 
-                    if (! in_array($arr, $ret['select_tables'])) {
+                    if (!in_array($arr, $ret['select_tables'])) {
                         $ret['select_tables'][] = $arr;
                     }
                 } else {
@@ -464,14 +437,14 @@ class Query
             // extracted from the FROM clause.
             if (empty($ret['select_tables'])) {
                 foreach ($statement->from as $expr) {
-                    if (! isset($expr->table) || ($expr->table === '')) {
+                    if (!isset($expr->table) || ($expr->table === '')) {
                         continue;
                     }
 
                     $arr = [
                         $expr->table,
                         isset($expr->database) && ($expr->database !== '') ?
-                            $expr->database : null,
+                        $expr->database : null,
                     ];
                     if (in_array($arr, $ret['select_tables'])) {
                         continue;
@@ -492,8 +465,7 @@ class Query
      *
      * @return array
      */
-    public static function getTables($statement)
-    {
+    public static function getTables($statement) {
         $expressions = [];
 
         if (($statement instanceof InsertStatement) || ($statement instanceof ReplaceStatement)) {
@@ -505,7 +477,7 @@ class Query
         } elseif (($statement instanceof AlterStatement) || ($statement instanceof TruncateStatement)) {
             $expressions = [$statement->table];
         } elseif ($statement instanceof DropStatement) {
-            if (! $statement->options->has('TABLE')) {
+            if (!$statement->options->has('TABLE')) {
                 // No tables are dropped.
                 return [];
             }
@@ -548,8 +520,7 @@ class Query
      *
      * @return string
      */
-    public static function getClause($statement, $list, $clause, $type = 0, $skipFirst = true)
-    {
+    public static function getClause($statement, $list, $clause, $type = 0, $skipFirst = true) {
         /**
          * The index of the current clause.
          *
@@ -643,9 +614,7 @@ class Query
             if ($brackets === 0) {
                 // Checking if the section was changed.
                 if (
-                    ($token->type === Token::TYPE_KEYWORD)
-                    && isset($clauses[$token->keyword])
-                    && ($clauses[$token->keyword] >= $currIdx)
+                        ($token->type === Token::TYPE_KEYWORD) && isset($clauses[$token->keyword]) && ($clauses[$token->keyword] >= $currIdx)
                 ) {
                     $currIdx = $clauses[$token->keyword];
                     if ($skipFirst && ($currIdx === $clauseIdx)) {
@@ -683,8 +652,7 @@ class Query
      *
      * @return string
      */
-    public static function replaceClause($statement, $list, $old, $new = null, $onlyType = false)
-    {
+    public static function replaceClause($statement, $list, $old, $new = null, $onlyType = false) {
         // TODO: Update the tokens list and the statement.
 
         if ($new === null) {
@@ -693,12 +661,12 @@ class Query
 
         if ($onlyType) {
             return static::getClause($statement, $list, $old, -1, false) . ' ' .
-                $new . ' ' . static::getClause($statement, $list, $old, 0) . ' ' .
-                static::getClause($statement, $list, $old, 1, false);
+                    $new . ' ' . static::getClause($statement, $list, $old, 0) . ' ' .
+                    static::getClause($statement, $list, $old, 1, false);
         }
 
         return static::getClause($statement, $list, $old, -1, false) . ' ' .
-            $new . ' ' . static::getClause($statement, $list, $old, 1, false);
+                $new . ' ' . static::getClause($statement, $list, $old, 1, false);
     }
 
     /**
@@ -713,8 +681,7 @@ class Query
      *
      * @return string
      */
-    public static function replaceClauses($statement, $list, array $ops)
-    {
+    public static function replaceClauses($statement, $list, array $ops) {
         $count = count($ops);
 
         // Nothing to do.
@@ -763,8 +730,7 @@ class Query
      *               remaining part of the query and the last
      *               delimiter
      */
-    public static function getFirstStatement($query, $delimiter = null)
-    {
+    public static function getFirstStatement($query, $delimiter = null) {
         $lexer = new Lexer($query, false, $delimiter);
         $list = $lexer->list;
 
@@ -791,7 +757,7 @@ class Query
 
             $statement .= $token->token;
 
-            if (($token->type === Token::TYPE_DELIMITER) && ! empty($token->token)) {
+            if (($token->type === Token::TYPE_DELIMITER) && !empty($token->token)) {
                 $delimiter = $token->token;
                 $fullStatement = true;
                 break;
@@ -800,7 +766,7 @@ class Query
 
         // No statement was found so we return the entire query as being the
         // remaining part.
-        if (! $fullStatement) {
+        if (!$fullStatement) {
             return [
                 null,
                 $query,
@@ -831,8 +797,7 @@ class Query
      *
      * @return int
      */
-    public static function getClauseStartOffset($statement, $list, $clause)
-    {
+    public static function getClauseStartOffset($statement, $list, $clause) {
         /**
          * The count of brackets.
          * We keep track of them so we won't insert the clause in a subquery.
@@ -868,9 +833,7 @@ class Query
             }
 
             if (
-                ($token->type === Token::TYPE_KEYWORD)
-                && isset($clauses[$token->keyword])
-                && ($clause === $token->keyword)
+                    ($token->type === Token::TYPE_KEYWORD) && isset($clauses[$token->keyword]) && ($clause === $token->keyword)
             ) {
                 return $i;
             }
@@ -882,4 +845,5 @@ class Query
 
         return -1;
     }
+
 }

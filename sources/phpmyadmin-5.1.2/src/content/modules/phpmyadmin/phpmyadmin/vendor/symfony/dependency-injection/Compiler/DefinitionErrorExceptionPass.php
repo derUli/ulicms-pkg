@@ -21,13 +21,12 @@ use Symfony\Component\DependencyInjection\Reference;
  *
  * @author Ryan Weaver <ryan@knpuniversity.com>
  */
-class DefinitionErrorExceptionPass extends AbstractRecursivePass
-{
+class DefinitionErrorExceptionPass extends AbstractRecursivePass {
+
     /**
      * {@inheritdoc}
      */
-    protected function processValue($value, $isRoot = false)
-    {
+    protected function processValue($value, $isRoot = false) {
         if (!$value instanceof Definition || !$value->hasErrors()) {
             return parent::processValue($value, $isRoot);
         }
@@ -53,4 +52,5 @@ class DefinitionErrorExceptionPass extends AbstractRecursivePass
 
         throw new RuntimeException($message);
     }
+
 }

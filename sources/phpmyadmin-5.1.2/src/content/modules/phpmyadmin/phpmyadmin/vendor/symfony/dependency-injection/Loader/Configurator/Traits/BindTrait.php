@@ -17,8 +17,8 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\DefaultsConfigurat
 use Symfony\Component\DependencyInjection\Loader\Configurator\InstanceofConfigurator;
 use Symfony\Component\DependencyInjection\Reference;
 
-trait BindTrait
-{
+trait BindTrait {
+
     /**
      * Sets bindings.
      *
@@ -31,8 +31,7 @@ trait BindTrait
      *
      * @return $this
      */
-    final public function bind(string $nameOrFqcn, $valueOrRef): self
-    {
+    final public function bind(string $nameOrFqcn, $valueOrRef): self {
         $valueOrRef = static::processValue($valueOrRef, true);
         if (!preg_match('/^(?:(?:array|bool|float|int|string|iterable)[ \t]*+)?\$/', $nameOrFqcn) && !$valueOrRef instanceof Reference) {
             throw new InvalidArgumentException(sprintf('Invalid binding for service "%s": named arguments must start with a "$", and FQCN must map to references. Neither applies to binding "%s".', $this->id, $nameOrFqcn));
@@ -44,4 +43,5 @@ trait BindTrait
 
         return $this;
     }
+
 }

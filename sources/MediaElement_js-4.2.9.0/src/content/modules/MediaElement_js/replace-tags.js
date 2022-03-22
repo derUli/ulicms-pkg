@@ -1,6 +1,6 @@
-$(function() {
-	// using jQuery
-	$('video, audio').mediaelementplayer({
-		stretching: 'responsive'
-	});
+$(function () {
+    // using jQuery
+    $('video, audio').mediaelementplayer({
+        stretching: 'responsive'
+    });
 });

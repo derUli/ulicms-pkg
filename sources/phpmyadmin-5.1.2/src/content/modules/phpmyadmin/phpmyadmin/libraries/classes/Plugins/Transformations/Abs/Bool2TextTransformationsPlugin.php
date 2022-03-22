@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Abstract class for the Bool2Text transformations plugins
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Plugins\Transformations\Abs;
@@ -13,18 +13,17 @@ use stdClass;
 /**
  * Provides common methods for all of the Bool2Text transformations plugins.
  */
-abstract class Bool2TextTransformationsPlugin extends TransformationsPlugin
-{
+abstract class Bool2TextTransformationsPlugin extends TransformationsPlugin {
+
     /**
      * Gets the transformation description of the specific plugin
      *
      * @return string
      */
-    public static function getInfo()
-    {
+    public static function getInfo() {
         return __(
-            'Converts Boolean values to text (default \'T\' and \'F\').'
-            . ' First option is for TRUE, second for FALSE. Nonzero=true.'
+                'Converts Boolean values to text (default \'T\' and \'F\').'
+                . ' First option is for TRUE, second for FALSE. Nonzero=true.'
         );
     }
 
@@ -37,8 +36,7 @@ abstract class Bool2TextTransformationsPlugin extends TransformationsPlugin
      *
      * @return string
      */
-    public function applyTransformation($buffer, array $options = [], ?stdClass $meta = null)
-    {
+    public function applyTransformation($buffer, array $options = [], ?stdClass $meta = null) {
         $cfg = $GLOBALS['cfg'];
         $options = $this->getOptions($options, $cfg['DefaultTransformations']['Bool2Text']);
 
@@ -56,8 +54,8 @@ abstract class Bool2TextTransformationsPlugin extends TransformationsPlugin
      *
      * @return string
      */
-    public static function getName()
-    {
+    public static function getName() {
         return 'Bool2Text';
     }
+
 }

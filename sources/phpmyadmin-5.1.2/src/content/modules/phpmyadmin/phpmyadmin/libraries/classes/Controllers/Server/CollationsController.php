@@ -16,8 +16,8 @@ use PhpMyAdmin\Url;
 /**
  * Handles viewing character sets and collations
  */
-class CollationsController extends AbstractController
-{
+class CollationsController extends AbstractController {
+
     /** @var array|null */
     private $charsets;
 
@@ -34,11 +34,11 @@ class CollationsController extends AbstractController
      * @param array|null        $collations Array of collations
      */
     public function __construct(
-        $response,
-        Template $template,
-        $dbi,
-        ?array $charsets = null,
-        ?array $collations = null
+            $response,
+            Template $template,
+            $dbi,
+            ?array $charsets = null,
+            ?array $collations = null
     ) {
         global $cfg;
 
@@ -49,8 +49,7 @@ class CollationsController extends AbstractController
         $this->collations = $collations ?? Charsets::getCollations($this->dbi, $cfg['Server']['DisableIS']);
     }
 
-    public function index(): void
-    {
+    public function index(): void {
         global $err_url;
 
         $err_url = Url::getFromRoute('/');
@@ -81,4 +80,5 @@ class CollationsController extends AbstractController
 
         $this->render('server/collations/index', ['charsets' => $charsets]);
     }
+
 }

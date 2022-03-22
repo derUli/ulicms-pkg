@@ -1,4 +1,5 @@
 <?php
+
 /**
  * BaconQrCode
  *
@@ -12,8 +13,8 @@ namespace BaconQrCode\Common;
 /**
  * Encapsulates a QR Code's format information, including the data mask used and error correction level.
  */
-class FormatInformation
-{
+class FormatInformation {
+
     /**
      * Mask for format information.
      */
@@ -80,8 +81,7 @@ class FormatInformation
      */
     private $dataMask;
 
-    protected function __construct(int $formatInfo)
-    {
+    protected function __construct(int $formatInfo) {
         $this->ecLevel = ErrorCorrectionLevel::forBits(($formatInfo >> 3) & 0x3);
         $this->dataMask = $formatInfo & 0x7;
     }
@@ -89,27 +89,18 @@ class FormatInformation
     /**
      * Checks how many bits are different between two integers.
      */
-    public static function numBitsDiffering(int $a, int $b) : int
-    {
+    public static function numBitsDiffering(int $a, int $b): int {
         $a ^= $b;
 
         return (
-            self::BITS_SET_IN_HALF_BYTE[$a & 0xf]
-            + self::BITS_SET_IN_HALF_BYTE[(BitUtils::unsignedRightShift($a, 4) & 0xf)]
-            + self::BITS_SET_IN_HALF_BYTE[(BitUtils::unsignedRightShift($a, 8) & 0xf)]
-            + self::BITS_SET_IN_HALF_BYTE[(BitUtils::unsignedRightShift($a, 12) & 0xf)]
-            + self::BITS_SET_IN_HALF_BYTE[(BitUtils::unsignedRightShift($a, 16) & 0xf)]
-            + self::BITS_SET_IN_HALF_BYTE[(BitUtils::unsignedRightShift($a, 20) & 0xf)]
-            + self::BITS_SET_IN_HALF_BYTE[(BitUtils::unsignedRightShift($a, 24) & 0xf)]
-            + self::BITS_SET_IN_HALF_BYTE[(BitUtils::unsignedRightShift($a, 28) & 0xf)]
-        );
+                self::BITS_SET_IN_HALF_BYTE[$a & 0xf] + self::BITS_SET_IN_HALF_BYTE[(BitUtils::unsignedRightShift($a, 4) & 0xf)] + self::BITS_SET_IN_HALF_BYTE[(BitUtils::unsignedRightShift($a, 8) & 0xf)] + self::BITS_SET_IN_HALF_BYTE[(BitUtils::unsignedRightShift($a, 12) & 0xf)] + self::BITS_SET_IN_HALF_BYTE[(BitUtils::unsignedRightShift($a, 16) & 0xf)] + self::BITS_SET_IN_HALF_BYTE[(BitUtils::unsignedRightShift($a, 20) & 0xf)] + self::BITS_SET_IN_HALF_BYTE[(BitUtils::unsignedRightShift($a, 24) & 0xf)] + self::BITS_SET_IN_HALF_BYTE[(BitUtils::unsignedRightShift($a, 28) & 0xf)]
+                );
     }
 
     /**
      * Decodes format information.
      */
-    public static function decodeFormatInformation(int $maskedFormatInfo1, int $maskedFormatInfo2) : ?self
-    {
+    public static function decodeFormatInformation(int $maskedFormatInfo1, int $maskedFormatInfo2): ?self {
         $formatInfo = self::doDecodeFormatInformation($maskedFormatInfo1, $maskedFormatInfo2);
 
         if (null !== $formatInfo) {
@@ -119,16 +110,15 @@ class FormatInformation
         // Should return null, but, some QR codes apparently do not mask this info. Try again by actually masking the
         // pattern first.
         return self::doDecodeFormatInformation(
-            $maskedFormatInfo1 ^ self::FORMAT_INFO_MASK_QR,
-            $maskedFormatInfo2 ^ self::FORMAT_INFO_MASK_QR
+                        $maskedFormatInfo1 ^ self::FORMAT_INFO_MASK_QR,
+                        $maskedFormatInfo2 ^ self::FORMAT_INFO_MASK_QR
         );
     }
 
     /**
      * Internal method for decoding format information.
      */
-    private static function doDecodeFormatInformation(int $maskedFormatInfo1, int $maskedFormatInfo2) : ?self
-    {
+    private static function doDecodeFormatInformation(int $maskedFormatInfo1, int $maskedFormatInfo2): ?self {
         $bestDifference = PHP_INT_MAX;
         $bestFormatInfo = 0;
 
@@ -169,35 +159,31 @@ class FormatInformation
     /**
      * Returns the error correction level.
      */
-    public function getErrorCorrectionLevel() : ErrorCorrectionLevel
-    {
+    public function getErrorCorrectionLevel(): ErrorCorrectionLevel {
         return $this->ecLevel;
     }
 
     /**
      * Returns the data mask.
      */
-    public function getDataMask() : int
-    {
+    public function getDataMask(): int {
         return $this->dataMask;
     }
 
     /**
      * Hashes the code of the EC level.
      */
-    public function hashCode() : int
-    {
+    public function hashCode(): int {
         return ($this->ecLevel->getBits() << 3) | $this->dataMask;
     }
 
     /**
      * Verifies if this instance equals another one.
      */
-    public function equals(self $other) : bool
-    {
+    public function equals(self $other): bool {
         return (
-            $this->ecLevel === $other->ecLevel
-            && $this->dataMask === $other->dataMask
-        );
+                $this->ecLevel === $other->ecLevel && $this->dataMask === $other->dataMask
+                );
     }
+
 }

@@ -14,21 +14,19 @@ namespace Twig\Node\Expression;
 
 use Twig\Compiler;
 
-class NameExpression extends AbstractExpression
-{
+class NameExpression extends AbstractExpression {
+
     private $specialVars = [
         '_self' => '$this->getTemplateName()',
         '_context' => '$context',
         '_charset' => '$this->env->getCharset()',
     ];
 
-    public function __construct(string $name, int $lineno)
-    {
+    public function __construct(string $name, int $lineno) {
         parent::__construct([], ['name' => $name, 'is_defined_test' => false, 'ignore_strict_check' => false, 'always_defined' => false], $lineno);
     }
 
-    public function compile(Compiler $compiler)
-    {
+    public function compile(Compiler $compiler) {
         $name = $this->getAttribute('name');
 
         $compiler->addDebugInfo($this);
@@ -38,62 +36,61 @@ class NameExpression extends AbstractExpression
                 $compiler->repr(true);
             } elseif (\PHP_VERSION_ID >= 70400) {
                 $compiler
-                    ->raw('array_key_exists(')
-                    ->string($name)
-                    ->raw(', $context)')
+                        ->raw('array_key_exists(')
+                        ->string($name)
+                        ->raw(', $context)')
                 ;
             } else {
                 $compiler
-                    ->raw('(isset($context[')
-                    ->string($name)
-                    ->raw(']) || array_key_exists(')
-                    ->string($name)
-                    ->raw(', $context))')
+                        ->raw('(isset($context[')
+                        ->string($name)
+                        ->raw(']) || array_key_exists(')
+                        ->string($name)
+                        ->raw(', $context))')
                 ;
             }
         } elseif ($this->isSpecial()) {
             $compiler->raw($this->specialVars[$name]);
         } elseif ($this->getAttribute('always_defined')) {
             $compiler
-                ->raw('$context[')
-                ->string($name)
-                ->raw(']')
+                    ->raw('$context[')
+                    ->string($name)
+                    ->raw(']')
             ;
         } else {
             if ($this->getAttribute('ignore_strict_check') || !$compiler->getEnvironment()->isStrictVariables()) {
                 $compiler
-                    ->raw('($context[')
-                    ->string($name)
-                    ->raw('] ?? null)')
+                        ->raw('($context[')
+                        ->string($name)
+                        ->raw('] ?? null)')
                 ;
             } else {
                 $compiler
-                    ->raw('(isset($context[')
-                    ->string($name)
-                    ->raw(']) || array_key_exists(')
-                    ->string($name)
-                    ->raw(', $context) ? $context[')
-                    ->string($name)
-                    ->raw('] : (function () { throw new RuntimeError(\'Variable ')
-                    ->string($name)
-                    ->raw(' does not exist.\', ')
-                    ->repr($this->lineno)
-                    ->raw(', $this->source); })()')
-                    ->raw(')')
+                        ->raw('(isset($context[')
+                        ->string($name)
+                        ->raw(']) || array_key_exists(')
+                        ->string($name)
+                        ->raw(', $context) ? $context[')
+                        ->string($name)
+                        ->raw('] : (function () { throw new RuntimeError(\'Variable ')
+                        ->string($name)
+                        ->raw(' does not exist.\', ')
+                        ->repr($this->lineno)
+                        ->raw(', $this->source); })()')
+                        ->raw(')')
                 ;
             }
         }
     }
 
-    public function isSpecial()
-    {
+    public function isSpecial() {
         return isset($this->specialVars[$this->getAttribute('name')]);
     }
 
-    public function isSimple()
-    {
+    public function isSimple() {
         return !$this->isSpecial() && !$this->getAttribute('is_defined_test');
     }
+
 }
 
 class_alias('Twig\Node\Expression\NameExpression', 'Twig_Node_Expression_Name');

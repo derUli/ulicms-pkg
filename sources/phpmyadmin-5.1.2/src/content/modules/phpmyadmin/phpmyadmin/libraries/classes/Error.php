@@ -47,30 +47,30 @@ use function var_export;
 /**
  * a single error
  */
-class Error extends Message
-{
+class Error extends Message {
+
     /**
      * Error types
      *
      * @var array
      */
-    public static $errortype =  [
-        0                    => 'Internal error',
-        E_ERROR              => 'Error',
-        E_WARNING            => 'Warning',
-        E_PARSE              => 'Parsing Error',
-        E_NOTICE             => 'Notice',
-        E_CORE_ERROR         => 'Core Error',
-        E_CORE_WARNING       => 'Core Warning',
-        E_COMPILE_ERROR      => 'Compile Error',
-        E_COMPILE_WARNING    => 'Compile Warning',
-        E_USER_ERROR         => 'User Error',
-        E_USER_WARNING       => 'User Warning',
-        E_USER_NOTICE        => 'User Notice',
-        E_STRICT             => 'Runtime Notice',
-        E_DEPRECATED         => 'Deprecation Notice',
-        E_USER_DEPRECATED    => 'Deprecation Notice',
-        E_RECOVERABLE_ERROR  => 'Catchable Fatal Error',
+    public static $errortype = [
+        0 => 'Internal error',
+        E_ERROR => 'Error',
+        E_WARNING => 'Warning',
+        E_PARSE => 'Parsing Error',
+        E_NOTICE => 'Notice',
+        E_CORE_ERROR => 'Core Error',
+        E_CORE_WARNING => 'Core Warning',
+        E_COMPILE_ERROR => 'Compile Error',
+        E_COMPILE_WARNING => 'Compile Warning',
+        E_USER_ERROR => 'User Error',
+        E_USER_WARNING => 'User Warning',
+        E_USER_NOTICE => 'User Notice',
+        E_STRICT => 'Runtime Notice',
+        E_DEPRECATED => 'Deprecation Notice',
+        E_USER_DEPRECATED => 'Deprecation Notice',
+        E_RECOVERABLE_ERROR => 'Catchable Fatal Error',
     ];
 
     /**
@@ -78,23 +78,23 @@ class Error extends Message
      *
      * @var array
      */
-    public static $errorlevel =  [
-        0                    => 'error',
-        E_ERROR              => 'error',
-        E_WARNING            => 'error',
-        E_PARSE              => 'error',
-        E_NOTICE             => 'notice',
-        E_CORE_ERROR         => 'error',
-        E_CORE_WARNING       => 'error',
-        E_COMPILE_ERROR      => 'error',
-        E_COMPILE_WARNING    => 'error',
-        E_USER_ERROR         => 'error',
-        E_USER_WARNING       => 'error',
-        E_USER_NOTICE        => 'notice',
-        E_STRICT             => 'notice',
-        E_DEPRECATED         => 'notice',
-        E_USER_DEPRECATED    => 'notice',
-        E_RECOVERABLE_ERROR  => 'error',
+    public static $errorlevel = [
+        0 => 'error',
+        E_ERROR => 'error',
+        E_WARNING => 'error',
+        E_PARSE => 'error',
+        E_NOTICE => 'notice',
+        E_CORE_ERROR => 'error',
+        E_CORE_WARNING => 'error',
+        E_COMPILE_ERROR => 'error',
+        E_COMPILE_WARNING => 'error',
+        E_USER_ERROR => 'error',
+        E_USER_WARNING => 'error',
+        E_USER_NOTICE => 'notice',
+        E_STRICT => 'notice',
+        E_DEPRECATED => 'notice',
+        E_USER_DEPRECATED => 'notice',
+        E_RECOVERABLE_ERROR => 'error',
     ];
 
     /**
@@ -131,8 +131,7 @@ class Error extends Message
      * @param string $errfile file
      * @param int    $errline line
      */
-    public function __construct(int $errno, string $errstr, string $errfile, int $errline)
-    {
+    public function __construct(int $errno, string $errstr, string $errfile, int $errline) {
         parent::__construct();
         $this->setNumber($errno);
         $this->setMessage($errstr, false);
@@ -159,8 +158,7 @@ class Error extends Message
      *
      * @return array
      */
-    public static function processBacktrace(array $backtrace): array
-    {
+    public static function processBacktrace(array $backtrace): array {
         $result = [];
 
         $members = [
@@ -181,7 +179,7 @@ class Error extends Message
 
             /* Store members we want */
             foreach ($members as $name) {
-                if (! isset($step[$name])) {
+                if (!isset($step[$name])) {
                     continue;
                 }
 
@@ -189,7 +187,7 @@ class Error extends Message
             }
 
             /* Store simplified args */
-            if (! isset($step['args'])) {
+            if (!isset($step['args'])) {
                 continue;
             }
 
@@ -206,8 +204,7 @@ class Error extends Message
      *
      * @param bool $hide Whether to hide
      */
-    public function setHideLocation(bool $hide): void
-    {
+    public function setHideLocation(bool $hide): void {
         $this->hideLocation = $hide;
     }
 
@@ -218,8 +215,7 @@ class Error extends Message
      *
      * @param array $backtrace backtrace
      */
-    public function setBacktrace(array $backtrace): void
-    {
+    public function setBacktrace(array $backtrace): void {
         $this->backtrace = self::processBacktrace($backtrace);
     }
 
@@ -228,8 +224,7 @@ class Error extends Message
      *
      * @param int $line the line
      */
-    public function setLine(int $line): void
-    {
+    public function setLine(int $line): void {
         $this->line = $line;
     }
 
@@ -238,8 +233,7 @@ class Error extends Message
      *
      * @param string $file the file
      */
-    public function setFile(string $file): void
-    {
+    public function setFile(string $file): void {
         $this->file = self::relPath($file);
     }
 
@@ -248,8 +242,7 @@ class Error extends Message
      *
      * @return string PhpMyAdmin\Error::$hash
      */
-    public function getHash(): string
-    {
+    public function getHash(): string {
         try {
             $backtrace = serialize($this->getBacktrace());
         } catch (Throwable $e) {
@@ -257,11 +250,11 @@ class Error extends Message
         }
         if ($this->hash === null) {
             $this->hash = md5(
-                $this->getNumber() .
-                $this->getMessage() .
-                $this->getFile() .
-                $this->getLine() .
-                $backtrace
+                    $this->getNumber() .
+                    $this->getMessage() .
+                    $this->getFile() .
+                    $this->getLine() .
+                    $backtrace
             );
         }
 
@@ -277,8 +270,7 @@ class Error extends Message
      *
      * @return array PhpMyAdmin\Error::$_backtrace
      */
-    public function getBacktrace(int $count = -1): array
-    {
+    public function getBacktrace(int $count = -1): array {
         if ($count != -1) {
             return array_slice($this->backtrace, 0, $count);
         }
@@ -291,8 +283,7 @@ class Error extends Message
      *
      * @return string PhpMyAdmin\Error::$file
      */
-    public function getFile(): string
-    {
+    public function getFile(): string {
         return $this->file;
     }
 
@@ -301,8 +292,7 @@ class Error extends Message
      *
      * @return int PhpMyAdmin\Error::$line
      */
-    public function getLine(): int
-    {
+    public function getLine(): int {
         return $this->line;
     }
 
@@ -311,8 +301,7 @@ class Error extends Message
      *
      * @return string type of error
      */
-    public function getType(): string
-    {
+    public function getType(): string {
         return self::$errortype[$this->getNumber()];
     }
 
@@ -321,8 +310,7 @@ class Error extends Message
      *
      * @return string level of error
      */
-    public function getLevel(): string
-    {
+    public function getLevel(): string {
         return self::$errorlevel[$this->getNumber()];
     }
 
@@ -331,30 +319,27 @@ class Error extends Message
      *
      * @return string HTML escaped and truncated title
      */
-    public function getHtmlTitle(): string
-    {
+    public function getHtmlTitle(): string {
         return htmlspecialchars(
-            mb_substr($this->getTitle(), 0, 100)
+                mb_substr($this->getTitle(), 0, 100)
         );
     }
 
     /**
      * returns title for error
      */
-    public function getTitle(): string
-    {
+    public function getTitle(): string {
         return $this->getType() . ': ' . $this->getMessage();
     }
 
     /**
      * Get HTML backtrace
      */
-    public function getBacktraceDisplay(): string
-    {
+    public function getBacktraceDisplay(): string {
         return self::formatBacktrace(
-            $this->getBacktrace(),
-            "<br>\n",
-            "<br>\n"
+                        $this->getBacktrace(),
+                        "<br>\n",
+                        "<br>\n"
         );
     }
 
@@ -368,16 +353,16 @@ class Error extends Message
      * @return string formatted backtrace
      */
     public static function formatBacktrace(
-        array $backtrace,
-        string $separator,
-        string $lines
+            array $backtrace,
+            string $separator,
+            string $lines
     ): string {
         $retval = '';
 
         foreach ($backtrace as $step) {
             if (isset($step['file'], $step['line'])) {
                 $retval .= self::relPath($step['file'])
-                    . '#' . $step['line'] . ': ';
+                        . '#' . $step['line'] . ': ';
             }
             if (isset($step['class'])) {
                 $retval .= $step['class'] . $step['type'];
@@ -395,8 +380,7 @@ class Error extends Message
      * @param array  $step      backtrace step
      * @param string $separator Arguments separator to use
      */
-    public static function getFunctionCall(array $step, string $separator): string
-    {
+    public static function getFunctionCall(array $step, string $separator): string {
         $retval = $step['function'] . '(';
         if (isset($step['args'])) {
             if (count($step['args']) > 1) {
@@ -425,8 +409,7 @@ class Error extends Message
      * @param string $arg      argument to process
      * @param string $function function name
      */
-    public static function getArg($arg, string $function): string
-    {
+    public static function getArg($arg, string $function): string {
         $retval = '';
         $include_functions = [
             'include',
@@ -445,13 +428,12 @@ class Error extends Message
 
         if (in_array($function, $include_functions)) {
             $retval .= self::relPath($arg);
-        } elseif (in_array($function, $connect_functions)
-            && is_string($arg)
+        } elseif (in_array($function, $connect_functions) && is_string($arg)
         ) {
             $retval .= gettype($arg) . ' ********';
         } elseif (is_scalar($arg)) {
             $retval .= gettype($arg) . ' '
-                . htmlspecialchars(var_export($arg, true));
+                    . htmlspecialchars(var_export($arg, true));
         } elseif (is_object($arg)) {
             $retval .= '<Class:' . get_class($arg) . '>';
         } else {
@@ -464,8 +446,7 @@ class Error extends Message
     /**
      * Gets the error as string of HTML
      */
-    public function getDisplay(): string
-    {
+    public function getDisplay(): string {
         $this->isDisplayed(true);
 
         $context = 'primary';
@@ -475,13 +456,13 @@ class Error extends Message
         }
 
         $retval = '<div class="alert alert-' . $context . '" role="alert">';
-        if (! $this->isUserError()) {
+        if (!$this->isUserError()) {
             $retval .= '<strong>' . $this->getType() . '</strong>';
             $retval .= ' in ' . $this->getFile() . '#' . $this->getLine();
             $retval .= "<br>\n";
         }
         $retval .= $this->getMessage();
-        if (! $this->isUserError()) {
+        if (!$this->isUserError()) {
             $retval .= "<br>\n";
             $retval .= "<br>\n";
             $retval .= "<strong>Backtrace</strong><br>\n";
@@ -496,10 +477,9 @@ class Error extends Message
     /**
      * whether this error is a user error
      */
-    public function isUserError(): bool
-    {
+    public function isUserError(): bool {
         return $this->hideLocation ||
-            ($this->getNumber() & (E_USER_WARNING | E_USER_ERROR | E_USER_NOTICE | E_USER_DEPRECATED));
+                ($this->getNumber() & (E_USER_WARNING | E_USER_ERROR | E_USER_NOTICE | E_USER_DEPRECATED));
     }
 
     /**
@@ -512,8 +492,7 @@ class Error extends Message
      *
      * @return string shortened path
      */
-    public static function relPath(string $path): string
-    {
+    public static function relPath(string $path): string {
         $dest = @realpath($path);
 
         /* Probably affected by open_basedir */
@@ -522,8 +501,8 @@ class Error extends Message
         }
 
         $Ahere = explode(
-            DIRECTORY_SEPARATOR,
-            (string) realpath(__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..')
+                DIRECTORY_SEPARATOR,
+                (string) realpath(__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..')
         );
         $Adest = explode(DIRECTORY_SEPARATOR, $dest);
 
@@ -540,9 +519,10 @@ class Error extends Message
         $path = $result . str_replace(implode(DIRECTORY_SEPARATOR, $Adest), '', $dest);
 
         return str_replace(
-            DIRECTORY_SEPARATOR . PATH_SEPARATOR,
-            DIRECTORY_SEPARATOR,
-            $path
+                DIRECTORY_SEPARATOR . PATH_SEPARATOR,
+                DIRECTORY_SEPARATOR,
+                $path
         );
     }
+
 }

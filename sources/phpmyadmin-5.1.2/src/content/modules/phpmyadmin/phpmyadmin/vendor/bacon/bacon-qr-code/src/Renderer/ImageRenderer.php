@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace BaconQrCode\Renderer;
 
@@ -11,8 +12,8 @@ use BaconQrCode\Renderer\Path\Path;
 use BaconQrCode\Renderer\RendererStyle\EyeFill;
 use BaconQrCode\Renderer\RendererStyle\RendererStyle;
 
-final class ImageRenderer implements RendererInterface
-{
+final class ImageRenderer implements RendererInterface {
+
     /**
      * @var RendererStyle
      */
@@ -23,8 +24,7 @@ final class ImageRenderer implements RendererInterface
      */
     private $imageBackEnd;
 
-    public function __construct(RendererStyle $rendererStyle, ImageBackEndInterface $imageBackEnd)
-    {
+    public function __construct(RendererStyle $rendererStyle, ImageBackEndInterface $imageBackEnd) {
         $this->rendererStyle = $rendererStyle;
         $this->imageBackEnd = $imageBackEnd;
     }
@@ -32,8 +32,7 @@ final class ImageRenderer implements RendererInterface
     /**
      * @throws InvalidArgumentException if matrix width doesn't match height
      */
-    public function render(QrCode $qrCode) : string
-    {
+    public function render(QrCode $qrCode): string {
         $size = $this->rendererStyle->getSize();
         $margin = $this->rendererStyle->getMargin();
         $matrix = $qrCode->getMatrix();
@@ -58,12 +57,12 @@ final class ImageRenderer implements RendererInterface
 
         if ($fill->hasGradientFill()) {
             $this->imageBackEnd->drawPathWithGradient(
-                $modulePath,
-                $fill->getForegroundGradient(),
-                0,
-                0,
-                $matrixSize,
-                $matrixSize
+                    $modulePath,
+                    $fill->getForegroundGradient(),
+                    0,
+                    0,
+                    $matrixSize,
+                    $matrixSize
             );
         } else {
             $this->imageBackEnd->drawPathWithColor($modulePath, $fill->getForegroundColor());
@@ -72,8 +71,7 @@ final class ImageRenderer implements RendererInterface
         return $this->imageBackEnd->done();
     }
 
-    private function drawEyes(int $matrixSize, Path $modulePath) : Path
-    {
+    private function drawEyes(int $matrixSize, Path $modulePath): Path {
         $fill = $this->rendererStyle->getFill();
 
         $eye = $this->rendererStyle->getEye();
@@ -81,49 +79,49 @@ final class ImageRenderer implements RendererInterface
         $internalPath = $eye->getInternalPath();
 
         $modulePath = $this->drawEye(
-            $externalPath,
-            $internalPath,
-            $fill->getTopLeftEyeFill(),
-            3.5,
-            3.5,
-            0,
-            $modulePath
+                $externalPath,
+                $internalPath,
+                $fill->getTopLeftEyeFill(),
+                3.5,
+                3.5,
+                0,
+                $modulePath
         );
         $modulePath = $this->drawEye(
-            $externalPath,
-            $internalPath,
-            $fill->getTopRightEyeFill(),
-            $matrixSize - 3.5,
-            3.5,
-            90,
-            $modulePath
+                $externalPath,
+                $internalPath,
+                $fill->getTopRightEyeFill(),
+                $matrixSize - 3.5,
+                3.5,
+                90,
+                $modulePath
         );
         $modulePath = $this->drawEye(
-            $externalPath,
-            $internalPath,
-            $fill->getBottomLeftEyeFill(),
-            3.5,
-            $matrixSize - 3.5,
-            -90,
-            $modulePath
+                $externalPath,
+                $internalPath,
+                $fill->getBottomLeftEyeFill(),
+                3.5,
+                $matrixSize - 3.5,
+                -90,
+                $modulePath
         );
 
         return $modulePath;
     }
 
     private function drawEye(
-        Path $externalPath,
-        Path $internalPath,
-        EyeFill $fill,
-        float $xTranslation,
-        float $yTranslation,
-        int $rotation,
-        Path $modulePath
-    ) : Path {
+            Path $externalPath,
+            Path $internalPath,
+            EyeFill $fill,
+            float $xTranslation,
+            float $yTranslation,
+            int $rotation,
+            Path $modulePath
+    ): Path {
         if ($fill->inheritsBothColors()) {
             return $modulePath
-                ->append($externalPath->translate($xTranslation, $yTranslation))
-                ->append($internalPath->translate($xTranslation, $yTranslation));
+                            ->append($externalPath->translate($xTranslation, $yTranslation))
+                            ->append($internalPath->translate($xTranslation, $yTranslation));
         }
 
         $this->imageBackEnd->push();
@@ -149,4 +147,5 @@ final class ImageRenderer implements RendererInterface
 
         return $modulePath;
     }
+
 }

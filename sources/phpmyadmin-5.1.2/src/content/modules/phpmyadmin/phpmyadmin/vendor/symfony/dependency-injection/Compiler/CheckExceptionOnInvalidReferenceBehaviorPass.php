@@ -21,15 +21,14 @@ use Symfony\Component\DependencyInjection\Reference;
  *
  * @author Johannes M. Schmitt <schmittjoh@gmail.com>
  */
-class CheckExceptionOnInvalidReferenceBehaviorPass extends AbstractRecursivePass
-{
+class CheckExceptionOnInvalidReferenceBehaviorPass extends AbstractRecursivePass {
+
     private $serviceLocatorContextIds = [];
 
     /**
      * {@inheritdoc}
      */
-    public function process(ContainerBuilder $container)
-    {
+    public function process(ContainerBuilder $container) {
         $this->serviceLocatorContextIds = [];
         foreach ($container->findTaggedServiceIds('container.service_locator_context') as $id => $tags) {
             $this->serviceLocatorContextIds[$id] = $tags[0]['id'];
@@ -43,8 +42,7 @@ class CheckExceptionOnInvalidReferenceBehaviorPass extends AbstractRecursivePass
         }
     }
 
-    protected function processValue($value, $isRoot = false)
-    {
+    protected function processValue($value, $isRoot = false) {
         if (!$value instanceof Reference) {
             return parent::processValue($value, $isRoot);
         }
@@ -62,7 +60,7 @@ class CheckExceptionOnInvalidReferenceBehaviorPass extends AbstractRecursivePass
             foreach ($locator->getArgument(0) as $k => $v) {
                 if ($v->getValues()[0] === $value) {
                     if ($k !== $id) {
-                        $currentId = $k.'" in the container provided to "'.$currentId;
+                        $currentId = $k . '" in the container provided to "' . $currentId;
                     }
                     throw new ServiceNotFoundException($id, $currentId);
                 }
@@ -85,4 +83,5 @@ class CheckExceptionOnInvalidReferenceBehaviorPass extends AbstractRecursivePass
 
         throw new ServiceNotFoundException($id, $currentId);
     }
+
 }

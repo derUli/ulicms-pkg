@@ -1,21 +1,20 @@
 <?php
+
 /**
  * User preferences form
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Config\Forms\User;
 
 use PhpMyAdmin\Config\Forms\BaseForm;
 
-class NaviForm extends BaseForm
-{
+class NaviForm extends BaseForm {
+
     /**
      * @return array
      */
-    public static function getForms()
-    {
+    public static function getForms() {
         return [
             'Navi_panel' => [
                 'ShowDatabasesNavigationAsTree',
@@ -61,8 +60,8 @@ class NaviForm extends BaseForm
     /**
      * @return string
      */
-    public static function getName()
-    {
+    public static function getName() {
         return __('Navigation panel');
     }
+
 }

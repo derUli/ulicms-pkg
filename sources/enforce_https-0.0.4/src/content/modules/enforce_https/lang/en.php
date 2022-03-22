@@ -1,4 +1,5 @@
 <?php
+
 define("TRANSLATION_ENFORCE_HTTPS", "HTTPS Erzwingen");
 define("TRANSLATION_ENFORCE_HTTPS_INFO_MESSAGE_1", "Before you enable this option please check if your server supports https://. Click <a href=\"%link%\" 
  			target=\"_blank\">this link</a> to check if https:// access is available.");

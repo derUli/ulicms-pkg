@@ -20,28 +20,26 @@ use Symfony\Component\Config\Resource\ResourceInterface;
  *
  * @final since Symfony 4.3
  */
-class ContainerParametersResource implements ResourceInterface
-{
+class ContainerParametersResource implements ResourceInterface {
+
     private $parameters;
 
     /**
      * @param array $parameters The container parameters to track
      */
-    public function __construct(array $parameters)
-    {
+    public function __construct(array $parameters) {
         $this->parameters = $parameters;
     }
 
-    public function __toString()
-    {
-        return 'container_parameters_'.md5(serialize($this->parameters));
+    public function __toString() {
+        return 'container_parameters_' . md5(serialize($this->parameters));
     }
 
     /**
      * @return array Tracked parameters
      */
-    public function getParameters()
-    {
+    public function getParameters() {
         return $this->parameters;
     }
+
 }

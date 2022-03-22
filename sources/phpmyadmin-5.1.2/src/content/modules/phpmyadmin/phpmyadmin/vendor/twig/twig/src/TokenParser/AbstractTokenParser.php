@@ -18,17 +18,17 @@ use Twig\Parser;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-abstract class AbstractTokenParser implements TokenParserInterface
-{
+abstract class AbstractTokenParser implements TokenParserInterface {
+
     /**
      * @var Parser
      */
     protected $parser;
 
-    public function setParser(Parser $parser)
-    {
+    public function setParser(Parser $parser) {
         $this->parser = $parser;
     }
+
 }
 
 class_alias('Twig\TokenParser\AbstractTokenParser', 'Twig_TokenParser');

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file contains the basic structure for a specific MIME Type and Subtype
  * transformations class.
@@ -7,8 +8,7 @@
  * @package    PhpMyAdmin-Transformations
  * @subpackage [TransformationName]
  */
-
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace PhpMyAdmin\Plugins\Transformations;
 
@@ -20,26 +20,26 @@ use PhpMyAdmin\Plugins\Transformations\Abs\[TransformationName]TransformationsPl
  * @package PhpMyAdmin
  */
 class [MIMEType][MIMESubtype][TransformationName]
-    extends [TransformationName]TransformationsPlugin
+extends [TransformationName]TransformationsPlugin
 {
-    /**
-     * Gets the plugin`s MIME type
-     *
-     * @return string
-     */
-    public static function getMIMEType()
-    {
-        return '[MIMEType]';
-    }
+/**
+ * Gets the plugin`s MIME type
+ *
+ * @return string
+ */
+public static function getMIMEType()
+{
+return '[MIMEType]';
+}
 
-    /**
-     * Gets the plugin`s MIME subtype
-     *
-     * @return string
-     */
-    public static function getMIMESubtype()
-    {
-        return '[MIMESubtype]';
-    }
+/**
+ * Gets the plugin`s MIME subtype
+ *
+ * @return string
+ */
+public static function getMIMESubtype()
+{
+return '[MIMESubtype]';
+}
 }
 ?>

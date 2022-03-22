@@ -1,15 +1,17 @@
 <?php
+
 if (containsModule(get_slug(), "jquery_tablesorter")) {
     ?>
-<script type="text/javascript">
-$(document).ready(function() 
-    { 
-        $("table").tablesorter(); 
-    } 
-); 
-    
-</script>
+    <script type="text/javascript">
+        $(document).ready(function ()
+        {
+            $("table").tablesorter();
+        }
+        );
 
-<?php
+    </script>
+
+    <?php
+
 }
 ?>

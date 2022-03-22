@@ -16,11 +16,11 @@ AJAX.registerOnload('database/tracking.js', function () {
     $versions.tablesorter({
         sortList: [[1, 0]],
         headers: {
-            0: { sorter: false },
-            2: { sorter: 'integer' },
-            5: { sorter: false },
-            6: { sorter: false },
-            7: { sorter: false }
+            0: {sorter: false},
+            2: {sorter: 'integer'},
+            5: {sorter: false},
+            6: {sorter: false},
+            7: {sorter: false}
         }
     });
 
@@ -29,8 +29,8 @@ AJAX.registerOnload('database/tracking.js', function () {
     $noVersions.tablesorter({
         sortList: [[1, 0]],
         headers: {
-            0: { sorter: false },
-            2: { sorter: false }
+            0: {sorter: false},
+            2: {sorter: false}
         }
     });
 

@@ -13,8 +13,8 @@ use function file_put_contents;
 use function preg_match;
 use function sprintf;
 
-final class SetVersionCommand extends Command
-{
+final class SetVersionCommand extends Command {
+
     /** @var string */
     protected static $defaultName = 'set-version';
 
@@ -46,21 +46,19 @@ final class Version
 
 PHP;
 
-    protected function configure(): void
-    {
+    protected function configure(): void {
         $this->setDescription('Sets the version number');
         $this->setHelp('This command generates the PhpMyAdmin\Version class based on the version number provided.');
         $this->addArgument('version', InputArgument::REQUIRED, 'The version number');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output): int
-    {
+    protected function execute(InputInterface $input, OutputInterface $output): int {
         /** @var string $version */
         $version = $input->getArgument('version');
 
         $generatedClass = $this->getGeneratedClass($version);
 
-        if (! $this->writeGeneratedClassFile($generatedClass)) {
+        if (!$this->writeGeneratedClassFile($generatedClass)) {
             // failure
             return 1;
         }
@@ -71,8 +69,7 @@ PHP;
         return 0;
     }
 
-    private function getGeneratedClass(string $version): string
-    {
+    private function getGeneratedClass(string $version): string {
         // Do not allow any major below 5
         $return = preg_match('/^([5-9]+)\.(\d{1,2})\.(\d{1,2})(-([a-z0-9]+))?$/', $version, $matches);
         if ($return === false || $return === 0) {
@@ -80,23 +77,23 @@ PHP;
         }
 
         return sprintf(
-            self::$generatedClassTemplate,
-            $matches[1],
-            $matches[2],
-            $matches[3],
-            $matches[4] ?? '',
-            $matches[5] ?? '',
-            ($matches[5] ?? '') === 'dev' ? 'true' : 'false'
+                self::$generatedClassTemplate,
+                $matches[1],
+                $matches[2],
+                $matches[3],
+                $matches[4] ?? '',
+                $matches[5] ?? '',
+                ($matches[5] ?? '') === 'dev' ? 'true' : 'false'
         );
     }
 
-    private function writeGeneratedClassFile(string $generatedClass): bool
-    {
+    private function writeGeneratedClassFile(string $generatedClass): bool {
         $result = file_put_contents(
-            ROOT_PATH . 'libraries/classes/Version.php',
-            $generatedClass
+                ROOT_PATH . 'libraries/classes/Version.php',
+                $generatedClass
         );
 
         return $result !== false;
     }
+
 }

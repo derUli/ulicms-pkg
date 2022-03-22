@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Generate HTML for MySQL Documentation
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Html;
@@ -16,8 +16,8 @@ use function htmlspecialchars;
 /**
  * Generate HTML for MySQL Documentation
  */
-class MySQLDocumentation
-{
+class MySQLDocumentation {
+
     /**
      * Displays a link to the official MySQL documentation
      *
@@ -32,11 +32,11 @@ class MySQLDocumentation
      * @access public
      */
     public static function show(
-        $link,
-        bool $bigIcon = false,
-        $url = null,
-        $text = null,
-        $anchor = ''
+            $link,
+            bool $bigIcon = false,
+            $url = null,
+            $text = null,
+            $anchor = ''
     ): string {
         if ($url === null) {
             $url = Util::getMySQLDocuURL($link, $anchor);
@@ -46,8 +46,8 @@ class MySQLDocumentation
 
         if ($bigIcon) {
             $html = $openLink .
-                Generator::getImage('b_sqlhelp', __('Documentation'))
-                . $closeLink;
+                    Generator::getImage('b_sqlhelp', __('Documentation'))
+                    . $closeLink;
         } elseif ($text !== null) {
             $html = $openLink . $text . $closeLink;
         } else {
@@ -68,8 +68,7 @@ class MySQLDocumentation
      *
      * @access public
      */
-    public static function showDocumentation($page, $anchor = '', $bbcode = false): string
-    {
+    public static function showDocumentation($page, $anchor = '', $bbcode = false): string {
         return Generator::showDocumentationLink(self::getDocumentationLink($page, $anchor), 'documentation', $bbcode);
     }
 
@@ -82,21 +81,21 @@ class MySQLDocumentation
      *
      * @return string URL
      */
-    public static function getDocumentationLink($page, $anchor = '', string $pathPrefix = './'): string
-    {
+    public static function getDocumentationLink($page, $anchor = '', string $pathPrefix = './'): string {
         /* Construct base URL */
         $url = $page . '.html';
-        if (! empty($anchor)) {
+        if (!empty($anchor)) {
             $url .= '#' . $anchor;
         }
 
         /* Check if we have built local documentation, however
          * provide consistent URL for testsuite
          */
-        if (! defined('TESTSUITE') && @file_exists(ROOT_PATH . 'doc/html/index.html')) {
+        if (!defined('TESTSUITE') && @file_exists(ROOT_PATH . 'doc/html/index.html')) {
             return $pathPrefix . 'doc/html/' . $url;
         }
 
         return Core::linkURL('https://docs.phpmyadmin.net/en/latest/' . $url);
     }
+
 }

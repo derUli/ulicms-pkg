@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Contains abstract class to hold relation preferences/statistics
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Plugins\Schema;
@@ -20,8 +20,8 @@ use function min;
  *
  * @abstract
  */
-abstract class RelationStats
-{
+abstract class RelationStats {
+
     /** @var object */
     protected $diagram;
 
@@ -54,11 +54,11 @@ abstract class RelationStats
      * @param string $foreign_field The relation field in the foreign table
      */
     public function __construct(
-        $diagram,
-        $master_table,
-        $master_field,
-        $foreign_table,
-        $foreign_field
+            $diagram,
+            $master_table,
+            $master_field,
+            $foreign_table,
+            $foreign_field
     ) {
         $this->diagram = $diagram;
 
@@ -66,9 +66,9 @@ abstract class RelationStats
         $dest_pos = $this->getXy($foreign_table, $foreign_field);
         /*
          * [0] is x-left
-        * [1] is x-right
-        * [2] is y
-        */
+         * [1] is x-right
+         * [2] is y
+         */
         $src_left = $src_pos[0] - $this->wTick;
         $src_right = $src_pos[1] + $this->wTick;
         $dest_left = $dest_pos[0] - $this->wTick;
@@ -115,8 +115,7 @@ abstract class RelationStats
      *
      * @access private
      */
-    private function getXy($table, $column)
-    {
+    private function getXy($table, $column) {
         $pos = array_search($column, $table->fields);
 
         // x_left, x_right, y
@@ -126,4 +125,5 @@ abstract class RelationStats
             $table->y + ($pos + 1.5) * $table->heightCell,
         ];
     }
+
 }

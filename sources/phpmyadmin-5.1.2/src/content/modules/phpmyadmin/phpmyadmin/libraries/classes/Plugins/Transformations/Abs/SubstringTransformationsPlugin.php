@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Abstract class for the substring transformations plugins
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Plugins\Transformations\Abs;
@@ -16,21 +16,20 @@ use function mb_substr;
 /**
  * Provides common methods for all of the substring transformations plugins.
  */
-abstract class SubstringTransformationsPlugin extends TransformationsPlugin
-{
+abstract class SubstringTransformationsPlugin extends TransformationsPlugin {
+
     /**
      * Gets the transformation description of the specific plugin
      *
      * @return string
      */
-    public static function getInfo()
-    {
+    public static function getInfo() {
         return __(
-            'Displays a part of a string. The first option is the number of'
-            . ' characters to skip from the beginning of the string (Default 0).'
-            . ' The second option is the number of characters to return (Default:'
-            . ' until end of string). The third option is the string to append'
-            . ' and/or prepend when truncation occurs (Default: "…").'
+                'Displays a part of a string. The first option is the number of'
+                . ' characters to skip from the beginning of the string (Default 0).'
+                . ' The second option is the number of characters to return (Default:'
+                . ' until end of string). The third option is the string to append'
+                . ' and/or prepend when truncation occurs (Default: "…").'
         );
     }
 
@@ -43,10 +42,8 @@ abstract class SubstringTransformationsPlugin extends TransformationsPlugin
      *
      * @return string
      */
-    public function applyTransformation($buffer, array $options = [], ?stdClass $meta = null)
-    {
+    public function applyTransformation($buffer, array $options = [], ?stdClass $meta = null) {
         // possibly use a global transform and feed it with special options
-
         // further operations on $buffer using the $options[] array.
         $cfg = $GLOBALS['cfg'];
         $options = $this->getOptions($options, $cfg['DefaultTransformations']['Substring']);
@@ -55,9 +52,9 @@ abstract class SubstringTransformationsPlugin extends TransformationsPlugin
 
         if ($options[1] !== 'all') {
             $newtext = mb_substr(
-                (string) $buffer,
-                $optionZero,
-                (int) $options[1]
+                    (string) $buffer,
+                    $optionZero,
+                    (int) $options[1]
             );
         } else {
             $newtext = mb_substr((string) $buffer, $optionZero);
@@ -85,8 +82,8 @@ abstract class SubstringTransformationsPlugin extends TransformationsPlugin
      *
      * @return string
      */
-    public static function getName()
-    {
+    public static function getName() {
         return 'Substring';
     }
+
 }

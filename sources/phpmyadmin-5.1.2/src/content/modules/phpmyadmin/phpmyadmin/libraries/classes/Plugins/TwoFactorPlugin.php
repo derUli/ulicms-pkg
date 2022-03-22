@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Two authentication factor handling
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Plugins;
@@ -23,8 +23,8 @@ use function strlen;
  * additional authentication, subclasses are expected
  * to implement this.
  */
-class TwoFactorPlugin
-{
+class TwoFactorPlugin {
+
     /** @var string */
     public static $id = '';
 
@@ -52,8 +52,7 @@ class TwoFactorPlugin
      *
      * @param TwoFactor $twofactor TwoFactor instance
      */
-    public function __construct(TwoFactor $twofactor)
-    {
+    public function __construct(TwoFactor $twofactor) {
         $this->twofactor = $twofactor;
         $this->provided = false;
         $this->message = '';
@@ -65,18 +64,17 @@ class TwoFactorPlugin
      *
      * @return string
      */
-    public function getError()
-    {
+    public function getError() {
         if ($this->provided) {
-            if (! empty($this->message)) {
+            if (!empty($this->message)) {
                 return Message::rawError(
-                    sprintf(__('Two-factor authentication failed: %s'), $this->message)
-                )->getDisplay();
+                                sprintf(__('Two-factor authentication failed: %s'), $this->message)
+                        )->getDisplay();
             }
 
             return Message::rawError(
-                __('Two-factor authentication failed.')
-            )->getDisplay();
+                            __('Two-factor authentication failed.')
+                    )->getDisplay();
         }
 
         return '';
@@ -87,8 +85,7 @@ class TwoFactorPlugin
      *
      * @return bool
      */
-    public function check()
-    {
+    public function check() {
         return true;
     }
 
@@ -97,8 +94,7 @@ class TwoFactorPlugin
      *
      * @return string HTML code
      */
-    public function render()
-    {
+    public function render() {
         return '';
     }
 
@@ -107,8 +103,7 @@ class TwoFactorPlugin
      *
      * @return string HTML code
      */
-    public function setup()
-    {
+    public function setup() {
         return '';
     }
 
@@ -117,8 +112,7 @@ class TwoFactorPlugin
      *
      * @return bool
      */
-    public function configure()
-    {
+    public function configure() {
         return true;
     }
 
@@ -127,8 +121,7 @@ class TwoFactorPlugin
      *
      * @return string
      */
-    public static function getName()
-    {
+    public static function getName() {
         return __('No Two-Factor Authentication');
     }
 
@@ -137,8 +130,7 @@ class TwoFactorPlugin
      *
      * @return string
      */
-    public static function getDescription()
-    {
+    public static function getDescription() {
         return __('Login using password only.');
     }
 
@@ -151,23 +143,22 @@ class TwoFactorPlugin
      *
      * @return string
      */
-    public function getAppId($return_url)
-    {
+    public function getAppId($return_url) {
         global $PMA_Config;
 
         $url = $PMA_Config->get('PmaAbsoluteUri');
         $parsed = [];
-        if (! empty($url)) {
+        if (!empty($url)) {
             $parsedUrl = parse_url($url);
 
             if (is_array($parsedUrl)) {
                 $parsed = $parsedUrl;
             }
         }
-        if (! isset($parsed['scheme']) || strlen($parsed['scheme']) === 0) {
+        if (!isset($parsed['scheme']) || strlen($parsed['scheme']) === 0) {
             $parsed['scheme'] = $PMA_Config->isHttps() ? 'https' : 'http';
         }
-        if (! isset($parsed['host']) || strlen($parsed['host']) === 0) {
+        if (!isset($parsed['host']) || strlen($parsed['host']) === 0) {
             $parsed['host'] = Core::getenv('HTTP_HOST');
         }
         if ($return_url) {
@@ -181,4 +172,5 @@ class TwoFactorPlugin
 
         return $parsed['host'];
     }
+
 }

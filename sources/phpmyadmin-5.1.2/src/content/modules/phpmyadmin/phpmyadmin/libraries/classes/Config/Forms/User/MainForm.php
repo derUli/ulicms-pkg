@@ -1,21 +1,20 @@
 <?php
+
 /**
  * User preferences form
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Config\Forms\User;
 
 use PhpMyAdmin\Config\Forms\BaseForm;
 
-class MainForm extends BaseForm
-{
+class MainForm extends BaseForm {
+
     /**
      * @return array
      */
-    public static function getForms()
-    {
+    public static function getForms() {
         return [
             'Startup' => [
                 'ShowCreateDb',
@@ -83,8 +82,8 @@ class MainForm extends BaseForm
     /**
      * @return string
      */
-    public static function getName()
-    {
+    public static function getName() {
         return __('Main panel');
     }
+
 }

@@ -1,16 +1,16 @@
 .list-group {
-  margin: 1rem 0 0;
-  padding-bottom: 10px;
+    margin: 1rem 0 0;
+    padding-bottom: 10px;
 }
 
 #maincontainer .list-group-item {
-  display: list-item;
-  padding-left: 0;
-  padding-right: 0;
+    display: list-item;
+    padding-left: 0;
+    padding-right: 0;
 }
 
 .list-group-item {
-  border: none;
+    border: none;
 }
 
 #li_select_server,
@@ -19,20 +19,29 @@
 #li_user_preferences,
 #li_select_lang,
 #li_select_theme {
-  &.list-group-item {
-    display: block;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-#{$right}: 10px;
-    padding-#{$left}: 20px;
+    &.list-group-item {
+        display: block;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        padding-#{
+            $right
+        }
+        : 10px;
+        padding-#{
+            $left
+        }
+        : 20px;
 
-    &:hover {
-      background: #f6f6f6;
+        &:hover {
+            background: #f6f6f6;
+        }
     }
-  }
 }
 
 #li_select_theme::after {
-  content: "Scheme: #{$color-scheme}";
-  margin-#{$left}: 10px;
+    content: "Scheme: #{$color-scheme}";
+    margin-#{
+        $left
+    }
+    : 10px;
 }

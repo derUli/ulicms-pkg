@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Responsible for retrieving version information and notifying about latest version
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin;
@@ -26,23 +26,21 @@ use function version_compare;
 /**
  * Responsible for retrieving version information and notifying about latest version
  */
-class VersionInformation
-{
+class VersionInformation {
+
     /**
      * Returns information with latest version from phpmyadmin.net
      *
      * @return stdClass|null JSON decoded object with the data
      */
-    public function getLatestVersion(): ?stdClass
-    {
-        if (! $GLOBALS['cfg']['VersionCheck']) {
+    public function getLatestVersion(): ?stdClass {
+        if (!$GLOBALS['cfg']['VersionCheck']) {
             return null;
         }
 
         // Get response text from phpmyadmin.net or from the session
         // Update cache every 6 hours
-        if (isset($_SESSION['cache']['version_check'])
-            && time() < $_SESSION['cache']['version_check']['timestamp'] + 3600 * 6
+        if (isset($_SESSION['cache']['version_check']) && time() < $_SESSION['cache']['version_check']['timestamp'] + 3600 * 6
         ) {
             $save = false;
             $response = $_SESSION['cache']['version_check']['response'];
@@ -57,10 +55,7 @@ class VersionInformation
         $data = json_decode($response);
 
         /* Basic sanity checking */
-        if (! is_object($data)
-            || empty($data->version)
-            || empty($data->releases)
-            || empty($data->date)
+        if (!is_object($data) || empty($data->version) || empty($data->releases) || empty($data->date)
         ) {
             return null;
         }
@@ -82,8 +77,7 @@ class VersionInformation
      *
      * @return mixed false on failure, integer on success
      */
-    public function versionToInt($version)
-    {
+    public function versionToInt($version) {
         $parts = explode('-', $version);
         if (count($parts) > 1) {
             $suffix = $parts[1];
@@ -110,7 +104,7 @@ class VersionInformation
             $result += 1 * (int) $parts[3];
         }
 
-        if (! empty($suffix)) {
+        if (!empty($suffix)) {
             $matches = [];
             if (preg_match('/^(\D+)(\d+)$/', $suffix, $matches)) {
                 $suffix = $matches[1];
@@ -148,15 +142,14 @@ class VersionInformation
      *
      * @return array|null containing the version and date of latest compatible version
      */
-    public function getLatestCompatibleVersion(array $releases)
-    {
+    public function getLatestCompatibleVersion(array $releases) {
         // Maintains the latest compatible version
         $latestRelease = null;
         foreach ($releases as $release) {
             $phpVersions = $release->php_versions;
             $phpConditions = explode(',', $phpVersions);
             foreach ($phpConditions as $phpCondition) {
-                if (! $this->evaluateVersionCondition('PHP', $phpCondition)) {
+                if (!$this->evaluateVersionCondition('PHP', $phpCondition)) {
                     continue 2;
                 }
             }
@@ -167,13 +160,13 @@ class VersionInformation
                 $mysqlVersions = $release->mysql_versions;
                 $mysqlConditions = explode(',', $mysqlVersions);
                 foreach ($mysqlConditions as $mysqlCondition) {
-                    if (! $this->evaluateVersionCondition('MySQL', $mysqlCondition)) {
+                    if (!$this->evaluateVersionCondition('MySQL', $mysqlCondition)) {
                         continue 2;
                     }
                 }
             }
             // To compare the current release with the previous latest release or no release is set
-            if ($latestRelease !== null && ! version_compare($latestRelease['version'], $release->version, '<')) {
+            if ($latestRelease !== null && !version_compare($latestRelease['version'], $release->version, '<')) {
                 continue;
             }
 
@@ -195,8 +188,7 @@ class VersionInformation
      *
      * @return bool whether the condition is met
      */
-    public function evaluateVersionCondition(string $type, string $condition)
-    {
+    public function evaluateVersionCondition(string $type, string $condition) {
         $operator = null;
         $version = null;
         $operators = [
@@ -235,8 +227,7 @@ class VersionInformation
      *
      * @return string PHP version
      */
-    protected function getPHPVersion()
-    {
+    protected function getPHPVersion() {
         return PHP_VERSION;
     }
 
@@ -245,8 +236,7 @@ class VersionInformation
      *
      * @return string|null MySQL version
      */
-    protected function getMySQLVersion()
-    {
+    protected function getMySQLVersion() {
         global $dbi;
 
         if (isset($dbi)) {
@@ -255,4 +245,5 @@ class VersionInformation
 
         return null;
     }
+
 }

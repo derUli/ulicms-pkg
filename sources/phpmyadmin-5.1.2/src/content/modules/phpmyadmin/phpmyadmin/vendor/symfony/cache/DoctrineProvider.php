@@ -18,28 +18,25 @@ use Symfony\Contracts\Service\ResetInterface;
 /**
  * @author Nicolas Grekas <p@tchwork.com>
  */
-class DoctrineProvider extends CacheProvider implements PruneableInterface, ResettableInterface
-{
+class DoctrineProvider extends CacheProvider implements PruneableInterface, ResettableInterface {
+
     private $pool;
 
-    public function __construct(CacheItemPoolInterface $pool)
-    {
+    public function __construct(CacheItemPoolInterface $pool) {
         $this->pool = $pool;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function prune()
-    {
+    public function prune() {
         return $this->pool instanceof PruneableInterface && $this->pool->prune();
     }
 
     /**
      * {@inheritdoc}
      */
-    public function reset()
-    {
+    public function reset() {
         if ($this->pool instanceof ResetInterface) {
             $this->pool->reset();
         }
@@ -51,8 +48,7 @@ class DoctrineProvider extends CacheProvider implements PruneableInterface, Rese
      *
      * @return mixed
      */
-    protected function doFetch($id)
-    {
+    protected function doFetch($id) {
         $item = $this->pool->getItem(rawurlencode($id));
 
         return $item->isHit() ? $item->get() : false;
@@ -63,8 +59,7 @@ class DoctrineProvider extends CacheProvider implements PruneableInterface, Rese
      *
      * @return bool
      */
-    protected function doContains($id)
-    {
+    protected function doContains($id) {
         return $this->pool->hasItem(rawurlencode($id));
     }
 
@@ -73,8 +68,7 @@ class DoctrineProvider extends CacheProvider implements PruneableInterface, Rese
      *
      * @return bool
      */
-    protected function doSave($id, $data, $lifeTime = 0)
-    {
+    protected function doSave($id, $data, $lifeTime = 0) {
         $item = $this->pool->getItem(rawurlencode($id));
 
         if (0 < $lifeTime) {
@@ -89,8 +83,7 @@ class DoctrineProvider extends CacheProvider implements PruneableInterface, Rese
      *
      * @return bool
      */
-    protected function doDelete($id)
-    {
+    protected function doDelete($id) {
         return $this->pool->deleteItem(rawurlencode($id));
     }
 
@@ -99,8 +92,7 @@ class DoctrineProvider extends CacheProvider implements PruneableInterface, Rese
      *
      * @return bool
      */
-    protected function doFlush()
-    {
+    protected function doFlush() {
         return $this->pool->clear();
     }
 
@@ -109,8 +101,8 @@ class DoctrineProvider extends CacheProvider implements PruneableInterface, Rese
      *
      * @return array|null
      */
-    protected function doGetStats()
-    {
+    protected function doGetStats() {
         return null;
     }
+
 }

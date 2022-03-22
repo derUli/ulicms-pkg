@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Manages the rendering of pages in PMA
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin;
@@ -32,8 +32,8 @@ use function strlen;
 /**
  * Singleton class used to manage the rendering of pages in PMA
  */
-class Response
-{
+class Response {
+
     /**
      * Response instance
      *
@@ -42,6 +42,7 @@ class Response
      * @var Response
      */
     private static $instance;
+
     /**
      * Header instance
      *
@@ -49,6 +50,7 @@ class Response
      * @var Header
      */
     protected $header;
+
     /**
      * HTML data to be used in the response
      *
@@ -56,6 +58,7 @@ class Response
      * @var string
      */
     private $HTML;
+
     /**
      * An array of JSON key-value pairs
      * to be sent back for ajax requests
@@ -64,6 +67,7 @@ class Response
      * @var array
      */
     private $JSON;
+
     /**
      * PhpMyAdmin\Footer instance
      *
@@ -71,6 +75,7 @@ class Response
      * @var Footer
      */
     protected $footer;
+
     /**
      * Whether we are servicing an ajax request.
      *
@@ -78,6 +83,7 @@ class Response
      * @var bool
      */
     protected $isAjax;
+
     /**
      * Whether response object is disabled
      *
@@ -85,6 +91,7 @@ class Response
      * @var bool
      */
     private $isDisabled;
+
     /**
      * Whether there were any errors during the processing of the request
      * Only used for ajax responses
@@ -174,21 +181,20 @@ class Response
     /**
      * Creates a new class instance
      */
-    private function __construct()
-    {
-        if (! defined('TESTSUITE')) {
+    private function __construct() {
+        if (!defined('TESTSUITE')) {
             $buffer = OutputBuffering::getInstance();
             $buffer->start();
             register_shutdown_function([$this, 'response']);
         }
         $this->header = new Header();
-        $this->HTML   = '';
-        $this->JSON   = [];
+        $this->HTML = '';
+        $this->JSON = [];
         $this->footer = new Footer();
 
-        $this->isSuccess  = true;
+        $this->isSuccess = true;
         $this->isDisabled = false;
-        $this->setAjax(! empty($_REQUEST['ajax_request']));
+        $this->setAjax(!empty($_REQUEST['ajax_request']));
     }
 
     /**
@@ -197,8 +203,7 @@ class Response
      *
      * @param bool $isAjax Whether we are servicing an ajax request
      */
-    public function setAjax(bool $isAjax): void
-    {
+    public function setAjax(bool $isAjax): void {
         $this->isAjax = $isAjax;
         $this->header->setAjax($this->isAjax);
         $this->footer->setAjax($this->isAjax);
@@ -209,8 +214,7 @@ class Response
      *
      * @return Response object
      */
-    public static function getInstance()
-    {
+    public static function getInstance() {
         if (empty(self::$instance)) {
             self::$instance = new Response();
         }
@@ -224,8 +228,7 @@ class Response
      *
      * @param bool $state Whether the request was successfully processed
      */
-    public function setRequestStatus(bool $state): void
-    {
+    public function setRequestStatus(bool $state): void {
         $this->isSuccess = ($state === true);
     }
 
@@ -233,8 +236,7 @@ class Response
      * Returns true or false depending on whether
      * we are servicing an ajax request
      */
-    public function isAjax(): bool
-    {
+    public function isAjax(): bool {
         return $this->isAjax;
     }
 
@@ -244,8 +246,7 @@ class Response
      *
      * @return void
      */
-    public function disable()
-    {
+    public function disable() {
         $this->header->disable();
         $this->footer->disable();
         $this->isDisabled = true;
@@ -256,8 +257,7 @@ class Response
      *
      * @return Header
      */
-    public function getHeader()
-    {
+    public function getHeader() {
         return $this->header;
     }
 
@@ -266,8 +266,7 @@ class Response
      *
      * @return Footer
      */
-    public function getFooter()
-    {
+    public function getFooter() {
         return $this->footer;
     }
 
@@ -279,8 +278,7 @@ class Response
      *
      * @return void
      */
-    public function addHTML($content)
-    {
+    public function addHTML($content) {
         if (is_array($content)) {
             foreach ($content as $msg) {
                 $this->addHTML($msg);
@@ -302,8 +300,7 @@ class Response
      *
      * @return void
      */
-    public function addJSON($json, $value = null)
-    {
+    public function addJSON($json, $value = null) {
         if (is_array($json)) {
             foreach ($json as $key => $value) {
                 $this->addJSON($key, $value);
@@ -322,13 +319,12 @@ class Response
      *
      * @return string
      */
-    private function getDisplay()
-    {
+    private function getDisplay() {
         // The header may contain nothing at all,
         // if its content was already rendered
         // and, in this case, the header will be
         // in the content part of the request
-        $retval  = $this->header->getDisplay();
+        $retval = $this->header->getDisplay();
         $retval .= $this->HTML;
         $retval .= $this->footer->getDisplay();
 
@@ -340,8 +336,7 @@ class Response
      *
      * @return void
      */
-    private function htmlResponse()
-    {
+    private function htmlResponse() {
         echo $this->getDisplay();
     }
 
@@ -350,8 +345,7 @@ class Response
      *
      * @return void
      */
-    private function ajaxResponse()
-    {
+    private function ajaxResponse() {
         global $dbi;
 
         /* Avoid wrapping in case we're disabled */
@@ -361,7 +355,7 @@ class Response
             return;
         }
 
-        if (! isset($this->JSON['message'])) {
+        if (!isset($this->JSON['message'])) {
             $this->JSON['message'] = $this->getDisplay();
         } elseif ($this->JSON['message'] instanceof Message) {
             $this->JSON['message'] = $this->JSON['message']->getDisplay();
@@ -371,12 +365,12 @@ class Response
             $this->JSON['success'] = true;
         } else {
             $this->JSON['success'] = false;
-            $this->JSON['error']   = $this->JSON['message'];
+            $this->JSON['error'] = $this->JSON['message'];
             unset($this->JSON['message']);
         }
 
         if ($this->isSuccess) {
-            if (! isset($this->JSON['title'])) {
+            if (!isset($this->JSON['title'])) {
                 $this->addJSON('title', '<title>' . $this->getHeader()->getPageTitle() . '</title>');
             }
 
@@ -387,12 +381,12 @@ class Response
                 if (isset($_REQUEST['menuHashes'])) {
                     $hashes = explode('-', $_REQUEST['menuHashes']);
                 }
-                if (! in_array($menuHash, $hashes)) {
+                if (!in_array($menuHash, $hashes)) {
                     $this->addJSON(
-                        'menu',
-                        $this->getHeader()
-                            ->getMenu()
-                            ->getDisplay()
+                            'menu',
+                            $this->getHeader()
+                                    ->getMenu()
+                                    ->getDisplay()
                     );
                 }
             }
@@ -402,8 +396,7 @@ class Response
             $this->addJSON('displayMessage', $this->getHeader()->getMessage());
 
             $debug = $this->footer->getDebugMessage();
-            if (empty($_REQUEST['no_debug'])
-                && strlen($debug) > 0
+            if (empty($_REQUEST['no_debug']) && strlen($debug) > 0
             ) {
                 $this->addJSON('debug', $debug);
             }
@@ -420,23 +413,22 @@ class Response
                 // (this is for the bottom console)
                 $query = '';
                 $maxChars = $GLOBALS['cfg']['MaxCharactersInDisplayedSQL'];
-                if (isset($GLOBALS['sql_query'])
-                    && mb_strlen($GLOBALS['sql_query']) < $maxChars
+                if (isset($GLOBALS['sql_query']) && mb_strlen($GLOBALS['sql_query']) < $maxChars
                 ) {
                     $query = $GLOBALS['sql_query'];
                 }
                 $this->addJSON(
-                    'reloadQuerywindow',
-                    [
-                        'db' => Core::ifSetOr($GLOBALS['db'], ''),
-                        'table' => Core::ifSetOr($GLOBALS['table'], ''),
-                        'sql_query' => $query,
-                    ]
+                        'reloadQuerywindow',
+                        [
+                            'db' => Core::ifSetOr($GLOBALS['db'], ''),
+                            'table' => Core::ifSetOr($GLOBALS['table'], ''),
+                            'sql_query' => $query,
+                        ]
                 );
-                if (! empty($GLOBALS['focus_querywindow'])) {
+                if (!empty($GLOBALS['focus_querywindow'])) {
                     $this->addJSON('_focusQuerywindow', $query);
                 }
-                if (! empty($GLOBALS['reload'])) {
+                if (!empty($GLOBALS['reload'])) {
                     $this->addJSON('reloadNavigation', 1);
                 }
                 $this->addJSON('params', $this->getHeader()->getJsParams());
@@ -495,8 +487,7 @@ class Response
      *
      * @return void
      */
-    public function response()
-    {
+    public function response() {
         $buffer = OutputBuffering::getInstance();
         if (empty($this->HTML)) {
             $this->HTML = $buffer->getContents();
@@ -517,8 +508,7 @@ class Response
      *
      * @return void
      */
-    public function header($text)
-    {
+    public function header($text) {
         // phpcs:ignore SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnly
         header($text);
     }
@@ -528,8 +518,7 @@ class Response
      *
      * @return bool
      */
-    public function headersSent()
-    {
+    public function headersSent() {
         return headers_sent();
     }
 
@@ -540,8 +529,7 @@ class Response
      *
      * @return void
      */
-    public function httpResponseCode($response_code)
-    {
+    public function httpResponseCode($response_code) {
         http_response_code($response_code);
     }
 
@@ -550,8 +538,7 @@ class Response
      *
      * @param int $responseCode will set the response code.
      */
-    public function setHttpResponseCode(int $responseCode): void
-    {
+    public function setHttpResponseCode(int $responseCode): void {
         $this->httpResponseCode($responseCode);
         $header = 'status: ' . $responseCode . ' ';
         if (isset(static::$httpStatusMessages[$responseCode])) {
@@ -573,11 +560,10 @@ class Response
      *
      * @return void
      */
-    public function generateHeader303($location)
-    {
+    public function generateHeader303($location) {
         $this->setHttpResponseCode(303);
         $this->header('Location: ' . $location);
-        if (! defined('TESTSUITE')) {
+        if (!defined('TESTSUITE')) {
             exit;
         }
     }
@@ -587,8 +573,7 @@ class Response
      *
      * @return bool Whether caller should exit
      */
-    public function loginPage()
-    {
+    public function loginPage() {
         /* Handle AJAX redirection */
         if ($this->isAjax()) {
             $this->setRequestStatus(false);
@@ -607,4 +592,5 @@ class Response
 
         return false;
     }
+
 }

@@ -19,8 +19,8 @@ use Twig\Node\Node;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class Compiler
-{
+class Compiler {
+
     private $lastLine;
     private $source;
     private $indentation;
@@ -30,8 +30,7 @@ class Compiler
     private $sourceLine;
     private $varNameSalt = 0;
 
-    public function __construct(Environment $env)
-    {
+    public function __construct(Environment $env) {
         $this->env = $env;
     }
 
@@ -40,8 +39,7 @@ class Compiler
      *
      * @return Environment
      */
-    public function getEnvironment()
-    {
+    public function getEnvironment() {
         return $this->env;
     }
 
@@ -50,8 +48,7 @@ class Compiler
      *
      * @return string The PHP code
      */
-    public function getSource()
-    {
+    public function getSource() {
         return $this->source;
     }
 
@@ -62,8 +59,7 @@ class Compiler
      *
      * @return $this
      */
-    public function compile(Node $node, $indentation = 0)
-    {
+    public function compile(Node $node, $indentation = 0) {
         $this->lastLine = null;
         $this->source = '';
         $this->debugInfo = [];
@@ -78,8 +74,7 @@ class Compiler
         return $this;
     }
 
-    public function subcompile(Node $node, $raw = true)
-    {
+    public function subcompile(Node $node, $raw = true) {
         if (false === $raw) {
             $this->source .= str_repeat(' ', $this->indentation * 4);
         }
@@ -96,8 +91,7 @@ class Compiler
      *
      * @return $this
      */
-    public function raw($string)
-    {
+    public function raw($string) {
         $this->source .= $string;
 
         return $this;
@@ -108,10 +102,9 @@ class Compiler
      *
      * @return $this
      */
-    public function write(...$strings)
-    {
+    public function write(...$strings) {
         foreach ($strings as $string) {
-            $this->source .= str_repeat(' ', $this->indentation * 4).$string;
+            $this->source .= str_repeat(' ', $this->indentation * 4) . $string;
         }
 
         return $this;
@@ -124,8 +117,7 @@ class Compiler
      *
      * @return $this
      */
-    public function string($value)
-    {
+    public function string($value) {
         $this->source .= sprintf('"%s"', addcslashes($value, "\0\t\"\$\\"));
 
         return $this;
@@ -138,8 +130,7 @@ class Compiler
      *
      * @return $this
      */
-    public function repr($value)
-    {
+    public function repr($value) {
         if (\is_int($value) || \is_float($value)) {
             if (false !== $locale = setlocale(\LC_NUMERIC, '0')) {
                 setlocale(\LC_NUMERIC, 'C');
@@ -179,8 +170,7 @@ class Compiler
      *
      * @return $this
      */
-    public function addDebugInfo(Node $node)
-    {
+    public function addDebugInfo(Node $node) {
         if ($node->getTemplateLine() != $this->lastLine) {
             $this->write(sprintf("// line %d\n", $node->getTemplateLine()));
 
@@ -194,8 +184,7 @@ class Compiler
         return $this;
     }
 
-    public function getDebugInfo()
-    {
+    public function getDebugInfo() {
         ksort($this->debugInfo);
 
         return $this->debugInfo;
@@ -208,8 +197,7 @@ class Compiler
      *
      * @return $this
      */
-    public function indent($step = 1)
-    {
+    public function indent($step = 1) {
         $this->indentation += $step;
 
         return $this;
@@ -224,8 +212,7 @@ class Compiler
      *
      * @throws \LogicException When trying to outdent too much so the indentation would become negative
      */
-    public function outdent($step = 1)
-    {
+    public function outdent($step = 1) {
         // can't outdent by more steps than the current indentation level
         if ($this->indentation < $step) {
             throw new \LogicException('Unable to call outdent() as the indentation would become negative.');
@@ -236,10 +223,10 @@ class Compiler
         return $this;
     }
 
-    public function getVarName()
-    {
+    public function getVarName() {
         return sprintf('__internal_compile_%d', $this->varNameSalt++);
     }
+
 }
 
 class_alias('Twig\Compiler', 'Twig_Compiler');

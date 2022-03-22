@@ -1,8 +1,8 @@
 <?php
+
 /**
  * `SHOW` statement.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\SqlParser\Statements;
@@ -10,8 +10,8 @@ namespace PhpMyAdmin\SqlParser\Statements;
 /**
  * `SHOW` statement.
  */
-class ShowStatement extends NotImplementedStatement
-{
+class ShowStatement extends NotImplementedStatement {
+
     /**
      * Options of this statement.
      *
@@ -60,4 +60,5 @@ class ShowStatement extends NotImplementedStatement
         'VIEW' => 2,
         'WARNINGS' => 2,
     ];
+
 }

@@ -18,14 +18,13 @@ use Symfony\Component\DependencyInjection\ServiceLocator as BaseServiceLocator;
  *
  * @internal
  */
-class ServiceLocator extends BaseServiceLocator
-{
+class ServiceLocator extends BaseServiceLocator {
+
     private $factory;
     private $serviceMap;
     private $serviceTypes;
 
-    public function __construct(\Closure $factory, array $serviceMap, array $serviceTypes = null)
-    {
+    public function __construct(\Closure $factory, array $serviceMap, array $serviceTypes = null) {
         $this->factory = $factory;
         $this->serviceMap = $serviceMap;
         $this->serviceTypes = $serviceTypes;
@@ -37,16 +36,17 @@ class ServiceLocator extends BaseServiceLocator
      *
      * @return mixed
      */
-    public function get($id)
-    {
+    public function get($id) {
         return isset($this->serviceMap[$id]) ? ($this->factory)(...$this->serviceMap[$id]) : parent::get($id);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getProvidedServices(): array
-    {
-        return $this->serviceTypes ?? $this->serviceTypes = array_map(function () { return '?'; }, $this->serviceMap);
+    public function getProvidedServices(): array {
+        return $this->serviceTypes ?? $this->serviceTypes = array_map(function () {
+            return '?';
+        }, $this->serviceMap);
     }
+
 }

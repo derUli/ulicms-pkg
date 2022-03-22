@@ -18,31 +18,28 @@ use Symfony\Component\DependencyInjection\Reference;
  * @author Titouan Galopin <galopintitouan@gmail.com>
  * @author Nicolas Grekas <p@tchwork.com>
  */
-trait ReferenceSetArgumentTrait
-{
+trait ReferenceSetArgumentTrait {
+
     private $values;
 
     /**
      * @param Reference[] $values
      */
-    public function __construct(array $values)
-    {
+    public function __construct(array $values) {
         $this->setValues($values);
     }
 
     /**
      * @return Reference[] The values in the set
      */
-    public function getValues()
-    {
+    public function getValues() {
         return $this->values;
     }
 
     /**
      * @param Reference[] $values The service references to put in the set
      */
-    public function setValues(array $values)
-    {
+    public function setValues(array $values) {
         foreach ($values as $k => $v) {
             if (null !== $v && !$v instanceof Reference) {
                 throw new InvalidArgumentException(sprintf('A "%s" must hold only Reference instances, "%s" given.', __CLASS__, \is_object($v) ? \get_class($v) : \gettype($v)));
@@ -51,4 +48,5 @@ trait ReferenceSetArgumentTrait
 
         $this->values = $values;
     }
+
 }

@@ -1,8 +1,8 @@
 <?php
+
 /**
  * `CHECKSUM` statement.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\SqlParser\Statements;
@@ -12,8 +12,8 @@ namespace PhpMyAdmin\SqlParser\Statements;
  *
  * CHECKSUM TABLE tbl_name [, tbl_name] ... [ QUICK | EXTENDED ]
  */
-class ChecksumStatement extends MaintenanceStatement
-{
+class ChecksumStatement extends MaintenanceStatement {
+
     /**
      * Options of this statement.
      *
@@ -21,8 +21,8 @@ class ChecksumStatement extends MaintenanceStatement
      */
     public static $OPTIONS = [
         'TABLE' => 1,
-
         'QUICK' => 2,
         'EXTENDED' => 3,
     ];
+
 }

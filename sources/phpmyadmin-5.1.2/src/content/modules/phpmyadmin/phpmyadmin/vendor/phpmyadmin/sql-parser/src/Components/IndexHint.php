@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Parses an Index hint.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\SqlParser\Components;
@@ -11,7 +11,6 @@ use PhpMyAdmin\SqlParser\Component;
 use PhpMyAdmin\SqlParser\Parser;
 use PhpMyAdmin\SqlParser\Token;
 use PhpMyAdmin\SqlParser\TokensList;
-
 use function implode;
 use function is_array;
 
@@ -20,8 +19,8 @@ use function is_array;
  *
  * @final
  */
-class IndexHint extends Component
-{
+class IndexHint extends Component {
+
     /**
      * The type of hint (USE/FORCE/IGNORE)
      *
@@ -57,10 +56,10 @@ class IndexHint extends Component
      * @param array  $indexes    List of indexes in this hint
      */
     public function __construct(
-        ?string $type = null,
-        ?string $indexOrKey = null,
-        ?string $for = null,
-        array $indexes = []
+            ?string $type = null,
+            ?string $indexOrKey = null,
+            ?string $for = null,
+            array $indexes = []
     ) {
         $this->type = $type;
         $this->indexOrKey = $indexOrKey;
@@ -75,8 +74,7 @@ class IndexHint extends Component
      *
      * @return IndexHint|Component[]
      */
-    public static function parse(Parser $parser, TokensList $list, array $options = [])
-    {
+    public static function parse(Parser $parser, TokensList $list, array $options = []) {
         $ret = [];
         $expr = new static();
         $expr->type = $options['type'] ?? null;
@@ -160,9 +158,7 @@ class IndexHint extends Component
                 case 3:
                     if ($token->type === Token::TYPE_KEYWORD) {
                         if (
-                            $token->keyword === 'JOIN'
-                            || $token->keyword === 'GROUP BY'
-                            || $token->keyword === 'ORDER BY'
+                                $token->keyword === 'JOIN' || $token->keyword === 'GROUP BY' || $token->keyword === 'ORDER BY'
                         ) {
                             $expr->for = $token->keyword;
                         } else {
@@ -196,8 +192,7 @@ class IndexHint extends Component
      *
      * @return string
      */
-    public static function build($component, array $options = [])
-    {
+    public static function build($component, array $options = []) {
         if (is_array($component)) {
             return implode(' ', $component);
         }
@@ -209,4 +204,5 @@ class IndexHint extends Component
 
         return $ret . ExpressionArray::build($component->indexes);
     }
+
 }

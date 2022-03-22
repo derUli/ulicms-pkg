@@ -2,9 +2,8 @@
 
 namespace CodeLts\U2F\U2FServer;
 
+class Registration {
 
-class Registration
-{
     /** The key handle of the registered authenticator */
     protected $keyHandle;
 
@@ -20,56 +19,50 @@ class Registration
     /**
      * @param string $keyHandle
      */
-    public function setKeyHandle($keyHandle)
-    {
+    public function setKeyHandle($keyHandle) {
         $this->keyHandle = $keyHandle;
     }
 
     /**
      * @param string $publicKey
      */
-    public function setPublicKey($publicKey)
-    {
+    public function setPublicKey($publicKey) {
         $this->publicKey = $publicKey;
     }
 
     /**
      * @param string $certificate
      */
-    public function setCertificate($certificate)
-    {
+    public function setCertificate($certificate) {
         $this->certificate = $certificate;
     }
 
     /**
      * @return string
      */
-    public function getKeyHandle()
-    {
+    public function getKeyHandle() {
         return $this->keyHandle;
     }
 
     /**
      * @return string
      */
-    public function getPublicKey()
-    {
+    public function getPublicKey() {
         return $this->publicKey;
     }
 
     /**
      * @return string
      */
-    public function getCertificate()
-    {
+    public function getCertificate() {
         return $this->certificate;
     }
 
     /**
      * @return string
      */
-    public function getCounter()
-    {
+    public function getCounter() {
         return $this->counter;
     }
+
 }

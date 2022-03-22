@@ -20,8 +20,8 @@ use Symfony\Component\Cache\Exception\InvalidArgumentException;
  *
  * @internal
  */
-trait AbstractAdapterTrait
-{
+trait AbstractAdapterTrait {
+
     use AbstractTrait;
 
     /**
@@ -37,8 +37,7 @@ trait AbstractAdapterTrait
     /**
      * {@inheritdoc}
      */
-    public function getItem($key)
-    {
+    public function getItem($key) {
         $id = $this->getId($key);
 
         if (isset($this->deferred[$key])) {
@@ -56,7 +55,7 @@ trait AbstractAdapterTrait
 
             return $f($key, $value, $isHit);
         } catch (\Exception $e) {
-            CacheItem::log($this->logger, 'Failed to fetch key "{key}": '.$e->getMessage(), ['key' => $key, 'exception' => $e]);
+            CacheItem::log($this->logger, 'Failed to fetch key "{key}": ' . $e->getMessage(), ['key' => $key, 'exception' => $e]);
         }
 
         return $f($key, null, false);
@@ -65,8 +64,7 @@ trait AbstractAdapterTrait
     /**
      * {@inheritdoc}
      */
-    public function getItems(array $keys = [])
-    {
+    public function getItems(array $keys = []) {
         $ids = [];
         $commit = false;
 
@@ -82,7 +80,7 @@ trait AbstractAdapterTrait
         try {
             $items = $this->doFetch($ids);
         } catch (\Exception $e) {
-            CacheItem::log($this->logger, 'Failed to fetch items: '.$e->getMessage(), ['keys' => $keys, 'exception' => $e]);
+            CacheItem::log($this->logger, 'Failed to fetch items: ' . $e->getMessage(), ['keys' => $keys, 'exception' => $e]);
             $items = [];
         }
         $ids = array_combine($ids, $keys);
@@ -95,8 +93,7 @@ trait AbstractAdapterTrait
      *
      * @return bool
      */
-    public function save(CacheItemInterface $item)
-    {
+    public function save(CacheItemInterface $item) {
         if (!$item instanceof CacheItem) {
             return false;
         }
@@ -110,8 +107,7 @@ trait AbstractAdapterTrait
      *
      * @return bool
      */
-    public function saveDeferred(CacheItemInterface $item)
-    {
+    public function saveDeferred(CacheItemInterface $item) {
         if (!$item instanceof CacheItem) {
             return false;
         }
@@ -123,25 +119,21 @@ trait AbstractAdapterTrait
     /**
      * @return array
      */
-    public function __sleep()
-    {
-        throw new \BadMethodCallException('Cannot serialize '.__CLASS__);
+    public function __sleep() {
+        throw new \BadMethodCallException('Cannot serialize ' . __CLASS__);
     }
 
-    public function __wakeup()
-    {
-        throw new \BadMethodCallException('Cannot unserialize '.__CLASS__);
+    public function __wakeup() {
+        throw new \BadMethodCallException('Cannot unserialize ' . __CLASS__);
     }
 
-    public function __destruct()
-    {
+    public function __destruct() {
         if ($this->deferred) {
             $this->commit();
         }
     }
 
-    private function generateItems(iterable $items, array &$keys): iterable
-    {
+    private function generateItems(iterable $items, array &$keys): iterable {
         $f = $this->createCacheItem;
 
         try {
@@ -154,11 +146,12 @@ trait AbstractAdapterTrait
                 yield $key => $f($key, $value, true);
             }
         } catch (\Exception $e) {
-            CacheItem::log($this->logger, 'Failed to fetch items: '.$e->getMessage(), ['keys' => array_values($keys), 'exception' => $e]);
+            CacheItem::log($this->logger, 'Failed to fetch items: ' . $e->getMessage(), ['keys' => array_values($keys), 'exception' => $e]);
         }
 
         foreach ($keys as $key) {
             yield $key => $f($key, null, false);
         }
     }
+
 }

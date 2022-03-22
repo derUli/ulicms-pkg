@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Links configuration for MySQL system tables
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Config;
@@ -10,8 +10,8 @@ namespace PhpMyAdmin\Config;
 use PhpMyAdmin\Url;
 use PhpMyAdmin\Util;
 
-class SpecialSchemaLinks
-{
+class SpecialSchemaLinks {
+
     /**
      * This array represent the details for generating links inside
      * special schemas like mysql, information_schema etc.
@@ -63,13 +63,12 @@ class SpecialSchemaLinks
      *             >
      * }
      */
-    public static function get(): array
-    {
+    public static function get(): array {
         global $cfg;
 
         $defaultPage = './' . Util::getScriptNameForOption(
-            $cfg['DefaultTabTable'],
-            'table'
+                        $cfg['DefaultTabTable'],
+                        'table'
         );
 
         return [
@@ -133,7 +132,6 @@ class SpecialSchemaLinks
                         ],
                         'default_page' => './' . Url::getFromRoute('/database/events', ['edit_item' => 1]),
                     ],
-
                 ],
                 'innodb_index_stats' => [
                     'table_name' => [
@@ -486,4 +484,5 @@ class SpecialSchemaLinks
             ],
         ];
     }
+
 }

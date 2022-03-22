@@ -19,16 +19,15 @@ use Twig\Template;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-final class SecurityPolicy implements SecurityPolicyInterface
-{
+final class SecurityPolicy implements SecurityPolicyInterface {
+
     private $allowedTags;
     private $allowedFilters;
     private $allowedMethods;
     private $allowedProperties;
     private $allowedFunctions;
 
-    public function __construct(array $allowedTags = [], array $allowedFilters = [], array $allowedMethods = [], array $allowedProperties = [], array $allowedFunctions = [])
-    {
+    public function __construct(array $allowedTags = [], array $allowedFilters = [], array $allowedMethods = [], array $allowedProperties = [], array $allowedFunctions = []) {
         $this->allowedTags = $allowedTags;
         $this->allowedFilters = $allowedFilters;
         $this->setAllowedMethods($allowedMethods);
@@ -36,36 +35,32 @@ final class SecurityPolicy implements SecurityPolicyInterface
         $this->allowedFunctions = $allowedFunctions;
     }
 
-    public function setAllowedTags(array $tags)
-    {
+    public function setAllowedTags(array $tags) {
         $this->allowedTags = $tags;
     }
 
-    public function setAllowedFilters(array $filters)
-    {
+    public function setAllowedFilters(array $filters) {
         $this->allowedFilters = $filters;
     }
 
-    public function setAllowedMethods(array $methods)
-    {
+    public function setAllowedMethods(array $methods) {
         $this->allowedMethods = [];
         foreach ($methods as $class => $m) {
-            $this->allowedMethods[$class] = array_map(function ($value) { return strtr($value, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'); }, \is_array($m) ? $m : [$m]);
+            $this->allowedMethods[$class] = array_map(function ($value) {
+                return strtr($value, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz');
+            }, \is_array($m) ? $m : [$m]);
         }
     }
 
-    public function setAllowedProperties(array $properties)
-    {
+    public function setAllowedProperties(array $properties) {
         $this->allowedProperties = $properties;
     }
 
-    public function setAllowedFunctions(array $functions)
-    {
+    public function setAllowedFunctions(array $functions) {
         $this->allowedFunctions = $functions;
     }
 
-    public function checkSecurity($tags, $filters, $functions)
-    {
+    public function checkSecurity($tags, $filters, $functions) {
         foreach ($tags as $tag) {
             if (!\in_array($tag, $this->allowedTags)) {
                 throw new SecurityNotAllowedTagError(sprintf('Tag "%s" is not allowed.', $tag), $tag);
@@ -85,8 +80,7 @@ final class SecurityPolicy implements SecurityPolicyInterface
         }
     }
 
-    public function checkMethodAllowed($obj, $method)
-    {
+    public function checkMethodAllowed($obj, $method) {
         if ($obj instanceof Template || $obj instanceof Markup) {
             return;
         }
@@ -107,8 +101,7 @@ final class SecurityPolicy implements SecurityPolicyInterface
         }
     }
 
-    public function checkPropertyAllowed($obj, $property)
-    {
+    public function checkPropertyAllowed($obj, $property) {
         $allowed = false;
         foreach ($this->allowedProperties as $class => $properties) {
             if ($obj instanceof $class) {
@@ -123,6 +116,7 @@ final class SecurityPolicy implements SecurityPolicyInterface
             throw new SecurityNotAllowedPropertyError(sprintf('Calling "%s" property on a "%s" object is not allowed.', $property, $class), $class, $property);
         }
     }
+
 }
 
 class_alias('Twig\Sandbox\SecurityPolicy', 'Twig_Sandbox_SecurityPolicy');

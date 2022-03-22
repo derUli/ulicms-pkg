@@ -8,34 +8,32 @@ use PhpMyAdmin\DatabaseInterface;
 use PhpMyAdmin\Util;
 use function sprintf;
 
-final class TemplateModel
-{
+final class TemplateModel {
+
     /** @var DatabaseInterface */
     private $dbi;
 
-    public function __construct(DatabaseInterface $dbi)
-    {
+    public function __construct(DatabaseInterface $dbi) {
         $this->dbi = $dbi;
     }
 
     /** @return bool|string */
-    public function create(string $db, string $table, Template $template)
-    {
+    public function create(string $db, string $table, Template $template) {
         $query = sprintf(
-            'INSERT INTO %s.%s (`username`, `export_type`, `template_name`, `template_data`)'
+                'INSERT INTO %s.%s (`username`, `export_type`, `template_name`, `template_data`)'
                 . ' VALUES (\'%s\', \'%s\', \'%s\', \'%s\');',
-            Util::backquote($db),
-            Util::backquote($table),
-            $this->dbi->escapeString($template->getUsername()),
-            $this->dbi->escapeString($template->getExportType()),
-            $this->dbi->escapeString($template->getName()),
-            $this->dbi->escapeString($template->getData())
+                Util::backquote($db),
+                Util::backquote($table),
+                $this->dbi->escapeString($template->getUsername()),
+                $this->dbi->escapeString($template->getExportType()),
+                $this->dbi->escapeString($template->getName()),
+                $this->dbi->escapeString($template->getData())
         );
         $result = $this->dbi->tryQuery(
-            $query,
-            DatabaseInterface::CONNECT_CONTROL,
-            0,
-            false
+                $query,
+                DatabaseInterface::CONNECT_CONTROL,
+                0,
+                false
         );
 
         if ($result === false) {
@@ -46,20 +44,19 @@ final class TemplateModel
     }
 
     /** @return bool|string */
-    public function delete(string $db, string $table, string $user, int $id)
-    {
+    public function delete(string $db, string $table, string $user, int $id) {
         $query = sprintf(
-            'DELETE FROM %s.%s WHERE `id` = %s AND `username` = \'%s\';',
-            Util::backquote($db),
-            Util::backquote($table),
-            $id,
-            $this->dbi->escapeString($user)
+                'DELETE FROM %s.%s WHERE `id` = %s AND `username` = \'%s\';',
+                Util::backquote($db),
+                Util::backquote($table),
+                $id,
+                $this->dbi->escapeString($user)
         );
         $result = $this->dbi->tryQuery(
-            $query,
-            DatabaseInterface::CONNECT_CONTROL,
-            0,
-            false
+                $query,
+                DatabaseInterface::CONNECT_CONTROL,
+                0,
+                false
         );
 
         if ($result === false) {
@@ -70,20 +67,19 @@ final class TemplateModel
     }
 
     /** @return Template|string|bool */
-    public function load(string $db, string $table, string $user, int $id)
-    {
+    public function load(string $db, string $table, string $user, int $id) {
         $query = sprintf(
-            'SELECT * FROM %s.%s WHERE `id` = %s AND `username` = \'%s\';',
-            Util::backquote($db),
-            Util::backquote($table),
-            $id,
-            $this->dbi->escapeString($user)
+                'SELECT * FROM %s.%s WHERE `id` = %s AND `username` = \'%s\';',
+                Util::backquote($db),
+                Util::backquote($table),
+                $id,
+                $this->dbi->escapeString($user)
         );
         $result = $this->dbi->tryQuery(
-            $query,
-            DatabaseInterface::CONNECT_CONTROL,
-            0,
-            false
+                $query,
+                DatabaseInterface::CONNECT_CONTROL,
+                0,
+                false
         );
 
         if ($result === false) {
@@ -98,30 +94,29 @@ final class TemplateModel
         $this->dbi->freeResult($result);
 
         return Template::fromArray([
-            'id' => (int) $data['id'],
-            'username' => $data['username'],
-            'exportType' => $data['export_type'],
-            'name' => $data['template_name'],
-            'data' => $data['template_data'],
+                    'id' => (int) $data['id'],
+                    'username' => $data['username'],
+                    'exportType' => $data['export_type'],
+                    'name' => $data['template_name'],
+                    'data' => $data['template_data'],
         ]);
     }
 
     /** @return bool|string */
-    public function update(string $db, string $table, Template $template)
-    {
+    public function update(string $db, string $table, Template $template) {
         $query = sprintf(
-            'UPDATE %s.%s SET `template_data` = \'%s\' WHERE `id` = %s AND `username` = \'%s\';',
-            Util::backquote($db),
-            Util::backquote($table),
-            $this->dbi->escapeString($template->getData()),
-            $template->getId(),
-            $this->dbi->escapeString($template->getUsername())
+                'UPDATE %s.%s SET `template_data` = \'%s\' WHERE `id` = %s AND `username` = \'%s\';',
+                Util::backquote($db),
+                Util::backquote($table),
+                $this->dbi->escapeString($template->getData()),
+                $template->getId(),
+                $this->dbi->escapeString($template->getUsername())
         );
         $result = $this->dbi->tryQuery(
-            $query,
-            DatabaseInterface::CONNECT_CONTROL,
-            0,
-            false
+                $query,
+                DatabaseInterface::CONNECT_CONTROL,
+                0,
+                false
         );
 
         if ($result === false) {
@@ -132,20 +127,19 @@ final class TemplateModel
     }
 
     /** @return Template[]|string|bool */
-    public function getAll(string $db, string $table, string $user, string $exportType)
-    {
+    public function getAll(string $db, string $table, string $user, string $exportType) {
         $query = sprintf(
-            'SELECT * FROM %s.%s WHERE `username` = \'%s\' AND `export_type` = \'%s\' ORDER BY `template_name`;',
-            Util::backquote($db),
-            Util::backquote($table),
-            $this->dbi->escapeString($user),
-            $this->dbi->escapeString($exportType)
+                'SELECT * FROM %s.%s WHERE `username` = \'%s\' AND `export_type` = \'%s\' ORDER BY `template_name`;',
+                Util::backquote($db),
+                Util::backquote($table),
+                $this->dbi->escapeString($user),
+                $this->dbi->escapeString($exportType)
         );
         $result = $this->dbi->tryQuery(
-            $query,
-            DatabaseInterface::CONNECT_CONTROL,
-            0,
-            false
+                $query,
+                DatabaseInterface::CONNECT_CONTROL,
+                0,
+                false
         );
 
         if ($result === false) {
@@ -155,11 +149,11 @@ final class TemplateModel
         $templates = [];
         while ($row = $this->dbi->fetchAssoc($result)) {
             $templates[] = Template::fromArray([
-                'id' => (int) $row['id'],
-                'username' => $row['username'],
-                'exportType' => $row['export_type'],
-                'name' => $row['template_name'],
-                'data' => $row['template_data'],
+                        'id' => (int) $row['id'],
+                        'username' => $row['username'],
+                        'exportType' => $row['export_type'],
+                        'name' => $row['template_name'],
+                        'data' => $row['template_data'],
             ]);
         }
 
@@ -167,4 +161,5 @@ final class TemplateModel
 
         return $templates;
     }
+
 }

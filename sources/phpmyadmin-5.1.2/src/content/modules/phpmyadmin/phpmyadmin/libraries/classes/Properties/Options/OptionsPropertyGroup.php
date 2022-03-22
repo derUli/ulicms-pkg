@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Superclass for the Property Group classes.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Properties\Options;
@@ -18,8 +18,8 @@ use function in_array;
  *
  * @todo    modify descriptions if needed, when the options are integrated
  */
-abstract class OptionsPropertyGroup extends OptionsPropertyItem implements Countable
-{
+abstract class OptionsPropertyGroup extends OptionsPropertyItem implements Countable {
+
     /**
      * Holds a group of properties (PhpMyAdmin\Properties\Options\OptionsPropertyItem instances)
      *
@@ -35,10 +35,8 @@ abstract class OptionsPropertyGroup extends OptionsPropertyItem implements Count
      *
      * @return void
      */
-    public function addProperty($property)
-    {
-        if (! $this->getProperties() == null
-            && in_array($property, $this->getProperties(), true)
+    public function addProperty($property) {
+        if (!$this->getProperties() == null && in_array($property, $this->getProperties(), true)
         ) {
             return;
         }
@@ -53,11 +51,10 @@ abstract class OptionsPropertyGroup extends OptionsPropertyItem implements Count
      *
      * @return void
      */
-    public function removeProperty($property)
-    {
+    public function removeProperty($property) {
         $this->properties = array_diff(
-            $this->getProperties(),
-            [$property]
+                $this->getProperties(),
+                [$property]
         );
     }
 
@@ -68,8 +65,7 @@ abstract class OptionsPropertyGroup extends OptionsPropertyItem implements Count
      *
      * @return OptionsPropertyGroup
      */
-    public function getGroup()
-    {
+    public function getGroup() {
         return $this;
     }
 
@@ -78,8 +74,7 @@ abstract class OptionsPropertyGroup extends OptionsPropertyItem implements Count
      *
      * @return array
      */
-    public function getProperties()
-    {
+    public function getProperties() {
         return $this->properties;
     }
 
@@ -88,8 +83,7 @@ abstract class OptionsPropertyGroup extends OptionsPropertyItem implements Count
      *
      * @return int
      */
-    public function getNrOfProperties()
-    {
+    public function getNrOfProperties() {
         if ($this->properties === null) {
             return 0;
         }
@@ -98,14 +92,15 @@ abstract class OptionsPropertyGroup extends OptionsPropertyItem implements Count
     }
 
     // phpcs:disable SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnly, Squiz.WhiteSpace.FunctionSpacing
+
     /**
      * Countable interface implementation.
      *
      * @return int
      */
     #[\ReturnTypeWillChange]
-    public function count()
-    {
+    public function count() {
         return $this->getNrOfProperties();
     }
+
 }

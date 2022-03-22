@@ -1,8 +1,8 @@
 <?php
+
 /**
  * User preferences form
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Config\Forms;
@@ -11,8 +11,8 @@ use PhpMyAdmin\Config\ConfigFile;
 use function array_merge;
 use function in_array;
 
-class BaseFormList
-{
+class BaseFormList {
+
     /**
      * List of all forms
      *
@@ -29,8 +29,7 @@ class BaseFormList
     /**
      * @return array
      */
-    public static function getAll()
-    {
+    public static function getAll() {
         return static::$all;
     }
 
@@ -39,8 +38,7 @@ class BaseFormList
      *
      * @return bool
      */
-    public static function isValid($name)
-    {
+    public static function isValid($name) {
         return in_array($name, static::$all);
     }
 
@@ -49,8 +47,7 @@ class BaseFormList
      *
      * @return string|null
      */
-    public static function get($name)
-    {
+    public static function get($name) {
         if (static::isValid($name)) {
             return static::$ns . $name . 'Form';
         }
@@ -61,8 +58,7 @@ class BaseFormList
     /**
      * @param ConfigFile $cf Config file instance
      */
-    public function __construct(ConfigFile $cf)
-    {
+    public function __construct(ConfigFile $cf) {
         $this->forms = [];
         foreach (static::$all as $form) {
             $class = static::get($form);
@@ -79,8 +75,7 @@ class BaseFormList
      *
      * @return bool whether processing was successful
      */
-    public function process($allowPartialSave = true, $checkFormSubmit = true)
-    {
+    public function process($allowPartialSave = true, $checkFormSubmit = true) {
         $ret = true;
         foreach ($this->forms as $form) {
             $ret = $ret && $form->process($allowPartialSave, $checkFormSubmit);
@@ -94,8 +89,7 @@ class BaseFormList
      *
      * @return string HTML for errors
      */
-    public function displayErrors()
-    {
+    public function displayErrors() {
         $ret = '';
         foreach ($this->forms as $form) {
             $ret .= $form->displayErrors();
@@ -109,8 +103,7 @@ class BaseFormList
      *
      * @return void
      */
-    public function fixErrors()
-    {
+    public function fixErrors() {
         foreach ($this->forms as $form) {
             $form->fixErrors();
         }
@@ -121,8 +114,7 @@ class BaseFormList
      *
      * @return bool
      */
-    public function hasErrors()
-    {
+    public function hasErrors() {
         $ret = false;
         foreach ($this->forms as $form) {
             $ret = $ret || $form->hasErrors();
@@ -136,8 +128,7 @@ class BaseFormList
      *
      * @return string[]
      */
-    public static function getFields()
-    {
+    public static function getFields() {
         $names = [];
         foreach (static::$all as $form) {
             $class = static::get($form);
@@ -146,4 +137,5 @@ class BaseFormList
 
         return $names;
     }
+
 }

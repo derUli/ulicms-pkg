@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Format converter
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Utils;
@@ -20,8 +20,8 @@ use function substr;
 /**
  * Format converter
  */
-class FormatConverter
-{
+class FormatConverter {
+
     /**
      * Transforms a binary to an IP
      *
@@ -29,8 +29,7 @@ class FormatConverter
      *
      * @return false|string
      */
-    public static function binaryToIp($buffer, bool $isBinary)
-    {
+    public static function binaryToIp($buffer, bool $isBinary) {
         if (strpos($buffer, '0x') !== 0) {
             return $isBinary ? bin2hex($buffer) : $buffer;
         }
@@ -52,8 +51,7 @@ class FormatConverter
      *
      * @return string
      */
-    public static function ipToBinary($buffer)
-    {
+    public static function ipToBinary($buffer) {
         $val = @inet_pton($buffer);
         if ($val !== false) {
             return '0x' . bin2hex($val);
@@ -69,8 +67,7 @@ class FormatConverter
      *
      * @return int|string
      */
-    public static function ipToLong(string $buffer)
-    {
+    public static function ipToLong(string $buffer) {
         $ipLong = ip2long($buffer);
         if ($ipLong === false) {
             return $buffer;
@@ -84,12 +81,12 @@ class FormatConverter
      *
      * @param mixed $buffer Data to transform
      */
-    public static function longToIp($buffer): string
-    {
-        if (! Util::isInteger($buffer) || $buffer < 0 || $buffer > 4294967295) {
+    public static function longToIp($buffer): string {
+        if (!Util::isInteger($buffer) || $buffer < 0 || $buffer > 4294967295) {
             return $buffer;
         }
 
         return (string) long2ip((int) $buffer);
     }
+
 }

@@ -20,21 +20,19 @@ use Symfony\Component\DependencyInjection\Reference;
 /**
  * @author Nicolas Grekas <p@tchwork.com>
  */
-class RegisterReverseContainerPass implements CompilerPassInterface
-{
+class RegisterReverseContainerPass implements CompilerPassInterface {
+
     private $beforeRemoving;
     private $serviceId;
     private $tagName;
 
-    public function __construct(bool $beforeRemoving, string $serviceId = 'reverse_container', string $tagName = 'container.reversible')
-    {
+    public function __construct(bool $beforeRemoving, string $serviceId = 'reverse_container', string $tagName = 'container.reversible') {
         $this->beforeRemoving = $beforeRemoving;
         $this->serviceId = $serviceId;
         $this->tagName = $tagName;
     }
 
-    public function process(ContainerBuilder $container)
-    {
+    public function process(ContainerBuilder $container) {
         if (!$container->hasDefinition($this->serviceId)) {
             return;
         }
@@ -63,4 +61,5 @@ class RegisterReverseContainerPass implements CompilerPassInterface
             $locator->setValues($services);
         }
     }
+
 }

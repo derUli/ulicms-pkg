@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Second authentication factor handling
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Plugins\TwoFactor;
@@ -14,8 +14,8 @@ use PhpMyAdmin\Plugins\TwoFactorPlugin;
  *
  * This has no practical use, but can be used for testing.
  */
-class Simple extends TwoFactorPlugin
-{
+class Simple extends TwoFactorPlugin {
+
     /** @var string */
     public static $id = 'simple';
 
@@ -24,8 +24,7 @@ class Simple extends TwoFactorPlugin
      *
      * @return bool
      */
-    public function check()
-    {
+    public function check() {
         return isset($_POST['2fa_confirm']);
     }
 
@@ -34,8 +33,7 @@ class Simple extends TwoFactorPlugin
      *
      * @return string HTML code
      */
-    public function render()
-    {
+    public function render() {
         return $this->template->render('login/twofactor/simple');
     }
 
@@ -44,8 +42,7 @@ class Simple extends TwoFactorPlugin
      *
      * @return string
      */
-    public static function getName()
-    {
+    public static function getName() {
         return __('Simple two-factor authentication');
     }
 
@@ -54,8 +51,8 @@ class Simple extends TwoFactorPlugin
      *
      * @return string
      */
-    public static function getDescription()
-    {
+    public static function getDescription() {
         return __('For testing purposes only!');
     }
+
 }

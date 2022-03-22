@@ -12,8 +12,8 @@ use function trim;
 /**
  * SunOS based SysInfo class
  */
-class SunOs extends Base
-{
+class SunOs extends Base {
+
     /**
      * The OS name
      *
@@ -28,8 +28,7 @@ class SunOs extends Base
      *
      * @return string with value
      */
-    private function kstat($key)
-    {
+    private function kstat($key) {
         $m = shell_exec('kstat -p d ' . $key);
 
         if ($m) {
@@ -46,8 +45,7 @@ class SunOs extends Base
      *
      * @return array with load data
      */
-    public function loadavg()
-    {
+    public function loadavg() {
         $load1 = $this->kstat('unix:0:system_misc:avenrun_1min');
 
         return ['loadavg' => $load1];
@@ -58,8 +56,7 @@ class SunOs extends Base
      *
      * @return bool true on success
      */
-    public function supported()
-    {
+    public function supported() {
         return @is_readable('/proc/meminfo');
     }
 
@@ -68,8 +65,7 @@ class SunOs extends Base
      *
      * @return array with memory usage data
      */
-    public function memory()
-    {
+    public function memory() {
         $pagesize = (int) $this->kstat('unix:0:seg_cache:slab_size');
         $mem = [];
         $mem['MemTotal'] = (int) $this->kstat('unix:0:system_pages:pagestotal') * $pagesize;
@@ -81,4 +77,5 @@ class SunOs extends Base
 
         return $mem;
     }
+
 }

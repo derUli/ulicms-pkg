@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Set of functions used with the relation and pdf feature
  *
@@ -12,7 +13,6 @@
  * Please provide a comment for your function,
  * what it does and what parameters are available.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin;
@@ -43,8 +43,8 @@ use function ucwords;
 /**
  * Transformations class
  */
-class Transformations
-{
+class Transformations {
+
     /**
      * Returns array of options from string with options separated by comma,
      * removes quotes
@@ -63,8 +63,7 @@ class Transformations
      *
      * @return array options
      */
-    public function getOptions($optionString)
-    {
+    public function getOptions($optionString) {
         if (strlen($optionString) === 0) {
             return [];
         }
@@ -75,9 +74,7 @@ class Transformations
 
         while (($option = array_shift($transformOptions)) !== null) {
             $trimmed = trim($option);
-            if (strlen($trimmed) > 1
-                && $trimmed[0] == "'"
-                && $trimmed[strlen($trimmed) - 1] == "'"
+            if (strlen($trimmed) > 1 && $trimmed[0] == "'" && $trimmed[strlen($trimmed) - 1] == "'"
             ) {
                 // '...'
                 $option = mb_substr($trimmed, 1, -1);
@@ -109,8 +106,7 @@ class Transformations
      *
      * @access public
      */
-    public function getAvailableMimeTypes()
-    {
+    public function getAvailableMimeTypes() {
         static $stack = null;
 
         if ($stack !== null) {
@@ -127,7 +123,7 @@ class Transformations
         foreach ($sub_dirs as $sd => $prefix) {
             $handle = opendir(ROOT_PATH . 'libraries/classes/Plugins/Transformations/' . $sd);
 
-            if (! $handle) {
+            if (!$handle) {
                 $stack[$prefix . 'transformation'] = [];
                 $stack[$prefix . 'transformation_file'] = [];
                 continue;
@@ -185,8 +181,7 @@ class Transformations
      *
      * @return string the class name of transformation
      */
-    public function getClassName($filename)
-    {
+    public function getClassName($filename) {
         // get the transformation class name
         $class_name = explode('.php', $filename);
         $class_name = 'PhpMyAdmin\\' . str_replace('/', '\\', mb_substr($class_name[0], 18));
@@ -201,8 +196,7 @@ class Transformations
      *
      * @return string the description of the transformation
      */
-    public function getDescription($file)
-    {
+    public function getDescription($file) {
         $include_file = 'libraries/classes/Plugins/Transformations/' . $file;
         /** @var TransformationsInterface $class_name */
         $class_name = $this->getClassName($include_file);
@@ -220,8 +214,7 @@ class Transformations
      *
      * @return string the name of the transformation
      */
-    public function getName($file)
-    {
+    public function getName($file) {
         $include_file = 'libraries/classes/Plugins/Transformations/' . $file;
         /** @var TransformationsInterface $class_name */
         $class_name = $this->getClassName($include_file);
@@ -244,26 +237,25 @@ class Transformations
      *
      * @return string
      */
-    public function fixUpMime($value)
-    {
+    public function fixUpMime($value) {
         $value = str_replace(
-            [
-                'jpeg',
-                'png',
-            ],
-            [
-                'JPEG',
-                'PNG',
-            ],
-            $value
+                [
+                    'jpeg',
+                    'png',
+                ],
+                [
+                    'JPEG',
+                    'PNG',
+                ],
+                $value
         );
 
         return str_replace(
-            ' ',
-            '',
-            ucwords(
-                (string) preg_replace('/([0-9_]+)/', '$1 ', $value)
-            )
+                ' ',
+                '',
+                ucwords(
+                        (string) preg_replace('/([0-9_]+)/', '$1 ', $value)
+                )
         );
     }
 
@@ -279,44 +271,43 @@ class Transformations
      *
      * @access public
      */
-    public function getMime($db, $table, $strict = false, $fullName = false)
-    {
+    public function getMime($db, $table, $strict = false, $fullName = false) {
         global $dbi;
 
         $relation = new Relation($dbi);
         $cfgRelation = $relation->getRelationsParam();
 
-        if (! $cfgRelation['mimework']) {
+        if (!$cfgRelation['mimework']) {
             return null;
         }
 
         $com_qry = '';
         if ($fullName) {
             $com_qry .= 'SELECT CONCAT('
-                . "`db_name`, '.', `table_name`, '.', `column_name`"
-                . ') AS column_name, ';
+                    . "`db_name`, '.', `table_name`, '.', `column_name`"
+                    . ') AS column_name, ';
         } else {
-            $com_qry  = 'SELECT `column_name`, ';
+            $com_qry = 'SELECT `column_name`, ';
         }
         $com_qry .= '`mimetype`, '
-                    . '`transformation`, '
-                    . '`transformation_options`, '
-                    . '`input_transformation`, '
-                    . '`input_transformation_options`'
-            . ' FROM ' . Util::backquote($cfgRelation['db']) . '.'
-            . Util::backquote($cfgRelation['column_info'])
-            . ' WHERE `db_name` = \'' . $dbi->escapeString($db) . '\''
-            . ' AND `table_name` = \'' . $dbi->escapeString($table) . '\''
-            . ' AND ( `mimetype` != \'\'' . (! $strict ?
+                . '`transformation`, '
+                . '`transformation_options`, '
+                . '`input_transformation`, '
+                . '`input_transformation_options`'
+                . ' FROM ' . Util::backquote($cfgRelation['db']) . '.'
+                . Util::backquote($cfgRelation['column_info'])
+                . ' WHERE `db_name` = \'' . $dbi->escapeString($db) . '\''
+                . ' AND `table_name` = \'' . $dbi->escapeString($table) . '\''
+                . ' AND ( `mimetype` != \'\'' . (!$strict ?
                 ' OR `transformation` != \'\''
                 . ' OR `transformation_options` != \'\''
                 . ' OR `input_transformation` != \'\''
                 . ' OR `input_transformation_options` != \'\'' : '') . ')';
         $result = $dbi->fetchResult(
-            $com_qry,
-            'column_name',
-            null,
-            DatabaseInterface::CONNECT_CONTROL
+                $com_qry,
+                'column_name',
+                null,
+                DatabaseInterface::CONNECT_CONTROL
         );
 
         foreach ($result as $column => $values) {
@@ -360,22 +351,22 @@ class Transformations
      * @access public
      */
     public function setMime(
-        $db,
-        $table,
-        $key,
-        $mimetype,
-        $transformation,
-        $transformationOpts,
-        $inputTransform,
-        $inputTransformOpts,
-        $forcedelete = false
+            $db,
+            $table,
+            $key,
+            $mimetype,
+            $transformation,
+            $transformationOpts,
+            $inputTransform,
+            $inputTransformOpts,
+            $forcedelete = false
     ) {
         global $dbi;
 
         $relation = new Relation($dbi);
         $cfgRelation = $relation->getRelationsParam();
 
-        if (! $cfgRelation['mimework']) {
+        if (!$cfgRelation['mimework']) {
             return false;
         }
 
@@ -385,51 +376,51 @@ class Transformations
 
         // Do we have any parameter to set?
         $has_value = (
-            strlen($mimetype) > 0 ||
-            strlen($transformation) > 0 ||
-            strlen($transformationOpts) > 0 ||
-            strlen($inputTransform) > 0 ||
-            strlen($inputTransformOpts) > 0
-        );
+                strlen($mimetype) > 0 ||
+                strlen($transformation) > 0 ||
+                strlen($transformationOpts) > 0 ||
+                strlen($inputTransform) > 0 ||
+                strlen($inputTransformOpts) > 0
+                );
 
         $test_qry = '
              SELECT `mimetype`,
                     `comment`
                FROM ' . Util::backquote($cfgRelation['db']) . '.'
-            . Util::backquote($cfgRelation['column_info']) . '
+                . Util::backquote($cfgRelation['column_info']) . '
               WHERE `db_name`     = \'' . $dbi->escapeString($db) . '\'
                 AND `table_name`  = \'' . $dbi->escapeString($table) . '\'
                 AND `column_name` = \'' . $dbi->escapeString($key) . '\'';
 
         $test_rs = $relation->queryAsControlUser(
-            $test_qry,
-            true,
-            DatabaseInterface::QUERY_STORE
+                $test_qry,
+                true,
+                DatabaseInterface::QUERY_STORE
         );
 
         if ($test_rs && $dbi->numRows($test_rs) > 0) {
             $row = @$dbi->fetchAssoc($test_rs);
             $dbi->freeResult($test_rs);
 
-            if (! $forcedelete && ($has_value || strlen($row['comment']) > 0)) {
+            if (!$forcedelete && ($has_value || strlen($row['comment']) > 0)) {
                 $upd_query = 'UPDATE '
-                    . Util::backquote($cfgRelation['db']) . '.'
-                    . Util::backquote($cfgRelation['column_info'])
-                    . ' SET '
-                    . '`mimetype` = \''
-                    . $dbi->escapeString($mimetype) . '\', '
-                    . '`transformation` = \''
-                    . $dbi->escapeString($transformation) . '\', '
-                    . '`transformation_options` = \''
-                    . $dbi->escapeString($transformationOpts) . '\', '
-                    . '`input_transformation` = \''
-                    . $dbi->escapeString($inputTransform) . '\', '
-                    . '`input_transformation_options` = \''
-                    . $dbi->escapeString($inputTransformOpts) . '\'';
+                        . Util::backquote($cfgRelation['db']) . '.'
+                        . Util::backquote($cfgRelation['column_info'])
+                        . ' SET '
+                        . '`mimetype` = \''
+                        . $dbi->escapeString($mimetype) . '\', '
+                        . '`transformation` = \''
+                        . $dbi->escapeString($transformation) . '\', '
+                        . '`transformation_options` = \''
+                        . $dbi->escapeString($transformationOpts) . '\', '
+                        . '`input_transformation` = \''
+                        . $dbi->escapeString($inputTransform) . '\', '
+                        . '`input_transformation_options` = \''
+                        . $dbi->escapeString($inputTransformOpts) . '\'';
             } else {
                 $upd_query = 'DELETE FROM '
-                    . Util::backquote($cfgRelation['db'])
-                    . '.' . Util::backquote($cfgRelation['column_info']);
+                        . Util::backquote($cfgRelation['db'])
+                        . '.' . Util::backquote($cfgRelation['column_info']);
             }
             $upd_query .= '
                 WHERE `db_name`     = \'' . $dbi->escapeString($db) . '\'
@@ -439,20 +430,20 @@ class Transformations
                     . '\'';
         } elseif ($has_value) {
             $upd_query = 'INSERT INTO '
-                . Util::backquote($cfgRelation['db'])
-                . '.' . Util::backquote($cfgRelation['column_info'])
-                . ' (db_name, table_name, column_name, mimetype, '
-                . 'transformation, transformation_options, '
-                . 'input_transformation, input_transformation_options) '
-                . ' VALUES('
-                . '\'' . $dbi->escapeString($db) . '\','
-                . '\'' . $dbi->escapeString($table) . '\','
-                . '\'' . $dbi->escapeString($key) . '\','
-                . '\'' . $dbi->escapeString($mimetype) . '\','
-                . '\'' . $dbi->escapeString($transformation) . '\','
-                . '\'' . $dbi->escapeString($transformationOpts) . '\','
-                . '\'' . $dbi->escapeString($inputTransform) . '\','
-                . '\'' . $dbi->escapeString($inputTransformOpts) . '\')';
+                    . Util::backquote($cfgRelation['db'])
+                    . '.' . Util::backquote($cfgRelation['column_info'])
+                    . ' (db_name, table_name, column_name, mimetype, '
+                    . 'transformation, transformation_options, '
+                    . 'input_transformation, input_transformation_options) '
+                    . ' VALUES('
+                    . '\'' . $dbi->escapeString($db) . '\','
+                    . '\'' . $dbi->escapeString($table) . '\','
+                    . '\'' . $dbi->escapeString($key) . '\','
+                    . '\'' . $dbi->escapeString($mimetype) . '\','
+                    . '\'' . $dbi->escapeString($transformation) . '\','
+                    . '\'' . $dbi->escapeString($transformationOpts) . '\','
+                    . '\'' . $dbi->escapeString($inputTransform) . '\','
+                    . '\'' . $dbi->escapeString($inputTransformOpts) . '\')';
         }
 
         if (isset($upd_query)) {
@@ -476,33 +467,33 @@ class Transformations
      *
      * @return bool State of the query execution
      */
-    public function clear($db, $table = '', $column = '')
-    {
+    public function clear($db, $table = '', $column = '') {
         global $dbi;
 
         $relation = new Relation($dbi);
         $cfgRelation = $relation->getRelationsParam();
 
-        if (! isset($cfgRelation['column_info'])) {
+        if (!isset($cfgRelation['column_info'])) {
             return false;
         }
 
         $delete_sql = 'DELETE FROM '
-            . Util::backquote($cfgRelation['db']) . '.'
-            . Util::backquote($cfgRelation['column_info'])
-            . ' WHERE ';
+                . Util::backquote($cfgRelation['db']) . '.'
+                . Util::backquote($cfgRelation['column_info'])
+                . ' WHERE ';
 
         if (($column != '') && ($table != '')) {
             $delete_sql .= '`db_name` = \'' . $db . '\' AND '
-                . '`table_name` = \'' . $table . '\' AND '
-                . '`column_name` = \'' . $column . '\' ';
+                    . '`table_name` = \'' . $table . '\' AND '
+                    . '`column_name` = \'' . $column . '\' ';
         } elseif ($table != '') {
             $delete_sql .= '`db_name` = \'' . $db . '\' AND '
-                . '`table_name` = \'' . $table . '\' ';
+                    . '`table_name` = \'' . $table . '\' ';
         } else {
             $delete_sql .= '`db_name` = \'' . $db . '\' ';
         }
 
         return $dbi->tryQuery($delete_sql);
     }
+
 }

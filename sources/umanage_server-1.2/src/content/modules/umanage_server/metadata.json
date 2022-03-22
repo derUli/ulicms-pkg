@@ -1,8 +1,8 @@
 {
-	"version": "1.2",
-	"embed": false,
-	"custom_acl": [
-		"umanage_server"
-	],
-	"admin_permission": "umanage_server"
+    "version": "1.2",
+    "embed": false,
+    "custom_acl": [
+        "umanage_server"
+    ],
+    "admin_permission": "umanage_server"
 }

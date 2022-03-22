@@ -24,8 +24,8 @@ use Symfony\Contracts\Service\ServiceSubscriberInterface;
  * @author Robin Chalas <robin.chalas@gmail.com>
  * @author Nicolas Grekas <p@tchwork.com>
  */
-class ServiceLocator implements ServiceProviderInterface
-{
+class ServiceLocator implements ServiceProviderInterface {
+
     use ServiceLocatorTrait {
         get as private doGet;
     }
@@ -38,8 +38,7 @@ class ServiceLocator implements ServiceProviderInterface
      *
      * @return mixed
      */
-    public function get($id)
-    {
+    public function get($id) {
         if (!$this->externalId) {
             return $this->doGet($id);
         }
@@ -62,8 +61,7 @@ class ServiceLocator implements ServiceProviderInterface
         }
     }
 
-    public function __invoke($id)
-    {
+    public function __invoke($id) {
         return isset($this->factories[$id]) ? $this->get($id) : null;
     }
 
@@ -72,8 +70,7 @@ class ServiceLocator implements ServiceProviderInterface
      *
      * @return static
      */
-    public function withContext(string $externalId, Container $container)
-    {
+    public function withContext(string $externalId, Container $container) {
         $locator = clone $this;
         $locator->externalId = $externalId;
         $locator->container = $container;
@@ -81,8 +78,7 @@ class ServiceLocator implements ServiceProviderInterface
         return $locator;
     }
 
-    private function createNotFoundException(string $id): NotFoundExceptionInterface
-    {
+    private function createNotFoundException(string $id): NotFoundExceptionInterface {
         if ($this->loading) {
             $msg = sprintf('The service "%s" has a dependency on a non-existent service "%s". This locator %s', end($this->loading), $id, $this->formatAlternatives());
 
@@ -129,13 +125,11 @@ class ServiceLocator implements ServiceProviderInterface
         return new ServiceNotFoundException($id, end($this->loading) ?: null, null, [], implode(' ', $msg));
     }
 
-    private function createCircularReferenceException(string $id, array $path): ContainerExceptionInterface
-    {
+    private function createCircularReferenceException(string $id, array $path): ContainerExceptionInterface {
         return new ServiceCircularReferenceException($id, $path);
     }
 
-    private function formatAlternatives(array $alternatives = null, string $separator = 'and'): string
-    {
+    private function formatAlternatives(array $alternatives = null, string $separator = 'and'): string {
         $format = '"%s"%s';
         if (null === $alternatives) {
             if (!$alternatives = array_keys($this->factories)) {
@@ -147,4 +141,5 @@ class ServiceLocator implements ServiceProviderInterface
 
         return sprintf($format, $alternatives ? implode('", "', $alternatives) : $last, $alternatives ? sprintf(' %s "%s"', $separator, $last) : '');
     }
+
 }

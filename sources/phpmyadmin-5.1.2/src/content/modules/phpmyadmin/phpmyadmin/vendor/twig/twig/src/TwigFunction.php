@@ -23,8 +23,8 @@ use Twig\Node\Node;
  *
  * @see https://twig.symfony.com/doc/templates.html#functions
  */
-class TwigFunction
-{
+class TwigFunction {
+
     private $name;
     private $callable;
     private $options;
@@ -37,10 +37,9 @@ class TwigFunction
      * @param callable|null $callable A callable implementing the function. If null, you need to overwrite the "node_class" option to customize compilation.
      * @param array         $options  Options array
      */
-    public function __construct(string $name, $callable = null, array $options = [])
-    {
+    public function __construct(string $name, $callable = null, array $options = []) {
         if (__CLASS__ !== static::class) {
-            @trigger_error('Overriding '.__CLASS__.' is deprecated since Twig 2.4.0 and the class will be final in 3.0.', \E_USER_DEPRECATED);
+            @trigger_error('Overriding ' . __CLASS__ . ' is deprecated since Twig 2.4.0 and the class will be final in 3.0.', \E_USER_DEPRECATED);
         }
 
         $this->name = $name;
@@ -54,11 +53,10 @@ class TwigFunction
             'node_class' => FunctionExpression::class,
             'deprecated' => false,
             'alternative' => null,
-        ], $options);
+                ], $options);
     }
 
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -67,38 +65,31 @@ class TwigFunction
      *
      * @return callable|null
      */
-    public function getCallable()
-    {
+    public function getCallable() {
         return $this->callable;
     }
 
-    public function getNodeClass()
-    {
+    public function getNodeClass() {
         return $this->options['node_class'];
     }
 
-    public function setArguments($arguments)
-    {
+    public function setArguments($arguments) {
         $this->arguments = $arguments;
     }
 
-    public function getArguments()
-    {
+    public function getArguments() {
         return $this->arguments;
     }
 
-    public function needsEnvironment()
-    {
+    public function needsEnvironment() {
         return $this->options['needs_environment'];
     }
 
-    public function needsContext()
-    {
+    public function needsContext() {
         return $this->options['needs_context'];
     }
 
-    public function getSafe(Node $functionArgs)
-    {
+    public function getSafe(Node $functionArgs) {
         if (null !== $this->options['is_safe']) {
             return $this->options['is_safe'];
         }
@@ -110,25 +101,22 @@ class TwigFunction
         return [];
     }
 
-    public function isVariadic()
-    {
+    public function isVariadic() {
         return $this->options['is_variadic'];
     }
 
-    public function isDeprecated()
-    {
+    public function isDeprecated() {
         return (bool) $this->options['deprecated'];
     }
 
-    public function getDeprecatedVersion()
-    {
+    public function getDeprecatedVersion() {
         return $this->options['deprecated'];
     }
 
-    public function getAlternative()
-    {
+    public function getAlternative() {
         return $this->options['alternative'];
     }
+
 }
 
 // For Twig 1.x compatibility

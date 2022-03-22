@@ -15,8 +15,8 @@ use function htmlspecialchars;
 /**
  * Database SQL executor
  */
-class SqlController extends AbstractController
-{
+class SqlController extends AbstractController {
+
     /** @var SqlQueryForm */
     private $sqlQueryForm;
 
@@ -24,14 +24,12 @@ class SqlController extends AbstractController
      * @param Response $response
      * @param string   $db       Database name
      */
-    public function __construct($response, Template $template, $db, SqlQueryForm $sqlQueryForm)
-    {
+    public function __construct($response, Template $template, $db, SqlQueryForm $sqlQueryForm) {
         parent::__construct($response, $template, $db);
         $this->sqlQueryForm = $sqlQueryForm;
     }
 
-    public function index(): void
-    {
+    public function index(): void {
         global $goto, $back, $db, $cfg, $err_url;
 
         $this->addScriptFiles([
@@ -50,7 +48,7 @@ class SqlController extends AbstractController
         $err_url = Util::getScriptNameForOption($cfg['DefaultTabDatabase'], 'database');
         $err_url .= Url::getCommon(['db' => $db], '&');
 
-        if (! $this->hasDatabase()) {
+        if (!$this->hasDatabase()) {
             return;
         }
 
@@ -62,11 +60,10 @@ class SqlController extends AbstractController
         $back = $goto;
 
         $this->response->addHTML($this->sqlQueryForm->getHtml(
-            true,
-            false,
-            isset($_POST['delimiter'])
-                ? htmlspecialchars($_POST['delimiter'])
-                : ';'
+                        true,
+                        false,
+                        isset($_POST['delimiter']) ? htmlspecialchars($_POST['delimiter']) : ';'
         ));
     }
+
 }

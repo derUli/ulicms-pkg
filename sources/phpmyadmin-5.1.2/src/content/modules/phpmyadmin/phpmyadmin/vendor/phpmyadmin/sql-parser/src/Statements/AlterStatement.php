@@ -1,8 +1,8 @@
 <?php
+
 /**
  * `ALTER` statement.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\SqlParser\Statements;
@@ -14,14 +14,13 @@ use PhpMyAdmin\SqlParser\Parser;
 use PhpMyAdmin\SqlParser\Statement;
 use PhpMyAdmin\SqlParser\Token;
 use PhpMyAdmin\SqlParser\TokensList;
-
 use function implode;
 
 /**
  * `ALTER` statement.
  */
-class AlterStatement extends Statement
-{
+class AlterStatement extends Statement {
+
     /**
      * Table affected.
      *
@@ -45,7 +44,6 @@ class AlterStatement extends Statement
         'ONLINE' => 1,
         'OFFLINE' => 1,
         'IGNORE' => 2,
-
         'DATABASE' => 3,
         'EVENT' => 3,
         'FUNCTION' => 3,
@@ -61,20 +59,19 @@ class AlterStatement extends Statement
      * @param Parser     $parser the instance that requests parsing
      * @param TokensList $list   the list of tokens to be parsed
      */
-    public function parse(Parser $parser, TokensList $list)
-    {
+    public function parse(Parser $parser, TokensList $list) {
         ++$list->idx; // Skipping `ALTER`.
         $this->options = OptionsArray::parse($parser, $list, static::$OPTIONS);
         ++$list->idx;
 
         // Parsing affected table.
         $this->table = Expression::parse(
-            $parser,
-            $list,
-            [
-                'parseField' => 'table',
-                'breakOnAlias' => true,
-            ]
+                        $parser,
+                        $list,
+                        [
+                            'parseField' => 'table',
+                            'breakOnAlias' => true,
+                        ]
         );
         ++$list->idx; // Skipping field.
 
@@ -134,15 +131,15 @@ class AlterStatement extends Statement
     /**
      * @return string
      */
-    public function build()
-    {
+    public function build() {
         $tmp = [];
         foreach ($this->altered as $altered) {
             $tmp[] = $altered::build($altered);
         }
 
         return 'ALTER ' . OptionsArray::build($this->options)
-            . ' ' . Expression::build($this->table)
-            . ' ' . implode(', ', $tmp);
+                . ' ' . Expression::build($this->table)
+                . ' ' . implode(', ', $tmp);
     }
+
 }

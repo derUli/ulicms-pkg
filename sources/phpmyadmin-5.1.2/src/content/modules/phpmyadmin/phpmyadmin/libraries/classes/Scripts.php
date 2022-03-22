@@ -1,8 +1,8 @@
 <?php
+
 /**
  * JavaScript management
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin;
@@ -16,8 +16,8 @@ use function strpos;
  * files and objects are necessary to render
  * the page and generates the relevant code.
  */
-class Scripts
-{
+class Scripts {
+
     /**
      * An array of SCRIPT tags
      *
@@ -25,6 +25,7 @@ class Scripts
      * @var array of strings
      */
     private $files;
+
     /**
      * A string of discrete javascript code snippets
      *
@@ -39,11 +40,10 @@ class Scripts
     /**
      * Generates new Scripts objects
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->template = new Template();
-        $this->files  = [];
-        $this->code   = '';
+        $this->files = [];
+        $this->code = '';
     }
 
     /**
@@ -55,11 +55,11 @@ class Scripts
      * @return void
      */
     public function addFile(
-        $filename,
-        array $params = []
+            $filename,
+            array $params = []
     ) {
         $hash = md5($filename);
-        if (! empty($this->files[$hash])) {
+        if (!empty($this->files[$hash])) {
             return;
         }
 
@@ -78,8 +78,7 @@ class Scripts
      *
      * @return void
      */
-    public function addFiles(array $filelist)
-    {
+    public function addFiles(array $filelist) {
         foreach ($filelist as $filename) {
             $this->addFile($filename);
         }
@@ -93,13 +92,8 @@ class Scripts
      *
      * @return int 1 to fire up the event, 0 not to
      */
-    private function hasOnloadEvent($filename)
-    {
-        if (strpos($filename, 'jquery') !== false
-            || strpos($filename, 'codemirror') !== false
-            || strpos($filename, 'messages.php') !== false
-            || strpos($filename, 'ajax.js') !== false
-            || strpos($filename, 'cross_framing_protection.js') !== false
+    private function hasOnloadEvent($filename) {
+        if (strpos($filename, 'jquery') !== false || strpos($filename, 'codemirror') !== false || strpos($filename, 'messages.php') !== false || strpos($filename, 'ajax.js') !== false || strpos($filename, 'cross_framing_protection.js') !== false
         ) {
             return 0;
         }
@@ -114,8 +108,7 @@ class Scripts
      *
      * @return void
      */
-    public function addCode($code)
-    {
+    public function addCode($code) {
         $this->code .= $code . "\n";
     }
 
@@ -125,8 +118,7 @@ class Scripts
      *
      * @return array
      */
-    public function getFiles()
-    {
+    public function getFiles() {
         $retval = [];
         foreach ($this->files as $file) {
             //If filename contains a "?", continue.
@@ -147,15 +139,15 @@ class Scripts
      *
      * @return string
      */
-    public function getDisplay()
-    {
+    public function getDisplay() {
         $baseDir = defined('PMA_PATH_TO_BASEDIR') ? PMA_PATH_TO_BASEDIR : '';
 
         return $this->template->render('scripts', [
-            'base_dir' => $baseDir,
-            'files' => $this->files,
-            'version' => PMA_VERSION,
-            'code' => $this->code,
+                    'base_dir' => $baseDir,
+                    'files' => $this->files,
+                    'version' => PMA_VERSION,
+                    'code' => $this->code,
         ]);
     }
+
 }

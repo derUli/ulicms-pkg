@@ -24,10 +24,9 @@ use Twig\Token;
  *      <input type="{{ type|default('text') }}" name="{{ name }}" value="{{ value|e }}" size="{{ size|default(20) }}" />
  *   {% endmacro %}
  */
-final class MacroTokenParser extends AbstractTokenParser
-{
-    public function parse(Token $token)
-    {
+final class MacroTokenParser extends AbstractTokenParser {
+
+    public function parse(Token $token) {
         $lineno = $token->getLine();
         $stream = $this->parser->getStream();
         $name = $stream->expect(/* Token::NAME_TYPE */ 5)->getValue();
@@ -52,15 +51,14 @@ final class MacroTokenParser extends AbstractTokenParser
         return new Node();
     }
 
-    public function decideBlockEnd(Token $token)
-    {
+    public function decideBlockEnd(Token $token) {
         return $token->test('endmacro');
     }
 
-    public function getTag()
-    {
+    public function getTag() {
         return 'macro';
     }
+
 }
 
 class_alias('Twig\TokenParser\MacroTokenParser', 'Twig_TokenParser_Macro');

@@ -1,18 +1,17 @@
 <?php
+
 /**
  * Defines the localization helper infrastructure of the library.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\SqlParser;
 
 use PhpMyAdmin\MoTranslator\Loader;
-
 use function class_exists;
 
-class Translator
-{
+class Translator {
+
     /**
      * The MoTranslator loader object.
      *
@@ -30,15 +29,14 @@ class Translator
     /**
      * Loads translator.
      */
-    public static function load()
-    {
+    public static function load() {
         if (self::$loader === null) {
             // Create loader object
             self::$loader = new Loader();
 
             // Set locale
             self::$loader->setlocale(
-                self::$loader->detectlocale()
+                    self::$loader->detectlocale()
             );
 
             // Set default text domain
@@ -63,9 +61,8 @@ class Translator
      *
      * @return string translated string (or original, if not found)
      */
-    public static function gettext($msgid)
-    {
-        if (! class_exists('\PhpMyAdmin\MoTranslator\Loader', true)) {
+    public static function gettext($msgid) {
+        if (!class_exists('\PhpMyAdmin\MoTranslator\Loader', true)) {
             return $msgid;
         }
 
@@ -73,4 +70,5 @@ class Translator
 
         return self::$translator->gettext($msgid);
     }
+
 }

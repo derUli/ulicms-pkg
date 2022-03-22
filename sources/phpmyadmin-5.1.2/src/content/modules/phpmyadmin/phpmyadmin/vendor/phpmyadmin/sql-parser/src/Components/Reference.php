@@ -1,8 +1,8 @@
 <?php
+
 /**
  * `REFERENCES` keyword parser.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\SqlParser\Components;
@@ -12,7 +12,6 @@ use PhpMyAdmin\SqlParser\Context;
 use PhpMyAdmin\SqlParser\Parser;
 use PhpMyAdmin\SqlParser\Token;
 use PhpMyAdmin\SqlParser\TokensList;
-
 use function implode;
 use function trim;
 
@@ -21,8 +20,8 @@ use function trim;
  *
  * @final
  */
-class Reference extends Component
-{
+class Reference extends Component {
+
     /**
      * All references options.
      *
@@ -69,8 +68,7 @@ class Reference extends Component
      * @param array        $columns the columns referenced
      * @param OptionsArray $options the options
      */
-    public function __construct($table = null, array $columns = [], $options = null)
-    {
+    public function __construct($table = null, array $columns = [], $options = null) {
         $this->table = $table;
         $this->columns = $columns;
         $this->options = $options;
@@ -83,8 +81,7 @@ class Reference extends Component
      *
      * @return Reference
      */
-    public static function parse(Parser $parser, TokensList $list, array $options = [])
-    {
+    public static function parse(Parser $parser, TokensList $list, array $options = []) {
         $ret = new static();
 
         /**
@@ -122,12 +119,12 @@ class Reference extends Component
 
             if ($state === 0) {
                 $ret->table = Expression::parse(
-                    $parser,
-                    $list,
-                    [
-                        'parseField' => 'table',
-                        'breakOnAlias' => true,
-                    ]
+                                $parser,
+                                $list,
+                                [
+                                    'parseField' => 'table',
+                                    'breakOnAlias' => true,
+                                ]
                 );
                 $state = 1;
             } elseif ($state === 1) {
@@ -151,12 +148,12 @@ class Reference extends Component
      *
      * @return string
      */
-    public static function build($component, array $options = [])
-    {
+    public static function build($component, array $options = []) {
         return trim(
-            $component->table
-            . ' (' . implode(', ', Context::escape($component->columns)) . ') '
-            . $component->options
+                $component->table
+                . ' (' . implode(', ', Context::escape($component->columns)) . ') '
+                . $component->options
         );
     }
+
 }

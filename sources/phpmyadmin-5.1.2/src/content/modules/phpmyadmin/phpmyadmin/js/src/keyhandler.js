@@ -3,11 +3,11 @@
 var ctrlKeyHistory = 0;
 
 /**
-  * Allows moving around inputs/select by Ctrl+arrows
-  *
-  * @param object   event data
-  */
-function onKeyDownArrowsHandler (event) {
+ * Allows moving around inputs/select by Ctrl+arrows
+ *
+ * @param object   event data
+ */
+function onKeyDownArrowsHandler(event) {
     var e = event || window.event;
 
     var o = (e.srcElement || e.target);
@@ -50,24 +50,24 @@ function onKeyDownArrowsHandler (event) {
     var y = pos[1];
 
     switch (e.keyCode) {
-    case 38:
-        // up
-        y--;
-        break;
-    case 40:
-        // down
-        y++;
-        break;
-    case 37:
-        // left
-        x--;
-        break;
-    case 39:
-        // right
-        x++;
-        break;
-    default:
-        return;
+        case 38:
+            // up
+            y--;
+            break;
+        case 40:
+            // down
+            y++;
+            break;
+        case 37:
+            // left
+            x--;
+            break;
+        case 39:
+            // right
+            x++;
+            break;
+        default:
+            return;
     }
 
     // eslint-disable-next-line compat/compat
@@ -76,13 +76,13 @@ function onKeyDownArrowsHandler (event) {
     var id = 'field_' + y + '_' + x;
 
     var nO = document.getElementById(id);
-    if (! nO) {
+    if (!nO) {
         id = 'field_' + y + '_' + x + '_0';
         nO = document.getElementById(id);
     }
 
     // skip non existent fields
-    if (! nO) {
+    if (!nO) {
         return;
     }
 
@@ -95,7 +95,7 @@ function onKeyDownArrowsHandler (event) {
     if (isFirefox) {
         var ffcheck = 0;
         var ffversion;
-        for (ffversion = 3 ; ffversion < 25 ; ffversion++) {
+        for (ffversion = 3; ffversion < 25; ffversion++) {
             var isFirefoxV24 = navigator.userAgent.toLowerCase().indexOf('firefox/' + ffversion) > -1;
             if (isFirefoxV24) {
                 ffcheck = 1;

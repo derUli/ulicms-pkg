@@ -7,13 +7,12 @@ namespace PhpMyAdmin\Providers\ServerVariables;
 use Williamdes\MariaDBMySQLKBS\Search;
 use function class_exists;
 
-class ServerVariablesProvider
-{
+class ServerVariablesProvider {
+
     /** @var ServerVariablesProviderInterface|null */
     private static $instance = null;
 
-    public static function getImplementation(): ServerVariablesProviderInterface
-    {
+    public static function getImplementation(): ServerVariablesProviderInterface {
         if (self::$instance !== null) {
             return self::$instance;
         }
@@ -29,8 +28,8 @@ class ServerVariablesProvider
         return self::$instance;
     }
 
-    public static function mariaDbMySqlKbsExists(): bool
-    {
+    public static function mariaDbMySqlKbsExists(): bool {
         return class_exists(Search::class);
     }
+
 }

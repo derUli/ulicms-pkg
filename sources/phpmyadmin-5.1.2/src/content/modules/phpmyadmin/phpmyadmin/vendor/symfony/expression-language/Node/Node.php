@@ -18,8 +18,8 @@ use Symfony\Component\ExpressionLanguage\Compiler;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class Node
-{
+class Node {
+
     public $nodes = [];
     public $attributes = [];
 
@@ -27,8 +27,7 @@ class Node
      * @param array $nodes      An array of nodes
      * @param array $attributes An array of attributes
      */
-    public function __construct(array $nodes = [], array $attributes = [])
-    {
+    public function __construct(array $nodes = [], array $attributes = []) {
         $this->nodes = $nodes;
         $this->attributes = $attributes;
     }
@@ -36,19 +35,18 @@ class Node
     /**
      * @return string
      */
-    public function __toString()
-    {
+    public function __toString() {
         $attributes = [];
         foreach ($this->attributes as $name => $value) {
             $attributes[] = sprintf('%s: %s', $name, str_replace("\n", '', var_export($value, true)));
         }
 
-        $repr = [str_replace('Symfony\Component\ExpressionLanguage\Node\\', '', static::class).'('.implode(', ', $attributes)];
+        $repr = [str_replace('Symfony\Component\ExpressionLanguage\Node\\', '', static::class) . '(' . implode(', ', $attributes)];
 
         if (\count($this->nodes)) {
             foreach ($this->nodes as $node) {
                 foreach (explode("\n", (string) $node) as $line) {
-                    $repr[] = '    '.$line;
+                    $repr[] = '    ' . $line;
                 }
             }
 
@@ -60,15 +58,13 @@ class Node
         return implode("\n", $repr);
     }
 
-    public function compile(Compiler $compiler)
-    {
+    public function compile(Compiler $compiler) {
         foreach ($this->nodes as $node) {
             $node->compile($compiler);
         }
     }
 
-    public function evaluate($functions, $values)
-    {
+    public function evaluate($functions, $values) {
         $results = [];
         foreach ($this->nodes as $node) {
             $results[] = $node->evaluate($functions, $values);
@@ -77,13 +73,11 @@ class Node
         return $results;
     }
 
-    public function toArray()
-    {
+    public function toArray() {
         throw new \BadMethodCallException(sprintf('Dumping a "%s" instance is not supported yet.', static::class));
     }
 
-    public function dump()
-    {
+    public function dump() {
         $dump = '';
 
         foreach ($this->toArray() as $v) {
@@ -93,13 +87,11 @@ class Node
         return $dump;
     }
 
-    protected function dumpString($value)
-    {
+    protected function dumpString($value) {
         return sprintf('"%s"', addcslashes($value, "\0\t\"\\"));
     }
 
-    protected function isHash(array $value)
-    {
+    protected function isHash(array $value) {
         $expectedKey = 0;
 
         foreach ($value as $key => $val) {
@@ -110,4 +102,5 @@ class Node
 
         return false;
     }
+
 }

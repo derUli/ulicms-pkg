@@ -19,14 +19,13 @@ use Symfony\Component\DependencyInjection\Exception\EnvParameterException;
  *
  * @author Johannes M. Schmitt <schmittjoh@gmail.com>
  */
-class Compiler
-{
+class Compiler {
+
     private $passConfig;
     private $log = [];
     private $serviceReferenceGraph;
 
-    public function __construct()
-    {
+    public function __construct() {
         $this->passConfig = new PassConfig();
         $this->serviceReferenceGraph = new ServiceReferenceGraph();
     }
@@ -36,8 +35,7 @@ class Compiler
      *
      * @return PassConfig The PassConfig instance
      */
-    public function getPassConfig()
-    {
+    public function getPassConfig() {
         return $this->passConfig;
     }
 
@@ -46,8 +44,7 @@ class Compiler
      *
      * @return ServiceReferenceGraph The ServiceReferenceGraph instance
      */
-    public function getServiceReferenceGraph()
-    {
+    public function getServiceReferenceGraph() {
         return $this->serviceReferenceGraph;
     }
 
@@ -57,21 +54,19 @@ class Compiler
      * @param string $type     The type of the pass
      * @param int    $priority Used to sort the passes
      */
-    public function addPass(CompilerPassInterface $pass, $type = PassConfig::TYPE_BEFORE_OPTIMIZATION, int $priority = 0)
-    {
+    public function addPass(CompilerPassInterface $pass, $type = PassConfig::TYPE_BEFORE_OPTIMIZATION, int $priority = 0) {
         $this->passConfig->addPass($pass, $type, $priority);
     }
 
     /**
      * @final
      */
-    public function log(CompilerPassInterface $pass, string $message)
-    {
+    public function log(CompilerPassInterface $pass, string $message) {
         if (str_contains($message, "\n")) {
-            $message = str_replace("\n", "\n".\get_class($pass).': ', trim($message));
+            $message = str_replace("\n", "\n" . \get_class($pass) . ': ', trim($message));
         }
 
-        $this->log[] = \get_class($pass).': '.$message;
+        $this->log[] = \get_class($pass) . ': ' . $message;
     }
 
     /**
@@ -79,16 +74,14 @@ class Compiler
      *
      * @return array Log array
      */
-    public function getLog()
-    {
+    public function getLog() {
         return $this->log;
     }
 
     /**
      * Run the Compiler and process all Passes.
      */
-    public function compile(ContainerBuilder $container)
-    {
+    public function compile(ContainerBuilder $container) {
         try {
             foreach ($this->passConfig->getPasses() as $pass) {
                 $pass->process($container);
@@ -116,4 +109,5 @@ class Compiler
             $this->getServiceReferenceGraph()->clear();
         }
     }
+
 }

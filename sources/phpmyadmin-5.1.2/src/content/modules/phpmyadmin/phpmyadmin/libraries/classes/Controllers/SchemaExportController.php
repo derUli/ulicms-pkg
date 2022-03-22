@@ -11,8 +11,8 @@ use PhpMyAdmin\Util;
 /**
  * Schema export handler
  */
-class SchemaExportController
-{
+class SchemaExportController {
+
     /** @var Export */
     private $export;
 
@@ -23,14 +23,12 @@ class SchemaExportController
      * @param Export   $export   A Export instance.
      * @param Relation $relation A Relation instance.
      */
-    public function __construct(Export $export, Relation $relation)
-    {
+    public function __construct(Export $export, Relation $relation) {
         $this->export = $export;
         $this->relation = $relation;
     }
 
-    public function index(): void
-    {
+    public function index(): void {
         global $cfgRelation;
 
         /**
@@ -39,7 +37,7 @@ class SchemaExportController
          */
         $cfgRelation = $this->relation->getRelationsParam();
 
-        if (! isset($_POST['export_type'])) {
+        if (!isset($_POST['export_type'])) {
             Util::checkParameters(['export_type']);
         }
 
@@ -49,4 +47,5 @@ class SchemaExportController
          */
         $this->export->processExportSchema($_POST['export_type']);
     }
+
 }

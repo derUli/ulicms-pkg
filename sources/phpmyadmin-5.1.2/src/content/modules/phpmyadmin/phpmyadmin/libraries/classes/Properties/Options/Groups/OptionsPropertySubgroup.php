@@ -10,14 +10,15 @@ use PhpMyAdmin\Properties\PropertyItem;
 /**
  * Group property item class of type subgroup
  */
-class OptionsPropertySubgroup extends OptionsPropertyGroup
-{
+class OptionsPropertySubgroup extends OptionsPropertyGroup {
+
     /**
      * Subgroup Header
      *
      * @var PropertyItem
      */
     private $subgroupHeader;
+
     /* ~~~~~~~~~~~~~~~~~~~~ Getters and Setters ~~~~~~~~~~~~~~~~~~~~ */
 
     /**
@@ -30,8 +31,7 @@ class OptionsPropertySubgroup extends OptionsPropertyGroup
      *
      * @return string
      */
-    public function getItemType()
-    {
+    public function getItemType() {
         return 'subgroup';
     }
 
@@ -40,8 +40,7 @@ class OptionsPropertySubgroup extends OptionsPropertyGroup
      *
      * @return PropertyItem
      */
-    public function getSubgroupHeader()
-    {
+    public function getSubgroupHeader() {
         return $this->subgroupHeader;
     }
 
@@ -52,8 +51,8 @@ class OptionsPropertySubgroup extends OptionsPropertyGroup
      *
      * @return void
      */
-    public function setSubgroupHeader($subgroupHeader)
-    {
+    public function setSubgroupHeader($subgroupHeader) {
         $this->subgroupHeader = $subgroupHeader;
     }
+
 }

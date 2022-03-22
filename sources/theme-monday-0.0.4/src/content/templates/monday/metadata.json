@@ -1,7 +1,7 @@
 {
-	"version": "0.0.4",
-	"menus": [
-		"top",
-		"bottom"
-	]
+    "version": "0.0.4",
+    "menus": [
+        "top",
+        "bottom"
+    ]
 }

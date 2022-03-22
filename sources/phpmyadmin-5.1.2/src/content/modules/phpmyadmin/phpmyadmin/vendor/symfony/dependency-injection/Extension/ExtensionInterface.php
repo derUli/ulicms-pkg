@@ -18,8 +18,8 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-interface ExtensionInterface
-{
+interface ExtensionInterface {
+
     /**
      * Loads a specific configuration.
      *

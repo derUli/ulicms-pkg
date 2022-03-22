@@ -28,35 +28,35 @@
         <div id="dataDisplay" class="hide">
             <table class="pma-table">
                 <thead>
-                <tr>
-                    <th>{% trans 'Column' %}</th>
-                    <th>{% trans 'Null' %}</th>
-                    <th>{% trans 'Value' %}</th>
-                </tr>
+                    <tr>
+                        <th>{% trans 'Column' %}</th>
+                        <th>{% trans 'Null' %}</th>
+                        <th>{% trans 'Value' %}</th>
+                    </tr>
                 </thead>
                 <tbody>
-                {% for column_index in 0..column_names|length - 1 %}
-                    {% set field_popup = column_names[column_index] %}
-                    {% set foreign_data = get_foreign_data(
+                    {% for column_index in 0..column_names|length - 1 %}
+                        {% set field_popup = column_names[column_index] %}
+                        {% set foreign_data = get_foreign_data(
                         foreigners,
                         field_popup,
                         false,
                         '',
                         ''
                     ) %}
-                    <tr class="noclick">
-                        <th>{{ column_names[column_index] }}</th>
-                        {# Null checkbox if column can be null #}
-                        <th>
-                            {% if column_null_flags[column_index] == 'YES' %}
-                                <input type="checkbox" class="checkbox_null"
-                                    name="criteriaColumnNullFlags[{{ column_index }}]"
-                                    id="edit_fields_null_id_{{ column_index }}">
-                            {% endif %}
-                        </th>
-                        {# Column's Input box #}
-                        <th>
-                            {% include 'table/search/input_box.twig' with {
+                        <tr class="noclick">
+                            <th>{{ column_names[column_index] }}</th>
+                                {# Null checkbox if column can be null #}
+                            <th>
+                                {% if column_null_flags[column_index] == 'YES' %}
+                                    <input type="checkbox" class="checkbox_null"
+                                           name="criteriaColumnNullFlags[{{ column_index }}]"
+                                           id="edit_fields_null_id_{{ column_index }}">
+                                {% endif %}
+                            </th>
+                            {# Column's Input box #}
+                            <th>
+                                {% include 'table/search/input_box.twig' with {
                                 'str': '',
                                 'column_type': column_types[column_index],
                                 'column_id': column_types[column_index] ? 'edit_fieldID_' : 'fieldID_',
@@ -72,9 +72,9 @@
                                 'db': db,
                                 'in_fbs': false
                             } only %}
-                        </th>
-                    </tr>
-                {% endfor %}
+                            </th>
+                        </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>

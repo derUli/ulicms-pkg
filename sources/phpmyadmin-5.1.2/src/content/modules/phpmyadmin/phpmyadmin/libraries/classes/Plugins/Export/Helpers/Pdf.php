@@ -1,8 +1,8 @@
 <?php
+
 /**
  * PhpMyAdmin\Plugins\Export\Helpers\Pdf class
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Plugins\Export\Helpers;
@@ -21,8 +21,8 @@ use function stripos;
 /**
  * Adapted from a LGPL script by Philip Clarke
  */
-class Pdf extends PdfLib
-{
+class Pdf extends PdfLib {
+
     /** @var array */
     public $tablewidths;
 
@@ -106,24 +106,24 @@ class Pdf extends PdfLib
      * @access public
      */
     public function __construct(
-        $orientation = 'P',
-        $unit = 'mm',
-        $format = 'A4',
-        $unicode = true,
-        $encoding = 'UTF-8',
-        $diskcache = false,
-        $pdfa = false
+            $orientation = 'P',
+            $unit = 'mm',
+            $format = 'A4',
+            $unicode = true,
+            $encoding = 'UTF-8',
+            $diskcache = false,
+            $pdfa = false
     ) {
         global $dbi;
 
         parent::__construct(
-            $orientation,
-            $unit,
-            $format,
-            $unicode,
-            $encoding,
-            $diskcache,
-            $pdfa
+                $orientation,
+                $unit,
+                $format,
+                $unicode,
+                $encoding,
+                $diskcache,
+                $pdfa
         );
         $this->relation = new Relation($dbi);
         $this->transformations = new Transformations();
@@ -140,15 +140,12 @@ class Pdf extends PdfLib
      *
      * @return bool true in case of page break, false otherwise.
      */
-    public function checkPageBreak($h = 0, $y = '', $addpage = true)
-    {
+    public function checkPageBreak($h = 0, $y = '', $addpage = true) {
         if (TCPDF_STATIC::empty_string($y)) {
             $y = $this->y;
         }
         $current_page = $this->page;
-        if (($y + $h > $this->PageBreakTrigger)
-            && (! $this->InFooter)
-            && $this->AcceptPageBreak()
+        if (($y + $h > $this->PageBreakTrigger) && (!$this->InFooter) && $this->AcceptPageBreak()
         ) {
             if ($addpage) {
                 //Automatic page break
@@ -189,8 +186,7 @@ class Pdf extends PdfLib
      * @return void
      */
     // @codingStandardsIgnoreLine
-    public function Header()
-    {
+    public function Header() {
         global $maxY;
         // We don't want automatic page breaks while generating header
         // as this can lead to infinite recursion as auto generated page
@@ -198,35 +194,34 @@ class Pdf extends PdfLib
         // FIXME: Better approach might be to try to compact the content
         $this->SetAutoPageBreak(false);
         // Check if header for this page already exists
-        if (! isset($this->headerset[$this->page])) {
+        if (!isset($this->headerset[$this->page])) {
             $this->SetY($this->tMargin - ($this->FontSizePt / $this->k) * 5);
             $this->cellFontSize = $this->FontSizePt;
             $this->SetFont(
-                PdfLib::PMA_PDF_FONT,
-                '',
-                ($this->titleFontSize
-                    ?: $this->FontSizePt)
+                    PdfLib::PMA_PDF_FONT,
+                    '',
+                    ($this->titleFontSize ?: $this->FontSizePt)
             );
             $this->Cell(0, $this->FontSizePt, $this->titleText, 0, 1, 'C');
             $this->SetFont(PdfLib::PMA_PDF_FONT, '', $this->cellFontSize);
             $this->SetY($this->tMargin - ($this->FontSizePt / $this->k) * 2.5);
             $this->Cell(
-                0,
-                $this->FontSizePt,
-                __('Database:') . ' ' . $this->dbAlias . ',  '
-                . __('Table:') . ' ' . $this->tableAlias . ',  '
-                . __('Purpose:') . ' ' . $this->purpose,
-                0,
-                1,
-                'L'
+                    0,
+                    $this->FontSizePt,
+                    __('Database:') . ' ' . $this->dbAlias . ',  '
+                    . __('Table:') . ' ' . $this->tableAlias . ',  '
+                    . __('Purpose:') . ' ' . $this->purpose,
+                    0,
+                    1,
+                    'L'
             );
             $l = $this->lMargin;
             foreach ($this->colTitles as $col => $txt) {
                 $this->SetXY($l, $this->tMargin);
                 $this->MultiCell(
-                    $this->tablewidths[$col],
-                    $this->FontSizePt,
-                    $txt
+                        $this->tablewidths[$col],
+                        $this->FontSizePt,
+                        $txt
                 );
                 $l += $this->tablewidths[$col];
                 $maxY = $maxY < $this->GetY() ? $this->GetY() : $maxY;
@@ -237,21 +232,21 @@ class Pdf extends PdfLib
             foreach ($this->colTitles as $col => $txt) {
                 $this->SetXY($l, $this->tMargin);
                 $this->Cell(
-                    $this->tablewidths[$col],
-                    $maxY - $this->tMargin,
-                    '',
-                    1,
-                    0,
-                    'L',
-                    1
+                        $this->tablewidths[$col],
+                        $maxY - $this->tMargin,
+                        '',
+                        1,
+                        0,
+                        'L',
+                        1
                 );
                 $this->SetXY($l, $this->tMargin);
                 $this->MultiCell(
-                    $this->tablewidths[$col],
-                    $this->FontSizePt,
-                    $txt,
-                    0,
-                    'C'
+                        $this->tablewidths[$col],
+                        $this->FontSizePt,
+                        $txt,
+                        0,
+                        'C'
                 );
                 $l += $this->tablewidths[$col];
             }
@@ -271,8 +266,7 @@ class Pdf extends PdfLib
      *
      * @return void
      */
-    public function morepagestable($lineheight = 8)
-    {
+    public function morepagestable($lineheight = 8) {
         global $dbi;
 
         // some things to set and 'remember'
@@ -301,16 +295,16 @@ class Pdf extends PdfLib
                 $this->SetXY($l, $h);
                 if ($this->tablewidths[$col] > 0) {
                     $this->MultiCell(
-                        $this->tablewidths[$col],
-                        $lineheight,
-                        $txt,
-                        0,
-                        $this->colAlign[$col]
+                            $this->tablewidths[$col],
+                            $lineheight,
+                            $txt,
+                            0,
+                            $this->colAlign[$col]
                     );
                     $l += $this->tablewidths[$col];
                 }
 
-                if (! isset($tmpheight[$row . '-' . $this->page])) {
+                if (!isset($tmpheight[$row . '-' . $this->page])) {
                     $tmpheight[$row . '-' . $this->page] = 0;
                 }
                 if ($tmpheight[$row . '-' . $this->page] < $this->GetY()) {
@@ -358,8 +352,7 @@ class Pdf extends PdfLib
      *
      * @return void
      */
-    public function setAttributes(array $attr = [])
-    {
+    public function setAttributes(array $attr = []) {
         foreach ($attr as $key => $val) {
             $this->$key = $val;
         }
@@ -373,8 +366,7 @@ class Pdf extends PdfLib
      *
      * @return void
      */
-    public function setTopMargin($topMargin)
-    {
+    public function setTopMargin($topMargin) {
         $this->tMargin = $topMargin;
     }
 
@@ -386,8 +378,7 @@ class Pdf extends PdfLib
      *
      * @return void
      */
-    public function getTriggers($db, $table)
-    {
+    public function getTriggers($db, $table) {
         global $dbi;
 
         $triggers = $dbi->getTriggers($db, $table);
@@ -396,12 +387,12 @@ class Pdf extends PdfLib
         }
 
         unset(
-            $this->tablewidths,
-            $this->colTitles,
-            $this->titleWidth,
-            $this->colFits,
-            $this->displayColumn,
-            $this->colAlign
+                $this->tablewidths,
+                $this->colTitles,
+                $this->titleWidth,
+                $this->colFits,
+                $this->displayColumn,
+                $this->colAlign
         );
 
         /**
@@ -457,16 +448,16 @@ class Pdf extends PdfLib
                 $this->SetXY($l, $h);
                 if ($this->tablewidths[$col] > 0) {
                     $this->MultiCell(
-                        $this->tablewidths[$col],
-                        $this->FontSizePt,
-                        $txt,
-                        0,
-                        $this->colAlign[$col]
+                            $this->tablewidths[$col],
+                            $this->FontSizePt,
+                            $txt,
+                            0,
+                            $this->colAlign[$col]
                     );
                     $l += $this->tablewidths[$col];
                 }
 
-                if (! isset($tmpheight[$row . '-' . $this->page])) {
+                if (!isset($tmpheight[$row . '-' . $this->page])) {
                     $tmpheight[$row . '-' . $this->page] = 0;
                 }
                 if ($tmpheight[$row . '-' . $this->page] < $this->GetY()) {
@@ -526,13 +517,13 @@ class Pdf extends PdfLib
      * @return void
      */
     public function getTableDef(
-        $db,
-        $table,
-        $do_relation,
-        $do_comments,
-        $do_mime,
-        $view = false,
-        array $aliases = []
+            $db,
+            $table,
+            $do_relation,
+            $do_comments,
+            $do_mime,
+            $view = false,
+            array $aliases = []
     ) {
         global $dbi;
 
@@ -541,12 +532,12 @@ class Pdf extends PdfLib
         global $cfgRelation;
 
         unset(
-            $this->tablewidths,
-            $this->colTitles,
-            $this->titleWidth,
-            $this->colFits,
-            $this->displayColumn,
-            $this->colAlign
+                $this->tablewidths,
+                $this->colTitles,
+                $this->titleWidth,
+                $this->colFits,
+                $this->displayColumn,
+                $this->colAlign
         );
 
         /**
@@ -565,7 +556,7 @@ class Pdf extends PdfLib
             // Find which tables are related with the current one and write it in
             // an array
             $res_rel = $this->relation->getForeigners($db, $table);
-            $have_rel = ! empty($res_rel);
+            $have_rel = !empty($res_rel);
         } else {
             $have_rel = false;
         }
@@ -593,7 +584,7 @@ class Pdf extends PdfLib
             $this->tablewidths[$columns_cnt] = 120;
             $columns_cnt++;
         }
-        if ($do_comments /*&& $cfgRelation['commwork']*/) {
+        if ($do_comments /* && $cfgRelation['commwork'] */) {
             $this->colTitles[$columns_cnt] = __('Comments');
             $this->displayColumn[$columns_cnt] = true;
             $this->colAlign[$columns_cnt] = 'L';
@@ -642,42 +633,35 @@ class Pdf extends PdfLib
 
         // fun begin
         foreach ($columns as $column) {
-            $extracted_columnspec
-                = Util::extractColumnSpec($column['Type']);
+            $extracted_columnspec = Util::extractColumnSpec($column['Type']);
 
             $type = $extracted_columnspec['print_type'];
             if (empty($type)) {
                 $type = ' ';
             }
 
-            if (! isset($column['Default'])) {
+            if (!isset($column['Default'])) {
                 if ($column['Null'] !== 'NO') {
                     $column['Default'] = 'NULL';
                 }
             }
             $data[] = $column['Field'];
             $data[] = $type;
-            $data[] = $column['Null'] == '' || $column['Null'] === 'NO'
-                ? 'No'
-                : 'Yes';
+            $data[] = $column['Null'] == '' || $column['Null'] === 'NO' ? 'No' : 'Yes';
             $data[] = $column['Default'] ?? '';
 
             $field_name = $column['Field'];
 
             if ($do_relation && $have_rel) {
-                $data[] = isset($res_rel[$field_name])
-                    ? $res_rel[$field_name]['foreign_table']
-                    . ' (' . $res_rel[$field_name]['foreign_field']
-                    . ')'
-                    : '';
+                $data[] = isset($res_rel[$field_name]) ? $res_rel[$field_name]['foreign_table']
+                        . ' (' . $res_rel[$field_name]['foreign_field']
+                        . ')' : '';
             }
             if ($do_comments) {
                 $data[] = $comments[$field_name] ?? '';
             }
             if ($do_mime) {
-                $data[] = isset($mime_map[$field_name])
-                    ? $mime_map[$field_name]['mimetype']
-                    : '';
+                $data[] = isset($mime_map[$field_name]) ? $mime_map[$field_name]['mimetype'] : '';
             }
 
             $this->page = $currpage;
@@ -689,16 +673,16 @@ class Pdf extends PdfLib
                 $this->SetXY($l, $h);
                 if ($this->tablewidths[$col] > 0) {
                     $this->MultiCell(
-                        $this->tablewidths[$col],
-                        $this->FontSizePt,
-                        $txt,
-                        0,
-                        $this->colAlign[$col]
+                            $this->tablewidths[$col],
+                            $this->FontSizePt,
+                            $txt,
+                            0,
+                            $this->colAlign[$col]
                     );
                     $l += $this->tablewidths[$col];
                 }
 
-                if (! isset($tmpheight[$row . '-' . $this->page])) {
+                if (!isset($tmpheight[$row . '-' . $this->page])) {
                     $tmpheight[$row . '-' . $this->page] = 0;
                 }
                 if ($tmpheight[$row . '-' . $this->page] < $this->GetY()) {
@@ -747,26 +731,25 @@ class Pdf extends PdfLib
      *
      * @return void
      */
-    public function mysqlReport($query)
-    {
+    public function mysqlReport($query) {
         global $dbi;
 
         unset(
-            $this->tablewidths,
-            $this->colTitles,
-            $this->titleWidth,
-            $this->colFits,
-            $this->displayColumn,
-            $this->colAlign
+                $this->tablewidths,
+                $this->colTitles,
+                $this->titleWidth,
+                $this->colFits,
+                $this->displayColumn,
+                $this->colAlign
         );
 
         /**
          * Pass 1 for column widths
          */
         $this->results = $dbi->query(
-            $query,
-            DatabaseInterface::CONNECT_USER,
-            DatabaseInterface::QUERY_UNBUFFERED
+                $query,
+                DatabaseInterface::CONNECT_USER,
+                DatabaseInterface::QUERY_UNBUFFERED
         );
         $this->numFields = $dbi->numFields($this->results);
         $this->fields = $dbi->getFieldsMeta($this->results);
@@ -786,7 +769,7 @@ class Pdf extends PdfLib
             $col_as = $this->fields[$i]->name;
             $db = $this->currentDb;
             $table = $this->currentTable;
-            if (! empty($this->aliases[$db]['tables'][$table]['columns'][$col_as])) {
+            if (!empty($this->aliases[$db]['tables'][$table]['columns'][$col_as])) {
                 $col_as = $this->aliases[$db]['tables'][$table]['columns'][$col_as];
             }
             $stringWidth = $this->GetStringWidth($col_as) + 6;
@@ -811,9 +794,9 @@ class Pdf extends PdfLib
                 case 'mediumblob':
                 case 'longblob':
                     /**
-                 * @todo do not deactivate completely the display
-                 * but show the field's name and [BLOB]
-                 */
+                     * @todo do not deactivate completely the display
+                     * but show the field's name and [BLOB]
+                     */
                     if (stripos($this->fields[$i]->flags, 'BINARY') !== false) {
                         $this->displayColumn[$i] = false;
                         unset($this->colTitles[$i]);
@@ -853,8 +836,7 @@ class Pdf extends PdfLib
                     // if data's width is bigger than the current column width,
                     // enlarge the column (but avoid enlarging it if the
                     // data's width is very big)
-                    if ($stringWidth > $val
-                        && $stringWidth < $this->sColWidth * 3
+                    if ($stringWidth > $val && $stringWidth < $this->sColWidth * 3
                     ) {
                         $colFits[$key] = $stringWidth;
                     }
@@ -878,7 +860,7 @@ class Pdf extends PdfLib
         }
 
         for ($i = 0; $i < $this->numFields; $i++) {
-            if (! array_key_exists($i, $colFits)) {
+            if (!array_key_exists($i, $colFits)) {
                 $this->tablewidths[$i] = $this->sColWidth + $surplusToAdd;
             }
             if ($this->displayColumn[$i] != false) {
@@ -895,9 +877,9 @@ class Pdf extends PdfLib
         // Pass 2
 
         $this->results = $dbi->query(
-            $query,
-            DatabaseInterface::CONNECT_USER,
-            DatabaseInterface::QUERY_UNBUFFERED
+                $query,
+                DatabaseInterface::CONNECT_USER,
+                DatabaseInterface::QUERY_UNBUFFERED
         );
         $this->SetY($this->tMargin);
         $this->AddPage();
@@ -905,4 +887,5 @@ class Pdf extends PdfLib
         $this->morepagestable($this->FontSizePt);
         $dbi->freeResult($this->results);
     }
+
 }

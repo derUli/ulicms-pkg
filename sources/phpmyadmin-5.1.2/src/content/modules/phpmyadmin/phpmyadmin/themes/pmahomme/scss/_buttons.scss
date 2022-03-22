@@ -1,14 +1,14 @@
 .btn-primary {
-  font-weight: $font-weight-bold;
+    font-weight: $font-weight-bold;
 }
 
 .btn-primary,
 .btn-secondary {
-  border-color: #aaa;
-  text-shadow: 0 1px 0 #fff;
-  background-image: linear-gradient(#f8f8f8, #d8d8d8);
+    border-color: #aaa;
+    text-shadow: 0 1px 0 #fff;
+    background-image: linear-gradient(#f8f8f8, #d8d8d8);
 
-  &:hover {
-    background-image: linear-gradient(#fff, #ddd);
-  }
+    &:hover {
+        background-image: linear-gradient(#fff, #ddd);
+    }
 }

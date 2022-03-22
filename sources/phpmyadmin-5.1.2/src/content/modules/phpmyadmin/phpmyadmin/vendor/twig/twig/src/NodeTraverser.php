@@ -21,32 +21,29 @@ use Twig\NodeVisitor\NodeVisitorInterface;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-final class NodeTraverser
-{
+final class NodeTraverser {
+
     private $env;
     private $visitors = [];
 
     /**
      * @param NodeVisitorInterface[] $visitors
      */
-    public function __construct(Environment $env, array $visitors = [])
-    {
+    public function __construct(Environment $env, array $visitors = []) {
         $this->env = $env;
         foreach ($visitors as $visitor) {
             $this->addVisitor($visitor);
         }
     }
 
-    public function addVisitor(NodeVisitorInterface $visitor)
-    {
+    public function addVisitor(NodeVisitorInterface $visitor) {
         $this->visitors[$visitor->getPriority()][] = $visitor;
     }
 
     /**
      * Traverses a node and calls the registered visitors.
      */
-    public function traverse(Node $node): Node
-    {
+    public function traverse(Node $node): Node {
         ksort($this->visitors);
         foreach ($this->visitors as $visitors) {
             foreach ($visitors as $visitor) {
@@ -60,8 +57,7 @@ final class NodeTraverser
     /**
      * @return Node|null
      */
-    private function traverseForVisitor(NodeVisitorInterface $visitor, Node $node)
-    {
+    private function traverseForVisitor(NodeVisitorInterface $visitor, Node $node) {
         $node = $visitor->enterNode($node, $this->env);
 
         foreach ($node as $k => $n) {
@@ -80,6 +76,7 @@ final class NodeTraverser
 
         return $visitor->leaveNode($node, $this->env);
     }
+
 }
 
 class_alias('Twig\NodeTraverser', 'Twig_NodeTraverser');

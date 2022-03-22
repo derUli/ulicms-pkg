@@ -1,8 +1,8 @@
 <?php
+
 /**
  * `SET` statement.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\SqlParser\Statements;
@@ -10,14 +10,13 @@ namespace PhpMyAdmin\SqlParser\Statements;
 use PhpMyAdmin\SqlParser\Components\OptionsArray;
 use PhpMyAdmin\SqlParser\Components\SetOperation;
 use PhpMyAdmin\SqlParser\Statement;
-
 use function trim;
 
 /**
  * `SET` statement.
  */
-class SetStatement extends Statement
-{
+class SetStatement extends Statement {
+
     /**
      * The clauses of this statement, in order.
      *
@@ -103,12 +102,12 @@ class SetStatement extends Statement
     /**
      * @return string
      */
-    public function build()
-    {
+    public function build() {
         $ret = 'SET ' . OptionsArray::build($this->options)
-            . ' ' . SetOperation::build($this->set)
-            . ' ' . OptionsArray::build($this->end_options);
+                . ' ' . SetOperation::build($this->set)
+                . ' ' . OptionsArray::build($this->end_options);
 
         return trim($ret);
     }
+
 }

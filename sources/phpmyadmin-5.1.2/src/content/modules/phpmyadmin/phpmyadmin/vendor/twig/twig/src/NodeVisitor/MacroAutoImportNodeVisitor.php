@@ -24,13 +24,12 @@ use Twig\Node\Node;
 /**
  * @author Fabien Potencier <fabien@symfony.com>
  */
-final class MacroAutoImportNodeVisitor implements NodeVisitorInterface
-{
+final class MacroAutoImportNodeVisitor implements NodeVisitorInterface {
+
     private $inAModule = false;
     private $hasMacroCalls = false;
 
-    public function enterNode(Node $node, Environment $env)
-    {
+    public function enterNode(Node $node, Environment $env) {
         if ($node instanceof ModuleNode) {
             $this->inAModule = true;
             $this->hasMacroCalls = false;
@@ -39,8 +38,7 @@ final class MacroAutoImportNodeVisitor implements NodeVisitorInterface
         return $node;
     }
 
-    public function leaveNode(Node $node, Environment $env)
-    {
+    public function leaveNode(Node $node, Environment $env) {
         if ($node instanceof ModuleNode) {
             $this->inAModule = false;
             if ($this->hasMacroCalls) {
@@ -48,15 +46,15 @@ final class MacroAutoImportNodeVisitor implements NodeVisitorInterface
             }
         } elseif ($this->inAModule) {
             if (
-                $node instanceof GetAttrExpression &&
-                $node->getNode('node') instanceof NameExpression &&
-                '_self' === $node->getNode('node')->getAttribute('name') &&
-                $node->getNode('attribute') instanceof ConstantExpression
+                    $node instanceof GetAttrExpression &&
+                    $node->getNode('node') instanceof NameExpression &&
+                    '_self' === $node->getNode('node')->getAttribute('name') &&
+                    $node->getNode('attribute') instanceof ConstantExpression
             ) {
                 $this->hasMacroCalls = true;
 
                 $name = $node->getNode('attribute')->getAttribute('value');
-                $node = new MethodCallExpression($node->getNode('node'), 'macro_'.$name, $node->getNode('arguments'), $node->getTemplateLine());
+                $node = new MethodCallExpression($node->getNode('node'), 'macro_' . $name, $node->getNode('arguments'), $node->getTemplateLine());
                 $node->setAttribute('safe', true);
             }
         }
@@ -64,9 +62,9 @@ final class MacroAutoImportNodeVisitor implements NodeVisitorInterface
         return $node;
     }
 
-    public function getPriority()
-    {
+    public function getPriority() {
         // we must be ran before auto-escaping
         return -10;
     }
+
 }

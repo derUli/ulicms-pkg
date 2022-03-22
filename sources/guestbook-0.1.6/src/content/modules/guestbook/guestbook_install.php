@@ -1,6 +1,6 @@
 <?php
-function guestbook_install()
-{
+
+function guestbook_install() {
     // install database tables
     db_query("CREATE TABLE IF NOT EXISTS `" . tbname("guestbook_entries") . "` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

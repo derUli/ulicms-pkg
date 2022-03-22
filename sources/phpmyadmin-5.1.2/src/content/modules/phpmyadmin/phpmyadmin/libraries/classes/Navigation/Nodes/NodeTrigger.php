@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Functionality for the navigation tree
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Navigation\Nodes;
@@ -13,8 +13,8 @@ use PhpMyAdmin\Url;
 /**
  * Represents a trigger node in the navigation tree
  */
-class NodeTrigger extends Node
-{
+class NodeTrigger extends Node {
+
     /**
      * Initialises the class
      *
@@ -23,8 +23,7 @@ class NodeTrigger extends Node
      * @param bool   $isGroup Whether this object has been created
      *                        while grouping nodes
      */
-    public function __construct($name, $type = Node::OBJECT, $isGroup = false)
-    {
+    public function __construct($name, $type = Node::OBJECT, $isGroup = false) {
         parent::__construct($name, $type, $isGroup);
         $this->icon = Generator::getImage('b_triggers');
         $this->links = [
@@ -39,4 +38,5 @@ class NodeTrigger extends Node
         ];
         $this->classes = 'trigger';
     }
+
 }

@@ -19,8 +19,8 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  *
  * @author Kevin Bond <kevinbond@gmail.com>
  */
-interface ConfigurationExtensionInterface
-{
+interface ConfigurationExtensionInterface {
+
     /**
      * Returns extension configuration.
      *

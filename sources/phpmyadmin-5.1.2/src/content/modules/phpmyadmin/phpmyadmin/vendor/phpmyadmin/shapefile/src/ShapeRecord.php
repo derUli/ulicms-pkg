@@ -1,4 +1,5 @@
 <?php
+
 /**
  * phpMyAdmin ShapeFile library
  * <https://github.com/phpmyadmin/shapefile/>.
@@ -25,28 +26,23 @@ namespace PhpMyAdmin\ShapeFile;
 /**
  * ShapeFile record class.
  */
-class ShapeRecord
-{
+class ShapeRecord {
+
     private $SHPFile = null;
     private $DBFFile = null;
     private $ShapeFile = null;
-
     private $size = 0;
     private $read = 0;
-
     public $recordNumber = null;
     public $shapeType = null;
-
     public $lastError = '';
-
     public $SHPData = array();
     public $DBFData = array();
 
     /**
      * @param int $shapeType
      */
-    public function __construct($shapeType)
-    {
+    public function __construct($shapeType) {
         $this->shapeType = $shapeType;
     }
 
@@ -57,8 +53,7 @@ class ShapeRecord
      * @param file      &$SHPFile  Opened SHP file
      * @param file      &$DBFFile  Opened DBF file
      */
-    public function loadFromFile(&$ShapeFile, &$SHPFile, &$DBFFile)
-    {
+    public function loadFromFile(&$ShapeFile, &$SHPFile, &$DBFFile) {
         $this->ShapeFile = $ShapeFile;
         $this->SHPFile = $SHPFile;
         $this->DBFFile = $DBFFile;
@@ -136,8 +131,7 @@ class ShapeRecord
      * @param file &$DBFFile     Opened DBF file
      * @param int  $recordNumber Record number
      */
-    public function saveToFile(&$SHPFile, &$DBFFile, $recordNumber)
-    {
+    public function saveToFile(&$SHPFile, &$DBFFile, $recordNumber) {
         $this->SHPFile = $SHPFile;
         $this->DBFFile = $DBFFile;
         $this->recordNumber = $recordNumber;
@@ -197,8 +191,7 @@ class ShapeRecord
      *
      * @param array $header DBF structure header
      */
-    public function updateDBFInfo($header)
-    {
+    public function updateDBFInfo($header) {
         $tmp = $this->DBFData;
         unset($this->DBFData);
         $this->DBFData = array();
@@ -215,8 +208,7 @@ class ShapeRecord
      *
      * @return mixed
      */
-    private function _loadData($type, $count)
-    {
+    private function _loadData($type, $count) {
         $data = $this->ShapeFile->readSHP($count);
         if ($data === false) {
             return false;
@@ -229,8 +221,7 @@ class ShapeRecord
     /**
      * Loads metadata header from a file.
      */
-    private function _loadHeaders()
-    {
+    private function _loadHeaders() {
         $this->shapeType = false;
         $this->recordNumber = $this->_loadData('N', 4);
         if ($this->recordNumber === false) {
@@ -248,15 +239,13 @@ class ShapeRecord
     /**
      * Saves metadata header to a file.
      */
-    private function _saveHeaders()
-    {
+    private function _saveHeaders() {
         fwrite($this->SHPFile, pack('N', $this->recordNumber));
         fwrite($this->SHPFile, pack('N', $this->getContentLength()));
         fwrite($this->SHPFile, pack('V', $this->shapeType));
     }
 
-    private function _loadPoint()
-    {
+    private function _loadPoint() {
         $data = array();
 
         $data['x'] = $this->_loadData('d', 8);
@@ -265,8 +254,7 @@ class ShapeRecord
         return $data;
     }
 
-    private function _loadPointM()
-    {
+    private function _loadPointM() {
         $data = $this->_loadPoint();
 
         $data['m'] = $this->_loadData('d', 8);
@@ -274,8 +262,7 @@ class ShapeRecord
         return $data;
     }
 
-    private function _loadPointZ()
-    {
+    private function _loadPointZ() {
         $data = $this->_loadPoint();
 
         $data['z'] = $this->_loadData('d', 8);
@@ -284,72 +271,60 @@ class ShapeRecord
         return $data;
     }
 
-    private function _savePoint($data)
-    {
+    private function _savePoint($data) {
         fwrite($this->SHPFile, Util::packDouble($data['x']));
         fwrite($this->SHPFile, Util::packDouble($data['y']));
     }
 
-    private function _savePointM($data)
-    {
+    private function _savePointM($data) {
         fwrite($this->SHPFile, Util::packDouble($data['x']));
         fwrite($this->SHPFile, Util::packDouble($data['y']));
         fwrite($this->SHPFile, Util::packDouble($data['m']));
     }
 
-    private function _savePointZ($data)
-    {
+    private function _savePointZ($data) {
         fwrite($this->SHPFile, Util::packDouble($data['x']));
         fwrite($this->SHPFile, Util::packDouble($data['y']));
         fwrite($this->SHPFile, Util::packDouble($data['z']));
         fwrite($this->SHPFile, Util::packDouble($data['m']));
     }
 
-    private function _loadNullRecord()
-    {
+    private function _loadNullRecord() {
         $this->SHPData = array();
     }
 
-    private function _loadPointRecord()
-    {
+    private function _loadPointRecord() {
         $this->SHPData = $this->_loadPoint();
     }
 
-    private function _loadPointMRecord()
-    {
+    private function _loadPointMRecord() {
         $this->SHPData = $this->_loadPointM();
     }
 
-    private function _loadPointZRecord()
-    {
+    private function _loadPointZRecord() {
         $this->SHPData = $this->_loadPointZ();
     }
 
-    private function _savePointRecord()
-    {
+    private function _savePointRecord() {
         $this->_savePoint($this->SHPData);
     }
 
-    private function _savePointMRecord()
-    {
+    private function _savePointMRecord() {
         $this->_savePointM($this->SHPData);
     }
 
-    private function _savePointZRecord()
-    {
+    private function _savePointZRecord() {
         $this->_savePointZ($this->SHPData);
     }
 
-    private function _loadBBox()
-    {
+    private function _loadBBox() {
         $this->SHPData['xmin'] = $this->_loadData('d', 8);
         $this->SHPData['ymin'] = $this->_loadData('d', 8);
         $this->SHPData['xmax'] = $this->_loadData('d', 8);
         $this->SHPData['ymax'] = $this->_loadData('d', 8);
     }
 
-    private function _loadMultiPointRecord()
-    {
+    private function _loadMultiPointRecord() {
         $this->SHPData = array();
         $this->_loadBBox();
 
@@ -363,8 +338,7 @@ class ShapeRecord
     /**
      * @param string $type
      */
-    private function _loadMultiPointMZRecord($type)
-    {
+    private function _loadMultiPointMZRecord($type) {
         /* The m dimension is optional, depends on bounding box data */
         if ($type == 'm' && !$this->ShapeFile->hasMeasure()) {
             return;
@@ -378,23 +352,20 @@ class ShapeRecord
         }
     }
 
-    private function _loadMultiPointMRecord()
-    {
+    private function _loadMultiPointMRecord() {
         $this->_loadMultiPointRecord();
 
         $this->_loadMultiPointMZRecord('m');
     }
 
-    private function _loadMultiPointZRecord()
-    {
+    private function _loadMultiPointZRecord() {
         $this->_loadMultiPointRecord();
 
         $this->_loadMultiPointMZRecord('z');
         $this->_loadMultiPointMZRecord('m');
     }
 
-    private function _saveMultiPointRecord()
-    {
+    private function _saveMultiPointRecord() {
         fwrite($this->SHPFile, pack('dddd', $this->SHPData['xmin'], $this->SHPData['ymin'], $this->SHPData['xmax'], $this->SHPData['ymax']));
 
         fwrite($this->SHPFile, pack('V', $this->SHPData['numpoints']));
@@ -407,8 +378,7 @@ class ShapeRecord
     /**
      * @param string $type
      */
-    private function _saveMultiPointMZRecord($type)
-    {
+    private function _saveMultiPointMZRecord($type) {
         fwrite($this->SHPFile, pack('dd', $this->SHPData[$type . 'min'], $this->SHPData[$type . 'max']));
 
         for ($i = 0; $i < $this->SHPData['numpoints']; ++$i) {
@@ -416,23 +386,20 @@ class ShapeRecord
         }
     }
 
-    private function _saveMultiPointMRecord()
-    {
+    private function _saveMultiPointMRecord() {
         $this->_saveMultiPointRecord();
 
         $this->_saveMultiPointMZRecord('m');
     }
 
-    private function _saveMultiPointZRecord()
-    {
+    private function _saveMultiPointZRecord() {
         $this->_saveMultiPointRecord();
 
         $this->_saveMultiPointMZRecord('z');
         $this->_saveMultiPointMZRecord('m');
     }
 
-    private function _loadPolyLineRecord()
-    {
+    private function _loadPolyLineRecord() {
         $this->SHPData = array();
         $this->_loadBBox();
 
@@ -461,8 +428,7 @@ class ShapeRecord
     /**
      * @param string $type
      */
-    private function _loadPolyLineMZRecord($type)
-    {
+    private function _loadPolyLineMZRecord($type) {
         /* The m dimension is optional, depends on bounding box data */
         if ($type == 'm' && !$this->ShapeFile->hasMeasure()) {
             return;
@@ -483,23 +449,20 @@ class ShapeRecord
         }
     }
 
-    private function _loadPolyLineMRecord()
-    {
+    private function _loadPolyLineMRecord() {
         $this->_loadPolyLineRecord();
 
         $this->_loadPolyLineMZRecord('m');
     }
 
-    private function _loadPolyLineZRecord()
-    {
+    private function _loadPolyLineZRecord() {
         $this->_loadPolyLineRecord();
 
         $this->_loadPolyLineMZRecord('z');
         $this->_loadPolyLineMZRecord('m');
     }
 
-    private function _savePolyLineRecord()
-    {
+    private function _savePolyLineRecord() {
         fwrite($this->SHPFile, pack('dddd', $this->SHPData['xmin'], $this->SHPData['ymin'], $this->SHPData['xmax'], $this->SHPData['ymax']));
 
         fwrite($this->SHPFile, pack('VV', $this->SHPData['numparts'], $this->SHPData['numpoints']));
@@ -520,8 +483,7 @@ class ShapeRecord
     /**
      * @param string $type
      */
-    private function _savePolyLineMZRecord($type)
-    {
+    private function _savePolyLineMZRecord($type) {
         fwrite($this->SHPFile, pack('dd', $this->SHPData[$type . 'min'], $this->SHPData[$type . 'max']));
 
         foreach ($this->SHPData['parts'] as $partData) {
@@ -531,53 +493,44 @@ class ShapeRecord
         }
     }
 
-    private function _savePolyLineMRecord()
-    {
+    private function _savePolyLineMRecord() {
         $this->_savePolyLineRecord();
 
         $this->_savePolyLineMZRecord('m');
     }
 
-    private function _savePolyLineZRecord()
-    {
+    private function _savePolyLineZRecord() {
         $this->_savePolyLineRecord();
 
         $this->_savePolyLineMZRecord('z');
         $this->_savePolyLineMZRecord('m');
     }
 
-    private function _loadPolygonRecord()
-    {
+    private function _loadPolygonRecord() {
         $this->_loadPolyLineRecord();
     }
 
-    private function _loadPolygonMRecord()
-    {
+    private function _loadPolygonMRecord() {
         $this->_loadPolyLineMRecord();
     }
 
-    private function _loadPolygonZRecord()
-    {
+    private function _loadPolygonZRecord() {
         $this->_loadPolyLineZRecord();
     }
 
-    private function _savePolygonRecord()
-    {
+    private function _savePolygonRecord() {
         $this->_savePolyLineRecord();
     }
 
-    private function _savePolygonMRecord()
-    {
+    private function _savePolygonMRecord() {
         $this->_savePolyLineMRecord();
     }
 
-    private function _savePolygonZRecord()
-    {
+    private function _savePolygonZRecord() {
         $this->_savePolyLineZRecord();
     }
 
-    private function _adjustBBox($point)
-    {
+    private function _adjustBBox($point) {
         // Adjusts bounding box based on point
         $directions = array('x', 'y', 'z', 'm');
         foreach ($directions as $direction) {
@@ -603,8 +556,7 @@ class ShapeRecord
      *
      * @return array
      */
-    private function _fixPoint($point, $dimension)
-    {
+    private function _fixPoint($point, $dimension) {
         if (!isset($point[$dimension])) {
             $point[$dimension] = 0.0; // no_value
         }
@@ -619,8 +571,7 @@ class ShapeRecord
      *
      * @return array Fixed point data
      */
-    private function _adjustPoint($point)
-    {
+    private function _adjustPoint($point) {
         $type = $this->shapeType / 10;
         if ($type >= 2) {
             $point = $this->_fixPoint($point, 'm');
@@ -638,8 +589,7 @@ class ShapeRecord
      * @param array $point     Point data
      * @param int   $partIndex Part index
      */
-    public function addPoint($point, $partIndex = 0)
-    {
+    public function addPoint($point, $partIndex = 0) {
         $point = $this->_adjustPoint($point);
         switch ($this->shapeType) {
             case 0:
@@ -683,8 +633,7 @@ class ShapeRecord
      * @param int $pointIndex Point index
      * @param int $partIndex  Part index
      */
-    public function deletePoint($pointIndex = 0, $partIndex = 0)
-    {
+    public function deletePoint($pointIndex = 0, $partIndex = 0) {
         switch ($this->shapeType) {
             case 0:
                 //Don't delete anything
@@ -745,8 +694,7 @@ class ShapeRecord
      *
      * @return int
      */
-    public function getContentLength()
-    {
+    public function getContentLength() {
         // The content length for a record is the length of the record contents section measured in 16-bit words.
         // one coordinate makes 4 16-bit words (64 bit double)
         switch ($this->shapeType) {
@@ -804,14 +752,12 @@ class ShapeRecord
         return $result;
     }
 
-    private function _loadDBFData()
-    {
+    private function _loadDBFData() {
         $this->DBFData = @dbase_get_record_with_names($this->DBFFile, $this->recordNumber);
         unset($this->DBFData['deleted']);
     }
 
-    private function _saveDBFData()
-    {
+    private function _saveDBFData() {
         if (count($this->DBFData) == 0) {
             return;
         }
@@ -832,8 +778,7 @@ class ShapeRecord
      *
      * @param string $error
      */
-    public function setError($error)
-    {
+    public function setError($error) {
         $this->lastError = $error;
     }
 
@@ -842,8 +787,8 @@ class ShapeRecord
      *
      * @return string
      */
-    public function getShapeName()
-    {
+    public function getShapeName() {
         return Util::nameShape($this->shapeType);
     }
+
 }

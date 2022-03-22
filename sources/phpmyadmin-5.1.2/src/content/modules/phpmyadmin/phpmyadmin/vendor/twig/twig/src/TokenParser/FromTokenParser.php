@@ -20,10 +20,9 @@ use Twig\Token;
  *
  *   {% from 'forms.html' import forms %}
  */
-final class FromTokenParser extends AbstractTokenParser
-{
-    public function parse(Token $token)
-    {
+final class FromTokenParser extends AbstractTokenParser {
+
+    public function parse(Token $token) {
         $macro = $this->parser->getExpressionParser()->parseExpression();
         $stream = $this->parser->getStream();
         $stream->expect(/* Token::NAME_TYPE */ 5, 'import');
@@ -50,16 +49,16 @@ final class FromTokenParser extends AbstractTokenParser
         $node = new ImportNode($macro, $var, $token->getLine(), $this->getTag(), $this->parser->isMainScope());
 
         foreach ($targets as $name => $alias) {
-            $this->parser->addImportedSymbol('function', $alias, 'macro_'.$name, $var);
+            $this->parser->addImportedSymbol('function', $alias, 'macro_' . $name, $var);
         }
 
         return $node;
     }
 
-    public function getTag()
-    {
+    public function getTag() {
         return 'from';
     }
+
 }
 
 class_alias('Twig\TokenParser\FromTokenParser', 'Twig_TokenParser_From');

@@ -31,10 +31,9 @@ use Twig\TokenStream;
  *    {% endfor %}
  *   </ul>
  */
-final class ForTokenParser extends AbstractTokenParser
-{
-    public function parse(Token $token)
-    {
+final class ForTokenParser extends AbstractTokenParser {
+
+    public function parse(Token $token) {
         $lineno = $token->getLine();
         $stream = $this->parser->getStream();
         $targets = $this->parser->getExpressionParser()->parseAssignmentExpression();
@@ -77,19 +76,16 @@ final class ForTokenParser extends AbstractTokenParser
         return new ForNode($keyTarget, $valueTarget, $seq, $ifexpr, $body, $else, $lineno, $this->getTag());
     }
 
-    public function decideForFork(Token $token)
-    {
+    public function decideForFork(Token $token) {
         return $token->test(['else', 'endfor']);
     }
 
-    public function decideForEnd(Token $token)
-    {
+    public function decideForEnd(Token $token) {
         return $token->test('endfor');
     }
 
     // the loop variable cannot be used in the condition
-    private function checkLoopUsageCondition(TokenStream $stream, Node $node)
-    {
+    private function checkLoopUsageCondition(TokenStream $stream, Node $node) {
         if ($node instanceof GetAttrExpression && $node->getNode('node') instanceof NameExpression && 'loop' == $node->getNode('node')->getAttribute('name')) {
             throw new SyntaxError('The "loop" variable cannot be used in a looping condition.', $node->getTemplateLine(), $stream->getSourceContext());
         }
@@ -105,8 +101,7 @@ final class ForTokenParser extends AbstractTokenParser
 
     // check usage of non-defined loop-items
     // it does not catch all problems (for instance when a for is included into another or when the variable is used in an include)
-    private function checkLoopUsageBody(TokenStream $stream, Node $node)
-    {
+    private function checkLoopUsageBody(TokenStream $stream, Node $node) {
         if ($node instanceof GetAttrExpression && $node->getNode('node') instanceof NameExpression && 'loop' == $node->getNode('node')->getAttribute('name')) {
             $attribute = $node->getNode('attribute');
             if ($attribute instanceof ConstantExpression && \in_array($attribute->getAttribute('value'), ['length', 'revindex0', 'revindex', 'last'])) {
@@ -128,10 +123,10 @@ final class ForTokenParser extends AbstractTokenParser
         }
     }
 
-    public function getTag()
-    {
+    public function getTag() {
         return 'for';
     }
+
 }
 
 class_alias('Twig\TokenParser\ForTokenParser', 'Twig_TokenParser_For');

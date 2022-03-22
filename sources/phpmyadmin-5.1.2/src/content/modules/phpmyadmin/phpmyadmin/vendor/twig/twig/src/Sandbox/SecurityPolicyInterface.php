@@ -16,8 +16,8 @@ namespace Twig\Sandbox;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-interface SecurityPolicyInterface
-{
+interface SecurityPolicyInterface {
+
     /**
      * @throws SecurityError
      */

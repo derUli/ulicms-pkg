@@ -28,7 +28,7 @@ return static function (ContainerConfigurator $configurator) {
                 }
                 $theService->args($service['arguments']);
             }
-            if (! isset($service['factory'])) {
+            if (!isset($service['factory'])) {
                 continue;
             }
             // !== null check

@@ -1,10 +1,10 @@
 <?php
+
 /**
  * Defines a token along with a set of types and flags and utility functions.
  *
  * An array of tokens will result after parsing the query.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\SqlParser;
@@ -20,8 +20,7 @@ use function strtoupper;
  * A structure representing a lexeme that explicitly indicates its
  * categorization for the purpose of parsing.
  */
-class Token
-{
+class Token {
     // Types of tokens (a vague description of a token's purpose).
 
     /**
@@ -110,7 +109,6 @@ class Token
      *  begin_label: WHILE ... DO [statement_list] END WHILE [end_label].
      */
     public const TYPE_LABEL = 10;
-
     // Flags that describe the tokens in more detail.
     // All keywords must have flag 1 so `Context::isKeyword` method doesn't
     // require strict comparison.
@@ -119,31 +117,26 @@ class Token
     public const FLAG_KEYWORD_DATA_TYPE = 8;
     public const FLAG_KEYWORD_KEY = 16;
     public const FLAG_KEYWORD_FUNCTION = 32;
-
     // Numbers related flags.
     public const FLAG_NUMBER_HEX = 1;
     public const FLAG_NUMBER_FLOAT = 2;
     public const FLAG_NUMBER_APPROXIMATE = 4;
     public const FLAG_NUMBER_NEGATIVE = 8;
     public const FLAG_NUMBER_BINARY = 16;
-
     // Strings related flags.
     public const FLAG_STRING_SINGLE_QUOTES = 1;
     public const FLAG_STRING_DOUBLE_QUOTES = 2;
-
     // Comments related flags.
     public const FLAG_COMMENT_BASH = 1;
     public const FLAG_COMMENT_C = 2;
     public const FLAG_COMMENT_SQL = 4;
     public const FLAG_COMMENT_MYSQL_CMD = 8;
-
     // Operators related flags.
     public const FLAG_OPERATOR_ARITHMETIC = 1;
     public const FLAG_OPERATOR_LOGICAL = 2;
     public const FLAG_OPERATOR_BITWISE = 4;
     public const FLAG_OPERATOR_ASSIGNMENT = 8;
     public const FLAG_OPERATOR_SQL = 16;
-
     // Symbols related flags.
     public const FLAG_SYMBOL_VARIABLE = 1;
     public const FLAG_SYMBOL_BACKTICK = 2;
@@ -201,8 +194,7 @@ class Token
      * @param int    $type  the type of the token
      * @param int    $flags the flags of the token
      */
-    public function __construct($token, $type = 0, $flags = 0)
-    {
+    public function __construct($token, $type = 0, $flags = 0) {
         $this->token = $token;
         $this->type = $type;
         $this->flags = $flags;
@@ -217,12 +209,11 @@ class Token
      *
      * @return mixed
      */
-    public function extract()
-    {
+    public function extract() {
         switch ($this->type) {
             case self::TYPE_KEYWORD:
                 $this->keyword = strtoupper($this->token);
-                if (! ($this->flags & self::FLAG_KEYWORD_RESERVED)) {
+                if (!($this->flags & self::FLAG_KEYWORD_RESERVED)) {
                     // Unreserved keywords should stay the way they are because they
                     // might represent field names.
                     return $this->token;
@@ -247,7 +238,7 @@ class Token
                     }
                 } elseif (($this->flags & self::FLAG_NUMBER_APPROXIMATE) || ($this->flags & self::FLAG_NUMBER_FLOAT)) {
                     $ret = (float) $ret;
-                } elseif (! ($this->flags & self::FLAG_NUMBER_BINARY)) {
+                } elseif (!($this->flags & self::FLAG_NUMBER_BINARY)) {
                     $ret = (int) $ret;
                 }
 
@@ -281,10 +272,10 @@ class Token
                     // `mb_strlen($str)` must be used instead of `null` because
                     // in PHP 5.3- the `null` parameter isn't handled correctly.
                     $str = mb_substr(
-                        $str,
-                        ! empty($str[1]) && ($str[1] === '@') ? 2 : 1,
-                        mb_strlen($str),
-                        'UTF-8'
+                            $str,
+                            !empty($str[1]) && ($str[1] === '@') ? 2 : 1,
+                            mb_strlen($str),
+                            'UTF-8'
                     );
                 }
 
@@ -309,20 +300,20 @@ class Token
      *
      * @return string
      */
-    public function getInlineToken()
-    {
+    public function getInlineToken() {
         return str_replace(
-            [
-                "\r",
-                "\n",
-                "\t",
-            ],
-            [
-                '\r',
-                '\n',
-                '\t',
-            ],
-            $this->token
+                [
+                    "\r",
+                    "\n",
+                    "\t",
+                ],
+                [
+                    '\r',
+                    '\n',
+                    '\t',
+                ],
+                $this->token
         );
     }
+
 }

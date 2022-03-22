@@ -1,4 +1,5 @@
 <?php
+
 /**
  * phpMyAdmin sample configuration, you can use it as base for
  * manual configuration. For easier setup you can use setup/
@@ -6,7 +7,6 @@
  * All directives are explained in documentation in the doc/ folder
  * or at <https://docs.phpmyadmin.net/>.
  */
-
 declare(strict_types=1);
 
 /**
@@ -34,7 +34,6 @@ $cfg['Servers'][$i]['AllowNoPassword'] = false;
 /**
  * phpMyAdmin configuration storage settings.
  */
-
 /* User used to manipulate with storage */
 // $cfg['Servers'][$i]['controlhost'] = '';
 // $cfg['Servers'][$i]['controlport'] = '';
@@ -66,7 +65,6 @@ $cfg['Servers'][$i]['AllowNoPassword'] = false;
 /**
  * End of servers configuration
  */
-
 /**
  * Directories for saving/loading files from server
  */

@@ -16,25 +16,23 @@ use Twig\Compiler;
 use Twig\Node\Expression\AbstractExpression;
 use Twig\Node\Node;
 
-abstract class AbstractBinary extends AbstractExpression
-{
-    public function __construct(Node $left, Node $right, int $lineno)
-    {
+abstract class AbstractBinary extends AbstractExpression {
+
+    public function __construct(Node $left, Node $right, int $lineno) {
         parent::__construct(['left' => $left, 'right' => $right], [], $lineno);
     }
 
-    public function compile(Compiler $compiler)
-    {
+    public function compile(Compiler $compiler) {
         $compiler
-            ->raw('(')
-            ->subcompile($this->getNode('left'))
-            ->raw(' ')
+                ->raw('(')
+                ->subcompile($this->getNode('left'))
+                ->raw(' ')
         ;
         $this->operator($compiler);
         $compiler
-            ->raw(' ')
-            ->subcompile($this->getNode('right'))
-            ->raw(')')
+                ->raw(' ')
+                ->subcompile($this->getNode('right'))
+                ->raw(')')
         ;
     }
 

@@ -1,8 +1,8 @@
 <?php
+
 /**
  * `TRUNCATE` statement.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\SqlParser\Statements;
@@ -13,8 +13,8 @@ use PhpMyAdmin\SqlParser\Statement;
 /**
  * `TRUNCATE` statement.
  */
-class TruncateStatement extends Statement
-{
+class TruncateStatement extends Statement {
+
     /**
      * Options for `TRUNCATE` statements.
      *
@@ -34,8 +34,8 @@ class TruncateStatement extends Statement
      *
      * @return string
      */
-    public function build()
-    {
+    public function build() {
         return 'TRUNCATE TABLE ' . $this->table . ';';
     }
+
 }

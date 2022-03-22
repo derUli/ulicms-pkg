@@ -16,10 +16,9 @@ namespace Symfony\Polyfill\Php81;
  *
  * @internal
  */
-final class Php81
-{
-    public static function array_is_list(array $array): bool
-    {
+final class Php81 {
+
+    public static function array_is_list(array $array): bool {
         if ([] === $array || $array === array_values($array)) {
             return true;
         }
@@ -34,4 +33,5 @@ final class Php81
 
         return true;
     }
+
 }

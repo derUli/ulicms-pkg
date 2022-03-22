@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Dia schema export code
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Plugins\Schema;
@@ -17,10 +17,9 @@ use PhpMyAdmin\Properties\Plugins\SchemaPluginProperties;
 /**
  * Handles the schema export for the Dia format
  */
-class SchemaDia extends SchemaPlugin
-{
-    public function __construct()
-    {
+class SchemaDia extends SchemaPlugin {
+
+    public function __construct() {
         $this->setProperties();
     }
 
@@ -29,8 +28,7 @@ class SchemaDia extends SchemaPlugin
      *
      * @return void
      */
-    protected function setProperties()
-    {
+    protected function setProperties() {
         $schemaPluginProperties = new SchemaPluginProperties();
         $schemaPluginProperties->setText('Dia');
         $schemaPluginProperties->setExtension('dia');
@@ -40,7 +38,7 @@ class SchemaDia extends SchemaPlugin
         // $schemaPluginProperties
         // this will be shown as "Format specific options"
         $exportSpecificOptions = new OptionsPropertyRootGroup(
-            'Format Specific Options'
+                'Format Specific Options'
         );
 
         // specific options main group
@@ -49,20 +47,20 @@ class SchemaDia extends SchemaPlugin
         $this->addCommonOptions($specificOptions);
 
         $leaf = new SelectPropertyItem(
-            'orientation',
-            __('Orientation')
+                'orientation',
+                __('Orientation')
         );
         $leaf->setValues(
-            [
-                'L' => __('Landscape'),
-                'P' => __('Portrait'),
-            ]
+                [
+                    'L' => __('Landscape'),
+                    'P' => __('Portrait'),
+                ]
         );
         $specificOptions->addProperty($leaf);
 
         $leaf = new SelectPropertyItem(
-            'paper',
-            __('Paper size')
+                'paper',
+                __('Paper size')
         );
         $leaf->setValues($this->getPaperSizeArray());
         $specificOptions->addProperty($leaf);
@@ -82,11 +80,11 @@ class SchemaDia extends SchemaPlugin
      *
      * @return bool Whether it succeeded
      */
-    public function exportSchema($db)
-    {
+    public function exportSchema($db) {
         $export = new DiaRelationSchema($db);
         $export->showOutput();
 
         return true;
     }
+
 }

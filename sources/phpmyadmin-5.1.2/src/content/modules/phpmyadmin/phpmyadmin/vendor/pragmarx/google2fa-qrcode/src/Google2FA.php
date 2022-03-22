@@ -6,15 +6,14 @@ use BaconQrCode\Renderer\Image\Png;
 use BaconQrCode\Renderer\Image\RendererInterface;
 use BaconQrCode\Writer as BaconQrCodeWriter;
 use PragmaRX\Google2FA\Google2FA as Google2FAPackage;
-
 use BaconQrCode\Renderer\ImageRenderer;
 use BaconQrCode\Renderer\Image\ImageBackEndInterface;
 use BaconQrCode\Renderer\Image\ImagickImageBackEnd;
 use BaconQrCode\Renderer\RendererStyle\RendererStyle;
 use BaconQrCode\Writer;
 
-class Google2FA extends Google2FAPackage
-{
+class Google2FA extends Google2FAPackage {
+
     /**
      * @var ImageBackEndInterface|RendererInterface|null $imageBackEnd
      */
@@ -25,8 +24,7 @@ class Google2FA extends Google2FAPackage
      *
      * @param ImageBackEndInterface|RendererInterface|null $imageBackEnd
      */
-    public function __construct($imageBackEnd = null)
-    {
+    public function __construct($imageBackEnd = null) {
         if ($this->getBaconQRCodeVersion() === 1) {
             if ($imageBackEnd instanceof RendererInterface) {
                 $this->imageBackEnd = $imageBackEnd;
@@ -53,11 +51,8 @@ class Google2FA extends Google2FAPackage
      *
      * @return string
      */
-    public function getQRCodeInline($company, $holder, $secret, $size = 200, $encoding = 'utf-8')
-    {
-        return $this->getBaconQRCodeVersion() === 1
-            ? $this->getQRCodeInlineV1($company, $holder, $secret, $size, $encoding)
-            : $this->getQRCodeInlineV2($company, $holder, $secret, $size, $encoding);
+    public function getQRCodeInline($company, $holder, $secret, $size = 200, $encoding = 'utf-8') {
+        return $this->getBaconQRCodeVersion() === 1 ? $this->getQRCodeInlineV1($company, $holder, $secret, $size, $encoding) : $this->getQRCodeInlineV2($company, $holder, $secret, $size, $encoding);
     }
 
     /**
@@ -71,8 +66,7 @@ class Google2FA extends Google2FAPackage
      *
      * @return string
      */
-    public function getQRCodeInlineV1($company, $holder, $secret, $size = 200, $encoding = 'utf-8')
-    {
+    public function getQRCodeInlineV1($company, $holder, $secret, $size = 200, $encoding = 'utf-8') {
         $url = $this->getQRCodeUrl($company, $holder, $secret);
 
         $renderer = $this->imageBackEnd;
@@ -83,7 +77,7 @@ class Google2FA extends Google2FAPackage
         $data = $bacon->writeString($url, $encoding);
 
         if ($this->imageBackEnd instanceof Png) {
-            return 'data:image/png;base64,'.base64_encode($data);
+            return 'data:image/png;base64,' . base64_encode($data);
         }
         return $data;
     }
@@ -99,22 +93,21 @@ class Google2FA extends Google2FAPackage
      *
      * @return string
      */
-    public function getQRCodeInlineV2($company, $holder, $secret, $size = 200, $encoding = 'utf-8')
-    {
+    public function getQRCodeInlineV2($company, $holder, $secret, $size = 200, $encoding = 'utf-8') {
         $renderer = new ImageRenderer(
-            (new RendererStyle($size))->withSize($size),
-            $this->imageBackEnd
+                (new RendererStyle($size))->withSize($size),
+                $this->imageBackEnd
         );
 
         $bacon = new Writer($renderer);
 
         $data = $bacon->writeString(
-            $this->getQRCodeUrl($company, $holder, $secret),
-            $encoding
+                $this->getQRCodeUrl($company, $holder, $secret),
+                $encoding
         );
 
         if ($this->imageBackEnd instanceof ImagickImageBackEnd) {
-            return 'data:image/png;base64,'.base64_encode($data);
+            return 'data:image/png;base64,' . base64_encode($data);
         }
 
         return $data;
@@ -125,10 +118,8 @@ class Google2FA extends Google2FAPackage
      *
      * @return int
      */
-    public function getBaconQRCodeVersion()
-    {
-        return class_exists('BaconQrCode\Renderer\Image\Png') && class_exists('BaconQrCode\Writer')
-            ? 1
-            : 2;
+    public function getBaconQRCodeVersion() {
+        return class_exists('BaconQrCode\Renderer\Image\Png') && class_exists('BaconQrCode\Writer') ? 1 : 2;
     }
+
 }

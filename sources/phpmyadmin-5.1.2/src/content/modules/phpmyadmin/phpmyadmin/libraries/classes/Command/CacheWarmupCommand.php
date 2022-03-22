@@ -36,21 +36,19 @@ use function strpos;
 use function is_file;
 use function sprintf;
 
-final class CacheWarmupCommand extends Command
-{
+final class CacheWarmupCommand extends Command {
+
     /** @var string */
     protected static $defaultName = 'cache:warmup';
 
-    protected function configure(): void
-    {
+    protected function configure(): void {
         $this->setDescription('Warms up the Twig templates cache');
         $this->addOption('twig', null, null, 'Warm up twig templates cache.');
         $this->addOption('routing', null, null, 'Warm up routing cache.');
         $this->setHelp('The <info>%command.name%</info> command warms up the cache of the Twig templates.');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output): int
-    {
+    protected function execute(InputInterface $input, OutputInterface $output): int {
         if ($input->getOption('twig') === true && $input->getOption('routing') === true) {
             $output->writeln('Please specify --twig or --routing');
 
@@ -83,8 +81,7 @@ final class CacheWarmupCommand extends Command
         return 0;
     }
 
-    private function warmUpRoutingCache(OutputInterface $output): int
-    {
+    private function warmUpRoutingCache(OutputInterface $output): int {
         $output->writeln('Warming up the routing cache', OutputInterface::VERBOSITY_VERBOSE);
         Routing::getDispatcher();
 
@@ -94,18 +91,17 @@ final class CacheWarmupCommand extends Command
             return 0;
         }
         $output->writeln(
-            sprintf(
-                'Warm up did not work, the folder "%s" is probably not writable.',
-                CACHE_DIR
-            ),
-            OutputInterface::VERBOSITY_NORMAL
+                sprintf(
+                        'Warm up did not work, the folder "%s" is probably not writable.',
+                        CACHE_DIR
+                ),
+                OutputInterface::VERBOSITY_NORMAL
         );
 
         return 1;
     }
 
-    private function warmUpTwigCache(OutputInterface $output): int
-    {
+    private function warmUpTwigCache(OutputInterface $output): int {
         global $cfg, $PMA_Config, $dbi;
 
         $output->writeln('Warming up the twig cache', OutputInterface::VERBOSITY_VERBOSE);
@@ -142,8 +138,8 @@ final class CacheWarmupCommand extends Command
 
         $replacements = [];
         $templates = new RecursiveIteratorIterator(
-            new RecursiveDirectoryIterator($tplDir),
-            RecursiveIteratorIterator::LEAVES_ONLY
+                new RecursiveDirectoryIterator($tplDir),
+                RecursiveIteratorIterator::LEAVES_ONLY
         );
 
         $output->writeln('Warming templates', OutputInterface::VERBOSITY_VERY_VERBOSE);
@@ -153,7 +149,7 @@ final class CacheWarmupCommand extends Command
                 continue;
             }
             // force compilation
-            if (! $file->isFile() || $file->getExtension() !== 'twig') {
+            if (!$file->isFile() || $file->getExtension() !== 'twig') {
                 continue;
             }
 
@@ -162,7 +158,7 @@ final class CacheWarmupCommand extends Command
             if (Environment::MAJOR_VERSION === 3) {
                 $template = $twig->loadTemplate($twig->getTemplateClass($name), $name);
             } else {// @phpstan-ignore-line Twig 2
-                $template = $twig->loadTemplate($name);// @phpstan-ignore-line Twig 2
+                $template = $twig->loadTemplate($name); // @phpstan-ignore-line Twig 2
             }
 
             // Generate line map
@@ -185,4 +181,5 @@ final class CacheWarmupCommand extends Command
 
         return 0;
     }
+
 }

@@ -26,8 +26,8 @@
                 {% if sql_history is not empty %}
                     {% for record in sql_history|reverse %}
                         <div class="message history collapsed hide
-                            {{- record['sqlquery'] matches '@^SELECT[[:space:]]+@i' ? ' select' }}"
-                            targetdb="{{ record['db'] }}" targettable="{{ record['table'] }}">
+                             {{- record['sqlquery'] matches '@^SELECT[[:space:]]+@i' ? ' select' }}"
+                             targetdb="{{ record['db'] }}" targettable="{{ record['table'] }}">
                             {% include 'console/query_action.twig' with {
                                 'parent_div_classes': 'action_content',
                                 'content_array': [
@@ -159,9 +159,9 @@
                 <br>
                 <label>
                     <input type="checkbox" name="enter_executes">
-                        {% trans %}
-                            Execute queries on Enter and insert new line with Shift + Enter. To make this permanent, view settings.
-                        {% endtrans %}
+                    {% trans %}
+                        Execute queries on Enter and insert new line with Shift + Enter. To make this permanent, view settings.
+                    {% endtrans %}
                 </label>
                 <br>
                 <label>

@@ -1,9 +1,8 @@
 <?php
 
-class uManagePackageManager extends PackageManager
-{
-    public function installRemotePackage($package)
-    {
+class uManagePackageManager extends PackageManager {
+
+    public function installRemotePackage($package) {
         $pkg_src = Settings::get("pkg_src");
         @set_time_limit(0);
         $version = new UliCMSVersion();
@@ -40,4 +39,5 @@ class uManagePackageManager extends PackageManager
             return false;
         }
     }
+
 }

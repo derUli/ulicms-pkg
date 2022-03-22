@@ -1,6 +1,6 @@
 {
-	 "version" : "0.0.8",
-	 "admin_permission" : "placeholders",
-	 "custom_acl" : ["placeholders"],
-	 "embed" : false
+    "version": "0.0.8",
+    "admin_permission": "placeholders",
+    "custom_acl": ["placeholders"],
+    "embed": false
 }

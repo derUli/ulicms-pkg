@@ -1,18 +1,18 @@
 .table {
-  border-collapse: separate;
+    border-collapse: separate;
 
-  td {
-    touch-action: manipulation;
-    vertical-align: middle;
-  }
+    td {
+        touch-action: manipulation;
+        vertical-align: middle;
+    }
 
-  thead th {
-    border-bottom: 0;
-  }
+    thead th {
+        border-bottom: 0;
+    }
 }
 
 .table-striped {
-  tbody tr:nth-of-type(odd) {
-    background-color: $bg-one;
-  }
+    tbody tr:nth-of-type(odd) {
+        background-color: $bg-one;
+    }
 }

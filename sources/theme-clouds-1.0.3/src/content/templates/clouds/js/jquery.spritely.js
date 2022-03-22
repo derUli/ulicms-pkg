@@ -10,11 +10,11 @@
  *
  */
 
-(function($) {
+(function ($) {
     $._spritely = {
         // shared methods and variables used by spritely plugin
         instances: {},
-        animate: function(options) {
+        animate: function (options) {
             var el = $(options.el);
             var el_id = el.attr('id');
             if (!$._spritely.instances[el_id]) {
@@ -28,12 +28,12 @@
                     $._spritely.instances[el_id]['remaining_frames'] = options.no_of_frames;
                 }
                 var frames;
-                var animate = function(el) {
+                var animate = function (el) {
                     var w = options.width, h = options.height;
                     if (!frames) {
                         frames = [];
                         total = 0
-                        for (var i = 0; i < options.no_of_frames; i ++) {
+                        for (var i = 0; i < options.no_of_frames; i++) {
                             frames[frames.length] = (0 - total);
                             total += w;
                         }
@@ -55,7 +55,8 @@
                             $._spritely.instances[el_id]['current_frame'] = frames.length - 1;
                         } else {
                             $._spritely.instances[el_id]['current_frame'] = $._spritely.instances[el_id]['current_frame'] - 1;
-                        };
+                        }
+                        ;
                     } else {
                         if ($._spritely.instances[el_id]['current_frame'] >= frames.length - 1) {
                             $._spritely.instances[el_id]['current_frame'] = 0;
@@ -71,12 +72,12 @@
                         var lr = options.bounce[1]; // left-right
                         var ms = options.bounce[2]; // milliseconds
                         el
-                            .animate({top: '+=' + ud + 'px', left: '-=' + lr + 'px'}, ms)
-                            .animate({top: '-=' + ud + 'px', left: '+=' + lr + 'px'}, ms);
+                                .animate({top: '+=' + ud + 'px', left: '-=' + lr + 'px'}, ms)
+                                .animate({top: '-=' + ud + 'px', left: '+=' + lr + 'px'}, ms);
                     }
                 }
                 if ($._spritely.instances[el_id]['remaining_frames'] && $._spritely.instances[el_id]['remaining_frames'] > 0) {
-                    $._spritely.instances[el_id]['remaining_frames'] --;
+                    $._spritely.instances[el_id]['remaining_frames']--;
                     if ($._spritely.instances[el_id]['remaining_frames'] == 0) {
                         $._spritely.instances[el_id]['remaining_frames'] = -1;
                         delete $._spritely.instances[el_id]['remaining_frames'];
@@ -94,11 +95,11 @@
                     // value to ease the load on the browser. This step is
                     // skipped if the image hasn't loaded yet.
                     var speed = options.speed || 1,
-                        start_x = $._spritely.instances[el_id]['l'] || parseInt($._spritely.getBgX(el).replace('px', ''), 10) || 0,
-                        start_y = $._spritely.instances[el_id]['t'] || parseInt($._spritely.getBgY(el).replace('px', ''), 10) || 0;
+                            start_x = $._spritely.instances[el_id]['l'] || parseInt($._spritely.getBgX(el).replace('px', ''), 10) || 0,
+                            start_y = $._spritely.instances[el_id]['t'] || parseInt($._spritely.getBgY(el).replace('px', ''), 10) || 0;
 
                     if (options.do_once && !$._spritely.instances[el_id].remaining_frames || $._spritely.instances[el_id].remaining_frames <= 0) {
-                        switch(options.dir) {
+                        switch (options.dir) {
                             case 'up':
                             case 'down':
                                 $._spritely.instances[el_id].remaining_frames = Math.floor((options.img_height || 0) / speed);
@@ -161,35 +162,35 @@
                 }
             }
             $._spritely.instances[el_id]['options'] = options;
-            $._spritely.instances[el_id]['timeout'] = window.setTimeout(function() {
+            $._spritely.instances[el_id]['timeout'] = window.setTimeout(function () {
                 $._spritely.animate(options);
             }, parseInt(1000 / options.fps));
         },
-        randomIntBetween: function(lower, higher) {
+        randomIntBetween: function (lower, higher) {
             return parseInt(rand_no = Math.floor((higher - (lower - 1)) * Math.random()) + lower);
         },
-        getBgUseXY: (function() {
+        getBgUseXY: (function () {
             try {
                 return typeof $('body').css('background-position-x') == 'string';
-            } catch(e) {
+            } catch (e) {
                 return false;
             }
         })(),
-        getBgY: function(el) {
+        getBgY: function (el) {
             if ($._spritely.getBgUseXY) {
                 return $(el).css('background-position-y') || '0';
             } else {
                 return ($(el).css('background-position') || ' ').split(' ')[1];
             }
         },
-        getBgX: function(el) {
+        getBgX: function (el) {
             if ($._spritely.getBgUseXY) {
                 return $(el).css('background-position-x') || '0';
             } else {
                 return ($(el).css('background-position') || ' ').split(' ')[0];
             }
         },
-        get_rel_pos: function(pos, w) {
+        get_rel_pos: function (pos, w) {
             // return the position of an item relative to a background
             // image of width given by w
             var r = pos;
@@ -205,13 +206,13 @@
             return r;
         },
 
-        _spStrip: function(s, chars) {
+        _spStrip: function (s, chars) {
             // Strip any character in 'chars' from the beginning or end of
             // 'str'. Like Python's .strip() method, or jQuery's $.trim()
             // function (but allowing you to specify the characters).
             while (s.length) {
                 var i, sr, nos = false, noe = false;
-                for (i=0;i<chars.length;i++) {
+                for (i = 0; i < chars.length; i++) {
                     var ss = s.slice(0, 1);
                     sr = s.slice(1);
                     if (chars.indexOf(ss) > -1)
@@ -219,7 +220,7 @@
                     else
                         nos = true;
                 }
-                for (i=0;i<chars.length;i++) {
+                for (i = 0; i < chars.length; i++) {
                     var se = s.slice(-1);
                     sr = s.slice(0, -1);
                     if (chars.indexOf(se) > -1)
@@ -235,57 +236,55 @@
     };
     $.fn.extend({
 
-        spritely: function(options) {
+        spritely: function (options) {
 
             var $this = $(this),
-                el_id = $this.attr('id'),
-                
-                options = $.extend({
-                    type: 'sprite',
-                    do_once: false,
-                    width: null,
-                    height: null,
-                    img_width: 0,
-                    img_height: 0,
-                    fps: 12,
-                    no_of_frames: 2,
-                    play_frames: 0
-                }, options || {}),
+                    el_id = $this.attr('id'),
+                    options = $.extend({
+                        type: 'sprite',
+                        do_once: false,
+                        width: null,
+                        height: null,
+                        img_width: 0,
+                        img_height: 0,
+                        fps: 12,
+                        no_of_frames: 2,
+                        play_frames: 0
+                    }, options || {}),
+                    background_image = (new Image()),
+                    background_image_src = $._spritely._spStrip($this.css('background-image') || '', 'url("); ');
 
-                background_image = (new Image()),
-                background_image_src = $._spritely._spStrip($this.css('background-image') || '', 'url("); ');
-
-                if (!$._spritely.instances[el_id]) {
-                    if (options.start_at_frame) {
-                        $._spritely.instances[el_id] = {current_frame: options.start_at_frame - 1};
-                    } else {
-                        $._spritely.instances[el_id] = {current_frame: -1};
-                    }
+            if (!$._spritely.instances[el_id]) {
+                if (options.start_at_frame) {
+                    $._spritely.instances[el_id] = {current_frame: options.start_at_frame - 1};
+                } else {
+                    $._spritely.instances[el_id] = {current_frame: -1};
                 }
+            }
 
-                $._spritely.instances[el_id]['type'] = options.type;
-                $._spritely.instances[el_id]['depth'] = options.depth;
+            $._spritely.instances[el_id]['type'] = options.type;
+            $._spritely.instances[el_id]['depth'] = options.depth;
 
-                options.el = $this;
-                options.width = options.width || $this.width() || 100;
-                options.height = options.height || $this.height() || 100;
+            options.el = $this;
+            options.width = options.width || $this.width() || 100;
+            options.height = options.height || $this.height() || 100;
 
-            background_image.onload = function() {
+            background_image.onload = function () {
 
                 options.img_width = background_image.width;
                 options.img_height = background_image.height;
 
                 options.img = background_image;
-                var get_rate = function() {
+                var get_rate = function () {
                     return parseInt(1000 / options.fps);
                 }
 
                 if (!options.do_once) {
-                    setTimeout(function() {
+                    setTimeout(function () {
                         $._spritely.animate(options);
                     }, get_rate(options.fps));
                 } else {
-                    setTimeout(function() {
+                    setTimeout(function () {
                         $._spritely.animate(options);
                     }, 0);
                 }
@@ -298,14 +297,14 @@
 
         },
 
-        sprite: function(options) {
+        sprite: function (options) {
             var options = $.extend({
                 type: 'sprite',
                 bounce: [0, 0, 1000] // up-down, left-right, milliseconds
             }, options || {});
             return $(this).spritely(options);
         },
-        pan: function(options) {
+        pan: function (options) {
             var options = $.extend({
                 type: 'pan',
                 dir: 'left',
@@ -314,7 +313,7 @@
             }, options || {});
             return $(this).spritely(options);
         },
-        flyToTap: function(options) {
+        flyToTap: function (options) {
             var options = $.extend({
                 el_to_move: null,
                 type: 'moveToTap',
@@ -326,7 +325,7 @@
             }
             if ($._spritely.activeSprite) {
                 if (window.Touch) { // iphone method see http://cubiq.org/remove-onclick-delay-on-webkit-for-iphone/9 or http://www.nimblekit.com/tutorials.html for clues...
-                    $(this)[0].ontouchstart = function(e) {
+                    $(this)[0].ontouchstart = function (e) {
                         var el_to_move = $._spritely.activeSprite;
                         var touch = e.touches[0];
                         var t = touch.pageY - (el_to_move.height() / 2);
@@ -337,7 +336,7 @@
                         }, 1000);
                     };
                 } else {
-                    $(this).click(function(e) {
+                    $(this).click(function (e) {
                         var el_to_move = $._spritely.activeSprite;
                         $(el_to_move).stop(true);
                         var w = el_to_move.width();
@@ -354,7 +353,7 @@
             return this;
         },
         // isDraggable requires jQuery ui
-        isDraggable: function(options) {
+        isDraggable: function (options) {
             if ((!$(this).draggable)) {
                 //console.log('To use the isDraggable method you need to load jquery-ui.js');
                 return this;
@@ -371,7 +370,7 @@
             }
             $._spritely.instances[el_id].isDraggableOptions = options;
             $(this).draggable({
-                start: function() {
+                start: function () {
                     var el_id = $(this).attr('id');
                     $._spritely.instances[el_id].stop_random = true;
                     $(this).stop(true);
@@ -380,7 +379,7 @@
                     }
                 },
                 drag: options.drag,
-                stop: function() {
+                stop: function () {
                     var el_id = $(this).attr('id');
                     $._spritely.instances[el_id].stop_random = false;
                     if ($._spritely.instances[el_id].isDraggableOptions.stop) {
@@ -390,26 +389,26 @@
             });
             return this;
         },
-        active: function() {
+        active: function () {
             // the active sprite
             $._spritely.activeSprite = this;
             return this;
         },
-        activeOnClick: function() {
+        activeOnClick: function () {
             // make this the active script if clicked...
             var el = $(this);
             if (window.Touch) { // iphone method see http://cubiq.org/remove-onclick-delay-on-webkit-for-iphone/9 or http://www.nimblekit.com/tutorials.html for clues...
-                el[0].ontouchstart = function(e) {
+                el[0].ontouchstart = function (e) {
                     $._spritely.activeSprite = el;
                 };
             } else {
-                el.click(function(e) {
+                el.click(function (e) {
                     $._spritely.activeSprite = el;
                 });
             }
             return this;
         },
-        spRandom: function(options) {
+        spRandom: function (options) {
             var options = $.extend({
                 top: 50,
                 left: 50,
@@ -431,36 +430,36 @@
                     left: l + 'px'
                 }, options.speed)
             }
-            window.setTimeout(function() {
+            window.setTimeout(function () {
                 $('#' + el_id).spRandom(options);
             }, options.speed + options.pause)
             return this;
         },
-        makeAbsolute: function() {
+        makeAbsolute: function () {
             // remove an element from its current position in the DOM and
             // position it absolutely, appended to the body tag.
-            return this.each(function() {
+            return this.each(function () {
                 var el = $(this);
                 var pos = el.position();
-                el.css({position: "absolute", marginLeft: 0, marginTop: 0, top: pos.top, left: pos.left })
-                    .remove()
-                    .appendTo("body");
+                el.css({position: "absolute", marginLeft: 0, marginTop: 0, top: pos.top, left: pos.left})
+                        .remove()
+                        .appendTo("body");
             });
 
         },
-        spSet: function(prop_name, prop_value) {
+        spSet: function (prop_name, prop_value) {
             var el_id = $(this).attr('id');
             $._spritely.instances[el_id][prop_name] = prop_value;
             return this;
         },
-        spGet: function(prop_name, prop_value) {
+        spGet: function (prop_name, prop_value) {
             var el_id = $(this).attr('id');
             return $._spritely.instances[el_id][prop_name];
         },
-        spStop: function(bool) {
-            this.each(function() {
+        spStop: function (bool) {
+            this.each(function () {
                 var $this = $(this),
-                    el_id = $this.attr('id');
+                        el_id = $this.attr('id');
                 if ($._spritely.instances[el_id]['options']['fps']) {
                     $._spritely.instances[el_id]['_last_fps'] = $._spritely.instances[el_id]['options']['fps'];
                 }
@@ -477,8 +476,8 @@
             });
             return this;
         },
-        spStart: function() {
-            $(this).each(function() {
+        spStart: function () {
+            $(this).each(function () {
                 var el_id = $(this).attr('id');
                 var fps = $._spritely.instances[el_id]['_last_fps'] || 12;
                 if ($._spritely.instances[el_id]['type'] == 'sprite') {
@@ -488,7 +487,7 @@
             });
             return this;
         },
-        spToggle: function() {
+        spToggle: function () {
             var el_id = $(this).attr('id');
             var stopped = $._spritely.instances[el_id]['_stopped'] || false;
             var stopped_f1 = $._spritely.instances[el_id]['_stopped_f1'] || false;
@@ -499,40 +498,40 @@
             }
             return this;
         },
-        fps: function(fps) {
-            $(this).each(function() {
+        fps: function (fps) {
+            $(this).each(function () {
                 $(this).spSet('fps', fps);
             });
             return this;
         },
-        goToFrame: function(n) {
+        goToFrame: function (n) {
             var el_id = $(this).attr('id');
             if ($._spritely.instances && $._spritely.instances[el_id]) {
                 $._spritely.instances[el_id]['current_frame'] = n - 1;
             }
             return this;
         },
-        spSpeed: function(speed) {
-            $(this).each(function() {
+        spSpeed: function (speed) {
+            $(this).each(function () {
                 $(this).spSet('speed', speed);
             });
             return this;
         },
-        spRelSpeed: function(speed) {
-            $(this).each(function() {
+        spRelSpeed: function (speed) {
+            $(this).each(function () {
                 var rel_depth = $(this).spGet('depth') / 100;
                 $(this).spSet('speed', speed * rel_depth);
             });
             return this;
         },
-        spChangeDir: function(dir) {
-            $(this).each(function() {
+        spChangeDir: function (dir) {
+            $(this).each(function () {
                 $(this).spSet('dir', dir);
             });
             return this;
         },
-        spState: function(n) {
-            $(this).each(function() {
+        spState: function (n) {
+            $(this).each(function () {
                 // change state of a sprite, where state is the vertical
                 // position of the background image (e.g. frames row)
                 var yPos = ((n - 1) * $(this).height()) + 'px';
@@ -542,8 +541,8 @@
             });
             return this;
         },
-        lockTo: function(el, options) {
-            $(this).each(function() {
+        lockTo: function (el, options) {
+            $(this).each(function () {
                 var el_id = $(this).attr('id');
                 if (!$._spritely.instances[el_id]) {
                     return this;
@@ -551,7 +550,7 @@
                 $._spritely.instances[el_id]['locked_el'] = $(this);
                 $._spritely.instances[el_id]['lock_to'] = $(el);
                 $._spritely.instances[el_id]['lock_to_options'] = options;
-                $._spritely.instances[el_id]['interval'] = window.setInterval(function() {
+                $._spritely.instances[el_id]['interval'] = window.setInterval(function () {
                     if ($._spritely.instances[el_id]['lock_to']) {
                         var locked_el = $._spritely.instances[el_id]['locked_el'];
                         var locked_to_el = $._spritely.instances[el_id]['lock_to'];
@@ -572,10 +571,10 @@
             });
             return this;
         },
-        destroy: function() {
+        destroy: function () {
             var el = $(this);
             var el_id = $(this).attr('id');
-            if ($._spritely.instances[el_id] && $._spritely.instances[el_id]['timeout']){
+            if ($._spritely.instances[el_id] && $._spritely.instances[el_id]['timeout']) {
                 window.clearTimeout($._spritely.instances[el_id]['timeout']);
             }
             if ($._spritely.instances[el_id] && $._spritely.instances[el_id]['interval']) {
@@ -588,5 +587,6 @@
 })(jQuery);
 // Stop IE6 re-loading background images continuously
 try {
-  document.execCommand("BackgroundImageCache", false, true);
-} catch(err) {} 
+    document.execCommand("BackgroundImageCache", false, true);
+} catch (err) {
+}

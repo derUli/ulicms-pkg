@@ -2,12 +2,12 @@
  * Chart type enumerations
  */
 var ChartType = {
-    LINE : 'line',
-    SPLINE : 'spline',
-    AREA : 'area',
-    BAR : 'bar',
-    COLUMN : 'column',
-    PIE : 'pie',
+    LINE: 'line',
+    SPLINE: 'spline',
+    AREA: 'area',
+    BAR: 'bar',
+    COLUMN: 'column',
+    PIE: 'pie',
     TIMELINE: 'timeline',
     SCATTER: 'scatter'
 };
@@ -16,10 +16,10 @@ var ChartType = {
  * Column type enumeration
  */
 var ColumnType = {
-    STRING : 'string',
-    NUMBER : 'number',
-    BOOLEAN : 'boolean',
-    DATE : 'date'
+    STRING: 'string',
+    NUMBER: 'number',
+    BOOLEAN: 'boolean',
+    DATE: 'date'
 };
 
 /**
@@ -28,7 +28,7 @@ var ColumnType = {
 var ChartFactory = function () {
 };
 ChartFactory.prototype = {
-    createChart : function () {
+    createChart: function () {
         throw new Error('createChart must be implemented by a subclass');
     }
 };
@@ -43,16 +43,16 @@ var Chart = function (elementId) {
     this.elementId = elementId;
 };
 Chart.prototype = {
-    draw : function () {
+    draw: function () {
         throw new Error('draw must be implemented by a subclass');
     },
-    redraw : function () {
+    redraw: function () {
         throw new Error('redraw must be implemented by a subclass');
     },
-    destroy : function () {
+    destroy: function () {
         throw new Error('destroy must be implemented by a subclass');
     },
-    toImageString : function () {
+    toImageString: function () {
         throw new Error('toImageString must be implemented by a subclass');
     }
 };
@@ -160,8 +160,8 @@ var DataTable = function () {
 
     this.addColumn = function (type, name) {
         columns.push({
-            'type' : type,
-            'name' : name
+            'type': type,
+            'name': name
         });
     };
 
@@ -216,7 +216,7 @@ JQPlotChart.prototype.constructor = JQPlotChart;
 JQPlotChart.prototype.draw = function (data, options) {
     if (this.validator.validateColumns(data)) {
         this.plot = $.jqplot(this.elementId, this.prepareData(data), this
-            .populateOptions(data, options));
+                .populateOptions(data, options));
     }
 };
 JQPlotChart.prototype.destroy = function () {
@@ -257,30 +257,30 @@ JQPlotLineChart.prototype.constructor = JQPlotLineChart;
 JQPlotLineChart.prototype.populateOptions = function (dataTable, options) {
     var columns = dataTable.getColumns();
     var optional = {
-        axes : {
-            xaxis : {
-                label : columns[0].name,
-                renderer : $.jqplot.CategoryAxisRenderer,
-                ticks : []
+        axes: {
+            xaxis: {
+                label: columns[0].name,
+                renderer: $.jqplot.CategoryAxisRenderer,
+                ticks: []
             },
-            yaxis : {
-                label : (columns.length === 2 ? columns[1].name : 'Values'),
-                labelRenderer : $.jqplot.CanvasAxisLabelRenderer
+            yaxis: {
+                label: (columns.length === 2 ? columns[1].name : 'Values'),
+                labelRenderer: $.jqplot.CanvasAxisLabelRenderer
             }
         },
         highlighter: {
             show: true,
             tooltipAxes: 'y',
-            formatString:'%d'
+            formatString: '%d'
         },
-        series : []
+        series: []
     };
     $.extend(true, optional, options);
 
     if (optional.series.length === 0) {
         for (var i = 1; i < columns.length; i++) {
             optional.series.push({
-                label : columns[i].name.toString()
+                label: columns[i].name.toString()
             });
         }
     }
@@ -327,11 +327,11 @@ JQPlotSplineChart.prototype.constructor = JQPlotSplineChart;
 JQPlotSplineChart.prototype.populateOptions = function (dataTable, options) {
     var optional = {};
     var opt = JQPlotLineChart.prototype.populateOptions.call(this, dataTable,
-        options);
+            options);
     var compulsory = {
-        seriesDefaults : {
-            rendererOptions : {
-                smooth : true
+        seriesDefaults: {
+            rendererOptions: {
+                smooth: true
             }
         }
     };
@@ -355,30 +355,30 @@ JQPlotScatterChart.prototype.constructor = JQPlotScatterChart;
 JQPlotScatterChart.prototype.populateOptions = function (dataTable, options) {
     var columns = dataTable.getColumns();
     var optional = {
-        axes : {
-            xaxis : {
-                label : columns[0].name
+        axes: {
+            xaxis: {
+                label: columns[0].name
             },
-            yaxis : {
-                label : (columns.length === 2 ? columns[1].name : 'Values'),
-                labelRenderer : $.jqplot.CanvasAxisLabelRenderer
+            yaxis: {
+                label: (columns.length === 2 ? columns[1].name : 'Values'),
+                labelRenderer: $.jqplot.CanvasAxisLabelRenderer
             }
         },
         highlighter: {
             show: true,
             tooltipAxes: 'xy',
-            formatString:'%d, %d'
+            formatString: '%d, %d'
         },
-        series : []
+        series: []
     };
     for (var i = 1; i < columns.length; i++) {
         optional.series.push({
-            label : columns[i].name.toString()
+            label: columns[i].name.toString()
         });
     }
 
     var compulsory = {
-        seriesDefaults : {
+        seriesDefaults: {
             showLine: false,
             markerOptions: {
                 size: 7,
@@ -427,9 +427,9 @@ JQPlotTimelineChart.prototype.constructor = JQPlotTimelineChart;
 
 JQPlotTimelineChart.prototype.populateOptions = function (dataTable, options) {
     var optional = {
-        axes : {
-            xaxis : {
-                tickOptions : {
+        axes: {
+            xaxis: {
+                tickOptions: {
                     formatString: '%b %#d, %y'
                 }
             }
@@ -437,9 +437,9 @@ JQPlotTimelineChart.prototype.populateOptions = function (dataTable, options) {
     };
     var opt = JQPlotLineChart.prototype.populateOptions.call(this, dataTable, options);
     var compulsory = {
-        axes : {
-            xaxis : {
-                renderer : $.jqplot.DateAxisRenderer
+        axes: {
+            xaxis: {
+                renderer: $.jqplot.DateAxisRenderer
             }
         }
     };
@@ -488,15 +488,15 @@ JQPlotAreaChart.prototype.constructor = JQPlotAreaChart;
 
 JQPlotAreaChart.prototype.populateOptions = function (dataTable, options) {
     var optional = {
-        seriesDefaults : {
-            fillToZero : true
+        seriesDefaults: {
+            fillToZero: true
         }
     };
     var opt = JQPlotLineChart.prototype.populateOptions.call(this, dataTable,
-        options);
+            options);
     var compulsory = {
-        seriesDefaults : {
-            fill : true
+        seriesDefaults: {
+            fill: true
         }
     };
     $.extend(true, optional, opt, compulsory);
@@ -517,15 +517,15 @@ JQPlotColumnChart.prototype.constructor = JQPlotColumnChart;
 
 JQPlotColumnChart.prototype.populateOptions = function (dataTable, options) {
     var optional = {
-        seriesDefaults : {
-            fillToZero : true
+        seriesDefaults: {
+            fillToZero: true
         }
     };
     var opt = JQPlotLineChart.prototype.populateOptions.call(this, dataTable,
-        options);
+            options);
     var compulsory = {
-        seriesDefaults : {
-            renderer : $.jqplot.BarRenderer
+        seriesDefaults: {
+            renderer: $.jqplot.BarRenderer
         }
     };
     $.extend(true, optional, opt, compulsory);
@@ -547,33 +547,33 @@ JQPlotBarChart.prototype.constructor = JQPlotBarChart;
 JQPlotBarChart.prototype.populateOptions = function (dataTable, options) {
     var columns = dataTable.getColumns();
     var optional = {
-        axes : {
-            yaxis : {
-                label : columns[0].name,
-                labelRenderer : $.jqplot.CanvasAxisLabelRenderer,
-                renderer : $.jqplot.CategoryAxisRenderer,
-                ticks : []
+        axes: {
+            yaxis: {
+                label: columns[0].name,
+                labelRenderer: $.jqplot.CanvasAxisLabelRenderer,
+                renderer: $.jqplot.CategoryAxisRenderer,
+                ticks: []
             },
-            xaxis : {
-                label : (columns.length === 2 ? columns[1].name : 'Values'),
-                labelRenderer : $.jqplot.CanvasAxisLabelRenderer
+            xaxis: {
+                label: (columns.length === 2 ? columns[1].name : 'Values'),
+                labelRenderer: $.jqplot.CanvasAxisLabelRenderer
             }
         },
         highlighter: {
             show: true,
             tooltipAxes: 'x',
-            formatString:'%d'
+            formatString: '%d'
         },
-        series : [],
-        seriesDefaults : {
-            fillToZero : true
+        series: [],
+        seriesDefaults: {
+            fillToZero: true
         }
     };
     var compulsory = {
-        seriesDefaults : {
-            renderer : $.jqplot.BarRenderer,
-            rendererOptions : {
-                barDirection : 'horizontal'
+        seriesDefaults: {
+            renderer: $.jqplot.BarRenderer,
+            rendererOptions: {
+                barDirection: 'horizontal'
             }
         }
     };
@@ -588,7 +588,7 @@ JQPlotBarChart.prototype.populateOptions = function (dataTable, options) {
     if (optional.series.length === 0) {
         for (var j = 1; j < columns.length; j++) {
             optional.series.push({
-                label : columns[j].name.toString()
+                label: columns[j].name.toString()
             });
         }
     }
@@ -613,7 +613,7 @@ JQPlotPieChart.prototype.populateOptions = function (dataTable, options) {
         highlighter: {
             show: true,
             tooltipAxes: 'xy',
-            formatString:'%s, %d',
+            formatString: '%s, %d',
             useAxesFormatters: false
         },
         legend: {
@@ -621,10 +621,10 @@ JQPlotPieChart.prototype.populateOptions = function (dataTable, options) {
         },
     };
     var compulsory = {
-        seriesDefaults : {
+        seriesDefaults: {
             shadow: false,
-            renderer : $.jqplot.PieRenderer,
-            rendererOptions: { sliceMargin: 1, showDataLabels: true }
+            renderer: $.jqplot.PieRenderer,
+            rendererOptions: {sliceMargin: 1, showDataLabels: true}
         }
     };
     $.extend(true, optional, options, compulsory);
@@ -651,30 +651,30 @@ JQPlotChartFactory.prototype = new ChartFactory();
 JQPlotChartFactory.prototype.createChart = function (type, elementId) {
     var chart = null;
     switch (type) {
-    case ChartType.LINE:
-        chart = new JQPlotLineChart(elementId);
-        break;
-    case ChartType.SPLINE:
-        chart = new JQPlotSplineChart(elementId);
-        break;
-    case ChartType.TIMELINE:
-        chart = new JQPlotTimelineChart(elementId);
-        break;
-    case ChartType.AREA:
-        chart = new JQPlotAreaChart(elementId);
-        break;
-    case ChartType.BAR:
-        chart = new JQPlotBarChart(elementId);
-        break;
-    case ChartType.COLUMN:
-        chart = new JQPlotColumnChart(elementId);
-        break;
-    case ChartType.PIE:
-        chart = new JQPlotPieChart(elementId);
-        break;
-    case ChartType.SCATTER:
-        chart = new JQPlotScatterChart(elementId);
-        break;
+        case ChartType.LINE:
+            chart = new JQPlotLineChart(elementId);
+            break;
+        case ChartType.SPLINE:
+            chart = new JQPlotSplineChart(elementId);
+            break;
+        case ChartType.TIMELINE:
+            chart = new JQPlotTimelineChart(elementId);
+            break;
+        case ChartType.AREA:
+            chart = new JQPlotAreaChart(elementId);
+            break;
+        case ChartType.BAR:
+            chart = new JQPlotBarChart(elementId);
+            break;
+        case ChartType.COLUMN:
+            chart = new JQPlotColumnChart(elementId);
+            break;
+        case ChartType.PIE:
+            chart = new JQPlotPieChart(elementId);
+            break;
+        case ChartType.SCATTER:
+            chart = new JQPlotScatterChart(elementId);
+            break;
     }
 
     return chart;

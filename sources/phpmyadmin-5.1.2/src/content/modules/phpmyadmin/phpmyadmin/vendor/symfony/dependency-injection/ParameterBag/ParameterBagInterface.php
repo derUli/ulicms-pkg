@@ -19,8 +19,8 @@ use Symfony\Component\DependencyInjection\Exception\ParameterNotFoundException;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-interface ParameterBagInterface
-{
+interface ParameterBagInterface {
+
     /**
      * Clears all parameters.
      *

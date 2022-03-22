@@ -12,8 +12,8 @@ use function json_encode;
 /**
  * Table/Column autocomplete in SQL editors.
  */
-class SqlAutoCompleteController extends AbstractController
-{
+class SqlAutoCompleteController extends AbstractController {
+
     /** @var DatabaseInterface */
     private $dbi;
 
@@ -22,14 +22,12 @@ class SqlAutoCompleteController extends AbstractController
      * @param string            $db       Database name.
      * @param DatabaseInterface $dbi
      */
-    public function __construct($response, Template $template, $db, $dbi)
-    {
+    public function __construct($response, Template $template, $db, $dbi) {
         parent::__construct($response, $template, $db);
         $this->dbi = $dbi;
     }
 
-    public function index(): void
-    {
+    public function index(): void {
         global $cfg, $db, $sql_autocomplete;
 
         $sql_autocomplete = true;
@@ -40,12 +38,13 @@ class SqlAutoCompleteController extends AbstractController
                 $tableNames = $this->dbi->getTables($db);
                 foreach ($tableNames as $tableName) {
                     $sql_autocomplete[$tableName] = $this->dbi->getColumns(
-                        $db,
-                        $tableName
+                            $db,
+                            $tableName
                     );
                 }
             }
         }
         $this->response->addJSON(['tables' => json_encode($sql_autocomplete)]);
     }
+
 }

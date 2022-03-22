@@ -1,4 +1,4 @@
 {
- "version" : "1.2.1",
- "menus" : ["top", "right"]
+    "version": "1.2.1",
+    "menus": ["top", "right"]
 }

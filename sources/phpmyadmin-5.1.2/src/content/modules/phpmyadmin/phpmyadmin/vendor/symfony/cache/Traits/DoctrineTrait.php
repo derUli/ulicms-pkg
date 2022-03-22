@@ -16,15 +16,14 @@ namespace Symfony\Component\Cache\Traits;
  *
  * @internal
  */
-trait DoctrineTrait
-{
+trait DoctrineTrait {
+
     private $provider;
 
     /**
      * {@inheritdoc}
      */
-    public function reset()
-    {
+    public function reset() {
         parent::reset();
         $this->provider->setNamespace($this->provider->getNamespace());
     }
@@ -32,9 +31,8 @@ trait DoctrineTrait
     /**
      * {@inheritdoc}
      */
-    protected function doFetch(array $ids)
-    {
-        $unserializeCallbackHandler = ini_set('unserialize_callback_func', parent::class.'::handleUnserializeCallback');
+    protected function doFetch(array $ids) {
+        $unserializeCallbackHandler = ini_set('unserialize_callback_func', parent::class . '::handleUnserializeCallback');
         try {
             return $this->provider->fetchMultiple($ids);
         } catch (\Error $e) {
@@ -58,28 +56,23 @@ trait DoctrineTrait
     /**
      * {@inheritdoc}
      */
-    protected function doHave($id)
-    {
+    protected function doHave($id) {
         return $this->provider->contains($id);
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function doClear($namespace)
-    {
+    protected function doClear($namespace) {
         $namespace = $this->provider->getNamespace();
 
-        return isset($namespace[0])
-            ? $this->provider->deleteAll()
-            : $this->provider->flushAll();
+        return isset($namespace[0]) ? $this->provider->deleteAll() : $this->provider->flushAll();
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function doDelete(array $ids)
-    {
+    protected function doDelete(array $ids) {
         $ok = true;
         foreach ($ids as $id) {
             $ok = $this->provider->delete($id) && $ok;
@@ -91,8 +84,8 @@ trait DoctrineTrait
     /**
      * {@inheritdoc}
      */
-    protected function doSave(array $values, int $lifetime)
-    {
+    protected function doSave(array $values, int $lifetime) {
         return $this->provider->saveMultiple($values, $lifetime);
     }
+
 }

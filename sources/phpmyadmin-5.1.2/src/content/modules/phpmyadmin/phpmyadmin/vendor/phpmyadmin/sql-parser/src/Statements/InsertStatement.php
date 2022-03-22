@@ -1,8 +1,8 @@
 <?php
+
 /**
  * `INSERT` statement.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\SqlParser\Statements;
@@ -16,7 +16,6 @@ use PhpMyAdmin\SqlParser\Parser;
 use PhpMyAdmin\SqlParser\Statement;
 use PhpMyAdmin\SqlParser\Token;
 use PhpMyAdmin\SqlParser\TokensList;
-
 use function count;
 use function strlen;
 use function trim;
@@ -54,8 +53,8 @@ use function trim;
  *       col_name=expr
  *         [, col_name=expr] ... ]
  */
-class InsertStatement extends Statement
-{
+class InsertStatement extends Statement {
+
     /**
      * Options for `INSERT` statements.
      *
@@ -109,8 +108,7 @@ class InsertStatement extends Statement
     /**
      * @return string
      */
-    public function build()
-    {
+    public function build() {
         $ret = 'INSERT ' . $this->options;
         $ret = trim($ret) . ' INTO ' . $this->into;
 
@@ -133,10 +131,8 @@ class InsertStatement extends Statement
      * @param Parser     $parser the instance that requests parsing
      * @param TokensList $list   the list of tokens to be parsed
      */
-    public function parse(Parser $parser, TokensList $list)
-    {
+    public function parse(Parser $parser, TokensList $list) {
         ++$list->idx; // Skipping `INSERT`.
-
         // parse any options if provided
         $this->options = OptionsArray::parse($parser, $list, static::$OPTIONS);
         ++$list->idx;
@@ -188,9 +184,9 @@ class InsertStatement extends Statement
 
                 ++$list->idx;
                 $this->into = IntoKeyword::parse(
-                    $parser,
-                    $list,
-                    ['fromInsert' => true]
+                                $parser,
+                                $list,
+                                ['fromInsert' => true]
                 );
 
                 $state = 1;
@@ -245,4 +241,5 @@ class InsertStatement extends Statement
 
         --$list->idx;
     }
+
 }

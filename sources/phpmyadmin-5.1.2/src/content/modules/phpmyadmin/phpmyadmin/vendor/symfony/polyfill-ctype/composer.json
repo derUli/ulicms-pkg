@@ -22,8 +22,10 @@
         "ext-ctype": "*"
     },
     "autoload": {
-        "psr-4": { "Symfony\\Polyfill\\Ctype\\": "" },
-        "files": [ "bootstrap.php" ]
+        "psr-4": {
+            "Symfony\\Polyfill\\Ctype\\": ""
+        },
+        "files": ["bootstrap.php"]
     },
     "suggest": {
         "ext-ctype": "For best performance"

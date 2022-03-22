@@ -18,8 +18,8 @@ use Symfony\Component\ExpressionLanguage\Compiler;
  *
  * @internal
  */
-class UnaryNode extends Node
-{
+class UnaryNode extends Node {
+
     private const OPERATORS = [
         '!' => '!',
         'not' => '!',
@@ -27,26 +27,23 @@ class UnaryNode extends Node
         '-' => '-',
     ];
 
-    public function __construct(string $operator, Node $node)
-    {
+    public function __construct(string $operator, Node $node) {
         parent::__construct(
-            ['node' => $node],
-            ['operator' => $operator]
+                ['node' => $node],
+                ['operator' => $operator]
         );
     }
 
-    public function compile(Compiler $compiler)
-    {
+    public function compile(Compiler $compiler) {
         $compiler
-            ->raw('(')
-            ->raw(self::OPERATORS[$this->attributes['operator']])
-            ->compile($this->nodes['node'])
-            ->raw(')')
+                ->raw('(')
+                ->raw(self::OPERATORS[$this->attributes['operator']])
+                ->compile($this->nodes['node'])
+                ->raw(')')
         ;
     }
 
-    public function evaluate($functions, $values)
-    {
+    public function evaluate($functions, $values) {
         $value = $this->nodes['node']->evaluate($functions, $values);
         switch ($this->attributes['operator']) {
             case 'not':
@@ -59,8 +56,8 @@ class UnaryNode extends Node
         return $value;
     }
 
-    public function toArray(): array
-    {
-        return ['(', $this->attributes['operator'].' ', $this->nodes['node'], ')'];
+    public function toArray(): array {
+        return ['(', $this->attributes['operator'] . ' ', $this->nodes['node'], ')'];
     }
+
 }

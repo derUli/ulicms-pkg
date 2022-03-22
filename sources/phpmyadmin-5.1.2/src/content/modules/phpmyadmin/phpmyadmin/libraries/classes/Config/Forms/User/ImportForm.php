@@ -1,21 +1,20 @@
 <?php
+
 /**
  * User preferences form
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Config\Forms\User;
 
 use PhpMyAdmin\Config\Forms\BaseForm;
 
-class ImportForm extends BaseForm
-{
+class ImportForm extends BaseForm {
+
     /**
      * @return array
      */
-    public static function getForms()
-    {
+    public static function getForms() {
         return [
             'Import_defaults' => [
                 'Import/format',
@@ -53,15 +52,14 @@ class ImportForm extends BaseForm
                 'Import/ods_recognize_percentages',
                 'Import/ods_recognize_currency',
             ],
-
         ];
     }
 
     /**
      * @return string
      */
-    public static function getName()
-    {
+    public static function getName() {
         return __('Import');
     }
+
 }

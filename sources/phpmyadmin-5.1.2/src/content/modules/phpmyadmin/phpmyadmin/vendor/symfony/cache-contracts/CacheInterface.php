@@ -19,8 +19,8 @@ use Psr\Cache\InvalidArgumentException;
  *
  * @author Nicolas Grekas <p@tchwork.com>
  */
-interface CacheInterface
-{
+interface CacheInterface {
+
     /**
      * Fetches a value from the pool or computes it if not found.
      *

@@ -53,7 +53,7 @@
             "PhpMyAdmin\\SqlParser\\Tests\\": "tests"
         }
     },
-    "config":{
+    "config": {
         "sort-packages": true
     }
 }

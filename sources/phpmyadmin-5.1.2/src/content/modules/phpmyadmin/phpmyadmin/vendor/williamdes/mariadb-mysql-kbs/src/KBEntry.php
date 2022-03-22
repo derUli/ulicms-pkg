@@ -1,14 +1,14 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Williamdes\MariaDBMySQLKBS;
 
 use stdClass;
 use JsonSerializable;
 
-class KBEntry extends stdClass implements JsonSerializable
-{
+class KBEntry extends stdClass implements JsonSerializable {
+
     /**
      * The name of the variable
      *
@@ -44,8 +44,7 @@ class KBEntry extends stdClass implements JsonSerializable
      * @param string|null $type    Type of variable
      * @param bool|null   $dynamic Is dynamic ?
      */
-    public function __construct(string $name, ?string $type, ?bool $dynamic)
-    {
+    public function __construct(string $name, ?string $type, ?bool $dynamic) {
         $this->name = $name;
         if ($type !== null) {
             $this->type = $type;
@@ -60,8 +59,7 @@ class KBEntry extends stdClass implements JsonSerializable
      *
      * @return string
      */
-    public function getName(): string
-    {
+    public function getName(): string {
         return $this->name;
     }
 
@@ -70,8 +68,7 @@ class KBEntry extends stdClass implements JsonSerializable
      *
      * @return bool|null
      */
-    public function isDynamic(): ?bool
-    {
+    public function isDynamic(): ?bool {
         return $this->dynamic;
     }
 
@@ -80,8 +77,7 @@ class KBEntry extends stdClass implements JsonSerializable
      *
      * @return string|null
      */
-    public function getType(): ?string
-    {
+    public function getType(): ?string {
         return $this->type;
     }
 
@@ -90,8 +86,7 @@ class KBEntry extends stdClass implements JsonSerializable
      *
      * @return bool
      */
-    public function hasDocumentations(): bool
-    {
+    public function hasDocumentations(): bool {
         if ($this->docs === null) {
             return false;
         } else {
@@ -104,8 +99,7 @@ class KBEntry extends stdClass implements JsonSerializable
      *
      * @return KBDocumentation[]
      */
-    public function getDocumentations(): array
-    {
+    public function getDocumentations(): array {
         return $this->docs;
     }
 
@@ -116,13 +110,12 @@ class KBEntry extends stdClass implements JsonSerializable
      * @param string|null $anchor The anchor
      * @return KBDocumentation
      */
-    public function addDocumentation(string $url, ?string $anchor = null): KBDocumentation
-    {
+    public function addDocumentation(string $url, ?string $anchor = null): KBDocumentation {
         $this->url = $url;
         if ($this->docs === null) {
             $this->docs = [];
         }
-        $kbd          = new KBDocumentation($url, $anchor);
+        $kbd = new KBDocumentation($url, $anchor);
         $this->docs[] = $kbd;
         return $kbd;
     }
@@ -133,9 +126,8 @@ class KBEntry extends stdClass implements JsonSerializable
      *
      * @return array<string,KBDocumentation[]|bool|string>
      */
-    public function jsonSerialize(): array
-    {
-        $outObj         = [];
+    public function jsonSerialize(): array {
+        $outObj = [];
         $outObj['name'] = $this->name;
         if ($this->type !== null) {
             $outObj['type'] = $this->type;

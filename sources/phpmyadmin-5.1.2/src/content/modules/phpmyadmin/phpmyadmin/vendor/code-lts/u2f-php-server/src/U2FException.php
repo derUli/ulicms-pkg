@@ -2,9 +2,8 @@
 
 namespace CodeLts\U2F\U2FServer;
 
+class U2FException extends \Exception {
 
-class U2FException extends \Exception
-{
     /** Error for the authentication message not matching any outstanding
      * authentication request */
     const NO_MATCHING_REQUEST = 1;
@@ -51,4 +50,5 @@ class U2FException extends \Exception
     public function __construct($message, $code, \Exception $previous = null) {
         parent::__construct($message, $code, $previous);
     }
+
 }

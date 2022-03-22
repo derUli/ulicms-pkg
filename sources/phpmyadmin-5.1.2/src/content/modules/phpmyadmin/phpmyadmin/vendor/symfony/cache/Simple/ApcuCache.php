@@ -20,12 +20,12 @@ use Symfony\Contracts\Cache\CacheInterface;
 /**
  * @deprecated since Symfony 4.3, use ApcuAdapter and type-hint for CacheInterface instead.
  */
-class ApcuCache extends AbstractCache
-{
+class ApcuCache extends AbstractCache {
+
     use ApcuTrait;
 
-    public function __construct(string $namespace = '', int $defaultLifetime = 0, string $version = null)
-    {
+    public function __construct(string $namespace = '', int $defaultLifetime = 0, string $version = null) {
         $this->init($namespace, $defaultLifetime, $version);
     }
+
 }

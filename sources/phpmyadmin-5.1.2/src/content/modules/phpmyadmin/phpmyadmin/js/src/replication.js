@@ -10,7 +10,7 @@
 var randomServerId = Math.floor(Math.random() * 10000000);
 var confPrefix = 'server-id=' + randomServerId + '\nlog_bin=mysql-bin\nlog_error=mysql-bin.err\n';
 
-function updateConfig () {
+function updateConfig() {
     var confIgnore = 'binlog_ignore_db=';
     var confDo = 'binlog_do_db=';
     var databaseList = '';

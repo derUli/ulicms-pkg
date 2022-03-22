@@ -1,8 +1,8 @@
 <?php
+
 /**
  * `LOAD` statement.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\SqlParser\Statements;
@@ -16,7 +16,6 @@ use PhpMyAdmin\SqlParser\Parser;
 use PhpMyAdmin\SqlParser\Statement;
 use PhpMyAdmin\SqlParser\Token;
 use PhpMyAdmin\SqlParser\TokensList;
-
 use function count;
 use function strlen;
 use function trim;
@@ -42,8 +41,8 @@ use function trim;
  *   [(col_name_or_user_var,...)]
  *   [SET col_name = expr,...]
  */
-class LoadStatement extends Statement
-{
+class LoadStatement extends Statement {
+
     /**
      * Options for `LOAD` statements and their slot ID.
      *
@@ -183,10 +182,9 @@ class LoadStatement extends Statement
     /**
      * @return string
      */
-    public function build()
-    {
+    public function build() {
         $ret = 'LOAD DATA ' . $this->options
-            . ' INFILE ' . $this->file_name;
+                . ' INFILE ' . $this->file_name;
 
         if ($this->replace_ignore !== null) {
             $ret .= ' ' . trim($this->replace_ignore);
@@ -229,10 +227,8 @@ class LoadStatement extends Statement
      * @param Parser     $parser the instance that requests parsing
      * @param TokensList $list   the list of tokens to be parsed
      */
-    public function parse(Parser $parser, TokensList $list)
-    {
+    public function parse(Parser $parser, TokensList $list) {
         ++$list->idx; // Skipping `LOAD DATA`.
-
         // parse any options if provided
         $this->options = OptionsArray::parse($parser, $list, static::$OPTIONS);
         ++$list->idx;
@@ -275,9 +271,9 @@ class LoadStatement extends Statement
 
                 ++$list->idx;
                 $this->file_name = Expression::parse(
-                    $parser,
-                    $list,
-                    ['parseField' => 'file']
+                                $parser,
+                                $list,
+                                ['parseField' => 'file']
                 );
                 $state = 1;
             } elseif ($state === 1) {
@@ -305,8 +301,7 @@ class LoadStatement extends Statement
                         break;
                     }
                 } elseif ($token->type === Token::TYPE_OPERATOR && $token->token === '(') {
-                    $this->col_name_or_user_var
-                        = ExpressionArray::parse($parser, $list);
+                    $this->col_name_or_user_var = ExpressionArray::parse($parser, $list);
                     $state = 7;
                 } else {
                     $parser->error('Unexpected token.', $token);
@@ -323,8 +318,7 @@ class LoadStatement extends Statement
      * @param TokensList $list    A token list
      * @param string     $keyword The keyword
      */
-    public function parseFileOptions(Parser $parser, TokensList $list, $keyword = 'FIELDS'): void
-    {
+    public function parseFileOptions(Parser $parser, TokensList $list, $keyword = 'FIELDS'): void {
         ++$list->idx;
 
         if ($keyword === 'FIELDS' || $keyword === 'COLUMNS') {
@@ -345,8 +339,7 @@ class LoadStatement extends Statement
      *
      * @return int
      */
-    public function parseKeywordsAccordingToState($parser, $list, $state)
-    {
+    public function parseKeywordsAccordingToState($parser, $list, $state) {
         $token = $list->tokens[$list->idx];
 
         switch ($state) {
@@ -358,7 +351,7 @@ class LoadStatement extends Statement
                     return 4;
                 }
 
-                // no break
+            // no break
             case 4:
                 if ($token->keyword === 'CHARACTER SET') {
                     ++$list->idx;
@@ -367,7 +360,7 @@ class LoadStatement extends Statement
                     return 5;
                 }
 
-                // no break
+            // no break
             case 5:
                 if ($token->keyword === 'FIELDS' || $token->keyword === 'COLUMNS' || $token->keyword === 'LINES') {
                     $this->parseFileOptions($parser, $list, $token->value);
@@ -375,7 +368,7 @@ class LoadStatement extends Statement
                     return 6;
                 }
 
-                // no break
+            // no break
             case 6:
                 if ($token->keyword === 'IGNORE') {
                     ++$list->idx;
@@ -384,9 +377,7 @@ class LoadStatement extends Statement
                     $nextToken = $list->getNextOfType(Token::TYPE_KEYWORD);
 
                     if (
-                        $nextToken->type === Token::TYPE_KEYWORD
-                        && (($nextToken->keyword === 'LINES')
-                        || ($nextToken->keyword === 'ROWS'))
+                            $nextToken->type === Token::TYPE_KEYWORD && (($nextToken->keyword === 'LINES') || ($nextToken->keyword === 'ROWS'))
                     ) {
                         $this->lines_rows = $nextToken->token;
                     }
@@ -394,7 +385,7 @@ class LoadStatement extends Statement
                     return 7;
                 }
 
-                // no break
+            // no break
             case 7:
                 if ($token->keyword === 'SET') {
                     ++$list->idx;
@@ -403,10 +394,11 @@ class LoadStatement extends Statement
                     return 8;
                 }
 
-                // no break
+            // no break
             default:
         }
 
         return $state;
     }
+
 }

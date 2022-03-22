@@ -11,7 +11,7 @@ var currentSettings = null;
 var dateTimeCols = [];
 var numericCols = [];
 
-function extractDate (dateString) {
+function extractDate(dateString) {
     var matches;
     var match;
     var dateTimeRegExp = /[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}/;
@@ -31,38 +31,38 @@ function extractDate (dateString) {
     return null;
 }
 
-function queryChart (data, columnNames, settings) {
+function queryChart(data, columnNames, settings) {
     if ($('#querychart').length === 0) {
         return;
     }
 
     var plotSettings = {
-        title : {
-            text : settings.title,
+        title: {
+            text: settings.title,
             escapeHtml: true
         },
-        grid : {
-            drawBorder : false,
-            shadow : false,
-            background : 'rgba(0,0,0,0)'
+        grid: {
+            drawBorder: false,
+            shadow: false,
+            background: 'rgba(0,0,0,0)'
         },
-        legend : {
-            show : true,
-            placement : 'outsideGrid',
-            location : 'e',
+        legend: {
+            show: true,
+            placement: 'outsideGrid',
+            location: 'e',
             rendererOptions: {
                 numberColumns: 2
             }
         },
-        axes : {
-            xaxis : {
-                label : Functions.escapeHtml(settings.xaxisLabel)
+        axes: {
+            xaxis: {
+                label: Functions.escapeHtml(settings.xaxisLabel)
             },
-            yaxis : {
-                label : settings.yaxisLabel
+            yaxis: {
+                label: settings.yaxisLabel
             }
         },
-        stackSeries : settings.stackSeries
+        stackSeries: settings.stackSeries
     };
 
     // create the chart
@@ -119,7 +119,7 @@ function queryChart (data, columnNames, settings) {
         var seriesNumber = 1;
         var seriesColumnName = columnNames[settings.seriesColumn];
         for (i = 0; i < data.length; i++) {
-            if (! seriesNames[data[i][seriesColumnName]]) {
+            if (!seriesNames[data[i][seriesColumnName]]) {
                 seriesNames[data[i][seriesColumnName]] = seriesNumber;
                 seriesNumber++;
             }
@@ -137,7 +137,7 @@ function queryChart (data, columnNames, settings) {
         for (i = 0; i < data.length; i++) {
             xValue = data[i][mainAxisName];
             value = valueMap[xValue];
-            if (! value) {
+            if (!value) {
                 value = [xValue];
                 valueMap[xValue] = value;
             }
@@ -156,7 +156,7 @@ function queryChart (data, columnNames, settings) {
     return chart;
 }
 
-function drawChart () {
+function drawChart() {
     currentSettings.width = $('#resizer').width() - 20;
     currentSettings.height = $('#resizer').height() - 20;
 
@@ -179,7 +179,7 @@ function drawChart () {
     }
 }
 
-function getSelectedSeries () {
+function getSelectedSeries() {
     var val = $('select[name="chartSeries"]').val() || [];
     var ret = [];
     $.each(val, function (i, v) {
@@ -188,7 +188,7 @@ function getSelectedSeries () {
     return ret;
 }
 
-function onXAxisChange () {
+function onXAxisChange() {
     var $xAxisSelect = $('select[name="chartXAxis"]');
     currentSettings.mainAxis = parseInt($xAxisSelect.val(), 10);
     if (dateTimeCols.indexOf(currentSettings.mainAxis) !== -1) {
@@ -214,7 +214,7 @@ function onXAxisChange () {
     currentSettings.xaxisLabel = xAxisTitle;
 }
 
-function onDataSeriesChange () {
+function onDataSeriesChange() {
     var $seriesSelect = $('select[name="chartSeries"]');
     currentSettings.selectedSeries = getSelectedSeries();
     var yAxisTitle;
@@ -259,7 +259,7 @@ AJAX.registerOnload('table/chart.js', function () {
         $('#querychart').width($('#resizer').width() * 0.96);
         if (currentChart !== null) {
             currentChart.redraw({
-                resetAxes : true
+                resetAxes: true
             });
         }
     });
@@ -271,7 +271,7 @@ AJAX.registerOnload('table/chart.js', function () {
             $('span.barStacked').show();
         } else {
             $('input[name="barStacked"]').prop('checked', false);
-            $.extend(true, currentSettings, { stackSeries : false });
+            $.extend(true, currentSettings, {stackSeries: false});
             $('span.barStacked').hide();
         }
         drawChart();
@@ -280,8 +280,8 @@ AJAX.registerOnload('table/chart.js', function () {
     // handle chosing alternative data format
     $('input[name="chkAlternative"]').on('click', function () {
         var $seriesColumn = $('select[name="chartSeriesColumn"]');
-        var $valueColumn  = $('select[name="chartValueColumn"]');
-        var $chartSeries  = $('select[name="chartSeries"]');
+        var $valueColumn = $('select[name="chartValueColumn"]');
+        var $chartSeries = $('select[name="chartSeries"]');
         if ($(this).is(':checked')) {
             $seriesColumn.prop('disabled', false);
             $valueColumn.prop('disabled', false);
@@ -301,27 +301,27 @@ AJAX.registerOnload('table/chart.js', function () {
     // handle stacking for bar, column and area charts
     $('input[name="barStacked"]').on('click', function () {
         if ($(this).is(':checked')) {
-            $.extend(true, currentSettings, { stackSeries : true });
+            $.extend(true, currentSettings, {stackSeries: true});
         } else {
-            $.extend(true, currentSettings, { stackSeries : false });
+            $.extend(true, currentSettings, {stackSeries: false});
         }
         drawChart();
     });
 
     // handle changes in chart title
     $('input[name="chartTitle"]')
-        .on('focus', function () {
-            tempChartTitle = $(this).val();
-        })
-        .on('keyup', function () {
-            currentSettings.title = $('input[name="chartTitle"]').val();
-            drawChart();
-        })
-        .on('blur', function () {
-            if ($(this).val() !== tempChartTitle) {
+            .on('focus', function () {
+                tempChartTitle = $(this).val();
+            })
+            .on('keyup', function () {
+                currentSettings.title = $('input[name="chartTitle"]').val();
                 drawChart();
-            }
-        });
+            })
+            .on('blur', function () {
+                if ($(this).val() !== tempChartTitle) {
+                    drawChart();
+                }
+            });
 
     // handle changing the x-axis
     $('select[name="chartXAxis"]').on('change', function () {
@@ -391,20 +391,20 @@ AJAX.registerOnload('table/chart.js', function () {
         minHeight: 240,
         minWidth: 300
     })
-        .width($('#div_view_options').width() - 50)
-        .trigger('resizestop');
+            .width($('#div_view_options').width() - 50)
+            .trigger('resizestop');
 
     currentSettings = {
-        type : 'line',
-        width : $('#resizer').width() - 20,
-        height : $('#resizer').height() - 20,
-        xaxisLabel : $('input[name="xaxis_label"]').val(),
-        yaxisLabel : $('input[name="yaxis_label"]').val(),
-        title : $('input[name="chartTitle"]').val(),
-        stackSeries : false,
-        mainAxis : parseInt($('select[name="chartXAxis"]').val(), 10),
-        selectedSeries : getSelectedSeries(),
-        seriesColumn : null
+        type: 'line',
+        width: $('#resizer').width() - 20,
+        height: $('#resizer').height() - 20,
+        xaxisLabel: $('input[name="xaxis_label"]').val(),
+        yaxisLabel: $('input[name="yaxis_label"]').val(),
+        title: $('input[name="chartTitle"]').val(),
+        stackSeries: false,
+        mainAxis: parseInt($('select[name="chartXAxis"]').val(), 10),
+        selectedSeries: getSelectedSeries(),
+        seriesColumn: null
     };
 
     var vals = $('input[name="dateTimeCols"]').val().split(' ');

@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Handles the IPv4/IPv6 to long transformation for text plain
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Plugins\Transformations\Input;
@@ -16,17 +16,16 @@ use function htmlspecialchars;
  * Handles the IPv4/IPv6 to long transformation for text plain
  */
 // @codingStandardsIgnoreLine
-class Text_Plain_Iptolong extends IOTransformationsPlugin
-{
+class Text_Plain_Iptolong extends IOTransformationsPlugin {
+
     /**
      * Gets the transformation description of the plugin
      *
      * @return string
      */
-    public static function getInfo()
-    {
+    public static function getInfo() {
         return __(
-            'Converts an Internet network address in (IPv4/IPv6) format into a long integer.'
+                'Converts an Internet network address in (IPv4/IPv6) format into a long integer.'
         );
     }
 
@@ -41,8 +40,7 @@ class Text_Plain_Iptolong extends IOTransformationsPlugin
      *
      * @return string IP address
      */
-    public function applyTransformation($buffer, array $options = [], ?stdClass $meta = null)
-    {
+    public function applyTransformation($buffer, array $options = [], ?stdClass $meta = null) {
         return (string) FormatConverter::ipToLong($buffer);
     }
 
@@ -63,35 +61,35 @@ class Text_Plain_Iptolong extends IOTransformationsPlugin
      * @return string the html for input field
      */
     public function getInputHtml(
-        array $column,
-        $row_id,
-        $column_name_appendix,
-        array $options,
-        $value,
-        $text_dir,
-        $tabindex,
-        $tabindex_for_value,
-        $idindex
+            array $column,
+            $row_id,
+            $column_name_appendix,
+            array $options,
+            $value,
+            $text_dir,
+            $tabindex,
+            $tabindex_for_value,
+            $idindex
     ) {
         $html = '';
         $val = '';
 
-        if (! empty($value)) {
+        if (!empty($value)) {
             $val = FormatConverter::longToIp($value);
 
             if ($value !== $val) {
                 $html = '<input type="hidden" name="fields_prev' . $column_name_appendix
-                    . '" value="' . htmlspecialchars($val) . '"/>';
+                        . '" value="' . htmlspecialchars($val) . '"/>';
             }
         }
 
         return $html . '<input type="text" name="fields' . $column_name_appendix . '"'
-            . ' value="' . htmlspecialchars($val) . '"'
-            . ' size="40"'
-            . ' dir="' . $text_dir . '"'
-            . ' class="transform_IPToLong"'
-            . ' id="field_' . $idindex . '_3"'
-            . ' tabindex="' . ($tabindex + $tabindex_for_value) . '" />';
+                . ' value="' . htmlspecialchars($val) . '"'
+                . ' size="40"'
+                . ' dir="' . $text_dir . '"'
+                . ' class="transform_IPToLong"'
+                . ' id="field_' . $idindex . '_3"'
+                . ' tabindex="' . ($tabindex + $tabindex_for_value) . '" />';
     }
 
     /* ~~~~~~~~~~~~~~~~~~~~ Getters and Setters ~~~~~~~~~~~~~~~~~~~~ */
@@ -101,8 +99,7 @@ class Text_Plain_Iptolong extends IOTransformationsPlugin
      *
      * @return string
      */
-    public static function getName()
-    {
+    public static function getName() {
         return 'IPv4/IPv6 To Long';
     }
 
@@ -111,8 +108,7 @@ class Text_Plain_Iptolong extends IOTransformationsPlugin
      *
      * @return string
      */
-    public static function getMIMEType()
-    {
+    public static function getMIMEType() {
         return 'Text';
     }
 
@@ -121,8 +117,8 @@ class Text_Plain_Iptolong extends IOTransformationsPlugin
      *
      * @return string
      */
-    public static function getMIMESubtype()
-    {
+    public static function getMIMESubtype() {
         return 'Plain';
     }
+
 }

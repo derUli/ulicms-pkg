@@ -1,19 +1,19 @@
 div {
-  interp1: yes;
-  interp2: yes;
-  interp3: okay;
+    interp1: yes;
+    interp2: yes;
+    interp3: okay;
 }
 10"yeah" {
-  color: blue;
+    color: blue;
 }
 10 {
-  color: blue;
+    color: blue;
 }
 hello world 10 {
-  color: red;
+    color: red;
 }
 #"yeah" {
-  color: "hello 10";
+    color: "hello 10";
 }
 [prop],
 [prop="value3"],
@@ -24,5 +24,5 @@ hello world 10 {
 [3^="val3"],
 [3=3],
 [3] {
-  attributes: yes;
+    attributes: yes;
 }

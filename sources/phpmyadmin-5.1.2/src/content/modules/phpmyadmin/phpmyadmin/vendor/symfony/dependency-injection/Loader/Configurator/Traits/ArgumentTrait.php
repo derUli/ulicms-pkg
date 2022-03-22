@@ -11,15 +11,14 @@
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator\Traits;
 
-trait ArgumentTrait
-{
+trait ArgumentTrait {
+
     /**
      * Sets the arguments to pass to the service constructor/factory method.
      *
      * @return $this
      */
-    final public function args(array $arguments): self
-    {
+    final public function args(array $arguments): self {
         $this->definition->setArguments(static::processValue($arguments, true));
 
         return $this;
@@ -33,10 +32,10 @@ trait ArgumentTrait
      *
      * @return $this
      */
-    final public function arg($key, $value): self
-    {
+    final public function arg($key, $value): self {
         $this->definition->setArgument($key, static::processValue($value, true));
 
         return $this;
     }
+
 }

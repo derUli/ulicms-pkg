@@ -15,15 +15,13 @@ namespace Twig\Node\Expression;
 use Twig\Compiler;
 use Twig\Node\Node;
 
-class FilterExpression extends CallExpression
-{
-    public function __construct(Node $node, ConstantExpression $filterName, Node $arguments, int $lineno, string $tag = null)
-    {
+class FilterExpression extends CallExpression {
+
+    public function __construct(Node $node, ConstantExpression $filterName, Node $arguments, int $lineno, string $tag = null) {
         parent::__construct(['node' => $node, 'filter' => $filterName, 'arguments' => $arguments], [], $lineno, $tag);
     }
 
-    public function compile(Compiler $compiler)
-    {
+    public function compile(Compiler $compiler) {
         $name = $this->getNode('filter')->getAttribute('value');
         $filter = $compiler->getEnvironment()->getFilter($name);
 
@@ -37,6 +35,7 @@ class FilterExpression extends CallExpression
 
         $this->compileCallable($compiler);
     }
+
 }
 
 class_alias('Twig\Node\Expression\FilterExpression', 'Twig_Node_Expression_Filter');

@@ -1,8 +1,8 @@
 <?php
+
 /**
  * MySQL charset metadata and manipulations
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin;
@@ -19,32 +19,32 @@ use function ksort;
 /**
  * Class used to manage MySQL charsets
  */
-class Charsets
-{
+class Charsets {
+
     /**
      * MySQL charsets map
      *
      * @var array
      */
     public static $mysqlCharsetMap = [
-        'big5'         => 'big5',
-        'cp-866'       => 'cp866',
-        'euc-jp'       => 'ujis',
-        'euc-kr'       => 'euckr',
-        'gb2312'       => 'gb2312',
-        'gbk'          => 'gbk',
-        'iso-8859-1'   => 'latin1',
-        'iso-8859-2'   => 'latin2',
-        'iso-8859-7'   => 'greek',
-        'iso-8859-8'   => 'hebrew',
+        'big5' => 'big5',
+        'cp-866' => 'cp866',
+        'euc-jp' => 'ujis',
+        'euc-kr' => 'euckr',
+        'gb2312' => 'gb2312',
+        'gbk' => 'gbk',
+        'iso-8859-1' => 'latin1',
+        'iso-8859-2' => 'latin2',
+        'iso-8859-7' => 'greek',
+        'iso-8859-8' => 'hebrew',
         'iso-8859-8-i' => 'hebrew',
-        'iso-8859-9'   => 'latin5',
-        'iso-8859-13'  => 'latin7',
-        'iso-8859-15'  => 'latin1',
-        'koi8-r'       => 'koi8r',
-        'shift_jis'    => 'sjis',
-        'tis-620'      => 'tis620',
-        'utf-8'        => 'utf8',
+        'iso-8859-9' => 'latin5',
+        'iso-8859-13' => 'latin7',
+        'iso-8859-15' => 'latin1',
+        'koi8-r' => 'koi8r',
+        'shift_jis' => 'sjis',
+        'tis-620' => 'tis620',
+        'utf-8' => 'utf8',
         'windows-1250' => 'cp1250',
         'windows-1251' => 'cp1251',
         'windows-1252' => 'latin1',
@@ -71,8 +71,7 @@ class Charsets
      * @param DatabaseInterface $dbi       DatabaseInterface instance
      * @param bool              $disableIs Disable use of INFORMATION_SCHEMA
      */
-    private static function loadCharsets(DatabaseInterface $dbi, bool $disableIs): void
-    {
+    private static function loadCharsets(DatabaseInterface $dbi, bool $disableIs): void {
         /* Data already loaded */
         if (count(self::$charsets) > 0) {
             return;
@@ -82,10 +81,10 @@ class Charsets
             $sql = 'SHOW CHARACTER SET';
         } else {
             $sql = 'SELECT `CHARACTER_SET_NAME` AS `Charset`,'
-                . ' `DEFAULT_COLLATE_NAME` AS `Default collation`,'
-                . ' `DESCRIPTION` AS `Description`,'
-                . ' `MAXLEN` AS `Maxlen`'
-                . ' FROM `information_schema`.`CHARACTER_SETS`';
+                    . ' `DEFAULT_COLLATE_NAME` AS `Default collation`,'
+                    . ' `DESCRIPTION` AS `Description`,'
+                    . ' `MAXLEN` AS `Maxlen`'
+                    . ' FROM `information_schema`.`CHARACTER_SETS`';
         }
         $res = $dbi->query($sql);
 
@@ -104,8 +103,7 @@ class Charsets
      * @param DatabaseInterface $dbi       DatabaseInterface instance
      * @param bool              $disableIs Disable use of INFORMATION_SCHEMA
      */
-    private static function loadCollations(DatabaseInterface $dbi, bool $disableIs): void
-    {
+    private static function loadCollations(DatabaseInterface $dbi, bool $disableIs): void {
         /* Data already loaded */
         if (count(self::$collations) > 0) {
             return;
@@ -115,12 +113,12 @@ class Charsets
             $sql = 'SHOW COLLATION';
         } else {
             $sql = 'SELECT `COLLATION_NAME` AS `Collation`,'
-                . ' `CHARACTER_SET_NAME` AS `Charset`,'
-                . ' `ID` AS `Id`,'
-                . ' `IS_DEFAULT` AS `Default`,'
-                . ' `IS_COMPILED` AS `Compiled`,'
-                . ' `SORTLEN` AS `Sortlen`'
-                . ' FROM `information_schema`.`COLLATIONS`';
+                    . ' `CHARACTER_SET_NAME` AS `Charset`,'
+                    . ' `ID` AS `Id`,'
+                    . ' `IS_DEFAULT` AS `Default`,'
+                    . ' `IS_COMPILED` AS `Compiled`,'
+                    . ' `SORTLEN` AS `Sortlen`'
+                    . ' FROM `information_schema`.`COLLATIONS`';
         }
         $res = $dbi->query($sql);
 
@@ -135,20 +133,19 @@ class Charsets
         }
     }
 
-     /**
-      * Get current server charset
-      *
-      * @param DatabaseInterface $dbi       DatabaseInterface instance
-      * @param bool              $disableIs Disable use of INFORMATION_SCHEMA
-      */
-    public static function getServerCharset(DatabaseInterface $dbi, bool $disableIs): Charset
-    {
+    /**
+     * Get current server charset
+     *
+     * @param DatabaseInterface $dbi       DatabaseInterface instance
+     * @param bool              $disableIs Disable use of INFORMATION_SCHEMA
+     */
+    public static function getServerCharset(DatabaseInterface $dbi, bool $disableIs): Charset {
         if (self::$serverCharset !== null) {
             return self::$serverCharset;
         }
         self::loadCharsets($dbi, $disableIs);
         $serverCharset = $dbi->getVariable('character_set_server');
-        if (! is_string($serverCharset)) {// MySQL 5.7.8 fallback, issue #15614
+        if (!is_string($serverCharset)) {// MySQL 5.7.8 fallback, issue #15614
             $serverCharset = $dbi->fetchValue('SELECT @@character_set_server;');
         }
 
@@ -168,10 +165,10 @@ class Charsets
 
         if (self::$serverCharset === null) {// Fallback in case nothing is found
             return Charset::fromServer(
-                [
-                    'Charset' => __('Unknown'),
-                    'Description' => __('Unknown'),
-                ]
+                            [
+                                'Charset' => __('Unknown'),
+                                'Description' => __('Unknown'),
+                            ]
             );
         }
 
@@ -186,8 +183,7 @@ class Charsets
      *
      * @return array
      */
-    public static function getCharsets(DatabaseInterface $dbi, bool $disableIs): array
-    {
+    public static function getCharsets(DatabaseInterface $dbi, bool $disableIs): array {
         self::loadCharsets($dbi, $disableIs);
 
         return self::$charsets;
@@ -201,8 +197,7 @@ class Charsets
      *
      * @return array
      */
-    public static function getCollations(DatabaseInterface $dbi, bool $disableIs): array
-    {
+    public static function getCollations(DatabaseInterface $dbi, bool $disableIs): array {
         self::loadCollations($dbi, $disableIs);
 
         return self::$collations;
@@ -213,10 +208,9 @@ class Charsets
      * @param bool              $disableIs Disable use of INFORMATION_SCHEMA
      * @param string|null       $name      Collation name
      */
-    public static function findCollationByName(DatabaseInterface $dbi, bool $disableIs, ?string $name): ?Collation
-    {
+    public static function findCollationByName(DatabaseInterface $dbi, bool $disableIs, ?string $name): ?Collation {
         $pieces = explode('_', (string) $name);
-        if ($pieces === false || ! isset($pieces[0])) {
+        if ($pieces === false || !isset($pieces[0])) {
             return null;
         }
         $charset = $pieces[0];
@@ -224,4 +218,5 @@ class Charsets
 
         return $collations[$charset][$name] ?? null;
     }
+
 }

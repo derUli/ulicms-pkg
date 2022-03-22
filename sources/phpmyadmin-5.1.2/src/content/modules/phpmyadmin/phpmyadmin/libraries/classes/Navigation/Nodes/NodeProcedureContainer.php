@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Functionality for the navigation tree
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Navigation\Nodes;
@@ -14,13 +14,12 @@ use PhpMyAdmin\Url;
 /**
  * Represents a container for procedure nodes in the navigation tree
  */
-class NodeProcedureContainer extends NodeDatabaseChildContainer
-{
+class NodeProcedureContainer extends NodeDatabaseChildContainer {
+
     /**
      * Initialises the class
      */
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct(__('Procedures'), Node::CONTAINER);
         $this->icon = Generator::getImage('b_routines', __('Procedures'));
         $this->links = [
@@ -37,8 +36,8 @@ class NodeProcedureContainer extends NodeDatabaseChildContainer
 
         $newLabel = _pgettext('Create new procedure', 'New');
         $new = NodeFactory::getInstanceForNewNode(
-            $newLabel,
-            'new_procedure italics'
+                        $newLabel,
+                        'new_procedure italics'
         );
         $new->icon = Generator::getImage('b_routine_add', $newLabel);
         $new->links = [
@@ -53,4 +52,5 @@ class NodeProcedureContainer extends NodeDatabaseChildContainer
         ];
         $this->addChild($new);
     }
+
 }

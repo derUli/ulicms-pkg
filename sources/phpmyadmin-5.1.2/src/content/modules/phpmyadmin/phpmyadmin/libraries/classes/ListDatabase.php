@@ -21,10 +21,9 @@ use function usort;
  *
  * @todo this object should be attached to the PMA_Server object
  */
-class ListDatabase extends ListAbstract
-{
-    public function __construct()
-    {
+class ListDatabase extends ListAbstract {
+
+    public function __construct() {
         global $dbi;
 
         parent::__construct();
@@ -40,14 +39,13 @@ class ListDatabase extends ListAbstract
      *
      * @return void
      */
-    protected function checkHideDatabase()
-    {
+    protected function checkHideDatabase() {
         if (empty($GLOBALS['cfg']['Server']['hide_db'])) {
             return;
         }
 
         foreach ($this->getArrayCopy() as $key => $db) {
-            if (! preg_match('/' . $GLOBALS['cfg']['Server']['hide_db'] . '/', $db)) {
+            if (!preg_match('/' . $GLOBALS['cfg']['Server']['hide_db'] . '/', $db)) {
                 continue;
             }
 
@@ -62,13 +60,12 @@ class ListDatabase extends ListAbstract
      *
      * @return array
      */
-    protected function retrieve($like_db_name = null)
-    {
+    protected function retrieve($like_db_name = null) {
         global $dbi;
 
         $database_list = [];
         $command = '';
-        if (! $GLOBALS['cfg']['Server']['DisableIS']) {
+        if (!$GLOBALS['cfg']['Server']['DisableIS']) {
             $command .= 'SELECT `SCHEMA_NAME` FROM `INFORMATION_SCHEMA`.`SCHEMATA`';
             if ($like_db_name !== null) {
                 $command .= " WHERE `SCHEMA_NAME` LIKE '" . $like_db_name . "'";
@@ -82,8 +79,8 @@ class ListDatabase extends ListAbstract
             } else {
                 foreach ($GLOBALS['dbs_to_test'] as $db) {
                     $database_list = array_merge(
-                        $database_list,
-                        $this->retrieve($db)
+                            $database_list,
+                            $this->retrieve($db)
                     );
                 }
             }
@@ -91,9 +88,9 @@ class ListDatabase extends ListAbstract
 
         if ($command) {
             $database_list = $dbi->fetchResult(
-                $command,
-                null,
-                null
+                    $command,
+                    null,
+                    null
             );
         }
 
@@ -113,9 +110,8 @@ class ListDatabase extends ListAbstract
      *
      * @return void
      */
-    public function build()
-    {
-        if (! $this->checkOnlyDatabase()) {
+    public function build() {
+        if (!$this->checkOnlyDatabase()) {
             $items = $this->retrieve();
             $this->exchangeArray($items);
         }
@@ -128,17 +124,15 @@ class ListDatabase extends ListAbstract
      *
      * @return bool false if there is no only_db, otherwise true
      */
-    protected function checkOnlyDatabase()
-    {
-        if (is_string($GLOBALS['cfg']['Server']['only_db'])
-            && strlen($GLOBALS['cfg']['Server']['only_db']) > 0
+    protected function checkOnlyDatabase() {
+        if (is_string($GLOBALS['cfg']['Server']['only_db']) && strlen($GLOBALS['cfg']['Server']['only_db']) > 0
         ) {
             $GLOBALS['cfg']['Server']['only_db'] = [
                 $GLOBALS['cfg']['Server']['only_db'],
             ];
         }
 
-        if (! is_array($GLOBALS['cfg']['Server']['only_db'])) {
+        if (!is_array($GLOBALS['cfg']['Server']['only_db'])) {
             return false;
         }
 
@@ -147,7 +141,7 @@ class ListDatabase extends ListAbstract
         foreach ($GLOBALS['cfg']['Server']['only_db'] as $each_only_db) {
             // check if the db name contains wildcard,
             // thus containing not escaped _ or %
-            if (! preg_match('/(^|[^\\\\])(_|%)/', $each_only_db)) {
+            if (!preg_match('/(^|[^\\\\])(_|%)/', $each_only_db)) {
                 // ... not contains wildcard
                 $items[] = Util::unescapeMysqlWildcards($each_only_db);
                 continue;
@@ -166,12 +160,12 @@ class ListDatabase extends ListAbstract
      *
      * @return string default item
      */
-    public function getDefault()
-    {
+    public function getDefault() {
         if (strlen($GLOBALS['db']) > 0) {
             return $GLOBALS['db'];
         }
 
         return $this->getEmpty();
     }
+
 }

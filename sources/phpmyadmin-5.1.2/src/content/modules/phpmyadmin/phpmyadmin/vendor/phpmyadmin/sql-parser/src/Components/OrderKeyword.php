@@ -1,8 +1,8 @@
 <?php
+
 /**
  * `ORDER BY` keyword parser.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\SqlParser\Components;
@@ -11,7 +11,6 @@ use PhpMyAdmin\SqlParser\Component;
 use PhpMyAdmin\SqlParser\Parser;
 use PhpMyAdmin\SqlParser\Token;
 use PhpMyAdmin\SqlParser\TokensList;
-
 use function implode;
 use function is_array;
 
@@ -20,8 +19,8 @@ use function is_array;
  *
  * @final
  */
-class OrderKeyword extends Component
-{
+class OrderKeyword extends Component {
+
     /**
      * The expression that is used for ordering.
      *
@@ -40,8 +39,7 @@ class OrderKeyword extends Component
      * @param Expression $expr the expression that we are sorting by
      * @param string     $type the sorting type
      */
-    public function __construct($expr = null, $type = 'ASC')
-    {
+    public function __construct($expr = null, $type = 'ASC') {
         $this->expr = $expr;
         $this->type = $type;
     }
@@ -53,8 +51,7 @@ class OrderKeyword extends Component
      *
      * @return OrderKeyword[]
      */
-    public static function parse(Parser $parser, TokensList $list, array $options = [])
-    {
+    public static function parse(Parser $parser, TokensList $list, array $options = []) {
         $ret = [];
 
         $expr = new static();
@@ -96,12 +93,11 @@ class OrderKeyword extends Component
                 $state = 1;
             } elseif ($state === 1) {
                 if (
-                    ($token->type === Token::TYPE_KEYWORD)
-                    && (($token->keyword === 'ASC') || ($token->keyword === 'DESC'))
+                        ($token->type === Token::TYPE_KEYWORD) && (($token->keyword === 'ASC') || ($token->keyword === 'DESC'))
                 ) {
                     $expr->type = $token->keyword;
                 } elseif (($token->type === Token::TYPE_OPERATOR) && ($token->value === ',')) {
-                    if (! empty($expr->expr)) {
+                    if (!empty($expr->expr)) {
                         $ret[] = $expr;
                     }
 
@@ -114,7 +110,7 @@ class OrderKeyword extends Component
         }
 
         // Last iteration was not processed.
-        if (! empty($expr->expr)) {
+        if (!empty($expr->expr)) {
             $ret[] = $expr;
         }
 
@@ -129,12 +125,12 @@ class OrderKeyword extends Component
      *
      * @return string
      */
-    public static function build($component, array $options = [])
-    {
+    public static function build($component, array $options = []) {
         if (is_array($component)) {
             return implode(', ', $component);
         }
 
         return $component->expr . ' ' . $component->type;
     }
+
 }

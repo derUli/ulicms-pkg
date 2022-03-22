@@ -1,8 +1,8 @@
 <?php
+
 /**
  * `PURGE` statement.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\SqlParser\Statements;
@@ -12,7 +12,6 @@ use PhpMyAdmin\SqlParser\Parser;
 use PhpMyAdmin\SqlParser\Statement;
 use PhpMyAdmin\SqlParser\Token;
 use PhpMyAdmin\SqlParser\TokensList;
-
 use function in_array;
 use function trim;
 
@@ -22,8 +21,8 @@ use function trim;
  * PURGE { BINARY | MASTER } LOGS
  *   { TO 'log_name' | BEFORE datetime_expr }
  */
-class PurgeStatement extends Statement
-{
+class PurgeStatement extends Statement {
+
     /**
      * The type of logs
      *
@@ -48,10 +47,9 @@ class PurgeStatement extends Statement
     /**
      * @return string
      */
-    public function build()
-    {
+    public function build() {
         $ret = 'PURGE ' . $this->log_type . ' LOGS '
-            . ($this->end_option !== null ? ($this->end_option . ' ' . $this->end_expr) : '');
+                . ($this->end_option !== null ? ($this->end_option . ' ' . $this->end_expr) : '');
 
         return trim($ret);
     }
@@ -60,8 +58,7 @@ class PurgeStatement extends Statement
      * @param Parser     $parser the instance that requests parsing
      * @param TokensList $list   the list of tokens to be parsed
      */
-    public function parse(Parser $parser, TokensList $list)
-    {
+    public function parse(Parser $parser, TokensList $list) {
         ++$list->idx; // Skipping `PURGE`.
 
         /**
@@ -133,8 +130,7 @@ class PurgeStatement extends Statement
      *
      * @return mixed|null
      */
-    private static function parseExpectedKeyword($parser, $token, $expectedKeywords)
-    {
+    private static function parseExpectedKeyword($parser, $token, $expectedKeywords) {
         if ($token->type === Token::TYPE_KEYWORD) {
             if (in_array($token->keyword, $expectedKeywords)) {
                 return $token->keyword;
@@ -147,4 +143,5 @@ class PurgeStatement extends Statement
 
         return null;
     }
+
 }

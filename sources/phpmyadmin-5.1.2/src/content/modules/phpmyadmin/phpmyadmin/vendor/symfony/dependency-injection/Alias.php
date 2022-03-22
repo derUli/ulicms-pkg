@@ -13,8 +13,8 @@ namespace Symfony\Component\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
 
-class Alias
-{
+class Alias {
+
     private const DEFAULT_DEPRECATION_TEMPLATE = 'The "%alias_id%" service alias is deprecated. You should stop using it, as it will be removed in the future.';
 
     private $id;
@@ -23,8 +23,7 @@ class Alias
     private $deprecated;
     private $deprecationTemplate;
 
-    public function __construct(string $id, bool $public = true)
-    {
+    public function __construct(string $id, bool $public = true) {
         $this->id = $id;
         $this->public = $public;
         $this->private = 2 > \func_num_args();
@@ -36,8 +35,7 @@ class Alias
      *
      * @return bool
      */
-    public function isPublic()
-    {
+    public function isPublic() {
         return $this->public;
     }
 
@@ -48,8 +46,7 @@ class Alias
      *
      * @return $this
      */
-    public function setPublic($boolean)
-    {
+    public function setPublic($boolean) {
         $this->public = (bool) $boolean;
         $this->private = false;
 
@@ -68,8 +65,7 @@ class Alias
      *
      * @return $this
      */
-    public function setPrivate($boolean)
-    {
+    public function setPrivate($boolean) {
         $this->private = (bool) $boolean;
 
         return $this;
@@ -80,8 +76,7 @@ class Alias
      *
      * @return bool
      */
-    public function isPrivate()
-    {
+    public function isPrivate() {
         return $this->private;
     }
 
@@ -96,8 +91,7 @@ class Alias
      *
      * @throws InvalidArgumentException when the message template is invalid
      */
-    public function setDeprecated($status = true, $template = null)
-    {
+    public function setDeprecated($status = true, $template = null) {
         if (null !== $template) {
             if (preg_match('#[\r\n]|\*/#', $template)) {
                 throw new InvalidArgumentException('Invalid characters found in deprecation template.');
@@ -115,13 +109,11 @@ class Alias
         return $this;
     }
 
-    public function isDeprecated(): bool
-    {
+    public function isDeprecated(): bool {
         return $this->deprecated;
     }
 
-    public function getDeprecationMessage(string $id): string
-    {
+    public function getDeprecationMessage(string $id): string {
         return str_replace('%alias_id%', $id, $this->deprecationTemplate ?: self::DEFAULT_DEPRECATION_TEMPLATE);
     }
 
@@ -130,8 +122,8 @@ class Alias
      *
      * @return string The alias id
      */
-    public function __toString()
-    {
+    public function __toString() {
         return $this->id;
     }
+
 }

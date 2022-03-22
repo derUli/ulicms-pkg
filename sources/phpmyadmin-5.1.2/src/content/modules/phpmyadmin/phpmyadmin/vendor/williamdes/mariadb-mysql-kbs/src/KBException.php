@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Williamdes\MariaDBMySQLKBS;
 
@@ -9,6 +9,6 @@ use Exception;
 /**
  * KBException class
  */
-class KBException extends Exception
-{
+class KBException extends Exception {
+    
 }

@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Abstract class for the I/O transformations plugins
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Plugins;
@@ -11,8 +11,8 @@ namespace PhpMyAdmin\Plugins;
  * Provides a common interface that will have to be implemented
  * by all of the Input/Output transformations plugins.
  */
-abstract class IOTransformationsPlugin extends TransformationsPlugin
-{
+abstract class IOTransformationsPlugin extends TransformationsPlugin {
+
     /**
      * Specifies whether transformation was successful or not.
      *
@@ -44,15 +44,15 @@ abstract class IOTransformationsPlugin extends TransformationsPlugin
      * @return string the html for input field
      */
     public function getInputHtml(
-        array $column,
-        $row_id,
-        $column_name_appendix,
-        array $options,
-        $value,
-        $text_dir,
-        $tabindex,
-        $tabindex_for_value,
-        $idindex
+            array $column,
+            $row_id,
+            $column_name_appendix,
+            array $options,
+            $value,
+            $text_dir,
+            $tabindex,
+            $tabindex_for_value,
+            $idindex
     ) {
         return '';
     }
@@ -63,8 +63,7 @@ abstract class IOTransformationsPlugin extends TransformationsPlugin
      *
      * @return array javascripts to be included
      */
-    public function getScripts()
-    {
+    public function getScripts() {
         return [];
     }
 
@@ -73,8 +72,7 @@ abstract class IOTransformationsPlugin extends TransformationsPlugin
      *
      * @return string error
      */
-    public function getError()
-    {
+    public function getError() {
         return $this->error;
     }
 
@@ -83,8 +81,7 @@ abstract class IOTransformationsPlugin extends TransformationsPlugin
      *
      * @return bool
      */
-    public function isSuccess()
-    {
+    public function isSuccess() {
         return $this->success;
     }
 
@@ -93,9 +90,9 @@ abstract class IOTransformationsPlugin extends TransformationsPlugin
      *
      * @return void
      */
-    public function reset()
-    {
+    public function reset() {
         $this->success = true;
         $this->error = '';
     }
+
 }

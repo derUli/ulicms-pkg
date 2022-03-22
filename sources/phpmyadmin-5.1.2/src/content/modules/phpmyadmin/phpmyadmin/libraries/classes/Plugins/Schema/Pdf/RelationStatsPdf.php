@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Contains PhpMyAdmin\Plugins\Schema\Pdf\RelationStatsPdf class
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Plugins\Schema\Pdf;
@@ -23,8 +23,8 @@ use function sqrt;
  *
  * @name    Relation_Stats_Pdf
  */
-class RelationStatsPdf extends RelationStats
-{
+class RelationStatsPdf extends RelationStats {
+
     /**
      * @param Pdf    $diagram       The PDF diagram
      * @param string $master_table  The master table name
@@ -33,19 +33,19 @@ class RelationStatsPdf extends RelationStats
      * @param string $foreign_field The relation field in the foreign table
      */
     public function __construct(
-        $diagram,
-        $master_table,
-        $master_field,
-        $foreign_table,
-        $foreign_field
-    ) {
-        $this->wTick = 5;
-        parent::__construct(
             $diagram,
             $master_table,
             $master_field,
             $foreign_table,
             $foreign_field
+    ) {
+        $this->wTick = 5;
+        parent::__construct(
+                $diagram,
+                $master_table,
+                $master_field,
+                $foreign_table,
+                $foreign_field
         );
     }
 
@@ -61,8 +61,7 @@ class RelationStatsPdf extends RelationStats
      *
      * @access public
      */
-    public function relationDraw($showColor, $i)
-    {
+    public function relationDraw($showColor, $i) {
         if ($showColor) {
             $d = $i % 6;
             $j = ($i - $d) / 6;
@@ -108,53 +107,54 @@ class RelationStatsPdf extends RelationStats
         }
         $this->diagram->setLineWidthScale(0.2);
         $this->diagram->lineScale(
-            $this->xSrc,
-            $this->ySrc,
-            $this->xSrc + $this->srcDir * $this->wTick,
-            $this->ySrc
+                $this->xSrc,
+                $this->ySrc,
+                $this->xSrc + $this->srcDir * $this->wTick,
+                $this->ySrc
         );
         $this->diagram->lineScale(
-            $this->xDest + $this->destDir * $this->wTick,
-            $this->yDest,
-            $this->xDest,
-            $this->yDest
+                $this->xDest + $this->destDir * $this->wTick,
+                $this->yDest,
+                $this->xDest,
+                $this->yDest
         );
         $this->diagram->setLineWidthScale(0.1);
         $this->diagram->lineScale(
-            $this->xSrc + $this->srcDir * $this->wTick,
-            $this->ySrc,
-            $this->xDest + $this->destDir * $this->wTick,
-            $this->yDest
+                $this->xSrc + $this->srcDir * $this->wTick,
+                $this->ySrc,
+                $this->xDest + $this->destDir * $this->wTick,
+                $this->yDest
         );
         /*
          * Draws arrows ->
-        */
+         */
         $root2 = 2 * sqrt(2);
         $this->diagram->lineScale(
-            $this->xSrc + $this->srcDir * $this->wTick * 0.75,
-            $this->ySrc,
-            $this->xSrc + $this->srcDir * (0.75 - 1 / $root2) * $this->wTick,
-            $this->ySrc + $this->wTick / $root2
+                $this->xSrc + $this->srcDir * $this->wTick * 0.75,
+                $this->ySrc,
+                $this->xSrc + $this->srcDir * (0.75 - 1 / $root2) * $this->wTick,
+                $this->ySrc + $this->wTick / $root2
         );
         $this->diagram->lineScale(
-            $this->xSrc + $this->srcDir * $this->wTick * 0.75,
-            $this->ySrc,
-            $this->xSrc + $this->srcDir * (0.75 - 1 / $root2) * $this->wTick,
-            $this->ySrc - $this->wTick / $root2
+                $this->xSrc + $this->srcDir * $this->wTick * 0.75,
+                $this->ySrc,
+                $this->xSrc + $this->srcDir * (0.75 - 1 / $root2) * $this->wTick,
+                $this->ySrc - $this->wTick / $root2
         );
 
         $this->diagram->lineScale(
-            $this->xDest + $this->destDir * $this->wTick / 2,
-            $this->yDest,
-            $this->xDest + $this->destDir * (0.5 + 1 / $root2) * $this->wTick,
-            $this->yDest + $this->wTick / $root2
+                $this->xDest + $this->destDir * $this->wTick / 2,
+                $this->yDest,
+                $this->xDest + $this->destDir * (0.5 + 1 / $root2) * $this->wTick,
+                $this->yDest + $this->wTick / $root2
         );
         $this->diagram->lineScale(
-            $this->xDest + $this->destDir * $this->wTick / 2,
-            $this->yDest,
-            $this->xDest + $this->destDir * (0.5 + 1 / $root2) * $this->wTick,
-            $this->yDest - $this->wTick / $root2
+                $this->xDest + $this->destDir * $this->wTick / 2,
+                $this->yDest,
+                $this->xDest + $this->destDir * (0.5 + 1 / $root2) * $this->wTick,
+                $this->yDest - $this->wTick / $root2
         );
         $this->diagram->SetDrawColor(0);
     }
+
 }

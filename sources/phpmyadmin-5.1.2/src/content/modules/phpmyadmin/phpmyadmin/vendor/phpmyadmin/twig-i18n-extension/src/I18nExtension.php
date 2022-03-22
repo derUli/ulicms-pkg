@@ -9,27 +9,26 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace PhpMyAdmin\Twig\Extensions;
 
 use PhpMyAdmin\Twig\Extensions\TokenParser\TransTokenParser;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
-class I18nExtension extends AbstractExtension
-{
+class I18nExtension extends AbstractExtension {
+
     /**
      * {@inheritdoc}
      */
-    public function getTokenParsers()
-    {
+    public function getTokenParsers() {
         return [new TransTokenParser()];
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getFilters()
-    {
+    public function getFilters() {
         return [
             new TwigFilter('trans', 'gettext'),
         ];
@@ -38,8 +37,8 @@ class I18nExtension extends AbstractExtension
     /**
      * {@inheritdoc}
      */
-    public function getName()
-    {
+    public function getName() {
         return 'i18n';
     }
+
 }

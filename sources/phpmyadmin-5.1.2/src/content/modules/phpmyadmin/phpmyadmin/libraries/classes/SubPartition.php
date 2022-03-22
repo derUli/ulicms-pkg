@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Library for extracting information about the sub-partitions
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin;
@@ -10,26 +10,35 @@ namespace PhpMyAdmin;
 /**
  * Represents a sub partition of a table
  */
-class SubPartition
-{
+class SubPartition {
+
     /** @var string the database */
     protected $db;
+
     /** @var string the table */
     protected $table;
+
     /** @var string partition name */
     protected $name;
+
     /** @var int ordinal */
     protected $ordinal;
+
     /** @var string partition method */
     protected $method;
+
     /** @var string partition expression */
     protected $expression;
+
     /** @var int no of table rows in the partition */
     protected $rows;
+
     /** @var int data length */
     protected $dataLength;
+
     /** @var int index length */
     protected $indexLength;
+
     /** @var string partition comment */
     protected $comment;
 
@@ -38,8 +47,7 @@ class SubPartition
      *
      * @param array $row fetched row from information_schema.PARTITIONS
      */
-    public function __construct(array $row)
-    {
+    public function __construct(array $row) {
         $this->db = $row['TABLE_SCHEMA'];
         $this->table = $row['TABLE_NAME'];
         $this->loadData($row);
@@ -52,8 +60,7 @@ class SubPartition
      *
      * @return void
      */
-    protected function loadData(array $row)
-    {
+    protected function loadData(array $row) {
         $this->name = $row['SUBPARTITION_NAME'];
         $this->ordinal = $row['SUBPARTITION_ORDINAL_POSITION'];
         $this->method = $row['SUBPARTITION_METHOD'];
@@ -68,8 +75,7 @@ class SubPartition
      *
      * @return void
      */
-    protected function loadCommonData(array $row)
-    {
+    protected function loadCommonData(array $row) {
         $this->rows = $row['TABLE_ROWS'];
         $this->dataLength = $row['DATA_LENGTH'];
         $this->indexLength = $row['INDEX_LENGTH'];
@@ -81,8 +87,7 @@ class SubPartition
      *
      * @return string partition name
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -91,8 +96,7 @@ class SubPartition
      *
      * @return int the ordinal
      */
-    public function getOrdinal()
-    {
+    public function getOrdinal() {
         return $this->ordinal;
     }
 
@@ -101,8 +105,7 @@ class SubPartition
      *
      * @return string partition method
      */
-    public function getMethod()
-    {
+    public function getMethod() {
         return $this->method;
     }
 
@@ -111,8 +114,7 @@ class SubPartition
      *
      * @return string partition expression
      */
-    public function getExpression()
-    {
+    public function getExpression() {
         return $this->expression;
     }
 
@@ -121,8 +123,7 @@ class SubPartition
      *
      * @return int number of rows
      */
-    public function getRows()
-    {
+    public function getRows() {
         return $this->rows;
     }
 
@@ -131,8 +132,7 @@ class SubPartition
      *
      * @return int data length
      */
-    public function getDataLength()
-    {
+    public function getDataLength() {
         return $this->dataLength;
     }
 
@@ -141,8 +141,7 @@ class SubPartition
      *
      * @return int index length
      */
-    public function getIndexLength()
-    {
+    public function getIndexLength() {
         return $this->indexLength;
     }
 
@@ -151,8 +150,8 @@ class SubPartition
      *
      * @return string partition comment
      */
-    public function getComment()
-    {
+    public function getComment() {
         return $this->comment;
     }
+
 }

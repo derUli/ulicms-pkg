@@ -72,15 +72,15 @@ DatabaseStructure.adjustTotals = function () {
         }
         strRows = strRows.replace(/[,.\s]/g, '');
         var intRow = parseInt(strRows, 10);
-        if (! isNaN(intRow)) {
+        if (!isNaN(intRow)) {
             rowsSum += intRow;
         }
         // Extract the size and overhead
-        var valSize         = 0;
-        var valOverhead     = 0;
-        var strSize         = $this.find('.tbl_size span:not(.unit)').text().trim();
-        var strSizeUnit     = $this.find('.tbl_size span.unit').text().trim();
-        var strOverhead     = $this.find('.tbl_overhead span:not(.unit)').text().trim();
+        var valSize = 0;
+        var valOverhead = 0;
+        var strSize = $this.find('.tbl_size span:not(.unit)').text().trim();
+        var strSizeUnit = $this.find('.tbl_size span.unit').text().trim();
+        var strOverhead = $this.find('.tbl_overhead span:not(.unit)').text().trim();
         var strOverheadUnit = $this.find('.tbl_overhead span.unit').text().trim();
         // Given a value and a unit, such as 100 and KiB, for the table size
         // and overhead calculate their numeric values in bytes, such as 102400
@@ -145,10 +145,10 @@ DatabaseStructure.adjustTotals = function () {
  */
 DatabaseStructure.fetchRealRowCount = function ($target) {
     var $throbber = $('#pma_navigation').find('.throbber')
-        .first()
-        .clone()
-        .css({ visibility: 'visible', display: 'inline-block' })
-        .on('click', false);
+            .first()
+            .clone()
+            .css({visibility: 'visible', display: 'inline-block'})
+            .on('click', false);
     $target.html($throbber);
     $.ajax({
         type: 'GET',
@@ -160,11 +160,11 @@ DatabaseStructure.fetchRealRowCount = function ($target) {
                 // If to update all row counts for a DB.
                 if (response.real_row_count_all) {
                     $.each(JSON.parse(response.real_row_count_all),
-                        function (index, table) {
-                            // Update each table row count.
-                            $('table.data td[data-table*="' + table.table + '"]')
-                                .text(table.row_count);
-                        }
+                            function (index, table) {
+                                // Update each table row count.
+                                $('table.data td[data-table*="' + table.table + '"]')
+                                        .text(table.row_count);
+                            }
                     );
                 }
                 // If to update a particular table's row count.
@@ -185,13 +185,13 @@ DatabaseStructure.fetchRealRowCount = function ($target) {
 };
 
 AJAX.registerOnload('database/structure.js', function () {
-/**
- * function to open the confirmation dialog for making table consistent with central list
- *
- * @param string   msg     message text to be displayed to user
- * @param function success function to be called on success
- *
- */
+    /**
+     * function to open the confirmation dialog for making table consistent with central list
+     *
+     * @param string   msg     message text to be displayed to user
+     * @param function success function to be called on success
+     *
+     */
     var jqConfirm = function (msg, success) {
         var dialogObj = $('<div class=\'hide\'>' + msg + '</div>');
         $('body').append(dialogObj);
@@ -213,8 +213,8 @@ AJAX.registerOnload('database/structure.js', function () {
     };
 
     /**
- *  Event handler on select of "Make consistent with central list"
- */
+     *  Event handler on select of "Make consistent with central list"
+     */
     $('select[name=submit_mult]').on('change', function (event) {
         var url = 'index.php?route=/database/structure';
         var action = $(this).val();
@@ -223,30 +223,30 @@ AJAX.registerOnload('database/structure.js', function () {
             event.preventDefault();
             event.stopPropagation();
             jqConfirm(
-                Messages.makeConsistentMessage,
-                function () {
-                    var $form = $('#tablesForm');
-                    var argsep = CommonParams.get('arg_separator');
-                    var data = $form.serialize() + argsep + 'ajax_request=true' + argsep + 'ajax_page_request=true';
+                    Messages.makeConsistentMessage,
+                    function () {
+                        var $form = $('#tablesForm');
+                        var argsep = CommonParams.get('arg_separator');
+                        var data = $form.serialize() + argsep + 'ajax_request=true' + argsep + 'ajax_page_request=true';
 
-                    Functions.ajaxShowMessage();
-                    AJAX.source = $form;
+                        Functions.ajaxShowMessage();
+                        AJAX.source = $form;
 
-                    $.post(
-                        'index.php?route=/database/structure/central-columns-make-consistent',
-                        data,
-                        AJAX.responseHandler
-                    );
-                }
+                        $.post(
+                                'index.php?route=/database/structure/central-columns-make-consistent',
+                                data,
+                                AJAX.responseHandler
+                                );
+                    }
             );
             return false;
         }
 
         if (action === 'copy_tbl' ||
-            action === 'add_prefix_tbl' ||
-            action === 'replace_prefix_tbl' ||
-            action === 'copy_tbl_change_prefix'
-        ) {
+                action === 'add_prefix_tbl' ||
+                action === 'replace_prefix_tbl' ||
+                action === 'copy_tbl_change_prefix'
+                ) {
             event.preventDefault();
             event.stopPropagation();
             if ($('input[name="selected_tbl[]"]:checked').length === 0) {
@@ -355,8 +355,8 @@ AJAX.registerOnload('database/structure.js', function () {
          * @var question    String containing the question to be asked for confirmation
          */
         var question = Messages.strTruncateTableStrongWarning + ' ' +
-            Functions.sprintf(Messages.strDoYouReally, 'TRUNCATE `' + Functions.escapeHtml(currTableName) + '`') +
-            Functions.getForeignKeyCheckboxLoader();
+                Functions.sprintf(Messages.strDoYouReally, 'TRUNCATE `' + Functions.escapeHtml(currTableName) + '`') +
+                Functions.getForeignKeyCheckboxLoader();
 
         $thisAnchor.confirm(question, $thisAnchor.attr('href'), function (url) {
             Functions.ajaxShowMessage(Messages.strProcessingRequest);
@@ -403,12 +403,12 @@ AJAX.registerOnload('database/structure.js', function () {
          * @var question    String containing the question to be asked for confirmation
          */
         var question;
-        if (! isView) {
+        if (!isView) {
             question = Messages.strDropTableStrongWarning + ' ' +
-                Functions.sprintf(Messages.strDoYouReally, 'DROP TABLE `' + Functions.escapeHtml(currTableName) + '`');
+                    Functions.sprintf(Messages.strDoYouReally, 'DROP TABLE `' + Functions.escapeHtml(currTableName) + '`');
         } else {
             question =
-                Functions.sprintf(Messages.strDoYouReally, 'DROP VIEW `' + Functions.escapeHtml(currTableName) + '`');
+                    Functions.sprintf(Messages.strDoYouReally, 'DROP VIEW `' + Functions.escapeHtml(currTableName) + '`');
         }
         question += Functions.getForeignKeyCheckboxLoader();
 
@@ -463,10 +463,10 @@ AJAX.registerOnload('database/structure.js', function () {
     // Add tooltip to favorite icons.
     $('.favorite_table_anchor').each(function () {
         Functions.tooltip(
-            $(this),
-            'a',
-            $(this).attr('title')
-        );
+                $(this),
+                'a',
+                $(this).attr('title')
+                );
     });
 
     // Get real row count via Ajax.

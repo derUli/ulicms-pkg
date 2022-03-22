@@ -1,38 +1,38 @@
 <form action="{form_action_url}" class="guestbook_form" method="post">
-{csrf_token}
-<table>
-<tr>
-<td>Dein Name:</td>
-<td><input type="text" name="gb_name" value="" size=50 maxlength=500 required></td>
-</tr>
+    {csrf_token}
+    <table>
+        <tr>
+            <td>Dein Name:</td>
+            <td><input type="text" name="gb_name" value="" size=50 maxlength=500 required></td>
+        </tr>
 
-<tr>
-<td>Ort:</td>
-<td><input type="text" name="gb_city" value="" size=50 maxlength=500 required></td>
-</tr>
+        <tr>
+            <td>Ort:</td>
+            <td><input type="text" name="gb_city" value="" size=50 maxlength=500 required></td>
+        </tr>
 
-<tr>
-<td>Email:</td>
-<td><input type="text" name="gb_mail" value="" size=50 maxlength=500 required></td>
-</tr>
-<tr>
-<td>Homepage:</td>
-<td><input type="text" name="gb_homepage" value="" size=50 maxlength=500></td>
-</tr>
-<tr>
-<td></td>
-<td>
-<textarea name="gb_content" cols="40" rows="10" size=50 maxlength=500 required></textarea>
-</td>
-</tr>
-<tr style="display:none">
-<td>Spamschutz:</td>
-<td>Dieses Feld leer lassen! <input type="text" name="phone" value=""></td>
-</tr>
+        <tr>
+            <td>Email:</td>
+            <td><input type="text" name="gb_mail" value="" size=50 maxlength=500 required></td>
+        </tr>
+        <tr>
+            <td>Homepage:</td>
+            <td><input type="text" name="gb_homepage" value="" size=50 maxlength=500></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <textarea name="gb_content" cols="40" rows="10" size=50 maxlength=500 required></textarea>
+            </td>
+        </tr>
+        <tr style="display:none">
+            <td>Spamschutz:</td>
+            <td>Dieses Feld leer lassen! <input type="text" name="phone" value=""></td>
+        </tr>
 
-<tr>
-<td></td>
-<td align="center"><input type="submit" value="Ins Gästebuch eintragen" name="gb_submit" value="gb_submit"></td>
-</tr>
-</table>
+        <tr>
+            <td></td>
+            <td align="center"><input type="submit" value="Ins Gästebuch eintragen" name="gb_submit" value="gb_submit"></td>
+        </tr>
+    </table>
 </form>

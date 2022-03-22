@@ -1,6 +1,6 @@
 {
-  "version" : "0.0.3",
-  "embed" : false,
-  "custom_acl" : ["forms_antispam_settings"],
-  "admin_permission" : "forms_antispam_settings"
+    "version": "0.0.3",
+    "embed": false,
+    "custom_acl": ["forms_antispam_settings"],
+    "admin_permission": "forms_antispam_settings"
 }

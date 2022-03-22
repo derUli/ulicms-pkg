@@ -1,6 +1,6 @@
 <?php
-function auto_nofollow_callback($matches)
-{
+
+function auto_nofollow_callback($matches) {
     $link = $matches [0];
     $http = "http://";
     $https = "https://";
@@ -12,7 +12,7 @@ function auto_nofollow_callback($matches)
     }
     return $link;
 }
-function rel_nofollow_content_filter($content)
-{
+
+function rel_nofollow_content_filter($content) {
     return preg_replace_callback('/<a[^>]+/', 'auto_nofollow_callback', $content);
 }

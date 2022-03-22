@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Contains PhpMyAdmin\Plugins\Schema\Svg\RelationStatsSvg class
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Plugins\Schema\Svg;
@@ -30,8 +30,8 @@ use function sprintf;
  *
  * @name Svg_Relation_Schema
  */
-class SvgRelationSchema extends ExportRelationSchema
-{
+class SvgRelationSchema extends ExportRelationSchema {
+
     /** @var TableStatsDia[]|TableStatsEps[]|TableStatsPdf[]|TableStatsSvg[] */
     private $tables = [];
 
@@ -61,8 +61,7 @@ class SvgRelationSchema extends ExportRelationSchema
      *
      * @param string $db database name
      */
-    public function __construct($db)
-    {
+    public function __construct($db) {
         parent::__construct($db, new Svg());
 
         $this->setShowColor(isset($_REQUEST['svg_show_color']));
@@ -71,11 +70,11 @@ class SvgRelationSchema extends ExportRelationSchema
         $this->setAllTablesSameWidth(isset($_REQUEST['svg_all_tables_same_width']));
 
         $this->diagram->setTitle(
-            sprintf(
-                __('Schema of the %s database - Page %s'),
-                $this->db,
-                $this->pageNumber
-            )
+                sprintf(
+                        __('Schema of the %s database - Page %s'),
+                        $this->db,
+                        $this->pageNumber
+                )
         );
         $this->diagram->SetAuthor('phpMyAdmin ' . PMA_VERSION);
         $this->diagram->setFont('Arial');
@@ -84,18 +83,18 @@ class SvgRelationSchema extends ExportRelationSchema
         $alltables = $this->getTablesFromRequest();
 
         foreach ($alltables as $table) {
-            if (! isset($this->tables[$table])) {
+            if (!isset($this->tables[$table])) {
                 $this->tables[$table] = new TableStatsSvg(
-                    $this->diagram,
-                    $this->db,
-                    $table,
-                    $this->diagram->getFont(),
-                    $this->diagram->getFontSize(),
-                    $this->pageNumber,
-                    $this->tablewidth,
-                    $this->showKeys,
-                    $this->tableDimension,
-                    $this->offline
+                        $this->diagram,
+                        $this->db,
+                        $table,
+                        $this->diagram->getFont(),
+                        $this->diagram->getFontSize(),
+                        $this->pageNumber,
+                        $this->tablewidth,
+                        $this->showKeys,
+                        $this->tableDimension,
+                        $this->offline
                 );
             }
 
@@ -107,55 +106,55 @@ class SvgRelationSchema extends ExportRelationSchema
 
         $border = 15;
         $this->diagram->startSvgDoc(
-            $this->xMax + $border,
-            $this->yMax + $border,
-            $this->xMin - $border,
-            $this->yMin - $border
+                $this->xMax + $border,
+                $this->yMax + $border,
+                $this->xMin - $border,
+                $this->yMin - $border
         );
 
         $seen_a_relation = false;
         foreach ($alltables as $one_table) {
             $exist_rel = $this->relation->getForeigners($this->db, $one_table, '', 'both');
-            if (! $exist_rel) {
+            if (!$exist_rel) {
                 continue;
             }
 
             $seen_a_relation = true;
             foreach ($exist_rel as $master_field => $rel) {
                 /* put the foreign table on the schema only if selected
-                * by the user
-                * (do not use array_search() because we would have to
-                * to do a === false and this is not PHP3 compatible)
-                */
+                 * by the user
+                 * (do not use array_search() because we would have to
+                 * to do a === false and this is not PHP3 compatible)
+                 */
                 if ($master_field !== 'foreign_keys_data') {
                     if (in_array($rel['foreign_table'], $alltables)) {
                         $this->addRelation(
-                            $one_table,
-                            $this->diagram->getFont(),
-                            $this->diagram->getFontSize(),
-                            $master_field,
-                            $rel['foreign_table'],
-                            $rel['foreign_field'],
-                            $this->tableDimension
+                                $one_table,
+                                $this->diagram->getFont(),
+                                $this->diagram->getFontSize(),
+                                $master_field,
+                                $rel['foreign_table'],
+                                $rel['foreign_field'],
+                                $this->tableDimension
                         );
                     }
                     continue;
                 }
 
                 foreach ($rel as $one_key) {
-                    if (! in_array($one_key['ref_table_name'], $alltables)) {
+                    if (!in_array($one_key['ref_table_name'], $alltables)) {
                         continue;
                     }
 
                     foreach ($one_key['index_list'] as $index => $one_field) {
                         $this->addRelation(
-                            $one_table,
-                            $this->diagram->getFont(),
-                            $this->diagram->getFontSize(),
-                            $one_field,
-                            $one_key['ref_table_name'],
-                            $one_key['ref_index_list'][$index],
-                            $this->tableDimension
+                                $one_table,
+                                $this->diagram->getFont(),
+                                $this->diagram->getFontSize(),
+                                $one_field,
+                                $one_key['ref_table_name'],
+                                $one_key['ref_index_list'][$index],
+                                $this->tableDimension
                         );
                     }
                 }
@@ -174,8 +173,7 @@ class SvgRelationSchema extends ExportRelationSchema
      *
      * @return void
      */
-    public function showOutput()
-    {
+    public function showOutput() {
         $this->diagram->showOutput($this->getFileName('.svg'));
     }
 
@@ -186,8 +184,7 @@ class SvgRelationSchema extends ExportRelationSchema
      *
      * @return void
      */
-    private function setMinMax($table)
-    {
+    private function setMinMax($table) {
         $this->xMax = max($this->xMax, $table->x + $table->width);
         $this->yMax = max($this->yMax, $table->y + $table->height);
         $this->xMin = min($this->xMin, $table->x);
@@ -211,48 +208,48 @@ class SvgRelationSchema extends ExportRelationSchema
      * @return void
      */
     private function addRelation(
-        $masterTable,
-        $font,
-        $fontSize,
-        $masterField,
-        $foreignTable,
-        $foreignField,
-        $tableDimension
+            $masterTable,
+            $font,
+            $fontSize,
+            $masterField,
+            $foreignTable,
+            $foreignField,
+            $tableDimension
     ) {
-        if (! isset($this->tables[$masterTable])) {
+        if (!isset($this->tables[$masterTable])) {
             $this->tables[$masterTable] = new TableStatsSvg(
-                $this->diagram,
-                $this->db,
-                $masterTable,
-                $font,
-                $fontSize,
-                $this->pageNumber,
-                $this->tablewidth,
-                false,
-                $tableDimension
+                    $this->diagram,
+                    $this->db,
+                    $masterTable,
+                    $font,
+                    $fontSize,
+                    $this->pageNumber,
+                    $this->tablewidth,
+                    false,
+                    $tableDimension
             );
             $this->setMinMax($this->tables[$masterTable]);
         }
-        if (! isset($this->tables[$foreignTable])) {
+        if (!isset($this->tables[$foreignTable])) {
             $this->tables[$foreignTable] = new TableStatsSvg(
-                $this->diagram,
-                $this->db,
-                $foreignTable,
-                $font,
-                $fontSize,
-                $this->pageNumber,
-                $this->tablewidth,
-                false,
-                $tableDimension
+                    $this->diagram,
+                    $this->db,
+                    $foreignTable,
+                    $font,
+                    $fontSize,
+                    $this->pageNumber,
+                    $this->tablewidth,
+                    false,
+                    $tableDimension
             );
             $this->setMinMax($this->tables[$foreignTable]);
         }
         $this->relations[] = new RelationStatsSvg(
-            $this->diagram,
-            $this->tables[$masterTable],
-            $masterField,
-            $this->tables[$foreignTable],
-            $foreignField
+                $this->diagram,
+                $this->tables[$masterTable],
+                $masterField,
+                $this->tables[$foreignTable],
+                $foreignField
         );
     }
 
@@ -265,8 +262,7 @@ class SvgRelationSchema extends ExportRelationSchema
      *
      * @return void
      */
-    private function drawRelations()
-    {
+    private function drawRelations() {
         foreach ($this->relations as $relation) {
             $relation->relationDraw($this->showColor);
         }
@@ -279,10 +275,10 @@ class SvgRelationSchema extends ExportRelationSchema
      *
      * @return void
      */
-    private function drawTables()
-    {
+    private function drawTables() {
         foreach ($this->tables as $table) {
             $table->tableDraw($this->showColor);
         }
     }
+
 }

@@ -1,5 +1,5 @@
 <?php
-function hide_meta_generator_render()
-{
+
+function hide_meta_generator_render() {
     return "";
 }

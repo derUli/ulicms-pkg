@@ -18,8 +18,8 @@ use Symfony\Component\DependencyInjection\Exception\RuntimeException;
  *
  * @author Nicolas Grekas <p@tchwork.com>
  */
-interface EnvVarProcessorInterface
-{
+interface EnvVarProcessorInterface {
+
     /**
      * Returns the value of the given variable as managed by the current instance.
      *

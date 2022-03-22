@@ -11,8 +11,8 @@
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator\Traits;
 
-trait LazyTrait
-{
+trait LazyTrait {
+
     /**
      * Sets the lazy flag of this service.
      *
@@ -20,8 +20,7 @@ trait LazyTrait
      *
      * @return $this
      */
-    final public function lazy($lazy = true): self
-    {
+    final public function lazy($lazy = true): self {
         $this->definition->setLazy((bool) $lazy);
         if (\is_string($lazy)) {
             $this->definition->addTag('proxy', ['interface' => $lazy]);
@@ -29,4 +28,5 @@ trait LazyTrait
 
         return $this;
     }
+
 }

@@ -12,8 +12,8 @@ use function is_array;
 /**
  * Handles caching results
  */
-class Cache
-{
+class Cache {
+
     /** @var array Table data cache */
     private $tableCache = [];
 
@@ -24,8 +24,7 @@ class Cache
      * @param array       $tables information for tables of some databases
      * @param string|bool $table  table name
      */
-    public function cacheTableData(array $tables, $table): void
-    {
+    public function cacheTableData(array $tables, $table): void {
         // Note: I don't see why we would need array_merge_recursive() here,
         // as it creates double entries for the same table (for example a double
         // entry for Comment when changing the storage engine in Operations)
@@ -37,13 +36,11 @@ class Cache
             if (isset($this->tableCache[$one_database])) {
                 // the + operator does not do the intended effect
                 // when the cache for one table already exists
-                if ($table
-                    && isset($this->tableCache[$one_database][$table])
+                if ($table && isset($this->tableCache[$one_database][$table])
                 ) {
                     unset($this->tableCache[$one_database][$table]);
                 }
-                $this->tableCache[$one_database]
-                    += $tables[$one_database];
+                $this->tableCache[$one_database] += $tables[$one_database];
             } else {
                 $this->tableCache[$one_database] = $tables[$one_database];
             }
@@ -56,11 +53,10 @@ class Cache
      * @param array|null $contentPath Array with the target path
      * @param mixed      $value       Target value
      */
-    public function cacheTableContent(?array $contentPath, $value): void
-    {
+    public function cacheTableContent(?array $contentPath, $value): void {
         $loc = &$this->tableCache;
 
-        if (! isset($contentPath)) {
+        if (!isset($contentPath)) {
             $loc = $value;
 
             return;
@@ -73,7 +69,7 @@ class Cache
             // array to hold the next value, allowing us to create the arrays to hold
             // final values at the correct depth. Then we'll keep digging into the
             // array.
-            if (! isset($loc[$key]) || ! is_array($loc[$key])) {
+            if (!isset($loc[$key]) || !is_array($loc[$key])) {
                 $loc[$key] = [];
             }
             $loc = &$loc[$key];
@@ -90,18 +86,16 @@ class Cache
      *
      * @return mixed cached value or default
      */
-    public function getCachedTableContent(array $contentPath, $default = null)
-    {
+    public function getCachedTableContent(array $contentPath, $default = null) {
         return Util::getValueByKey($this->tableCache, $contentPath, $default);
     }
 
-    public function getCache(): array
-    {
+    public function getCache(): array {
         return $this->tableCache;
     }
 
-    public function clearTableCache(): void
-    {
+    public function clearTableCache(): void {
         $this->tableCache = [];
     }
+
 }

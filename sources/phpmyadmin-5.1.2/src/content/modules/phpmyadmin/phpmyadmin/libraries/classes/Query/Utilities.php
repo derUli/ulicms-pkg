@@ -21,15 +21,14 @@ use function strtolower;
 /**
  * Some helfull functions for common tasks related to SQL results
  */
-class Utilities
-{
+class Utilities {
+
     /**
      * Get the list of system schemas
      *
      * @return string[] list of system schemas
      */
-    public static function getSystemSchemas(): array
-    {
+    public static function getSystemSchemas(): array {
         $schemas = [
             'information_schema',
             'performance_schema',
@@ -38,7 +37,7 @@ class Utilities
         ];
         $systemSchemas = [];
         foreach ($schemas as $schema) {
-            if (! self::isSystemSchema($schema, true)) {
+            if (!self::isSystemSchema($schema, true)) {
                 continue;
             }
 
@@ -56,17 +55,14 @@ class Utilities
      *                                   be treated the same as IS and DD
      */
     public static function isSystemSchema(
-        string $schema_name,
-        bool $testForMysqlSchema = false
+            string $schema_name,
+            bool $testForMysqlSchema = false
     ): bool {
         $schema_name = strtolower($schema_name);
 
         $isMySqlSystemSchema = $schema_name === 'mysql' && $testForMysqlSchema;
 
-        return $schema_name === 'information_schema'
-            || $schema_name === 'performance_schema'
-            || $isMySqlSystemSchema
-            || $schema_name === 'sys';
+        return $schema_name === 'information_schema' || $schema_name === 'performance_schema' || $isMySqlSystemSchema || $schema_name === 'sys';
     }
 
     /**
@@ -79,8 +75,7 @@ class Utilities
      *
      * @return string HML text with error details
      */
-    public static function formatError(int $error_number, string $error_message): string
-    {
+    public static function formatError(int $error_number, string $error_message): string {
         $error_message = htmlspecialchars($error_message);
 
         $error = '#' . ((string) $error_number);
@@ -90,8 +85,8 @@ class Utilities
             $error .= ' - ' . $error_message;
             $error .= $separator;
             $error .= __(
-                'The server is not responding (or the local server\'s socket'
-                . ' is not correctly configured).'
+                    'The server is not responding (or the local server\'s socket'
+                    . ' is not correctly configured).'
             );
         } elseif ($error_number == 2003) {
             $error .= ' - ' . $error_message;
@@ -104,18 +99,18 @@ class Utilities
             if (strpos($error_message, 'errno: 13') !== false) {
                 $error .= ' - ' . $error_message;
                 $error .= $separator
-                    . __(
-                        'Please check privileges of directory containing database.'
-                    );
+                        . __(
+                                'Please check privileges of directory containing database.'
+                );
             } else {
                 /**
                  * InnoDB constraints, see
                  * https://dev.mysql.com/doc/refman/8.0/en/create-table-foreign-keys.html
                  */
                 $error .= ' - ' . $error_message .
-                    ' (<a href="' .
-                    Url::getFromRoute('/server/engines/InnoDB/Status') .
-                    '">' . __('Details…') . '</a>)';
+                        ' (<a href="' .
+                        Url::getFromRoute('/server/engines/InnoDB/Status') .
+                        '">' . __('Details…') . '</a>)';
             }
         } else {
             $error .= ' - ' . $error_message;
@@ -135,12 +130,11 @@ class Utilities
      * @return int  a value representing whether $a should be before $b in the
      *              sorted array or not
      */
-    public static function usortComparisonCallback(array $a, array $b, string $sortBy, string $sortOrder): int
-    {
+    public static function usortComparisonCallback(array $a, array $b, string $sortBy, string $sortOrder): int {
         global $cfg;
 
         /* No sorting when key is not present */
-        if (! isset($a[$sortBy], $b[$sortBy])
+        if (!isset($a[$sortBy], $b[$sortBy])
         ) {
             return 0;
         }
@@ -148,11 +142,11 @@ class Utilities
         // produces f.e.:
         // return -1 * strnatcasecmp($a['SCHEMA_TABLES'], $b['SCHEMA_TABLES'])
         $compare = $cfg['NaturalOrder'] ? strnatcasecmp(
-            $a[$sortBy],
-            $b[$sortBy]
-        ) : strcasecmp(
-            $a[$sortBy],
-            $b[$sortBy]
+                        $a[$sortBy],
+                        $b[$sortBy]
+                ) : strcasecmp(
+                        $a[$sortBy],
+                        $b[$sortBy]
         );
 
         return ($sortOrder === 'ASC' ? 1 : -1) * $compare;
@@ -163,8 +157,7 @@ class Utilities
      *
      * @param string $version MySQL server version
      */
-    public static function versionToInt(string $version): int
-    {
+    public static function versionToInt(string $version): int {
         $match = explode('.', $version);
 
         return (int) sprintf('%d%02d%02d', $match[0], $match[1], intval($match[2]));
@@ -178,14 +171,12 @@ class Utilities
      * @param object|bool $result       Query result
      * @param int|float   $time         Time to execute query
      */
-    public static function debugLogQueryIntoSession(string $query, ?string $errorMessage, $result, $time): void
-    {
+    public static function debugLogQueryIntoSession(string $query, ?string $errorMessage, $result, $time): void {
         $dbgInfo = [];
 
         if ($result === false && $errorMessage !== null) {
-            $dbgInfo['error']
-                = '<span class="color_red">'
-                . htmlspecialchars($errorMessage) . '</span>';
+            $dbgInfo['error'] = '<span class="color_red">'
+                    . htmlspecialchars($errorMessage) . '</span>';
         }
         $dbgInfo['query'] = htmlspecialchars($query);
         $dbgInfo['time'] = $time;
@@ -193,10 +184,11 @@ class Utilities
         // in the javascript console.
         // Strip call to debugLogQueryIntoSession
         $dbgInfo['trace'] = Error::processBacktrace(
-            array_slice(debug_backtrace(), 1)
+                        array_slice(debug_backtrace(), 1)
         );
         $dbgInfo['hash'] = md5($query);
 
         $_SESSION['debug']['queries'][] = $dbgInfo;
     }
+
 }

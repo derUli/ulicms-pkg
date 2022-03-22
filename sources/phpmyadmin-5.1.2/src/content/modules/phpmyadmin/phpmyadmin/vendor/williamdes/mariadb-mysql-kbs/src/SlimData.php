@@ -1,14 +1,14 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Williamdes\MariaDBMySQLKBS;
 
 use stdClass;
 use JsonSerializable;
 
-class SlimData extends stdClass implements JsonSerializable
-{
+class SlimData extends stdClass implements JsonSerializable {
+
     /**
      * Variables
      *
@@ -62,9 +62,9 @@ class SlimData extends stdClass implements JsonSerializable
      * @param array<string,int>|null $varTypes The types of variables
      */
     public function __construct(
-        ?float $version = null,
-        ?array $types = null,
-        ?array $varTypes = null
+            ?float $version = null,
+            ?array $types = null,
+            ?array $varTypes = null
     ) {
         if ($version !== null) {
             $this->version = $version;
@@ -87,9 +87,8 @@ class SlimData extends stdClass implements JsonSerializable
      * @param bool|null   $dynamic Is dynamic
      * @return KBEntry The newly created KBEntry
      */
-    public function addVariable(string $name, ?string $type, ?bool $dynamic): KBEntry
-    {
-        $kbe          = new KBEntry($name, $type, $dynamic);
+    public function addVariable(string $name, ?string $type, ?bool $dynamic): KBEntry {
+        $kbe = new KBEntry($name, $type, $dynamic);
         $this->vars[] = $kbe;
         return $kbe;
     }
@@ -101,13 +100,12 @@ class SlimData extends stdClass implements JsonSerializable
      * @phpstan-ignore-next-line
      * @return array<string,array|float|stdClass>
      */
-    public function jsonSerialize(): array
-    {
+    public function jsonSerialize(): array {
         $outObj = [];
         if (count($this->vars) > 0) {
             $vars = new stdClass();
             foreach ($this->vars as $var) {
-                $variable    = new stdClass();
+                $variable = new stdClass();
                 $variable->d = $var->isDynamic();
                 if ($variable->d === null) {
                     unset($variable->d);
@@ -124,7 +122,7 @@ class SlimData extends stdClass implements JsonSerializable
                 if ($var->hasDocumentations()) {
                     $variable->a = [];
                     foreach ($var->getDocumentations() as $kbd) {
-                        $entry    = new stdClass();
+                        $entry = new stdClass();
                         $entry->a = $kbd->getAnchor();
                         if ($entry->a === null) {
                             unset($entry->a);
@@ -154,9 +152,9 @@ class SlimData extends stdClass implements JsonSerializable
         }
         $outObj['version'] = $this->version;
         if (count($this->vars) > 0) {
-            $outObj['types']    = array_flip($this->types);
+            $outObj['types'] = array_flip($this->types);
             $outObj['varTypes'] = array_flip($this->varTypes);
-            $outObj['urls']     = $this->urls;
+            $outObj['urls'] = $this->urls;
         }
         return $outObj;
     }

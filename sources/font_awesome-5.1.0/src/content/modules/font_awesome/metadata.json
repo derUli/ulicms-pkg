@@ -1,9 +1,9 @@
 {
-	"version": "5.1.0",
-	"embed": false,
-	"controllers": {
-		"FontAwesome": "FontAwesome.php"
-	},
-	"main_class": "FontAwesome"
+    "version": "5.1.0",
+    "embed": false,
+    "controllers": {
+        "FontAwesome": "FontAwesome.php"
+    },
+    "main_class": "FontAwesome"
 }
 

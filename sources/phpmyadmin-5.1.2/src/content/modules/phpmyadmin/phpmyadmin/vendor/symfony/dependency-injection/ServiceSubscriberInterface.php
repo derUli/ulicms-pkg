@@ -18,6 +18,6 @@ use Symfony\Contracts\Service\ServiceSubscriberInterface as BaseServiceSubscribe
  *
  * @deprecated since Symfony 4.2, use Symfony\Contracts\Service\ServiceSubscriberInterface instead.
  */
-interface ServiceSubscriberInterface extends BaseServiceSubscriberInterface
-{
+interface ServiceSubscriberInterface extends BaseServiceSubscriberInterface {
+    
 }

@@ -1,5 +1,5 @@
 <?php
-function jquery_ui_render()
-{
+
+function jquery_ui_render() {
     return "";
 }

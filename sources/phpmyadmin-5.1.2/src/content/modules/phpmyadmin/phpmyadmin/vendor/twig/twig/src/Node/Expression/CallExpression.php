@@ -16,12 +16,11 @@ use Twig\Error\SyntaxError;
 use Twig\Extension\ExtensionInterface;
 use Twig\Node\Node;
 
-abstract class CallExpression extends AbstractExpression
-{
+abstract class CallExpression extends AbstractExpression {
+
     private $reflector;
 
-    protected function compileCallable(Compiler $compiler)
-    {
+    protected function compileCallable(Compiler $compiler) {
         $callable = $this->getAttribute('callable');
 
         $closingParenthesis = false;
@@ -61,8 +60,7 @@ abstract class CallExpression extends AbstractExpression
         }
     }
 
-    protected function compileArguments(Compiler $compiler, $isArray = false)
-    {
+    protected function compileArguments(Compiler $compiler, $isArray = false) {
         $compiler->raw($isArray ? '[' : '(');
 
         $first = true;
@@ -113,8 +111,7 @@ abstract class CallExpression extends AbstractExpression
         $compiler->raw($isArray ? ']' : ')');
     }
 
-    protected function getArguments($callable, $arguments)
-    {
+    protected function getArguments($callable, $arguments) {
         $callType = $this->getAttribute('type');
         $callName = $this->getAttribute('name');
 
@@ -171,9 +168,9 @@ abstract class CallExpression extends AbstractExpression
 
                 if (\count($missingArguments)) {
                     throw new SyntaxError(sprintf(
-                        'Argument "%s" could not be assigned for %s "%s(%s)" because it is mapped to an internal PHP function which cannot determine default value for optional argument%s "%s".',
-                        $name, $callType, $callName, implode(', ', $names), \count($missingArguments) > 1 ? 's' : '', implode('", "', $missingArguments)
-                    ), $this->getTemplateLine(), $this->getSourceContext());
+                                            'Argument "%s" could not be assigned for %s "%s(%s)" because it is mapped to an internal PHP function which cannot determine default value for optional argument%s "%s".',
+                                            $name, $callType, $callName, implode(', ', $names), \count($missingArguments) > 1 ? 's' : '', implode('", "', $missingArguments)
+                                    ), $this->getTemplateLine(), $this->getSourceContext());
                 }
 
                 $arguments = array_merge($arguments, $optionalArguments);
@@ -226,25 +223,23 @@ abstract class CallExpression extends AbstractExpression
             }
 
             throw new SyntaxError(
-                sprintf(
-                    'Unknown argument%s "%s" for %s "%s(%s)".',
-                    \count($parameters) > 1 ? 's' : '', implode('", "', array_keys($parameters)), $callType, $callName, implode(', ', $names)
-                ),
-                $unknownParameter ? $unknownParameter->getTemplateLine() : $this->getTemplateLine(),
-                $unknownParameter ? $unknownParameter->getSourceContext() : $this->getSourceContext()
+                            sprintf(
+                                    'Unknown argument%s "%s" for %s "%s(%s)".',
+                                    \count($parameters) > 1 ? 's' : '', implode('", "', array_keys($parameters)), $callType, $callName, implode(', ', $names)
+                            ),
+                            $unknownParameter ? $unknownParameter->getTemplateLine() : $this->getTemplateLine(),
+                            $unknownParameter ? $unknownParameter->getSourceContext() : $this->getSourceContext()
             );
         }
 
         return $arguments;
     }
 
-    protected function normalizeName($name)
-    {
+    protected function normalizeName($name) {
         return strtolower(preg_replace(['/([A-Z]+)([A-Z][a-z])/', '/([a-z\d])([A-Z])/'], ['\\1_\\2', '\\1_\\2'], $name));
     }
 
-    private function getCallableParameters($callable, bool $isVariadic): array
-    {
+    private function getCallableParameters($callable, bool $isVariadic): array {
         list($r) = $this->reflectCallable($callable);
         if (null === $r) {
             return [[], false];
@@ -277,7 +272,7 @@ abstract class CallExpression extends AbstractExpression
             } else {
                 $callableName = $r->name;
                 if ($r instanceof \ReflectionMethod) {
-                    $callableName = $r->getDeclaringClass()->name.'::'.$callableName;
+                    $callableName = $r->getDeclaringClass()->name . '::' . $callableName;
                 }
 
                 throw new \LogicException(sprintf('The last parameter of "%s" for %s "%s" must be an array with default value, eg. "array $arg = []".', $callableName, $this->getAttribute('type'), $this->getAttribute('name')));
@@ -287,8 +282,7 @@ abstract class CallExpression extends AbstractExpression
         return [$parameters, $isPhpVariadic];
     }
 
-    private function reflectCallable($callable)
-    {
+    private function reflectCallable($callable) {
         if (null !== $this->reflector) {
             return $this->reflector;
         }
@@ -318,6 +312,7 @@ abstract class CallExpression extends AbstractExpression
 
         return $this->reflector = [$r, $callable];
     }
+
 }
 
 class_alias('Twig\Node\Expression\CallExpression', 'Twig_Node_Expression_Call');

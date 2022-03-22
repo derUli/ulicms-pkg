@@ -1,5 +1,7 @@
 <?php
+
 declare(strict_types=1);
+
 namespace ParagonIE\ConstantTime;
 
 /**
@@ -29,8 +31,8 @@ namespace ParagonIE\ConstantTime;
  * Interface EncoderInterface
  * @package ParagonIE\ConstantTime
  */
-interface EncoderInterface
-{
+interface EncoderInterface {
+
     /**
      * Convert a binary string into a hexadecimal string without cache-timing
      * leaks

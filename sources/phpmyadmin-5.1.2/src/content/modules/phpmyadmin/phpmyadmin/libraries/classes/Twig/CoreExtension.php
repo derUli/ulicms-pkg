@@ -7,20 +7,20 @@ namespace PhpMyAdmin\Twig;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
-class CoreExtension extends AbstractExtension
-{
+class CoreExtension extends AbstractExtension {
+
     /**
      * Returns a list of filters to add to the existing list.
      *
      * @return TwigFilter[]
      */
-    public function getFilters()
-    {
+    public function getFilters() {
         return [
             new TwigFilter(
-                'link',
-                'PhpMyAdmin\Core::linkURL'
+                    'link',
+                    'PhpMyAdmin\Core::linkURL'
             ),
         ];
     }
+
 }

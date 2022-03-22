@@ -9,8 +9,8 @@ use PhpMyAdmin\Properties\Options\OptionsPropertyGroup;
 /**
  * Group property item class of type main
  */
-class OptionsPropertyMainGroup extends OptionsPropertyGroup
-{
+class OptionsPropertyMainGroup extends OptionsPropertyGroup {
+
     /**
      * Returns the property item type of either an instance of
      *  - PhpMyAdmin\Properties\Options\OptionsPropertyOneItem ( f.e. "bool",
@@ -21,8 +21,8 @@ class OptionsPropertyMainGroup extends OptionsPropertyGroup
      *
      * @return string
      */
-    public function getItemType()
-    {
+    public function getItemType() {
         return 'main';
     }
+
 }

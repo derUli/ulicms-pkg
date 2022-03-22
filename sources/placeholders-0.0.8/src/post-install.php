@@ -1,4 +1,5 @@
 <?php
+
 echo "<p>";
 echo "Datenbankstruktur anlegen... ";
 flush();

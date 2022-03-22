@@ -22,8 +22,8 @@ use Twig\TwigTest;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-interface ExtensionInterface
-{
+interface ExtensionInterface {
+
     /**
      * Returns the token parser instances to add to the existing list.
      *

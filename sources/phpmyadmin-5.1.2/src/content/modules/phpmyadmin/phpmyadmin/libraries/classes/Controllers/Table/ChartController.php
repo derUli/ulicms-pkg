@@ -24,8 +24,8 @@ use function strlen;
 /**
  * Handles creation of the chart.
  */
-class ChartController extends AbstractController
-{
+class ChartController extends AbstractController {
+
     /** @var DatabaseInterface */
     private $dbi;
 
@@ -35,14 +35,12 @@ class ChartController extends AbstractController
      * @param string            $table    Table name.
      * @param DatabaseInterface $dbi
      */
-    public function __construct($response, Template $template, $db, $table, $dbi)
-    {
+    public function __construct($response, Template $template, $db, $table, $dbi) {
         parent::__construct($response, $template, $db, $table);
         $this->dbi = $dbi;
     }
 
-    public function index(): void
-    {
+    public function index(): void {
         global $db, $table, $cfg, $sql_query, $err_url;
 
         if (isset($_REQUEST['pos'], $_REQUEST['session_max_rows']) && $this->response->isAjax()
@@ -53,10 +51,10 @@ class ChartController extends AbstractController
         }
 
         // Throw error if no sql query is set
-        if (! isset($sql_query) || $sql_query == '') {
+        if (!isset($sql_query) || $sql_query == '') {
             $this->response->setRequestStatus(false);
             $this->response->addHTML(
-                Message::error(__('No SQL query was set to fetch data.'))
+                    Message::error(__('No SQL query was set to fetch data.'))
             );
 
             return;
@@ -96,8 +94,8 @@ class ChartController extends AbstractController
             $this->dbi->selectDb($db);
         } elseif (strlen($db) > 0) {
             $url_params['goto'] = Util::getScriptNameForOption(
-                $cfg['DefaultTabDatabase'],
-                'database'
+                            $cfg['DefaultTabDatabase'],
+                            'database'
             );
             $url_params['back'] = Url::getFromRoute('/sql');
 
@@ -106,13 +104,13 @@ class ChartController extends AbstractController
             $err_url = Util::getScriptNameForOption($cfg['DefaultTabDatabase'], 'database');
             $err_url .= Url::getCommon(['db' => $db], '&');
 
-            if (! $this->hasDatabase()) {
+            if (!$this->hasDatabase()) {
                 return;
             }
         } else {
             $url_params['goto'] = Util::getScriptNameForOption(
-                $cfg['DefaultTabServer'],
-                'server'
+                            $cfg['DefaultTabServer'],
+                            'server'
             );
             $url_params['back'] = Url::getFromRoute('/sql');
             $err_url = Url::getFromRoute('/');
@@ -138,7 +136,7 @@ class ChartController extends AbstractController
         ];
         $numeric_column_count = 0;
         foreach ($keys as $idx => $key) {
-            if (! in_array($fields_meta[$idx]->type, $numeric_types)) {
+            if (!in_array($fields_meta[$idx]->type, $numeric_types)) {
                 continue;
             }
 
@@ -148,8 +146,8 @@ class ChartController extends AbstractController
         if ($numeric_column_count == 0) {
             $this->response->setRequestStatus(false);
             $this->response->addJSON(
-                'message',
-                __('No numeric columns present in the table to plot.')
+                    'message',
+                    __('No numeric columns present in the table to plot.')
             );
 
             return;
@@ -174,8 +172,7 @@ class ChartController extends AbstractController
     /**
      * Handle ajax request
      */
-    public function ajax(): void
-    {
+    public function ajax(): void {
         global $db, $table, $sql_query, $url_params, $err_url, $cfg;
 
         if (strlen($table) > 0 && strlen($db) > 0) {
@@ -195,14 +192,14 @@ class ChartController extends AbstractController
         $statement = $parser->statements[0];
         if (empty($statement->limit)) {
             $statement->limit = new Limit(
-                $_REQUEST['session_max_rows'],
-                $_REQUEST['pos']
+                    $_REQUEST['session_max_rows'],
+                    $_REQUEST['pos']
             );
         } else {
             $start = $statement->limit->offset + $_REQUEST['pos'];
             $rows = min(
-                $_REQUEST['session_max_rows'],
-                $statement->limit->rowCount - $_REQUEST['pos']
+                    $_REQUEST['session_max_rows'],
+                    $statement->limit->rowCount - $_REQUEST['pos']
             );
             $statement->limit = new Limit($rows, $start);
         }
@@ -234,4 +231,5 @@ class ChartController extends AbstractController
         $this->response->addJSON('message', null);
         $this->response->addJSON('chartData', json_encode($sanitized_data));
     }
+
 }

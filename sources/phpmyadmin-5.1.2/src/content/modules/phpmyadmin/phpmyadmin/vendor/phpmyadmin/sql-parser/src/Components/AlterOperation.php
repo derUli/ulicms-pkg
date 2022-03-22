@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Parses an alter operation.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\SqlParser\Components;
@@ -11,7 +11,6 @@ use PhpMyAdmin\SqlParser\Component;
 use PhpMyAdmin\SqlParser\Parser;
 use PhpMyAdmin\SqlParser\Token;
 use PhpMyAdmin\SqlParser\TokensList;
-
 use function array_key_exists;
 use function in_array;
 use function is_numeric;
@@ -22,8 +21,8 @@ use function is_string;
  *
  * @final
  */
-class AlterOperation extends Component
-{
+class AlterOperation extends Component {
+
     /**
      * All database options.
      *
@@ -114,7 +113,6 @@ class AlterOperation extends Component
         'REORGANIZE' => 1,
         'REPAIR' => 1,
         'UPGRADE' => 1,
-
         'COLUMN' => 2,
         'CONSTRAINT' => 2,
         'DEFAULT' => 2,
@@ -129,7 +127,6 @@ class AlterOperation extends Component
         'SPATIAL' => 2,
         'TABLESPACE' => 2,
         'INDEX' => 2,
-
         'CHARACTER SET' => 3,
     ];
 
@@ -163,13 +160,10 @@ class AlterOperation extends Component
             2,
             'var',
         ],
-
         'ACCOUNT' => 1,
         'DEFAULT' => 1,
-
         'LOCK' => 2,
         'UNLOCK' => 2,
-
         'IDENTIFIED' => 3,
     ];
 
@@ -207,9 +201,9 @@ class AlterOperation extends Component
      * @param array        $unknown unparsed tokens found at the end of operation
      */
     public function __construct(
-        $options = null,
-        $field = null,
-        $unknown = []
+            $options = null,
+            $field = null,
+            $unknown = []
     ) {
         $this->options = $options;
         $this->field = $field;
@@ -223,8 +217,7 @@ class AlterOperation extends Component
      *
      * @return AlterOperation
      */
-    public static function parse(Parser $parser, TokensList $list, array $options = [])
-    {
+    public static function parse(Parser $parser, TokensList $list, array $options = []) {
         $ret = new static();
 
         /**
@@ -296,12 +289,12 @@ class AlterOperation extends Component
                 $state = 1;
             } elseif ($state === 1) {
                 $ret->field = Expression::parse(
-                    $parser,
-                    $list,
-                    [
-                        'breakOnAlias' => true,
-                        'parseField' => 'column',
-                    ]
+                                $parser,
+                                $list,
+                                [
+                                    'breakOnAlias' => true,
+                                    'parseField' => 'column',
+                                ]
                 );
                 if ($ret->field === null) {
                     // No field was read. We go back one token so the next
@@ -326,8 +319,8 @@ class AlterOperation extends Component
                     } elseif (($token->value === ',') && ($brackets === 0)) {
                         break;
                     }
-                } elseif (! self::checkIfTokenQuotedSymbol($token)) {
-                    if (! empty(Parser::$STATEMENT_PARSERS[$token->value])) {
+                } elseif (!self::checkIfTokenQuotedSymbol($token)) {
+                    if (!empty(Parser::$STATEMENT_PARSERS[$token->value])) {
                         // We want to get the next non-comment and non-space token after $token
                         // therefore, the first getNext call will start with the current $idx which's $token,
                         // will return it and increase $idx by 1, which's not guaranteed to be non-comment
@@ -346,15 +339,13 @@ class AlterOperation extends Component
                             // We have reached the end of ALTER operation and suddenly found
                             // a start to new statement, but have not find a delimiter between them
                             $parser->error(
-                                'A new statement was found, but no delimiter between it and the previous one.',
-                                $token
+                                    'A new statement was found, but no delimiter between it and the previous one.',
+                                    $token
                             );
                             break;
                         }
                     } elseif (
-                        (array_key_exists($arrayKey, self::$DB_OPTIONS)
-                        || array_key_exists($arrayKey, self::$TABLE_OPTIONS))
-                        && ! self::checkIfColumnDefinitionKeyword($arrayKey)
+                            (array_key_exists($arrayKey, self::$DB_OPTIONS) || array_key_exists($arrayKey, self::$TABLE_OPTIONS)) && !self::checkIfColumnDefinitionKeyword($arrayKey)
                     ) {
                         // This alter operation has finished, which means a comma
                         // was missing before start of new alter operation
@@ -382,8 +373,7 @@ class AlterOperation extends Component
      *
      * @return string
      */
-    public static function build($component, array $options = [])
-    {
+    public static function build($component, array $options = []) {
         $ret = $component->options . ' ';
         if (isset($component->field) && ($component->field !== '')) {
             $ret .= $component->field . ' ';
@@ -402,8 +392,7 @@ class AlterOperation extends Component
      *
      * @return bool
      */
-    private static function checkIfColumnDefinitionKeyword($tokenValue)
-    {
+    private static function checkIfColumnDefinitionKeyword($tokenValue) {
         $commonOptions = [
             'AUTO_INCREMENT',
             'COMMENT',
@@ -428,8 +417,8 @@ class AlterOperation extends Component
      *
      * @return bool
      */
-    private static function checkIfTokenQuotedSymbol($token)
-    {
+    private static function checkIfTokenQuotedSymbol($token) {
         return $token->type === Token::TYPE_SYMBOL && $token->flags === Token::FLAG_SYMBOL_BACKTICK;
     }
+
 }

@@ -23,30 +23,29 @@ class_exists(InvalidArgumentException::class);
  *
  * @author Nicolas Grekas <p@tchwork.com>
  */
-trait CacheTrait
-{
+trait CacheTrait {
+
     /**
      * {@inheritdoc}
      *
      * @return mixed
      */
-    public function get(string $key, callable $callback, float $beta = null, array &$metadata = null)
-    {
+    public function get(string $key, callable $callback, float $beta = null, array &$metadata = null) {
         return $this->doGet($this, $key, $callback, $beta, $metadata);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function delete(string $key): bool
-    {
+    public function delete(string $key): bool {
         return $this->deleteItem($key);
     }
 
-    private function doGet(CacheItemPoolInterface $pool, string $key, callable $callback, ?float $beta, array &$metadata = null, LoggerInterface $logger = null)
-    {
+    private function doGet(CacheItemPoolInterface $pool, string $key, callable $callback, ?float $beta, array &$metadata = null, LoggerInterface $logger = null) {
         if (0 > $beta = $beta ?? 1.0) {
-            throw new class(sprintf('Argument "$beta" provided to "%s::get()" must be a positive number, %f given.', static::class, $beta)) extends \InvalidArgumentException implements InvalidArgumentException { };
+            throw new class(sprintf('Argument "$beta" provided to "%s::get()" must be a positive number, %f given.', static::class, $beta)) extends \InvalidArgumentException implements InvalidArgumentException {
+                        
+                    };
         }
 
         $item = $pool->getItem($key);
@@ -61,8 +60,8 @@ trait CacheTrait
                 // force applying defaultLifetime to expiry
                 $item->expiresAt(null);
                 $logger && $logger->info('Item "{key}" elected for early recomputation {delta}s before its expiration', [
-                    'key' => $key,
-                    'delta' => sprintf('%.1f', $expiry - $now),
+                            'key' => $key,
+                            'delta' => sprintf('%.1f', $expiry - $now),
                 ]);
             }
         }
@@ -77,4 +76,5 @@ trait CacheTrait
 
         return $item->get();
     }
+
 }

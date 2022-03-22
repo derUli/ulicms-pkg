@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Implementation for UTF-8 strings.
  *
@@ -9,14 +10,12 @@
  * Because the lexer relies on the subscript operator this class had to be
  * implemented.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\SqlParser;
 
 use ArrayAccess;
 use Exception;
-
 use function mb_check_encoding;
 use function mb_strlen;
 use function ord;
@@ -26,8 +25,8 @@ use function ord;
  *
  * In this library, this class should be used to parse UTF-8 queries.
  */
-class UtfString implements ArrayAccess
-{
+class UtfString implements ArrayAccess {
+
     /**
      * The raw, multi-byte string.
      *
@@ -184,13 +183,12 @@ class UtfString implements ArrayAccess
     /**
      * @param string $str the string
      */
-    public function __construct($str)
-    {
+    public function __construct($str) {
         $this->str = $str;
         $this->byteIdx = 0;
         $this->charIdx = 0;
         $this->byteLen = mb_strlen($str, '8bit');
-        if (! mb_check_encoding($str, 'UTF-8')) {
+        if (!mb_check_encoding($str, 'UTF-8')) {
             $this->charLen = 0;
         } else {
             $this->charLen = mb_strlen($str, 'UTF-8');
@@ -205,8 +203,7 @@ class UtfString implements ArrayAccess
      * @return bool
      */
     #[\ReturnTypeWillChange]
-    public function offsetExists($offset)
-    {
+    public function offsetExists($offset) {
         return ($offset >= 0) && ($offset < $this->charLen);
     }
 
@@ -218,8 +215,7 @@ class UtfString implements ArrayAccess
      * @return string|null
      */
     #[\ReturnTypeWillChange]
-    public function offsetGet($offset)
-    {
+    public function offsetGet($offset) {
         if (($offset < 0) || ($offset >= $this->charLen)) {
             return null;
         }
@@ -262,8 +258,7 @@ class UtfString implements ArrayAccess
      * @throws Exception not implemented.
      */
     #[\ReturnTypeWillChange]
-    public function offsetSet($offset, $value)
-    {
+    public function offsetSet($offset, $value) {
         throw new Exception('Not implemented.');
     }
 
@@ -275,8 +270,7 @@ class UtfString implements ArrayAccess
      * @throws Exception not implemented.
      */
     #[\ReturnTypeWillChange]
-    public function offsetUnset($offset)
-    {
+    public function offsetUnset($offset) {
         throw new Exception('Not implemented.');
     }
 
@@ -293,12 +287,11 @@ class UtfString implements ArrayAccess
      *
      * @return int
      */
-    public static function getCharLength($byte)
-    {
+    public static function getCharLength($byte) {
         // Use the default ASCII map as queries are mostly ASCII chars
         // ord($byte) has a performance cost
 
-        if (! isset(static::$asciiMap[$byte])) {
+        if (!isset(static::$asciiMap[$byte])) {
             // Complete the cache with missing items
             static::$asciiMap[$byte] = ord($byte);
         }
@@ -333,8 +326,7 @@ class UtfString implements ArrayAccess
      *
      * @return int
      */
-    public function length()
-    {
+    public function length() {
         return $this->charLen;
     }
 
@@ -343,8 +335,8 @@ class UtfString implements ArrayAccess
      *
      * @return string
      */
-    public function __toString()
-    {
+    public function __toString() {
         return $this->str;
     }
+
 }

@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Abstract class for the SQL transformations plugins
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Plugins\Transformations\Abs;
@@ -14,17 +14,16 @@ use stdClass;
 /**
  * Provides common methods for all of the SQL transformations plugins.
  */
-abstract class SQLTransformationsPlugin extends TransformationsPlugin
-{
+abstract class SQLTransformationsPlugin extends TransformationsPlugin {
+
     /**
      * Gets the transformation description of the specific plugin
      *
      * @return string
      */
-    public static function getInfo()
-    {
+    public static function getInfo() {
         return __(
-            'Formats text as SQL query with syntax highlighting.'
+                'Formats text as SQL query with syntax highlighting.'
         );
     }
 
@@ -37,8 +36,7 @@ abstract class SQLTransformationsPlugin extends TransformationsPlugin
      *
      * @return string
      */
-    public function applyTransformation($buffer, array $options = [], ?stdClass $meta = null)
-    {
+    public function applyTransformation($buffer, array $options = [], ?stdClass $meta = null) {
         return Generator::formatSql($buffer);
     }
 
@@ -49,8 +47,8 @@ abstract class SQLTransformationsPlugin extends TransformationsPlugin
      *
      * @return string
      */
-    public static function getName()
-    {
+    public static function getName() {
         return 'SQL';
     }
+
 }

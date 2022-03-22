@@ -19,15 +19,13 @@ use Symfony\Component\Cache\Exception\CacheException;
  *
  * @internal
  */
-trait ApcuTrait
-{
-    public static function isSupported()
-    {
+trait ApcuTrait {
+
+    public static function isSupported() {
         return \function_exists('apcu_fetch') && filter_var(ini_get('apc.enabled'), \FILTER_VALIDATE_BOOLEAN);
     }
 
-    private function init(string $namespace, int $defaultLifetime, ?string $version)
-    {
+    private function init(string $namespace, int $defaultLifetime, ?string $version) {
         if (!static::isSupported()) {
             throw new CacheException('APCu is not enabled.');
         }
@@ -39,9 +37,9 @@ trait ApcuTrait
         if (null !== $version) {
             CacheItem::validateKey($version);
 
-            if (!apcu_exists($version.'@'.$namespace)) {
+            if (!apcu_exists($version . '@' . $namespace)) {
                 $this->doClear($namespace);
-                apcu_add($version.'@'.$namespace, null);
+                apcu_add($version . '@' . $namespace, null);
             }
         }
     }
@@ -49,9 +47,8 @@ trait ApcuTrait
     /**
      * {@inheritdoc}
      */
-    protected function doFetch(array $ids)
-    {
-        $unserializeCallbackHandler = ini_set('unserialize_callback_func', __CLASS__.'::handleUnserializeCallback');
+    protected function doFetch(array $ids) {
+        $unserializeCallbackHandler = ini_set('unserialize_callback_func', __CLASS__ . '::handleUnserializeCallback');
         try {
             $values = [];
             $ids = array_flip($ids);
@@ -78,26 +75,21 @@ trait ApcuTrait
     /**
      * {@inheritdoc}
      */
-    protected function doHave($id)
-    {
+    protected function doHave($id) {
         return apcu_exists($id);
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function doClear($namespace)
-    {
-        return isset($namespace[0]) && class_exists(\APCuIterator::class, false) && ('cli' !== \PHP_SAPI || filter_var(ini_get('apc.enable_cli'), \FILTER_VALIDATE_BOOLEAN))
-            ? apcu_delete(new \APCuIterator(sprintf('/^%s/', preg_quote($namespace, '/')), \APC_ITER_KEY))
-            : apcu_clear_cache();
+    protected function doClear($namespace) {
+        return isset($namespace[0]) && class_exists(\APCuIterator::class, false) && ('cli' !== \PHP_SAPI || filter_var(ini_get('apc.enable_cli'), \FILTER_VALIDATE_BOOLEAN)) ? apcu_delete(new \APCuIterator(sprintf('/^%s/', preg_quote($namespace, '/')), \APC_ITER_KEY)) : apcu_clear_cache();
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function doDelete(array $ids)
-    {
+    protected function doDelete(array $ids) {
         foreach ($ids as $id) {
             apcu_delete($id);
         }
@@ -108,8 +100,7 @@ trait ApcuTrait
     /**
      * {@inheritdoc}
      */
-    protected function doSave(array $values, int $lifetime)
-    {
+    protected function doSave(array $values, int $lifetime) {
         try {
             if (false === $failures = apcu_store($values, null, $lifetime)) {
                 $failures = $values;
@@ -125,4 +116,5 @@ trait ApcuTrait
             throw $e;
         }
     }
+
 }

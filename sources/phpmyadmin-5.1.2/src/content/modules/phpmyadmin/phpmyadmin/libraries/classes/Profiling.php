@@ -10,10 +10,9 @@ use function is_array;
 /**
  * Statement resource usage.
  */
-final class Profiling
-{
-    public static function isSupported(DatabaseInterface $dbi): bool
-    {
+final class Profiling {
+
+    public static function isSupported(DatabaseInterface $dbi): bool {
         if (SessionCache::has('profiling_supported')) {
             return SessionCache::get('profiling_supported');
         }
@@ -34,9 +33,8 @@ final class Profiling
         return false;
     }
 
-    public static function enable(DatabaseInterface $dbi): void
-    {
-        if (! isset($_SESSION['profiling']) || ! self::isSupported($dbi)) {
+    public static function enable(DatabaseInterface $dbi): void {
+        if (!isset($_SESSION['profiling']) || !self::isSupported($dbi)) {
             return;
         }
 
@@ -44,15 +42,14 @@ final class Profiling
     }
 
     /** @return array<string, string>|null */
-    public static function getInformation(DatabaseInterface $dbi): ?array
-    {
-        if (! isset($_SESSION['profiling']) || ! self::isSupported($dbi)) {
+    public static function getInformation(DatabaseInterface $dbi): ?array {
+        if (!isset($_SESSION['profiling']) || !self::isSupported($dbi)) {
             return null;
         }
 
         $result = $dbi->fetchResult('SHOW PROFILE;');
 
-        if (! is_array($result)) {
+        if (!is_array($result)) {
             return null;
         }
 
@@ -62,8 +59,7 @@ final class Profiling
     /**
      * Check if profiling was requested and remember it.
      */
-    public static function check(DatabaseInterface $dbi, Response $response): void
-    {
+    public static function check(DatabaseInterface $dbi, Response $response): void {
         if (isset($_REQUEST['profiling']) && self::isSupported($dbi)) {
             $_SESSION['profiling'] = true;
         } elseif (isset($_REQUEST['profiling_form'])) {
@@ -71,7 +67,7 @@ final class Profiling
             unset($_SESSION['profiling']);
         }
 
-        if (! isset($_SESSION['profiling'])) {
+        if (!isset($_SESSION['profiling'])) {
             return;
         }
 
@@ -84,4 +80,5 @@ final class Profiling
             'vendor/jquery/jquery.tablesorter.js',
         ]);
     }
+
 }

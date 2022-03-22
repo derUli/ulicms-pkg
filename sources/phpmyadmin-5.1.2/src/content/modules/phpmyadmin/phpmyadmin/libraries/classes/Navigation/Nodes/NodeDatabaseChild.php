@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Functionality for the navigation tree
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Navigation\Nodes;
@@ -15,8 +15,8 @@ use PhpMyAdmin\Url;
  * This may either be a concrete child such as table or a container
  * such as table container
  */
-abstract class NodeDatabaseChild extends Node
-{
+abstract class NodeDatabaseChild extends Node {
+
     /**
      * Returns the type of the item represented by the node.
      *
@@ -29,8 +29,7 @@ abstract class NodeDatabaseChild extends Node
      *
      * @return string HTML for control buttons
      */
-    public function getHtmlForControlButtons(): string
-    {
+    public function getHtmlForControlButtons(): string {
         $ret = '';
         $cfgRelation = $this->relation->getRelationsParam();
         if ($cfgRelation['navwork']) {
@@ -45,13 +44,14 @@ abstract class NodeDatabaseChild extends Node
             ];
 
             $ret = '<span class="navItemControls">'
-                . '<a href="' . Url::getFromRoute('/navigation') . '" data-post="'
-                . Url::getCommon($params, '', false) . '"'
-                . ' class="hideNavItem ajax">'
-                . Generator::getImage('hide', __('Hide'))
-                . '</a></span>';
+                    . '<a href="' . Url::getFromRoute('/navigation') . '" data-post="'
+                    . Url::getCommon($params, '', false) . '"'
+                    . ' class="hideNavItem ajax">'
+                    . Generator::getImage('hide', __('Hide'))
+                    . '</a></span>';
         }
 
         return $ret;
     }
+
 }

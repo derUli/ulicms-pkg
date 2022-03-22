@@ -11,21 +11,21 @@ AJAX.registerTeardown('table/find_replace.js', function () {
  */
 AJAX.registerOnload('table/find_replace.js', function () {
     $('<div id="toggle_find_div"><a id="toggle_find"></a></div>')
-        .insertAfter('#find_replace_form')
-        .hide();
+            .insertAfter('#find_replace_form')
+            .hide();
 
     $('#toggle_find')
-        .html(Messages.strHideFindNReplaceCriteria)
-        .on('click', function () {
-            var $link = $(this);
-            $('#find_replace_form').slideToggle();
-            if ($link.text() === Messages.strHideFindNReplaceCriteria) {
-                $link.text(Messages.strShowFindNReplaceCriteria);
-            } else {
-                $link.text(Messages.strHideFindNReplaceCriteria);
-            }
-            return false;
-        });
+            .html(Messages.strHideFindNReplaceCriteria)
+            .on('click', function () {
+                var $link = $(this);
+                $('#find_replace_form').slideToggle();
+                if ($link.text() === Messages.strHideFindNReplaceCriteria) {
+                    $link.text(Messages.strShowFindNReplaceCriteria);
+                } else {
+                    $link.text(Messages.strHideFindNReplaceCriteria);
+                }
+                return false;
+            });
 
     $('#find_replace_form').on('submit', function (e) {
         e.preventDefault();

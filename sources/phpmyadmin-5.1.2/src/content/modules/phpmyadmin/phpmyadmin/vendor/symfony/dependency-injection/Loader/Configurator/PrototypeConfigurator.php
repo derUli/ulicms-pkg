@@ -17,8 +17,8 @@ use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
 /**
  * @author Nicolas Grekas <p@tchwork.com>
  */
-class PrototypeConfigurator extends AbstractServiceConfigurator
-{
+class PrototypeConfigurator extends AbstractServiceConfigurator {
+
     use Traits\AbstractTrait;
     use Traits\ArgumentTrait;
     use Traits\AutoconfigureTrait;
@@ -42,8 +42,7 @@ class PrototypeConfigurator extends AbstractServiceConfigurator
     private $excludes;
     private $allowParent;
 
-    public function __construct(ServicesConfigurator $parent, PhpFileLoader $loader, Definition $defaults, string $namespace, string $resource, bool $allowParent)
-    {
+    public function __construct(ServicesConfigurator $parent, PhpFileLoader $loader, Definition $defaults, string $namespace, string $resource, bool $allowParent) {
         $definition = new Definition();
         if (!$defaults->isPublic() || !$defaults->isPrivate()) {
             $definition->setPublic($defaults->isPublic());
@@ -61,8 +60,7 @@ class PrototypeConfigurator extends AbstractServiceConfigurator
         parent::__construct($parent, $definition, $namespace, $defaults->getTags());
     }
 
-    public function __destruct()
-    {
+    public function __destruct() {
         parent::__destruct();
 
         if ($this->loader) {
@@ -78,10 +76,10 @@ class PrototypeConfigurator extends AbstractServiceConfigurator
      *
      * @return $this
      */
-    final public function exclude($excludes): self
-    {
+    final public function exclude($excludes): self {
         $this->excludes = (array) $excludes;
 
         return $this;
     }
+
 }

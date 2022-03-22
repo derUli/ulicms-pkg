@@ -34,8 +34,8 @@ use function strtoupper;
  * Display table search form, create SQL query from form data
  * and call Sql::executeQueryAndSendQueryResponse() to execute it.
  */
-class SearchController extends AbstractController
-{
+class SearchController extends AbstractController {
+
     /**
      * Names of columns
      *
@@ -43,6 +43,7 @@ class SearchController extends AbstractController
      * @var array
      */
     private $columnNames;
+
     /**
      * Types of columns
      *
@@ -50,6 +51,7 @@ class SearchController extends AbstractController
      * @var array
      */
     private $columnTypes;
+
     /**
      * Types of columns without any replacement
      *
@@ -57,6 +59,7 @@ class SearchController extends AbstractController
      * @var array
      */
     private $originalColumnTypes;
+
     /**
      * Collations of columns
      *
@@ -64,6 +67,7 @@ class SearchController extends AbstractController
      * @var array
      */
     private $columnCollations;
+
     /**
      * Null Flags of columns
      *
@@ -71,6 +75,7 @@ class SearchController extends AbstractController
      * @var array
      */
     private $columnNullFlags;
+
     /**
      * Whether a geometry column is present
      *
@@ -78,6 +83,7 @@ class SearchController extends AbstractController
      * @var bool
      */
     private $geomColumnFlag;
+
     /**
      * Foreign Keys
      *
@@ -102,13 +108,13 @@ class SearchController extends AbstractController
      * @param DatabaseInterface $dbi
      */
     public function __construct(
-        $response,
-        Template $template,
-        $db,
-        $table,
-        Search $search,
-        Relation $relation,
-        $dbi
+            $response,
+            Template $template,
+            $db,
+            $table,
+            Search $search,
+            Relation $relation,
+            $dbi
     ) {
         parent::__construct($response, $template, $db, $table);
         $this->search = $search;
@@ -129,14 +135,13 @@ class SearchController extends AbstractController
      * Gets all the columns of a table along with their types, collations
      * and whether null or not.
      */
-    private function loadTableInfo(): void
-    {
+    private function loadTableInfo(): void {
         // Gets the list and number of columns
         $columns = $this->dbi->getColumns(
-            $this->db,
-            $this->table,
-            null,
-            true
+                $this->db,
+                $this->table,
+                null,
+                true
         );
         // Get details about the geometry functions
         $geom_types = Util::getGISDatatypes();
@@ -153,14 +158,13 @@ class SearchController extends AbstractController
                 $this->geomColumnFlag = true;
             }
             // reformat mysql query output
-            if (strncasecmp($type, 'set', 3) == 0
-                || strncasecmp($type, 'enum', 4) == 0
+            if (strncasecmp($type, 'set', 3) == 0 || strncasecmp($type, 'enum', 4) == 0
             ) {
                 $type = str_replace(',', ', ', $type);
             } else {
                 // strip the "BINARY" attribute, except if we find "BINARY(" because
                 // this would be a BINARY or VARBINARY column type
-                if (! preg_match('@BINARY[\(]@i', $type)) {
+                if (!preg_match('@BINARY[\(]@i', $type)) {
                     $type = str_ireplace('BINARY', '', $type);
                 }
                 $type = str_ireplace('ZEROFILL', '', $type);
@@ -172,10 +176,7 @@ class SearchController extends AbstractController
             }
             $this->columnTypes[] = $type;
             $this->columnNullFlags[] = $row['Null'];
-            $this->columnCollations[]
-                = ! empty($row['Collation']) && $row['Collation'] !== 'NULL'
-                ? $row['Collation']
-                : '';
+            $this->columnCollations[] = !empty($row['Collation']) && $row['Collation'] !== 'NULL' ? $row['Collation'] : '';
         }
 
         // Retrieve foreign keys
@@ -185,8 +186,7 @@ class SearchController extends AbstractController
     /**
      * Index action
      */
-    public function index(): void
-    {
+    public function index(): void {
         global $db, $table, $url_params, $cfg, $err_url;
 
         Util::checkParameters(['db', 'table']);
@@ -216,8 +216,7 @@ class SearchController extends AbstractController
         /**
          * No selection criteria received -> display the selection form
          */
-        if (! isset($_POST['columnsToDisplay'])
-            && ! isset($_POST['displayAllColumns'])
+        if (!isset($_POST['columnsToDisplay']) && !isset($_POST['displayAllColumns'])
         ) {
             $this->displaySelectionFormAction();
         } else {
@@ -230,19 +229,18 @@ class SearchController extends AbstractController
      *
      * @return void
      */
-    public function getDataRowAction()
-    {
-        if (! Core::checkSqlQuerySignature($_POST['where_clause'], $_POST['where_clause_sign'])) {
+    public function getDataRowAction() {
+        if (!Core::checkSqlQuerySignature($_POST['where_clause'], $_POST['where_clause_sign'])) {
             return;
         }
 
         $extra_data = [];
         $row_info_query = 'SELECT * FROM ' . Util::backquote($_POST['db']) . '.'
-            . Util::backquote($_POST['table']) . ' WHERE ' . $_POST['where_clause'];
+                . Util::backquote($_POST['table']) . ' WHERE ' . $_POST['where_clause'];
         $result = $this->dbi->query(
-            $row_info_query . ';',
-            DatabaseInterface::CONNECT_USER,
-            DatabaseInterface::QUERY_STORE
+                $row_info_query . ';',
+                DatabaseInterface::CONNECT_USER,
+                DatabaseInterface::QUERY_STORE
         );
         $fields_meta = $this->dbi->getFieldsMeta($result);
         while ($row = $this->dbi->fetchAssoc($result)) {
@@ -251,8 +249,8 @@ class SearchController extends AbstractController
             foreach ($row as $col => $val) {
                 if ($fields_meta[$i]->type === 'bit') {
                     $row[$col] = Util::printableBitValue(
-                        (int) $val,
-                        (int) $fields_meta[$i]->length
+                                    (int) $val,
+                                    (int) $fields_meta[$i]->length
                     );
                 }
                 $i++;
@@ -267,8 +265,7 @@ class SearchController extends AbstractController
      *
      * @return void
      */
-    public function doSelectionAction()
-    {
+    public function doSelectionAction() {
         global $PMA_Theme;
 
         /**
@@ -280,44 +277,43 @@ class SearchController extends AbstractController
          * Add this to ensure following procedures included running correctly.
          */
         $sql = new Sql(
-            $this->dbi,
-            $this->relation,
-            new RelationCleanup($this->dbi, $this->relation),
-            new Operations($this->dbi, $this->relation),
-            new Transformations(),
-            $this->template
+                $this->dbi,
+                $this->relation,
+                new RelationCleanup($this->dbi, $this->relation),
+                new Operations($this->dbi, $this->relation),
+                new Transformations(),
+                $this->template
         );
 
         $this->response->addHTML($sql->executeQueryAndSendQueryResponse(
-            null, // analyzed_sql_results
-            false, // is_gotofile
-            $this->db, // db
-            $this->table, // table
-            null, // find_real_end
-            null, // sql_query_for_bookmark
-            null, // extra_data
-            null, // message_to_show
-            null, // sql_data
-            $GLOBALS['goto'], // goto
-            $PMA_Theme->getImgPath(),
-            null, // disp_query
-            null, // disp_message
-            $sql_query, // sql_query
-            null // complete_query
+                        null, // analyzed_sql_results
+                        false, // is_gotofile
+                        $this->db, // db
+                        $this->table, // table
+                        null, // find_real_end
+                        null, // sql_query_for_bookmark
+                        null, // extra_data
+                        null, // message_to_show
+                        null, // sql_data
+                        $GLOBALS['goto'], // goto
+                        $PMA_Theme->getImgPath(),
+                        null, // disp_query
+                        null, // disp_message
+                        $sql_query, // sql_query
+                        null // complete_query
         ));
     }
 
     /**
      * Display selection form action
      */
-    public function displaySelectionFormAction(): void
-    {
+    public function displaySelectionFormAction(): void {
         global $goto, $cfg;
 
-        if (! isset($goto)) {
+        if (!isset($goto)) {
             $goto = Util::getScriptNameForOption(
-                $cfg['DefaultTabTable'],
-                'table'
+                            $cfg['DefaultTabTable'],
+                            'table'
             );
         }
 
@@ -340,8 +336,7 @@ class SearchController extends AbstractController
      *
      * @return void
      */
-    public function rangeSearchAction()
-    {
+    public function rangeSearchAction() {
         $min_max = $this->getColumnMinMax($_POST['column']);
         $this->response->addJSON('column_data', $min_max);
     }
@@ -353,12 +348,11 @@ class SearchController extends AbstractController
      *
      * @return array
      */
-    public function getColumnMinMax($column)
-    {
+    public function getColumnMinMax($column) {
         $sql_query = 'SELECT MIN(' . Util::backquote($column) . ') AS `min`, '
-            . 'MAX(' . Util::backquote($column) . ') AS `max` '
-            . 'FROM ' . Util::backquote($this->db) . '.'
-            . Util::backquote($this->table);
+                . 'MAX(' . Util::backquote($column) . ') AS `max` '
+                . 'FROM ' . Util::backquote($this->db) . '.'
+                . Util::backquote($this->table);
 
         return $this->dbi->fetchSingleRow($sql_query);
     }
@@ -372,8 +366,7 @@ class SearchController extends AbstractController
      *
      * @return array Array containing column's properties
      */
-    public function getColumnProperties($search_index, $column_index)
-    {
+    public function getColumnProperties($search_index, $column_index) {
         $selected_operator = ($_POST['criteriaColumnOperators'][$search_index] ?? '');
         $entered_value = ($_POST['criteriaValues'] ?? '');
         //Gets column's type and collation
@@ -382,9 +375,9 @@ class SearchController extends AbstractController
         $cleanType = preg_replace('@\(.*@s', '', $type);
         //Gets column's comparison operators depending on column type
         $typeOperators = $this->dbi->types->getTypeOperatorsHtml(
-            $cleanType,
-            $this->columnNullFlags[$column_index],
-            $selected_operator
+                $cleanType,
+                $this->columnNullFlags[$column_index],
+                $selected_operator
         );
         $func = $this->template->render('table/search/column_comparison_operators', [
             'search_index' => $search_index,
@@ -392,28 +385,28 @@ class SearchController extends AbstractController
         ]);
         //Gets link to browse foreign data(if any) and criteria inputbox
         $foreignData = $this->relation->getForeignData(
-            $this->foreigners,
-            $this->columnNames[$column_index],
-            false,
-            '',
-            ''
+                $this->foreigners,
+                $this->columnNames[$column_index],
+                false,
+                '',
+                ''
         );
         $htmlAttributes = '';
         if (in_array($cleanType, $this->dbi->types->getIntegerTypes())) {
             $extractedColumnspec = Util::extractColumnSpec(
-                $this->originalColumnTypes[$column_index]
+                            $this->originalColumnTypes[$column_index]
             );
             $is_unsigned = $extractedColumnspec['unsigned'];
             $minMaxValues = $this->dbi->types->getIntegerRange(
-                $cleanType,
-                ! $is_unsigned
+                    $cleanType,
+                    !$is_unsigned
             );
             $htmlAttributes = 'data-min="' . $minMaxValues[0] . '" '
-                            . 'data-max="' . $minMaxValues[1] . '"';
+                    . 'data-max="' . $minMaxValues[1] . '"';
         }
 
         $htmlAttributes .= ' onfocus="return '
-                        . 'verifyAfterSearchFieldChange(' . $search_index . ', \'#tbl_search_form\')"';
+                . 'verifyAfterSearchFieldChange(' . $search_index . ', \'#tbl_search_form\')"';
 
         $value = $this->template->render('table/search/input_box', [
             'str' => '',
@@ -441,4 +434,5 @@ class SearchController extends AbstractController
             'value' => $value,
         ];
     }
+
 }

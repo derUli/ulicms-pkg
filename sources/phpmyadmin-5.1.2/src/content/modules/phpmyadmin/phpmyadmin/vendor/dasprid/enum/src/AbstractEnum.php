@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace DASPRiD\Enum;
 
@@ -10,8 +11,8 @@ use DASPRiD\Enum\Exception\SerializeNotSupportedException;
 use DASPRiD\Enum\Exception\UnserializeNotSupportedException;
 use ReflectionClass;
 
-abstract class AbstractEnum
-{
+abstract class AbstractEnum {
+
     /**
      * @var string
      */
@@ -44,8 +45,8 @@ abstract class AbstractEnum
      * the static methods are able to construct it. Avoid making it public, as that would allow creation of
      * non-singleton enum instances.
      */
-    private function __construct()
-    {
+    private function __construct() {
+        
     }
 
     /**
@@ -53,8 +54,7 @@ abstract class AbstractEnum
      *
      * @return static
      */
-    final public static function __callStatic(string $name, array $arguments) : self
-    {
+    final public static function __callStatic(string $name, array $arguments): self {
         return static::valueOf($name);
     }
 
@@ -67,8 +67,7 @@ abstract class AbstractEnum
      * @return static
      * @throws IllegalArgumentException if the enum has no constant with the specified name
      */
-    final public static function valueOf(string $name) : self
-    {
+    final public static function valueOf(string $name): self {
         if (isset(self::$values[static::class][$name])) {
             return self::$values[static::class][$name];
         }
@@ -85,8 +84,7 @@ abstract class AbstractEnum
     /**
      * @return static
      */
-    private static function createValue(string $name, int $ordinal, array $arguments) : self
-    {
+    private static function createValue(string $name, int $ordinal, array $arguments): self {
         $instance = new static(...$arguments);
         $instance->name = $name;
         $instance->ordinal = $ordinal;
@@ -99,13 +97,12 @@ abstract class AbstractEnum
      *
      * @return static[]
      */
-    final public static function values() : array
-    {
+    final public static function values(): array {
         if (isset(self::$allValuesLoaded[static::class])) {
             return self::$values[static::class];
         }
 
-        if (! isset(self::$values[static::class])) {
+        if (!isset(self::$values[static::class])) {
             self::$values[static::class] = [];
         }
 
@@ -125,8 +122,7 @@ abstract class AbstractEnum
         return self::$values[static::class];
     }
 
-    private static function constants() : array
-    {
+    private static function constants(): array {
         if (isset(self::$constants[static::class])) {
             return self::$constants[static::class];
         }
@@ -136,7 +132,7 @@ abstract class AbstractEnum
         $ordinal = -1;
 
         foreach ($reflectionClass->getReflectionConstants() as $reflectionConstant) {
-            if (! $reflectionConstant->isProtected()) {
+            if (!$reflectionConstant->isProtected()) {
                 continue;
             }
 
@@ -158,8 +154,7 @@ abstract class AbstractEnum
      * method may return a more user-friendly name. This method is designed primarily for use in specialized situations
      * where correctness depends on getting the exact name, which will not vary from release to release.
      */
-    final public function name() : string
-    {
+    final public function name(): string {
         return $this->name;
     }
 
@@ -170,8 +165,7 @@ abstract class AbstractEnum
      * Most programmers will have no use for this method. It is designed for use by sophisticated enum-based data
      * structures.
      */
-    final public function ordinal() : int
-    {
+    final public function ordinal(): int {
         return $this->ordinal;
     }
 
@@ -186,13 +180,12 @@ abstract class AbstractEnum
      *
      * @throws MismatchException if the passed enum is not of the same type
      */
-    final public function compareTo(self $other) : int
-    {
-        if (! $other instanceof static) {
+    final public function compareTo(self $other): int {
+        if (!$other instanceof static) {
             throw new MismatchException(sprintf(
-                'The passed enum %s is not of the same type as %s',
-                get_class($other),
-                static::class
+                                    'The passed enum %s is not of the same type as %s',
+                                    get_class($other),
+                                    static::class
             ));
         }
 
@@ -204,8 +197,7 @@ abstract class AbstractEnum
      *
      * @throws CloneNotSupportedException
      */
-    final public function __clone()
-    {
+    final public function __clone() {
         throw new CloneNotSupportedException();
     }
 
@@ -214,8 +206,7 @@ abstract class AbstractEnum
      *
      * @throws SerializeNotSupportedException
      */
-    final public function __sleep() : array
-    {
+    final public function __sleep(): array {
         throw new SerializeNotSupportedException();
     }
 
@@ -224,8 +215,7 @@ abstract class AbstractEnum
      *
      * @throws UnserializeNotSupportedException
      */
-    final public function __wakeup() : void
-    {
+    final public function __wakeup(): void {
         throw new UnserializeNotSupportedException();
     }
 
@@ -234,8 +224,8 @@ abstract class AbstractEnum
      *
      * You may override this method to give a more user-friendly version.
      */
-    public function __toString() : string
-    {
+    public function __toString(): string {
         return $this->name;
     }
+
 }

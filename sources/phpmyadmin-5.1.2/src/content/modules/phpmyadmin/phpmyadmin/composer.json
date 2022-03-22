@@ -2,7 +2,7 @@
     "name": "phpmyadmin/phpmyadmin",
     "type": "project",
     "description": "A web interface for MySQL and MariaDB",
-    "keywords": ["phpmyadmin","mysql","web"],
+    "keywords": ["phpmyadmin", "mysql", "web"],
     "homepage": "https://www.phpmyadmin.net/",
     "support": {
         "forum": "https://www.phpmyadmin.net/support/",
@@ -116,7 +116,7 @@
         "update:baselines": "phpstan analyse --generate-baseline && psalm --set-baseline=psalm-baseline.xml",
         "twig-lint": "php scripts/console lint:twig templates --ansi --show-deprecations"
     },
-    "config":{
+    "config": {
         "sort-packages": true,
         "discard-changes": true,
         "allow-plugins": {

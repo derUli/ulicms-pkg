@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Library for extracting information about the partitions
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin;
@@ -12,10 +12,11 @@ use function array_values;
 /**
  * base Partition Class
  */
-class Partition extends SubPartition
-{
+class Partition extends SubPartition {
+
     /** @var string partition description */
     protected $description;
+
     /** @var SubPartition[] sub partitions */
     protected $subPartitions = [];
 
@@ -26,15 +27,14 @@ class Partition extends SubPartition
      *
      * @return void
      */
-    protected function loadData(array $row)
-    {
+    protected function loadData(array $row) {
         $this->name = $row['PARTITION_NAME'];
         $this->ordinal = $row['PARTITION_ORDINAL_POSITION'];
         $this->method = $row['PARTITION_METHOD'];
         $this->expression = $row['PARTITION_EXPRESSION'];
         $this->description = $row['PARTITION_DESCRIPTION'];
         // no sub partitions, load all data to this object
-        if (! empty($row['SUBPARTITION_NAME'])) {
+        if (!empty($row['SUBPARTITION_NAME'])) {
             return;
         }
 
@@ -46,8 +46,7 @@ class Partition extends SubPartition
      *
      * @return string partition description
      */
-    public function getDescription()
-    {
+    public function getDescription() {
         return $this->description;
     }
 
@@ -58,8 +57,7 @@ class Partition extends SubPartition
      *
      * @return void
      */
-    public function addSubPartition(SubPartition $partition)
-    {
+    public function addSubPartition(SubPartition $partition) {
         $this->subPartitions[] = $partition;
     }
 
@@ -68,9 +66,8 @@ class Partition extends SubPartition
      *
      * @return bool
      */
-    public function hasSubPartitions()
-    {
-        return ! empty($this->subPartitions);
+    public function hasSubPartitions() {
+        return !empty($this->subPartitions);
     }
 
     /**
@@ -78,8 +75,7 @@ class Partition extends SubPartition
      *
      * @return int number of rows
      */
-    public function getRows()
-    {
+    public function getRows() {
         if (empty($this->subPartitions)) {
             return $this->rows;
         }
@@ -97,8 +93,7 @@ class Partition extends SubPartition
      *
      * @return int data length
      */
-    public function getDataLength()
-    {
+    public function getDataLength() {
         if (empty($this->subPartitions)) {
             return $this->dataLength;
         }
@@ -116,8 +111,7 @@ class Partition extends SubPartition
      *
      * @return int index length
      */
-    public function getIndexLength()
-    {
+    public function getIndexLength() {
         if (empty($this->subPartitions)) {
             return $this->indexLength;
         }
@@ -135,8 +129,7 @@ class Partition extends SubPartition
      *
      * @return SubPartition[]
      */
-    public function getSubPartitions()
-    {
+    public function getSubPartitions() {
         return $this->subPartitions;
     }
 
@@ -150,15 +143,14 @@ class Partition extends SubPartition
      *
      * @access public
      */
-    public static function getPartitions($db, $table)
-    {
+    public static function getPartitions($db, $table) {
         global $dbi;
 
         if (self::havePartitioning()) {
             $result = $dbi->fetchResult(
-                'SELECT * FROM `information_schema`.`PARTITIONS`'
-                . " WHERE `TABLE_SCHEMA` = '" . $dbi->escapeString($db)
-                . "' AND `TABLE_NAME` = '" . $dbi->escapeString($table) . "'"
+                    'SELECT * FROM `information_schema`.`PARTITIONS`'
+                    . " WHERE `TABLE_SCHEMA` = '" . $dbi->escapeString($db)
+                    . "' AND `TABLE_NAME` = '" . $dbi->escapeString($table) . "'"
             );
             if ($result) {
                 $partitionMap = [];
@@ -199,15 +191,14 @@ class Partition extends SubPartition
      *
      * @access public
      */
-    public static function getPartitionNames($db, $table)
-    {
+    public static function getPartitionNames($db, $table) {
         global $dbi;
 
         if (self::havePartitioning()) {
             return $dbi->fetchResult(
-                'SELECT DISTINCT `PARTITION_NAME` FROM `information_schema`.`PARTITIONS`'
-                . " WHERE `TABLE_SCHEMA` = '" . $dbi->escapeString($db)
-                . "' AND `TABLE_NAME` = '" . $dbi->escapeString($table) . "'"
+                            'SELECT DISTINCT `PARTITION_NAME` FROM `information_schema`.`PARTITIONS`'
+                            . " WHERE `TABLE_SCHEMA` = '" . $dbi->escapeString($db)
+                            . "' AND `TABLE_NAME` = '" . $dbi->escapeString($table) . "'"
             );
         }
 
@@ -222,18 +213,17 @@ class Partition extends SubPartition
      *
      * @return string|null partition method
      */
-    public static function getPartitionMethod($db, $table)
-    {
+    public static function getPartitionMethod($db, $table) {
         global $dbi;
 
         if (self::havePartitioning()) {
             $partition_method = $dbi->fetchResult(
-                'SELECT `PARTITION_METHOD` FROM `information_schema`.`PARTITIONS`'
-                . " WHERE `TABLE_SCHEMA` = '" . $dbi->escapeString($db) . "'"
-                . " AND `TABLE_NAME` = '" . $dbi->escapeString($table) . "'"
-                . ' LIMIT 1'
+                    'SELECT `PARTITION_METHOD` FROM `information_schema`.`PARTITIONS`'
+                    . " WHERE `TABLE_SCHEMA` = '" . $dbi->escapeString($db) . "'"
+                    . " AND `TABLE_NAME` = '" . $dbi->escapeString($table) . "'"
+                    . ' LIMIT 1'
             );
-            if (! empty($partition_method)) {
+            if (!empty($partition_method)) {
                 return $partition_method[0];
             }
         }
@@ -251,18 +241,17 @@ class Partition extends SubPartition
      * @staticvar boolean $already_checked
      * @access public
      */
-    public static function havePartitioning()
-    {
+    public static function havePartitioning() {
         global $dbi;
 
         static $have_partitioning = false;
         static $already_checked = false;
 
-        if (! $already_checked) {
+        if (!$already_checked) {
             if ($dbi->getVersion() < 50600) {
                 if ($dbi->fetchValue(
-                    'SELECT @@have_partitioning;'
-                )) {
+                                'SELECT @@have_partitioning;'
+                        )) {
                     $have_partitioning = true;
                 }
             } elseif ($dbi->getVersion() >= 80000) {
@@ -282,4 +271,5 @@ class Partition extends SubPartition
 
         return $have_partitioning;
     }
+
 }

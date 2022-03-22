@@ -4,9 +4,9 @@
 @var: "hello";
 
 div {
-	interp1: ~"@{cool-hello}";
-	interp2: ~"@{cool-@{var}}";
-	interp3: ~"@{cool-@{cool-@{var}}}";
+    interp1: ~"@{cool-hello}";
+    interp2: ~"@{cool-@{var}}";
+    interp3: ~"@{cool-@{cool-@{var}}}";
 }
 
 // interpolation in selectors
@@ -14,20 +14,35 @@ div {
 @hello: 10;
 @world: "yeah";
 
-@{hello}@{world} {
-	color: blue;
+@{
+    hello
+}
+@{
+    world
+}
+{
+    color: blue;
 }
 
-@{hello} {
-	color: blue;
+@{
+    hello
+}
+{
+    color: blue;
 }
 
-hello world @{hello} {
-	color: red;
+hello world @{
+    hello
+}
+{
+    color: red;
 }
 
-#@{world} {
-	color: "hello @{hello}";
+#@{
+    world
+}
+{
+    color: "hello @{hello}";
 }
 
 
@@ -39,9 +54,21 @@ hello world @{hello} {
 [|prop~="val@{num}"],
 [*|prop$="val@{num}"],
 [ns|prop^="val@{num}"],
-[@{num}^="val@{num}"],
-[@{num}=@{num}],
-[@{num}] {
-  attributes: yes;
+[@{
+    num
+}
+^="val@{num}"],
+[@{
+    num
+}
+=@{
+    num
+}
+],
+[@{
+    num
+}
+] {
+    attributes: yes;
 }
 

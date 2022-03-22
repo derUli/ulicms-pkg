@@ -1,8 +1,8 @@
 <?php
+
 /**
  * `LIMIT` keyword parser.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\SqlParser\Components;
@@ -17,8 +17,8 @@ use PhpMyAdmin\SqlParser\TokensList;
  *
  * @final
  */
-class Limit extends Component
-{
+class Limit extends Component {
+
     /**
      * The number of rows skipped.
      *
@@ -37,8 +37,7 @@ class Limit extends Component
      * @param int $rowCount the row count
      * @param int $offset   the offset
      */
-    public function __construct($rowCount = 0, $offset = 0)
-    {
+    public function __construct($rowCount = 0, $offset = 0) {
         $this->rowCount = $rowCount;
         $this->offset = $offset;
     }
@@ -50,8 +49,7 @@ class Limit extends Component
      *
      * @return Limit
      */
-    public static function parse(Parser $parser, TokensList $list, array $options = [])
-    {
+    public static function parse(Parser $parser, TokensList $list, array $options = []) {
         $ret = new static();
 
         $offset = false;
@@ -121,8 +119,8 @@ class Limit extends Component
      *
      * @return string
      */
-    public static function build($component, array $options = [])
-    {
+    public static function build($component, array $options = []) {
         return $component->offset . ', ' . $component->rowCount;
     }
+
 }

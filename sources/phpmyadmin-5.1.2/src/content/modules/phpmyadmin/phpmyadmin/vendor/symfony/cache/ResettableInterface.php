@@ -16,6 +16,6 @@ use Symfony\Contracts\Service\ResetInterface;
 /**
  * Resets a pool's local state.
  */
-interface ResettableInterface extends ResetInterface
-{
+interface ResettableInterface extends ResetInterface {
+    
 }

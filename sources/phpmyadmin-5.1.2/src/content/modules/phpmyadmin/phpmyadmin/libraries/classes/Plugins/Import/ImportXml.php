@@ -1,10 +1,10 @@
 <?php
+
 /**
  * XML import plugin for phpMyAdmin
  *
  * @todo       Improve efficiency
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Plugins\Import;
@@ -29,10 +29,9 @@ use const PHP_VERSION_ID;
 /**
  * Handles the import for the XML format
  */
-class ImportXml extends ImportPlugin
-{
-    public function __construct()
-    {
+class ImportXml extends ImportPlugin {
+
+    public function __construct() {
         parent::__construct();
         $this->setProperties();
     }
@@ -43,8 +42,7 @@ class ImportXml extends ImportPlugin
      *
      * @return void
      */
-    protected function setProperties()
-    {
+    protected function setProperties() {
         $importPluginProperties = new ImportPluginProperties();
         $importPluginProperties->setText(__('XML'));
         $importPluginProperties->setExtension('xml');
@@ -62,8 +60,7 @@ class ImportXml extends ImportPlugin
      *
      * @return void
      */
-    public function doImport(?File $importHandle = null, array &$sql_data = [])
-    {
+    public function doImport(?File $importHandle = null, array &$sql_data = []) {
         global $error, $timeout_passed, $finished, $db;
 
         $i = 0;
@@ -74,7 +71,7 @@ class ImportXml extends ImportPlugin
          * Read in the file via Import::getNextChunk so that
          * it can process compressed files
          */
-        while (! ($finished && $i >= $len) && ! $error && ! $timeout_passed) {
+        while (!($finished && $i >= $len) && !$error && !$timeout_passed) {
             $data = $this->import->getNextChunk($importHandle);
             if ($data === false) {
                 /* subtract data we didn't handle yet and stop processing */
@@ -114,10 +111,10 @@ class ImportXml extends ImportPlugin
          */
         if ($xml === false) {
             echo Message::error(
-                __(
-                    'The XML file specified was either malformed or incomplete.'
-                    . ' Please correct the issue and try again.'
-                )
+                    __(
+                            'The XML file specified was either malformed or incomplete.'
+                            . ' Please correct the issue and try again.'
+                    )
             )->getDisplay();
             unset($xml);
             $GLOBALS['finished'] = false;
@@ -154,7 +151,7 @@ class ImportXml extends ImportPlugin
          * Get the database name, collation and charset
          */
         $db_attr = $xml->children($namespaces['pma'] ?? null)
-            ->{'structure_schemas'}->{'database'};
+                ->{'structure_schemas'}->{'database'};
 
         if ($db_attr instanceof SimpleXMLElement) {
             $db_attr = $db_attr->attributes();
@@ -167,7 +164,7 @@ class ImportXml extends ImportPlugin
              * get the database name from the data section
              */
             $db_attr = $xml->children()
-                ->attributes();
+                    ->attributes();
             $db_name = (string) $db_attr['name'];
             $collation = null;
             $charset = null;
@@ -178,10 +175,10 @@ class ImportXml extends ImportPlugin
          */
         if ($db_name === null) {
             echo Message::error(
-                __(
-                    'The XML file specified was either malformed or incomplete.'
-                    . ' Please correct the issue and try again.'
-                )
+                    __(
+                            'The XML file specified was either malformed or incomplete.'
+                            . ' Please correct the issue and try again.'
+                    )
             )->getDisplay();
             unset($xml);
             $GLOBALS['finished'] = false;
@@ -214,9 +211,9 @@ class ImportXml extends ImportPlugin
                      */
                     $attrs = $val2->attributes();
                     $create[] = 'USE '
-                        . Util::backquote(
-                            $attrs['name']
-                        );
+                            . Util::backquote(
+                                    $attrs['name']
+                    );
 
                     foreach ($val2 as $val3) {
                         /**
@@ -235,7 +232,7 @@ class ImportXml extends ImportPlugin
          * Move down the XML tree to the actual data
          */
         $xml = $xml->children()
-            ->children();
+                ->children();
 
         $data_present = false;
 
@@ -254,19 +251,19 @@ class ImportXml extends ImportPlugin
                 $isInTables = false;
                 $num_tables = count($tables);
                 for ($i = 0; $i < $num_tables; ++$i) {
-                    if (! strcmp($tables[$i][Import::TBL_NAME], (string) $tbl_attr['name'])) {
+                    if (!strcmp($tables[$i][Import::TBL_NAME], (string) $tbl_attr['name'])) {
                         $isInTables = true;
                         break;
                     }
                 }
 
-                if (! $isInTables) {
+                if (!$isInTables) {
                     $tables[] = [(string) $tbl_attr['name']];
                 }
 
                 foreach ($v1 as $v2) {
                     $row_attr = $v2->attributes();
-                    if (! in_array((string) $row_attr['name'], $tempRow)) {
+                    if (!in_array((string) $row_attr['name'], $tempRow)) {
                         $tempRow[] = (string) $row_attr['name'];
                     }
                     $tempCells[] = (string) $v2;
@@ -295,7 +292,7 @@ class ImportXml extends ImportPlugin
                         continue;
                     }
 
-                    if (! isset($tables[$i][Import::COL_NAMES])) {
+                    if (!isset($tables[$i][Import::COL_NAMES])) {
                         $tables[$i][] = $rows[$j][Import::COL_NAMES];
                     }
 
@@ -305,7 +302,7 @@ class ImportXml extends ImportPlugin
 
             unset($rows);
 
-            if (! $struct_present) {
+            if (!$struct_present) {
                 $analyses = [];
 
                 $len = count($tables);
@@ -325,9 +322,9 @@ class ImportXml extends ImportPlugin
              * Set values to NULL if they were not present
              * to maintain Import::buildSql() call integrity
              */
-            if (! isset($analyses)) {
+            if (!isset($analyses)) {
                 $analyses = null;
-                if (! $struct_present) {
+                if (!$struct_present) {
                     $create = null;
                 }
             }
@@ -346,7 +343,6 @@ class ImportXml extends ImportPlugin
          *
          * array $options = an associative array of options
          */
-
         /* Set database name to the currently selected one, if applicable */
         if (strlen((string) $db)) {
             /* Override the database name in the XML file, if one is selected */
@@ -360,7 +356,7 @@ class ImportXml extends ImportPlugin
             /* Set database collation/charset */
             $options = [
                 'db_collation' => $collation,
-                'db_charset'   => $charset,
+                'db_charset' => $charset,
             ];
         }
 
@@ -372,4 +368,5 @@ class ImportXml extends ImportPlugin
         /* Commit any possible data in buffers */
         $this->import->runQuery('', '', $sql_data);
     }
+
 }

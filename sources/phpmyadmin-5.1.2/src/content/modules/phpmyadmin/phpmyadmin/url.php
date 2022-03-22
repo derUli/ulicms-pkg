@@ -1,8 +1,8 @@
 <?php
+
 /**
  * URL redirector to avoid leaking Referer with some sensitive information.
  */
-
 declare(strict_types=1);
 
 use PhpMyAdmin\Core;
@@ -10,7 +10,7 @@ use PhpMyAdmin\DatabaseInterface;
 use PhpMyAdmin\Response;
 use PhpMyAdmin\Sanitize;
 
-if (! defined('ROOT_PATH')) {
+if (!defined('ROOT_PATH')) {
     // phpcs:disable PSR1.Files.SideEffects
     define('ROOT_PATH', __DIR__ . DIRECTORY_SEPARATOR);
     // phpcs:enable
@@ -33,9 +33,7 @@ $response = Response::getInstance();
 $response->getHeader()->sendHttpHeaders();
 $response->disable();
 
-if (! Core::isValid($_GET['url'])
-    || ! preg_match('/^https:\/\/[^\n\r]*$/', $_GET['url'])
-    || ! Core::isAllowedDomain($_GET['url'])
+if (!Core::isValid($_GET['url']) || !preg_match('/^https:\/\/[^\n\r]*$/', $_GET['url']) || !Core::isAllowedDomain($_GET['url'])
 ) {
     Core::sendHeaderLocation('./');
 } else {

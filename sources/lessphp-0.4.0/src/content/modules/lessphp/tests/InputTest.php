@@ -4,27 +4,23 @@ require_once __DIR__ . "/../lessc.inc.php";
 
 // Runs all the tests in inputs/ and compares their output to ouputs/
 
-function _dump($value)
-{
+function _dump($value) {
     fwrite(STDOUT, print_r($value, true));
 }
 
-function _quote($str)
-{
+function _quote($str) {
     return preg_quote($str, "/");
 }
 
-class InputTest extends PHPUnit_Framework_TestCase
-{
-    protected static $importDirs = array("inputs/test-imports");
+class InputTest extends PHPUnit_Framework_TestCase {
 
+    protected static $importDirs = array("inputs/test-imports");
     protected static $testDirs = array(
         "inputs" => "outputs",
         "inputs_lessjs" => "outputs_lessjs",
     );
 
-    public function setUp()
-    {
+    public function setUp() {
         $this->less = new lessc();
         $this->less->importDir = array_map(function ($path) {
             return __DIR__ . "/" . $path;
@@ -34,8 +30,7 @@ class InputTest extends PHPUnit_Framework_TestCase
     /**
      * @dataProvider fileNameProvider
      */
-    public function testInputFile($inFname)
-    {
+    public function testInputFile($inFname) {
         if ($pattern = getenv("BUILD")) {
             return $this->buildInput($inFname);
         }
@@ -43,8 +38,8 @@ class InputTest extends PHPUnit_Framework_TestCase
         $outFname = self::outputNameFor($inFname);
 
         if (!is_readable($outFname)) {
-            $this->fail("$outFname is missing, ".
-                "consider building tests with BUILD=true");
+            $this->fail("$outFname is missing, " .
+                    "consider building tests with BUILD=true");
         }
 
         $input = file_get_contents($inFname);
@@ -53,25 +48,22 @@ class InputTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($output, $this->less->parse($input));
     }
 
-    public function fileNameProvider()
-    {
+    public function fileNameProvider() {
         return array_map(
-            function ($a) {
-                return array($a);
-            },
-            self::findInputNames()
+                function ($a) {
+                    return array($a);
+                },
+                self::findInputNames()
         );
     }
 
     // only run when env is set
-    public function buildInput($inFname)
-    {
+    public function buildInput($inFname) {
         $css = $this->less->parse(file_get_contents($inFname));
         file_put_contents(self::outputNameFor($inFname), $css);
     }
 
-    public static function findInputNames($pattern="*.less")
-    {
+    public static function findInputNames($pattern = "*.less") {
         $files = array();
         foreach (self::$testDirs as $inputDir => $outputDir) {
             $files = array_merge($files, glob(__DIR__ . "/" . $inputDir . "/" . $pattern));
@@ -80,8 +72,7 @@ class InputTest extends PHPUnit_Framework_TestCase
         return array_filter($files, "is_file");
     }
 
-    public static function outputNameFor($input)
-    {
+    public static function outputNameFor($input) {
         $front = _quote(__DIR__ . "/");
         $out = preg_replace("/^$front/", "", $input);
 
@@ -98,4 +89,5 @@ class InputTest extends PHPUnit_Framework_TestCase
 
         return __DIR__ . "/" . $out;
     }
+
 }

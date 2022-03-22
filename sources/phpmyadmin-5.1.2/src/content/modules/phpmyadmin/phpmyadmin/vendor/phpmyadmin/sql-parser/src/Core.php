@@ -1,16 +1,16 @@
 <?php
+
 /**
  * Defines the core helper infrastructure of the library.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\SqlParser;
 
 use Exception;
 
-class Core
-{
+class Core {
+
     /**
      * Whether errors should throw exceptions or just be stored.
      *
@@ -40,12 +40,12 @@ class Core
      *
      * @throws Exception throws the exception, if strict mode is enabled.
      */
-    public function error($error)
-    {
+    public function error($error) {
         if ($this->strict) {
             throw $error;
         }
 
         $this->errors[] = $error;
     }
+
 }

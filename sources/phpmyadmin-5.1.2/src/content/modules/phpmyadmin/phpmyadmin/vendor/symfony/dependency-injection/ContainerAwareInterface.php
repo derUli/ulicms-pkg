@@ -16,8 +16,8 @@ namespace Symfony\Component\DependencyInjection;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-interface ContainerAwareInterface
-{
+interface ContainerAwareInterface {
+
     /**
      * Sets the container.
      */

@@ -17,6 +17,6 @@ namespace Symfony\Component\Config\Definition\Exception;
  *
  * @author Johannes M. Schmitt <schmittjoh@gmail.com>
  */
-class DuplicateKeyException extends InvalidConfigurationException
-{
+class DuplicateKeyException extends InvalidConfigurationException {
+    
 }

@@ -18,8 +18,8 @@ use function substr;
 /**
  * Functions for listing directories
  */
-class FileListing
-{
+class FileListing {
+
     /**
      * Returns array of filtered file names
      *
@@ -28,9 +28,8 @@ class FileListing
      *
      * @return array|bool sorted file list on success, false on failure
      */
-    public function getDirContent(string $dir, string $expression = '')
-    {
-        if (! @file_exists($dir)) {
+    public function getDirContent(string $dir, string $expression = '') {
+        if (!@file_exists($dir)) {
             return false;
         }
 
@@ -45,9 +44,7 @@ class FileListing
             $dir .= '/';
         }
         while ($file = @readdir($handle)) {
-            if (! @is_file($dir . $file)
-                || @is_link($dir . $file)
-                || ($expression != '' && ! preg_match($expression, $file))
+            if (!@is_file($dir . $file) || @is_link($dir . $file) || ($expression != '' && !preg_match($expression, $file))
             ) {
                 continue;
             }
@@ -70,9 +67,9 @@ class FileListing
      * @return string|false Html <option> field, false if not files in dir
      */
     public function getFileSelectOptions(
-        string $dir,
-        string $extensions = '',
-        string $active = ''
+            string $dir,
+            string $extensions = '',
+            string $active = ''
     ) {
         $list = $this->getDirContent($dir, $extensions);
         if ($list === false) {
@@ -82,8 +79,8 @@ class FileListing
         $template = new Template();
 
         return $template->render('file_select_options', [
-            'filesList' => $list,
-            'active' => $active,
+                    'filesList' => $list,
+                    'active' => $active,
         ]);
     }
 
@@ -92,8 +89,7 @@ class FileListing
      *
      * @return string separated list of extensions usable in getDirContent
      */
-    public function supportedDecompressions(): string
-    {
+    public function supportedDecompressions(): string {
         global $cfg;
 
         $compressions = '';
@@ -102,13 +98,13 @@ class FileListing
             $compressions = 'gz';
         }
         if ($cfg['BZipDump'] && function_exists('bzopen')) {
-            if (! empty($compressions)) {
+            if (!empty($compressions)) {
                 $compressions .= '|';
             }
             $compressions .= 'bz2';
         }
         if ($cfg['ZipDump'] && function_exists('gzinflate')) {
-            if (! empty($compressions)) {
+            if (!empty($compressions)) {
                 $compressions .= '|';
             }
             $compressions .= 'zip';
@@ -116,4 +112,5 @@ class FileListing
 
         return $compressions;
     }
+
 }

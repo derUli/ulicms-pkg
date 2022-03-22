@@ -39,9 +39,9 @@ AJAX.registerOnload('database/central_columns.js', function () {
     if ($('#table_columns').find('tbody tr').length > 0) {
         $('#table_columns').tablesorter({
             headers: {
-                0: { sorter: false },
-                1: { sorter: false }, // hidden column
-                4: { sorter: 'integer' }
+                0: {sorter: false},
+                1: {sorter: false}, // hidden column
+                4: {sorter: 'integer'}
             }
         });
     }
@@ -83,12 +83,12 @@ AJAX.registerOnload('database/central_columns.js', function () {
             $(this).find('input,select').first().attr('name', $(this).attr('name'));
         }
     });
-    $('#field_0_0').attr('required','required');
+    $('#field_0_0').attr('required', 'required');
     $('#add_new input[type="text"], #add_new input[type="number"], #add_new select')
-        .css({
-            'width' : '10em',
-            '-moz-box-sizing' : 'border-box'
-        });
+            .css({
+                'width': '10em',
+                '-moz-box-sizing': 'border-box'
+            });
     window.scrollTo(0, 0);
     $(document).on('keyup', '.filter_rows', function () {
         // get the column names
@@ -104,7 +104,7 @@ AJAX.registerOnload('database/central_columns.js', function () {
         $('#f_' + rownum + ' td span').hide();
         $('#f_' + rownum + ' input, #f_' + rownum + ' select, #f_' + rownum + ' .open_enum_editor').show();
         var attributeVal = $('#f_' + rownum + ' td[name=col_attribute] span').html();
-        $('#f_' + rownum + ' select[name=field_attribute\\[' + rownum + '\\] ] option[value="' + attributeVal + '"]').attr('selected','selected');
+        $('#f_' + rownum + ' select[name=field_attribute\\[' + rownum + '\\] ] option[value="' + attributeVal + '"]').attr('selected', 'selected');
         if ($('#f_' + rownum + ' .default_type').val() === 'USER_DEFINED') {
             $('#f_' + rownum + ' .default_type').siblings('.default_value').show();
         } else {
@@ -139,14 +139,14 @@ AJAX.registerOnload('database/central_columns.js', function () {
         $('#f_' + rownum + ' td').each(function () {
             if ($(this).attr('name') !== 'undefined') {
                 $(this).find(':input[type!="hidden"],select').first()
-                    .attr('name', $(this).attr('name'));
+                        .attr('name', $(this).attr('name'));
             }
         });
 
         if ($('#f_' + rownum + ' .default_type').val() === 'USER_DEFINED') {
-            $('#f_' + rownum + ' .default_type').attr('name','col_default_sel');
+            $('#f_' + rownum + ' .default_type').attr('name', 'col_default_sel');
         } else {
-            $('#f_' + rownum + ' .default_value').attr('name','col_default_val');
+            $('#f_' + rownum + ' .default_value').attr('name', 'col_default_val');
         }
 
         var datastring = $('#f_' + rownum + ' :input').serialize();
@@ -158,11 +158,11 @@ AJAX.registerOnload('database/central_columns.js', function () {
             success: function (data) {
                 if (data.message !== '1') {
                     Functions.ajaxShowMessage(
-                        '<div class="alert alert-danger" role="alert">' +
-                        data.message +
-                        '</div>',
-                        false
-                    );
+                            '<div class="alert alert-danger" role="alert">' +
+                            data.message +
+                            '</div>',
+                            false
+                            );
                 } else {
                     $('#f_' + rownum + ' td input[id=checkbox_row_' + rownum + ']').val($('#f_' + rownum + ' input[name=col_name]').val()).html();
                     $('#f_' + rownum + ' td[name=col_name] span').text($('#f_' + rownum + ' input[name=col_name]').val()).html();
@@ -182,11 +182,11 @@ AJAX.registerOnload('database/central_columns.js', function () {
             },
             error: function () {
                 Functions.ajaxShowMessage(
-                    '<div class="alert alert-danger" role="alert">' +
+                        '<div class="alert alert-danger" role="alert">' +
                         Messages.strErrorProcessingRequest +
                         '</div>',
-                    false
-                );
+                        false
+                        );
             }
         });
     });
@@ -195,10 +195,10 @@ AJAX.registerOnload('database/central_columns.js', function () {
         var defaultColumnSelect = $('#column-select').find('option').first();
         var href = 'index.php?route=/database/central-columns/populate';
         var params = {
-            'ajax_request' : true,
-            'server' : CommonParams.get('server'),
-            'db' : CommonParams.get('db'),
-            'selectedTable' : selectValue
+            'ajax_request': true,
+            'server': CommonParams.get('server'),
+            'db': CommonParams.get('db'),
+            'selectedTable': selectValue
         };
         $('#column-select').html('<option value="">' + Messages.strLoading + '</option>');
         if (selectValue !== '') {
@@ -229,11 +229,11 @@ AJAX.registerOnload('database/central_columns.js', function () {
     });
     $('#tableslistcontainer').find('select.default_type').on('change', function () {
         if ($(this).val() === 'USER_DEFINED') {
-            $(this).siblings('.default_value').attr('name','col_default');
-            $(this).attr('name','col_default_sel');
+            $(this).siblings('.default_value').attr('name', 'col_default');
+            $(this).attr('name', 'col_default_sel');
         } else {
-            $(this).attr('name','col_default');
-            $(this).siblings('.default_value').attr('name','col_default_val');
+            $(this).attr('name', 'col_default');
+            $(this).siblings('.default_value').attr('name', 'col_default_val');
         }
     });
 });

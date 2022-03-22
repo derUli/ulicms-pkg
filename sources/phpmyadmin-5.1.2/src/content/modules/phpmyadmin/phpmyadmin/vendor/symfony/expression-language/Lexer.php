@@ -16,8 +16,8 @@ namespace Symfony\Component\ExpressionLanguage;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class Lexer
-{
+class Lexer {
+
     /**
      * Tokenizes an expression.
      *
@@ -27,8 +27,7 @@ class Lexer
      *
      * @throws SyntaxError
      */
-    public function tokenize($expression)
-    {
+    public function tokenize($expression) {
         $expression = str_replace(["\r", "\n", "\t", "\v", "\f"], ' ', $expression);
         $cursor = 0;
         $tokens = [];
@@ -100,4 +99,5 @@ class Lexer
 
         return new TokenStream($tokens, $expression);
     }
+
 }

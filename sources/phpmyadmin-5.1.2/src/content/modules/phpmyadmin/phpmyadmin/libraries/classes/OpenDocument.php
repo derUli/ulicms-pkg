@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Simple interface for creating OASIS OpenDocument files.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin;
@@ -12,8 +12,8 @@ use function strftime;
 /**
  * Simplfied OpenDocument creator class
  */
-class OpenDocument
-{
+class OpenDocument {
+
     public const NS = <<<EOT
 xmlns:office="urn:oasis:names:tc:opendocument:xmlns:office:1.0"
 xmlns:text="urn:oasis:names:tc:opendocument:xmlns:text:1.0"
@@ -33,8 +33,7 @@ EOT;
      *
      * @access public
      */
-    public static function create($mime, $data)
-    {
+    public static function create($mime, $data) {
         $data = [
             $mime,
             $data,
@@ -172,4 +171,5 @@ EOT;
 
         return $zipExtension->createFile($data, $name);
     }
+
 }

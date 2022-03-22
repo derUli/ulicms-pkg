@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Properties class for the export plug-in
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Properties\Plugins;
@@ -12,14 +12,15 @@ namespace PhpMyAdmin\Properties\Plugins;
  *
  * @todo    modify descriptions if needed, when the plug-in properties are integrated
  */
-class ExportPluginProperties extends PluginPropertyItem
-{
+class ExportPluginProperties extends PluginPropertyItem {
+
     /**
      * Whether to force or not
      *
      * @var bool
      */
     private $forceFile;
+
     /* ~~~~~~~~~~~~~~~~~~~~ Getters and Setters ~~~~~~~~~~~~~~~~~~~~ */
 
     /**
@@ -32,8 +33,7 @@ class ExportPluginProperties extends PluginPropertyItem
      *
      * @return string
      */
-    public function getItemType()
-    {
+    public function getItemType() {
         return 'export';
     }
 
@@ -42,8 +42,7 @@ class ExportPluginProperties extends PluginPropertyItem
      *
      * @return bool
      */
-    public function getForceFile()
-    {
+    public function getForceFile() {
         return $this->forceFile;
     }
 
@@ -54,8 +53,8 @@ class ExportPluginProperties extends PluginPropertyItem
      *
      * @return void
      */
-    public function setForceFile($forceFile)
-    {
+    public function setForceFile($forceFile) {
         $this->forceFile = $forceFile;
     }
+
 }

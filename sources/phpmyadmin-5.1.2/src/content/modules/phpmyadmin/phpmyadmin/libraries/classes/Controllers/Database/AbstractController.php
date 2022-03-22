@@ -8,8 +8,8 @@ use PhpMyAdmin\Controllers\AbstractController as Controller;
 use PhpMyAdmin\Response;
 use PhpMyAdmin\Template;
 
-abstract class AbstractController extends Controller
-{
+abstract class AbstractController extends Controller {
+
     /** @var string */
     protected $db;
 
@@ -17,9 +17,9 @@ abstract class AbstractController extends Controller
      * @param Response $response
      * @param string   $db       Database name
      */
-    public function __construct($response, Template $template, $db)
-    {
+    public function __construct($response, Template $template, $db) {
         parent::__construct($response, $template);
         $this->db = $db;
     }
+
 }

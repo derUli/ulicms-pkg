@@ -44,8 +44,8 @@ use Symfony\Component\Cache\Traits\RedisTrait;
  * @author Nicolas Grekas <p@tchwork.com>
  * @author André Rømcke <andre.romcke+symfony@gmail.com>
  */
-class RedisTagAwareAdapter extends AbstractTagAwareAdapter
-{
+class RedisTagAwareAdapter extends AbstractTagAwareAdapter {
+
     use RedisTrait;
 
     /**
@@ -64,8 +64,7 @@ class RedisTagAwareAdapter extends AbstractTagAwareAdapter
      * @param string                                                                                $namespace       The default namespace
      * @param int                                                                                   $defaultLifetime The default lifetime
      */
-    public function __construct($redis, string $namespace = '', int $defaultLifetime = 0, MarshallerInterface $marshaller = null)
-    {
+    public function __construct($redis, string $namespace = '', int $defaultLifetime = 0, MarshallerInterface $marshaller = null) {
         if ($redis instanceof \Predis\ClientInterface && $redis->getConnection() instanceof ClusterInterface && !$redis->getConnection() instanceof PredisCluster) {
             throw new InvalidArgumentException(sprintf('Unsupported Predis cluster connection: only "%s" is, "%s" given.', PredisCluster::class, \get_class($redis->getConnection())));
         }
@@ -86,8 +85,7 @@ class RedisTagAwareAdapter extends AbstractTagAwareAdapter
     /**
      * {@inheritdoc}
      */
-    protected function doSave(array $values, int $lifetime, array $addTagData = [], array $delTagData = []): array
-    {
+    protected function doSave(array $values, int $lifetime, array $addTagData = [], array $delTagData = []): array {
         $eviction = $this->getRedisEvictionPolicy();
         if ('noeviction' !== $eviction && !str_starts_with($eviction, 'volatile-')) {
             throw new LogicException(sprintf('Redis maxmemory-policy setting "%s" is *not* supported by RedisTagAwareAdapter, use "noeviction" or "volatile-*" eviction policies.', $eviction));
@@ -140,8 +138,7 @@ class RedisTagAwareAdapter extends AbstractTagAwareAdapter
     /**
      * {@inheritdoc}
      */
-    protected function doDeleteYieldTags(array $ids): iterable
-    {
+    protected function doDeleteYieldTags(array $ids): iterable {
         $lua = <<<'EOLUA'
             local v = redis.call('GET', KEYS[1])
             redis.call('DEL', KEYS[1])
@@ -161,7 +158,7 @@ EOLUA;
 
         foreach ($results as $id => $result) {
             if ($result instanceof \RedisException) {
-                CacheItem::log($this->logger, 'Failed to delete key "{key}": '.$result->getMessage(), ['key' => substr($id, \strlen($this->namespace)), 'exception' => $result]);
+                CacheItem::log($this->logger, 'Failed to delete key "{key}": ' . $result->getMessage(), ['key' => substr($id, \strlen($this->namespace)), 'exception' => $result]);
 
                 continue;
             }
@@ -177,8 +174,7 @@ EOLUA;
     /**
      * {@inheritdoc}
      */
-    protected function doDeleteTagRelations(array $tagData): bool
-    {
+    protected function doDeleteTagRelations(array $tagData): bool {
         $results = $this->pipeline(static function () use ($tagData) {
             foreach ($tagData as $tagId => $idList) {
                 array_unshift($idList, $tagId);
@@ -195,8 +191,7 @@ EOLUA;
     /**
      * {@inheritdoc}
      */
-    protected function doInvalidate(array $tagIds): bool
-    {
+    protected function doInvalidate(array $tagIds): bool {
         // This script scans the set of items linked to tag: it empties the set
         // and removes the linked items. When the set is still not empty after
         // the scan, it means we're in cluster mode and that the linked items
@@ -255,7 +250,7 @@ EOLUA;
         $success = true;
         foreach ($results as $id => $values) {
             if ($values instanceof \RedisException) {
-                CacheItem::log($this->logger, 'Failed to invalidate key "{key}": '.$values->getMessage(), ['key' => substr($id, \strlen($this->namespace)), 'exception' => $values]);
+                CacheItem::log($this->logger, 'Failed to invalidate key "{key}": ' . $values->getMessage(), ['key' => substr($id, \strlen($this->namespace)), 'exception' => $values]);
                 $success = false;
 
                 continue;
@@ -288,8 +283,7 @@ EOLUA;
         return $success;
     }
 
-    private function getRedisEvictionPolicy(): string
-    {
+    private function getRedisEvictionPolicy(): string {
         if (null !== $this->redisEvictionPolicy) {
             return $this->redisEvictionPolicy;
         }
@@ -310,4 +304,5 @@ EOLUA;
 
         return $this->redisEvictionPolicy = '';
     }
+
 }

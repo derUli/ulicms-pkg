@@ -1,8 +1,8 @@
 <?php
+
 /**
  * `JOIN` keyword parser.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\SqlParser\Components;
@@ -11,7 +11,6 @@ use PhpMyAdmin\SqlParser\Component;
 use PhpMyAdmin\SqlParser\Parser;
 use PhpMyAdmin\SqlParser\Token;
 use PhpMyAdmin\SqlParser\TokensList;
-
 use function array_search;
 use function implode;
 
@@ -20,8 +19,8 @@ use function implode;
  *
  * @final
  */
-class JoinKeyword extends Component
-{
+class JoinKeyword extends Component {
+
     /**
      * Types of join.
      *
@@ -83,8 +82,7 @@ class JoinKeyword extends Component
      * @param Condition[] $on    join conditions
      * @param ArrayObj    $using columns joined
      */
-    public function __construct($type = null, $expr = null, $on = null, $using = null)
-    {
+    public function __construct($type = null, $expr = null, $on = null, $using = null) {
         $this->type = $type;
         $this->expr = $expr;
         $this->on = $on;
@@ -98,8 +96,7 @@ class JoinKeyword extends Component
      *
      * @return JoinKeyword[]
      */
-    public static function parse(Parser $parser, TokensList $list, array $options = [])
-    {
+    public static function parse(Parser $parser, TokensList $list, array $options = []) {
         $ret = [];
 
         $expr = new static();
@@ -195,7 +192,7 @@ class JoinKeyword extends Component
             }
         }
 
-        if (! empty($expr->type)) {
+        if (!empty($expr->type)) {
             $ret[] = $expr;
         }
 
@@ -210,17 +207,15 @@ class JoinKeyword extends Component
      *
      * @return string
      */
-    public static function build($component, array $options = [])
-    {
+    public static function build($component, array $options = []) {
         $ret = [];
         foreach ($component as $c) {
             $ret[] = array_search($c->type, static::$JOINS) . ' ' . $c->expr
-                . (! empty($c->on)
-                    ? ' ON ' . Condition::build($c->on) : '')
-                . (! empty($c->using)
-                    ? ' USING ' . ArrayObj::build($c->using) : '');
+                    . (!empty($c->on) ? ' ON ' . Condition::build($c->on) : '')
+                    . (!empty($c->using) ? ' USING ' . ArrayObj::build($c->using) : '');
         }
 
         return implode(' ', $ret);
     }
+
 }

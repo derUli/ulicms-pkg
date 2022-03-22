@@ -1,8 +1,8 @@
 <?php
+
 /**
  * `RENAME TABLE` keyword parser.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\SqlParser\Components;
@@ -11,7 +11,6 @@ use PhpMyAdmin\SqlParser\Component;
 use PhpMyAdmin\SqlParser\Parser;
 use PhpMyAdmin\SqlParser\Token;
 use PhpMyAdmin\SqlParser\TokensList;
-
 use function implode;
 use function is_array;
 
@@ -20,8 +19,8 @@ use function is_array;
  *
  * @final
  */
-class RenameOperation extends Component
-{
+class RenameOperation extends Component {
+
     /**
      * The old table name.
      *
@@ -40,8 +39,7 @@ class RenameOperation extends Component
      * @param Expression $old old expression
      * @param Expression $new new expression containing new name
      */
-    public function __construct($old = null, $new = null)
-    {
+    public function __construct($old = null, $new = null) {
         $this->old = $old;
         $this->new = $new;
     }
@@ -53,8 +51,7 @@ class RenameOperation extends Component
      *
      * @return RenameOperation[]
      */
-    public static function parse(Parser $parser, TokensList $list, array $options = [])
-    {
+    public static function parse(Parser $parser, TokensList $list, array $options = []) {
         $ret = [];
 
         $expr = new static();
@@ -97,12 +94,12 @@ class RenameOperation extends Component
 
             if ($state === 0) {
                 $expr->old = Expression::parse(
-                    $parser,
-                    $list,
-                    [
-                        'breakOnAlias' => true,
-                        'parseField' => 'table',
-                    ]
+                                $parser,
+                                $list,
+                                [
+                                    'breakOnAlias' => true,
+                                    'parseField' => 'table',
+                                ]
                 );
                 if (empty($expr->old)) {
                     $parser->error('The old name of the table was expected.', $token);
@@ -118,12 +115,12 @@ class RenameOperation extends Component
                 $state = 2;
             } elseif ($state === 2) {
                 $expr->new = Expression::parse(
-                    $parser,
-                    $list,
-                    [
-                        'breakOnAlias' => true,
-                        'parseField' => 'table',
-                    ]
+                                $parser,
+                                $list,
+                                [
+                                    'breakOnAlias' => true,
+                                    'parseField' => 'table',
+                                ]
                 );
                 if (empty($expr->new)) {
                     $parser->error('The new name of the table was expected.', $token);
@@ -146,7 +143,7 @@ class RenameOperation extends Component
         }
 
         // Last iteration was not saved.
-        if (! empty($expr->old)) {
+        if (!empty($expr->old)) {
             $ret[] = $expr;
         }
 
@@ -161,12 +158,12 @@ class RenameOperation extends Component
      *
      * @return string
      */
-    public static function build($component, array $options = [])
-    {
+    public static function build($component, array $options = []) {
         if (is_array($component)) {
             return implode(', ', $component);
         }
 
         return $component->old . ' TO ' . $component->new;
     }
+
 }

@@ -16,20 +16,18 @@ namespace Symfony\Component\Cache\Marshaller;
  *
  * @author Nicolas Grekas <p@tchwork.com>
  */
-class TagAwareMarshaller implements MarshallerInterface
-{
+class TagAwareMarshaller implements MarshallerInterface {
+
     private $marshaller;
 
-    public function __construct(MarshallerInterface $marshaller = null)
-    {
+    public function __construct(MarshallerInterface $marshaller = null) {
         $this->marshaller = $marshaller ?? new DefaultMarshaller();
     }
 
     /**
      * {@inheritdoc}
      */
-    public function marshall(array $values, ?array &$failed): array
-    {
+    public function marshall(array $values, ?array &$failed): array {
         $failed = $notSerialized = $serialized = [];
 
         foreach ($values as $id => $value) {
@@ -47,7 +45,7 @@ class TagAwareMarshaller implements MarshallerInterface
                         $v['tags'] = '';
                     }
 
-                    $serialized[$id] = "\x9D".($value['meta'] ?? "\0\0\0\0\0\0\0\0").pack('N', \strlen($v['tags'])).$v['tags'].$v['value'];
+                    $serialized[$id] = "\x9D" . ($value['meta'] ?? "\0\0\0\0\0\0\0\0") . pack('N', \strlen($v['tags'])) . $v['tags'] . $v['value'];
                     $serialized[$id][9] = "\x5F";
                 }
             } else {
@@ -67,8 +65,7 @@ class TagAwareMarshaller implements MarshallerInterface
     /**
      * {@inheritdoc}
      */
-    public function unmarshall(string $value)
-    {
+    public function unmarshall(string $value) {
         // detect the compact format used in marshall() using magic numbers in the form 9D-..-..-..-..-00-..-..-..-5F
         if (13 >= \strlen($value) || "\x9D" !== $value[0] || "\0" !== $value[5] || "\x5F" !== $value[9]) {
             return $this->marshaller->unmarshall($value);
@@ -86,4 +83,5 @@ class TagAwareMarshaller implements MarshallerInterface
             'meta' => "\0\0\0\0\0\0\0\0" === $meta ? null : $meta,
         ];
     }
+
 }

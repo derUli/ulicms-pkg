@@ -1,11 +1,12 @@
 <?php
+
 if (containsModule(get_slug(), "kundenbereich")) {
-    if (! is_logged_in()) {
+    if (!is_logged_in()) {
         $url = "admin/?go=" . urlencode(getCurrentURL());
         header("Location: " . $url);
         exit();
     }
-    
+
     if (isset($_GET["get"])) {
         $get = intval($_GET["get"]);
         $query = db_query("SELECT filename, content FROM `" . tbname("shared_files") . "` WHERE `user_id` = " . intval($_SESSION["login_id"]) . " AND id = " . $get);
@@ -13,7 +14,7 @@ if (containsModule(get_slug(), "kundenbereich")) {
             $data = db_fetch_assoc($query);
             $content = base64_decode($data["content"]);
             $filesize = mb_strlen($content, '8bit');
-            
+
             @set_time_limit(0); // Kein Zeitlimit
             header("HTTP/1.0 200 OK");
             header("Content-type: application/octet-stream");

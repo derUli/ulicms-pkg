@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Various checks and message functions used on index page.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Setup;
@@ -19,16 +19,15 @@ use function uniqid;
  *
  * Various checks and message functions used on index page.
  */
-class Index
-{
+class Index {
+
     /**
      * Initializes message list
      *
      * @return void
      */
-    public static function messagesBegin()
-    {
-        if (! isset($_SESSION['messages']) || ! is_array($_SESSION['messages'])) {
+    public static function messagesBegin() {
+        if (!isset($_SESSION['messages']) || !is_array($_SESSION['messages'])) {
             $_SESSION['messages'] = [
                 'error' => [],
                 'notice' => [],
@@ -54,9 +53,8 @@ class Index
      *
      * @return void
      */
-    public static function messagesSet($type, $msgId, $title, $message)
-    {
-        $fresh = ! isset($_SESSION['messages'][$type][$msgId]);
+    public static function messagesSet($type, $msgId, $title, $message) {
+        $fresh = !isset($_SESSION['messages'][$type][$msgId]);
         $_SESSION['messages'][$type][$msgId] = [
             'fresh' => $fresh,
             'active' => true,
@@ -70,8 +68,7 @@ class Index
      *
      * @return void
      */
-    public static function messagesEnd()
-    {
+    public static function messagesEnd() {
         foreach ($_SESSION['messages'] as &$messages) {
             $remove_ids = [];
             foreach ($messages as $id => &$msg) {
@@ -92,8 +89,7 @@ class Index
      *
      * @return array
      */
-    public static function messagesShowHtml()
-    {
+    public static function messagesShowHtml() {
         $return = [];
         foreach ($_SESSION['messages'] as $type => $messages) {
             foreach ($messages as $id => $msg) {
@@ -102,7 +98,7 @@ class Index
                     'title' => $msg['title'],
                     'type' => $type,
                     'message' => $msg['message'],
-                    'is_hidden' => ! $msg['fresh'] && $type !== 'error',
+                    'is_hidden' => !$msg['fresh'] && $type !== 'error',
                 ];
             }
         }
@@ -115,8 +111,7 @@ class Index
      *
      * @return void
      */
-    public static function versionCheck()
-    {
+    public static function versionCheck() {
         // version check messages should always be visible so let's make
         // a unique message id each time we run it
         $message_id = uniqid('version_check');
@@ -127,13 +122,13 @@ class Index
 
         if (empty($version_data)) {
             self::messagesSet(
-                'error',
-                $message_id,
-                __('Version check'),
-                __(
-                    'Reading of version failed. '
-                    . 'Maybe you\'re offline or the upgrade server does not respond.'
-                )
+                    'error',
+                    $message_id,
+                    __('Version check'),
+                    __(
+                            'Reading of version failed. '
+                            . 'Maybe you\'re offline or the upgrade server does not respond.'
+                    )
             );
 
             return;
@@ -151,24 +146,24 @@ class Index
         $version_upstream = $versionInformation->versionToInt($version);
         if ($version_upstream === false) {
             self::messagesSet(
-                'error',
-                $message_id,
-                __('Version check'),
-                __('Got invalid version string from server')
+                    'error',
+                    $message_id,
+                    __('Version check'),
+                    __('Got invalid version string from server')
             );
 
             return;
         }
 
         $version_local = $versionInformation->versionToInt(
-            $GLOBALS['PMA_Config']->get('PMA_VERSION')
+                $GLOBALS['PMA_Config']->get('PMA_VERSION')
         );
         if ($version_local === false) {
             self::messagesSet(
-                'error',
-                $message_id,
-                __('Version check'),
-                __('Unparsable version string')
+                    'error',
+                    $message_id,
+                    __('Version check'),
+                    __('Unparsable version string')
             );
 
             return;
@@ -178,29 +173,30 @@ class Index
             $version = htmlspecialchars($version);
             $date = htmlspecialchars($date);
             self::messagesSet(
-                'notice',
-                $message_id,
-                __('Version check'),
-                sprintf(__('A newer version of phpMyAdmin is available and you should consider upgrading.'
-                    . ' The newest version is %s, released on %s.'), $version, $date)
+                    'notice',
+                    $message_id,
+                    __('Version check'),
+                    sprintf(__('A newer version of phpMyAdmin is available and you should consider upgrading.'
+                                    . ' The newest version is %s, released on %s.'), $version, $date)
             );
         } else {
             if ($version_local % 100 == 0) {
                 self::messagesSet(
-                    'notice',
-                    $message_id,
-                    __('Version check'),
-                    Sanitize::sanitizeMessage(sprintf(__('You are using Git version, run [kbd]git pull[/kbd]'
-                        . ' :-)[br]The latest stable version is %s, released on %s.'), $version, $date))
+                        'notice',
+                        $message_id,
+                        __('Version check'),
+                        Sanitize::sanitizeMessage(sprintf(__('You are using Git version, run [kbd]git pull[/kbd]'
+                                                . ' :-)[br]The latest stable version is %s, released on %s.'), $version, $date))
                 );
             } else {
                 self::messagesSet(
-                    'notice',
-                    $message_id,
-                    __('Version check'),
-                    __('No newer stable version is available')
+                        'notice',
+                        $message_id,
+                        __('Version check'),
+                        __('No newer stable version is available')
                 );
             }
         }
     }
+
 }

@@ -16,13 +16,12 @@ namespace Symfony\Component\DependencyInjection;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class Reference
-{
+class Reference {
+
     private $id;
     private $invalidBehavior;
 
-    public function __construct(string $id, int $invalidBehavior = ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE)
-    {
+    public function __construct(string $id, int $invalidBehavior = ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE) {
         $this->id = $id;
         $this->invalidBehavior = $invalidBehavior;
     }
@@ -30,8 +29,7 @@ class Reference
     /**
      * @return string The service identifier
      */
-    public function __toString()
-    {
+    public function __toString() {
         return $this->id;
     }
 
@@ -40,8 +38,8 @@ class Reference
      *
      * @return int
      */
-    public function getInvalidBehavior()
-    {
+    public function getInvalidBehavior() {
         return $this->invalidBehavior;
     }
+
 }

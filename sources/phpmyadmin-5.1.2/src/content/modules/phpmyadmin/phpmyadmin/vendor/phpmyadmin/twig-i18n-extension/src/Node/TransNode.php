@@ -9,6 +9,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace PhpMyAdmin\Twig\Extensions\Node;
 
 use Twig\Compiler;
@@ -31,10 +32,9 @@ use function trim;
  *
  * Author Fabien Potencier <fabien.potencier@symfony-project.com>
  */
-class TransNode extends Node
-{
-    public function __construct(Node $body, ?Node $plural, ?AbstractExpression $count, ?Node $notes, int $lineno = 0, ?string $tag = null)
-    {
+class TransNode extends Node {
+
+    public function __construct(Node $body, ?Node $plural, ?AbstractExpression $count, ?Node $notes, int $lineno = 0, ?string $tag = null) {
         $nodes = ['body' => $body];
         if ($count !== null) {
             $nodes['count'] = $count;
@@ -52,8 +52,7 @@ class TransNode extends Node
     /**
      * {@inheritdoc}
      */
-    public function compile(Compiler $compiler)
-    {
+    public function compile(Compiler $compiler) {
         $compiler->addDebugInfo($this);
 
         [$msg, $vars] = $this->compileString($this->getNode('body'));
@@ -76,16 +75,16 @@ class TransNode extends Node
 
         if ($vars) {
             $compiler
-                ->write('echo strtr(' . $function . '(')
-                ->subcompile($msg);
+                    ->write('echo strtr(' . $function . '(')
+                    ->subcompile($msg);
 
             if ($this->hasNode('plural')) {
                 $compiler
-                    ->raw(', ')
-                    ->subcompile($msg1)
-                    ->raw(', abs(')
-                    ->subcompile($this->hasNode('count') ? $this->getNode('count') : null)
-                    ->raw(')');
+                        ->raw(', ')
+                        ->subcompile($msg1)
+                        ->raw(', abs(')
+                        ->subcompile($this->hasNode('count') ? $this->getNode('count') : null)
+                        ->raw(')');
             }
 
             $compiler->raw('), array(');
@@ -93,32 +92,32 @@ class TransNode extends Node
             foreach ($vars as $var) {
                 if ($var->getAttribute('name') === 'count') {
                     $compiler
-                        ->string('%count%')
-                        ->raw(' => abs(')
-                        ->subcompile($this->hasNode('count') ? $this->getNode('count') : null)
-                        ->raw('), ');
+                            ->string('%count%')
+                            ->raw(' => abs(')
+                            ->subcompile($this->hasNode('count') ? $this->getNode('count') : null)
+                            ->raw('), ');
                 } else {
                     $compiler
-                        ->string('%' . $var->getAttribute('name') . '%')
-                        ->raw(' => ')
-                        ->subcompile($var)
-                        ->raw(', ');
+                            ->string('%' . $var->getAttribute('name') . '%')
+                            ->raw(' => ')
+                            ->subcompile($var)
+                            ->raw(', ');
                 }
             }
 
             $compiler->raw("));\n");
         } else {
             $compiler
-                ->write('echo ' . $function . '(')
-                ->subcompile($msg);
+                    ->write('echo ' . $function . '(')
+                    ->subcompile($msg);
 
             if ($this->hasNode('plural')) {
                 $compiler
-                    ->raw(', ')
-                    ->subcompile($msg1)
-                    ->raw(', abs(')
-                    ->subcompile($this->hasNode('count') ? $this->getNode('count') : null)
-                    ->raw(')');
+                        ->raw(', ')
+                        ->subcompile($msg1)
+                        ->raw(', abs(')
+                        ->subcompile($this->hasNode('count') ? $this->getNode('count') : null)
+                        ->raw(')');
             }
 
             $compiler->raw(");\n");
@@ -129,8 +128,7 @@ class TransNode extends Node
      * Keep this method protected instead of private
      * Twig/I18n/NodeTrans from phpmyadmin/phpmyadmin uses it
      */
-    protected function compileString(Node $body): array
-    {
+    protected function compileString(Node $body): array {
         if ($body instanceof NameExpression || $body instanceof ConstantExpression || $body instanceof TempNameExpression) {
             return [$body, []];
         }
@@ -161,8 +159,8 @@ class TransNode extends Node
         return [new Node([new ConstantExpression(trim($msg), $body->getTemplateLine())]), $vars];
     }
 
-    private function getTransFunction(bool $plural): string
-    {
+    private function getTransFunction(bool $plural): string {
         return $plural ? 'ngettext' : 'gettext';
     }
+
 }

@@ -20,29 +20,26 @@ use Symfony\Component\DependencyInjection\Exception\RuntimeException;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class ParameterBag implements ParameterBagInterface
-{
+class ParameterBag implements ParameterBagInterface {
+
     protected $parameters = [];
     protected $resolved = false;
 
-    public function __construct(array $parameters = [])
-    {
+    public function __construct(array $parameters = []) {
         $this->add($parameters);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function clear()
-    {
+    public function clear() {
         $this->parameters = [];
     }
 
     /**
      * {@inheritdoc}
      */
-    public function add(array $parameters)
-    {
+    public function add(array $parameters) {
         foreach ($parameters as $key => $value) {
             $this->set($key, $value);
         }
@@ -51,16 +48,14 @@ class ParameterBag implements ParameterBagInterface
     /**
      * {@inheritdoc}
      */
-    public function all()
-    {
+    public function all() {
         return $this->parameters;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function get($name)
-    {
+    public function get($name) {
         $name = (string) $name;
 
         if (!\array_key_exists($name, $this->parameters)) {
@@ -101,32 +96,28 @@ class ParameterBag implements ParameterBagInterface
     /**
      * {@inheritdoc}
      */
-    public function set($name, $value)
-    {
+    public function set($name, $value) {
         $this->parameters[(string) $name] = $value;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function has($name)
-    {
+    public function has($name) {
         return \array_key_exists((string) $name, $this->parameters);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function remove($name)
-    {
+    public function remove($name) {
         unset($this->parameters[(string) $name]);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function resolve()
-    {
+    public function resolve() {
         if ($this->resolved) {
             return;
         }
@@ -159,8 +150,7 @@ class ParameterBag implements ParameterBagInterface
      * @throws ParameterCircularReferenceException if a circular reference if detected
      * @throws RuntimeException                    when a given parameter has a type problem
      */
-    public function resolveValue($value, array $resolving = [])
-    {
+    public function resolveValue($value, array $resolving = []) {
         if (\is_array($value)) {
             $args = [];
             foreach ($value as $k => $v) {
@@ -189,8 +179,7 @@ class ParameterBag implements ParameterBagInterface
      * @throws ParameterCircularReferenceException if a circular reference if detected
      * @throws RuntimeException                    when a given parameter has a type problem
      */
-    public function resolveString($value, array $resolving = [])
-    {
+    public function resolveString($value, array $resolving = []) {
         // we do this to deal with non string values (Boolean, integer, ...)
         // as the preg_replace_callback throw an exception when trying
         // a non-string in a parameter value
@@ -230,16 +219,14 @@ class ParameterBag implements ParameterBagInterface
         }, $value);
     }
 
-    public function isResolved()
-    {
+    public function isResolved() {
         return $this->resolved;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function escapeValue($value)
-    {
+    public function escapeValue($value) {
         if (\is_string($value)) {
             return str_replace('%', '%%', $value);
         }
@@ -259,8 +246,7 @@ class ParameterBag implements ParameterBagInterface
     /**
      * {@inheritdoc}
      */
-    public function unescapeValue($value)
-    {
+    public function unescapeValue($value) {
         if (\is_string($value)) {
             return str_replace('%%', '%', $value);
         }
@@ -276,4 +262,5 @@ class ParameterBag implements ParameterBagInterface
 
         return $value;
     }
+
 }

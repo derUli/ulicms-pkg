@@ -18,14 +18,13 @@ use Symfony\Component\ExpressionLanguage\Compiler;
  *
  * @internal
  */
-class BinaryNode extends Node
-{
+class BinaryNode extends Node {
+
     private const OPERATORS = [
         '~' => '.',
         'and' => '&&',
         'or' => '||',
     ];
-
     private const FUNCTIONS = [
         '**' => 'pow',
         '..' => 'range',
@@ -33,25 +32,23 @@ class BinaryNode extends Node
         'not in' => '!in_array',
     ];
 
-    public function __construct(string $operator, Node $left, Node $right)
-    {
+    public function __construct(string $operator, Node $left, Node $right) {
         parent::__construct(
-            ['left' => $left, 'right' => $right],
-            ['operator' => $operator]
+                ['left' => $left, 'right' => $right],
+                ['operator' => $operator]
         );
     }
 
-    public function compile(Compiler $compiler)
-    {
+    public function compile(Compiler $compiler) {
         $operator = $this->attributes['operator'];
 
         if ('matches' == $operator) {
             $compiler
-                ->raw('preg_match(')
-                ->compile($this->nodes['right'])
-                ->raw(', ')
-                ->compile($this->nodes['left'])
-                ->raw(')')
+                    ->raw('preg_match(')
+                    ->compile($this->nodes['right'])
+                    ->raw(', ')
+                    ->compile($this->nodes['left'])
+                    ->raw(')')
             ;
 
             return;
@@ -59,11 +56,11 @@ class BinaryNode extends Node
 
         if (isset(self::FUNCTIONS[$operator])) {
             $compiler
-                ->raw(sprintf('%s(', self::FUNCTIONS[$operator]))
-                ->compile($this->nodes['left'])
-                ->raw(', ')
-                ->compile($this->nodes['right'])
-                ->raw(')')
+                    ->raw(sprintf('%s(', self::FUNCTIONS[$operator]))
+                    ->compile($this->nodes['left'])
+                    ->raw(', ')
+                    ->compile($this->nodes['right'])
+                    ->raw(')')
             ;
 
             return;
@@ -74,18 +71,17 @@ class BinaryNode extends Node
         }
 
         $compiler
-            ->raw('(')
-            ->compile($this->nodes['left'])
-            ->raw(' ')
-            ->raw($operator)
-            ->raw(' ')
-            ->compile($this->nodes['right'])
-            ->raw(')')
+                ->raw('(')
+                ->compile($this->nodes['left'])
+                ->raw(' ')
+                ->raw($operator)
+                ->raw(' ')
+                ->compile($this->nodes['right'])
+                ->raw(')')
         ;
     }
 
-    public function evaluate($functions, $values)
-    {
+    public function evaluate($functions, $values) {
         $operator = $this->attributes['operator'];
         $left = $this->nodes['left']->evaluate($functions, $values);
 
@@ -143,7 +139,7 @@ class BinaryNode extends Node
             case '-':
                 return $left - $right;
             case '~':
-                return $left.$right;
+                return $left . $right;
             case '*':
                 return $left * $right;
             case '/':
@@ -163,8 +159,8 @@ class BinaryNode extends Node
         }
     }
 
-    public function toArray()
-    {
-        return ['(', $this->nodes['left'], ' '.$this->attributes['operator'].' ', $this->nodes['right'], ')'];
+    public function toArray() {
+        return ['(', $this->nodes['left'], ' ' . $this->attributes['operator'] . ' ', $this->nodes['right'], ')'];
     }
+
 }

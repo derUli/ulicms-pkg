@@ -22,8 +22,8 @@ use Symfony\Contracts\Cache\CacheInterface;
 /**
  * @deprecated since Symfony 4.3, use PdoAdapter and type-hint for CacheInterface instead.
  */
-class PdoCache extends AbstractCache implements PruneableInterface
-{
+class PdoCache extends AbstractCache implements PruneableInterface {
+
     use PdoTrait;
 
     protected $maxIdLength = 255;
@@ -52,8 +52,8 @@ class PdoCache extends AbstractCache implements PruneableInterface
      * @throws InvalidArgumentException When PDO error mode is not PDO::ERRMODE_EXCEPTION
      * @throws InvalidArgumentException When namespace contains invalid characters
      */
-    public function __construct($connOrDsn, string $namespace = '', int $defaultLifetime = 0, array $options = [], MarshallerInterface $marshaller = null)
-    {
+    public function __construct($connOrDsn, string $namespace = '', int $defaultLifetime = 0, array $options = [], MarshallerInterface $marshaller = null) {
         $this->init($connOrDsn, $namespace, $defaultLifetime, $options, $marshaller);
     }
+
 }

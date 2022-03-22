@@ -17,28 +17,31 @@ namespace Symfony\Polyfill\Php72;
  *
  * @internal
  */
-final class Php72
-{
+final class Php72 {
+
     private static $hashMask;
 
-    public static function utf8_encode($s)
-    {
+    public static function utf8_encode($s) {
         $s .= $s;
         $len = \strlen($s);
 
         for ($i = $len >> 1, $j = 0; $i < $len; ++$i, ++$j) {
             switch (true) {
-                case $s[$i] < "\x80": $s[$j] = $s[$i]; break;
-                case $s[$i] < "\xC0": $s[$j] = "\xC2"; $s[++$j] = $s[$i]; break;
-                default: $s[$j] = "\xC3"; $s[++$j] = \chr(\ord($s[$i]) - 64); break;
+                case $s[$i] < "\x80": $s[$j] = $s[$i];
+                    break;
+                case $s[$i] < "\xC0": $s[$j] = "\xC2";
+                    $s[++$j] = $s[$i];
+                    break;
+                default: $s[$j] = "\xC3";
+                    $s[++$j] = \chr(\ord($s[$i]) - 64);
+                    break;
             }
         }
 
         return substr($s, 0, $j);
     }
 
-    public static function utf8_decode($s)
-    {
+    public static function utf8_decode($s) {
         $s = (string) $s;
         $len = \strlen($s);
 
@@ -52,7 +55,7 @@ final class Php72
 
                 case "\xF0":
                     ++$i;
-                    // no break
+                // no break
 
                 case "\xE0":
                     $s[$j] = '?';
@@ -67,8 +70,7 @@ final class Php72
         return substr($s, 0, $j);
     }
 
-    public static function php_os_family()
-    {
+    public static function php_os_family() {
         if ('\\' === \DIRECTORY_SEPARATOR) {
             return 'Windows';
         }
@@ -86,8 +88,7 @@ final class Php72
         return isset($map[\PHP_OS]) ? $map[\PHP_OS] : 'Unknown';
     }
 
-    public static function spl_object_id($object)
-    {
+    public static function spl_object_id($object) {
         if (null === self::$hashMask) {
             self::initHashMask();
         }
@@ -99,10 +100,9 @@ final class Php72
         return self::$hashMask ^ hexdec(substr($hash, 16 - (\PHP_INT_SIZE * 2 - 1), (\PHP_INT_SIZE * 2 - 1)));
     }
 
-    public static function sapi_windows_vt100_support($stream, $enable = null)
-    {
+    public static function sapi_windows_vt100_support($stream, $enable = null) {
         if (!\is_resource($stream)) {
-            trigger_error('sapi_windows_vt100_support() expects parameter 1 to be resource, '.\gettype($stream).' given', \E_USER_WARNING);
+            trigger_error('sapi_windows_vt100_support() expects parameter 1 to be resource, ' . \gettype($stream) . ' given', \E_USER_WARNING);
 
             return false;
         }
@@ -124,17 +124,12 @@ final class Php72
         $meta = array_map('strtolower', $meta);
         $stdin = 'php://stdin' === $meta['uri'] || 'php://fd/0' === $meta['uri'];
 
-        return !$stdin
-            && (false !== getenv('ANSICON')
-            || 'ON' === getenv('ConEmuANSI')
-            || 'xterm' === getenv('TERM')
-            || 'Hyper' === getenv('TERM_PROGRAM'));
+        return !$stdin && (false !== getenv('ANSICON') || 'ON' === getenv('ConEmuANSI') || 'xterm' === getenv('TERM') || 'Hyper' === getenv('TERM_PROGRAM'));
     }
 
-    public static function stream_isatty($stream)
-    {
+    public static function stream_isatty($stream) {
         if (!\is_resource($stream)) {
-            trigger_error('stream_isatty() expects parameter 1 to be resource, '.\gettype($stream).' given', \E_USER_WARNING);
+            trigger_error('stream_isatty() expects parameter 1 to be resource, ' . \gettype($stream) . ' given', \E_USER_WARNING);
 
             return false;
         }
@@ -148,8 +143,7 @@ final class Php72
         return \function_exists('posix_isatty') && @posix_isatty($stream);
     }
 
-    private static function initHashMask()
-    {
+    private static function initHashMask() {
         $obj = (object) [];
         self::$hashMask = -1;
 
@@ -170,16 +164,15 @@ final class Php72
         self::$hashMask ^= hexdec(substr(spl_object_hash($obj), 16 - (\PHP_INT_SIZE * 2 - 1), (\PHP_INT_SIZE * 2 - 1)));
     }
 
-    public static function mb_chr($code, $encoding = null)
-    {
+    public static function mb_chr($code, $encoding = null) {
         if (0x80 > $code %= 0x200000) {
             $s = \chr($code);
         } elseif (0x800 > $code) {
-            $s = \chr(0xC0 | $code >> 6).\chr(0x80 | $code & 0x3F);
+            $s = \chr(0xC0 | $code >> 6) . \chr(0x80 | $code & 0x3F);
         } elseif (0x10000 > $code) {
-            $s = \chr(0xE0 | $code >> 12).\chr(0x80 | $code >> 6 & 0x3F).\chr(0x80 | $code & 0x3F);
+            $s = \chr(0xE0 | $code >> 12) . \chr(0x80 | $code >> 6 & 0x3F) . \chr(0x80 | $code & 0x3F);
         } else {
-            $s = \chr(0xF0 | $code >> 18).\chr(0x80 | $code >> 12 & 0x3F).\chr(0x80 | $code >> 6 & 0x3F).\chr(0x80 | $code & 0x3F);
+            $s = \chr(0xF0 | $code >> 18) . \chr(0x80 | $code >> 12 & 0x3F) . \chr(0x80 | $code >> 6 & 0x3F) . \chr(0x80 | $code & 0x3F);
         }
 
         if ('UTF-8' !== $encoding = $encoding ?? mb_internal_encoding()) {
@@ -189,8 +182,7 @@ final class Php72
         return $s;
     }
 
-    public static function mb_ord($s, $encoding = null)
-    {
+    public static function mb_ord($s, $encoding = null) {
         if (null === $encoding) {
             $s = mb_convert_encoding($s, 'UTF-8');
         } elseif ('UTF-8' !== $encoding) {
@@ -214,4 +206,5 @@ final class Php72
 
         return $code;
     }
+
 }

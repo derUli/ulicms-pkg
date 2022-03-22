@@ -19,8 +19,8 @@ use function strlen;
 /**
  * Provides download to a given field defined in parameters.
  */
-class GetFieldController extends AbstractController
-{
+class GetFieldController extends AbstractController {
+
     /** @var DatabaseInterface */
     private $dbi;
 
@@ -30,14 +30,12 @@ class GetFieldController extends AbstractController
      * @param string            $table    Table name.
      * @param DatabaseInterface $dbi
      */
-    public function __construct($response, Template $template, $db, $table, $dbi)
-    {
+    public function __construct($response, Template $template, $db, $table, $dbi) {
         parent::__construct($response, $template, $db, $table);
         $this->dbi = $dbi;
     }
 
-    public function index(): void
-    {
+    public function index(): void {
         global $db, $table;
 
         $this->response->disable();
@@ -49,22 +47,20 @@ class GetFieldController extends AbstractController
         ]);
 
         /* Select database */
-        if (! $this->dbi->selectDb($db)) {
+        if (!$this->dbi->selectDb($db)) {
             Generator::mysqlDie(
-                sprintf(__('\'%s\' database does not exist.'), htmlspecialchars($db)),
-                '',
-                false
+                    sprintf(__('\'%s\' database does not exist.'), htmlspecialchars($db)),
+                    '',
+                    false
             );
         }
 
         /* Check if table exists */
-        if (! $this->dbi->getColumns($db, $table)) {
+        if (!$this->dbi->getColumns($db, $table)) {
             Generator::mysqlDie(__('Invalid table name'));
         }
 
-        if (! isset($_GET['where_clause'])
-            || ! isset($_GET['where_clause_sign'])
-            || ! Core::checkSqlQuerySignature($_GET['where_clause'], $_GET['where_clause_sign'])
+        if (!isset($_GET['where_clause']) || !isset($_GET['where_clause_sign']) || !Core::checkSqlQuerySignature($_GET['where_clause'], $_GET['where_clause_sign'])
         ) {
             /* l10n: In case a SQL query did not pass a security check  */
             Core::fatalError(__('There is an issue with your request.'));
@@ -74,15 +70,15 @@ class GetFieldController extends AbstractController
 
         /* Grab data */
         $sql = 'SELECT ' . Util::backquote($_GET['transform_key'])
-            . ' FROM ' . Util::backquote($table)
-            . ' WHERE ' . $_GET['where_clause'] . ';';
+                . ' FROM ' . Util::backquote($table)
+                . ' WHERE ' . $_GET['where_clause'] . ';';
         $result = $this->dbi->fetchValue($sql);
 
         /* Check return code */
         if ($result === false) {
             Generator::mysqlDie(
-                __('MySQL returned an empty result set (i.e. zero rows).'),
-                $sql
+                    __('MySQL returned an empty result set (i.e. zero rows).'),
+                    $sql
             );
         }
 
@@ -90,10 +86,11 @@ class GetFieldController extends AbstractController
         ini_set('url_rewriter.tags', '');
 
         Core::downloadHeader(
-            $table . '-' . $_GET['transform_key'] . '.bin',
-            Mime::detect($result),
-            strlen($result)
+                $table . '-' . $_GET['transform_key'] . '.bin',
+                Mime::detect($result),
+                strlen($result)
         );
         echo $result;
     }
+
 }

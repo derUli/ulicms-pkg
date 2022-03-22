@@ -29,17 +29,15 @@ use Twig\Node\SetNode;
 /**
  * @author Fabien Potencier <fabien@symfony.com>
  */
-final class SandboxNodeVisitor extends AbstractNodeVisitor
-{
+final class SandboxNodeVisitor extends AbstractNodeVisitor {
+
     private $inAModule = false;
     private $tags;
     private $filters;
     private $functions;
-
     private $needsToStringWrap = false;
 
-    protected function doEnterNode(Node $node, Environment $env)
-    {
+    protected function doEnterNode(Node $node, Environment $env) {
         if ($node instanceof ModuleNode) {
             $this->inAModule = true;
             $this->tags = [];
@@ -96,8 +94,7 @@ final class SandboxNodeVisitor extends AbstractNodeVisitor
         return $node;
     }
 
-    protected function doLeaveNode(Node $node, Environment $env)
-    {
+    protected function doLeaveNode(Node $node, Environment $env) {
         if ($node instanceof ModuleNode) {
             $this->inAModule = false;
 
@@ -112,26 +109,24 @@ final class SandboxNodeVisitor extends AbstractNodeVisitor
         return $node;
     }
 
-    private function wrapNode(Node $node, string $name)
-    {
+    private function wrapNode(Node $node, string $name) {
         $expr = $node->getNode($name);
         if ($expr instanceof NameExpression || $expr instanceof GetAttrExpression) {
             $node->setNode($name, new CheckToStringNode($expr));
         }
     }
 
-    private function wrapArrayNode(Node $node, string $name)
-    {
+    private function wrapArrayNode(Node $node, string $name) {
         $args = $node->getNode($name);
         foreach ($args as $name => $_) {
             $this->wrapNode($args, $name);
         }
     }
 
-    public function getPriority()
-    {
+    public function getPriority() {
         return 0;
     }
+
 }
 
 class_alias('Twig\NodeVisitor\SandboxNodeVisitor', 'Twig_NodeVisitor_Sandbox');

@@ -37,8 +37,8 @@ use Symfony\Component\Yaml\Yaml;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class YamlFileLoader extends FileLoader
-{
+class YamlFileLoader extends FileLoader {
+
     private const SERVICE_KEYWORDS = [
         'alias' => 'alias',
         'parent' => 'parent',
@@ -64,7 +64,6 @@ class YamlFileLoader extends FileLoader
         'autoconfigure' => 'autoconfigure',
         'bind' => 'bind',
     ];
-
     private const PROTOTYPE_KEYWORDS = [
         'resource' => 'resource',
         'namespace' => 'namespace',
@@ -85,7 +84,6 @@ class YamlFileLoader extends FileLoader
         'autoconfigure' => 'autoconfigure',
         'bind' => 'bind',
     ];
-
     private const INSTANCEOF_KEYWORDS = [
         'shared' => 'shared',
         'lazy' => 'lazy',
@@ -97,7 +95,6 @@ class YamlFileLoader extends FileLoader
         'autowire' => 'autowire',
         'bind' => 'bind',
     ];
-
     private const DEFAULTS_KEYWORDS = [
         'public' => 'public',
         'tags' => 'tags',
@@ -107,17 +104,14 @@ class YamlFileLoader extends FileLoader
     ];
 
     private $yamlParser;
-
     private $anonymousServicesCount;
     private $anonymousServicesSuffix;
-
     protected $autoRegisterAliasesForSinglyImplementedInterfaces = false;
 
     /**
      * {@inheritdoc}
      */
-    public function load($resource, $type = null)
-    {
+    public function load($resource, $type = null) {
         $path = $this->locator->locate($resource);
 
         $content = $this->loadFile($path);
@@ -148,7 +142,7 @@ class YamlFileLoader extends FileLoader
 
         // services
         $this->anonymousServicesCount = 0;
-        $this->anonymousServicesSuffix = '~'.ContainerBuilder::hash($path);
+        $this->anonymousServicesSuffix = '~' . ContainerBuilder::hash($path);
         $this->setCurrentDir(\dirname($path));
         try {
             $this->parseDefinitions($content, $path);
@@ -161,8 +155,7 @@ class YamlFileLoader extends FileLoader
     /**
      * {@inheritdoc}
      */
-    public function supports($resource, $type = null)
-    {
+    public function supports($resource, $type = null) {
         if (!\is_string($resource)) {
             return false;
         }
@@ -174,8 +167,7 @@ class YamlFileLoader extends FileLoader
         return \in_array($type, ['yaml', 'yml'], true);
     }
 
-    private function parseImports(array $content, string $file)
-    {
+    private function parseImports(array $content, string $file) {
         if (!isset($content['imports'])) {
             return;
         }
@@ -198,8 +190,7 @@ class YamlFileLoader extends FileLoader
         }
     }
 
-    private function parseDefinitions(array $content, string $file)
-    {
+    private function parseDefinitions(array $content, string $file) {
         if (!isset($content['services'])) {
             return;
         }
@@ -238,8 +229,7 @@ class YamlFileLoader extends FileLoader
     /**
      * @throws InvalidArgumentException
      */
-    private function parseDefaults(array &$content, string $file): array
-    {
+    private function parseDefaults(array &$content, string $file): array {
         if (!\array_key_exists('_defaults', $content['services'])) {
             return [];
         }
@@ -297,8 +287,7 @@ class YamlFileLoader extends FileLoader
         return $defaults;
     }
 
-    private function isUsingShortSyntax(array $service): bool
-    {
+    private function isUsingShortSyntax(array $service): bool {
         foreach ($service as $key => $value) {
             if (\is_string($key) && ('' === $key || ('$' !== $key[0] && !str_contains($key, '\\')))) {
                 return false;
@@ -315,8 +304,7 @@ class YamlFileLoader extends FileLoader
      *
      * @throws InvalidArgumentException When tags are invalid
      */
-    private function parseDefinition(string $id, $service, string $file, array $defaults)
-    {
+    private function parseDefinition(string $id, $service, string $file, array $defaults) {
         if (preg_match('/^_[a-zA-Z0-9_]*$/', $id)) {
             throw new InvalidArgumentException(sprintf('Service names that start with an underscore are reserved. Rename the "%s" service or define it in XML instead.', $id));
         }
@@ -465,7 +453,7 @@ class YamlFileLoader extends FileLoader
 
             foreach ($service['calls'] as $k => $call) {
                 if (!\is_array($call) && (!\is_string($k) || !$call instanceof TaggedValue)) {
-                    throw new InvalidArgumentException(sprintf('Invalid method call for service "%s": expected map or array, "%s" given in "%s".', $id, $call instanceof TaggedValue ? '!'.$call->getTag() : \gettype($call), $file));
+                    throw new InvalidArgumentException(sprintf('Invalid method call for service "%s": expected map or array, "%s" given in "%s".', $id, $call instanceof TaggedValue ? '!' . $call->getTag() : \gettype($call), $file));
                 }
 
                 if (\is_string($k)) {
@@ -624,8 +612,7 @@ class YamlFileLoader extends FileLoader
      *
      * @return string|array|Reference A parsed callable
      */
-    private function parseCallable($callable, string $parameter, string $id, string $file)
-    {
+    private function parseCallable($callable, string $parameter, string $id, string $file) {
         if (\is_string($callable)) {
             if ('' !== $callable && '@' === $callable[0]) {
                 if (!str_contains($callable, ':')) {
@@ -640,7 +627,7 @@ class YamlFileLoader extends FileLoader
 
                 @trigger_error(sprintf('Using short %s syntax for service "%s" is deprecated since Symfony 4.4, use "[\'@%s\', \'%s\']" instead.', $parameter, $id, ...$parts), \E_USER_DEPRECATED);
 
-                return [$this->resolveServices('@'.$parts[0], $file), $parts[1]];
+                return [$this->resolveServices('@' . $parts[0], $file), $parts[1]];
             }
 
             return $callable;
@@ -670,8 +657,7 @@ class YamlFileLoader extends FileLoader
      *
      * @throws InvalidArgumentException when the given file is not a local file or when it does not exist
      */
-    protected function loadFile($file)
-    {
+    protected function loadFile($file) {
         if (!class_exists(\Symfony\Component\Yaml\Parser::class)) {
             throw new RuntimeException('Unable to load YAML config files as the Symfony Yaml Component is not installed.');
         }
@@ -691,7 +677,7 @@ class YamlFileLoader extends FileLoader
         try {
             $configuration = $this->yamlParser->parseFile($file, Yaml::PARSE_CONSTANT | Yaml::PARSE_CUSTOM_TAGS);
         } catch (ParseException $e) {
-            throw new InvalidArgumentException(sprintf('The file "%s" does not contain valid YAML: ', $file).$e->getMessage(), 0, $e);
+            throw new InvalidArgumentException(sprintf('The file "%s" does not contain valid YAML: ', $file) . $e->getMessage(), 0, $e);
         }
 
         return $this->validate($configuration, $file);
@@ -702,8 +688,7 @@ class YamlFileLoader extends FileLoader
      *
      * @throws InvalidArgumentException When service file is not valid
      */
-    private function validate($content, string $file): ?array
-    {
+    private function validate($content, string $file): ?array {
         if (null === $content) {
             return $content;
         }
@@ -718,7 +703,9 @@ class YamlFileLoader extends FileLoader
             }
 
             if (!$this->container->hasExtension($namespace)) {
-                $extensionNamespaces = array_filter(array_map(function (ExtensionInterface $ext) { return $ext->getAlias(); }, $this->container->getExtensions()));
+                $extensionNamespaces = array_filter(array_map(function (ExtensionInterface $ext) {
+                            return $ext->getAlias();
+                        }, $this->container->getExtensions()));
                 throw new InvalidArgumentException(sprintf('There is no extension able to load the configuration for "%s" (in "%s"). Looked for namespace "%s", found "%s".', $namespace, $file, $namespace, $extensionNamespaces ? sprintf('"%s"', implode('", "', $extensionNamespaces)) : 'none'));
             }
         }
@@ -731,8 +718,7 @@ class YamlFileLoader extends FileLoader
      *
      * @return array|string|Reference|ArgumentInterface
      */
-    private function resolveServices($value, string $file, bool $isParameter = false)
-    {
+    private function resolveServices($value, string $file, bool $isParameter = false) {
         if ($value instanceof TaggedValue) {
             $argument = $value->getValue();
             if ('iterator' === $value->getTag()) {
@@ -799,7 +785,7 @@ class YamlFileLoader extends FileLoader
                 $instanceof = $this->instanceof;
                 $this->instanceof = [];
 
-                $id = sprintf('.%d_%s', ++$this->anonymousServicesCount, preg_replace('/^.*\\\\/', '', $argument['class'] ?? '').$this->anonymousServicesSuffix);
+                $id = sprintf('.%d_%s', ++$this->anonymousServicesCount, preg_replace('/^.*\\\\/', '', $argument['class'] ?? '') . $this->anonymousServicesSuffix);
                 $this->parseDefinition($id, $argument, $file, []);
 
                 if (!$this->container->hasDefinition($id)) {
@@ -850,8 +836,7 @@ class YamlFileLoader extends FileLoader
         return $value;
     }
 
-    private function loadFromExtensions(array $content)
-    {
+    private function loadFromExtensions(array $content) {
         foreach ($content as $namespace => $values) {
             if (\in_array($namespace, ['imports', 'parameters', 'services'])) {
                 continue;
@@ -865,8 +850,7 @@ class YamlFileLoader extends FileLoader
         }
     }
 
-    private function checkDefinition(string $id, array $definition, string $file)
-    {
+    private function checkDefinition(string $id, array $definition, string $file) {
         if ($this->isLoadingInstanceof) {
             $keywords = self::INSTANCEOF_KEYWORDS;
         } elseif (isset($definition['resource']) || isset($definition['namespace'])) {
@@ -881,4 +865,5 @@ class YamlFileLoader extends FileLoader
             }
         }
     }
+
 }

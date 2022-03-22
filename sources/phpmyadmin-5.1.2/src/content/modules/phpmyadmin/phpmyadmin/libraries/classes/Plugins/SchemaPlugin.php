@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Abstract class for the schema export plugins
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Plugins;
@@ -17,8 +17,8 @@ use PhpMyAdmin\Properties\Plugins\SchemaPluginProperties;
  * methods, but those are not declared here, because they are not implemented
  * by all export plugins.
  */
-abstract class SchemaPlugin
-{
+abstract class SchemaPlugin {
+
     /**
      * PhpMyAdmin\Properties\Plugins\SchemaPluginProperties object containing
      * the specific schema export plugin type properties
@@ -32,8 +32,7 @@ abstract class SchemaPlugin
      *
      * @return SchemaPluginProperties
      */
-    public function getProperties()
-    {
+    public function getProperties() {
         return $this->properties;
     }
 
@@ -61,8 +60,7 @@ abstract class SchemaPlugin
      *
      * @return void
      */
-    protected function addCommonOptions(OptionsPropertyMainGroup $propertyGroup)
-    {
+    protected function addCommonOptions(OptionsPropertyMainGroup $propertyGroup) {
         $leaf = new BoolPropertyItem('show_color', __('Show color'));
         $propertyGroup->addProperty($leaf);
         $leaf = new BoolPropertyItem('show_keys', __('Only show keys'));
@@ -74,8 +72,7 @@ abstract class SchemaPlugin
      *
      * @return array array of paper sizes
      */
-    protected function getPaperSizeArray()
-    {
+    protected function getPaperSizeArray() {
         $ret = [];
         foreach ($GLOBALS['cfg']['PDFPageSizes'] as $val) {
             $ret[$val] = $val;
@@ -83,4 +80,5 @@ abstract class SchemaPlugin
 
         return $ret;
     }
+
 }

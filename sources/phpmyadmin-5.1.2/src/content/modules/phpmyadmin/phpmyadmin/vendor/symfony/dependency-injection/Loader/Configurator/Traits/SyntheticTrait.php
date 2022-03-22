@@ -11,18 +11,18 @@
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator\Traits;
 
-trait SyntheticTrait
-{
+trait SyntheticTrait {
+
     /**
      * Sets whether this definition is synthetic, that is not constructed by the
      * container, but dynamically injected.
      *
      * @return $this
      */
-    final public function synthetic(bool $synthetic = true): self
-    {
+    final public function synthetic(bool $synthetic = true): self {
         $this->definition->setSynthetic($synthetic);
 
         return $this;
     }
+
 }

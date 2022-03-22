@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Abstract class for the transformations plugins
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Plugins;
@@ -13,8 +13,8 @@ use stdClass;
  * Provides a common interface that will have to
  * be implemented by all of the transformations plugins.
  */
-abstract class TransformationsPlugin implements TransformationsInterface
-{
+abstract class TransformationsPlugin implements TransformationsInterface {
+
     /**
      * Does the actual work of each specific transformations plugin.
      *
@@ -22,8 +22,8 @@ abstract class TransformationsPlugin implements TransformationsInterface
      *
      * @return void
      */
-    public function applyTransformationNoWrap(array $options = [])
-    {
+    public function applyTransformationNoWrap(array $options = []) {
+        
     }
 
     /**
@@ -36,9 +36,9 @@ abstract class TransformationsPlugin implements TransformationsInterface
      * @return string the transformed text
      */
     abstract public function applyTransformation(
-        $buffer,
-        array $options = [],
-        ?stdClass $meta = null
+            $buffer,
+            array $options = [],
+            ?stdClass $meta = null
     );
 
     /**
@@ -49,8 +49,7 @@ abstract class TransformationsPlugin implements TransformationsInterface
      *
      * @return array List of options possibly filled in by defaults.
      */
-    public function getOptions(array $options, array $defaults)
-    {
+    public function getOptions(array $options, array $defaults) {
         $result = [];
         foreach ($defaults as $key => $value) {
             if (isset($options[$key]) && $options[$key] !== '') {
@@ -62,4 +61,5 @@ abstract class TransformationsPlugin implements TransformationsInterface
 
         return $result;
     }
+
 }

@@ -13,8 +13,8 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator\Traits;
 
 use Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
 
-trait CallTrait
-{
+trait CallTrait {
+
     /**
      * Adds a method to call after service initialization.
      *
@@ -26,10 +26,10 @@ trait CallTrait
      *
      * @throws InvalidArgumentException on empty $method param
      */
-    final public function call(string $method, array $arguments = [], bool $returnsClone = false): self
-    {
+    final public function call(string $method, array $arguments = [], bool $returnsClone = false): self {
         $this->definition->addMethodCall($method, static::processValue($arguments, true), $returnsClone);
 
         return $this;
     }
+
 }

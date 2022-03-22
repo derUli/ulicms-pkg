@@ -13,7 +13,7 @@ var gisEditorLoaded = false;
 /**
  * Closes the GIS data editor and perform necessary clean up work.
  */
-function closeGISEditor () {
+function closeGISEditor() {
     $('#popup_background').fadeOut('fast');
     $('#gis_editor').fadeOut('fast', function () {
         $(this).empty();
@@ -23,17 +23,17 @@ function closeGISEditor () {
 /**
  * Prepares the HTML received via AJAX.
  */
-function prepareJSVersion () {
+function prepareJSVersion() {
     // Change the text on the submit button
     $('#gis_editor').find('input[name=\'gis_data[save]\']')
-        .val(Messages.strCopy)
-        .insertAfter($('#gis_data_textarea'))
-        .before('<br><br>');
+            .val(Messages.strCopy)
+            .insertAfter($('#gis_data_textarea'))
+            .before('<br><br>');
 
     // Add close and cancel links
     $('#gis_data_editor').prepend('<a class="close_gis_editor" href="#">' + Messages.strClose + '</a>');
     $('<a class="cancel_gis_editor" href="#"> ' + Messages.strCancel + '</a>')
-        .insertAfter($('input[name=\'gis_data[save]\']'));
+            .insertAfter($('input[name=\'gis_data[save]\']'));
 
     // Remove the unnecessary text
     $('div#gis_data_output p').remove();
@@ -44,10 +44,10 @@ function prepareJSVersion () {
         $button.addClass('addJs').removeClass('add');
         var classes = $button.attr('class');
         $button.replaceWith(
-            '<a class="' + classes +
-            '" name="' + $button.attr('name') +
-            '" href="#">+ ' + $button.val() + '</a>'
-        );
+                '<a class="' + classes +
+                '" name="' + $button.attr('name') +
+                '" href="#">+ ' + $button.val() + '</a>'
+                );
     });
 }
 
@@ -58,19 +58,19 @@ function prepareJSVersion () {
  * @param prefix      prefix of the name
  * @returns the HTML for a data point
  */
-function addDataPoint (pointNumber, prefix) {
+function addDataPoint(pointNumber, prefix) {
     return '<br>' +
-        Functions.sprintf(Messages.strPointN, (pointNumber + 1)) + ': ' +
-        '<label for="x">' + Messages.strX + '</label>' +
-        '<input type="text" name="' + prefix + '[' + pointNumber + '][x]" value="">' +
-        '<label for="y">' + Messages.strY + '</label>' +
-        '<input type="text" name="' + prefix + '[' + pointNumber + '][y]" value="">';
+            Functions.sprintf(Messages.strPointN, (pointNumber + 1)) + ': ' +
+            '<label for="x">' + Messages.strX + '</label>' +
+            '<input type="text" name="' + prefix + '[' + pointNumber + '][x]" value="">' +
+            '<label for="y">' + Messages.strY + '</label>' +
+            '<input type="text" name="' + prefix + '[' + pointNumber + '][y]" value="">';
 }
 
 /**
  * Initialize the visualization in the GIS data editor.
  */
-function initGISEditorVisualization () {
+function initGISEditorVisualization() {
     storeGisSvgRef();
     // Loads either SVG or OSM visualization based on the choice
     selectVisualization();
@@ -91,7 +91,7 @@ function initGISEditorVisualization () {
  * @param token      token
  */
 // eslint-disable-next-line no-unused-vars
-function loadJSAndGISEditor (value, field, type, inputName) {
+function loadJSAndGISEditor(value, field, type, inputName) {
     var head = document.getElementsByTagName('head')[0];
     var script;
 
@@ -139,14 +139,14 @@ function loadJSAndGISEditor (value, field, type, inputName) {
  * @param type       geometry type
  * @param inputName name of the input field
  */
-function loadGISEditor (value, field, type, inputName) {
+function loadGISEditor(value, field, type, inputName) {
     var $gisEditor = $('#gis_editor');
     $.post('index.php?route=/gis-data-editor', {
-        'field' : field,
-        'value' : value,
-        'type' : type,
-        'input_name' : inputName,
-        'get_gis_editor' : true,
+        'field': field,
+        'value': value,
+        'type': type,
+        'input_name': inputName,
+        'get_gis_editor': true,
         'ajax_request': true,
         'server': CommonParams.get('server')
     }, function (data) {
@@ -164,7 +164,7 @@ function loadGISEditor (value, field, type, inputName) {
  * Opens up the dialog for the GIS data editor.
  */
 // eslint-disable-next-line no-unused-vars
-function openGISEditor () {
+function openGISEditor() {
     // Center the popup
     var windowWidth = document.documentElement.clientWidth;
     var windowHeight = document.documentElement.clientHeight;
@@ -176,15 +176,15 @@ function openGISEditor () {
     var $gisEditor = $('#gis_editor');
     var $background = $('#popup_background');
 
-    $gisEditor.css({ 'top': popupOffsetTop, 'left': popupOffsetLeft, 'width': popupWidth, 'height': popupHeight });
-    $background.css({ 'opacity' : '0.7' });
+    $gisEditor.css({'top': popupOffsetTop, 'left': popupOffsetLeft, 'width': popupWidth, 'height': popupHeight});
+    $background.css({'opacity': '0.7'});
 
     $gisEditor.append(
-        '<div id="gis_data_editor">' +
-        '<img class="ajaxIcon" id="loadingMonitorIcon" src="' +
-        themeImagePath + 'ajax_clock_small.gif" alt="">' +
-        '</div>'
-    );
+            '<div id="gis_data_editor">' +
+            '<img class="ajaxIcon" id="loadingMonitorIcon" src="' +
+            themeImagePath + 'ajax_clock_small.gif" alt="">' +
+            '</div>'
+            );
 
     // Make it appear
     $background.fadeIn('fast');
@@ -195,7 +195,7 @@ function openGISEditor () {
  * Prepare and insert the GIS data in Well Known Text format
  * to the input field.
  */
-function insertDataAndClose () {
+function insertDataAndClose() {
     var $form = $('form#gis_data_editor_form');
     var inputName = $form.find('input[name=\'input_name\']').val();
 
@@ -336,7 +336,7 @@ AJAX.registerOnload('gis_data_editor.js', function () {
             html += addDataPoint(i, (prefix + '[' + noOfLines + ']'));
         }
         html += '<a class="addPoint addJs" name="' + prefix + '[' + noOfLines + '][add_point]" href="#">+ ' +
-            Messages.strAddPoint + '</a><br>';
+                Messages.strAddPoint + '</a><br>';
 
         $a.before(html);
         $noOfLinesInput.val(noOfLines + 1);
@@ -357,15 +357,15 @@ AJAX.registerOnload('gis_data_editor.js', function () {
         // Add the new polygon
         var html = Messages.strPolygon + ' ' + (noOfPolygons + 1) + ':<br>';
         html += '<input type="hidden" name="' + prefix + '[' + noOfPolygons + '][no_of_lines]" value="1">' +
-            '<br>' + Messages.strOuterRing + ':' +
-            '<input type="hidden" name="' + prefix + '[' + noOfPolygons + '][0][no_of_points]" value="4">';
+                '<br>' + Messages.strOuterRing + ':' +
+                '<input type="hidden" name="' + prefix + '[' + noOfPolygons + '][0][no_of_points]" value="4">';
         for (var i = 0; i < 4; i++) {
             html += addDataPoint(i, (prefix + '[' + noOfPolygons + '][0]'));
         }
         html += '<a class="addPoint addJs" name="' + prefix + '[' + noOfPolygons + '][0][add_point]" href="#">+ ' +
-            Messages.strAddPoint + '</a><br>' +
-            '<a class="addLine addJs" name="' + prefix + '[' + noOfPolygons + '][add_line]" href="#">+ ' +
-            Messages.strAddInnerRing + '</a><br><br>';
+                Messages.strAddPoint + '</a><br>' +
+                '<a class="addLine addJs" name="' + prefix + '[' + noOfPolygons + '][add_line]" href="#">+ ' +
+                Messages.strAddInnerRing + '</a><br><br>';
 
         $a.before(html);
         $noOfPolygonsInput.val(noOfPolygons + 1);
@@ -385,11 +385,11 @@ AJAX.registerOnload('gis_data_editor.js', function () {
         var $geomType = $('select[name=\'gis_data[' + (noOfGeoms - 1) + '][gis_type]\']').clone();
         $geomType.attr('name', 'gis_data[' + noOfGeoms + '][gis_type]').val('POINT');
         var html2 = '<br>' + Messages.strPoint + ' :' +
-            '<label for="x"> ' + Messages.strX + ' </label>' +
-            '<input type="text" name="gis_data[' + noOfGeoms + '][POINT][x]" value="">' +
-            '<label for="y"> ' + Messages.strY + ' </label>' +
-            '<input type="text" name="gis_data[' + noOfGeoms + '][POINT][y]" value="">' +
-            '<br><br>';
+                '<label for="x"> ' + Messages.strX + ' </label>' +
+                '<input type="text" name="gis_data[' + noOfGeoms + '][POINT][x]" value="">' +
+                '<label for="y"> ' + Messages.strY + ' </label>' +
+                '<input type="text" name="gis_data[' + noOfGeoms + '][POINT][y]" value="">' +
+                '<br><br>';
 
         $a.before(html1);
         $geomType.insertBefore($a);

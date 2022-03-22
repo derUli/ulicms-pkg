@@ -1,4 +1,5 @@
 <?php
+
 flush();
 
 $beginn = microtime(true);
@@ -11,21 +12,22 @@ if (is_admin_dir()) {
 
 $default_bot_user_id = getconfig("rss2blog_bot_user_id");
 
-if (! $bot_user_id) {
+if (!$bot_user_id) {
     $bot_user_id = 1;
 }
 
 $rss2blog_src_link_format = getconfig("rss2blog_src_link_format");
 
-if (! $rss2blog_src_link_format) {
+if (!$rss2blog_src_link_format) {
     $rss2blog_src_link_format = "Quelle: %title%";
 }
 
-if (! function_exists("rsstotime")) {
-    function rsstotime($rss_time)
-    {
+if (!function_exists("rsstotime")) {
+
+    function rsstotime($rss_time) {
         return strtotime($rss_time);
     }
+
 }
 
 /**
@@ -39,10 +41,9 @@ if (! function_exists("rsstotime")) {
  *            Separator that will be used instead of spaces
  * @return string Cleaned up string, ready for SEO
  */
+if (!function_exists("cleanString")) {
 
-if (! function_exists("cleanString")) {
-    function cleanString($string, $separator = '-')
-    {
+    function cleanString($string, $separator = '-') {
         $accents = array(
             'Š' => 'S',
             'š' => 's',
@@ -118,18 +119,19 @@ if (! function_exists("cleanString")) {
         $string = preg_replace('{ +}', ' ', $string);
         $string = trim($string);
         $string = str_replace(' ', $separator, $string);
-        
+
         return $string;
     }
+
 }
 
 @include_once "lib/file_get_contents_wrapper.php";
 $srclist = getModulePath("rss2blog") . "etc/sources.ini";
-if (! is_file($srclist)) {
+if (!is_file($srclist)) {
     die();
 }
 
-if (! class_exists("lastRSS")) {
+if (!class_exists("lastRSS")) {
     @include_once getModulePath("lastRSS", true) . "lib/lastRSS.php";
 }
 
@@ -147,13 +149,13 @@ while ($row = db_fetch_object($query)) {
 }
 
 $cache_time = getconfig("cache_period");
-if (! $cache_time) {
+if (!$cache_time) {
     $cache_time = 60 * 60 * 24;
 } // 24 Stunden
 
-for ($n = 0; $n < count($srclist); $n ++) {
+for ($n = 0; $n < count($srclist); $n++) {
     $currentLine = trim($srclist[$n]);
-    if (! startsWith($currentLine, "#") and ! empty($currentLine)) {
+    if (!startsWith($currentLine, "#") and!empty($currentLine)) {
         $splittedLine = explode(" ", $currentLine);
         if (count($splittedLine) > 1) {
             $currentLine = $splittedLine[0];
@@ -162,48 +164,48 @@ for ($n = 0; $n < count($srclist); $n ++) {
             $currentLine = $splittedLine[0];
             $bot_user_id = $default_bot_user_id;
         }
-        
+
         $rss = new lastRSS();
         $rss->cache_dir = 'content/cache';
         $rss->CDATA = "content";
         $rss->cp = "UTF-8";
         $rss->cache_time = $cache_time;
-        
+
         $rssdata = $rss->get($currentLine);
         if ($rssdata) {
             $page_title = $rssdata["title"];
             $items = $rssdata["items"];
-            for ($a = 0; $a < count($items); $a ++) {
+            for ($a = 0; $a < count($items); $a++) {
                 $article = $items[$a];
                 $title = db_escape($article["title"]);
                 $link = $article["link"];
                 $article["description"] = html_entity_decode($article["description"], ENT_QUOTES, "UTF-8");
                 $src_text = $rss2blog_src_link_format;
                 $src_text = str_ireplace("%title%", $page_title, $src_text);
-                
+
                 $article["description"] .= "<p class=\"src_link_p\"><a href=\"" . real_htmlspecialchars($link) . "\" class=\"src_link\">$src_text</a></p>";
                 $description = db_escape($article["description"]);
-                
+
                 $link = db_escape($link);
                 $pubDate = intval(rsstotime($article["pubDate"]));
-                
+
                 $seo_shortname = cleanString($title) . "-" . uniqid();
-                
-                if (! in_array($link, $allLinks)) {
+
+                if (!in_array($link, $allLinks)) {
                     array_push($allLinks, $link);
-                    
+
                     $insert_query = "INSERT INTO `" . tbname("blog") . "` (datum, " . "title, seo_shortname, comments_enabled, language, 
                 entry_enabled, author, 
                 content_full, content_preview, src_link) VALUES (" . $pubDate . ", '$title', 
                 '$seo_shortname', 1, 'de', 1,
                 $bot_user_id, '$description', '$description', '$link')";
-                    
+
                     db_query($insert_query);
-                    
+
                     $imported += 1;
                     $laufdauer = microtime(true) - $beginn;
                     $max = intval(ini_get("max_execution_time")) - 4;
-                    
+
                     if ($max < 1) {
                         $max = 60;
                     }

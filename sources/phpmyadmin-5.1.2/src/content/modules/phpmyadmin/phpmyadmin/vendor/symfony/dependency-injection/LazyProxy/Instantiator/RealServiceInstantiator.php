@@ -21,13 +21,13 @@ use Symfony\Component\DependencyInjection\Definition;
  *
  * @author Marco Pivetta <ocramius@gmail.com>
  */
-class RealServiceInstantiator implements InstantiatorInterface
-{
+class RealServiceInstantiator implements InstantiatorInterface {
+
     /**
      * {@inheritdoc}
      */
-    public function instantiateProxy(ContainerInterface $container, Definition $definition, $id, $realInstantiator)
-    {
+    public function instantiateProxy(ContainerInterface $container, Definition $definition, $id, $realInstantiator) {
         return $realInstantiator();
     }
+
 }

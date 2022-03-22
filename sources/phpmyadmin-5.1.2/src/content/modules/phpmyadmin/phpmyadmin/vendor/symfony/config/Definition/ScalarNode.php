@@ -25,13 +25,12 @@ use Symfony\Component\Config\Definition\Exception\InvalidTypeException;
  *
  * @author Johannes M. Schmitt <schmittjoh@gmail.com>
  */
-class ScalarNode extends VariableNode
-{
+class ScalarNode extends VariableNode {
+
     /**
      * {@inheritdoc}
      */
-    protected function validateType($value)
-    {
+    protected function validateType($value) {
         if (!is_scalar($value) && null !== $value) {
             $ex = new InvalidTypeException(sprintf('Invalid type for path "%s". Expected scalar, but got %s.', $this->getPath(), \gettype($value)));
             if ($hint = $this->getInfo()) {
@@ -46,8 +45,7 @@ class ScalarNode extends VariableNode
     /**
      * {@inheritdoc}
      */
-    protected function isValueEmpty($value)
-    {
+    protected function isValueEmpty($value) {
         // assume environment variables are never empty (which in practice is likely to be true during runtime)
         // not doing so breaks many configs that are valid today
         if ($this->isHandlingPlaceholder()) {
@@ -60,8 +58,8 @@ class ScalarNode extends VariableNode
     /**
      * {@inheritdoc}
      */
-    protected function getValidPlaceholderTypes(): array
-    {
+    protected function getValidPlaceholderTypes(): array {
         return ['bool', 'int', 'float', 'string'];
     }
+
 }

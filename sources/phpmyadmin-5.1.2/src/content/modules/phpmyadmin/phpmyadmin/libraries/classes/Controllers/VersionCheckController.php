@@ -11,10 +11,9 @@ use function json_encode;
 /**
  * A caching proxy for retrieving version information from https://www.phpmyadmin.net/.
  */
-class VersionCheckController extends AbstractController
-{
-    public function index(): void
-    {
+class VersionCheckController extends AbstractController {
+
+    public function index(): void {
         $_GET['ajax_request'] = 'true';
 
         // Disabling standard response.
@@ -33,7 +32,7 @@ class VersionCheckController extends AbstractController
         }
 
         $latestCompatible = $versionInformation->getLatestCompatibleVersion(
-            $versionDetails->releases
+                $versionDetails->releases
         );
         $version = '';
         $date = '';
@@ -42,8 +41,9 @@ class VersionCheckController extends AbstractController
             $date = $latestCompatible['date'];
         }
         echo json_encode([
-            'version' => ! empty($version) ? $version : '',
-            'date' => ! empty($date) ? $date : '',
+            'version' => !empty($version) ? $version : '',
+            'date' => !empty($date) ? $date : '',
         ]);
     }
+
 }

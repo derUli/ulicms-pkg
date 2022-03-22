@@ -24,8 +24,8 @@ use function strlen;
 use function strpos;
 use function urlencode;
 
-class SqlController extends AbstractController
-{
+class SqlController extends AbstractController {
+
     /** @var Sql */
     private $sql;
 
@@ -40,11 +40,11 @@ class SqlController extends AbstractController
      * @param DatabaseInterface $dbi
      */
     public function __construct(
-        $response,
-        Template $template,
-        Sql $sql,
-        CheckUserPrivileges $checkUserPrivileges,
-        $dbi
+            $response,
+            Template $template,
+            Sql $sql,
+            CheckUserPrivileges $checkUserPrivileges,
+            $dbi
     ) {
         parent::__construct($response, $template);
         $this->sql = $sql;
@@ -52,8 +52,7 @@ class SqlController extends AbstractController
         $this->dbi = $dbi;
     }
 
-    public function index(): void
-    {
+    public function index(): void {
         global $cfg, $db, $display_query, $sql_query, $table, $PMA_Theme;
         global $ajax_reload, $goto, $err_url, $find_real_end, $unlim_num_rows, $import_text, $disp_query;
         global $extra_data, $message_to_show, $sql_data, $disp_message, $complete_query;
@@ -84,29 +83,28 @@ class SqlController extends AbstractController
         /**
          * Defines the url to return to in case of error in a sql statement
          */
-        $is_gotofile  = true;
+        $is_gotofile = true;
         if (empty($goto)) {
             if (empty($table)) {
                 $goto = Util::getScriptNameForOption(
-                    $cfg['DefaultTabDatabase'],
-                    'database'
+                                $cfg['DefaultTabDatabase'],
+                                'database'
                 );
             } else {
                 $goto = Util::getScriptNameForOption(
-                    $cfg['DefaultTabTable'],
-                    'table'
+                                $cfg['DefaultTabTable'],
+                                'table'
                 );
             }
         }
 
-        if (! isset($err_url)) {
-            $err_url = ! empty($back) ? $back : $goto;
+        if (!isset($err_url)) {
+            $err_url = !empty($back) ? $back : $goto;
             $err_url .= Url::getCommon(
-                ['db' => $GLOBALS['db']],
-                strpos($err_url, '?') === false ? '?' : '&'
+                            ['db' => $GLOBALS['db']],
+                            strpos($err_url, '?') === false ? '?' : '&'
             );
-            if ((mb_strpos(' ' . $err_url, 'db_') !== 1 || mb_strpos($err_url, '?route=/database/') === false)
-                && strlen($table) > 0
+            if ((mb_strpos(' ' . $err_url, 'db_') !== 1 || mb_strpos($err_url, '?route=/database/') === false) && strlen($table) > 0
             ) {
                 $err_url .= '&amp;table=' . urlencode($table);
             }
@@ -144,12 +142,12 @@ class SqlController extends AbstractController
          * Parse and analyze the query
          */
         [
-            $analyzed_sql_results,
-            $db,
-            $table_from_sql,
-        ] = ParseAnalyze::sqlQuery($sql_query, $db);
+                $analyzed_sql_results,
+                $db,
+                $table_from_sql,
+                ] = ParseAnalyze::sqlQuery($sql_query, $db);
 
-        if ($table != $table_from_sql && ! empty($table_from_sql)) {
+        if ($table != $table_from_sql && !empty($table_from_sql)) {
             $table = $table_from_sql;
         }
 
@@ -161,15 +159,15 @@ class SqlController extends AbstractController
          * into account this case.
          */
         if ($this->sql->hasNoRightsToDropDatabase(
-            $analyzed_sql_results,
-            $cfg['AllowUserDropDatabase'],
-            $this->dbi->isSuperUser()
-        )) {
+                        $analyzed_sql_results,
+                        $cfg['AllowUserDropDatabase'],
+                        $this->dbi->isSuperUser()
+                )) {
             Generator::mysqlDie(
-                __('"DROP DATABASE" statements are disabled.'),
-                '',
-                false,
-                $err_url
+                    __('"DROP DATABASE" statements are disabled.'),
+                    '',
+                    false,
+                    $err_url
             );
         }
 
@@ -195,28 +193,28 @@ class SqlController extends AbstractController
         if ($goto === Url::getFromRoute('/sql')) {
             $is_gotofile = false;
             $goto = Url::getFromRoute('/sql', [
-                'db' => $db,
-                'table' => $table,
-                'sql_query' => $sql_query,
+                        'db' => $db,
+                        'table' => $table,
+                        'sql_query' => $sql_query,
             ]);
         }
 
         $this->response->addHTML($this->sql->executeQueryAndSendQueryResponse(
-            $analyzed_sql_results,
-            $is_gotofile,
-            $db,
-            $table,
-            $find_real_end ?? null,
-            $import_text ?? null,
-            $extra_data ?? null,
-            $message_to_show ?? null,
-            $sql_data ?? null,
-            $goto,
-            $PMA_Theme->getImgPath(),
-            isset($disp_query) ? $display_query : null,
-            $disp_message ?? null,
-            $sql_query,
-            $complete_query ?? null
+                        $analyzed_sql_results,
+                        $is_gotofile,
+                        $db,
+                        $table,
+                        $find_real_end ?? null,
+                        $import_text ?? null,
+                        $extra_data ?? null,
+                        $message_to_show ?? null,
+                        $sql_data ?? null,
+                        $goto,
+                        $PMA_Theme->getImgPath(),
+                        isset($disp_query) ? $display_query : null,
+                        $disp_message ?? null,
+                        $sql_query,
+                        $complete_query ?? null
         ));
     }
 
@@ -225,26 +223,23 @@ class SqlController extends AbstractController
      *
      * During grid edit, if we have a relational field, show the dropdown for it.
      */
-    public function getRelationalValues(): void
-    {
+    public function getRelationalValues(): void {
         global $db, $table;
 
         $this->checkUserPrivileges->getPrivileges();
 
         $column = $_POST['column'];
-        if ($_SESSION['tmpval']['relational_display'] === 'D'
-            && isset($_POST['relation_key_or_display_column'])
-            && $_POST['relation_key_or_display_column']
+        if ($_SESSION['tmpval']['relational_display'] === 'D' && isset($_POST['relation_key_or_display_column']) && $_POST['relation_key_or_display_column']
         ) {
             $curr_value = $_POST['relation_key_or_display_column'];
         } else {
             $curr_value = $_POST['curr_value'];
         }
         $dropdown = $this->sql->getHtmlForRelationalColumnDropdown(
-            $db,
-            $table,
-            $column,
-            $curr_value
+                $db,
+                $table,
+                $column,
+                $curr_value
         );
         $this->response->addJSON('dropdown', $dropdown);
     }
@@ -252,8 +247,7 @@ class SqlController extends AbstractController
     /**
      * Get possible values for enum fields during grid edit.
      */
-    public function getEnumValues(): void
-    {
+    public function getEnumValues(): void {
         global $db, $table;
 
         $this->checkUserPrivileges->getPrivileges();
@@ -283,8 +277,7 @@ class SqlController extends AbstractController
     /**
      * Get possible values for SET fields during grid edit.
      */
-    public function getSetValues(): void
-    {
+    public function getSetValues(): void {
         global $db, $table;
 
         $this->checkUserPrivileges->getPrivileges();
@@ -304,12 +297,12 @@ class SqlController extends AbstractController
         }
 
         // If the $currentValue was truncated, we should fetch the correct full values from the table.
-        if ($fullValues && ! empty($whereClause)) {
+        if ($fullValues && !empty($whereClause)) {
             $currentValue = $this->sql->getFullValuesForSetColumn(
-                $db,
-                $table,
-                $column,
-                $whereClause
+                    $db,
+                    $table,
+                    $column,
+                    $whereClause
             );
         }
 
@@ -324,18 +317,16 @@ class SqlController extends AbstractController
         $this->response->addJSON('select', $select);
     }
 
-    public function getDefaultForeignKeyCheckValue(): void
-    {
+    public function getDefaultForeignKeyCheckValue(): void {
         $this->checkUserPrivileges->getPrivileges();
 
         $this->response->addJSON(
-            'default_fk_check_value',
-            Util::isForeignKeyCheck()
+                'default_fk_check_value',
+                Util::isForeignKeyCheck()
         );
     }
 
-    public function setColumnOrderOrVisibility(): void
-    {
+    public function setColumnOrderOrVisibility(): void {
         global $db, $table;
 
         $this->checkUserPrivileges->getPrivileges();
@@ -363,15 +354,14 @@ class SqlController extends AbstractController
         $this->response->setRequestStatus($status === true);
     }
 
-    private function addBookmark(string $goto): void
-    {
+    private function addBookmark(string $goto): void {
         global $cfg;
 
         $bookmark = Bookmark::createBookmark(
-            $this->dbi,
-            $cfg['Server']['user'],
-            $_POST['bkm_fields'],
-            isset($_POST['bkm_all_users']) && $_POST['bkm_all_users'] === 'true'
+                        $this->dbi,
+                        $cfg['Server']['user'],
+                        $_POST['bkm_fields'],
+                        isset($_POST['bkm_all_users']) && $_POST['bkm_all_users'] === 'true'
         );
 
         $result = null;
@@ -379,7 +369,7 @@ class SqlController extends AbstractController
             $result = $bookmark->save();
         }
 
-        if (! $this->response->isAjax()) {
+        if (!$this->response->isAjax()) {
             Core::sendHeaderLocation('./' . $goto . '&label=' . $_POST['bkm_fields']['bkm_label']);
 
             return;
@@ -397,4 +387,5 @@ class SqlController extends AbstractController
         $this->response->setRequestStatus(false);
         $this->response->addJSON('message', $msg);
     }
+
 }

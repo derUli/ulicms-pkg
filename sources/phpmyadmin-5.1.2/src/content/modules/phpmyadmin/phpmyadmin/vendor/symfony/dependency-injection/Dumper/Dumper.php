@@ -18,12 +18,12 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-abstract class Dumper implements DumperInterface
-{
+abstract class Dumper implements DumperInterface {
+
     protected $container;
 
-    public function __construct(ContainerBuilder $container)
-    {
+    public function __construct(ContainerBuilder $container) {
         $this->container = $container;
     }
+
 }

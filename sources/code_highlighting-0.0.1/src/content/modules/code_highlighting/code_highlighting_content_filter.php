@@ -1,6 +1,6 @@
 <?php
-function code_highlighting_content_filter($html)
-{
+
+function code_highlighting_content_filter($html) {
     // Wenn der Content keinen code-Tag enthält, abbrechen
     if (strpos($html, "[code src=") === false) {
         return $html;
@@ -10,7 +10,7 @@ function code_highlighting_content_filter($html)
     $allContentFiles = find_all_files($baseDir);
 
     // Durch den files-Ordner durchiterieren
-    for ($l = 0; $l < count($allContentFiles); $l ++) {
+    for ($l = 0; $l < count($allContentFiles); $l++) {
         $replaceName = str_replace($baseDir, "", $allContentFiles [$l]);
         $replaceName = str_replace("../", "", $replaceName);
         $replaceName = trim($replaceName, "/");
@@ -22,17 +22,17 @@ function code_highlighting_content_filter($html)
 
         $mime = get_mime($allContentFiles [$l]);
         $allowed_mime = array(
-                "text/php",
-                "text/x-php",
-                "text/plain",
-                "application/php",
-                "application/x-php",
-                "application/x-httpd-php",
-                "application/x-httpd-php-source",
-                "text/html",
-                "text/xml",
-                "text/javascript",
-                "application/json"
+            "text/php",
+            "text/x-php",
+            "text/plain",
+            "application/php",
+            "application/x-php",
+            "application/x-httpd-php",
+            "application/x-httpd-php-source",
+            "text/html",
+            "text/xml",
+            "text/javascript",
+            "application/json"
         );
 
         if (in_array($mime, $allowed_mime)) {

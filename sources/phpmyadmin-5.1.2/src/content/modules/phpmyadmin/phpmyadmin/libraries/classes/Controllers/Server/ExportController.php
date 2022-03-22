@@ -15,8 +15,8 @@ use PhpMyAdmin\Template;
 use PhpMyAdmin\Url;
 use function array_merge;
 
-final class ExportController extends AbstractController
-{
+final class ExportController extends AbstractController {
+
     /** @var Options */
     private $export;
 
@@ -27,15 +27,13 @@ final class ExportController extends AbstractController
      * @param Response          $response
      * @param DatabaseInterface $dbi
      */
-    public function __construct($response, Template $template, Options $export, $dbi)
-    {
+    public function __construct($response, Template $template, Options $export, $dbi) {
         parent::__construct($response, $template);
         $this->export = $export;
         $this->dbi = $dbi;
     }
 
-    public function index(): void
-    {
+    public function index(): void {
         global $db, $table, $sql_query, $num_tables, $unlim_num_rows;
         global $tmp_select, $select_item, $err_url;
 
@@ -54,13 +52,13 @@ final class ExportController extends AbstractController
         $select_item = $tmp_select ?? '';
         $databases = $this->export->getDatabasesForSelectOptions($select_item);
 
-        if (! isset($sql_query)) {
+        if (!isset($sql_query)) {
             $sql_query = '';
         }
-        if (! isset($num_tables)) {
+        if (!isset($num_tables)) {
             $num_tables = 0;
         }
-        if (! isset($unlim_num_rows)) {
+        if (!isset($unlim_num_rows)) {
             $unlim_num_rows = 0;
         }
 
@@ -70,20 +68,20 @@ final class ExportController extends AbstractController
 
         if (empty($exportList)) {
             $this->response->addHTML(Message::error(
-                __('Could not load export plugins, please check your installation!')
-            )->getDisplay());
+                            __('Could not load export plugins, please check your installation!')
+                    )->getDisplay());
 
             return;
         }
 
         $options = $this->export->getOptions(
-            'server',
-            $db,
-            $table,
-            $sql_query,
-            $num_tables,
-            $unlim_num_rows,
-            $exportList
+                'server',
+                $db,
+                $table,
+                $sql_query,
+                $num_tables,
+                $unlim_num_rows,
+                $exportList
         );
 
         $this->render('server/export/index', array_merge($options, [
@@ -92,4 +90,5 @@ final class ExportController extends AbstractController
             'databases' => $databases,
         ]));
     }
+
 }

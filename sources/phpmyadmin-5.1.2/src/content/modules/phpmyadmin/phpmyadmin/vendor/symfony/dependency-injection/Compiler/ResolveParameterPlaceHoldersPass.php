@@ -20,14 +20,13 @@ use Symfony\Component\DependencyInjection\Exception\ParameterNotFoundException;
  *
  * @author Johannes M. Schmitt <schmittjoh@gmail.com>
  */
-class ResolveParameterPlaceHoldersPass extends AbstractRecursivePass
-{
+class ResolveParameterPlaceHoldersPass extends AbstractRecursivePass {
+
     private $bag;
     private $resolveArrays;
     private $throwOnResolveException;
 
-    public function __construct($resolveArrays = true, $throwOnResolveException = true)
-    {
+    public function __construct($resolveArrays = true, $throwOnResolveException = true) {
         $this->resolveArrays = $resolveArrays;
         $this->throwOnResolveException = $throwOnResolveException;
     }
@@ -37,8 +36,7 @@ class ResolveParameterPlaceHoldersPass extends AbstractRecursivePass
      *
      * @throws ParameterNotFoundException
      */
-    public function process(ContainerBuilder $container)
-    {
+    public function process(ContainerBuilder $container) {
         $this->bag = $container->getParameterBag();
 
         try {
@@ -60,8 +58,7 @@ class ResolveParameterPlaceHoldersPass extends AbstractRecursivePass
         $this->bag = null;
     }
 
-    protected function processValue($value, $isRoot = false)
-    {
+    protected function processValue($value, $isRoot = false) {
         if (\is_string($value)) {
             try {
                 $v = $this->bag->resolveValue($value);
@@ -95,4 +92,5 @@ class ResolveParameterPlaceHoldersPass extends AbstractRecursivePass
 
         return $value;
     }
+
 }

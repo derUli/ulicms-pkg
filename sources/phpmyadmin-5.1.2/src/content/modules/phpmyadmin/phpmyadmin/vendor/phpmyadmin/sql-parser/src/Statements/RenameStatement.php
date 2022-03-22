@@ -1,8 +1,8 @@
 <?php
+
 /**
  * `RENAME` statement.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\SqlParser\Statements;
@@ -19,8 +19,8 @@ use PhpMyAdmin\SqlParser\TokensList;
  * RENAME TABLE tbl_name TO new_tbl_name
  *  [, tbl_name2 TO new_tbl_name2] ...
  */
-class RenameStatement extends Statement
-{
+class RenameStatement extends Statement {
+
     /**
      * The old and new names of the tables.
      *
@@ -37,8 +37,7 @@ class RenameStatement extends Statement
      * @param TokensList $list   the list of tokens to be parsed
      * @param Token      $token  the token that is being parsed
      */
-    public function before(Parser $parser, TokensList $list, Token $token)
-    {
+    public function before(Parser $parser, TokensList $list, Token $token) {
         if (($token->type !== Token::TYPE_KEYWORD) || ($token->keyword !== 'RENAME')) {
             return;
         }
@@ -50,8 +49,8 @@ class RenameStatement extends Statement
     /**
      * @return string
      */
-    public function build()
-    {
+    public function build() {
         return 'RENAME TABLE ' . RenameOperation::build($this->renames);
     }
+
 }

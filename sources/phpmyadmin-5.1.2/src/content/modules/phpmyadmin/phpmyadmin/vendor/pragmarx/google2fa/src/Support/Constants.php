@@ -2,8 +2,8 @@
 
 namespace PragmaRX\Google2FA\Support;
 
-class Constants
-{
+class Constants {
+
     /**
      * Characters valid for Base 32.
      */
@@ -28,4 +28,5 @@ class Constants
      * SHA512 algorithm.
      */
     const SHA512 = 'sha512';
+
 }

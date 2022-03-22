@@ -24,14 +24,13 @@ use Symfony\Component\DependencyInjection\Reference;
  *
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
-class CacheCollectorPass implements CompilerPassInterface
-{
+class CacheCollectorPass implements CompilerPassInterface {
+
     private $dataCollectorCacheId;
     private $cachePoolTag;
     private $cachePoolRecorderInnerSuffix;
 
-    public function __construct(string $dataCollectorCacheId = 'data_collector.cache', string $cachePoolTag = 'cache.pool', string $cachePoolRecorderInnerSuffix = '.recorder_inner')
-    {
+    public function __construct(string $dataCollectorCacheId = 'data_collector.cache', string $cachePoolTag = 'cache.pool', string $cachePoolRecorderInnerSuffix = '.recorder_inner') {
         $this->dataCollectorCacheId = $dataCollectorCacheId;
         $this->cachePoolTag = $cachePoolTag;
         $this->cachePoolRecorderInnerSuffix = $cachePoolRecorderInnerSuffix;
@@ -40,8 +39,7 @@ class CacheCollectorPass implements CompilerPassInterface
     /**
      * {@inheritdoc}
      */
-    public function process(ContainerBuilder $container)
-    {
+    public function process(ContainerBuilder $container) {
         if (!$container->hasDefinition($this->dataCollectorCacheId)) {
             return;
         }
@@ -53,8 +51,7 @@ class CacheCollectorPass implements CompilerPassInterface
         }
     }
 
-    private function addToCollector(string $id, string $name, ContainerBuilder $container)
-    {
+    private function addToCollector(string $id, string $name, ContainerBuilder $container) {
         $definition = $container->getDefinition($id);
         if ($definition->isAbstract()) {
             return;
@@ -66,7 +63,7 @@ class CacheCollectorPass implements CompilerPassInterface
         if (!$definition->isPublic() || !$definition->isPrivate()) {
             $recorder->setPublic($definition->isPublic());
         }
-        $recorder->setArguments([new Reference($innerId = $id.$this->cachePoolRecorderInnerSuffix)]);
+        $recorder->setArguments([new Reference($innerId = $id . $this->cachePoolRecorderInnerSuffix)]);
 
         $definition->setTags([]);
         $definition->setPublic(false);
@@ -78,4 +75,5 @@ class CacheCollectorPass implements CompilerPassInterface
         $collectorDefinition->addMethodCall('addInstance', [$name, new Reference($id)]);
         $collectorDefinition->setPublic(false);
     }
+
 }

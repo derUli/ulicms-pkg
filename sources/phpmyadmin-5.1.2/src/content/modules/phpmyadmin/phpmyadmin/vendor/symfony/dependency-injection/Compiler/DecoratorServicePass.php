@@ -25,10 +25,9 @@ use Symfony\Component\DependencyInjection\Reference;
  * @author Fabien Potencier <fabien@symfony.com>
  * @author Diego Saint Esteben <diego@saintesteben.me>
  */
-class DecoratorServicePass implements CompilerPassInterface
-{
-    public function process(ContainerBuilder $container)
-    {
+class DecoratorServicePass implements CompilerPassInterface {
+
+    public function process(ContainerBuilder $container) {
         $definitions = new \SplPriorityQueue();
         $order = \PHP_INT_MAX;
 
@@ -48,7 +47,7 @@ class DecoratorServicePass implements CompilerPassInterface
             $definition->setDecoratedService(null);
 
             if (!$renamedId) {
-                $renamedId = $id.'.inner';
+                $renamedId = $id . '.inner';
             }
             $definition->innerServiceId = $renamedId;
             $definition->decorationOnInvalid = $invalidBehavior;
@@ -105,4 +104,5 @@ class DecoratorServicePass implements CompilerPassInterface
             $container->setAlias($inner, $id)->setPublic($public)->setPrivate($private);
         }
     }
+
 }

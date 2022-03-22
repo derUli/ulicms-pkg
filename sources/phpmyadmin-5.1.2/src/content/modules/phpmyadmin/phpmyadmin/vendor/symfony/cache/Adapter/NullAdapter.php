@@ -18,30 +18,28 @@ use Symfony\Contracts\Cache\CacheInterface;
 /**
  * @author Titouan Galopin <galopintitouan@gmail.com>
  */
-class NullAdapter implements AdapterInterface, CacheInterface
-{
+class NullAdapter implements AdapterInterface, CacheInterface {
+
     private $createCacheItem;
 
-    public function __construct()
-    {
+    public function __construct() {
         $this->createCacheItem = \Closure::bind(
-            function ($key) {
-                $item = new CacheItem();
-                $item->key = $key;
-                $item->isHit = false;
+                        function ($key) {
+                            $item = new CacheItem();
+                            $item->key = $key;
+                            $item->isHit = false;
 
-                return $item;
-            },
-            $this,
-            CacheItem::class
+                            return $item;
+                        },
+                        $this,
+                        CacheItem::class
         );
     }
 
     /**
      * {@inheritdoc}
      */
-    public function get(string $key, callable $callback, float $beta = null, array &$metadata = null)
-    {
+    public function get(string $key, callable $callback, float $beta = null, array &$metadata = null) {
         $save = true;
 
         return $callback(($this->createCacheItem)($key), $save);
@@ -50,8 +48,7 @@ class NullAdapter implements AdapterInterface, CacheInterface
     /**
      * {@inheritdoc}
      */
-    public function getItem($key)
-    {
+    public function getItem($key) {
         $f = $this->createCacheItem;
 
         return $f($key);
@@ -60,8 +57,7 @@ class NullAdapter implements AdapterInterface, CacheInterface
     /**
      * {@inheritdoc}
      */
-    public function getItems(array $keys = [])
-    {
+    public function getItems(array $keys = []) {
         return $this->generateItems($keys);
     }
 
@@ -70,8 +66,7 @@ class NullAdapter implements AdapterInterface, CacheInterface
      *
      * @return bool
      */
-    public function hasItem($key)
-    {
+    public function hasItem($key) {
         return false;
     }
 
@@ -82,8 +77,7 @@ class NullAdapter implements AdapterInterface, CacheInterface
      *
      * @return bool
      */
-    public function clear(/*string $prefix = ''*/)
-    {
+    public function clear(/* string $prefix = '' */) {
         return true;
     }
 
@@ -92,8 +86,7 @@ class NullAdapter implements AdapterInterface, CacheInterface
      *
      * @return bool
      */
-    public function deleteItem($key)
-    {
+    public function deleteItem($key) {
         return true;
     }
 
@@ -102,8 +95,7 @@ class NullAdapter implements AdapterInterface, CacheInterface
      *
      * @return bool
      */
-    public function deleteItems(array $keys)
-    {
+    public function deleteItems(array $keys) {
         return true;
     }
 
@@ -112,8 +104,7 @@ class NullAdapter implements AdapterInterface, CacheInterface
      *
      * @return bool
      */
-    public function save(CacheItemInterface $item)
-    {
+    public function save(CacheItemInterface $item) {
         return true;
     }
 
@@ -122,8 +113,7 @@ class NullAdapter implements AdapterInterface, CacheInterface
      *
      * @return bool
      */
-    public function saveDeferred(CacheItemInterface $item)
-    {
+    public function saveDeferred(CacheItemInterface $item) {
         return true;
     }
 
@@ -132,25 +122,23 @@ class NullAdapter implements AdapterInterface, CacheInterface
      *
      * @return bool
      */
-    public function commit()
-    {
+    public function commit() {
         return true;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function delete(string $key): bool
-    {
+    public function delete(string $key): bool {
         return $this->deleteItem($key);
     }
 
-    private function generateItems(array $keys)
-    {
+    private function generateItems(array $keys) {
         $f = $this->createCacheItem;
 
         foreach ($keys as $key) {
             yield $key => $f($key);
         }
     }
+
 }

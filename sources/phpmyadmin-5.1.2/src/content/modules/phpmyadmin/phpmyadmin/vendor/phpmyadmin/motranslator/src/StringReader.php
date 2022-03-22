@@ -3,25 +3,25 @@
 declare(strict_types=1);
 
 /*
-    Copyright (c) 2003, 2005, 2006, 2009 Danilo Segan <danilo@kvota.net>.
-    Copyright (c) 2016 Michal Čihař <michal@cihar.com>
+  Copyright (c) 2003, 2005, 2006, 2009 Danilo Segan <danilo@kvota.net>.
+  Copyright (c) 2016 Michal Čihař <michal@cihar.com>
 
-    This file is part of MoTranslator.
+  This file is part of MoTranslator.
 
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 2 of the License, or
-    (at your option) any later version.
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation; either version 2 of the License, or
+  (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License along
-    with this program; if not, write to the Free Software Foundation, Inc.,
-    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*/
+  You should have received a copy of the GNU General Public License along
+  with this program; if not, write to the Free Software Foundation, Inc.,
+  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
 
 namespace PhpMyAdmin\MoTranslator;
 
@@ -35,18 +35,18 @@ use function unpack;
  * Simple wrapper around string buffer for
  * random access and values parsing.
  */
-class StringReader
-{
+class StringReader {
+
     /** @var string */
     private $string;
+
     /** @var int */
     private $length;
 
     /**
      * @param string $filename Name of file to load
      */
-    public function __construct(string $filename)
-    {
+    public function __construct(string $filename) {
         $this->string = (string) file_get_contents($filename);
         $this->length = strlen($this->string);
     }
@@ -57,8 +57,7 @@ class StringReader
      * @param int $pos   Offset
      * @param int $bytes Number of bytes to read
      */
-    public function read(int $pos, int $bytes): string
-    {
+    public function read(int $pos, int $bytes): string {
         if ($pos + $bytes > $this->length) {
             throw new ReaderException('Not enough bytes!');
         }
@@ -74,8 +73,7 @@ class StringReader
      *
      * @return int Integer from the stream
      */
-    public function readint(string $unpack, int $pos): int
-    {
+    public function readint(string $unpack, int $pos): int {
         $data = unpack($unpack, $this->read($pos, 4));
         if ($data === false) {
             return PHP_INT_MAX;
@@ -101,8 +99,7 @@ class StringReader
      *
      * @return int[] Array of Integers
      */
-    public function readintarray(string $unpack, int $pos, int $count): array
-    {
+    public function readintarray(string $unpack, int $pos, int $count): array {
         $data = unpack($unpack . $count, $this->read($pos, 4 * $count));
         if ($data === false) {
             return [];
@@ -110,4 +107,5 @@ class StringReader
 
         return $data;
     }
+
 }

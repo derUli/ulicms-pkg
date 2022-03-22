@@ -21,14 +21,14 @@ use Symfony\Contracts\Cache\CacheInterface;
 /**
  * @deprecated since Symfony 4.3, use DoctrineAdapter and type-hint for CacheInterface instead.
  */
-class DoctrineCache extends AbstractCache
-{
+class DoctrineCache extends AbstractCache {
+
     use DoctrineTrait;
 
-    public function __construct(CacheProvider $provider, string $namespace = '', int $defaultLifetime = 0)
-    {
+    public function __construct(CacheProvider $provider, string $namespace = '', int $defaultLifetime = 0) {
         parent::__construct('', $defaultLifetime);
         $this->provider = $provider;
         $provider->setNamespace($namespace);
     }
+
 }

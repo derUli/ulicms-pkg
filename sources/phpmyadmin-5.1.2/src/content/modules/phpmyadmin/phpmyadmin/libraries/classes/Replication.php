@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Replication helpers
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin;
@@ -13,8 +13,8 @@ use function mb_strtoupper;
 /**
  * PhpMyAdmin\Replication class
  */
-class Replication
-{
+class Replication {
+
     /**
      * Extracts database or table name from string
      *
@@ -23,8 +23,7 @@ class Replication
      *
      * @return string the extracted part
      */
-    public function extractDbOrTable($string, $what = 'db')
-    {
+    public function extractDbOrTable($string, $what = 'db') {
         $list = explode('.', $string);
         if ($what === 'db') {
             return $list[0];
@@ -45,8 +44,7 @@ class Replication
      *
      * @return mixed|int output of DatabaseInterface::tryQuery
      */
-    public function slaveControl(string $action, ?string $control, int $link)
-    {
+    public function slaveControl(string $action, ?string $control, int $link) {
         global $dbi;
 
         $action = mb_strtoupper($action);
@@ -78,14 +76,14 @@ class Replication
      * @return string output of CHANGE MASTER mysql command
      */
     public function slaveChangeMaster(
-        $user,
-        $password,
-        $host,
-        $port,
-        array $pos,
-        bool $stop,
-        bool $start,
-        int $link
+            $user,
+            $password,
+            $host,
+            $port,
+            array $pos,
+            bool $stop,
+            bool $start,
+            int $link
     ) {
         global $dbi;
 
@@ -94,14 +92,14 @@ class Replication
         }
 
         $out = $dbi->tryQuery(
-            'CHANGE MASTER TO ' .
-            'MASTER_HOST=\'' . $host . '\',' .
-            'MASTER_PORT=' . ($port * 1) . ',' .
-            'MASTER_USER=\'' . $user . '\',' .
-            'MASTER_PASSWORD=\'' . $password . '\',' .
-            'MASTER_LOG_FILE=\'' . $pos['File'] . '\',' .
-            'MASTER_LOG_POS=' . $pos['Position'] . ';',
-            $link
+                'CHANGE MASTER TO ' .
+                'MASTER_HOST=\'' . $host . '\',' .
+                'MASTER_PORT=' . ($port * 1) . ',' .
+                'MASTER_USER=\'' . $user . '\',' .
+                'MASTER_PASSWORD=\'' . $password . '\',' .
+                'MASTER_LOG_FILE=\'' . $pos['File'] . '\',' .
+                'MASTER_LOG_POS=' . $pos['Position'] . ';',
+                $link
         );
 
         if ($start) {
@@ -123,11 +121,11 @@ class Replication
      * @return mixed mysql link on success
      */
     public function connectToMaster(
-        $user,
-        $password,
-        $host = null,
-        $port = null,
-        $socket = null
+            $user,
+            $password,
+            $host = null,
+            $port = null,
+            $socket = null
     ) {
         global $dbi;
 
@@ -153,18 +151,18 @@ class Replication
      *
      * @phpstan-return array{'File'?: string, 'Position'?: string}
      */
-    public function slaveBinLogMaster(int $link): array
-    {
+    public function slaveBinLogMaster(int $link): array {
         global $dbi;
 
         $data = $dbi->fetchResult('SHOW MASTER STATUS', null, null, $link);
         $output = [];
 
-        if (! empty($data)) {
+        if (!empty($data)) {
             $output['File'] = $data[0]['File'];
             $output['Position'] = $data[0]['Position'];
         }
 
         return $output;
     }
+
 }

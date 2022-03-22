@@ -16,6 +16,6 @@ namespace Symfony\Component\Cache\Adapter;
 /**
  * @deprecated since Symfony 4.3, use Psr16Adapter instead.
  */
-class SimpleCacheAdapter extends Psr16Adapter
-{
+class SimpleCacheAdapter extends Psr16Adapter {
+    
 }

@@ -78,9 +78,9 @@ var AJAX = {
         if (this.debug) {
             // eslint-disable-next-line no-console
             console.log(
-                // no need to translate
-                'Registered event ' + eventName + ' for file ' + file
-            );
+                    // no need to translate
+                    'Registered event ' + eventName + ' for file ' + file
+                    );
         }
         return this;
     },
@@ -100,9 +100,9 @@ var AJAX = {
         if (this.debug) {
             // eslint-disable-next-line no-console
             console.log(
-                // no need to translate
-                'Registered event ' + eventName + ' for file ' + file
-            );
+                    // no need to translate
+                    'Registered event ' + eventName + ' for file ' + file
+                    );
         }
         return this;
     },
@@ -120,9 +120,9 @@ var AJAX = {
         if (this.debug) {
             // eslint-disable-next-line no-console
             console.log(
-                // no need to translate
-                'Fired event ' + eventName + ' for file ' + file
-            );
+                    // no need to translate
+                    'Fired event ' + eventName + ' for file ' + file
+                    );
         }
     },
     /**
@@ -139,9 +139,9 @@ var AJAX = {
         if (this.debug) {
             // eslint-disable-next-line no-console
             console.log(
-                // no need to translate
-                'Fired event ' + eventName + ' for file ' + file
-            );
+                    // no need to translate
+                    'Fired event ' + eventName + ' for file ' + file
+                    );
         }
     },
     /**
@@ -215,9 +215,9 @@ var AJAX = {
     handleMenu: {
         replace: function (content) {
             $('#floating_menubar').html(content)
-                // Remove duplicate wrapper
-                // TODO: don't send it in the response
-                .children().first().remove();
+                    // Remove duplicate wrapper
+                    // TODO: don't send it in the response
+                    .children().first().remove();
             $('#topmenu').menuResizer(Functions.mainMenuResizerCallback);
         }
     },
@@ -246,8 +246,8 @@ var AJAX = {
         } else if (href && href.match(/^mailto/)) {
             return true;
         } else if ($(this).hasClass('ui-datepicker-next') ||
-            $(this).hasClass('ui-datepicker-prev')
-        ) {
+                $(this).hasClass('ui-datepicker-prev')
+                ) {
             return true;
         }
 
@@ -261,14 +261,14 @@ var AJAX = {
         // the user clicks on some link, (won't trigger for buttons)
         // the click event is not triggered by script
         if (typeof event !== 'undefined' && event.type === 'click' &&
-            event.isTrigger !== true &&
-            !jQuery.isEmptyObject(AJAX.lockedTargets) &&
-            confirm(Messages.strConfirmNavigation) === false
-        ) {
+                event.isTrigger !== true &&
+                !jQuery.isEmptyObject(AJAX.lockedTargets) &&
+                confirm(Messages.strConfirmNavigation) === false
+                ) {
             return false;
         }
         AJAX.resetLock();
-        var isLink = !! href || false;
+        var isLink = !!href || false;
         var previousLinkAborted = false;
 
         if (AJAX.active === true) {
@@ -296,19 +296,19 @@ var AJAX = {
 
         AJAX.source = $(this);
 
-        $('html, body').animate({ scrollTop: 0 }, 'fast');
+        $('html, body').animate({scrollTop: 0}, 'fast');
 
         var url = isLink ? href : $(this).attr('action');
         var argsep = CommonParams.get('arg_separator');
         var params = 'ajax_request=true' + argsep + 'ajax_page_request=true';
         var dataPost = AJAX.source.getPostData();
-        if (! isLink) {
+        if (!isLink) {
             params += argsep + $(this).serialize();
         } else if (dataPost) {
             params += argsep + dataPost;
             isLink = false;
         }
-        if (! (history && history.pushState)) {
+        if (!(history && history.pushState)) {
             // Add a list of menu hashes that we have in the cache to the request
             params += MicroHistory.menus.getRequestParam();
         }
@@ -325,7 +325,7 @@ var AJAX = {
             AJAX.xhr = $.get(url, params, AJAX.responseHandler);
             if (history && history.pushState) {
                 var state = {
-                    url : href
+                    url: href
                 };
                 if (previousLinkAborted) {
                     // hack: there is already an aborted entry on stack
@@ -387,9 +387,9 @@ var AJAX = {
             msg = data.errSubmitMsg;
         }
         if (data.errors) {
-            $('<div></div>', { id : 'pma_errors', class : 'clearfloat' })
-                .insertAfter('#selflink')
-                .append(data.errors);
+            $('<div></div>', {id: 'pma_errors', class: 'clearfloat'})
+                    .insertAfter('#selflink')
+                    .append(data.errors);
             // bind for php error reporting forms (bottom)
             $('#pma_ignore_errors_bottom').on('click', function (e) {
                 e.preventDefault();
@@ -402,16 +402,16 @@ var AJAX = {
             // In case of 'sendErrorReport'='always'
             // submit the hidden error reporting form.
             if (data.sendErrorAlways === '1' &&
-                data.stopErrorReportLoop !== '1'
-            ) {
+                    data.stopErrorReportLoop !== '1'
+                    ) {
                 $('#pma_report_errors_form').trigger('submit');
                 Functions.ajaxShowMessage(Messages.phpErrorsBeingSubmitted, false);
-                $('html, body').animate({ scrollTop:$(document).height() }, 'slow');
+                $('html, body').animate({scrollTop: $(document).height()}, 'slow');
             } else if (data.promptPhpErrors) {
                 // otherwise just prompt user if it is set so.
                 msg = msg + Messages.phpErrorsFound;
                 // scroll to bottom where all the errors are displayed.
-                $('html, body').animate({ scrollTop:$(document).height() }, 'slow');
+                $('html, body').animate({scrollTop: $(document).height()}, 'slow');
             }
         }
 
@@ -476,7 +476,7 @@ var AJAX = {
             return;
         }
         if (typeof data.success !== 'undefined' && data.success) {
-            $('html, body').animate({ scrollTop: 0 }, 'fast');
+            $('html, body').animate({scrollTop: 0}, 'fast');
             Functions.ajaxRemoveMessage(AJAX.$msgbox);
 
             if (data.redirect) {
@@ -496,8 +496,8 @@ var AJAX = {
                 if (data.menu) {
                     if (history && history.pushState) {
                         var state = {
-                            url : data.selflink,
-                            menu : data.menu
+                            url: data.selflink,
+                            menu: data.menu
                         };
                         history.replaceState(state, null);
                         AJAX.handleMenu.replace(data.menu);
@@ -506,7 +506,7 @@ var AJAX = {
                         MicroHistory.menus.add(data.menuHash, data.menu);
                     }
                 } else if (data.menuHash) {
-                    if (! (history && history.pushState)) {
+                    if (!(history && history.pushState)) {
                         MicroHistory.menus.replace(MicroHistory.menus.get(data.menuHash));
                     }
                 }
@@ -519,22 +519,22 @@ var AJAX = {
                 // Remove all containers that may have
                 // been added outside of #page_content
                 $('body').children()
-                    .not('#pma_navigation')
-                    .not('#floating_menubar')
-                    .not('#page_nav_icons')
-                    .not('#page_content')
-                    .not('#selflink')
-                    .not('#pma_header')
-                    .not('#pma_footer')
-                    .not('#pma_demo')
-                    .not('#pma_console_container')
-                    .not('#prefs_autoload')
-                    .remove();
+                        .not('#pma_navigation')
+                        .not('#floating_menubar')
+                        .not('#page_nav_icons')
+                        .not('#page_content')
+                        .not('#selflink')
+                        .not('#pma_header')
+                        .not('#pma_footer')
+                        .not('#pma_demo')
+                        .not('#pma_console_container')
+                        .not('#prefs_autoload')
+                        .remove();
                 // Replace #page_content with new content
                 if (data.message && data.message.length > 0) {
                     $('#page_content').replaceWith(
-                        '<div id=\'page_content\'>' + data.message + '</div>'
-                    );
+                            '<div id=\'page_content\'>' + data.message + '</div>'
+                            );
                     Functions.highlightSql($('#page_content'));
                     Functions.checkNumberOfFields();
                 }
@@ -560,14 +560,14 @@ var AJAX = {
                     AJAX.scriptHandler.load(data.scripts);
                 }
                 if (data.selflink && data.scripts && data.menuHash && data.params) {
-                    if (! (history && history.pushState)) {
+                    if (!(history && history.pushState)) {
                         MicroHistory.add(
-                            data.selflink,
-                            data.scripts,
-                            data.menuHash,
-                            data.params,
-                            AJAX.source.attr('rel')
-                        );
+                                data.selflink,
+                                data.scripts,
+                                data.menuHash,
+                                data.params,
+                                AJAX.source.attr('rel')
+                                );
                     }
                 }
                 if (data.displayMessage) {
@@ -582,9 +582,9 @@ var AJAX = {
                     msg = data.errSubmitMsg;
                 }
                 if (data.errors) {
-                    $('<div></div>', { id : 'pma_errors', class : 'clearfloat' })
-                        .insertAfter('#selflink')
-                        .append(data.errors);
+                    $('<div></div>', {id: 'pma_errors', class: 'clearfloat'})
+                            .insertAfter('#selflink')
+                            .append(data.errors);
                     // bind for php error reporting forms (bottom)
                     $('#pma_ignore_errors_bottom').on('click', function (e) {
                         e.preventDefault();
@@ -597,16 +597,16 @@ var AJAX = {
                     // In case of 'sendErrorReport'='always'
                     // submit the hidden error reporting form.
                     if (data.sendErrorAlways === '1' &&
-                        data.stopErrorReportLoop !== '1'
-                    ) {
+                            data.stopErrorReportLoop !== '1'
+                            ) {
                         $('#pma_report_errors_form').trigger('submit');
                         Functions.ajaxShowMessage(Messages.phpErrorsBeingSubmitted, false);
-                        $('html, body').animate({ scrollTop:$(document).height() }, 'slow');
+                        $('html, body').animate({scrollTop: $(document).height()}, 'slow');
                     } else if (data.promptPhpErrors) {
                         // otherwise just prompt user if it is set so.
                         msg = msg + Messages.phpErrorsFound;
                         // scroll to bottom where all the errors are displayed.
-                        $('html, body').animate({ scrollTop:$(document).height() }, 'slow');
+                        $('html, body').animate({scrollTop: $(document).height()}, 'slow');
                     }
                 }
                 Functions.ajaxShowMessage(msg, false);
@@ -627,10 +627,10 @@ var AJAX = {
             Functions.ajaxShowMessage(data.error, false);
             Functions.ajaxRemoveMessage(AJAX.$msgbox);
             var $ajaxError = $('<div></div>');
-            $ajaxError.attr({ 'id': 'ajaxError' });
+            $ajaxError.attr({'id': 'ajaxError'});
             $('#page_content').append($ajaxError);
             $ajaxError.html(data.error);
-            $('html, body').animate({ scrollTop: $(document).height() }, 200);
+            $('html, body').animate({scrollTop: $(document).height()}, 200);
             AJAX.active = false;
             AJAX.xhr = null;
             Functions.handleRedirectAndReload(data);
@@ -746,9 +746,9 @@ var AJAX = {
                 this.scriptsCompleted = true;
             }
             /* We need to wait for last signal (with null) or last script load */
-            AJAX.active = (this.scriptsToBeLoaded.length > 0) || ! this.scriptsCompleted;
+            AJAX.active = (this.scriptsToBeLoaded.length > 0) || !this.scriptsCompleted;
             /* Run callback on last script */
-            if (! AJAX.active && typeof callback === 'function') {
+            if (!AJAX.active && typeof callback === 'function') {
                 callback();
             }
         },
@@ -790,7 +790,7 @@ var AJAX = {
              */
             $(document).off('click', 'a').on('click', 'a', AJAX.requestHandler);
             $(document).off('submit', 'form').on('submit', 'form', AJAX.requestHandler);
-            if (! (history && history.pushState)) {
+            if (!(history && history.pushState)) {
                 MicroHistory.update();
             }
             callback();
@@ -826,8 +826,8 @@ AJAX.registerOnload('functions.js', function () {
             return;
         }
         $(this).closest('form').append($('<input>', {
-            'type' : 'hidden',
-            'name' : buttonName,
+            'type': 'hidden',
+            'name': buttonName,
             'value': $(this).val()
         }));
     });
@@ -837,21 +837,21 @@ AJAX.registerOnload('functions.js', function () {
      * Input,Textarea and select fields to make changes in forms
      */
     $pageContent.on(
-        'keyup change',
-        'form.lock-page textarea, ' +
-        'form.lock-page input[type="text"], ' +
-        'form.lock-page input[type="number"], ' +
-        'form.lock-page select',
-        { value:1 },
-        AJAX.lockPageHandler
-    );
+            'keyup change',
+            'form.lock-page textarea, ' +
+            'form.lock-page input[type="text"], ' +
+            'form.lock-page input[type="number"], ' +
+            'form.lock-page select',
+            {value: 1},
+            AJAX.lockPageHandler
+            );
     $pageContent.on(
-        'change',
-        'form.lock-page input[type="checkbox"], ' +
-        'form.lock-page input[type="radio"]',
-        { value:2 },
-        AJAX.lockPageHandler
-    );
+            'change',
+            'form.lock-page input[type="checkbox"], ' +
+            'form.lock-page input[type="radio"]',
+            {value: 2},
+            AJAX.lockPageHandler
+            );
     /**
      * Reset lock when lock-page form reset event is fired
      * Note: reset does not bubble in all browser so attach to
@@ -867,21 +867,21 @@ AJAX.registerOnload('functions.js', function () {
  */
 $(function () {
     var menuContent = $('<div></div>')
-        .append($('#server-breadcrumb').clone())
-        .append($('#topmenucontainer').clone())
-        .html();
+            .append($('#server-breadcrumb').clone())
+            .append($('#topmenucontainer').clone())
+            .html();
     if (history && history.pushState) {
         // set initial state reload
         var initState = ('state' in window.history && window.history.state !== null);
         var initURL = $('#selflink').find('> a').attr('href') || location.href;
         var state = {
-            url : initURL,
-            menu : menuContent
+            url: initURL,
+            menu: menuContent
         };
         history.replaceState(state, null);
 
         $(window).on('popstate', function (event) {
-            var initPop = (! initState && location.href === initURL);
+            var initPop = (!initState && location.href === initURL);
             initState = true;
             // check if popstate fired on first page itself
             if (initPop) {
@@ -903,26 +903,26 @@ $(function () {
     } else {
         // Fallback to microhistory mechanism
         AJAX.scriptHandler
-            .load([{ 'name' : 'microhistory.js', 'fire' : 1 }], function () {
-                // The cache primer is set by the footer class
-                if (MicroHistory.primer.url) {
-                    MicroHistory.menus.add(
-                        MicroHistory.primer.menuHash,
-                        menuContent
-                    );
-                }
-                $(function () {
-                    // Queue up this event twice to make sure that we get a copy
-                    // of the page after all other onload events have been fired
+                .load([{'name': 'microhistory.js', 'fire': 1}], function () {
+                    // The cache primer is set by the footer class
                     if (MicroHistory.primer.url) {
-                        MicroHistory.add(
-                            MicroHistory.primer.url,
-                            MicroHistory.primer.scripts,
-                            MicroHistory.primer.menuHash
-                        );
+                        MicroHistory.menus.add(
+                                MicroHistory.primer.menuHash,
+                                menuContent
+                                );
                     }
+                    $(function () {
+                        // Queue up this event twice to make sure that we get a copy
+                        // of the page after all other onload events have been fired
+                        if (MicroHistory.primer.url) {
+                            MicroHistory.add(
+                                    MicroHistory.primer.url,
+                                    MicroHistory.primer.scripts,
+                                    MicroHistory.primer.menuHash
+                                    );
+                        }
+                    });
                 });
-            });
     }
 });
 
@@ -955,12 +955,12 @@ $(document).on('ajaxError', function (event, request) {
             details += '<div>' + Functions.escapeHtml(Messages.strErrorConnection) + '</div>';
         }
         Functions.ajaxShowMessage(
-            '<div class="alert alert-danger" role="alert">' +
-            Messages.strErrorProcessingRequest +
-            details +
-            '</div>',
-            false
-        );
+                '<div class="alert alert-danger" role="alert">' +
+                Messages.strErrorProcessingRequest +
+                details +
+                '</div>',
+                false
+                );
         AJAX.active = false;
         AJAX.xhr = null;
     }

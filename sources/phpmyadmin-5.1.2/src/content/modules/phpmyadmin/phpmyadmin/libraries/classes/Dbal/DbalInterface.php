@@ -12,8 +12,8 @@ use PhpMyAdmin\Table;
 /**
  * Main interface for database interactions
  */
-interface DbalInterface
-{
+interface DbalInterface {
+
     /**
      * runs a query
      *
@@ -25,10 +25,10 @@ interface DbalInterface
      * @return mixed
      */
     public function query(
-        string $query,
-        $link = DatabaseInterface::CONNECT_USER,
-        int $options = 0,
-        bool $cache_affected_rows = true
+            string $query,
+            $link = DatabaseInterface::CONNECT_USER,
+            int $options = 0,
+            bool $cache_affected_rows = true
     );
 
     /**
@@ -42,10 +42,10 @@ interface DbalInterface
      * @return mixed
      */
     public function tryQuery(
-        string $query,
-        $link = DatabaseInterface::CONNECT_USER,
-        int $options = 0,
-        bool $cache_affected_rows = true
+            string $query,
+            $link = DatabaseInterface::CONNECT_USER,
+            int $options = 0,
+            bool $cache_affected_rows = true
     );
 
     /**
@@ -78,9 +78,9 @@ interface DbalInterface
      * @return array           array of found foreign keys
      */
     public function getForeignKeyConstrains(
-        string $database,
-        array $tables,
-        $link = DatabaseInterface::CONNECT_USER
+            string $database,
+            array $tables,
+            $link = DatabaseInterface::CONNECT_USER
     ): array;
 
     /**
@@ -112,15 +112,15 @@ interface DbalInterface
      * @todo    move into Table
      */
     public function getTablesFull(
-        string $database,
-        $table = '',
-        bool $tbl_is_group = false,
-        int $limit_offset = 0,
-        $limit_count = false,
-        string $sort_by = 'Name',
-        string $sort_order = 'ASC',
-        ?string $table_type = null,
-        $link = DatabaseInterface::CONNECT_USER
+            string $database,
+            $table = '',
+            bool $tbl_is_group = false,
+            int $limit_offset = 0,
+            $limit_count = false,
+            string $sort_by = 'Name',
+            string $sort_order = 'ASC',
+            ?string $table_type = null,
+            $link = DatabaseInterface::CONNECT_USER
     ): array;
 
     /**
@@ -150,13 +150,13 @@ interface DbalInterface
      * @todo    move into ListDatabase?
      */
     public function getDatabasesFull(
-        ?string $database = null,
-        bool $force_stats = false,
-        $link = DatabaseInterface::CONNECT_USER,
-        string $sort_by = 'SCHEMA_NAME',
-        string $sort_order = 'ASC',
-        int $limit_offset = 0,
-        $limit_count = false
+            ?string $database = null,
+            bool $force_stats = false,
+            $link = DatabaseInterface::CONNECT_USER,
+            string $sort_by = 'SCHEMA_NAME',
+            string $sort_order = 'ASC',
+            int $limit_offset = 0,
+            $limit_count = false
     ): array;
 
     /**
@@ -181,10 +181,10 @@ interface DbalInterface
      * @return array
      */
     public function getColumnsFull(
-        ?string $database = null,
-        ?string $table = null,
-        ?string $column = null,
-        $link = DatabaseInterface::CONNECT_USER
+            ?string $database = null,
+            ?string $table = null,
+            ?string $column = null,
+            $link = DatabaseInterface::CONNECT_USER
     ): array;
 
     /**
@@ -200,11 +200,11 @@ interface DbalInterface
      *               if $column is given, flat array description
      */
     public function getColumns(
-        string $database,
-        string $table,
-        ?string $column = null,
-        bool $full = false,
-        $link = DatabaseInterface::CONNECT_USER
+            string $database,
+            string $table,
+            ?string $column = null,
+            bool $full = false,
+            $link = DatabaseInterface::CONNECT_USER
     ): array;
 
     /**
@@ -217,9 +217,9 @@ interface DbalInterface
      * @return array|null
      */
     public function getColumnNames(
-        string $database,
-        string $table,
-        $link = DatabaseInterface::CONNECT_USER
+            string $database,
+            string $table,
+            $link = DatabaseInterface::CONNECT_USER
     ): ?array;
 
     /**
@@ -232,9 +232,9 @@ interface DbalInterface
      * @return array
      */
     public function getTableIndexes(
-        string $database,
-        string $table,
-        $link = DatabaseInterface::CONNECT_USER
+            string $database,
+            string $table,
+            $link = DatabaseInterface::CONNECT_USER
     ): array;
 
     /**
@@ -248,9 +248,9 @@ interface DbalInterface
      * @return mixed   value for mysql server variable
      */
     public function getVariable(
-        string $var,
-        int $type = DatabaseInterface::GETVAR_SESSION,
-        $link = DatabaseInterface::CONNECT_USER
+            string $var,
+            int $type = DatabaseInterface::GETVAR_SESSION,
+            $link = DatabaseInterface::CONNECT_USER
     );
 
     /**
@@ -310,10 +310,10 @@ interface DbalInterface
      *               or false if not found
      */
     public function fetchValue(
-        string $query,
-        int $row_number = 0,
-        $field = 0,
-        $link = DatabaseInterface::CONNECT_USER
+            string $query,
+            int $row_number = 0,
+            $field = 0,
+            $link = DatabaseInterface::CONNECT_USER
     );
 
     /**
@@ -332,9 +332,9 @@ interface DbalInterface
      * @param int    $link  link type
      */
     public function fetchSingleRow(
-        string $query,
-        string $type = 'ASSOC',
-        $link = DatabaseInterface::CONNECT_USER
+            string $query,
+            string $type = 'ASSOC',
+            $link = DatabaseInterface::CONNECT_USER
     ): ?array;
 
     /**
@@ -393,11 +393,11 @@ interface DbalInterface
      * @return array resultrows or values indexed by $key
      */
     public function fetchResult(
-        string $query,
-        $key = null,
-        $value = null,
-        $link = DatabaseInterface::CONNECT_USER,
-        int $options = 0
+            string $query,
+            $key = null,
+            $value = null,
+            $link = DatabaseInterface::CONNECT_USER,
+            int $options = 0
     );
 
     /**
@@ -426,9 +426,9 @@ interface DbalInterface
      * @return array the procedure names or function names
      */
     public function getProceduresOrFunctions(
-        string $db,
-        string $which,
-        $link = DatabaseInterface::CONNECT_USER
+            string $db,
+            string $which,
+            $link = DatabaseInterface::CONNECT_USER
     ): array;
 
     /**
@@ -442,10 +442,10 @@ interface DbalInterface
      * @return string|null the definition
      */
     public function getDefinition(
-        string $db,
-        string $which,
-        string $name,
-        $link = DatabaseInterface::CONNECT_USER
+            string $db,
+            string $which,
+            string $name,
+            $link = DatabaseInterface::CONNECT_USER
     ): ?string;
 
     /**

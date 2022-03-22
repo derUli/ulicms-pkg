@@ -19,10 +19,9 @@ use Twig\Token;
 /**
  * Marks a section of a template to be escaped or not.
  */
-final class AutoEscapeTokenParser extends AbstractTokenParser
-{
-    public function parse(Token $token)
-    {
+final class AutoEscapeTokenParser extends AbstractTokenParser {
+
+    public function parse(Token $token) {
         $lineno = $token->getLine();
         $stream = $this->parser->getStream();
 
@@ -43,15 +42,14 @@ final class AutoEscapeTokenParser extends AbstractTokenParser
         return new AutoEscapeNode($value, $body, $lineno, $this->getTag());
     }
 
-    public function decideBlockEnd(Token $token)
-    {
+    public function decideBlockEnd(Token $token) {
         return $token->test('endautoescape');
     }
 
-    public function getTag()
-    {
+    public function getTag() {
         return 'autoescape';
     }
+
 }
 
 class_alias('Twig\TokenParser\AutoEscapeTokenParser', 'Twig_TokenParser_AutoEscape');

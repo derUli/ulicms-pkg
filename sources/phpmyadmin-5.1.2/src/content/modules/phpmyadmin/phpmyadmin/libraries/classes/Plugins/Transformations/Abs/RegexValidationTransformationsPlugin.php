@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Abstract class for the regex validation input transformations plugins
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Plugins\Transformations\Abs;
@@ -17,19 +17,18 @@ use function sprintf;
  * Provides common methods for all of the regex validation
  * input transformations plugins.
  */
-abstract class RegexValidationTransformationsPlugin extends IOTransformationsPlugin
-{
+abstract class RegexValidationTransformationsPlugin extends IOTransformationsPlugin {
+
     /**
      * Gets the transformation description of the specific plugin
      *
      * @return string
      */
-    public static function getInfo()
-    {
+    public static function getInfo() {
         return __(
-            'Validates the string using regular expression '
-            . 'and performs insert only if string matches it. '
-            . 'The first option is the Regular Expression.'
+                'Validates the string using regular expression '
+                . 'and performs insert only if string matches it. '
+                . 'The first option is the Regular Expression.'
         );
     }
 
@@ -42,15 +41,14 @@ abstract class RegexValidationTransformationsPlugin extends IOTransformationsPlu
      *
      * @return string
      */
-    public function applyTransformation($buffer, array $options = [], ?stdClass $meta = null)
-    {
+    public function applyTransformation($buffer, array $options = [], ?stdClass $meta = null) {
         // reset properties of object
         $this->reset();
-        if (! empty($options[0]) && ! preg_match($options[0], $buffer)) {
+        if (!empty($options[0]) && !preg_match($options[0], $buffer)) {
             $this->success = false;
             $this->error = sprintf(
-                __('Validation failed for the input string %s.'),
-                htmlspecialchars($buffer)
+                    __('Validation failed for the input string %s.'),
+                    htmlspecialchars($buffer)
             );
         }
 
@@ -64,8 +62,8 @@ abstract class RegexValidationTransformationsPlugin extends IOTransformationsPlu
      *
      * @return string
      */
-    public static function getName()
-    {
+    public static function getName() {
         return 'Regex Validation';
     }
+
 }

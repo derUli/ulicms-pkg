@@ -19,21 +19,20 @@ use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
  *
  * @author Nicolas Grekas <p@tchwork.com>
  */
-final class ReverseContainer
-{
+final class ReverseContainer {
+
     private $serviceContainer;
     private $reversibleLocator;
     private $tagName;
     private $getServiceId;
 
-    public function __construct(Container $serviceContainer, ContainerInterface $reversibleLocator, string $tagName = 'container.reversible')
-    {
+    public function __construct(Container $serviceContainer, ContainerInterface $reversibleLocator, string $tagName = 'container.reversible') {
         $this->serviceContainer = $serviceContainer;
         $this->reversibleLocator = $reversibleLocator;
         $this->tagName = $tagName;
         $this->getServiceId = \Closure::bind(function ($service): ?string {
-            return array_search($service, $this->services, true) ?: array_search($service, $this->privates, true) ?: null;
-        }, $serviceContainer, Container::class);
+                    return array_search($service, $this->services, true) ?: array_search($service, $this->privates, true) ?: null;
+                }, $serviceContainer, Container::class);
     }
 
     /**
@@ -43,8 +42,7 @@ final class ReverseContainer
      *
      * @param object $service
      */
-    public function getId($service): ?string
-    {
+    public function getId($service): ?string {
         if ($this->serviceContainer === $service) {
             return 'service_container';
         }
@@ -65,8 +63,7 @@ final class ReverseContainer
      *
      * @throws ServiceNotFoundException When the service is not reversible
      */
-    public function getService(string $id)
-    {
+    public function getService(string $id) {
         if ($this->serviceContainer->has($id)) {
             return $this->serviceContainer->get($id);
         }
@@ -82,4 +79,5 @@ final class ReverseContainer
         // will throw a ServiceNotFoundException
         $this->serviceContainer->get($id);
     }
+
 }

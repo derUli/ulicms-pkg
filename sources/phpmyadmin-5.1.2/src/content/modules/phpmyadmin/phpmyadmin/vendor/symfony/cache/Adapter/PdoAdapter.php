@@ -17,8 +17,8 @@ use Symfony\Component\Cache\Marshaller\MarshallerInterface;
 use Symfony\Component\Cache\PruneableInterface;
 use Symfony\Component\Cache\Traits\PdoTrait;
 
-class PdoAdapter extends AbstractAdapter implements PruneableInterface
-{
+class PdoAdapter extends AbstractAdapter implements PruneableInterface {
+
     use PdoTrait;
 
     protected $maxIdLength = 255;
@@ -47,8 +47,8 @@ class PdoAdapter extends AbstractAdapter implements PruneableInterface
      * @throws InvalidArgumentException When PDO error mode is not PDO::ERRMODE_EXCEPTION
      * @throws InvalidArgumentException When namespace contains invalid characters
      */
-    public function __construct($connOrDsn, string $namespace = '', int $defaultLifetime = 0, array $options = [], MarshallerInterface $marshaller = null)
-    {
+    public function __construct($connOrDsn, string $namespace = '', int $defaultLifetime = 0, array $options = [], MarshallerInterface $marshaller = null) {
         $this->init($connOrDsn, $namespace, $defaultLifetime, $options, $marshaller);
     }
+
 }

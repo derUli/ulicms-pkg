@@ -19,14 +19,14 @@
  * @package PhpMyAdmin
  */
 (function ($) {
-    function MenuResizer ($container, widthCalculator) {
+    function MenuResizer($container, widthCalculator) {
         var self = this;
         self.$container = $container;
         self.widthCalculator = widthCalculator;
         var windowWidth = $(window).width();
 
         if (windowWidth < 768) {
-            $('#pma_navigation_resizer').css({ 'width': '0px' });
+            $('#pma_navigation_resizer').css({'width': '0px'});
         }
 
         // create submenu container
@@ -44,12 +44,12 @@
         if (img.length) {
             $(Functions.getImage('b_more').toString()).prependTo(link);
         }
-        var $submenu = $('<li></li>', { 'class': 'nav-item dropdown d-none' })
-            .append(link)
-            .append($('<ul></ul>', {
-                'class': 'dropdown-menu dropdown-menu-right',
-                'aria-labelledby': 'navbarDropdown'
-            }));
+        var $submenu = $('<li></li>', {'class': 'nav-item dropdown d-none'})
+                .append(link)
+                .append($('<ul></ul>', {
+                    'class': 'dropdown-menu dropdown-menu-right',
+                    'aria-labelledby': 'navbarDropdown'
+                }));
         $container.append($submenu);
         setTimeout(function () {
             self.resize();
@@ -89,7 +89,7 @@
             el.removeClass('nav-item').addClass('dropdown-item');
             var elWidth = el.outerWidth(true);
             el.data('width', elWidth);
-            if (! moreShown) {
+            if (!moreShown) {
                 totalLen -= elWidth;
                 el.prependTo($submenuUl);
                 totalLen += submenuW;
@@ -100,15 +100,15 @@
             }
         }
         // If we didn't hide any tabs, then there might be some space to show some
-        if (! hidden) {
+        if (!hidden) {
             // Show menu elements that do fit into the menubar
             for (i = 0, l = $li2.length; i < l; i++) {
                 totalLen += $($li2[i]).data('width');
                 // item fits or (it is the last item
                 // and it would fit if More got removed)
                 if (totalLen < wmax ||
-                    (i === $li2.length - 1 && totalLen - submenuW < wmax)
-                ) {
+                        (i === $li2.length - 1 && totalLen - submenuW < wmax)
+                        ) {
                     $($li2[i]).removeClass('dropdown-item').addClass('nav-item');
                     $($li2[i]).insertBefore($submenu);
                 } else {
@@ -118,12 +118,12 @@
         }
         // Show/hide the "More" tab as needed
         if (windowWidth < 768) {
-            $('.navbar-collapse').css({ 'width': windowWidth - 80 - $('#pma_navigation').width() });
+            $('.navbar-collapse').css({'width': windowWidth - 80 - $('#pma_navigation').width()});
             $submenu.addClass('d-none');
-            $('.navbar-collapse').css({ 'overflow': 'hidden' });
+            $('.navbar-collapse').css({'overflow': 'hidden'});
         } else {
-            $('.navbar-collapse').css({ 'width': 'auto' });
-            $('.navbar-collapse').css({ 'overflow': 'visible' });
+            $('.navbar-collapse').css({'width': 'auto'});
+            $('.navbar-collapse').css({'overflow': 'visible'});
             if ($submenuUl.find('li').length > 0) {
                 $submenu.removeClass('d-none');
             } else {
@@ -142,11 +142,11 @@
         init: function (widthCalculator) {
             return this.each(function () {
                 var $this = $(this);
-                if (! $this.data('menuResizer')) {
+                if (!$this.data('menuResizer')) {
                     $this.data(
-                        'menuResizer',
-                        new MenuResizer($this, widthCalculator)
-                    );
+                            'menuResizer',
+                            new MenuResizer($this, widthCalculator)
+                            );
                 }
             });
         },
@@ -175,7 +175,7 @@
         } else if (typeof method === 'function') {
             return methods.init.apply(this, [method]);
         } else {
-            $.error('Method ' +  method + ' does not exist on jQuery.menuResizer');
+            $.error('Method ' + method + ' does not exist on jQuery.menuResizer');
         }
     };
 }(jQuery));

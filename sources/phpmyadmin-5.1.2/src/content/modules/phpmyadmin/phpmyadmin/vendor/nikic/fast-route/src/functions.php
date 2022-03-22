@@ -3,14 +3,14 @@
 namespace FastRoute;
 
 if (!function_exists('FastRoute\simpleDispatcher')) {
+
     /**
      * @param callable $routeDefinitionCallback
      * @param array $options
      *
      * @return Dispatcher
      */
-    function simpleDispatcher(callable $routeDefinitionCallback, array $options = [])
-    {
+    function simpleDispatcher(callable $routeDefinitionCallback, array $options = []) {
         $options += [
             'routeParser' => 'FastRoute\\RouteParser\\Std',
             'dataGenerator' => 'FastRoute\\DataGenerator\\GroupCountBased',
@@ -20,7 +20,7 @@ if (!function_exists('FastRoute\simpleDispatcher')) {
 
         /** @var RouteCollector $routeCollector */
         $routeCollector = new $options['routeCollector'](
-            new $options['routeParser'], new $options['dataGenerator']
+                new $options['routeParser'], new $options['dataGenerator']
         );
         $routeDefinitionCallback($routeCollector);
 
@@ -33,8 +33,7 @@ if (!function_exists('FastRoute\simpleDispatcher')) {
      *
      * @return Dispatcher
      */
-    function cachedDispatcher(callable $routeDefinitionCallback, array $options = [])
-    {
+    function cachedDispatcher(callable $routeDefinitionCallback, array $options = []) {
         $options += [
             'routeParser' => 'FastRoute\\RouteParser\\Std',
             'dataGenerator' => 'FastRoute\\DataGenerator\\GroupCountBased',
@@ -56,7 +55,7 @@ if (!function_exists('FastRoute\simpleDispatcher')) {
         }
 
         $routeCollector = new $options['routeCollector'](
-            new $options['routeParser'], new $options['dataGenerator']
+                new $options['routeParser'], new $options['dataGenerator']
         );
         $routeDefinitionCallback($routeCollector);
 
@@ -64,11 +63,12 @@ if (!function_exists('FastRoute\simpleDispatcher')) {
         $dispatchData = $routeCollector->getData();
         if (!$options['cacheDisabled']) {
             file_put_contents(
-                $options['cacheFile'],
-                '<?php return ' . var_export($dispatchData, true) . ';'
+                    $options['cacheFile'],
+                    '<?php return ' . var_export($dispatchData, true) . ';'
             );
         }
 
         return new $options['dispatcher']($dispatchData);
     }
+
 }

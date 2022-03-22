@@ -29,8 +29,8 @@ use Symfony\Contracts\Service\ResetInterface;
  *
  * @author Kévin Dunglas <dunglas@gmail.com>
  */
-class ChainAdapter implements AdapterInterface, CacheInterface, PruneableInterface, ResettableInterface
-{
+class ChainAdapter implements AdapterInterface, CacheInterface, PruneableInterface, ResettableInterface {
+
     use ContractsTrait;
 
     private $adapters = [];
@@ -41,8 +41,7 @@ class ChainAdapter implements AdapterInterface, CacheInterface, PruneableInterfa
      * @param CacheItemPoolInterface[] $adapters        The ordered list of adapters used to fetch cached items
      * @param int                      $defaultLifetime The default lifetime of items propagated from lower adapters to upper ones
      */
-    public function __construct(array $adapters, int $defaultLifetime = 0)
-    {
+    public function __construct(array $adapters, int $defaultLifetime = 0) {
         if (!$adapters) {
             throw new InvalidArgumentException('At least one adapter must be specified.');
         }
@@ -64,33 +63,32 @@ class ChainAdapter implements AdapterInterface, CacheInterface, PruneableInterfa
         $this->adapterCount = \count($this->adapters);
 
         $this->syncItem = \Closure::bind(
-            static function ($sourceItem, $item, $sourceMetadata = null) use ($defaultLifetime) {
-                $sourceItem->isTaggable = false;
-                $sourceMetadata = $sourceMetadata ?? $sourceItem->metadata;
-                unset($sourceMetadata[CacheItem::METADATA_TAGS]);
+                        static function ($sourceItem, $item, $sourceMetadata = null) use ($defaultLifetime) {
+                            $sourceItem->isTaggable = false;
+                            $sourceMetadata = $sourceMetadata ?? $sourceItem->metadata;
+                            unset($sourceMetadata[CacheItem::METADATA_TAGS]);
 
-                $item->value = $sourceItem->value;
-                $item->isHit = $sourceItem->isHit;
-                $item->metadata = $item->newMetadata = $sourceItem->metadata = $sourceMetadata;
+                            $item->value = $sourceItem->value;
+                            $item->isHit = $sourceItem->isHit;
+                            $item->metadata = $item->newMetadata = $sourceItem->metadata = $sourceMetadata;
 
-                if (isset($item->metadata[CacheItem::METADATA_EXPIRY])) {
-                    $item->expiresAt(\DateTime::createFromFormat('U.u', sprintf('%.6F', $item->metadata[CacheItem::METADATA_EXPIRY])));
-                } elseif (0 < $defaultLifetime) {
-                    $item->expiresAfter($defaultLifetime);
-                }
+                            if (isset($item->metadata[CacheItem::METADATA_EXPIRY])) {
+                                $item->expiresAt(\DateTime::createFromFormat('U.u', sprintf('%.6F', $item->metadata[CacheItem::METADATA_EXPIRY])));
+                            } elseif (0 < $defaultLifetime) {
+                                $item->expiresAfter($defaultLifetime);
+                            }
 
-                return $item;
-            },
-            null,
-            CacheItem::class
+                            return $item;
+                        },
+                        null,
+                        CacheItem::class
         );
     }
 
     /**
      * {@inheritdoc}
      */
-    public function get(string $key, callable $callback, float $beta = null, array &$metadata = null)
-    {
+    public function get(string $key, callable $callback, float $beta = null, array &$metadata = null) {
         $lastItem = null;
         $i = 0;
         $wrap = function (CacheItem $item = null) use ($key, $callback, $beta, &$wrap, &$i, &$lastItem, &$metadata) {
@@ -117,8 +115,7 @@ class ChainAdapter implements AdapterInterface, CacheInterface, PruneableInterfa
     /**
      * {@inheritdoc}
      */
-    public function getItem($key)
-    {
+    public function getItem($key) {
         $syncItem = $this->syncItem;
         $misses = [];
 
@@ -142,13 +139,11 @@ class ChainAdapter implements AdapterInterface, CacheInterface, PruneableInterfa
     /**
      * {@inheritdoc}
      */
-    public function getItems(array $keys = [])
-    {
+    public function getItems(array $keys = []) {
         return $this->generateItems($this->adapters[0]->getItems($keys), 0);
     }
 
-    private function generateItems(iterable $items, int $adapterIndex)
-    {
+    private function generateItems(iterable $items, int $adapterIndex) {
         $missing = [];
         $misses = [];
         $nextAdapterIndex = $adapterIndex + 1;
@@ -183,8 +178,7 @@ class ChainAdapter implements AdapterInterface, CacheInterface, PruneableInterfa
      *
      * @return bool
      */
-    public function hasItem($key)
-    {
+    public function hasItem($key) {
         foreach ($this->adapters as $adapter) {
             if ($adapter->hasItem($key)) {
                 return true;
@@ -201,8 +195,7 @@ class ChainAdapter implements AdapterInterface, CacheInterface, PruneableInterfa
      *
      * @return bool
      */
-    public function clear(/*string $prefix = ''*/)
-    {
+    public function clear(/* string $prefix = '' */) {
         $prefix = 0 < \func_num_args() ? (string) func_get_arg(0) : '';
         $cleared = true;
         $i = $this->adapterCount;
@@ -223,8 +216,7 @@ class ChainAdapter implements AdapterInterface, CacheInterface, PruneableInterfa
      *
      * @return bool
      */
-    public function deleteItem($key)
-    {
+    public function deleteItem($key) {
         $deleted = true;
         $i = $this->adapterCount;
 
@@ -240,8 +232,7 @@ class ChainAdapter implements AdapterInterface, CacheInterface, PruneableInterfa
      *
      * @return bool
      */
-    public function deleteItems(array $keys)
-    {
+    public function deleteItems(array $keys) {
         $deleted = true;
         $i = $this->adapterCount;
 
@@ -257,8 +248,7 @@ class ChainAdapter implements AdapterInterface, CacheInterface, PruneableInterfa
      *
      * @return bool
      */
-    public function save(CacheItemInterface $item)
-    {
+    public function save(CacheItemInterface $item) {
         $saved = true;
         $i = $this->adapterCount;
 
@@ -274,8 +264,7 @@ class ChainAdapter implements AdapterInterface, CacheInterface, PruneableInterfa
      *
      * @return bool
      */
-    public function saveDeferred(CacheItemInterface $item)
-    {
+    public function saveDeferred(CacheItemInterface $item) {
         $saved = true;
         $i = $this->adapterCount;
 
@@ -291,8 +280,7 @@ class ChainAdapter implements AdapterInterface, CacheInterface, PruneableInterfa
      *
      * @return bool
      */
-    public function commit()
-    {
+    public function commit() {
         $committed = true;
         $i = $this->adapterCount;
 
@@ -306,8 +294,7 @@ class ChainAdapter implements AdapterInterface, CacheInterface, PruneableInterfa
     /**
      * {@inheritdoc}
      */
-    public function prune()
-    {
+    public function prune() {
         $pruned = true;
 
         foreach ($this->adapters as $adapter) {
@@ -322,12 +309,12 @@ class ChainAdapter implements AdapterInterface, CacheInterface, PruneableInterfa
     /**
      * {@inheritdoc}
      */
-    public function reset()
-    {
+    public function reset() {
         foreach ($this->adapters as $adapter) {
             if ($adapter instanceof ResetInterface) {
                 $adapter->reset();
             }
         }
     }
+
 }

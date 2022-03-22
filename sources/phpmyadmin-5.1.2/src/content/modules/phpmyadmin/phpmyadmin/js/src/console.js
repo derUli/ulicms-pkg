@@ -81,15 +81,15 @@ var Console = {
 
         // Generate a from for post
         Console.$requestForm = $('<form method="post" action="index.php?route=/import">' +
-            '<input name="is_js_confirmed" value="0">' +
-            '<textarea name="sql_query"></textarea>' +
-            '<input name="console_message_id" value="0">' +
-            '<input name="server" value="">' +
-            '<input name="db" value="">' +
-            '<input name="table" value="">' +
-            '<input name="token" value="">' +
-            '</form>'
-        );
+                '<input name="is_js_confirmed" value="0">' +
+                '<textarea name="sql_query"></textarea>' +
+                '<input name="console_message_id" value="0">' +
+                '<input name="server" value="">' +
+                '<input name="db" value="">' +
+                '<input name="table" value="">' +
+                '<input name="token" value="">' +
+                '</form>'
+                );
         Console.$requestForm.children('[name=token]').val(CommonParams.get('token'));
         Console.$requestForm.on('submit', AJAX.requestHandler);
 
@@ -201,19 +201,19 @@ var Console = {
 
         // Change console mode from cookie
         switch (Console.config.Mode) {
-        case 'collapse':
-            Console.collapse();
-            break;
-        case 'info':
-            Console.info();
-            break;
-        case 'show':
-            Console.show(true);
-            Console.scrollBottom();
-            break;
-        default:
-            Console.setConfig('Mode', 'info');
-            Console.info();
+            case 'collapse':
+                Console.collapse();
+                break;
+            case 'info':
+                Console.info();
+                break;
+            case 'show':
+                Console.show(true);
+                Console.scrollBottom();
+                break;
+            default:
+                Console.setConfig('Mode', 'info');
+                Console.info();
         }
     },
 
@@ -223,7 +223,7 @@ var Console = {
      * @return void
      */
     execute: function (queryString, options) {
-        if (typeof(queryString) !== 'string' || ! /[a-z]|[A-Z]/.test(queryString)) {
+        if (typeof (queryString) !== 'string' || !/[a-z]|[A-Z]/.test(queryString)) {
             return;
         }
         Console.$requestForm.children('textarea').val(queryString);
@@ -237,17 +237,17 @@ var Console = {
             }
         } else {
             Console.$requestForm.children('[name=db]').val(
-                (CommonParams.get('db').length > 0 ? CommonParams.get('db') : ''));
+                    (CommonParams.get('db').length > 0 ? CommonParams.get('db') : ''));
         }
         Console.$requestForm.find('[name=profiling]').remove();
         if (options && options.profiling === true) {
             Console.$requestForm.append('<input name="profiling" value="on">');
         }
-        if (! Functions.confirmQuery(Console.$requestForm[0], Console.$requestForm.children('textarea')[0].value)) {
+        if (!Functions.confirmQuery(Console.$requestForm[0], Console.$requestForm.children('textarea')[0].value)) {
             return;
         }
         Console.$requestForm.children('[name=console_message_id]')
-            .val(ConsoleMessages.appendQuery({ 'sql_query': queryString }).message_id);
+                .val(ConsoleMessages.appendQuery({'sql_query': queryString}).message_id);
         Console.$requestForm.trigger('submit');
         ConsoleInput.clear();
         Navigation.reload();
@@ -255,11 +255,11 @@ var Console = {
     ajaxCallback: function (data) {
         if (data && data.console_message_id) {
             ConsoleMessages.updateQuery(data.console_message_id, data.success,
-                (data.reloadQuerywindow ? data.reloadQuerywindow : false));
+                    (data.reloadQuerywindow ? data.reloadQuerywindow : false));
         } else if (data && data.reloadQuerywindow) {
             if (data.reloadQuerywindow.sql_query.length > 0) {
                 ConsoleMessages.appendQuery(data.reloadQuerywindow, 'successed')
-                    .$message.addClass(Console.config.CurrentQuery ? '' : 'hide');
+                        .$message.addClass(Console.config.CurrentQuery ? '' : 'hide');
             }
         }
     },
@@ -275,11 +275,11 @@ var Console = {
         Console.$consoleToolbar.addClass('collapsed');
         Console.$consoleAllContents.height(pmaConsoleHeight);
         Console.$consoleContent.stop();
-        Console.$consoleContent.animate({ 'margin-bottom': -1 * Console.$consoleContent.outerHeight() + 'px' },
-            'fast', 'easeOutQuart', function () {
-                Console.$consoleContent.css({ display:'none' });
-                $(window).trigger('resize');
-            });
+        Console.$consoleContent.animate({'margin-bottom': -1 * Console.$consoleContent.outerHeight() + 'px'},
+                'fast', 'easeOutQuart', function () {
+                    Console.$consoleContent.css({display: 'none'});
+                    $(window).trigger('resize');
+                });
         Console.hideCard();
     },
     /**
@@ -294,19 +294,19 @@ var Console = {
         var pmaConsoleHeight = Math.max(92, Console.config.Height);
         // eslint-disable-next-line compat/compat
         pmaConsoleHeight = Math.min(Console.config.Height, (window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight) - 25);
-        Console.$consoleContent.css({ display:'block' });
+        Console.$consoleContent.css({display: 'block'});
         if (Console.$consoleToolbar.hasClass('collapsed')) {
             Console.$consoleToolbar.removeClass('collapsed');
         }
         Console.$consoleAllContents.height(pmaConsoleHeight);
         Console.$consoleContent.stop();
-        Console.$consoleContent.animate({ 'margin-bottom': 0 },
-            'fast', 'easeOutQuart', function () {
-                $(window).trigger('resize');
-                if (inputFocus) {
-                    ConsoleInput.focus();
-                }
-            });
+        Console.$consoleContent.animate({'margin-bottom': 0},
+                'fast', 'easeOutQuart', function () {
+                    $(window).trigger('resize');
+                    if (inputFocus) {
+                        ConsoleInput.focus();
+                    }
+                });
     },
     /**
      * Change console to SQL information mode
@@ -327,13 +327,13 @@ var Console = {
      */
     toggle: function () {
         switch (Console.config.Mode) {
-        case 'collapse':
-        case 'info':
-            Console.show(true);
-            break;
-        case 'show':
-            Console.collapse();
-            break;
+            case 'collapse':
+            case 'info':
+                Console.show(true);
+                break;
+            case 'show':
+                Console.collapse();
+                break;
         }
     },
     /**
@@ -354,7 +354,7 @@ var Console = {
      */
     showCard: function (cardSelector) {
         var $card = null;
-        if (typeof(cardSelector) !== 'string') {
+        if (typeof (cardSelector) !== 'string') {
             if (cardSelector.length > 0) {
                 $card = cardSelector;
             } else {
@@ -380,7 +380,7 @@ var Console = {
      * @return void
      */
     hideCard: function ($targetCard) {
-        if (! $targetCard) {
+        if (!$targetCard) {
             $('#pma_console').find('.mid_layer').fadeOut(140);
             $('#pma_console').find('.card').removeClass('show');
         } else if ($targetCard.length > 0) {
@@ -461,7 +461,7 @@ var ConsoleResizer = {
         } else {
             // Logic below makes viewable area always at bottom when adjusting height and content already at bottom
             if (Console.$consoleContent.scrollTop() + Console.$consoleContent.innerHeight() + 16
-                >= Console.$consoleContent.prop('scrollHeight')) {
+                    >= Console.$consoleContent.prop('scrollHeight')) {
                 Console.$consoleAllContents.height(ConsoleResizer.resultHeight);
                 Console.scrollBottom();
             } else {
@@ -536,8 +536,8 @@ var ConsoleInput = {
                 theme: 'pma',
                 mode: 'text/x-sql',
                 lineWrapping: true,
-                extraKeys: { 'Ctrl-Space': 'autocomplete' },
-                hintOptions: { 'completeSingle': false, 'completeOnSingleClick': true },
+                extraKeys: {'Ctrl-Space': 'autocomplete'},
+                hintOptions: {'completeSingle': false, 'completeOnSingleClick': true},
                 gutters: ['CodeMirror-lint-markers'],
                 lint: {
                     'getAnnotations': CodeMirror.sqlLint,
@@ -554,8 +554,8 @@ var ConsoleInput = {
                     theme: 'pma',
                     mode: 'text/x-sql',
                     lineWrapping: true,
-                    extraKeys: { 'Ctrl-Space': 'autocomplete' },
-                    hintOptions: { 'completeSingle': false, 'completeOnSingleClick': true },
+                    extraKeys: {'Ctrl-Space': 'autocomplete'},
+                    hintOptions: {'completeSingle': false, 'completeOnSingleClick': true},
                     gutters: ['CodeMirror-lint-markers'],
                     lint: {
                         'getAnnotations': CodeMirror.sqlLint,
@@ -566,11 +566,11 @@ var ConsoleInput = {
             }
         } else {
             ConsoleInput.inputs.console =
-                $('<textarea>').appendTo('#pma_console .console_query_input')
+                    $('<textarea>').appendTo('#pma_console .console_query_input')
                     .on('keydown', ConsoleInput.historyNavigate);
             if ($('#pma_bookmarks').length !== 0) {
                 ConsoleInput.inputs.bookmark =
-                    $('<textarea>').appendTo('#pma_console .bookmark_add_input');
+                        $('<textarea>').appendTo('#pma_console .bookmark_add_input');
             }
         }
         $('#pma_console').find('.console_query_input').on('keydown', ConsoleInput.keyDown);
@@ -708,40 +708,40 @@ var ConsoleInput = {
     setText: function (text, target) {
         if (ConsoleInput.codeMirror) {
             switch (target) {
-            case 'bookmark':
-                Console.execute(ConsoleInput.inputs.bookmark.setValue(text));
-                break;
-            default:
-            case 'console':
-                Console.execute(ConsoleInput.inputs.console.setValue(text));
+                case 'bookmark':
+                    Console.execute(ConsoleInput.inputs.bookmark.setValue(text));
+                    break;
+                default:
+                case 'console':
+                    Console.execute(ConsoleInput.inputs.console.setValue(text));
             }
         } else {
             switch (target) {
-            case 'bookmark':
-                Console.execute(ConsoleInput.inputs.bookmark.val(text));
-                break;
-            default:
-            case 'console':
-                Console.execute(ConsoleInput.inputs.console.val(text));
+                case 'bookmark':
+                    Console.execute(ConsoleInput.inputs.bookmark.val(text));
+                    break;
+                default:
+                case 'console':
+                    Console.execute(ConsoleInput.inputs.console.val(text));
             }
         }
     },
     getText: function (target) {
         if (ConsoleInput.codeMirror) {
             switch (target) {
-            case 'bookmark':
-                return ConsoleInput.inputs.bookmark.getValue();
-            default:
-            case 'console':
-                return ConsoleInput.inputs.console.getValue();
+                case 'bookmark':
+                    return ConsoleInput.inputs.bookmark.getValue();
+                default:
+                case 'console':
+                    return ConsoleInput.inputs.console.getValue();
             }
         } else {
             switch (target) {
-            case 'bookmark':
-                return ConsoleInput.inputs.bookmark.val();
-            default:
-            case 'console':
-                return ConsoleInput.inputs.console.val();
+                case 'bookmark':
+                    return ConsoleInput.inputs.bookmark.val();
+                default:
+                case 'console':
+                    return ConsoleInput.inputs.console.val();
             }
         }
     }
@@ -807,36 +807,36 @@ var ConsoleMessages = {
      * @return object, {message_id, $message}
      */
     append: function (msgString, msgType) {
-        if (typeof(msgString) !== 'string') {
+        if (typeof (msgString) !== 'string') {
             return false;
         }
         // Generate an ID for each message, we can find them later
         var msgId = Math.round(Math.random() * (899999999999) + 100000000000);
         var now = new Date();
         var $newMessage =
-            $('<div class="message ' +
-                (Console.config.AlwaysExpand ? 'expanded' : 'collapsed') +
-                '" msgid="' + msgId + '"><div class="action_content"></div></div>');
+                $('<div class="message ' +
+                        (Console.config.AlwaysExpand ? 'expanded' : 'collapsed') +
+                        '" msgid="' + msgId + '"><div class="action_content"></div></div>');
         switch (msgType) {
-        case 'query':
-            $newMessage.append('<div class="query highlighted"></div>');
-            if (ConsoleInput.codeMirror) {
-                CodeMirror.runMode(msgString,
-                    'text/x-sql', $newMessage.children('.query')[0]);
-            } else {
-                $newMessage.children('.query').text(msgString);
-            }
-            $newMessage.children('.action_content')
-                .append(Console.$consoleTemplates.children('.query_actions').html());
-            break;
-        default:
-        case 'normal':
-            $newMessage.append('<div>' + msgString + '</div>');
+            case 'query':
+                $newMessage.append('<div class="query highlighted"></div>');
+                if (ConsoleInput.codeMirror) {
+                    CodeMirror.runMode(msgString,
+                            'text/x-sql', $newMessage.children('.query')[0]);
+                } else {
+                    $newMessage.children('.query').text(msgString);
+                }
+                $newMessage.children('.action_content')
+                        .append(Console.$consoleTemplates.children('.query_actions').html());
+                break;
+            default:
+            case 'normal':
+                $newMessage.append('<div>' + msgString + '</div>');
         }
         ConsoleMessages.messageEventBinds($newMessage);
         $newMessage.find('span.text.query_time span')
-            .text(now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds())
-            .parent().attr('title', now);
+                .text(now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds())
+                .parent().attr('title', now);
         return {
             'message_id': msgId,
             $message: $newMessage.appendTo('#pma_console .content .console_message_container')
@@ -852,7 +852,7 @@ var ConsoleMessages = {
      */
     appendQuery: function (queryData, state) {
         var targetMessage = ConsoleMessages.append(queryData.sql_query, 'query');
-        if (! targetMessage) {
+        if (!targetMessage) {
             return false;
         }
         if (queryData.db && queryData.table) {
@@ -864,15 +864,15 @@ var ConsoleMessages = {
             targetMessage.$message.addClass('select');
         }
         switch (state) {
-        case 'failed':
-            targetMessage.$message.addClass('failed');
-            break;
-        case 'successed':
-            targetMessage.$message.addClass('successed');
-            break;
-        default:
-        case 'pending':
-            targetMessage.$message.addClass('pending');
+            case 'failed':
+                targetMessage.$message.addClass('failed');
+                break;
+            case 'successed':
+                targetMessage.$message.addClass('successed');
+                break;
+            default:
+            case 'pending':
+                targetMessage.$message.addClass('pending');
         }
         return targetMessage;
     },
@@ -900,9 +900,9 @@ var ConsoleMessages = {
             var query = $(this).parent().siblings('.query').text();
             var $message = $(this).closest('.message');
             if (confirm(Messages.strConsoleRequeryConfirm + '\n' +
-                (query.length < 100 ? query : query.slice(0, 100) + '...'))
-            ) {
-                Console.execute(query, { db: $message.attr('targetdb'), table: $message.attr('targettable') });
+                    (query.length < 100 ? query : query.slice(0, 100) + '...'))
+                    ) {
+                Console.execute(query, {db: $message.attr('targetdb'), table: $message.attr('targettable')});
             }
         });
         $targetMessage.find('.action.bookmark').on('click', function () {
@@ -923,38 +923,38 @@ var ConsoleMessages = {
             var $message = $(this).closest('.message');
             if (confirm(Messages.strConsoleDeleteBookmarkConfirm + '\n' + $message.find('.bookmark_label').text())) {
                 $.post('index.php?route=/import',
-                    {
-                        'server': CommonParams.get('server'),
-                        'action_bookmark': 2,
-                        'ajax_request': true,
-                        'id_bookmark': $message.attr('bookmarkid')
-                    },
-                    function () {
-                        ConsoleBookmarks.refresh();
-                    });
+                        {
+                            'server': CommonParams.get('server'),
+                            'action_bookmark': 2,
+                            'ajax_request': true,
+                            'id_bookmark': $message.attr('bookmarkid')
+                        },
+                        function () {
+                            ConsoleBookmarks.refresh();
+                        });
             }
         });
         $targetMessage.find('.action.profiling').on('click', function () {
             var $message = $(this).closest('.message');
             Console.execute($(this).parent().siblings('.query').text(),
-                { db: $message.attr('targetdb'),
-                    table: $message.attr('targettable'),
-                    profiling: true });
+                    {db: $message.attr('targetdb'),
+                        table: $message.attr('targettable'),
+                        profiling: true});
         });
         $targetMessage.find('.action.explain').on('click', function () {
             var $message = $(this).closest('.message');
             Console.execute('EXPLAIN ' + $(this).parent().siblings('.query').text(),
-                { db: $message.attr('targetdb'),
-                    table: $message.attr('targettable') });
+                    {db: $message.attr('targetdb'),
+                        table: $message.attr('targettable')});
         });
         $targetMessage.find('.action.dbg_show_trace').on('click', function () {
             var $message = $(this).closest('.message');
             if (!$message.find('.trace').length) {
                 ConsoleDebug.getQueryDetails(
-                    $message.data('queryInfo'),
-                    $message.data('totalTime'),
-                    $message
-                );
+                        $message.data('queryInfo'),
+                        $message.data('totalTime'),
+                        $message
+                        );
                 ConsoleMessages.messageEventBinds($message.find('.message:not(.binded)'));
             }
             $message.addClass('show_trace');
@@ -978,14 +978,14 @@ var ConsoleMessages = {
         if (ConsoleInput.codeMirror) {
             $targetMessage.find('.query:not(.highlighted)').each(function (index, elem) {
                 CodeMirror.runMode($(elem).text(),
-                    'text/x-sql', elem);
+                        'text/x-sql', elem);
                 $(this).addClass('highlighted');
             });
         }
     },
     msgAppend: function (msgId, msgString) {
         var $targetMessage = $('#pma_console').find('.content .console_message_container .message[msgid=' + msgId + ']');
-        if ($targetMessage.length === 0 || isNaN(parseInt(msgId)) || typeof(msgString) !== 'string') {
+        if ($targetMessage.length === 0 || isNaN(parseInt(msgId)) || typeof (msgString) !== 'string') {
             return false;
         }
         $targetMessage.append('<div>' + msgString + '</div>');
@@ -1058,17 +1058,17 @@ var ConsoleBookmarks = {
     },
     refresh: function () {
         $.get('index.php?route=/import',
-            {
-                'ajax_request': true,
-                'server': CommonParams.get('server'),
-                'console_bookmark_refresh': 'refresh'
-            },
-            function (data) {
-                if (data.console_message_bookmark) {
-                    $('#pma_bookmarks').find('.content.bookmark').html(data.console_message_bookmark);
-                    ConsoleMessages.messageEventBinds($('#pma_bookmarks').find('.message:not(.binded)'));
-                }
-            });
+                {
+                    'ajax_request': true,
+                    'server': CommonParams.get('server'),
+                    'console_bookmark_refresh': 'refresh'
+                },
+                function (data) {
+                    if (data.console_message_bookmark) {
+                        $('#pma_bookmarks').find('.content.bookmark').html(data.console_message_bookmark);
+                        ConsoleMessages.messageEventBinds($('#pma_bookmarks').find('.message:not(.binded)'));
+                    }
+                });
     },
     /**
      * Used for console bookmarks initialize
@@ -1088,26 +1088,26 @@ var ConsoleBookmarks = {
         });
         $('#pma_bookmarks').find('.card.add [name=submit]').on('click', function () {
             if ($('#pma_bookmarks').find('.card.add [name=label]').val().length === 0
-                || ConsoleInput.getText('bookmark').length === 0) {
+                    || ConsoleInput.getText('bookmark').length === 0) {
                 alert(Messages.strFormEmpty);
                 return;
             }
             $(this).prop('disabled', true);
             $.post('index.php?route=/import',
-                {
-                    'ajax_request': true,
-                    'console_bookmark_add': 'true',
-                    'label': $('#pma_bookmarks').find('.card.add [name=label]').val(),
-                    'server': CommonParams.get('server'),
-                    'db': $('#pma_bookmarks').find('.card.add [name=targetdb]').val(),
-                    'bookmark_query': ConsoleInput.getText('bookmark'),
-                    'shared': $('#pma_bookmarks').find('.card.add [name=shared]').prop('checked')
-                },
-                function () {
-                    ConsoleBookmarks.refresh();
-                    $('#pma_bookmarks').find('.card.add [name=submit]').prop('disabled', false);
-                    Console.hideCard($('#pma_bookmarks').find('.card.add'));
-                });
+                    {
+                        'ajax_request': true,
+                        'console_bookmark_add': 'true',
+                        'label': $('#pma_bookmarks').find('.card.add [name=label]').val(),
+                        'server': CommonParams.get('server'),
+                        'db': $('#pma_bookmarks').find('.card.add [name=targetdb]').val(),
+                        'bookmark_query': ConsoleInput.getText('bookmark'),
+                        'shared': $('#pma_bookmarks').find('.card.add [name=shared]').prop('checked')
+                    },
+                    function () {
+                        ConsoleBookmarks.refresh();
+                        $('#pma_bookmarks').find('.card.add [name=submit]').prop('disabled', false);
+                        Console.hideCard($('#pma_bookmarks').find('.card.add'));
+                    });
         });
         $('#pma_console').find('.button.refresh').on('click', function () {
             ConsoleBookmarks.refresh();
@@ -1216,24 +1216,24 @@ var ConsoleDebug = {
         var $args = $('<div>');
         if (dbgStep.args.length) {
             $args.append('<div class="message welcome">')
-                .append(
-                    $('<div class="message welcome">')
-                        .text(
-                            Functions.sprintf(
-                                Messages.strConsoleDebugArgsSummary,
-                                dbgStep.args.length
-                            )
-                        )
-                );
+                    .append(
+                            $('<div class="message welcome">')
+                            .text(
+                                    Functions.sprintf(
+                                            Messages.strConsoleDebugArgsSummary,
+                                            dbgStep.args.length
+                                            )
+                                    )
+                            );
             for (var i = 0; i < dbgStep.args.length; i++) {
                 $args.append(
-                    $('<div class="message">')
+                        $('<div class="message">')
                         .html(
-                            '<pre>' +
-                        Functions.escapeHtml(JSON.stringify(dbgStep.args[i], null, '  ')) +
-                        '</pre>'
-                        )
-                );
+                                '<pre>' +
+                                Functions.escapeHtml(JSON.stringify(dbgStep.args[i], null, '  ')) +
+                                '</pre>'
+                                )
+                        );
             }
         }
         return $args;
@@ -1249,8 +1249,8 @@ var ConsoleDebug = {
     formatBackTrace: function (dbgTrace) {
         var $traceElem = $('<div class="trace">');
         $traceElem.append(
-            $('<div class="message welcome">')
-        );
+                $('<div class="message welcome">')
+                );
         var step;
         var $stepElem;
         for (var stepId in dbgTrace) {
@@ -1258,40 +1258,40 @@ var ConsoleDebug = {
                 step = dbgTrace[stepId];
                 if (!Array.isArray(step) && typeof step !== 'object') {
                     $stepElem =
-                        $('<div class="message traceStep collapsed hide_args">')
+                            $('<div class="message traceStep collapsed hide_args">')
                             .append(
-                                $('<span>').text(step)
-                            );
+                                    $('<span>').text(step)
+                                    );
                 } else {
                     if (typeof step.args === 'string' && step.args) {
                         step.args = [step.args];
                     }
                     $stepElem =
-                        $('<div class="message traceStep collapsed hide_args">')
+                            $('<div class="message traceStep collapsed hide_args">')
                             .append(
-                                $('<span class="function">').text(this.formatFunctionCall(step))
-                            )
+                                    $('<span class="function">').text(this.formatFunctionCall(step))
+                                    )
                             .append(
-                                $('<span class="file">').text(this.formatFileName(step))
-                            );
+                                    $('<span class="file">').text(this.formatFileName(step))
+                                    );
                     if (step.args && step.args.length) {
                         $stepElem
-                            .append(
-                                $('<span class="args">').html(this.formatFunctionArgs(step))
-                            )
-                            .prepend(
-                                $('<div class="action_content">')
-                                    .append(
-                                        '<span class="action dbg_show_args">' +
-                                Messages.strConsoleDebugShowArgs +
-                                '</span> '
-                                    )
-                                    .append(
-                                        '<span class="action dbg_hide_args">' +
-                                Messages.strConsoleDebugHideArgs +
-                                '</span> '
-                                    )
-                            );
+                                .append(
+                                        $('<span class="args">').html(this.formatFunctionArgs(step))
+                                        )
+                                .prepend(
+                                        $('<div class="action_content">')
+                                        .append(
+                                                '<span class="action dbg_show_args">' +
+                                                Messages.strConsoleDebugShowArgs +
+                                                '</span> '
+                                                )
+                                        .append(
+                                                '<span class="action dbg_hide_args">' +
+                                                Messages.strConsoleDebugHideArgs +
+                                                '</span> '
+                                                )
+                                        );
                     }
                 }
                 $traceElem.append($stepElem);
@@ -1323,15 +1323,15 @@ var ConsoleDebug = {
         }
 
         var $query = $('<div class="message collapsed hide_trace">')
-            .append(
-                $('#debug_console').find('.templates .debug_query').clone()
-            )
-            .append(
-                $('<div class="query">')
-                    .text(queryText)
-            )
-            .data('queryInfo', queryInfo)
-            .data('totalTime', totalTime);
+                .append(
+                        $('#debug_console').find('.templates .debug_query').clone()
+                        )
+                .append(
+                        $('<div class="query">')
+                        .text(queryText)
+                        )
+                .data('queryInfo', queryInfo)
+                .data('totalTime', totalTime);
         if (grouped) {
             $query.find('.text.count').removeClass('hide');
             $query.find('.text.count span').text(count);
@@ -1343,8 +1343,8 @@ var ConsoleDebug = {
     appendQueryExtraInfo: function (query, $elem) {
         if ('error' in query) {
             $elem.append(
-                $('<div>').html(query.error)
-            );
+                    $('<div>').html(query.error)
+                    );
         }
         $elem.append(this.formatBackTrace(query.trace));
     },
@@ -1353,18 +1353,18 @@ var ConsoleDebug = {
             var $singleQuery;
             for (var i in queryInfo) {
                 $singleQuery = $('<div class="message welcome trace">')
-                    .text((parseInt(i) + 1) + '.')
-                    .append(
-                        $('<span class="time">').text(
-                            Messages.strConsoleDebugTimeTaken +
-                        ' ' + queryInfo[i].time + 's' +
-                        ' (' + ((queryInfo[i].time * 100) / totalTime).toFixed(3) + '%)'
-                        )
-                    );
+                        .text((parseInt(i) + 1) + '.')
+                        .append(
+                                $('<span class="time">').text(
+                                Messages.strConsoleDebugTimeTaken +
+                                ' ' + queryInfo[i].time + 's' +
+                                ' (' + ((queryInfo[i].time * 100) / totalTime).toFixed(3) + '%)'
+                                )
+                                );
                 this.appendQueryExtraInfo(queryInfo[i], $singleQuery);
                 $query
-                    .append('<div class="message welcome trace">')
-                    .append($singleQuery);
+                        .append('<div class="message welcome trace">')
+                        .append($singleQuery);
             }
         } else {
             this.appendQueryExtraInfo(queryInfo, $query);
@@ -1384,7 +1384,7 @@ var ConsoleDebug = {
             if (!('queries' in debugInfo)) {
                 debugJson = false;
             } else {
-                debugJson = { queries: [] };
+                debugJson = {queries: []};
                 for (i in debugInfo.queries) {
                     debugJson.queries[i] = debugInfo.queries[i];
                 }
@@ -1401,8 +1401,8 @@ var ConsoleDebug = {
         }
         if (debugJson === false) {
             $('#debug_console').find('.debug>.welcome').text(
-                Messages.strConsoleDebugError
-            );
+                    Messages.strConsoleDebugError
+                    );
             return;
         }
         var allQueries = debugJson.queries;
@@ -1431,23 +1431,23 @@ var ConsoleDebug = {
         uniqueQueries = uniqueArray;
         // Show summary
         $('#debug_console').find('.debug>.welcome').append(
-            $('<span class="debug_summary">').text(
+                $('<span class="debug_summary">').text(
                 Functions.sprintf(
-                    Messages.strConsoleDebugSummary,
-                    totalUnique,
-                    totalExec,
-                    totalTime
+                        Messages.strConsoleDebugSummary,
+                        totalUnique,
+                        totalExec,
+                        totalTime
+                        )
                 )
-            )
-        );
+                );
         if (url) {
             $('#debug_console').find('.debug>.welcome').append(
-                $('<span class="script_name">').text(url.split('?')[0])
-            );
+                    $('<span class="script_name">').text(url.split('?')[0])
+                    );
         }
 
         // For sorting queries
-        function sortByTime (a, b) {
+        function sortByTime(a, b) {
             var order = ((Console.config.Order === 'asc') ? 1 : -1);
             if (Array.isArray(a) && Array.isArray(b)) {
                 // It is grouped
@@ -1466,7 +1466,7 @@ var ConsoleDebug = {
             }
         }
 
-        function sortByCount (a, b) {
+        function sortByCount(a, b) {
             var order = ((Console.config.Oorder === 'asc') ? 1 : -1);
             return (a.length - b.length) * order;
         }

@@ -8,8 +8,8 @@ use PhpMyAdmin\Twig\Extensions\TokenParser\TransTokenParser;
 use Twig\Error\SyntaxError;
 use Twig\Token;
 
-class TokenParserTrans extends TransTokenParser
-{
+class TokenParserTrans extends TransTokenParser {
+
     /**
      * Parses a token and returns a node.
      *
@@ -19,8 +19,7 @@ class TokenParserTrans extends TransTokenParser
      *
      * @throws SyntaxError
      */
-    public function parse(Token $token)
-    {
+    public function parse(Token $token) {
         $lineno = $token->getLine();
         $stream = $this->parser->getStream();
         $count = null;
@@ -28,7 +27,7 @@ class TokenParserTrans extends TransTokenParser
         $notes = null;
         $context = null;
 
-        if (! $stream->test(Token::BLOCK_END_TYPE)) {
+        if (!$stream->test(Token::BLOCK_END_TYPE)) {
             $body = $this->parser->getExpressionParser()->parseExpression();
         } else {
             $stream->expect(Token::BLOCK_END_TYPE);
@@ -67,8 +66,8 @@ class TokenParserTrans extends TransTokenParser
      *
      * @return bool
      */
-    public function decideForFork(Token $token)
-    {
+    public function decideForFork(Token $token) {
         return $token->test(['plural', 'context', 'notes', 'endtrans']);
     }
+
 }

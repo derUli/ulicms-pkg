@@ -19,20 +19,19 @@ use Twig\Node\Node;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class LeaveProfileNode extends Node
-{
-    public function __construct(string $varName)
-    {
+class LeaveProfileNode extends Node {
+
+    public function __construct(string $varName) {
         parent::__construct([], ['var_name' => $varName]);
     }
 
-    public function compile(Compiler $compiler)
-    {
+    public function compile(Compiler $compiler) {
         $compiler
-            ->write("\n")
-            ->write(sprintf("\$%s->leave(\$%s);\n\n", $this->getAttribute('var_name'), $this->getAttribute('var_name').'_prof'))
+                ->write("\n")
+                ->write(sprintf("\$%s->leave(\$%s);\n\n", $this->getAttribute('var_name'), $this->getAttribute('var_name') . '_prof'))
         ;
     }
+
 }
 
 class_alias('Twig\Profiler\Node\LeaveProfileNode', 'Twig_Profiler_Node_LeaveProfile');

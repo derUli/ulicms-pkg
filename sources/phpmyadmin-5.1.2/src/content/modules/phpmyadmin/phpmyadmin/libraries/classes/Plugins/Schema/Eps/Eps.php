@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Classes to create relation schema in EPS format.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Plugins\Schema\Eps;
@@ -19,8 +19,8 @@ use function strlen;
  *
  * @access  public
  */
-class Eps
-{
+class Eps {
+
     /** @var string */
     public $font;
 
@@ -37,8 +37,7 @@ class Eps
      * Document Structuring Convention [DSC] and is Compliant
      * Encapsulated Post Script Document
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->stringCommands = '';
         $this->stringCommands .= "%!PS-Adobe-3.0 EPSF-3.0 \n";
     }
@@ -50,8 +49,7 @@ class Eps
      *
      * @return void
      */
-    public function setTitle($value)
-    {
+    public function setTitle($value) {
         $this->stringCommands .= '%%Title: ' . $value . "\n";
     }
 
@@ -62,8 +60,7 @@ class Eps
      *
      * @return void
      */
-    public function setAuthor($value)
-    {
+    public function setAuthor($value) {
         $this->stringCommands .= '%%Creator: ' . $value . "\n";
     }
 
@@ -74,8 +71,7 @@ class Eps
      *
      * @return void
      */
-    public function setDate($value)
-    {
+    public function setDate($value) {
         $this->stringCommands .= '%%CreationDate: ' . $value . "\n";
     }
 
@@ -86,8 +82,7 @@ class Eps
      *
      * @return void
      */
-    public function setOrientation($orientation)
-    {
+    public function setOrientation($orientation) {
         $this->stringCommands .= "%%PageOrder: Ascend \n";
         if ($orientation === 'L') {
             $orientation = 'Landscape';
@@ -111,15 +106,13 @@ class Eps
      *
      * @return void
      */
-    public function setFont($value, $size)
-    {
+    public function setFont($value, $size) {
         $this->font = $value;
         $this->fontSize = $size;
         $this->stringCommands .= '/' . $value . " findfont   % Get the basic font\n";
         $this->stringCommands .= ''
-            . $size . ' scalefont            % Scale the font to ' . $size . " points\n";
-        $this->stringCommands
-            .= "setfont                 % Make it the current font\n";
+                . $size . ' scalefont            % Scale the font to ' . $size . " points\n";
+        $this->stringCommands .= "setfont                 % Make it the current font\n";
     }
 
     /**
@@ -127,8 +120,7 @@ class Eps
      *
      * @return string return the font name e.g Arial
      */
-    public function getFont()
-    {
+    public function getFont() {
         return $this->font;
     }
 
@@ -137,8 +129,7 @@ class Eps
      *
      * @return string|int return the size of the font e.g 10
      */
-    public function getFontSize()
-    {
+    public function getFontSize() {
         return $this->fontSize;
     }
 
@@ -161,11 +152,11 @@ class Eps
      * @return void
      */
     public function line(
-        $x_from = 0,
-        $y_from = 0,
-        $x_to = 0,
-        $y_to = 0,
-        $lineWidth = 0
+            $x_from = 0,
+            $y_from = 0,
+            $x_to = 0,
+            $y_to = 0,
+            $lineWidth = 0
     ) {
         $this->stringCommands .= $lineWidth . " setlinewidth  \n";
         $this->stringCommands .= $x_from . ' ' . $y_from . " moveto \n";
@@ -191,8 +182,7 @@ class Eps
      *
      * @return void
      */
-    public function rect($x_from, $y_from, $x_to, $y_to, $lineWidth)
-    {
+    public function rect($x_from, $y_from, $x_to, $y_to, $lineWidth) {
         $this->stringCommands .= $lineWidth . " setlinewidth  \n";
         $this->stringCommands .= "newpath \n";
         $this->stringCommands .= $x_from . ' ' . $y_from . " moveto \n";
@@ -215,8 +205,7 @@ class Eps
      *
      * @return void
      */
-    public function moveTo($x, $y)
-    {
+    public function moveTo($x, $y) {
         $this->stringCommands .= $x . ' ' . $y . " moveto \n";
     }
 
@@ -227,8 +216,7 @@ class Eps
      *
      * @return void
      */
-    public function show($text)
-    {
+    public function show($text) {
         $this->stringCommands .= '(' . $text . ") show \n";
     }
 
@@ -241,8 +229,7 @@ class Eps
      *
      * @return void
      */
-    public function showXY($text, $x, $y)
-    {
+    public function showXY($text, $x, $y) {
         $this->moveTo($x, $y);
         $this->show($text);
     }
@@ -252,8 +239,7 @@ class Eps
      *
      * @return void
      */
-    public function endEpsDoc()
-    {
+    public function endEpsDoc() {
         $this->stringCommands .= "showpage \n";
     }
 
@@ -264,19 +250,19 @@ class Eps
      *
      * @return void
      */
-    public function showOutput($fileName)
-    {
+    public function showOutput($fileName) {
         // if(ob_get_clean()){
         //ob_end_clean();
         //}
         $output = $this->stringCommands;
         Response::getInstance()
-            ->disable();
+                ->disable();
         Core::downloadHeader(
-            $fileName,
-            'image/x-eps',
-            strlen($output)
+                $fileName,
+                'image/x-eps',
+                strlen($output)
         );
         print $output;
     }
+
 }

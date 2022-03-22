@@ -10,7 +10,7 @@
 
 /* global sprintf */ // js/vendor/sprintf.js
 
-function getFormatsText () {
+function getFormatsText() {
     return {
         '=': ' = \'%s\'',
         '>': ' > \'%s\'',
@@ -31,7 +31,7 @@ function getFormatsText () {
     };
 }
 
-function generateCondition (criteriaDiv, table) {
+function generateCondition(criteriaDiv, table) {
     var query = '`' + Functions.escapeBacktick(table.val()) + '`.';
     query += '`' + Functions.escapeBacktick(table.siblings('.columnNameSelect').first().val()) + '`';
     if (criteriaDiv.find('.criteria_rhs').first().val() === 'text') {
@@ -46,7 +46,7 @@ function generateCondition (criteriaDiv, table) {
 }
 
 // eslint-disable-next-line no-unused-vars
-function generateWhereBlock () {
+function generateWhereBlock() {
     var count = 0;
     var query = '';
     $('.tableNameSelect').each(function () {
@@ -67,7 +67,7 @@ function generateWhereBlock () {
     return query;
 }
 
-function generateJoin (newTable, tableAliases, fk) {
+function generateJoin(newTable, tableAliases, fk) {
     var query = '';
     query += ' \n\tLEFT JOIN ' + '`' + Functions.escapeBacktick(newTable) + '`';
     if (tableAliases[fk.TABLE_NAME][0] !== '') {
@@ -86,13 +86,13 @@ function generateJoin (newTable, tableAliases, fk) {
     return query;
 }
 
-function existReference (table, fk, usedTables) {
+function existReference(table, fk, usedTables) {
     var isReferredBy = fk.TABLE_NAME === table && usedTables.includes(fk.REFERENCED_TABLE_NAME);
     var isReferencedBy = fk.REFERENCED_TABLE_NAME === table && usedTables.includes(fk.TABLE_NAME);
     return isReferredBy || isReferencedBy;
 }
 
-function tryJoinTable (table, tableAliases, usedTables, foreignKeys) {
+function tryJoinTable(table, tableAliases, usedTables, foreignKeys) {
     for (var i = 0; i < foreignKeys.length; i++) {
         var fk = foreignKeys[i];
         if (existReference(table, fk, usedTables)) {
@@ -102,8 +102,8 @@ function tryJoinTable (table, tableAliases, usedTables, foreignKeys) {
     return '';
 }
 
-function appendTable (table, tableAliases, usedTables, foreignKeys) {
-    var query = tryJoinTable (table, tableAliases, usedTables, foreignKeys);
+function appendTable(table, tableAliases, usedTables, foreignKeys) {
+    var query = tryJoinTable(table, tableAliases, usedTables, foreignKeys);
     if (query === '') {
         if (usedTables.length > 0) {
             query += '\n\t, ';
@@ -118,7 +118,7 @@ function appendTable (table, tableAliases, usedTables, foreignKeys) {
 }
 
 // eslint-disable-next-line no-unused-vars
-function generateFromBlock (tableAliases, foreignKeys) {
+function generateFromBlock(tableAliases, foreignKeys) {
     var usedTables = [];
     var query = '';
     for (var table in tableAliases) {

@@ -23,8 +23,8 @@ use Twig\Environment;
  *
  * @deprecated since Twig 2.7, to be removed in 3.0
  */
-interface InitRuntimeInterface
-{
+interface InitRuntimeInterface {
+
     /**
      * Initializes the runtime environment.
      *

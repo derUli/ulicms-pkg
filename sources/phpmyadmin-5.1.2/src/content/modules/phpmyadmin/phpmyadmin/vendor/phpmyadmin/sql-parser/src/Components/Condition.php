@@ -1,8 +1,8 @@
 <?php
+
 /**
  * `WHERE` keyword parser.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\SqlParser\Components;
@@ -11,7 +11,6 @@ use PhpMyAdmin\SqlParser\Component;
 use PhpMyAdmin\SqlParser\Parser;
 use PhpMyAdmin\SqlParser\Token;
 use PhpMyAdmin\SqlParser\TokensList;
-
 use function implode;
 use function in_array;
 use function is_array;
@@ -22,8 +21,8 @@ use function trim;
  *
  * @final
  */
-class Condition extends Component
-{
+class Condition extends Component {
+
     /**
      * Logical operators that can be used to delimit expressions.
      *
@@ -88,8 +87,7 @@ class Condition extends Component
     /**
      * @param string $expr the condition or the operator
      */
-    public function __construct($expr = null)
-    {
+    public function __construct($expr = null) {
         $this->expr = trim((string) $expr);
     }
 
@@ -100,8 +98,7 @@ class Condition extends Component
      *
      * @return Condition[]
      */
-    public static function parse(Parser $parser, TokensList $list, array $options = [])
-    {
+    public static function parse(Parser $parser, TokensList $list, array $options = []) {
         $ret = [];
 
         $expr = new static();
@@ -157,7 +154,7 @@ class Condition extends Component
                 } else {
                     // The expression ended.
                     $expr->expr = trim($expr->expr);
-                    if (! empty($expr->expr)) {
+                    if (!empty($expr->expr)) {
                         $ret[] = $expr;
                     }
 
@@ -173,9 +170,7 @@ class Condition extends Component
             }
 
             if (
-                ($token->type === Token::TYPE_KEYWORD)
-                && ($token->flags & Token::FLAG_KEYWORD_RESERVED)
-                && ! ($token->flags & Token::FLAG_KEYWORD_FUNCTION)
+                    ($token->type === Token::TYPE_KEYWORD) && ($token->flags & Token::FLAG_KEYWORD_RESERVED) && !($token->flags & Token::FLAG_KEYWORD_FUNCTION)
             ) {
                 if ($token->value === 'BETWEEN') {
                     $betweenBefore = true;
@@ -200,11 +195,7 @@ class Condition extends Component
 
             $expr->expr .= $token->token;
             if (
-                ($token->type !== Token::TYPE_NONE)
-                && (($token->type !== Token::TYPE_KEYWORD)
-                || ($token->flags & Token::FLAG_KEYWORD_RESERVED))
-                && ($token->type !== Token::TYPE_STRING)
-                && ($token->type !== Token::TYPE_SYMBOL)
+                    ($token->type !== Token::TYPE_NONE) && (($token->type !== Token::TYPE_KEYWORD) || ($token->flags & Token::FLAG_KEYWORD_RESERVED)) && ($token->type !== Token::TYPE_STRING) && ($token->type !== Token::TYPE_SYMBOL)
             ) {
                 continue;
             }
@@ -218,7 +209,7 @@ class Condition extends Component
 
         // Last iteration was not processed.
         $expr->expr = trim($expr->expr);
-        if (! empty($expr->expr)) {
+        if (!empty($expr->expr)) {
             $ret[] = $expr;
         }
 
@@ -233,12 +224,12 @@ class Condition extends Component
      *
      * @return string
      */
-    public static function build($component, array $options = [])
-    {
+    public static function build($component, array $options = []) {
         if (is_array($component)) {
             return implode(' ', $component);
         }
 
         return $component->expr;
     }
+
 }

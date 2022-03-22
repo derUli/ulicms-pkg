@@ -23,16 +23,13 @@ use Symfony\Component\Config\Resource\GlobResource;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-abstract class FileLoader extends Loader
-{
+abstract class FileLoader extends Loader {
+
     protected static $loading = [];
-
     protected $locator;
-
     private $currentDir;
 
-    public function __construct(FileLocatorInterface $locator)
-    {
+    public function __construct(FileLocatorInterface $locator) {
         $this->locator = $locator;
     }
 
@@ -41,8 +38,7 @@ abstract class FileLoader extends Loader
      *
      * @param string $dir
      */
-    public function setCurrentDir($dir)
-    {
+    public function setCurrentDir($dir) {
         $this->currentDir = $dir;
     }
 
@@ -51,8 +47,7 @@ abstract class FileLoader extends Loader
      *
      * @return FileLocatorInterface
      */
-    public function getLocator()
-    {
+    public function getLocator() {
         return $this->locator;
     }
 
@@ -71,8 +66,7 @@ abstract class FileLoader extends Loader
      * @throws FileLoaderImportCircularReferenceException
      * @throws FileLocatorFileNotFoundException
      */
-    public function import($resource, $type = null, $ignoreErrors = false, $sourceResource = null/*, $exclude = null*/)
-    {
+    public function import($resource, $type = null, $ignoreErrors = false, $sourceResource = null/* , $exclude = null */) {
         if (\func_num_args() < 5 && __CLASS__ !== static::class && !str_starts_with(static::class, 'Symfony\Component\\') && __CLASS__ !== (new \ReflectionMethod($this, __FUNCTION__))->getDeclaringClass()->getName() && !$this instanceof \PHPUnit\Framework\MockObject\MockObject && !$this instanceof \Prophecy\Prophecy\ProphecySubjectInterface && !$this instanceof \Mockery\MockInterface) {
             @trigger_error(sprintf('The "%s()" method will have a new "$exclude = null" argument in version 5.0, not defining it is deprecated since Symfony 4.4.', __METHOD__), \E_USER_DEPRECATED);
         }
@@ -107,14 +101,13 @@ abstract class FileLoader extends Loader
     /**
      * @internal
      */
-    protected function glob(string $pattern, bool $recursive, &$resource = null, bool $ignoreErrors = false, bool $forExclusion = false, array $excluded = [])
-    {
+    protected function glob(string $pattern, bool $recursive, &$resource = null, bool $ignoreErrors = false, bool $forExclusion = false, array $excluded = []) {
         if (\strlen($pattern) === $i = strcspn($pattern, '*?{[')) {
             $prefix = $pattern;
             $pattern = '';
         } elseif (0 === $i || !str_contains(substr($pattern, 0, $i), '/')) {
             $prefix = '.';
-            $pattern = '/'.$pattern;
+            $pattern = '/' . $pattern;
         } else {
             $prefix = \dirname(substr($pattern, 0, 1 + $i));
             $pattern = substr($pattern, \strlen($prefix));
@@ -139,8 +132,7 @@ abstract class FileLoader extends Loader
         yield from $resource;
     }
 
-    private function doImport($resource, string $type = null, bool $ignoreErrors = false, $sourceResource = null)
-    {
+    private function doImport($resource, string $type = null, bool $ignoreErrors = false, $sourceResource = null) {
         try {
             $loader = $this->resolve($resource, $type);
 
@@ -183,4 +175,5 @@ abstract class FileLoader extends Loader
 
         return null;
     }
+
 }

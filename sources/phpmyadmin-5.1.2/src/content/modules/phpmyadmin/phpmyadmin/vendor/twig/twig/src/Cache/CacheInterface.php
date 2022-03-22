@@ -20,8 +20,8 @@ namespace Twig\Cache;
  *
  * @author Andrew Tch <andrew@noop.lv>
  */
-interface CacheInterface
-{
+interface CacheInterface {
+
     /**
      * Generates a cache key for the given template class name.
      *

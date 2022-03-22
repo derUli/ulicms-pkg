@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Abstract class for the date format transformations plugins
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Plugins\Transformations\Abs;
@@ -24,25 +24,24 @@ use function strtotime;
 /**
  * Provides common methods for all of the date format transformations plugins.
  */
-abstract class DateFormatTransformationsPlugin extends TransformationsPlugin
-{
+abstract class DateFormatTransformationsPlugin extends TransformationsPlugin {
+
     /**
      * Gets the transformation description of the specific plugin
      *
      * @return string
      */
-    public static function getInfo()
-    {
+    public static function getInfo() {
         return __(
-            'Displays a TIME, TIMESTAMP, DATETIME or numeric unix timestamp'
-            . ' column as formatted date. The first option is the offset (in'
-            . ' hours) which will be added to the timestamp (Default: 0). Use'
-            . ' second option to specify a different date/time format string.'
-            . ' Third option determines whether you want to see local date or'
-            . ' UTC one (use "local" or "utc" strings) for that. According to'
-            . ' that, date format has different value - for "local" see the'
-            . ' documentation for PHP\'s strftime() function and for "utc" it'
-            . ' is done using gmdate() function.'
+                'Displays a TIME, TIMESTAMP, DATETIME or numeric unix timestamp'
+                . ' column as formatted date. The first option is the offset (in'
+                . ' hours) which will be added to the timestamp (Default: 0). Use'
+                . ' second option to specify a different date/time format string.'
+                . ' Third option determines whether you want to see local date or'
+                . ' UTC one (use "local" or "utc" strings) for that. According to'
+                . ' that, date format has different value - for "local" see the'
+                . ' documentation for PHP\'s strftime() function and for "utc" it'
+                . ' is done using gmdate() function.'
         );
     }
 
@@ -55,8 +54,7 @@ abstract class DateFormatTransformationsPlugin extends TransformationsPlugin
      *
      * @return string
      */
-    public function applyTransformation($buffer, array $options = [], ?stdClass $meta = null)
-    {
+    public function applyTransformation($buffer, array $options = [], ?stdClass $meta = null) {
         $buffer = (string) $buffer;
         // possibly use a global transform and feed it with special options
         $cfg = $GLOBALS['cfg'];
@@ -103,12 +101,12 @@ abstract class DateFormatTransformationsPlugin extends TransformationsPlugin
 
                 if (checkdate($aDate['month'], $aDate['day'], $aDate['year'])) {
                     $timestamp = mktime(
-                        $aDate['hour'],
-                        $aDate['minute'],
-                        $aDate['second'],
-                        $aDate['month'],
-                        $aDate['day'],
-                        $aDate['year']
+                            $aDate['hour'],
+                            $aDate['minute'],
+                            $aDate['second'],
+                            $aDate['month'],
+                            $aDate['day'],
+                            $aDate['year']
                     );
                 }
                 // If all fails, assume one of the dozens of valid strtime() syntaxes
@@ -133,8 +131,8 @@ abstract class DateFormatTransformationsPlugin extends TransformationsPlugin
             $source = $buffer;
             if ($options[2] === 'local') {
                 $text = Util::localisedDate(
-                    $timestamp,
-                    $options[1]
+                                $timestamp,
+                                $options[1]
                 );
             } elseif ($options[2] === 'utc') {
                 $text = gmdate($options[1], $timestamp);
@@ -143,7 +141,7 @@ abstract class DateFormatTransformationsPlugin extends TransformationsPlugin
             }
 
             return '<dfn onclick="alert(\'' . Sanitize::jsFormat($source, false) . '\');" title="'
-                . htmlspecialchars((string) $source) . '">' . htmlspecialchars((string) $text) . '</dfn>';
+                    . htmlspecialchars((string) $source) . '">' . htmlspecialchars((string) $text) . '</dfn>';
         }
 
         return htmlspecialchars((string) $buffer);
@@ -156,8 +154,8 @@ abstract class DateFormatTransformationsPlugin extends TransformationsPlugin
      *
      * @return string
      */
-    public static function getName()
-    {
+    public static function getName() {
         return 'Date Format';
     }
+
 }

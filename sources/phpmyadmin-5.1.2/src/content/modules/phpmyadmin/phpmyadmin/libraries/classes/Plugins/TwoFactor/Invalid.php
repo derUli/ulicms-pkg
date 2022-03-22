@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Second authentication factor handling
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Plugins\TwoFactor;
@@ -12,8 +12,8 @@ use PhpMyAdmin\Plugins\TwoFactorPlugin;
 /**
  * Invalid two-factor authentication showing that configured choice is not available.
  */
-class Invalid extends TwoFactorPlugin
-{
+class Invalid extends TwoFactorPlugin {
+
     /** @var string */
     public static $id = 'invalid';
 
@@ -25,8 +25,7 @@ class Invalid extends TwoFactorPlugin
      *
      * @return bool
      */
-    public function check()
-    {
+    public function check() {
         return false;
     }
 
@@ -35,8 +34,7 @@ class Invalid extends TwoFactorPlugin
      *
      * @return string HTML code
      */
-    public function render()
-    {
+    public function render() {
         return $this->template->render('login/twofactor/invalid');
     }
 
@@ -45,8 +43,7 @@ class Invalid extends TwoFactorPlugin
      *
      * @return string
      */
-    public static function getName()
-    {
+    public static function getName() {
         return 'Invalid two-factor authentication';
     }
 
@@ -55,8 +52,8 @@ class Invalid extends TwoFactorPlugin
      *
      * @return string
      */
-    public static function getDescription()
-    {
+    public static function getDescription() {
         return 'Error fallback only!';
     }
+
 }

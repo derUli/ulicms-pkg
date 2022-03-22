@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace PhpMyAdmin\Providers\ServerVariables;
 
-interface ServerVariablesProviderInterface
-{
+interface ServerVariablesProviderInterface {
+
     public function getVariableType(string $name): ?string;
 
     public function getStaticVariables(): array;

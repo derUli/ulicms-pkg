@@ -20,8 +20,8 @@ use const SODIUM_CRYPTO_SECRETBOX_NONCEBYTES;
 use function sodium_crypto_secretbox;
 use function sodium_crypto_secretbox_open;
 
-final class Crypto
-{
+final class Crypto {
+
     /** @var bool */
     private $hasRandomBytesSupport;
 
@@ -31,15 +31,9 @@ final class Crypto
     /**
      * @param bool $forceFallback Force the usage of the fallback functions.
      */
-    public function __construct($forceFallback = false)
-    {
-        $this->hasRandomBytesSupport = ! $forceFallback && is_callable('random_bytes');
-        $this->hasSodiumSupport = ! $forceFallback
-            && $this->hasRandomBytesSupport
-            && is_callable('sodium_crypto_secretbox')
-            && is_callable('sodium_crypto_secretbox_open')
-            && defined('SODIUM_CRYPTO_SECRETBOX_NONCEBYTES')
-            && defined('SODIUM_CRYPTO_SECRETBOX_KEYBYTES');
+    public function __construct($forceFallback = false) {
+        $this->hasRandomBytesSupport = !$forceFallback && is_callable('random_bytes');
+        $this->hasSodiumSupport = !$forceFallback && $this->hasRandomBytesSupport && is_callable('sodium_crypto_secretbox') && is_callable('sodium_crypto_secretbox_open') && defined('SODIUM_CRYPTO_SECRETBOX_NONCEBYTES') && defined('SODIUM_CRYPTO_SECRETBOX_KEYBYTES');
     }
 
     /**
@@ -47,8 +41,7 @@ final class Crypto
      *
      * @return string
      */
-    public function encrypt($plaintext)
-    {
+    public function encrypt($plaintext) {
         if ($this->hasSodiumSupport) {
             return $this->encryptWithSodium($plaintext);
         }
@@ -61,8 +54,7 @@ final class Crypto
      *
      * @return string|null
      */
-    public function decrypt($ciphertext)
-    {
+    public function decrypt($ciphertext) {
         if ($this->hasSodiumSupport) {
             return $this->decryptWithSodium($ciphertext);
         }
@@ -73,8 +65,7 @@ final class Crypto
     /**
      * @return string
      */
-    private function getEncryptionKey()
-    {
+    private function getEncryptionKey() {
         global $PMA_Config;
 
         $keyLength = $this->hasSodiumSupport ? SODIUM_CRYPTO_SECRETBOX_KEYBYTES : 32;
@@ -100,8 +91,7 @@ final class Crypto
      *
      * @return string
      */
-    private function encryptWithPhpseclib($plaintext)
-    {
+    private function encryptWithPhpseclib($plaintext) {
         $key = $this->getEncryptionKey();
         $cipher = new AES(AES::MODE_CBC);
         $iv = $this->hasRandomBytesSupport ? random_bytes(16) : Random::string(16);
@@ -118,14 +108,13 @@ final class Crypto
      *
      * @return string|null
      */
-    private function decryptWithPhpseclib($encrypted)
-    {
+    private function decryptWithPhpseclib($encrypted) {
         $key = $this->getEncryptionKey();
         $hmac = mb_substr($encrypted, 0, 32, '8bit');
         $iv = mb_substr($encrypted, 32, 16, '8bit');
         $ciphertext = mb_substr($encrypted, 48, null, '8bit');
         $calculatedHmac = hash_hmac('sha256', $iv . $ciphertext, $key, true);
-        if (! hash_equals($hmac, $calculatedHmac)) {
+        if (!hash_equals($hmac, $calculatedHmac)) {
             return null;
         }
 
@@ -141,8 +130,7 @@ final class Crypto
      *
      * @return string
      */
-    private function encryptWithSodium($plaintext)
-    {
+    private function encryptWithSodium($plaintext) {
         $key = $this->getEncryptionKey();
         $nonce = random_bytes(SODIUM_CRYPTO_SECRETBOX_NONCEBYTES);
         $ciphertext = sodium_crypto_secretbox($plaintext, $nonce, $key);
@@ -155,8 +143,7 @@ final class Crypto
      *
      * @return string|null
      */
-    private function decryptWithSodium($encrypted)
-    {
+    private function decryptWithSodium($encrypted) {
         $key = $this->getEncryptionKey();
         $nonce = mb_substr($encrypted, 0, SODIUM_CRYPTO_SECRETBOX_NONCEBYTES, '8bit');
         $ciphertext = mb_substr($encrypted, SODIUM_CRYPTO_SECRETBOX_NONCEBYTES, null, '8bit');
@@ -172,4 +159,5 @@ final class Crypto
 
         return $decrypted;
     }
+
 }

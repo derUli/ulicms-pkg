@@ -19,8 +19,10 @@
         "php": ">=7.1"
     },
     "autoload": {
-        "psr-4": { "Symfony\\Polyfill\\Php72\\": "" },
-        "files": [ "bootstrap.php" ]
+        "psr-4": {
+            "Symfony\\Polyfill\\Php72\\": ""
+        },
+        "files": ["bootstrap.php"]
     },
     "minimum-stability": "dev",
     "extra": {

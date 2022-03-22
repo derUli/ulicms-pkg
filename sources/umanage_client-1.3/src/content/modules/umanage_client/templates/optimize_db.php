@@ -26,19 +26,20 @@ if ($acl->hasPermission("umanage_client")) {
                 ?>
                 <span style="color: red">
                     <?php esc($site["domain"]); ?> ×</span>
-                    <?php
-            } ?>
+                <?php }
+                ?>
 
             <br />
 
             <?php
             fcflush();
-        } ?>
+        }
+        ?>
 
         <?php if (is_array($_GET["sites"]) and count($_GET["sites"]) > 0) { ?>
             <br />
-            <?php
-        } ?>
+        <?php }
+        ?>
         <?php
     }
 } else {

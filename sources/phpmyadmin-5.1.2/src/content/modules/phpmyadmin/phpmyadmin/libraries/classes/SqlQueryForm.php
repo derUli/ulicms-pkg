@@ -1,4 +1,5 @@
 <?php
+
 /**
  * functions for displaying the sql query form
  *
@@ -8,7 +9,6 @@
  * @usedby  /table/structure
  * @usedby  /table/tracking
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin;
@@ -22,16 +22,15 @@ use function strpos;
 /**
  * PhpMyAdmin\SqlQueryForm class
  */
-class SqlQueryForm
-{
+class SqlQueryForm {
+
     /** @var Template */
     private $template;
 
     /**
      * @param Template $template Template object
      */
-    public function __construct(Template $template)
-    {
+    public function __construct(Template $template) {
         $this->template = $template;
     }
 
@@ -54,13 +53,13 @@ class SqlQueryForm
      * @usedby  /table/tracking
      */
     public function getHtml(
-        $query = true,
-        $display_tab = false,
-        $delimiter = ';'
+            $query = true,
+            $display_tab = false,
+            $delimiter = ';'
     ) {
         global $dbi;
 
-        if (! $display_tab) {
+        if (!$display_tab) {
             $display_tab = 'full';
         }
         // query to show
@@ -96,9 +95,9 @@ class SqlQueryForm
         if ($display_tab === 'full') {
             if ($cfgBookmark) {
                 $bookmark_list = Bookmark::getList(
-                    $dbi,
-                    $GLOBALS['cfg']['Server']['user'],
-                    $GLOBALS['db']
+                                $dbi,
+                                $GLOBALS['cfg']['Server']['user'],
+                                $GLOBALS['db']
                 );
 
                 foreach ($bookmark_list as $bookmarkItem) {
@@ -113,24 +112,24 @@ class SqlQueryForm
         }
 
         return $this->template->render('sql/query', [
-            'legend' => $legend ?? '',
-            'textarea_cols' => $GLOBALS['cfg']['TextareaCols'],
-            'textarea_rows' => $GLOBALS['cfg']['TextareaRows'],
-            'textarea_auto_select' => $GLOBALS['cfg']['TextareaAutoSelect'],
-            'columns_list' => $columns_list ?? [],
-            'codemirror_enable' => $GLOBALS['cfg']['CodemirrorEnable'],
-            'has_bookmark' => $cfgBookmark,
-            'delimiter' => $delimiter,
-            'retain_query_box' => $GLOBALS['cfg']['RetainQueryBox'] !== false,
-            'is_upload' => $GLOBALS['is_upload'],
-            'db' => $db,
-            'table' => $table,
-            'goto' => $goto,
-            'query' => $query,
-            'display_tab' => $display_tab,
-            'bookmarks' => $bookmarks,
-            'can_convert_kanji' => Encoding::canConvertKanji(),
-            'is_foreign_key_check' => Util::isForeignKeyCheck(),
+                    'legend' => $legend ?? '',
+                    'textarea_cols' => $GLOBALS['cfg']['TextareaCols'],
+                    'textarea_rows' => $GLOBALS['cfg']['TextareaRows'],
+                    'textarea_auto_select' => $GLOBALS['cfg']['TextareaAutoSelect'],
+                    'columns_list' => $columns_list ?? [],
+                    'codemirror_enable' => $GLOBALS['cfg']['CodemirrorEnable'],
+                    'has_bookmark' => $cfgBookmark,
+                    'delimiter' => $delimiter,
+                    'retain_query_box' => $GLOBALS['cfg']['RetainQueryBox'] !== false,
+                    'is_upload' => $GLOBALS['is_upload'],
+                    'db' => $db,
+                    'table' => $table,
+                    'goto' => $goto,
+                    'query' => $query,
+                    'display_tab' => $display_tab,
+                    'bookmarks' => $bookmarks,
+                    'can_convert_kanji' => Encoding::canConvertKanji(),
+                    'is_foreign_key_check' => Util::isForeignKeyCheck(),
         ]);
     }
 
@@ -141,64 +140,61 @@ class SqlQueryForm
      *
      * @return array ($legend, $query, $columns_list)
      */
-    public function init($query)
-    {
+    public function init($query) {
         global $dbi;
 
-        $columns_list    = [];
+        $columns_list = [];
         if (strlen($GLOBALS['db']) === 0) {
             // prepare for server related
             $legend = sprintf(
-                __('Run SQL query/queries on server “%s”'),
-                htmlspecialchars(
-                    ! empty($GLOBALS['cfg']['Servers'][$GLOBALS['server']]['verbose'])
-                    ? $GLOBALS['cfg']['Servers'][$GLOBALS['server']]['verbose']
-                    : $GLOBALS['cfg']['Servers'][$GLOBALS['server']]['host']
-                )
+                    __('Run SQL query/queries on server “%s”'),
+                    htmlspecialchars(
+                            !empty($GLOBALS['cfg']['Servers'][$GLOBALS['server']]['verbose']) ? $GLOBALS['cfg']['Servers'][$GLOBALS['server']]['verbose'] : $GLOBALS['cfg']['Servers'][$GLOBALS['server']]['host']
+                    )
             );
         } elseif (strlen($GLOBALS['table']) === 0) {
             // prepare for db related
-            $db     = $GLOBALS['db'];
+            $db = $GLOBALS['db'];
             // if you want navigation:
             $scriptName = Util::getScriptNameForOption(
-                $GLOBALS['cfg']['DefaultTabDatabase'],
-                'database'
+                            $GLOBALS['cfg']['DefaultTabDatabase'],
+                            'database'
             );
             $tmp_db_link = '<a href="' . $scriptName
-                . Url::getCommon(['db' => $db], strpos($scriptName, '?') === false ? '?' : '&')
-                . '">';
+                    . Url::getCommon(['db' => $db], strpos($scriptName, '?') === false ? '?' : '&')
+                    . '">';
             $tmp_db_link .= htmlspecialchars($db) . '</a>';
             $legend = sprintf(__('Run SQL query/queries on database %s'), $tmp_db_link);
             if (empty($query)) {
                 $query = Util::expandUserString(
-                    $GLOBALS['cfg']['DefaultQueryDatabase'],
-                    'backquote'
+                                $GLOBALS['cfg']['DefaultQueryDatabase'],
+                                'backquote'
                 );
             }
         } else {
-            $db     = $GLOBALS['db'];
-            $table  = $GLOBALS['table'];
+            $db = $GLOBALS['db'];
+            $table = $GLOBALS['table'];
             // Get the list and number of fields
             // we do a try_query here, because we could be in the query window,
             // trying to synchronize and the table has not yet been created
             $columns_list = $dbi->getColumns(
-                $db,
-                $GLOBALS['table'],
-                null,
-                true
+                    $db,
+                    $GLOBALS['table'],
+                    null,
+                    true
             );
 
             $scriptName = Util::getScriptNameForOption(
-                $GLOBALS['cfg']['DefaultTabTable'],
-                'table'
+                            $GLOBALS['cfg']['DefaultTabTable'],
+                            'table'
             );
             $tmp_tbl_link = '<a href="' . $scriptName . Url::getCommon(['db' => $db, 'table' => $table], '&') . '">';
             $tmp_tbl_link .= htmlspecialchars($db) . '.' . htmlspecialchars($table) . '</a>';
             $legend = sprintf(__('Run SQL query/queries on table %s'), $tmp_tbl_link);
             if (empty($query)) {
                 $query = Util::expandUserString(
-                    $GLOBALS['cfg']['DefaultQueryTable'],
-                    'backquote'
+                                $GLOBALS['cfg']['DefaultQueryTable'],
+                                'backquote'
                 );
             }
         }
@@ -210,4 +206,5 @@ class SqlQueryForm
             $columns_list,
         ];
     }
+
 }

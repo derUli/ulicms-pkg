@@ -17,8 +17,8 @@ use PhpMyAdmin\Utils\SessionCache;
  *
  * Displays server, database and table selection tree.
  */
-class NavigationController extends AbstractController
-{
+class NavigationController extends AbstractController {
+
     /** @var Navigation */
     private $navigation;
 
@@ -29,23 +29,22 @@ class NavigationController extends AbstractController
      * @param Response $response
      */
     public function __construct(
-        $response,
-        Template $template,
-        Navigation $navigation,
-        Relation $relation
+            $response,
+            Template $template,
+            Navigation $navigation,
+            Relation $relation
     ) {
         parent::__construct($response, $template);
         $this->navigation = $navigation;
         $this->relation = $relation;
     }
 
-    public function index(): void
-    {
-        if (! $this->response->isAjax()) {
+    public function index(): void {
+        if (!$this->response->isAjax()) {
             $this->response->addHTML(
-                Message::error(
-                    __('Fatal error: The navigation can only be accessed via AJAX')
-                )->getDisplay()
+                    Message::error(
+                            __('Fatal error: The navigation can only be accessed via AJAX')
+                    )->getDisplay()
             );
 
             return;
@@ -60,21 +59,19 @@ class NavigationController extends AbstractController
         }
 
         if (isset($_POST['reload'])) {
-            SessionCache::set('dbs_to_test', false);// Empty database list cache, see #14252
+            SessionCache::set('dbs_to_test', false); // Empty database list cache, see #14252
         }
 
         $cfgRelation = $this->relation->getRelationsParam();
         if ($cfgRelation['navwork']) {
             if (isset($_POST['hideNavItem'])) {
-                if (! empty($_POST['itemName'])
-                    && ! empty($_POST['itemType'])
-                    && ! empty($_POST['dbName'])
+                if (!empty($_POST['itemName']) && !empty($_POST['itemType']) && !empty($_POST['dbName'])
                 ) {
                     $this->navigation->hideNavigationItem(
-                        $_POST['itemName'],
-                        $_POST['itemType'],
-                        $_POST['dbName'],
-                        (! empty($_POST['tableName']) ? $_POST['tableName'] : null)
+                            $_POST['itemName'],
+                            $_POST['itemType'],
+                            $_POST['dbName'],
+                            (!empty($_POST['tableName']) ? $_POST['tableName'] : null)
                     );
                 }
 
@@ -82,15 +79,13 @@ class NavigationController extends AbstractController
             }
 
             if (isset($_POST['unhideNavItem'])) {
-                if (! empty($_POST['itemName'])
-                    && ! empty($_POST['itemType'])
-                    && ! empty($_POST['dbName'])
+                if (!empty($_POST['itemName']) && !empty($_POST['itemType']) && !empty($_POST['dbName'])
                 ) {
                     $this->navigation->unhideNavigationItem(
-                        $_POST['itemName'],
-                        $_POST['itemType'],
-                        $_POST['dbName'],
-                        (! empty($_POST['tableName']) ? $_POST['tableName'] : null)
+                            $_POST['itemName'],
+                            $_POST['itemType'],
+                            $_POST['dbName'],
+                            (!empty($_POST['tableName']) ? $_POST['tableName'] : null)
                     );
                 }
 
@@ -98,10 +93,10 @@ class NavigationController extends AbstractController
             }
 
             if (isset($_POST['showUnhideDialog'])) {
-                if (! empty($_POST['dbName'])) {
+                if (!empty($_POST['dbName'])) {
                     $this->response->addJSON(
-                        'message',
-                        $this->navigation->getItemUnhideDialog($_POST['dbName'])
+                            'message',
+                            $this->navigation->getItemUnhideDialog($_POST['dbName'])
                     );
                 }
 
@@ -111,4 +106,5 @@ class NavigationController extends AbstractController
 
         $this->response->addJSON('message', $this->navigation->getDisplay());
     }
+
 }

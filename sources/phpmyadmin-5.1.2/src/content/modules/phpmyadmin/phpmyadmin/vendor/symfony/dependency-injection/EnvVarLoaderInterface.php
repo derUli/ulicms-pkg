@@ -16,8 +16,8 @@ namespace Symfony\Component\DependencyInjection;
  *
  * @author Nicolas Grekas <p@tchwork.com>
  */
-interface EnvVarLoaderInterface
-{
+interface EnvVarLoaderInterface {
+
     /**
      * @return string[] Key/value pairs that can be accessed using the regular "%env()%" syntax
      */

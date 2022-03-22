@@ -1,14 +1,13 @@
 <?php
+
 /**
  * Buffered query utilities.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\SqlParser\Utils;
 
 use PhpMyAdmin\SqlParser\Context;
-
 use function array_merge;
 use function strlen;
 use function substr;
@@ -21,16 +20,14 @@ use function trim;
  * that are being buffered. After each statement has been extracted, a lexer or
  * a parser may be used.
  */
-class BufferedQuery
-{
-    // Constants that describe the current status of the parser.
+class BufferedQuery {
 
+    // Constants that describe the current status of the parser.
     // A string is being parsed.
     public const STATUS_STRING = 16; // 0001 0000
     public const STATUS_STRING_SINGLE_QUOTES = 17; // 0001 0001
     public const STATUS_STRING_DOUBLE_QUOTES = 18; // 0001 0010
     public const STATUS_STRING_BACKTICK = 20; // 0001 0100
-
     // A comment is being parsed.
     public const STATUS_COMMENT = 32; // 0010 0000
     public const STATUS_COMMENT_BASH = 33; // 0010 0001
@@ -85,34 +82,31 @@ class BufferedQuery
      * @param string $query   the query to be parsed
      * @param array  $options the options of this parser
      */
-    public function __construct($query = '', array $options = [])
-    {
+    public function __construct($query = '', array $options = []) {
         // Merges specified options with defaults.
         $this->options = array_merge(
-            [
-                /*
-                 * The starting delimiter.
-                 *
-                 * @var string
-                 */
-                'delimiter' => ';',
-
-                /*
-                 * Whether `DELIMITER` statements should be parsed.
-                 *
-                 * @var bool
-                 */
-                'parse_delimiter' => false,
-
-                /*
-                 * Whether a delimiter should be added at the end of the
-                 * statement.
-                 *
-                 * @var bool
-                 */
-                'add_delimiter' => false,
-            ],
-            $options
+                [
+                    /*
+                     * The starting delimiter.
+                     *
+                     * @var string
+                     */
+                    'delimiter' => ';',
+                    /*
+                     * Whether `DELIMITER` statements should be parsed.
+                     *
+                     * @var bool
+                     */
+                    'parse_delimiter' => false,
+                    /*
+                     * Whether a delimiter should be added at the end of the
+                     * statement.
+                     *
+                     * @var bool
+                     */
+                    'add_delimiter' => false,
+                ],
+                $options
         );
 
         $this->query = $query;
@@ -126,8 +120,7 @@ class BufferedQuery
      *
      * @param string $delimiter
      */
-    public function setDelimiter($delimiter)
-    {
+    public function setDelimiter($delimiter) {
         $this->delimiter = $delimiter;
         $this->delimiterLen = strlen($delimiter);
     }
@@ -139,8 +132,7 @@ class BufferedQuery
      *
      * @return string|false
      */
-    public function extract($end = false)
-    {
+    public function extract($end = false) {
         /**
          * The last parsed position.
          *
@@ -272,9 +264,7 @@ class BufferedQuery
 
             if ($i + 2 < $len) {
                 if (
-                    ($this->query[$i] === '-')
-                    && ($this->query[$i + 1] === '-')
-                    && Context::isWhitespace($this->query[$i + 2])
+                        ($this->query[$i] === '-') && ($this->query[$i + 1] === '-') && Context::isWhitespace($this->query[$i + 2])
                 ) {
                     $this->status = self::STATUS_COMMENT_SQL;
                     $this->current .= $this->query[$i];
@@ -301,23 +291,12 @@ class BufferedQuery
              * statement. This is the reason for the last condition.
              */
             if (
-                ($i + 9 < $len)
-                && (($this->query[$i] === 'D') || ($this->query[$i] === 'd'))
-                && (($this->query[$i + 1] === 'E') || ($this->query[$i + 1] === 'e'))
-                && (($this->query[$i + 2] === 'L') || ($this->query[$i + 2] === 'l'))
-                && (($this->query[$i + 3] === 'I') || ($this->query[$i + 3] === 'i'))
-                && (($this->query[$i + 4] === 'M') || ($this->query[$i + 4] === 'm'))
-                && (($this->query[$i + 5] === 'I') || ($this->query[$i + 5] === 'i'))
-                && (($this->query[$i + 6] === 'T') || ($this->query[$i + 6] === 't'))
-                && (($this->query[$i + 7] === 'E') || ($this->query[$i + 7] === 'e'))
-                && (($this->query[$i + 8] === 'R') || ($this->query[$i + 8] === 'r'))
-                && Context::isWhitespace($this->query[$i + 9])
+                    ($i + 9 < $len) && (($this->query[$i] === 'D') || ($this->query[$i] === 'd')) && (($this->query[$i + 1] === 'E') || ($this->query[$i + 1] === 'e')) && (($this->query[$i + 2] === 'L') || ($this->query[$i + 2] === 'l')) && (($this->query[$i + 3] === 'I') || ($this->query[$i + 3] === 'i')) && (($this->query[$i + 4] === 'M') || ($this->query[$i + 4] === 'm')) && (($this->query[$i + 5] === 'I') || ($this->query[$i + 5] === 'i')) && (($this->query[$i + 6] === 'T') || ($this->query[$i + 6] === 't')) && (($this->query[$i + 7] === 'E') || ($this->query[$i + 7] === 'e')) && (($this->query[$i + 8] === 'R') || ($this->query[$i + 8] === 'r')) && Context::isWhitespace($this->query[$i + 9])
             ) {
                 // Saving the current index to be able to revert any parsing
                 // done in this block.
                 $iBak = $i;
                 $i += 9; // Skipping `DELIMITER`.
-
                 // Skipping whitespaces.
                 while (($i < $len) && Context::isWhitespace($this->query[$i])) {
                     ++$i;
@@ -325,26 +304,24 @@ class BufferedQuery
 
                 // Parsing the delimiter.
                 $delimiter = '';
-                while (($i < $len) && (! Context::isWhitespace($this->query[$i]))) {
+                while (($i < $len) && (!Context::isWhitespace($this->query[$i]))) {
                     $delimiter .= $this->query[$i++];
                 }
 
                 // Checking if the delimiter definition ended.
                 if (
-                    ($delimiter !== '')
-                    && (($i < $len) && Context::isWhitespace($this->query[$i])
-                    || (($i === $len) && $end))
+                        ($delimiter !== '') && (($i < $len) && Context::isWhitespace($this->query[$i]) || (($i === $len) && $end))
                 ) {
                     // Saving the delimiter.
                     $this->setDelimiter($delimiter);
 
                     // Whether this statement should be returned or not.
                     $ret = '';
-                    if (! empty($this->options['parse_delimiter'])) {
+                    if (!empty($this->options['parse_delimiter'])) {
                         // Appending the `DELIMITER` statement that was just
                         // found to the current statement.
                         $ret = trim(
-                            $this->current . ' ' . substr($this->query, $iBak, $i - $iBak)
+                                $this->current . ' ' . substr($this->query, $iBak, $i - $iBak)
                         );
                     }
 
@@ -375,15 +352,13 @@ class BufferedQuery
              * the first letter matches.
              */
             if (
-                ($this->query[$i] === $this->delimiter[0])
-                && (($this->delimiterLen === 1)
-                || (substr($this->query, $i, $this->delimiterLen) === $this->delimiter))
+                    ($this->query[$i] === $this->delimiter[0]) && (($this->delimiterLen === 1) || (substr($this->query, $i, $this->delimiterLen) === $this->delimiter))
             ) {
                 // Saving the statement that just ended.
                 $ret = $this->current;
 
                 // If needed, adds a delimiter at the end of the statement.
-                if (! empty($this->options['add_delimiter'])) {
+                if (!empty($this->options['add_delimiter'])) {
                     $ret .= $this->delimiter;
                 }
 
@@ -423,4 +398,5 @@ class BufferedQuery
 
         return '';
     }
+
 }

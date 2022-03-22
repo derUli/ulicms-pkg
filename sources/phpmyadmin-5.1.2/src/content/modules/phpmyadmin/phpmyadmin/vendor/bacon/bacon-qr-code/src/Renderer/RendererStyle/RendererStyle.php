@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace BaconQrCode\Renderer\RendererStyle;
 
@@ -8,8 +9,8 @@ use BaconQrCode\Renderer\Eye\ModuleEye;
 use BaconQrCode\Renderer\Module\ModuleInterface;
 use BaconQrCode\Renderer\Module\SquareModule;
 
-final class RendererStyle
-{
+final class RendererStyle {
+
     /**
      * @var int
      */
@@ -36,11 +37,11 @@ final class RendererStyle
     private $fill;
 
     public function __construct(
-        int $size,
-        int $margin = 4,
-        ?ModuleInterface $module = null,
-        ?EyeInterface $eye = null,
-        ?Fill $fill = null
+            int $size,
+            int $margin = 4,
+            ?ModuleInterface $module = null,
+            ?EyeInterface $eye = null,
+            ?Fill $fill = null
     ) {
         $this->margin = $margin;
         $this->size = $size;
@@ -49,42 +50,36 @@ final class RendererStyle
         $this->fill = $fill ?: Fill::default();
     }
 
-    public function withSize(int $size) : self
-    {
+    public function withSize(int $size): self {
         $style = clone $this;
         $style->size = $size;
         return $style;
     }
 
-    public function withMargin(int $margin) : self
-    {
+    public function withMargin(int $margin): self {
         $style = clone $this;
         $style->margin = $margin;
         return $style;
     }
 
-    public function getSize() : int
-    {
+    public function getSize(): int {
         return $this->size;
     }
 
-    public function getMargin() : int
-    {
+    public function getMargin(): int {
         return $this->margin;
     }
 
-    public function getModule() : ModuleInterface
-    {
+    public function getModule(): ModuleInterface {
         return $this->module;
     }
 
-    public function getEye() : EyeInterface
-    {
+    public function getEye(): EyeInterface {
         return $this->eye;
     }
 
-    public function getFill() : Fill
-    {
+    public function getFill(): Fill {
         return $this->fill;
     }
+
 }

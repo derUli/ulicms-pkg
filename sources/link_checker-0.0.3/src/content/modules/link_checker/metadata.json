@@ -1,8 +1,8 @@
 {
-	"version": "0.0.3",
-	"embed": false,
-	"custom_acl": [
-		"link_checker"
-	],
-	"admin_permission": "link_checker"
+    "version": "0.0.3",
+    "embed": false,
+    "custom_acl": [
+        "link_checker"
+    ],
+    "admin_permission": "link_checker"
 }

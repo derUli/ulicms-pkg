@@ -1,10 +1,10 @@
 <?php
+
 /**
  * Defines the parser of the library.
  *
  * This is one of the most important components, along with the lexer.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\SqlParser;
@@ -12,7 +12,6 @@ namespace PhpMyAdmin\SqlParser;
 use PhpMyAdmin\SqlParser\Exceptions\ParserException;
 use PhpMyAdmin\SqlParser\Statements\SelectStatement;
 use PhpMyAdmin\SqlParser\Statements\TransactionStatement;
-
 use function is_string;
 use function strtoupper;
 
@@ -20,8 +19,8 @@ use function strtoupper;
  * Takes multiple tokens (contained in a Lexer instance) as input and builds a
  * parse tree.
  */
-class Parser extends Core
-{
+class Parser extends Core {
+
     /**
      * Array of classes that are used in parsing the SQL statements.
      *
@@ -38,7 +37,6 @@ class Parser extends Core
         'SET PASSWORD' => '',
         'STATUS' => '',
         'USE' => '',
-
         // Table Maintenance Statements
         // https://dev.mysql.com/doc/refman/5.7/en/table-maintenance-sql.html
         'ANALYZE' => 'PhpMyAdmin\\SqlParser\\Statements\\AnalyzeStatement',
@@ -48,12 +46,10 @@ class Parser extends Core
         'OPTIMIZE' => 'PhpMyAdmin\\SqlParser\\Statements\\OptimizeStatement',
         'REPAIR' => 'PhpMyAdmin\\SqlParser\\Statements\\RepairStatement',
         'RESTORE' => 'PhpMyAdmin\\SqlParser\\Statements\\RestoreStatement',
-
         // Database Administration Statements
         // https://dev.mysql.com/doc/refman/5.7/en/sql-syntax-server-administration.html
         'SET' => 'PhpMyAdmin\\SqlParser\\Statements\\SetStatement',
         'SHOW' => 'PhpMyAdmin\\SqlParser\\Statements\\ShowStatement',
-
         // Data Definition Statements.
         // https://dev.mysql.com/doc/refman/5.7/en/sql-syntax-data-definition.html
         'ALTER' => 'PhpMyAdmin\\SqlParser\\Statements\\AlterStatement',
@@ -61,7 +57,6 @@ class Parser extends Core
         'DROP' => 'PhpMyAdmin\\SqlParser\\Statements\\DropStatement',
         'RENAME' => 'PhpMyAdmin\\SqlParser\\Statements\\RenameStatement',
         'TRUNCATE' => 'PhpMyAdmin\\SqlParser\\Statements\\TruncateStatement',
-
         // Data Manipulation Statements.
         // https://dev.mysql.com/doc/refman/5.7/en/sql-syntax-data-manipulation.html
         'CALL' => 'PhpMyAdmin\\SqlParser\\Statements\\CallStatement',
@@ -74,22 +69,18 @@ class Parser extends Core
         'SELECT' => 'PhpMyAdmin\\SqlParser\\Statements\\SelectStatement',
         'UPDATE' => 'PhpMyAdmin\\SqlParser\\Statements\\UpdateStatement',
         'WITH' => 'PhpMyAdmin\\SqlParser\\Statements\\WithStatement',
-
         // Prepared Statements.
         // https://dev.mysql.com/doc/refman/5.7/en/sql-syntax-prepared-statements.html
         'DEALLOCATE' => '',
         'EXECUTE' => '',
         'PREPARE' => '',
-
         // Transactional and Locking Statements
         // https://dev.mysql.com/doc/refman/5.7/en/commit.html
         'BEGIN' => 'PhpMyAdmin\\SqlParser\\Statements\\TransactionStatement',
         'COMMIT' => 'PhpMyAdmin\\SqlParser\\Statements\\TransactionStatement',
         'ROLLBACK' => 'PhpMyAdmin\\SqlParser\\Statements\\TransactionStatement',
         'START TRANSACTION' => 'PhpMyAdmin\\SqlParser\\Statements\\TransactionStatement',
-
         'PURGE' => 'PhpMyAdmin\\SqlParser\\Statements\\PurgeStatement',
-
         // Lock statements
         // https://dev.mysql.com/doc/refman/5.7/en/lock-tables.html
         'LOCK' => 'PhpMyAdmin\\SqlParser\\Statements\\LockStatement',
@@ -106,7 +97,6 @@ class Parser extends Core
         // formatter.
         'PARTITION BY' => [],
         'SUBPARTITION BY' => [],
-
         // This is not a proper keyword and was added here to help the
         // builder.
         '_OPTIONS' => [
@@ -117,7 +107,6 @@ class Parser extends Core
             'class' => 'PhpMyAdmin\\SqlParser\\Components\\OptionsArray',
             'field' => 'end_options',
         ],
-
         'INTERSECT' => [
             'class' => 'PhpMyAdmin\\SqlParser\\Components\\UnionKeyword',
             'field' => 'union',
@@ -138,7 +127,6 @@ class Parser extends Core
             'class' => 'PhpMyAdmin\\SqlParser\\Components\\UnionKeyword',
             'field' => 'union',
         ],
-
         // Actual clause parsers.
         'ALTER' => [
             'class' => 'PhpMyAdmin\\SqlParser\\Components\\Expression',
@@ -360,8 +348,7 @@ class Parser extends Core
      * @param string|UtfString|TokensList $list   the list of tokens to be parsed
      * @param bool                        $strict whether strict mode should be enabled or not
      */
-    public function __construct($list = null, $strict = false)
-    {
+    public function __construct($list = null, $strict = false) {
         if (is_string($list) || ($list instanceof UtfString)) {
             $lexer = new Lexer($list, $strict);
             $this->list = $lexer->list;
@@ -383,8 +370,7 @@ class Parser extends Core
      *
      * @throws ParserException
      */
-    public function parse()
-    {
+    public function parse() {
         /**
          * Last transaction.
          *
@@ -447,10 +433,8 @@ class Parser extends Core
             // Comments, whitespaces, etc. are ignored.
             if ($token->type !== Token::TYPE_KEYWORD) {
                 if (
-                    ($token->type !== Token::TYPE_COMMENT)
-                    && ($token->type !== Token::TYPE_WHITESPACE)
-                    && ($token->type !== Token::TYPE_OPERATOR) // `(` and `)`
-                    && ($token->type !== Token::TYPE_DELIMITER)
+                        ($token->type !== Token::TYPE_COMMENT) && ($token->type !== Token::TYPE_WHITESPACE) && ($token->type !== Token::TYPE_OPERATOR) // `(` and `)`
+                        && ($token->type !== Token::TYPE_DELIMITER)
                 ) {
                     $this->error('Unexpected beginning of statement.', $token);
                 }
@@ -459,7 +443,7 @@ class Parser extends Core
             }
 
             if (
-                ($token->keyword === 'UNION') ||
+                    ($token->keyword === 'UNION') ||
                     ($token->keyword === 'UNION ALL') ||
                     ($token->keyword === 'UNION DISTINCT') ||
                     ($token->keyword === 'EXCEPT') ||
@@ -471,7 +455,7 @@ class Parser extends Core
 
             // Checking if it is a known statement that can be parsed.
             if (empty(static::$STATEMENT_PARSERS[$token->keyword])) {
-                if (! isset(static::$STATEMENT_PARSERS[$token->keyword])) {
+                if (!isset(static::$STATEMENT_PARSERS[$token->keyword])) {
                     // A statement is considered recognized if the parser
                     // is aware that it is a statement, but it does not have
                     // a parser for it yet.
@@ -511,9 +495,7 @@ class Parser extends Core
 
             // Handles unions.
             if (
-                ! empty($unionType)
-                && ($lastStatement instanceof SelectStatement)
-                && ($statement instanceof SelectStatement)
+                    !empty($unionType) && ($lastStatement instanceof SelectStatement) && ($statement instanceof SelectStatement)
             ) {
                 /*
                  * This SELECT statement.
@@ -598,13 +580,13 @@ class Parser extends Core
      *
      * @throws ParserException throws the exception, if strict mode is enabled.
      */
-    public function error($msg, ?Token $token = null, $code = 0)
-    {
+    public function error($msg, ?Token $token = null, $code = 0) {
         $error = new ParserException(
-            Translator::gettext($msg),
-            $token,
-            $code
+                Translator::gettext($msg),
+                $token,
+                $code
         );
         parent::error($error);
     }
+
 }

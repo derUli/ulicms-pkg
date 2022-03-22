@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Abstract class for syntax highlighted editors using CodeMirror
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Plugins\Transformations\Abs;
@@ -15,8 +15,8 @@ use function strtolower;
 /**
  * Provides common methods for all the CodeMirror syntax highlighted editors
  */
-abstract class CodeMirrorEditorTransformationPlugin extends IOTransformationsPlugin
-{
+abstract class CodeMirrorEditorTransformationPlugin extends IOTransformationsPlugin {
+
     /**
      * Does the actual work of each specific transformations plugin.
      *
@@ -26,8 +26,7 @@ abstract class CodeMirrorEditorTransformationPlugin extends IOTransformationsPlu
      *
      * @return string
      */
-    public function applyTransformation($buffer, array $options = [], ?stdClass $meta = null)
-    {
+    public function applyTransformation($buffer, array $options = [], ?stdClass $meta = null) {
         return $buffer;
     }
 
@@ -48,25 +47,26 @@ abstract class CodeMirrorEditorTransformationPlugin extends IOTransformationsPlu
      * @return string the html for input field
      */
     public function getInputHtml(
-        array $column,
-        $row_id,
-        $column_name_appendix,
-        array $options,
-        $value,
-        $text_dir,
-        $tabindex,
-        $tabindex_for_value,
-        $idindex
+            array $column,
+            $row_id,
+            $column_name_appendix,
+            array $options,
+            $value,
+            $text_dir,
+            $tabindex,
+            $tabindex_for_value,
+            $idindex
     ) {
         $html = '';
-        if (! empty($value)) {
+        if (!empty($value)) {
             $html = '<input type="hidden" name="fields_prev' . $column_name_appendix
-                . '" value="' . htmlspecialchars($value) . '">';
+                    . '" value="' . htmlspecialchars($value) . '">';
         }
         $class = 'transform_' . strtolower(static::getName()) . '_editor';
 
         return $html . '<textarea name="fields' . $column_name_appendix . '"'
-            . ' dir="' . $text_dir . '" class="' . $class . '">'
-            . htmlspecialchars($value) . '</textarea>';
+                . ' dir="' . $text_dir . '" class="' . $class . '">'
+                . htmlspecialchars($value) . '</textarea>';
     }
+
 }

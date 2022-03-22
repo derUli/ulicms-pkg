@@ -11,15 +11,15 @@
 /**
  **  Display Help/Info
  **/
-function displayHelp () {
+function displayHelp() {
     $('<div></div>')
-        .append(Messages.strDisplayHelp)
-        .appendTo('#page_content')
-        .dialog({
-            width: 450,
-            height: 'auto',
-            title: Messages.strHelpTitle
-        });
+            .append(Messages.strDisplayHelp)
+            .appendTo('#page_content')
+            .dialog({
+                width: 450,
+                height: 'auto',
+                title: Messages.strHelpTitle
+            });
     return false;
 }
 
@@ -43,7 +43,7 @@ Array.min = function (array) {
  ** Checks if a string contains only numeric value
  ** @param n: String (to be checked)
  **/
-function isNumeric (n) {
+function isNumeric(n) {
     return !isNaN(parseFloat(n)) && isFinite(n);
 }
 
@@ -51,7 +51,7 @@ function isNumeric (n) {
  ** Checks if an object is empty
  ** @param n: Object (to be checked)
  **/
-function isEmpty (obj) {
+function isEmpty(obj) {
     var name;
     for (name in obj) {
         return false;
@@ -64,10 +64,10 @@ function isEmpty (obj) {
  ** @param val  String Date
  ** @param type String  Field type(datetime/timestamp/time/date)
  **/
-function getTimeStamp (val, type) {
+function getTimeStamp(val, type) {
     if (type.toString().search(/datetime/i) !== -1 ||
-        type.toString().search(/timestamp/i) !== -1
-    ) {
+            type.toString().search(/timestamp/i) !== -1
+            ) {
         return $.datepicker.parseDateTime('yy-mm-dd', 'HH:mm:ss', val);
     } else if (type.toString().search(/time/i) !== -1) {
         return $.datepicker.parseDateTime('yy-mm-dd', 'HH:mm:ss', '1970-01-01 ' + val);
@@ -80,15 +80,15 @@ function getTimeStamp (val, type) {
  ** Classifies the field type into numeric,timeseries or text
  ** @param field: field type (as in database structure)
  **/
-function getType (field) {
+function getType(field) {
     if (field.toString().search(/int/i) !== -1 ||
-        field.toString().search(/decimal/i) !== -1 ||
-        field.toString().search(/year/i) !== -1
-    ) {
+            field.toString().search(/decimal/i) !== -1 ||
+            field.toString().search(/year/i) !== -1
+            ) {
         return 'numeric';
     } else if (field.toString().search(/time/i) !== -1 ||
-        field.toString().search(/date/i) !== -1
-    ) {
+            field.toString().search(/date/i) !== -1
+            ) {
         return 'time';
     } else {
         return 'text';
@@ -148,13 +148,13 @@ AJAX.registerOnload('table/zoom_plot_jqplot.js', function () {
     $('#tableid_0').on('change', function () {
         // AJAX request for field type, collation, operators, and value field
         $.post('index.php?route=/table/zoom-search', {
-            'ajax_request' : true,
-            'change_tbl_info' : true,
-            'server' : CommonParams.get('server'),
-            'db' : CommonParams.get('db'),
-            'table' : CommonParams.get('table'),
-            'field' : $('#tableid_0').val(),
-            'it' : 0
+            'ajax_request': true,
+            'change_tbl_info': true,
+            'server': CommonParams.get('server'),
+            'db': CommonParams.get('db'),
+            'table': CommonParams.get('table'),
+            'field': $('#tableid_0').val(),
+            'it': 0
         }, function (data) {
             $('#tableFieldsId').find('tr').eq(1).find('td').eq(0).html(data.field_type);
             $('#tableFieldsId').find('tr').eq(1).find('td').eq(1).html(data.field_collation);
@@ -173,13 +173,13 @@ AJAX.registerOnload('table/zoom_plot_jqplot.js', function () {
     $('#tableid_1').on('change', function () {
         // AJAX request for field type, collation, operators, and value field
         $.post('index.php?route=/table/zoom-search', {
-            'ajax_request' : true,
-            'change_tbl_info' : true,
-            'server' : CommonParams.get('server'),
-            'db' : CommonParams.get('db'),
-            'table' : CommonParams.get('table'),
-            'field' : $('#tableid_1').val(),
-            'it' : 1
+            'ajax_request': true,
+            'change_tbl_info': true,
+            'server': CommonParams.get('server'),
+            'db': CommonParams.get('db'),
+            'table': CommonParams.get('table'),
+            'field': $('#tableid_1').val(),
+            'it': 1
         }, function (data) {
             $('#tableFieldsId').find('tr').eq(2).find('td').eq(0).html(data.field_type);
             $('#tableFieldsId').find('tr').eq(2).find('td').eq(1).html(data.field_collation);
@@ -197,13 +197,13 @@ AJAX.registerOnload('table/zoom_plot_jqplot.js', function () {
     $('#tableid_2').on('change', function () {
         // AJAX request for field type, collation, operators, and value field
         $.post('index.php?route=/table/zoom-search', {
-            'ajax_request' : true,
-            'change_tbl_info' : true,
-            'server' : CommonParams.get('server'),
-            'db' : CommonParams.get('db'),
-            'table' : CommonParams.get('table'),
-            'field' : $('#tableid_2').val(),
-            'it' : 2
+            'ajax_request': true,
+            'change_tbl_info': true,
+            'server': CommonParams.get('server'),
+            'db': CommonParams.get('db'),
+            'table': CommonParams.get('table'),
+            'field': $('#tableid_2').val(),
+            'it': 2
         }, function (data) {
             $('#tableFieldsId').find('tr').eq(4).find('td').eq(0).html(data.field_type);
             $('#tableFieldsId').find('tr').eq(4).find('td').eq(1).html(data.field_collation);
@@ -219,13 +219,13 @@ AJAX.registerOnload('table/zoom_plot_jqplot.js', function () {
     $('#tableid_3').on('change', function () {
         // AJAX request for field type, collation, operators, and value field
         $.post('index.php?route=/table/zoom-search', {
-            'ajax_request' : true,
-            'change_tbl_info' : true,
-            'server' : CommonParams.get('server'),
-            'db' : CommonParams.get('db'),
-            'table' : CommonParams.get('table'),
-            'field' : $('#tableid_3').val(),
-            'it' : 3
+            'ajax_request': true,
+            'change_tbl_info': true,
+            'server': CommonParams.get('server'),
+            'db': CommonParams.get('db'),
+            'table': CommonParams.get('table'),
+            'field': $('#tableid_3').val(),
+            'it': 3
         }, function (data) {
             $('#tableFieldsId').find('tr').eq(5).find('td').eq(0).html(data.field_type);
             $('#tableFieldsId').find('tr').eq(5).find('td').eq(1).html(data.field_collation);
@@ -250,27 +250,27 @@ AJAX.registerOnload('table/zoom_plot_jqplot.js', function () {
     });
 
     /**
-      ** Prepare a div containing a link, otherwise it's incorrectly displayed
-      ** after a couple of clicks
-      **/
+     ** Prepare a div containing a link, otherwise it's incorrectly displayed
+     ** after a couple of clicks
+     **/
     $('<div id="togglesearchformdiv"><a id="togglesearchformlink"></a></div>')
-        .insertAfter('#zoom_search_form')
-        // don't show it until we have results on-screen
-        .hide();
+            .insertAfter('#zoom_search_form')
+            // don't show it until we have results on-screen
+            .hide();
 
     $('#togglesearchformlink')
-        .html(Messages.strShowSearchCriteria)
-        .on('click', function () {
-            var $link = $(this);
-            $('#zoom_search_form').slideToggle();
-            if ($link.text() === Messages.strHideSearchCriteria) {
-                $link.text(Messages.strShowSearchCriteria);
-            } else {
-                $link.text(Messages.strHideSearchCriteria);
-            }
-            // avoid default click action
-            return false;
-        });
+            .html(Messages.strShowSearchCriteria)
+            .on('click', function () {
+                var $link = $(this);
+                $('#zoom_search_form').slideToggle();
+                if ($link.text() === Messages.strHideSearchCriteria) {
+                    $link.text(Messages.strShowSearchCriteria);
+                } else {
+                    $link.text(Messages.strHideSearchCriteria);
+                }
+                // avoid default click action
+                return false;
+            });
 
     /**
      ** Set dialog properties for the data display form
@@ -294,7 +294,7 @@ AJAX.registerOnload('table/zoom_plot_jqplot.js', function () {
             var oldVal = selectedRow[key];
             var newVal = ($('#edit_fields_null_id_' + it).prop('checked')) ? null : $('#edit_fieldID_' + it).val();
             if (newVal instanceof Array) { // when the column is of type SET
-                newVal =  $('#edit_fieldID_' + it).map(tempGetVal).get().join(',');
+                newVal = $('#edit_fieldID_' + it).map(tempGetVal).get().join(',');
             }
             if (oldVal !== newVal) {
                 selectedRow[key] = newVal;
@@ -327,7 +327,7 @@ AJAX.registerOnload('table/zoom_plot_jqplot.js', function () {
                     series[0][searchedDataKey][0] = selectedRow[xLabel];
                 } else if (xType === 'time') {
                     series[0][searchedDataKey][0] =
-                        getTimeStamp(selectedRow[xLabel], $('#types_0').val());
+                            getTimeStamp(selectedRow[xLabel], $('#types_0').val());
                 } else {
                     series[0][searchedDataKey][0] = '';
                     // TODO: text values
@@ -343,7 +343,7 @@ AJAX.registerOnload('table/zoom_plot_jqplot.js', function () {
                     series[0][searchedDataKey][1] = selectedRow[yLabel];
                 } else if (yType === 'time') {
                     series[0][searchedDataKey][1] =
-                        getTimeStamp(selectedRow[yLabel], $('#types_1').val());
+                            getTimeStamp(selectedRow[yLabel], $('#types_1').val());
                 } else {
                     series[0][searchedDataKey][1] = '';
                     // TODO: text values
@@ -365,18 +365,18 @@ AJAX.registerOnload('table/zoom_plot_jqplot.js', function () {
                 if (value === null) {
                     sqlQuery += 'NULL, ';
 
-                // empty
+                    // empty
                 } else if (value.trim() === '') {
                     sqlQuery += '\'\', ';
 
-                // other
+                    // other
                 } else {
                     // type explicitly identified
                     if (sqlTypes[key] !== null) {
                         if (sqlTypes[key] === 'bit') {
                             sqlQuery += 'b\'' + value + '\', ';
                         }
-                    // type not explicitly identified
+                        // type not explicitly identified
                     } else {
                         if (!isNumeric(value)) {
                             sqlQuery += '\'' + value + '\', ';
@@ -391,11 +391,11 @@ AJAX.registerOnload('table/zoom_plot_jqplot.js', function () {
             sqlQuery += ' WHERE ' + Sql.urlDecode(searchedData[searchedDataKey].where_clause);
 
             $.post('index.php?route=/sql', {
-                'server' : CommonParams.get('server'),
-                'db' : CommonParams.get('db'),
-                'ajax_request' : true,
-                'sql_query' : sqlQuery,
-                'inline_edit' : false
+                'server': CommonParams.get('server'),
+                'db': CommonParams.get('db'),
+                'ajax_request': true,
+                'sql_query': sqlQuery,
+                'inline_edit': false
             }, function (data) {
                 if (typeof data !== 'undefined' && data.success === true) {
                     $('#sqlqueryresultsouter').html(data.sql_query);
@@ -441,10 +441,10 @@ AJAX.registerOnload('table/zoom_plot_jqplot.js', function () {
 
     if (searchedData !== null) {
         $('#zoom_search_form')
-            .slideToggle()
-            .hide();
+                .slideToggle()
+                .hide();
         $('#togglesearchformlink')
-            .text(Messages.strShowSearchCriteria);
+                .text(Messages.strShowSearchCriteria);
         $('#togglesearchformdiv').show();
         var selectedRow;
         var series = [];
@@ -457,7 +457,7 @@ AJAX.registerOnload('table/zoom_plot_jqplot.js', function () {
         var options = {
             series: [
                 // for a scatter plot
-                { showLine: false }
+                {showLine: false}
             ],
             grid: {
                 drawBorder: false,
@@ -551,7 +551,7 @@ AJAX.registerOnload('table/zoom_plot_jqplot.js', function () {
                 value[dataLabel], // for highlighter
                 // (may set an undefined value)
                 value.where_clause, // for click on point
-                key,               // key from searchedData
+                key, // key from searchedData
                 value.where_clause_sign
             ]);
         });
@@ -572,48 +572,48 @@ AJAX.registerOnload('table/zoom_plot_jqplot.js', function () {
             // make room so that the handle will still appear
             $('div#querychart').height($('div#resizer').height() * 0.96);
             $('div#querychart').width($('div#resizer').width() * 0.96);
-            currentChart.replot({ resetAxes: true });
+            currentChart.replot({resetAxes: true});
         });
 
         $('div#querychart').on('jqplotDataClick',
-            function (event, seriesIndex, pointIndex, data) {
-                searchedDataKey = data[4]; // key from searchedData (global)
-                var fieldId = 0;
-                var postParams = {
-                    'ajax_request' : true,
-                    'get_data_row' : true,
-                    'server' : CommonParams.get('server'),
-                    'db' : CommonParams.get('db'),
-                    'table' : CommonParams.get('table'),
-                    'where_clause' : data[3],
-                    'where_clause_sign' : data[5]
-                };
+                function (event, seriesIndex, pointIndex, data) {
+                    searchedDataKey = data[4]; // key from searchedData (global)
+                    var fieldId = 0;
+                    var postParams = {
+                        'ajax_request': true,
+                        'get_data_row': true,
+                        'server': CommonParams.get('server'),
+                        'db': CommonParams.get('db'),
+                        'table': CommonParams.get('table'),
+                        'where_clause': data[3],
+                        'where_clause_sign': data[5]
+                    };
 
-                $.post('index.php?route=/table/zoom-search', postParams, function (data) {
-                    // Row is contained in data.row_info,
-                    // now fill the displayResultForm with row values
-                    var key;
-                    for (key in data.row_info) {
-                        var $field = $('#edit_fieldID_' + fieldId);
-                        var $fieldNull = $('#edit_fields_null_id_' + fieldId);
-                        if (data.row_info[key] === null) {
-                            $fieldNull.prop('checked', true);
-                            $field.val('');
-                        } else {
-                            $fieldNull.prop('checked', false);
-                            if ($field.attr('multiple')) { // when the column is of type SET
-                                $field.val(data.row_info[key].split(','));
+                    $.post('index.php?route=/table/zoom-search', postParams, function (data) {
+                        // Row is contained in data.row_info,
+                        // now fill the displayResultForm with row values
+                        var key;
+                        for (key in data.row_info) {
+                            var $field = $('#edit_fieldID_' + fieldId);
+                            var $fieldNull = $('#edit_fields_null_id_' + fieldId);
+                            if (data.row_info[key] === null) {
+                                $fieldNull.prop('checked', true);
+                                $field.val('');
                             } else {
-                                $field.val(data.row_info[key]);
+                                $fieldNull.prop('checked', false);
+                                if ($field.attr('multiple')) { // when the column is of type SET
+                                    $field.val(data.row_info[key].split(','));
+                                } else {
+                                    $field.val(data.row_info[key]);
+                                }
                             }
+                            fieldId++;
                         }
-                        fieldId++;
-                    }
-                    selectedRow = data.row_info;
-                });
+                        selectedRow = data.row_info;
+                    });
 
-                $('#dataDisplay').dialog('open');
-            }
+                    $('#dataDisplay').dialog('open');
+                }
         );
     }
 

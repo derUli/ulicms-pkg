@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Routine utilities.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\SqlParser\Utils;
@@ -12,15 +12,14 @@ use PhpMyAdmin\SqlParser\Components\ParameterDefinition;
 use PhpMyAdmin\SqlParser\Lexer;
 use PhpMyAdmin\SqlParser\Parser;
 use PhpMyAdmin\SqlParser\Statements\CreateStatement;
-
 use function implode;
 use function is_string;
 
 /**
  * Routine utilities.
  */
-class Routine
-{
+class Routine {
+
     /**
      * Parses a parameter of a routine.
      *
@@ -28,8 +27,7 @@ class Routine
      *
      * @return array
      */
-    public static function getReturnType($param)
-    {
+    public static function getReturnType($param) {
         $lexer = new Lexer($param);
 
         // A dummy parser is used for error reporting.
@@ -66,8 +64,7 @@ class Routine
      *
      * @return array
      */
-    public static function getParameter($param)
-    {
+    public static function getParameter($param) {
         $lexer = new Lexer('(' . $param . ')');
 
         // A dummy parser is used for error reporting.
@@ -106,8 +103,7 @@ class Routine
      *
      * @return array
      */
-    public static function getParameters($statement)
-    {
+    public static function getParameters($statement) {
         $retval = [
             'num' => 0,
             'dir' => [],
@@ -118,7 +114,7 @@ class Routine
             'opts' => [],
         ];
 
-        if (! empty($statement->parameters)) {
+        if (!empty($statement->parameters)) {
             $idx = 0;
             foreach ($statement->parameters as $param) {
                 $retval['dir'][$idx] = $param->inOut;
@@ -129,7 +125,7 @@ class Routine
                 $retval['opts'][$idx] = [];
                 foreach ($param->type->options->options as $opt) {
                     $retval['opts'][$idx][] = is_string($opt) ?
-                        $opt : $opt['value'];
+                            $opt : $opt['value'];
                 }
 
                 $retval['opts'][$idx] = implode(' ', $retval['opts'][$idx]);
@@ -141,4 +137,5 @@ class Routine
 
         return $retval;
     }
+
 }

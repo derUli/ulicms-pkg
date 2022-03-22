@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Image JPEG Link Transformations plugin for phpMyAdmin
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Plugins\Transformations\Output;
@@ -13,15 +13,14 @@ use PhpMyAdmin\Plugins\Transformations\Abs\ImageLinkTransformationsPlugin;
  * Handles the link transformation for image jpeg
  */
 // @codingStandardsIgnoreLine
-class Image_JPEG_Link extends ImageLinkTransformationsPlugin
-{
+class Image_JPEG_Link extends ImageLinkTransformationsPlugin {
+
     /**
      * Gets the plugin`s MIME type
      *
      * @return string
      */
-    public static function getMIMEType()
-    {
+    public static function getMIMEType() {
         return 'Image';
     }
 
@@ -30,8 +29,8 @@ class Image_JPEG_Link extends ImageLinkTransformationsPlugin
      *
      * @return string
      */
-    public static function getMIMESubtype()
-    {
+    public static function getMIMESubtype() {
         return 'JPEG';
     }
+
 }

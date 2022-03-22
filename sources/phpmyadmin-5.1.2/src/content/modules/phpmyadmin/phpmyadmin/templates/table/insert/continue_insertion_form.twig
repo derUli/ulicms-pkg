@@ -7,13 +7,13 @@
     {% if has_where_clause %}
         {% for key_id, where_clause in where_clause_array %}
             <input type="hidden" name="where_clause[{{ key_id }}]" value="
-                {{- where_clause|trim }}">
+                   {{- where_clause|trim }}">
         {% endfor %}
     {% endif %}
 
     {% set insert_rows %}
         <input type="number" name="insert_rows" id="insert_rows" value="
-            {{- insert_rows_default }}" min="1">
+               {{- insert_rows_default }}" min="1">
     {% endset %}
     {{ 'Continue insertion with %s rows'|trans|format(insert_rows)|raw }}
 </form>

@@ -27,8 +27,8 @@ use const DIRECTORY_SEPARATOR;
  * and by default on original
  * @todo make all components optional - get missing components from 'parent' theme
  */
-class Theme
-{
+class Theme {
+
     /**
      * @var string theme version
      * @access protected
@@ -103,8 +103,7 @@ class Theme
     /** @var Template */
     public $template;
 
-    public function __construct()
-    {
+    public function __construct() {
         $this->template = new Template();
     }
 
@@ -115,10 +114,9 @@ class Theme
      *
      * @access public
      */
-    public function loadInfo()
-    {
+    public function loadInfo() {
         $infofile = $this->getFsPath() . 'theme.json';
-        if (! @file_exists($infofile)) {
+        if (!@file_exists($infofile)) {
             return false;
         }
 
@@ -132,7 +130,7 @@ class Theme
         $data = json_decode($content, true);
 
         // Did we get expected data?
-        if (! is_array($data)) {
+        if (!is_array($data)) {
             return false;
         }
         // Check that all required data are there
@@ -142,16 +140,16 @@ class Theme
             'supports',
         ];
         foreach ($members as $member) {
-            if (! isset($data[$member])) {
+            if (!isset($data[$member])) {
                 return false;
             }
         }
 
         // Version check
-        if (! is_array($data['supports'])) {
+        if (!is_array($data['supports'])) {
             return false;
         }
-        if (! in_array(PMA_MAJOR_VERSION, $data['supports'])) {
+        if (!in_array(PMA_MAJOR_VERSION, $data['supports'])) {
             return false;
         }
 
@@ -176,14 +174,13 @@ class Theme
      * @static
      * @access public
      */
-    public static function load(string $folder, string $fsPath)
-    {
+    public static function load(string $folder, string $fsPath) {
         $theme = new Theme();
 
         $theme->setPath($folder);
         $theme->setFsPath($fsPath);
 
-        if (! $theme->loadInfo()) {
+        if (!$theme->loadInfo()) {
             return false;
         }
 
@@ -199,8 +196,7 @@ class Theme
      *
      * @access public
      */
-    public function checkImgPath()
-    {
+    public function checkImgPath() {
         // try current theme first
         if (is_dir($this->getFsPath() . 'img' . DIRECTORY_SEPARATOR)) {
             $this->setImgPath($this->getPath() . '/img/');
@@ -211,10 +207,10 @@ class Theme
 
         // try fallback theme
         $fallbackFsPathThemeDir = ThemeManager::getThemesFsDir() . ThemeManager::FALLBACK_THEME
-                                  . DIRECTORY_SEPARATOR . 'img' . DIRECTORY_SEPARATOR;
+                . DIRECTORY_SEPARATOR . 'img' . DIRECTORY_SEPARATOR;
         if (is_dir($fallbackFsPathThemeDir)) {
             $fallbackUrl = ThemeManager::getThemesDir() . ThemeManager::FALLBACK_THEME
-                        . '/img/';
+                    . '/img/';
             $this->setImgPath($fallbackUrl);
             $this->setImgPathFs($fallbackFsPathThemeDir);
 
@@ -223,11 +219,11 @@ class Theme
 
         // we failed
         trigger_error(
-            sprintf(
-                __('No valid image path for theme %s found!'),
-                $this->getName()
-            ),
-            E_USER_ERROR
+                sprintf(
+                        __('No valid image path for theme %s found!'),
+                        $this->getName()
+                ),
+                E_USER_ERROR
         );
 
         return false;
@@ -240,8 +236,7 @@ class Theme
      *
      * @access public
      */
-    public function getPath()
-    {
+    public function getPath() {
         return $this->path;
     }
 
@@ -250,8 +245,7 @@ class Theme
      *
      * @return string file system path to theme
      */
-    public function getFsPath(): string
-    {
+    public function getFsPath(): string {
         return $this->fsPath;
     }
 
@@ -264,8 +258,7 @@ class Theme
      *
      * @access public
      */
-    public function setPath($path)
-    {
+    public function setPath($path) {
         $this->path = trim($path);
     }
 
@@ -274,8 +267,7 @@ class Theme
      *
      * @param string $path path to theme
      */
-    public function setFsPath(string $path): void
-    {
+    public function setFsPath(string $path): void {
         $this->fsPath = trim($path);
     }
 
@@ -288,8 +280,7 @@ class Theme
      *
      * @access public
      */
-    public function setVersion($version)
-    {
+    public function setVersion($version) {
         $this->version = trim($version);
     }
 
@@ -300,8 +291,7 @@ class Theme
      *
      * @access public
      */
-    public function getVersion()
-    {
+    public function getVersion() {
         return $this->version;
     }
 
@@ -315,8 +305,7 @@ class Theme
      *
      * @access public
      */
-    public function checkVersion($version)
-    {
+    public function checkVersion($version) {
         return version_compare($this->getVersion(), $version, 'lt');
     }
 
@@ -329,8 +318,7 @@ class Theme
      *
      * @access public
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = trim($name);
     }
 
@@ -341,8 +329,7 @@ class Theme
      *
      * @access public
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -355,8 +342,7 @@ class Theme
      *
      * @access public
      */
-    public function setId($id)
-    {
+    public function setId($id) {
         $this->id = trim($id);
     }
 
@@ -367,8 +353,7 @@ class Theme
      *
      * @access public
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -381,8 +366,7 @@ class Theme
      *
      * @access public
      */
-    public function setImgPath($path)
-    {
+    public function setImgPath($path) {
         $this->imgPath = $path;
     }
 
@@ -391,8 +375,7 @@ class Theme
      *
      * @param string $path file-system path to images for this theme
      */
-    public function setImgPathFs(string $path): void
-    {
+    public function setImgPathFs(string $path): void {
         $this->imgPathFs = $path;
     }
 
@@ -408,8 +391,7 @@ class Theme
      *
      * @access public
      */
-    public function getImgPath($file = null, $fallback = null)
-    {
+    public function getImgPath($file = null, $fallback = null) {
         if ($file === null) {
             return $this->imgPath;
         }
@@ -432,8 +414,7 @@ class Theme
      *
      * @access public
      */
-    public function getPrintPreview()
-    {
+    public function getPrintPreview() {
         $url_params = ['set_theme' => $this->getId()];
         $screen = null;
         if (@file_exists($this->getFsPath() . 'screen.png')) {
@@ -441,11 +422,12 @@ class Theme
         }
 
         return $this->template->render('theme_preview', [
-            'url_params' => $url_params,
-            'name' => $this->getName(),
-            'version' => $this->getVersion(),
-            'id' => $this->getId(),
-            'screen' => $screen,
+                    'url_params' => $url_params,
+                    'name' => $this->getName(),
+                    'version' => $this->getVersion(),
+                    'id' => $this->getId(),
+                    'screen' => $screen,
         ]);
     }
+
 }

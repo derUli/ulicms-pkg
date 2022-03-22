@@ -22,29 +22,27 @@ use Symfony\Component\ExpressionLanguage\ExpressionFunctionProviderInterface;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class ExpressionLanguageProvider implements ExpressionFunctionProviderInterface
-{
+class ExpressionLanguageProvider implements ExpressionFunctionProviderInterface {
+
     private $serviceCompiler;
 
-    public function __construct(callable $serviceCompiler = null)
-    {
+    public function __construct(callable $serviceCompiler = null) {
         $this->serviceCompiler = $serviceCompiler;
     }
 
-    public function getFunctions()
-    {
+    public function getFunctions() {
         return [
             new ExpressionFunction('service', $this->serviceCompiler ?: function ($arg) {
-                return sprintf('$this->get(%s)', $arg);
-            }, function (array $variables, $value) {
-                return $variables['container']->get($value);
-            }),
-
+                        return sprintf('$this->get(%s)', $arg);
+                    }, function (array $variables, $value) {
+                        return $variables['container']->get($value);
+                    }),
             new ExpressionFunction('parameter', function ($arg) {
-                return sprintf('$this->getParameter(%s)', $arg);
-            }, function (array $variables, $value) {
-                return $variables['container']->getParameter($value);
-            }),
+                        return sprintf('$this->getParameter(%s)', $arg);
+                    }, function (array $variables, $value) {
+                        return $variables['container']->getParameter($value);
+                    }),
         ];
     }
+
 }

@@ -1,9 +1,9 @@
 <?php
+
 /**
  * This class extends ShapeFile class to cater the following phpMyAdmin
  * specific requirements.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Plugins\Import;
@@ -13,8 +13,8 @@ use PhpMyAdmin\ShapeFile\ShapeFile;
 /**
  * ShapeFileImport class
  */
-class ShapeFileImport extends ShapeFile
-{
+class ShapeFileImport extends ShapeFile {
+
     /**
      * Reads given number of bytes from SHP file
      *
@@ -22,8 +22,7 @@ class ShapeFileImport extends ShapeFile
      *
      * @return string|false
      */
-    public function readSHP($bytes)
-    {
+    public function readSHP($bytes) {
         return ImportShp::readFromBuffer($bytes);
     }
 
@@ -32,10 +31,10 @@ class ShapeFileImport extends ShapeFile
      *
      * @return bool
      */
-    public function eofSHP()
-    {
+    public function eofSHP() {
         global $eof;
 
         return $eof;
     }
+
 }

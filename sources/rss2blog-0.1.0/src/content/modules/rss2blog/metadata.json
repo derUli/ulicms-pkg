@@ -1,9 +1,9 @@
 {
-	"version": "0.1.0",
-	"admin_permission": "rss2blog",
-	"embed": false,
-	"custom_acl": [
-		"rss2blog"
-	]
+    "version": "0.1.0",
+    "admin_permission": "rss2blog",
+    "embed": false,
+    "custom_acl": [
+        "rss2blog"
+    ]
 }
 

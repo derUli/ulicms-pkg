@@ -1,10 +1,10 @@
 <?php
+
 /**
  * Logging functionality for webserver.
  *
  * This includes web server specific code to log some information.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin;
@@ -23,15 +23,14 @@ use function syslog;
 /**
  * Misc logging functions
  */
-class Logging
-{
+class Logging {
+
     /**
      * Get authentication logging destination
      *
      * @return string
      */
-    public static function getLogDestination()
-    {
+    public static function getLogDestination() {
         $log_file = $GLOBALS['PMA_Config']->get('AuthLog');
 
         /* Autodetect */
@@ -56,8 +55,7 @@ class Logging
      *
      * @return string
      */
-    public static function getLogMessage($user, $status)
-    {
+    public static function getLogMessage($user, $status) {
         if ($status === 'ok') {
             return 'user authenticated: ' . $user . ' from ' . Core::getIp();
         }
@@ -73,14 +71,13 @@ class Logging
      *
      * @return void
      */
-    public static function logUser($user, $status = 'ok')
-    {
+    public static function logUser($user, $status = 'ok') {
         if (function_exists('apache_note')) {
             apache_note('userID', $user);
             apache_note('userStatus', $status);
         }
         /* Do not log successful authentications */
-        if (! $GLOBALS['PMA_Config']->get('AuthLogSuccess') && $status === 'ok') {
+        if (!$GLOBALS['PMA_Config']->get('AuthLogSuccess') && $status === 'ok') {
             return;
         }
         $log_file = self::getLogDestination();
@@ -100,10 +97,11 @@ class Logging
             @error_log($message, 4);
         } else {
             @error_log(
-                date('M d H:i:s') . ' phpmyadmin: ' . $message . "\n",
-                3,
-                $log_file
+                            date('M d H:i:s') . ' phpmyadmin: ' . $message . "\n",
+                            3,
+                            $log_file
             );
         }
     }
+
 }

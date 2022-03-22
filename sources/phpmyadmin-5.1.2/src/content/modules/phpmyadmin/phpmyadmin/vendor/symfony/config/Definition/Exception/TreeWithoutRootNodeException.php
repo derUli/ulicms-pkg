@@ -16,6 +16,6 @@ namespace Symfony\Component\Config\Definition\Exception;
  *
  * @internal
  */
-class TreeWithoutRootNodeException extends \RuntimeException
-{
+class TreeWithoutRootNodeException extends \RuntimeException {
+    
 }

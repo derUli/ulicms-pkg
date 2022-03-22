@@ -9,8 +9,8 @@ use const PHP_OS;
 /**
  * Basic SysInfo class not providing any real data.
  */
-class Base
-{
+class Base {
+
     /**
      * The OS name
      *
@@ -23,8 +23,7 @@ class Base
      *
      * @return array with load data
      */
-    public function loadavg()
-    {
+    public function loadavg() {
         return ['loadavg' => 0];
     }
 
@@ -33,8 +32,7 @@ class Base
      *
      * @return array with memory usage data
      */
-    public function memory()
-    {
+    public function memory() {
         return [];
     }
 
@@ -43,8 +41,8 @@ class Base
      *
      * @return bool true on success
      */
-    public function supported()
-    {
+    public function supported() {
         return true;
     }
+
 }

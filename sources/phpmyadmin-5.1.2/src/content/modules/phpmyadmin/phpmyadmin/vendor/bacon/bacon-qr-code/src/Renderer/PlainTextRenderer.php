@@ -1,13 +1,14 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace BaconQrCode\Renderer;
 
 use BaconQrCode\Encoder\QrCode;
 use BaconQrCode\Exception\InvalidArgumentException;
 
-final class PlainTextRenderer implements RendererInterface
-{
+final class PlainTextRenderer implements RendererInterface {
+
     /**
      * UTF-8 full block (U+2588)
      */
@@ -33,16 +34,14 @@ final class PlainTextRenderer implements RendererInterface
      */
     private $margin;
 
-    public function __construct(int $margin = 2)
-    {
+    public function __construct(int $margin = 2) {
         $this->margin = $margin;
     }
 
     /**
      * @throws InvalidArgumentException if matrix width doesn't match height
      */
-    public function render(QrCode $qrCode) : string
-    {
+    public function render(QrCode $qrCode): string {
         $matrix = $qrCode->getMatrix();
         $matrixSize = $matrix->getWidth();
 
@@ -83,4 +82,5 @@ final class PlainTextRenderer implements RendererInterface
 
         return $result;
     }
+
 }

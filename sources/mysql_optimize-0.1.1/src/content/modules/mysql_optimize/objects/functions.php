@@ -3,8 +3,8 @@
 use UliCMS\Exceptions\SqlException;
 
 if (!function_exists("db_optimize")) {
-    function db_optimize($database, $output = true)
-    {
+
+    function db_optimize($database, $output = true) {
         @set_time_limit(0);
         $obj = db_query('SHOW TABLES');
 
@@ -30,7 +30,7 @@ if (!function_exists("db_optimize")) {
                     echo $e->getMessage();
                 }
             }
-            
+
             if ($output) {
                 echo "<br/>";
             }
@@ -56,14 +56,14 @@ if (!function_exists("db_optimize")) {
                 echo "<br/>";
             }
             $flush_sql = 'FLUSH TABLE ' . $value;
-            
+
             if ($output) {
                 echo $flush_sql;
                 fcflush();
             }
             try {
                 Database::query($flush_sql);
-                
+
                 if ($output) {
                     echo " <span style='color:green'>[" . get_translation("ok") . "]</span>";
                 }
@@ -81,4 +81,5 @@ if (!function_exists("db_optimize")) {
             }
         }
     }
+
 }

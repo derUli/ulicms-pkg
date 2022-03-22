@@ -14,8 +14,8 @@ use function htmlspecialchars;
 use function in_array;
 use function sprintf;
 
-class DesignerController extends AbstractController
-{
+class DesignerController extends AbstractController {
+
     /** @var Designer */
     private $databaseDesigner;
 
@@ -27,19 +27,18 @@ class DesignerController extends AbstractController
      * @param string   $db       Database name
      */
     public function __construct(
-        $response,
-        Template $template,
-        $db,
-        Designer $databaseDesigner,
-        DesignerCommon $designerCommon
+            $response,
+            Template $template,
+            $db,
+            Designer $databaseDesigner,
+            DesignerCommon $designerCommon
     ) {
         parent::__construct($response, $template, $db);
         $this->databaseDesigner = $databaseDesigner;
         $this->designerCommon = $designerCommon;
     }
 
-    public function index(): void
-    {
+    public function index(): void {
         global $db, $script_display_field, $tab_column, $tables_all_keys, $tables_pk_or_unique_keys;
         global $success, $page, $message, $display_page, $selected_page, $tab_pos, $fullTableNames, $script_tables;
         global $script_contr, $params, $tables, $num_tables, $total_num_tables, $sub_part;
@@ -54,8 +53,8 @@ class DesignerController extends AbstractController
                 $html = $this->databaseDesigner->getHtmlForPageSaveAs($_POST['db']);
             } elseif ($_POST['dialog'] === 'export') {
                 $html = $this->databaseDesigner->getHtmlForSchemaExport(
-                    $_POST['db'],
-                    $_POST['selected_page']
+                        $_POST['db'],
+                        $_POST['selected_page']
                 );
             } elseif ($_POST['dialog'] === 'add_table') {
                 // Pass the db and table to the getTablesInfo so we only have the table we asked for
@@ -65,17 +64,17 @@ class DesignerController extends AbstractController
                 $tables_pk_or_unique_keys = $this->designerCommon->getPkOrUniqueKeys($script_display_field);
 
                 $html = $this->databaseDesigner->getDatabaseTables(
-                    $_POST['db'],
-                    $script_display_field,
-                    [],
-                    -1,
-                    $tab_column,
-                    $tables_all_keys,
-                    $tables_pk_or_unique_keys
+                        $_POST['db'],
+                        $script_display_field,
+                        [],
+                        -1,
+                        $tab_column,
+                        $tables_all_keys,
+                        $tables_pk_or_unique_keys
                 );
             }
 
-            if (! empty($html)) {
+            if (!empty($html)) {
                 $this->response->addHTML($html);
             }
 
@@ -91,14 +90,14 @@ class DesignerController extends AbstractController
                     $page = $_POST['selected_page'];
                 } elseif ($this->designerCommon->getPageExists($_POST['selected_value'])) {
                     $this->response->addJSON(
-                        'message',
-                        /* l10n: The user tries to save a page with an existing name in Designer */
-                        __(
-                            sprintf(
-                                'There already exists a page named "%s" please rename it to something else.',
-                                htmlspecialchars($_POST['selected_value'])
+                            'message',
+                            /* l10n: The user tries to save a page with an existing name in Designer */
+                            __(
+                                    sprintf(
+                                            'There already exists a page named "%s" please rename it to something else.',
+                                            htmlspecialchars($_POST['selected_value'])
+                                    )
                             )
-                        )
                     );
                     $this->response->setRequestStatus(false);
 
@@ -111,35 +110,35 @@ class DesignerController extends AbstractController
                 $this->response->setRequestStatus($success);
             } elseif ($_POST['operation'] === 'setDisplayField') {
                 [
-                    $success,
-                    $message,
-                ] = $this->designerCommon->saveDisplayField(
-                    $_POST['db'],
-                    $_POST['table'],
-                    $_POST['field']
+                        $success,
+                        $message,
+                        ] = $this->designerCommon->saveDisplayField(
+                        $_POST['db'],
+                        $_POST['table'],
+                        $_POST['field']
                 );
                 $this->response->setRequestStatus($success);
                 $this->response->addJSON('message', $message);
             } elseif ($_POST['operation'] === 'addNewRelation') {
                 [$success, $message] = $this->designerCommon->addNewRelation(
-                    $_POST['db'],
-                    $_POST['T1'],
-                    $_POST['F1'],
-                    $_POST['T2'],
-                    $_POST['F2'],
-                    $_POST['on_delete'],
-                    $_POST['on_update'],
-                    $_POST['DB1'],
-                    $_POST['DB2']
+                        $_POST['db'],
+                        $_POST['T1'],
+                        $_POST['F1'],
+                        $_POST['T2'],
+                        $_POST['F2'],
+                        $_POST['on_delete'],
+                        $_POST['on_update'],
+                        $_POST['DB1'],
+                        $_POST['DB2']
                 );
                 $this->response->setRequestStatus($success);
                 $this->response->addJSON('message', $message);
             } elseif ($_POST['operation'] === 'removeRelation') {
                 [$success, $message] = $this->designerCommon->removeRelation(
-                    $_POST['T1'],
-                    $_POST['F1'],
-                    $_POST['T2'],
-                    $_POST['F2']
+                        $_POST['T1'],
+                        $_POST['F1'],
+                        $_POST['T2'],
+                        $_POST['F2']
                 );
                 $this->response->setRequestStatus($success);
                 $this->response->addJSON('message', $message);
@@ -156,7 +155,7 @@ class DesignerController extends AbstractController
         $err_url = Util::getScriptNameForOption($cfg['DefaultTabDatabase'], 'database');
         $err_url .= Url::getCommon(['db' => $db], '&');
 
-        if (! $this->hasDatabase()) {
+        if (!$this->hasDatabase()) {
             return;
         }
 
@@ -169,7 +168,7 @@ class DesignerController extends AbstractController
 
         if ($visualBuilderMode) {
             $display_page = $this->designerCommon->getDefaultPage($_GET['db']);
-        } elseif (! empty($_GET['page'])) {
+        } elseif (!empty($_GET['page'])) {
             $display_page = $_GET['page'];
         } else {
             $display_page = $this->designerCommon->getLoadingPage($_GET['db']);
@@ -224,36 +223,37 @@ class DesignerController extends AbstractController
         ]);
 
         [
-            $tables,
-            $num_tables,
-            $total_num_tables,
-            $sub_part,,,
-            $tooltip_truename,
-            $tooltip_aliasname,
-            $pos,
-        ] = Util::getDbInfo($db, $sub_part ?? '');
+                $tables,
+                $num_tables,
+                $total_num_tables,
+                $sub_part,,,
+                $tooltip_truename,
+                $tooltip_aliasname,
+                $pos,
+                ] = Util::getDbInfo($db, $sub_part ?? '');
 
         // Embed some data into HTML, later it will be read
         // by designer/init.js and converted to JS variables.
         $this->response->addHTML(
-            $this->databaseDesigner->getHtmlForMain(
-                $db,
-                $_GET['db'],
-                $script_display_field,
-                $script_tables,
-                $script_contr,
-                $script_display_field,
-                $display_page,
-                $visualBuilderMode,
-                $selected_page,
-                $classes_side_menu,
-                $tab_pos,
-                $tab_column,
-                $tables_all_keys,
-                $tables_pk_or_unique_keys
-            )
+                $this->databaseDesigner->getHtmlForMain(
+                        $db,
+                        $_GET['db'],
+                        $script_display_field,
+                        $script_tables,
+                        $script_contr,
+                        $script_display_field,
+                        $display_page,
+                        $visualBuilderMode,
+                        $selected_page,
+                        $classes_side_menu,
+                        $tab_pos,
+                        $tab_column,
+                        $tables_all_keys,
+                        $tables_pk_or_unique_keys
+                )
         );
 
         $this->response->addHTML('<div id="PMA_disable_floating_menubar"></div>');
     }
+
 }

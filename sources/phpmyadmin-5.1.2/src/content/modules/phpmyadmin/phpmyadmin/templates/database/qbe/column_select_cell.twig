@@ -3,7 +3,7 @@
         <option value="">&nbsp;</option>
         {% for column in column_names %}
             <option value="{{ column }}"
-                {%- if column is same as(selected) %} selected="selected"{% endif %}>
+                    {%- if column is same as(selected) %} selected="selected"{% endif %}>
                 {{- column -}}
             </option>
         {% endfor %}

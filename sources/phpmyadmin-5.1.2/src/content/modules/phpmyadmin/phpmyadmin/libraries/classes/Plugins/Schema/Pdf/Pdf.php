@@ -1,8 +1,8 @@
 <?php
+
 /**
  * PDF schema handling
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Plugins\Schema\Pdf;
@@ -24,7 +24,7 @@ use function is_array;
 /**
  * Skip the plugin if TCPDF is not available.
  */
-if (! class_exists('TCPDF')) {
+if (!class_exists('TCPDF')) {
     $GLOBALS['skip_import'] = true;
 
     return;
@@ -46,8 +46,8 @@ if (getcwd() == __DIR__) {
  *
  * @access  public
  */
-class Pdf extends PdfLib
-{
+class Pdf extends PdfLib {
+
     /** @var int|float */
     public $xMin;
 
@@ -103,12 +103,12 @@ class Pdf extends PdfLib
      * @access public
      */
     public function __construct(
-        $orientation,
-        $unit,
-        $paper,
-        $pageNumber,
-        $withDoc,
-        $db
+            $orientation,
+            $unit,
+            $paper,
+            $pageNumber,
+            $withDoc,
+            $db
     ) {
         global $dbi;
 
@@ -126,8 +126,7 @@ class Pdf extends PdfLib
      *
      * @return void
      */
-    public function setCMargin($c_margin)
-    {
+    public function setCMargin($c_margin) {
         $this->cMargin = $c_margin;
     }
 
@@ -143,11 +142,11 @@ class Pdf extends PdfLib
      * @return void
      */
     public function setScale(
-        $scale = 1,
-        $xMin = 0,
-        $yMin = 0,
-        $leftMargin = -1,
-        $topMargin = -1
+            $scale = 1,
+            $xMin = 0,
+            $yMin = 0,
+            $leftMargin = -1,
+            $topMargin = -1
     ) {
         $this->scale = $scale;
         $this->xMin = $xMin;
@@ -179,14 +178,14 @@ class Pdf extends PdfLib
      * @return void
      */
     public function cellScale(
-        $w,
-        $h = 0,
-        $txt = '',
-        $border = 0,
-        $ln = 0,
-        $align = '',
-        $fill = 0,
-        $link = ''
+            $w,
+            $h = 0,
+            $txt = '',
+            $border = 0,
+            $ln = 0,
+            $align = '',
+            $fill = 0,
+            $link = ''
     ) {
         $h /= $this->scale;
         $w /= $this->scale;
@@ -205,8 +204,7 @@ class Pdf extends PdfLib
      *
      * @return void
      */
-    public function lineScale($x1, $y1, $x2, $y2)
-    {
+    public function lineScale($x1, $y1, $x2, $y2) {
         $x1 = ($x1 - $this->xMin) / $this->scale + $this->leftMargin;
         $y1 = ($y1 - $this->yMin) / $this->scale + $this->topMargin;
         $x2 = ($x2 - $this->xMin) / $this->scale + $this->leftMargin;
@@ -224,8 +222,7 @@ class Pdf extends PdfLib
      *
      * @return void
      */
-    public function setXyScale($x, $y)
-    {
+    public function setXyScale($x, $y) {
         $x = ($x - $this->xMin) / $this->scale + $this->leftMargin;
         $y = ($y - $this->yMin) / $this->scale + $this->topMargin;
         $this->SetXY($x, $y);
@@ -240,8 +237,7 @@ class Pdf extends PdfLib
      *
      * @return void
      */
-    public function setXScale($x)
-    {
+    public function setXScale($x) {
         $x = ($x - $this->xMin) / $this->scale + $this->leftMargin;
         $this->SetX($x);
     }
@@ -255,8 +251,7 @@ class Pdf extends PdfLib
      *
      * @return void
      */
-    public function setFontSizeScale($size)
-    {
+    public function setFontSizeScale($size) {
         // Set font size in points
         $size /= $this->scale;
         $this->SetFontSize($size);
@@ -271,8 +266,7 @@ class Pdf extends PdfLib
      *
      * @return void
      */
-    public function setLineWidthScale($width)
-    {
+    public function setLineWidthScale($width) {
         $width /= $this->scale;
         $this->SetLineWidth($width);
     }
@@ -285,14 +279,12 @@ class Pdf extends PdfLib
      * @return void
      */
     // @codingStandardsIgnoreLine
-    public function Header()
-    {
+    public function Header() {
         global $dbi;
 
         // We only show this if we find something in the new pdf_pages table
-
         // This function must be named "Header" to work with the TCPDF library
-        if (! $this->withDoc) {
+        if (!$this->withDoc) {
             return;
         }
 
@@ -300,10 +292,10 @@ class Pdf extends PdfLib
             $pg_name = __('PDF export page');
         } else {
             $test_query = 'SELECT * FROM '
-                . Util::backquote($GLOBALS['cfgRelation']['db']) . '.'
-                . Util::backquote($GLOBALS['cfgRelation']['pdf_pages'])
-                . ' WHERE db_name = \'' . $dbi->escapeString($this->db)
-                . '\' AND page_nr = \'' . $this->pageNumber . '\'';
+                    . Util::backquote($GLOBALS['cfgRelation']['db']) . '.'
+                    . Util::backquote($GLOBALS['cfgRelation']['pdf_pages'])
+                    . ' WHERE db_name = \'' . $dbi->escapeString($this->db)
+                    . '\' AND page_nr = \'' . $this->pageNumber . '\'';
             $test_rs = $this->relation->queryAsControlUser($test_query);
             $pageDesc = '';
             $pages = $dbi->fetchAssoc($test_rs);
@@ -327,9 +319,8 @@ class Pdf extends PdfLib
      * @return void
      */
     // @codingStandardsIgnoreLine
-    public function Footer()
-    {
-        if (! $this->withDoc) {
+    public function Footer() {
+        if (!$this->withDoc) {
             return;
         }
 
@@ -343,8 +334,7 @@ class Pdf extends PdfLib
      *
      * @return void
      */
-    public function setWidths(array $w)
-    {
+    public function setWidths(array $w) {
         // column widths
         $this->widths = $w;
     }
@@ -357,8 +347,7 @@ class Pdf extends PdfLib
      *
      * @return void
      */
-    public function row(array $data, array $links)
-    {
+    public function row(array $data, array $links) {
         // line height
         $nb = 0;
         $data_cnt = count($data);
@@ -398,8 +387,7 @@ class Pdf extends PdfLib
      *
      * @return int
      */
-    public function numLines($w, $txt)
-    {
+    public function numLines($w, $txt) {
         $cw = &$this->CurrentFont['cw'];
         if ($w == 0) {
             $w = $this->w - $this->rMargin - $this->x;
@@ -458,8 +446,8 @@ class Pdf extends PdfLib
      *
      * @access private
      */
-    public function setOffline($value)
-    {
+    public function setOffline($value) {
         $this->offline = $value;
     }
+
 }

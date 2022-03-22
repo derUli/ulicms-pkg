@@ -16,8 +16,8 @@ namespace Symfony\Component\Config\Resource;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-interface ResourceInterface
-{
+interface ResourceInterface {
+
     /**
      * Returns a string representation of the Resource.
      *

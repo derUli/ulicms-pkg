@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Contains PhpMyAdmin\Plugins\Schema\Dia\TableStatsDia class
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Plugins\Schema\Dia;
@@ -23,8 +23,8 @@ use function sprintf;
  *
  * @name    Table_Stats_Dia
  */
-class TableStatsDia extends TableStats
-{
+class TableStatsDia extends TableStats {
+
     /** @var int */
     public $tableId;
 
@@ -41,27 +41,27 @@ class TableStatsDia extends TableStats
      * @param bool   $offline    Whether the coordinates are sent from the browser
      */
     public function __construct(
-        $diagram,
-        $db,
-        $tableName,
-        $pageNumber,
-        $showKeys = false,
-        $offline = false
-    ) {
-        parent::__construct(
             $diagram,
             $db,
-            $pageNumber,
             $tableName,
-            $showKeys,
-            false,
-            $offline
+            $pageNumber,
+            $showKeys = false,
+            $offline = false
+    ) {
+        parent::__construct(
+                $diagram,
+                $db,
+                $pageNumber,
+                $tableName,
+                $showKeys,
+                false,
+                $offline
         );
 
         /**
          * Every object in Dia document needs an ID to identify
          * so, we used a static variable to keep the things unique
-        */
+         */
         $this->tableId = ++DiaRelationSchema::$objectId;
     }
 
@@ -70,12 +70,11 @@ class TableStatsDia extends TableStats
      *
      * @return void
      */
-    protected function showMissingTableError()
-    {
+    protected function showMissingTableError() {
         ExportRelationSchema::dieSchema(
-            $this->pageNumber,
-            'DIA',
-            sprintf(__('The %s table doesn\'t exist!'), $this->tableName)
+                $this->pageNumber,
+                'DIA',
+                sprintf(__('The %s table doesn\'t exist!'), $this->tableName)
         );
     }
 
@@ -99,8 +98,7 @@ class TableStatsDia extends TableStats
      *
      * @access public
      */
-    public function tableDraw($showColor)
-    {
+    public function tableDraw($showColor) {
         if ($showColor) {
             $listOfColors = [
                 'FF0000',
@@ -108,7 +106,7 @@ class TableStatsDia extends TableStats
                 '00FF00',
             ];
             shuffle($listOfColors);
-            $this->tableColor =  '#' . $listOfColors[0] . '';
+            $this->tableColor = '#' . $listOfColors[0] . '';
         } else {
             $this->tableColor = '#000000';
         }
@@ -120,20 +118,20 @@ class TableStatsDia extends TableStats
         $this->diagram->writeAttribute('version', '0');
         $this->diagram->writeAttribute('id', '' . $this->tableId . '');
         $this->diagram->writeRaw(
-            '<dia:attribute name="obj_pos">
+                '<dia:attribute name="obj_pos">
                 <dia:point val="'
-            . ($this->x * $factor) . ',' . ($this->y * $factor) . '"/>
+                . ($this->x * $factor) . ',' . ($this->y * $factor) . '"/>
             </dia:attribute>
             <dia:attribute name="obj_bb">
                 <dia:rectangle val="'
-            . ($this->x * $factor) . ',' . ($this->y * $factor) . ';9.97,9.2"/>
+                . ($this->x * $factor) . ',' . ($this->y * $factor) . ';9.97,9.2"/>
             </dia:attribute>
             <dia:attribute name="meta">
                 <dia:composite type="dict"/>
             </dia:attribute>
             <dia:attribute name="elem_corner">
                 <dia:point val="'
-            . ($this->x * $factor) . ',' . ($this->y * $factor) . '"/>
+                . ($this->x * $factor) . ',' . ($this->y * $factor) . '"/>
             </dia:attribute>
             <dia:attribute name="elem_width">
                 <dia:real val="5.9199999999999999"/>
@@ -196,7 +194,7 @@ class TableStatsDia extends TableStats
 
         foreach ($this->fields as $field) {
             $this->diagram->writeRaw(
-                '<dia:composite type="table_attribute">
+                    '<dia:composite type="table_attribute">
                     <dia:attribute name="name">
                 <dia:string>#' . $field . '#</dia:string>
                 </dia:attribute>
@@ -216,7 +214,7 @@ class TableStatsDia extends TableStats
                 $pm = 'false';
             }
             $this->diagram->writeRaw(
-                '<dia:attribute name="primary_key">
+                    '<dia:attribute name="primary_key">
                     <dia:boolean val="' . $pm . '"/>
                 </dia:attribute>
                 <dia:attribute name="nullable">
@@ -231,4 +229,5 @@ class TableStatsDia extends TableStats
         $this->diagram->endElement();
         $this->diagram->endElement();
     }
+
 }

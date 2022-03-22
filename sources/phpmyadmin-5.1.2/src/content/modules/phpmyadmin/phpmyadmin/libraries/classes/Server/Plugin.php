@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Server Plugin value object
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Server;
@@ -10,8 +10,8 @@ namespace PhpMyAdmin\Server;
 /**
  * Server Plugin value object
  */
-final class Plugin
-{
+final class Plugin {
+
     /** @var string */
     private $name;
 
@@ -67,19 +67,19 @@ final class Plugin
      * @param string|null $authVersion    Plugin's version as determined by the plugin author
      */
     private function __construct(
-        string $name,
-        ?string $version,
-        string $status,
-        string $type,
-        ?string $typeVersion,
-        ?string $library,
-        ?string $libraryVersion,
-        ?string $author,
-        ?string $description,
-        string $license,
-        ?string $loadOption,
-        ?string $maturity,
-        ?string $authVersion
+            string $name,
+            ?string $version,
+            string $status,
+            string $type,
+            ?string $typeVersion,
+            ?string $library,
+            ?string $libraryVersion,
+            ?string $author,
+            ?string $description,
+            string $license,
+            ?string $loadOption,
+            ?string $maturity,
+            ?string $authVersion
     ) {
         $this->name = $name;
         $this->version = $version;
@@ -99,30 +99,28 @@ final class Plugin
     /**
      * @param array $state array with the properties
      */
-    public static function fromState(array $state): self
-    {
+    public static function fromState(array $state): self {
         return new self(
-            $state['name'] ?? '',
-            $state['version'] ?? null,
-            $state['status'] ?? '',
-            $state['type'] ?? '',
-            $state['typeVersion'] ?? null,
-            $state['library'] ?? null,
-            $state['libraryVersion'] ?? null,
-            $state['author'] ?? null,
-            $state['description'] ?? null,
-            $state['license'] ?? '',
-            $state['loadOption'] ?? null,
-            $state['maturity'] ?? null,
-            $state['authVersion'] ?? null
+                $state['name'] ?? '',
+                $state['version'] ?? null,
+                $state['status'] ?? '',
+                $state['type'] ?? '',
+                $state['typeVersion'] ?? null,
+                $state['library'] ?? null,
+                $state['libraryVersion'] ?? null,
+                $state['author'] ?? null,
+                $state['description'] ?? null,
+                $state['license'] ?? '',
+                $state['loadOption'] ?? null,
+                $state['maturity'] ?? null,
+                $state['authVersion'] ?? null
         );
     }
 
     /**
      * @return array
      */
-    public function toArray(): array
-    {
+    public function toArray(): array {
         return [
             'name' => $this->getName(),
             'version' => $this->getVersion(),
@@ -140,68 +138,56 @@ final class Plugin
         ];
     }
 
-    public function getName(): string
-    {
+    public function getName(): string {
         return $this->name;
     }
 
-    public function getVersion(): ?string
-    {
+    public function getVersion(): ?string {
         return $this->version;
     }
 
-    public function getStatus(): string
-    {
+    public function getStatus(): string {
         return $this->status;
     }
 
-    public function getType(): string
-    {
+    public function getType(): string {
         return $this->type;
     }
 
-    public function getTypeVersion(): ?string
-    {
+    public function getTypeVersion(): ?string {
         return $this->typeVersion;
     }
 
-    public function getLibrary(): ?string
-    {
+    public function getLibrary(): ?string {
         return $this->library;
     }
 
-    public function getLibraryVersion(): ?string
-    {
+    public function getLibraryVersion(): ?string {
         return $this->libraryVersion;
     }
 
-    public function getAuthor(): ?string
-    {
+    public function getAuthor(): ?string {
         return $this->author;
     }
 
-    public function getDescription(): ?string
-    {
+    public function getDescription(): ?string {
         return $this->description;
     }
 
-    public function getLicense(): string
-    {
+    public function getLicense(): string {
         return $this->license;
     }
 
-    public function getLoadOption(): ?string
-    {
+    public function getLoadOption(): ?string {
         return $this->loadOption;
     }
 
-    public function getMaturity(): ?string
-    {
+    public function getMaturity(): ?string {
         return $this->maturity;
     }
 
-    public function getAuthVersion(): ?string
-    {
+    public function getAuthVersion(): ?string {
         return $this->authVersion;
     }
+
 }

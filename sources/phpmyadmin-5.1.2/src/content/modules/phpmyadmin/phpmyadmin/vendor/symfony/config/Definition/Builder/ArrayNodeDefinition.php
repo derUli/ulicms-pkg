@@ -20,8 +20,8 @@ use Symfony\Component\Config\Definition\PrototypedArrayNode;
  *
  * @author Johannes M. Schmitt <schmittjoh@gmail.com>
  */
-class ArrayNodeDefinition extends NodeDefinition implements ParentNodeDefinitionInterface
-{
+class ArrayNodeDefinition extends NodeDefinition implements ParentNodeDefinitionInterface {
+
     protected $performDeepMerging = true;
     protected $ignoreExtraKeys = false;
     protected $removeExtraKeys = true;
@@ -39,8 +39,7 @@ class ArrayNodeDefinition extends NodeDefinition implements ParentNodeDefinition
     /**
      * {@inheritdoc}
      */
-    public function __construct(?string $name, NodeParentInterface $parent = null)
-    {
+    public function __construct(?string $name, NodeParentInterface $parent = null) {
         parent::__construct($name, $parent);
 
         $this->nullEquivalent = [];
@@ -50,16 +49,14 @@ class ArrayNodeDefinition extends NodeDefinition implements ParentNodeDefinition
     /**
      * {@inheritdoc}
      */
-    public function setBuilder(NodeBuilder $builder)
-    {
+    public function setBuilder(NodeBuilder $builder) {
         $this->nodeBuilder = $builder;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function children()
-    {
+    public function children() {
         return $this->getNodeBuilder();
     }
 
@@ -70,64 +67,56 @@ class ArrayNodeDefinition extends NodeDefinition implements ParentNodeDefinition
      *
      * @return NodeDefinition
      */
-    public function prototype($type)
-    {
+    public function prototype($type) {
         return $this->prototype = $this->getNodeBuilder()->node(null, $type)->setParent($this);
     }
 
     /**
      * @return VariableNodeDefinition
      */
-    public function variablePrototype()
-    {
+    public function variablePrototype() {
         return $this->prototype('variable');
     }
 
     /**
      * @return ScalarNodeDefinition
      */
-    public function scalarPrototype()
-    {
+    public function scalarPrototype() {
         return $this->prototype('scalar');
     }
 
     /**
      * @return BooleanNodeDefinition
      */
-    public function booleanPrototype()
-    {
+    public function booleanPrototype() {
         return $this->prototype('boolean');
     }
 
     /**
      * @return IntegerNodeDefinition
      */
-    public function integerPrototype()
-    {
+    public function integerPrototype() {
         return $this->prototype('integer');
     }
 
     /**
      * @return FloatNodeDefinition
      */
-    public function floatPrototype()
-    {
+    public function floatPrototype() {
         return $this->prototype('float');
     }
 
     /**
      * @return ArrayNodeDefinition
      */
-    public function arrayPrototype()
-    {
+    public function arrayPrototype() {
         return $this->prototype('array');
     }
 
     /**
      * @return EnumNodeDefinition
      */
-    public function enumPrototype()
-    {
+    public function enumPrototype() {
         return $this->prototype('enum');
     }
 
@@ -140,8 +129,7 @@ class ArrayNodeDefinition extends NodeDefinition implements ParentNodeDefinition
      *
      * @return $this
      */
-    public function addDefaultsIfNotSet()
-    {
+    public function addDefaultsIfNotSet() {
         $this->addDefaults = true;
 
         return $this;
@@ -156,8 +144,7 @@ class ArrayNodeDefinition extends NodeDefinition implements ParentNodeDefinition
      *
      * @return $this
      */
-    public function addDefaultChildrenIfNoneSet($children = null)
-    {
+    public function addDefaultChildrenIfNoneSet($children = null) {
         $this->addDefaultChildren = $children;
 
         return $this;
@@ -170,8 +157,7 @@ class ArrayNodeDefinition extends NodeDefinition implements ParentNodeDefinition
      *
      * @return $this
      */
-    public function requiresAtLeastOneElement()
-    {
+    public function requiresAtLeastOneElement() {
         $this->atLeastOne = true;
 
         return $this;
@@ -184,8 +170,7 @@ class ArrayNodeDefinition extends NodeDefinition implements ParentNodeDefinition
      *
      * @return $this
      */
-    public function disallowNewKeysInSubsequentConfigs()
-    {
+    public function disallowNewKeysInSubsequentConfigs() {
         $this->allowNewKeys = false;
 
         return $this;
@@ -199,8 +184,7 @@ class ArrayNodeDefinition extends NodeDefinition implements ParentNodeDefinition
      *
      * @return $this
      */
-    public function fixXmlConfig($singular, $plural = null)
-    {
+    public function fixXmlConfig($singular, $plural = null) {
         $this->normalization()->remap($singular, $plural);
 
         return $this;
@@ -234,8 +218,7 @@ class ArrayNodeDefinition extends NodeDefinition implements ParentNodeDefinition
      *
      * @return $this
      */
-    public function useAttributeAsKey($name, $removeKeyItem = true)
-    {
+    public function useAttributeAsKey($name, $removeKeyItem = true) {
         $this->key = $name;
         $this->removeKeyItem = $removeKeyItem;
 
@@ -249,8 +232,7 @@ class ArrayNodeDefinition extends NodeDefinition implements ParentNodeDefinition
      *
      * @return $this
      */
-    public function canBeUnset($allow = true)
-    {
+    public function canBeUnset($allow = true) {
         $this->merge()->allowUnset($allow);
 
         return $this;
@@ -271,24 +253,23 @@ class ArrayNodeDefinition extends NodeDefinition implements ParentNodeDefinition
      *
      * @return $this
      */
-    public function canBeEnabled()
-    {
+    public function canBeEnabled() {
         $this
-            ->addDefaultsIfNotSet()
-            ->treatFalseLike(['enabled' => false])
-            ->treatTrueLike(['enabled' => true])
-            ->treatNullLike(['enabled' => true])
-            ->beforeNormalization()
+                ->addDefaultsIfNotSet()
+                ->treatFalseLike(['enabled' => false])
+                ->treatTrueLike(['enabled' => true])
+                ->treatNullLike(['enabled' => true])
+                ->beforeNormalization()
                 ->ifArray()
                 ->then(function (array $v) {
                     $v['enabled'] = $v['enabled'] ?? true;
 
                     return $v;
                 })
-            ->end()
-            ->children()
+                ->end()
+                ->children()
                 ->booleanNode('enabled')
-                    ->defaultFalse()
+                ->defaultFalse()
         ;
 
         return $this;
@@ -301,16 +282,15 @@ class ArrayNodeDefinition extends NodeDefinition implements ParentNodeDefinition
      *
      * @return $this
      */
-    public function canBeDisabled()
-    {
+    public function canBeDisabled() {
         $this
-            ->addDefaultsIfNotSet()
-            ->treatFalseLike(['enabled' => false])
-            ->treatTrueLike(['enabled' => true])
-            ->treatNullLike(['enabled' => true])
-            ->children()
+                ->addDefaultsIfNotSet()
+                ->treatFalseLike(['enabled' => false])
+                ->treatTrueLike(['enabled' => true])
+                ->treatNullLike(['enabled' => true])
+                ->children()
                 ->booleanNode('enabled')
-                    ->defaultTrue()
+                ->defaultTrue()
         ;
 
         return $this;
@@ -321,8 +301,7 @@ class ArrayNodeDefinition extends NodeDefinition implements ParentNodeDefinition
      *
      * @return $this
      */
-    public function performNoDeepMerging()
-    {
+    public function performNoDeepMerging() {
         $this->performDeepMerging = false;
 
         return $this;
@@ -341,8 +320,7 @@ class ArrayNodeDefinition extends NodeDefinition implements ParentNodeDefinition
      *
      * @return $this
      */
-    public function ignoreExtraKeys($remove = true)
-    {
+    public function ignoreExtraKeys($remove = true) {
         $this->ignoreExtraKeys = true;
         $this->removeExtraKeys = $remove;
 
@@ -356,8 +334,7 @@ class ArrayNodeDefinition extends NodeDefinition implements ParentNodeDefinition
      *
      * @return $this
      */
-    public function normalizeKeys($bool)
-    {
+    public function normalizeKeys($bool) {
         $this->normalizeKeys = (bool) $bool;
 
         return $this;
@@ -366,8 +343,7 @@ class ArrayNodeDefinition extends NodeDefinition implements ParentNodeDefinition
     /**
      * {@inheritdoc}
      */
-    public function append(NodeDefinition $node)
-    {
+    public function append(NodeDefinition $node) {
         $this->children[$node->name] = $node->setParent($this);
 
         return $this;
@@ -378,8 +354,7 @@ class ArrayNodeDefinition extends NodeDefinition implements ParentNodeDefinition
      *
      * @return NodeBuilder The node builder
      */
-    protected function getNodeBuilder()
-    {
+    protected function getNodeBuilder() {
         if (null === $this->nodeBuilder) {
             $this->nodeBuilder = new NodeBuilder();
         }
@@ -390,8 +365,7 @@ class ArrayNodeDefinition extends NodeDefinition implements ParentNodeDefinition
     /**
      * {@inheritdoc}
      */
-    protected function createNode()
-    {
+    protected function createNode() {
         if (null === $this->prototype) {
             $node = new ArrayNode($this->name, $this->parent, $this->pathSeparator);
 
@@ -463,8 +437,7 @@ class ArrayNodeDefinition extends NodeDefinition implements ParentNodeDefinition
      *
      * @throws InvalidDefinitionException
      */
-    protected function validateConcreteNode(ArrayNode $node)
-    {
+    protected function validateConcreteNode(ArrayNode $node) {
         $path = $node->getPath();
 
         if (null !== $this->key) {
@@ -493,8 +466,7 @@ class ArrayNodeDefinition extends NodeDefinition implements ParentNodeDefinition
      *
      * @throws InvalidDefinitionException
      */
-    protected function validatePrototypeNode(PrototypedArrayNode $node)
-    {
+    protected function validatePrototypeNode(PrototypedArrayNode $node) {
         $path = $node->getPath();
 
         if ($this->addDefaults) {
@@ -519,8 +491,7 @@ class ArrayNodeDefinition extends NodeDefinition implements ParentNodeDefinition
     /**
      * @return NodeDefinition[]
      */
-    public function getChildNodeDefinitions()
-    {
+    public function getChildNodeDefinitions() {
         return $this->children;
     }
 
@@ -529,11 +500,8 @@ class ArrayNodeDefinition extends NodeDefinition implements ParentNodeDefinition
      *
      * @param string $nodePath The path of the node to find. e.g "doctrine.orm.mappings"
      */
-    public function find(string $nodePath): NodeDefinition
-    {
-        $firstPathSegment = (false === $pathSeparatorPos = strpos($nodePath, $this->pathSeparator))
-            ? $nodePath
-            : substr($nodePath, 0, $pathSeparatorPos);
+    public function find(string $nodePath): NodeDefinition {
+        $firstPathSegment = (false === $pathSeparatorPos = strpos($nodePath, $this->pathSeparator)) ? $nodePath : substr($nodePath, 0, $pathSeparatorPos);
 
         if (null === $node = ($this->children[$firstPathSegment] ?? null)) {
             throw new \RuntimeException(sprintf('Node with name "%s" does not exist in the current node "%s".', $firstPathSegment, $this->name));
@@ -545,4 +513,5 @@ class ArrayNodeDefinition extends NodeDefinition implements ParentNodeDefinition
 
         return $node->find(substr($nodePath, $pathSeparatorPos + \strlen($this->pathSeparator)));
     }
+
 }

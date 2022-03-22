@@ -16,20 +16,19 @@ namespace Symfony\Component\DependencyInjection;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class Parameter
-{
+class Parameter {
+
     private $id;
 
-    public function __construct(string $id)
-    {
+    public function __construct(string $id) {
         $this->id = $id;
     }
 
     /**
      * @return string The parameter key
      */
-    public function __toString()
-    {
+    public function __toString() {
         return $this->id;
     }
+
 }

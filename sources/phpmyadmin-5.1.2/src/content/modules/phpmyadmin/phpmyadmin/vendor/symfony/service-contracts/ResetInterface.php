@@ -24,7 +24,7 @@ namespace Symfony\Contracts\Service;
  * process loop (note that we advise making your services stateless instead of
  * implementing this interface when possible.)
  */
-interface ResetInterface
-{
+interface ResetInterface {
+
     public function reset();
 }

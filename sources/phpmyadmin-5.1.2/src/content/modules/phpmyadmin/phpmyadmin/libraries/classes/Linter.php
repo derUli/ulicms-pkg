@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Analyzes a query and gives user feedback.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin;
@@ -20,8 +20,8 @@ use function strlen;
 /**
  * The linter itself.
  */
-class Linter
-{
+class Linter {
+
     /**
      * Gets the starting position of each line.
      *
@@ -29,11 +29,8 @@ class Linter
      *
      * @return array
      */
-    public static function getLines($str)
-    {
-        if ((! ($str instanceof UtfString))
-            && defined('USE_UTF_STRINGS')
-            && USE_UTF_STRINGS
+    public static function getLines($str) {
+        if ((!($str instanceof UtfString)) && defined('USE_UTF_STRINGS') && USE_UTF_STRINGS
         ) {
             // If the lexer uses UtfString for processing then the position will
             // represent the position of the character and not the position of
@@ -54,7 +51,7 @@ class Linter
         // (which is actually a new line) aren't going to be processed at
         // all.
         $len = $str instanceof UtfString ?
-            $str->length() : strlen($str);
+                $str->length() : strlen($str);
 
         $lines = [0];
         for ($i = 0; $i < $len; ++$i) {
@@ -76,8 +73,7 @@ class Linter
      *
      * @return array
      */
-    public static function findLineNumberAndColumn(array $lines, $pos)
-    {
+    public static function findLineNumberAndColumn(array $lines, $pos) {
         $line = 0;
         foreach ($lines as $lineNo => $lineStart) {
             if ($lineStart > $pos) {
@@ -99,15 +95,14 @@ class Linter
      *
      * @return array
      */
-    public static function lint($query)
-    {
+    public static function lint($query) {
         // Disabling lint for huge queries to save some resources.
         if (mb_strlen($query) > 10000) {
             return [
                 [
                     'message' => __(
-                        'Linting is disabled for this query because it exceeds the '
-                        . 'maximum length.'
+                            'Linting is disabled for this query because it exceeds the '
+                            . 'maximum length.'
                     ),
                     'fromLine' => 0,
                     'fromColumn' => 0,
@@ -160,22 +155,22 @@ class Linter
         foreach ($errors as $idx => $error) {
             // Starting position of the string that caused the error.
             [$fromLine, $fromColumn] = static::findLineNumberAndColumn(
-                $lines,
-                $error[3]
+                            $lines,
+                            $error[3]
             );
 
             // Ending position of the string that caused the error.
             [$toLine, $toColumn] = static::findLineNumberAndColumn(
-                $lines,
-                $error[3] + mb_strlen((string) $error[2])
+                            $lines,
+                            $error[3] + mb_strlen((string) $error[2])
             );
 
             // Building the response.
             $response[] = [
                 'message' => sprintf(
-                    __('%1$s (near <code>%2$s</code>)'),
-                    htmlspecialchars((string) $error[0]),
-                    htmlspecialchars((string) $error[2])
+                        __('%1$s (near <code>%2$s</code>)'),
+                        htmlspecialchars((string) $error[0]),
+                        htmlspecialchars((string) $error[2])
                 ),
                 'fromLine' => $fromLine,
                 'fromColumn' => $fromColumn,
@@ -188,4 +183,5 @@ class Linter
         // Sending back the answer.
         return $response;
     }
+
 }

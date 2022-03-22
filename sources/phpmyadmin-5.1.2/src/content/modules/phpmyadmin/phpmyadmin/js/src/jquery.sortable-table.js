@@ -62,7 +62,7 @@
             $.error('Method ' + method + ' does not exist on jQuery.sortableTable');
         }
 
-        function SortableTableInstance (table, options = {}) {
+        function SortableTableInstance(table, options = {}) {
             var down = false;
             var $draggedEl;
             var oldCell;
@@ -79,7 +79,7 @@
                 if ($draggedEl.length === 0) {
                     return;
                 }
-                if (options.ignoreRect && insideRect({ x: e.pageX - $draggedEl.offset().left, y: e.pageY - $draggedEl.offset().top }, options.ignoreRect)) {
+                if (options.ignoreRect && insideRect({x: e.pageX - $draggedEl.offset().left, y: e.pageY - $draggedEl.offset().top}, options.ignoreRect)) {
                     return;
                 }
 
@@ -179,7 +179,7 @@
                 $(document).off('mouseleave', globalMouseOut);
             };
 
-            function switchElement (drag, dropTo) {
+            function switchElement(drag, dropTo) {
                 var dragPosDiff = {
                     left: $(drag).children().first().offset().left - $(dropTo).offset().left,
                     top: $(drag).children().first().offset().top - $(dropTo).offset().top
@@ -196,23 +196,23 @@
                 /* I love you append(). It moves the DOM Elements so gracefully <3 */
                 // Put the element in the way to old place
                 $(drag).append($(dropTo).children().first()).children()
-                    .stop(true, true)
-                    .on('mouseup', onMouseUp);
+                        .stop(true, true)
+                        .on('mouseup', onMouseUp);
 
                 if (dropPosDiff) {
                     $(drag).append($(dropTo).children().first()).children()
-                        .css('left', dropPosDiff.left + 'px')
-                        .css('top', dropPosDiff.top + 'px');
+                            .css('left', dropPosDiff.left + 'px')
+                            .css('top', dropPosDiff.top + 'px');
                 }
 
                 // Put our dragged element into the space we just freed up
                 $(dropTo).append($(drag).children().first()).children()
-                    .on('mouseup', onMouseUp)
-                    .css('left', dragPosDiff.left + 'px')
-                    .css('top', dragPosDiff.top + 'px');
+                        .on('mouseup', onMouseUp)
+                        .css('left', dragPosDiff.left + 'px')
+                        .css('top', dragPosDiff.top + 'px');
 
-                moveTo($(dropTo).children().first(), { duration: 100 });
-                moveTo($(drag).children().first(), { duration: 100 });
+                moveTo($(dropTo).children().first(), {duration: 100});
+                moveTo($(drag).children().first(), {duration: 100});
 
                 if (options.events && options.events.drop) {
                     // Drop event. The drag child element is moved into the drop element
@@ -222,27 +222,27 @@
                     const colIdx = $(dropTo).prevAll().length;
                     const rowIdx = $(dropTo).parent().prevAll().length;
 
-                    options.events.drop(drag, dropTo, { col: colIdx, row: rowIdx });
+                    options.events.drop(drag, dropTo, {col: colIdx, row: rowIdx});
                 }
             }
 
-            function move (x, y) {
+            function move(x, y) {
                 $draggedEl.offset({
                     top: Math.min($(document).height(), Math.max(0, y - $draggedEl.height() / 2)),
                     left: Math.min($(document).width(), Math.max(0, x - $draggedEl.width() / 2))
                 });
             }
 
-            function inside ($el, x, y) {
+            function inside($el, x, y) {
                 var off = $el.offset();
                 return y >= off.top && x >= off.left && x < off.left + $el.width() && y < off.top + $el.height();
             }
 
-            function insideRect (pos, r) {
+            function insideRect(pos, r) {
                 return pos.y > r.top && pos.x > r.left && pos.y < r.top + r.height && pos.x < r.left + r.width;
             }
 
-            function dropAt (x, y) {
+            function dropAt(x, y) {
                 if (!down) {
                     return;
                 }
@@ -267,27 +267,27 @@
                 previewMove = null;
             }
 
-            function moveTo (elem, opts = {}) {
+            function moveTo(elem, opts = {}) {
                 if (!opts.pos) {
-                    opts.pos = { left: 0, top: 0 };
+                    opts.pos = {left: 0, top: 0};
                 }
                 if (!opts.duration) {
                     opts.duration = 200;
                 }
 
                 $(elem).css('position', 'relative');
-                $(elem).animate({ top: opts.pos.top, left: opts.pos.left }, {
+                $(elem).animate({top: opts.pos.top, left: opts.pos.left}, {
                     duration: opts.duration,
                     complete: function () {
                         if (opts.pos.left === 0 && opts.pos.top === 0) {
                             $(elem)
-                                .css('position', '')
-                                .css('left', '')
-                                .css('top', '');
+                                    .css('position', '')
+                                    .css('left', '')
+                                    .css('top', '');
                         }
                     }
                 });
-            }
+        }
         }
     };
 }(jQuery));

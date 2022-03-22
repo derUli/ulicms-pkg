@@ -12,15 +12,14 @@ use function ob_get_clean;
 use function ob_start;
 use function is_string;
 
-class FormController extends AbstractController
-{
+class FormController extends AbstractController {
+
     /**
      * @param array $params Request parameters
      *
      * @return string HTML
      */
-    public function index(array $params): string
-    {
+    public function index(array $params): string {
         $pages = $this->getPages();
 
         $formset = isset($params['formset']) && is_string($params['formset']) ? $params['formset'] : '';
@@ -37,10 +36,11 @@ class FormController extends AbstractController
         $page = ob_get_clean();
 
         return $this->template->render('setup/form/index', [
-            'formset' => $formset,
-            'pages' => $pages,
-            'name' => $form::getName(),
-            'page' => $page,
+                    'formset' => $formset,
+                    'pages' => $pages,
+                    'name' => $form::getName(),
+                    'page' => $page,
         ]);
     }
+
 }

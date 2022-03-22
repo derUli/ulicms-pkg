@@ -1,5 +1,5 @@
 <?php
-function enforce_https_render()
-{
+
+function enforce_https_render() {
     return "";
 }

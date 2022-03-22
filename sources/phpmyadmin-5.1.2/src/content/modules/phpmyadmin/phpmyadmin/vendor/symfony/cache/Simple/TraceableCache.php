@@ -23,14 +23,13 @@ use Symfony\Contracts\Service\ResetInterface;
 /**
  * @deprecated since Symfony 4.3, use TraceableAdapter and type-hint for CacheInterface instead.
  */
-class TraceableCache implements Psr16CacheInterface, PruneableInterface, ResettableInterface
-{
+class TraceableCache implements Psr16CacheInterface, PruneableInterface, ResettableInterface {
+
     private $pool;
     private $miss;
     private $calls = [];
 
-    public function __construct(Psr16CacheInterface $pool)
-    {
+    public function __construct(Psr16CacheInterface $pool) {
         $this->pool = $pool;
         $this->miss = new \stdClass();
     }
@@ -38,8 +37,7 @@ class TraceableCache implements Psr16CacheInterface, PruneableInterface, Resetta
     /**
      * {@inheritdoc}
      */
-    public function get($key, $default = null)
-    {
+    public function get($key, $default = null) {
         $miss = null !== $default && \is_object($default) ? $default : $this->miss;
         $event = $this->start(__FUNCTION__);
         try {
@@ -62,8 +60,7 @@ class TraceableCache implements Psr16CacheInterface, PruneableInterface, Resetta
      *
      * @return bool
      */
-    public function has($key)
-    {
+    public function has($key) {
         $event = $this->start(__FUNCTION__);
         try {
             return $event->result[$key] = $this->pool->has($key);
@@ -77,8 +74,7 @@ class TraceableCache implements Psr16CacheInterface, PruneableInterface, Resetta
      *
      * @return bool
      */
-    public function delete($key)
-    {
+    public function delete($key) {
         $event = $this->start(__FUNCTION__);
         try {
             return $event->result[$key] = $this->pool->delete($key);
@@ -92,8 +88,7 @@ class TraceableCache implements Psr16CacheInterface, PruneableInterface, Resetta
      *
      * @return bool
      */
-    public function set($key, $value, $ttl = null)
-    {
+    public function set($key, $value, $ttl = null) {
         $event = $this->start(__FUNCTION__);
         try {
             return $event->result[$key] = $this->pool->set($key, $value, $ttl);
@@ -107,8 +102,7 @@ class TraceableCache implements Psr16CacheInterface, PruneableInterface, Resetta
      *
      * @return bool
      */
-    public function setMultiple($values, $ttl = null)
-    {
+    public function setMultiple($values, $ttl = null) {
         $event = $this->start(__FUNCTION__);
         $event->result['keys'] = [];
 
@@ -136,8 +130,7 @@ class TraceableCache implements Psr16CacheInterface, PruneableInterface, Resetta
      *
      * @return iterable
      */
-    public function getMultiple($keys, $default = null)
-    {
+    public function getMultiple($keys, $default = null) {
         $miss = null !== $default && \is_object($default) ? $default : $this->miss;
         $event = $this->start(__FUNCTION__);
         try {
@@ -166,8 +159,7 @@ class TraceableCache implements Psr16CacheInterface, PruneableInterface, Resetta
      *
      * @return bool
      */
-    public function clear()
-    {
+    public function clear() {
         $event = $this->start(__FUNCTION__);
         try {
             return $event->result = $this->pool->clear();
@@ -181,8 +173,7 @@ class TraceableCache implements Psr16CacheInterface, PruneableInterface, Resetta
      *
      * @return bool
      */
-    public function deleteMultiple($keys)
-    {
+    public function deleteMultiple($keys) {
         $event = $this->start(__FUNCTION__);
         if ($keys instanceof \Traversable) {
             $keys = $event->result['keys'] = iterator_to_array($keys, false);
@@ -199,8 +190,7 @@ class TraceableCache implements Psr16CacheInterface, PruneableInterface, Resetta
     /**
      * {@inheritdoc}
      */
-    public function prune()
-    {
+    public function prune() {
         if (!$this->pool instanceof PruneableInterface) {
             return false;
         }
@@ -215,8 +205,7 @@ class TraceableCache implements Psr16CacheInterface, PruneableInterface, Resetta
     /**
      * {@inheritdoc}
      */
-    public function reset()
-    {
+    public function reset() {
         if (!$this->pool instanceof ResetInterface) {
             return;
         }
@@ -228,8 +217,7 @@ class TraceableCache implements Psr16CacheInterface, PruneableInterface, Resetta
         }
     }
 
-    public function getCalls()
-    {
+    public function getCalls() {
         try {
             return $this->calls;
         } finally {
@@ -237,22 +225,23 @@ class TraceableCache implements Psr16CacheInterface, PruneableInterface, Resetta
         }
     }
 
-    private function start(string $name): TraceableCacheEvent
-    {
+    private function start(string $name): TraceableCacheEvent {
         $this->calls[] = $event = new TraceableCacheEvent();
         $event->name = $name;
         $event->start = microtime(true);
 
         return $event;
     }
+
 }
 
-class TraceableCacheEvent
-{
+class TraceableCacheEvent {
+
     public $name;
     public $start;
     public $end;
     public $result;
     public $hits = 0;
     public $misses = 0;
+
 }

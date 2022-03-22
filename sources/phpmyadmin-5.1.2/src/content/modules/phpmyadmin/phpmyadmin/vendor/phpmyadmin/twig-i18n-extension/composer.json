@@ -1,7 +1,7 @@
 {
     "name": "phpmyadmin/twig-i18n-extension",
     "description": "Internationalization support for Twig via the gettext library",
-    "keywords": ["i18n","gettext"],
+    "keywords": ["i18n", "gettext"],
     "type": "library",
     "license": "MIT",
     "authors": [
@@ -33,12 +33,16 @@
         "phpcbf": "phpcbf"
     },
     "autoload": {
-        "psr-4": { "PhpMyAdmin\\Twig\\Extensions\\": "src/" }
+        "psr-4": {
+            "PhpMyAdmin\\Twig\\Extensions\\": "src/"
+        }
     },
     "autoload-dev": {
-        "psr-4": { "PhpMyAdmin\\Tests\\Twig\\Extensions\\": "test/" }
+        "psr-4": {
+            "PhpMyAdmin\\Tests\\Twig\\Extensions\\": "test/"
+        }
     },
-    "config":{
+    "config": {
         "sort-packages": true
     }
 }

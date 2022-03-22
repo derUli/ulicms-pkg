@@ -29,13 +29,13 @@ AJAX.registerOnload('table/operations.js', function () {
             if (typeof data !== 'undefined' && data.success === true) {
                 if ($form.find('input[name=\'switch_to_new\']').prop('checked')) {
                     CommonParams.set(
-                        'db',
-                        $form.find('select[name=\'target_db\'],input[name=\'target_db\']').val()
-                    );
+                            'db',
+                            $form.find('select[name=\'target_db\'],input[name=\'target_db\']').val()
+                            );
                     CommonParams.set(
-                        'table',
-                        $form.find('input[name=\'new_name\']').val()
-                    );
+                            'table',
+                            $form.find('input[name=\'new_name\']').val()
+                            );
                     CommonActions.refreshMain(false, function () {
                         Functions.ajaxShowMessage(data.message);
                     });
@@ -107,7 +107,7 @@ AJAX.registerOnload('table/operations.js', function () {
             }
         }
 
-        function submitOptionsForm () {
+        function submitOptionsForm() {
             $.post($form.attr('action'), $form.serialize(), function (data) {
                 if (typeof data !== 'undefined' && data.success === true) {
                     CommonParams.set('table', data.params.table);
@@ -126,7 +126,7 @@ AJAX.registerOnload('table/operations.js', function () {
 
     /**
      *Ajax events for actions in the "Table maintenance"
-    **/
+     **/
     $(document).on('click', '#tbl_maintenance li a.maintain_action.ajax', function (event) {
         event.preventDefault();
         var $link = $(this);
@@ -148,8 +148,8 @@ AJAX.registerOnload('table/operations.js', function () {
         }
 
         $.post($link.attr('href'), params, function (data) {
-            function scrollToTop () {
-                $('html, body').animate({ scrollTop: 0 });
+            function scrollToTop() {
+                $('html, body').animate({scrollTop: 0});
             }
             var $tempDiv;
             if (typeof data !== 'undefined' && data.success === true && data.sql_query !== undefined) {
@@ -193,7 +193,7 @@ AJAX.registerOnload('table/operations.js', function () {
         event.preventDefault();
         var $form = $(this);
 
-        function submitPartitionMaintenance () {
+        function submitPartitionMaintenance() {
             var argsep = CommonParams.get('arg_separator');
             var submitData = $form.serialize() + argsep + 'ajax_request=true' + argsep + 'ajax_page_request=true';
             Functions.ajaxShowMessage(Messages.strProcessingRequest);
@@ -222,9 +222,9 @@ AJAX.registerOnload('table/operations.js', function () {
          */
         var question = Messages.strDropTableStrongWarning + ' ';
         question += Functions.sprintf(
-            Messages.strDoYouReally,
-            'DROP TABLE `'  + Functions.escapeHtml(CommonParams.get('db')) + '`.`' + Functions.escapeHtml(CommonParams.get('table') + '`')
-        ) + Functions.getForeignKeyCheckboxLoader();
+                Messages.strDoYouReally,
+                'DROP TABLE `' + Functions.escapeHtml(CommonParams.get('db')) + '`.`' + Functions.escapeHtml(CommonParams.get('table') + '`')
+                ) + Functions.getForeignKeyCheckboxLoader();
 
         $(this).confirm(question, $(this).attr('href'), function (url) {
             var $msgbox = Functions.ajaxShowMessage(Messages.strProcessingRequest);
@@ -238,10 +238,10 @@ AJAX.registerOnload('table/operations.js', function () {
                     Navigation.reload();
                     CommonParams.set('table', '');
                     CommonActions.refreshMain(
-                        CommonParams.get('opendb_url'),
-                        function () {
-                            Functions.ajaxShowMessage(data.message);
-                        }
+                            CommonParams.get('opendb_url'),
+                            function () {
+                                Functions.ajaxShowMessage(data.message);
+                            }
                     );
                 } else {
                     Functions.ajaxShowMessage(data.error, false);
@@ -258,9 +258,9 @@ AJAX.registerOnload('table/operations.js', function () {
          */
         var question = Messages.strDropTableStrongWarning + ' ';
         question += Functions.sprintf(
-            Messages.strDoYouReally,
-            'DROP VIEW `' + Functions.escapeHtml(CommonParams.get('table') + '`')
-        );
+                Messages.strDoYouReally,
+                'DROP VIEW `' + Functions.escapeHtml(CommonParams.get('table') + '`')
+                );
 
         $(this).confirm(question, $(this).attr('href'), function (url) {
             var $msgbox = Functions.ajaxShowMessage(Messages.strProcessingRequest);
@@ -272,10 +272,10 @@ AJAX.registerOnload('table/operations.js', function () {
                     Navigation.reload();
                     CommonParams.set('table', '');
                     CommonActions.refreshMain(
-                        CommonParams.get('opendb_url'),
-                        function () {
-                            Functions.ajaxShowMessage(data.message);
-                        }
+                            CommonParams.get('opendb_url'),
+                            function () {
+                                Functions.ajaxShowMessage(data.message);
+                            }
                     );
                 } else {
                     Functions.ajaxShowMessage(data.error, false);
@@ -292,9 +292,9 @@ AJAX.registerOnload('table/operations.js', function () {
          */
         var question = Messages.strTruncateTableStrongWarning + ' ';
         question += Functions.sprintf(
-            Messages.strDoYouReally,
-            'TRUNCATE `' + Functions.escapeHtml(CommonParams.get('db')) + '`.`' + Functions.escapeHtml(CommonParams.get('table') + '`')
-        ) + Functions.getForeignKeyCheckboxLoader();
+                Messages.strDoYouReally,
+                'TRUNCATE `' + Functions.escapeHtml(CommonParams.get('db')) + '`.`' + Functions.escapeHtml(CommonParams.get('table') + '`')
+                ) + Functions.getForeignKeyCheckboxLoader();
         $(this).confirm(question, $(this).attr('href'), function (url) {
             Functions.ajaxShowMessage(Messages.strProcessingRequest);
 

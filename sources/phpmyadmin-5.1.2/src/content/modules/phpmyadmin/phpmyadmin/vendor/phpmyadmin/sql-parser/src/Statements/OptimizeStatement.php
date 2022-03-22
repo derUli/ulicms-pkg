@@ -1,8 +1,8 @@
 <?php
+
 /**
  * `OPTIMIZE` statement.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\SqlParser\Statements;
@@ -16,8 +16,8 @@ use PhpMyAdmin\SqlParser\Statement;
  * OPTIMIZE [NO_WRITE_TO_BINLOG | LOCAL] TABLE
  *  tbl_name [, tbl_name] ...
  */
-class OptimizeStatement extends Statement
-{
+class OptimizeStatement extends Statement {
+
     /**
      * Options of this statement.
      *
@@ -25,7 +25,6 @@ class OptimizeStatement extends Statement
      */
     public static $OPTIONS = [
         'TABLE' => 1,
-
         'NO_WRITE_TO_BINLOG' => 2,
         'LOCAL' => 3,
     ];
@@ -36,4 +35,5 @@ class OptimizeStatement extends Statement
      * @var Expression[]
      */
     public $tables;
+
 }

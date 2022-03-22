@@ -20,8 +20,8 @@ use Symfony\Component\DependencyInjection\Exception\OutOfBoundsException;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class Definition
-{
+class Definition {
+
     private const DEFAULT_DEPRECATION_TEMPLATE = 'The "%service_id%" service is deprecated. You should stop using it, as it will be removed in the future.';
 
     private $class;
@@ -46,7 +46,6 @@ class Definition
     private $changes = [];
     private $bindings = [];
     private $errors = [];
-
     protected $arguments = [];
 
     /**
@@ -67,8 +66,7 @@ class Definition
      * @param string|null $class     The service class
      * @param array       $arguments An array of arguments to pass to the service constructor
      */
-    public function __construct($class = null, array $arguments = [])
-    {
+    public function __construct($class = null, array $arguments = []) {
         if (null !== $class) {
             $this->setClass($class);
         }
@@ -80,8 +78,7 @@ class Definition
      *
      * @return array An array of changes for this Definition
      */
-    public function getChanges()
-    {
+    public function getChanges() {
         return $this->changes;
     }
 
@@ -92,8 +89,7 @@ class Definition
      *
      * @return $this
      */
-    public function setChanges(array $changes)
-    {
+    public function setChanges(array $changes) {
         $this->changes = $changes;
 
         return $this;
@@ -106,8 +102,7 @@ class Definition
      *
      * @return $this
      */
-    public function setFactory($factory)
-    {
+    public function setFactory($factory) {
         $this->changes['factory'] = true;
 
         if (\is_string($factory) && str_contains($factory, '::')) {
@@ -126,8 +121,7 @@ class Definition
      *
      * @return string|array|null The PHP function or an array containing a class/Reference and a method to call
      */
-    public function getFactory()
-    {
+    public function getFactory() {
         return $this->factory;
     }
 
@@ -143,8 +137,7 @@ class Definition
      *
      * @throws InvalidArgumentException in case the decorated service id and the new decorated service id are equals
      */
-    public function setDecoratedService($id, $renamedId = null, $priority = 0/*, int $invalidBehavior = ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE*/)
-    {
+    public function setDecoratedService($id, $renamedId = null, $priority = 0/* , int $invalidBehavior = ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE */) {
         if ($renamedId && $id === $renamedId) {
             throw new InvalidArgumentException(sprintf('The decorated service inner name for "%s" must be different than the service name itself.', $id));
         }
@@ -171,8 +164,7 @@ class Definition
      *
      * @return array|null An array composed of the decorated service id, the new id for it and the priority of decoration, null if no service is decorated
      */
-    public function getDecoratedService()
-    {
+    public function getDecoratedService() {
         return $this->decoratedService;
     }
 
@@ -183,8 +175,7 @@ class Definition
      *
      * @return $this
      */
-    public function setClass($class)
-    {
+    public function setClass($class) {
         if ($class instanceof Parameter) {
             @trigger_error(sprintf('Passing an instance of %s as class name to %s in deprecated in Symfony 4.4 and will result in a TypeError in 5.0. Please pass the string "%%%s%%" instead.', Parameter::class, __CLASS__, (string) $class), \E_USER_DEPRECATED);
         }
@@ -204,8 +195,7 @@ class Definition
      *
      * @return string|null The service class
      */
-    public function getClass()
-    {
+    public function getClass() {
         return $this->class;
     }
 
@@ -214,8 +204,7 @@ class Definition
      *
      * @return $this
      */
-    public function setArguments(array $arguments)
-    {
+    public function setArguments(array $arguments) {
         $this->arguments = $arguments;
 
         return $this;
@@ -226,8 +215,7 @@ class Definition
      *
      * @return $this
      */
-    public function setProperties(array $properties)
-    {
+    public function setProperties(array $properties) {
         $this->properties = $properties;
 
         return $this;
@@ -238,8 +226,7 @@ class Definition
      *
      * @return array
      */
-    public function getProperties()
-    {
+    public function getProperties() {
         return $this->properties;
     }
 
@@ -251,8 +238,7 @@ class Definition
      *
      * @return $this
      */
-    public function setProperty($name, $value)
-    {
+    public function setProperty($name, $value) {
         $this->properties[$name] = $value;
 
         return $this;
@@ -265,8 +251,7 @@ class Definition
      *
      * @return $this
      */
-    public function addArgument($argument)
-    {
+    public function addArgument($argument) {
         $this->arguments[] = $argument;
 
         return $this;
@@ -282,8 +267,7 @@ class Definition
      *
      * @throws OutOfBoundsException When the replaced argument does not exist
      */
-    public function replaceArgument($index, $argument)
-    {
+    public function replaceArgument($index, $argument) {
         if (0 === \count($this->arguments)) {
             throw new OutOfBoundsException('Cannot replace arguments if none have been configured yet.');
         }
@@ -309,8 +293,7 @@ class Definition
      *
      * @return $this
      */
-    public function setArgument($key, $value)
-    {
+    public function setArgument($key, $value) {
         $this->arguments[$key] = $value;
 
         return $this;
@@ -321,8 +304,7 @@ class Definition
      *
      * @return array The array of arguments
      */
-    public function getArguments()
-    {
+    public function getArguments() {
         return $this->arguments;
     }
 
@@ -335,8 +317,7 @@ class Definition
      *
      * @throws OutOfBoundsException When the argument does not exist
      */
-    public function getArgument($index)
-    {
+    public function getArgument($index) {
         if (!\array_key_exists($index, $this->arguments)) {
             throw new OutOfBoundsException(sprintf('The argument "%s" doesn\'t exist.', $index));
         }
@@ -349,8 +330,7 @@ class Definition
      *
      * @return $this
      */
-    public function setMethodCalls(array $calls = [])
-    {
+    public function setMethodCalls(array $calls = []) {
         $this->calls = [];
         foreach ($calls as $call) {
             $this->addMethodCall($call[0], $call[1], $call[2] ?? false);
@@ -370,8 +350,7 @@ class Definition
      *
      * @throws InvalidArgumentException on empty $method param
      */
-    public function addMethodCall($method, array $arguments = []/*, bool $returnsClone = false*/)
-    {
+    public function addMethodCall($method, array $arguments = []/* , bool $returnsClone = false */) {
         if (empty($method)) {
             throw new InvalidArgumentException('Method name cannot be empty.');
         }
@@ -387,8 +366,7 @@ class Definition
      *
      * @return $this
      */
-    public function removeMethodCall($method)
-    {
+    public function removeMethodCall($method) {
         foreach ($this->calls as $i => $call) {
             if ($call[0] === $method) {
                 unset($this->calls[$i]);
@@ -405,8 +383,7 @@ class Definition
      *
      * @return bool
      */
-    public function hasMethodCall($method)
-    {
+    public function hasMethodCall($method) {
         foreach ($this->calls as $call) {
             if ($call[0] === $method) {
                 return true;
@@ -421,8 +398,7 @@ class Definition
      *
      * @return array An array of method calls
      */
-    public function getMethodCalls()
-    {
+    public function getMethodCalls() {
         return $this->calls;
     }
 
@@ -433,8 +409,7 @@ class Definition
      *
      * @return $this
      */
-    public function setInstanceofConditionals(array $instanceof)
-    {
+    public function setInstanceofConditionals(array $instanceof) {
         $this->instanceof = $instanceof;
 
         return $this;
@@ -445,8 +420,7 @@ class Definition
      *
      * @return ChildDefinition[]
      */
-    public function getInstanceofConditionals()
-    {
+    public function getInstanceofConditionals() {
         return $this->instanceof;
     }
 
@@ -457,8 +431,7 @@ class Definition
      *
      * @return $this
      */
-    public function setAutoconfigured($autoconfigured)
-    {
+    public function setAutoconfigured($autoconfigured) {
         $this->changes['autoconfigured'] = true;
 
         $this->autoconfigured = $autoconfigured;
@@ -469,8 +442,7 @@ class Definition
     /**
      * @return bool
      */
-    public function isAutoconfigured()
-    {
+    public function isAutoconfigured() {
         return $this->autoconfigured;
     }
 
@@ -479,8 +451,7 @@ class Definition
      *
      * @return $this
      */
-    public function setTags(array $tags)
-    {
+    public function setTags(array $tags) {
         $this->tags = $tags;
 
         return $this;
@@ -491,8 +462,7 @@ class Definition
      *
      * @return array An array of tags
      */
-    public function getTags()
-    {
+    public function getTags() {
         return $this->tags;
     }
 
@@ -503,8 +473,7 @@ class Definition
      *
      * @return array An array of attributes
      */
-    public function getTag($name)
-    {
+    public function getTag($name) {
         return $this->tags[$name] ?? [];
     }
 
@@ -516,8 +485,7 @@ class Definition
      *
      * @return $this
      */
-    public function addTag($name, array $attributes = [])
-    {
+    public function addTag($name, array $attributes = []) {
         $this->tags[$name][] = $attributes;
 
         return $this;
@@ -530,8 +498,7 @@ class Definition
      *
      * @return bool
      */
-    public function hasTag($name)
-    {
+    public function hasTag($name) {
         return isset($this->tags[$name]);
     }
 
@@ -542,8 +509,7 @@ class Definition
      *
      * @return $this
      */
-    public function clearTag($name)
-    {
+    public function clearTag($name) {
         unset($this->tags[$name]);
 
         return $this;
@@ -554,8 +520,7 @@ class Definition
      *
      * @return $this
      */
-    public function clearTags()
-    {
+    public function clearTags() {
         $this->tags = [];
 
         return $this;
@@ -568,8 +533,7 @@ class Definition
      *
      * @return $this
      */
-    public function setFile($file)
-    {
+    public function setFile($file) {
         $this->changes['file'] = true;
 
         $this->file = $file;
@@ -582,8 +546,7 @@ class Definition
      *
      * @return string|null The full pathname to include
      */
-    public function getFile()
-    {
+    public function getFile() {
         return $this->file;
     }
 
@@ -594,8 +557,7 @@ class Definition
      *
      * @return $this
      */
-    public function setShared($shared)
-    {
+    public function setShared($shared) {
         $this->changes['shared'] = true;
 
         $this->shared = (bool) $shared;
@@ -608,8 +570,7 @@ class Definition
      *
      * @return bool
      */
-    public function isShared()
-    {
+    public function isShared() {
         return $this->shared;
     }
 
@@ -620,8 +581,7 @@ class Definition
      *
      * @return $this
      */
-    public function setPublic($boolean)
-    {
+    public function setPublic($boolean) {
         $this->changes['public'] = true;
 
         $this->public = (bool) $boolean;
@@ -635,8 +595,7 @@ class Definition
      *
      * @return bool
      */
-    public function isPublic()
-    {
+    public function isPublic() {
         return $this->public;
     }
 
@@ -652,8 +611,7 @@ class Definition
      *
      * @return $this
      */
-    public function setPrivate($boolean)
-    {
+    public function setPrivate($boolean) {
         $this->private = (bool) $boolean;
 
         return $this;
@@ -664,8 +622,7 @@ class Definition
      *
      * @return bool
      */
-    public function isPrivate()
-    {
+    public function isPrivate() {
         return $this->private;
     }
 
@@ -676,8 +633,7 @@ class Definition
      *
      * @return $this
      */
-    public function setLazy($lazy)
-    {
+    public function setLazy($lazy) {
         $this->changes['lazy'] = true;
 
         $this->lazy = (bool) $lazy;
@@ -690,8 +646,7 @@ class Definition
      *
      * @return bool
      */
-    public function isLazy()
-    {
+    public function isLazy() {
         return $this->lazy;
     }
 
@@ -703,8 +658,7 @@ class Definition
      *
      * @return $this
      */
-    public function setSynthetic($boolean)
-    {
+    public function setSynthetic($boolean) {
         $this->synthetic = (bool) $boolean;
 
         return $this;
@@ -716,8 +670,7 @@ class Definition
      *
      * @return bool
      */
-    public function isSynthetic()
-    {
+    public function isSynthetic() {
         return $this->synthetic;
     }
 
@@ -729,8 +682,7 @@ class Definition
      *
      * @return $this
      */
-    public function setAbstract($boolean)
-    {
+    public function setAbstract($boolean) {
         $this->abstract = (bool) $boolean;
 
         return $this;
@@ -742,8 +694,7 @@ class Definition
      *
      * @return bool
      */
-    public function isAbstract()
-    {
+    public function isAbstract() {
         return $this->abstract;
     }
 
@@ -758,8 +709,7 @@ class Definition
      *
      * @throws InvalidArgumentException when the message template is invalid
      */
-    public function setDeprecated($status = true, $template = null)
-    {
+    public function setDeprecated($status = true, $template = null) {
         if (null !== $template) {
             if (preg_match('#[\r\n]|\*/#', $template)) {
                 throw new InvalidArgumentException('Invalid characters found in deprecation template.');
@@ -785,8 +735,7 @@ class Definition
      *
      * @return bool
      */
-    public function isDeprecated()
-    {
+    public function isDeprecated() {
         return $this->deprecated;
     }
 
@@ -797,8 +746,7 @@ class Definition
      *
      * @return string
      */
-    public function getDeprecationMessage($id)
-    {
+    public function getDeprecationMessage($id) {
         return str_replace('%service_id%', $id, $this->deprecationTemplate ?: self::DEFAULT_DEPRECATION_TEMPLATE);
     }
 
@@ -809,8 +757,7 @@ class Definition
      *
      * @return $this
      */
-    public function setConfigurator($configurator)
-    {
+    public function setConfigurator($configurator) {
         $this->changes['configurator'] = true;
 
         if (\is_string($configurator) && str_contains($configurator, '::')) {
@@ -829,8 +776,7 @@ class Definition
      *
      * @return callable|array|null
      */
-    public function getConfigurator()
-    {
+    public function getConfigurator() {
         return $this->configurator;
     }
 
@@ -839,8 +785,7 @@ class Definition
      *
      * @return bool
      */
-    public function isAutowired()
-    {
+    public function isAutowired() {
         return $this->autowired;
     }
 
@@ -851,8 +796,7 @@ class Definition
      *
      * @return $this
      */
-    public function setAutowired($autowired)
-    {
+    public function setAutowired($autowired) {
         $this->changes['autowired'] = true;
 
         $this->autowired = (bool) $autowired;
@@ -865,8 +809,7 @@ class Definition
      *
      * @return array|BoundArgument[]
      */
-    public function getBindings()
-    {
+    public function getBindings() {
         return $this->bindings;
     }
 
@@ -879,8 +822,7 @@ class Definition
      *
      * @return $this
      */
-    public function setBindings(array $bindings)
-    {
+    public function setBindings(array $bindings) {
         foreach ($bindings as $key => $binding) {
             if (0 < strpos($key, '$') && $key !== $k = preg_replace('/[ \t]*\$/', ' $', $key)) {
                 unset($bindings[$key]);
@@ -903,8 +845,7 @@ class Definition
      *
      * @return $this
      */
-    public function addError($error)
-    {
+    public function addError($error) {
         if ($error instanceof self) {
             $this->errors = array_merge($this->errors, $error->errors);
         } else {
@@ -919,8 +860,7 @@ class Definition
      *
      * @return array
      */
-    public function getErrors()
-    {
+    public function getErrors() {
         foreach ($this->errors as $i => $error) {
             if ($error instanceof \Closure) {
                 $this->errors[$i] = (string) $error();
@@ -932,8 +872,8 @@ class Definition
         return $this->errors;
     }
 
-    public function hasErrors(): bool
-    {
+    public function hasErrors(): bool {
         return (bool) $this->errors;
     }
+
 }

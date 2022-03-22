@@ -16,8 +16,8 @@ use function trim;
 /**
  * PhpMyAdmin\Plugins\Export\Helpers\TableProperty class
  */
-class TableProperty
-{
+class TableProperty {
+
     /**
      * Name
      *
@@ -63,8 +63,7 @@ class TableProperty
     /**
      * @param array $row table row
      */
-    public function __construct(array $row)
-    {
+    public function __construct(array $row) {
         $this->name = trim((string) $row[0]);
         $this->type = trim((string) $row[1]);
         $this->nullable = trim((string) $row[2]);
@@ -78,8 +77,7 @@ class TableProperty
      *
      * @return string type
      */
-    public function getPureType()
-    {
+    public function getPureType() {
         $pos = (int) mb_strpos($this->type, '(');
         if ($pos > 0) {
             return mb_substr($this->type, 0, $pos);
@@ -93,8 +91,7 @@ class TableProperty
      *
      * @return string true if the key is not null, false otherwise
      */
-    public function isNotNull()
-    {
+    public function isNotNull() {
         return $this->nullable === 'NO' ? 'true' : 'false';
     }
 
@@ -103,8 +100,7 @@ class TableProperty
      *
      * @return string "true" if the key is unique, "false" otherwise
      */
-    public function isUnique(): string
-    {
+    public function isUnique(): string {
         return $this->key === 'PRI' || $this->key === 'UNI' ? 'true' : 'false';
     }
 
@@ -113,8 +109,7 @@ class TableProperty
      *
      * @return string type
      */
-    public function getDotNetPrimitiveType()
-    {
+    public function getDotNetPrimitiveType() {
         if (mb_strpos($this->type, 'int') === 0) {
             return 'int';
         }
@@ -148,8 +143,7 @@ class TableProperty
      *
      * @return string type
      */
-    public function getDotNetObjectType()
-    {
+    public function getDotNetObjectType() {
         if (mb_strpos($this->type, 'int') === 0) {
             return 'Int32';
         }
@@ -183,12 +177,11 @@ class TableProperty
      *
      * @return string containing the name of the index
      */
-    public function getIndexName()
-    {
+    public function getIndexName() {
         if (strlen($this->key) > 0) {
             return 'index="'
-                . htmlspecialchars($this->name, ENT_COMPAT, 'UTF-8')
-                . '"';
+                    . htmlspecialchars($this->name, ENT_COMPAT, 'UTF-8')
+                    . '"';
         }
 
         return '';
@@ -199,8 +192,7 @@ class TableProperty
      *
      * @return bool true if the key is primary, false otherwise
      */
-    public function isPK(): bool
-    {
+    public function isPK(): bool {
         return $this->key === 'PRI';
     }
 
@@ -211,12 +203,11 @@ class TableProperty
      *
      * @return string formatted text
      */
-    public function formatCs($text)
-    {
+    public function formatCs($text) {
         $text = str_replace(
-            '#name#',
-            ExportCodegen::cgMakeIdentifier($this->name, false),
-            $text
+                '#name#',
+                ExportCodegen::cgMakeIdentifier($this->name, false),
+                $text
         );
 
         return $this->format($text);
@@ -229,18 +220,17 @@ class TableProperty
      *
      * @return string formatted text
      */
-    public function formatXml($text)
-    {
+    public function formatXml($text) {
         $text = str_replace(
-            [
-                '#name#',
-                '#indexName#',
-            ],
-            [
-                htmlspecialchars($this->name, ENT_COMPAT, 'UTF-8'),
-                $this->getIndexName(),
-            ],
-            $text
+                [
+                    '#name#',
+                    '#indexName#',
+                ],
+                [
+                    htmlspecialchars($this->name, ENT_COMPAT, 'UTF-8'),
+                    $this->getIndexName(),
+                ],
+                $text
         );
 
         return $this->format($text);
@@ -253,28 +243,28 @@ class TableProperty
      *
      * @return string formatted text
      */
-    public function format($text)
-    {
+    public function format($text) {
         $text = str_replace(
-            [
-                '#ucfirstName#',
-                '#dotNetPrimitiveType#',
-                '#dotNetObjectType#',
-                '#type#',
-                '#notNull#',
-                '#unique#',
-            ],
-            [
-                ExportCodegen::cgMakeIdentifier($this->name),
-                $this->getDotNetPrimitiveType(),
-                $this->getDotNetObjectType(),
-                $this->getPureType(),
-                $this->isNotNull(),
-                $this->isUnique(),
-            ],
-            $text
+                [
+                    '#ucfirstName#',
+                    '#dotNetPrimitiveType#',
+                    '#dotNetObjectType#',
+                    '#type#',
+                    '#notNull#',
+                    '#unique#',
+                ],
+                [
+                    ExportCodegen::cgMakeIdentifier($this->name),
+                    $this->getDotNetPrimitiveType(),
+                    $this->getDotNetObjectType(),
+                    $this->getPureType(),
+                    $this->isNotNull(),
+                    $this->isUnique(),
+                ],
+                $text
         );
 
         return $text;
     }
+
 }

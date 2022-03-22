@@ -17,20 +17,18 @@ use Symfony\Component\DependencyInjection\Exception\RuntimeException;
 /**
  * @author Nicolas Grekas <p@tchwork.com>
  */
-class EnvPlaceholderParameterBag extends ParameterBag
-{
+class EnvPlaceholderParameterBag extends ParameterBag {
+
     private $envPlaceholderUniquePrefix;
     private $envPlaceholders = [];
     private $unusedEnvPlaceholders = [];
     private $providedTypes = [];
-
     private static $counter = 0;
 
     /**
      * {@inheritdoc}
      */
-    public function get($name)
-    {
+    public function get($name) {
         if (str_starts_with($name, 'env(') && str_ends_with($name, ')') && 'env()' !== $name) {
             $env = substr($name, 4, -1);
 
@@ -59,7 +57,7 @@ class EnvPlaceholderParameterBag extends ParameterBag
                 }
             }
 
-            $uniqueName = md5($name.'_'.self::$counter++);
+            $uniqueName = md5($name . '_' . self::$counter++);
             $placeholder = sprintf('%s_%s_%s', $this->getEnvPlaceholderUniquePrefix(), str_replace(':', '_', $env), $uniqueName);
             $this->envPlaceholders[$env][$placeholder] = $placeholder;
 
@@ -72,12 +70,13 @@ class EnvPlaceholderParameterBag extends ParameterBag
     /**
      * Gets the common env placeholder prefix for env vars created by this bag.
      */
-    public function getEnvPlaceholderUniquePrefix(): string
-    {
+    public function getEnvPlaceholderUniquePrefix(): string {
         if (null === $this->envPlaceholderUniquePrefix) {
             $reproducibleEntropy = unserialize(serialize($this->parameters));
-            array_walk_recursive($reproducibleEntropy, function (&$v) { $v = null; });
-            $this->envPlaceholderUniquePrefix = 'env_'.substr(md5(serialize($reproducibleEntropy)), -16);
+            array_walk_recursive($reproducibleEntropy, function (&$v) {
+                $v = null;
+            });
+            $this->envPlaceholderUniquePrefix = 'env_' . substr(md5(serialize($reproducibleEntropy)), -16);
         }
 
         return $this->envPlaceholderUniquePrefix;
@@ -88,26 +87,22 @@ class EnvPlaceholderParameterBag extends ParameterBag
      *
      * @return string[][] A map of env var names to their placeholders
      */
-    public function getEnvPlaceholders()
-    {
+    public function getEnvPlaceholders() {
         return $this->envPlaceholders;
     }
 
-    public function getUnusedEnvPlaceholders(): array
-    {
+    public function getUnusedEnvPlaceholders(): array {
         return $this->unusedEnvPlaceholders;
     }
 
-    public function clearUnusedEnvPlaceholders()
-    {
+    public function clearUnusedEnvPlaceholders() {
         $this->unusedEnvPlaceholders = [];
     }
 
     /**
      * Merges the env placeholders of another EnvPlaceholderParameterBag.
      */
-    public function mergeEnvPlaceholders(self $bag)
-    {
+    public function mergeEnvPlaceholders(self $bag) {
         if ($newPlaceholders = $bag->getEnvPlaceholders()) {
             $this->envPlaceholders += $newPlaceholders;
 
@@ -128,8 +123,7 @@ class EnvPlaceholderParameterBag extends ParameterBag
     /**
      * Maps env prefixes to their corresponding PHP types.
      */
-    public function setProvidedTypes(array $providedTypes)
-    {
+    public function setProvidedTypes(array $providedTypes) {
         $this->providedTypes = $providedTypes;
     }
 
@@ -138,16 +132,14 @@ class EnvPlaceholderParameterBag extends ParameterBag
      *
      * @return string[][]
      */
-    public function getProvidedTypes()
-    {
+    public function getProvidedTypes() {
         return $this->providedTypes;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function resolve()
-    {
+    public function resolve() {
         if ($this->resolved) {
             return;
         }
@@ -170,4 +162,5 @@ class EnvPlaceholderParameterBag extends ParameterBag
             }
         }
     }
+
 }

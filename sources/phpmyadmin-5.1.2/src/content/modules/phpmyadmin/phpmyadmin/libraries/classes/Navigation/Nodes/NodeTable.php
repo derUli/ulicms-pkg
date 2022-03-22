@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Functionality for the navigation tree
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Navigation\Nodes;
@@ -17,8 +17,8 @@ use function strpos;
 /**
  * Represents a columns node in the navigation tree
  */
-class NodeTable extends NodeDatabaseChild
-{
+class NodeTable extends NodeDatabaseChild {
+
     /** @var array IMG tags, used when rendering the node */
     public $icon;
 
@@ -30,45 +30,44 @@ class NodeTable extends NodeDatabaseChild
      * @param bool   $isGroup Whether this object has been created
      *                        while grouping nodes
      */
-    public function __construct($name, $type = Node::OBJECT, $isGroup = false)
-    {
+    public function __construct($name, $type = Node::OBJECT, $isGroup = false) {
         parent::__construct($name, $type, $isGroup);
         $this->icon = [];
         $this->addIcon(
-            Util::getScriptNameForOption(
-                $GLOBALS['cfg']['NavigationTreeDefaultTabTable'],
-                'table'
-            )
+                Util::getScriptNameForOption(
+                        $GLOBALS['cfg']['NavigationTreeDefaultTabTable'],
+                        'table'
+                )
         );
         $this->addIcon(
-            Util::getScriptNameForOption(
-                $GLOBALS['cfg']['NavigationTreeDefaultTabTable2'],
-                'table'
-            )
+                Util::getScriptNameForOption(
+                        $GLOBALS['cfg']['NavigationTreeDefaultTabTable2'],
+                        'table'
+                )
         );
         $title = (string) Util::getTitleForTarget(
-            $GLOBALS['cfg']['DefaultTabTable']
+                        $GLOBALS['cfg']['DefaultTabTable']
         );
         $this->title = $title;
 
         $scriptName = Util::getScriptNameForOption(
-            $GLOBALS['cfg']['DefaultTabTable'],
-            'table'
+                        $GLOBALS['cfg']['DefaultTabTable'],
+                        'table'
         );
         $firstIconLink = Util::getScriptNameForOption(
-            $GLOBALS['cfg']['NavigationTreeDefaultTabTable'],
-            'table'
+                        $GLOBALS['cfg']['NavigationTreeDefaultTabTable'],
+                        'table'
         );
         $secondIconLink = Util::getScriptNameForOption(
-            $GLOBALS['cfg']['NavigationTreeDefaultTabTable2'],
-            'table'
+                        $GLOBALS['cfg']['NavigationTreeDefaultTabTable2'],
+                        'table'
         );
         $this->links = [
-            'text'  => $scriptName . (strpos($scriptName, '?') === false ? '?' : '&')
-                . 'server=' . $GLOBALS['server']
-                . '&amp;db=%2$s&amp;table=%1$s'
-                . '&amp;pos=0',
-            'icon'  => [
+            'text' => $scriptName . (strpos($scriptName, '?') === false ? '?' : '&')
+            . 'server=' . $GLOBALS['server']
+            . '&amp;db=%2$s&amp;table=%1$s'
+            . '&amp;pos=0',
+            'icon' => [
                 $firstIconLink . (strpos($firstIconLink, '?') === false ? '?' : '&')
                 . 'server=' . $GLOBALS['server']
                 . '&amp;db=%2$s&amp;table=%1$s',
@@ -92,8 +91,7 @@ class NodeTable extends NodeDatabaseChild
      *
      * @return int
      */
-    public function getPresence($type = '', $searchClause = '')
-    {
+    public function getPresence($type = '', $searchClause = '') {
         global $dbi;
 
         $retval = 0;
@@ -101,7 +99,7 @@ class NodeTable extends NodeDatabaseChild
         $table = $this->realName;
         switch ($type) {
             case 'columns':
-                if (! $GLOBALS['cfg']['Server']['DisableIS']) {
+                if (!$GLOBALS['cfg']['Server']['DisableIS']) {
                     $db = $dbi->escapeString($db);
                     $table = $dbi->escapeString($table);
                     $query = 'SELECT COUNT(*) ';
@@ -114,7 +112,7 @@ class NodeTable extends NodeDatabaseChild
                     $table = Util::backquote($table);
                     $query = 'SHOW COLUMNS FROM ' . $table . ' FROM ' . $db . '';
                     $retval = (int) $dbi->numRows(
-                        $dbi->tryQuery($query)
+                                    $dbi->tryQuery($query)
                     );
                 }
                 break;
@@ -123,26 +121,26 @@ class NodeTable extends NodeDatabaseChild
                 $table = Util::backquote($table);
                 $query = 'SHOW INDEXES FROM ' . $table . ' FROM ' . $db;
                 $retval = (int) $dbi->numRows(
-                    $dbi->tryQuery($query)
+                                $dbi->tryQuery($query)
                 );
                 break;
             case 'triggers':
-                if (! $GLOBALS['cfg']['Server']['DisableIS']) {
+                if (!$GLOBALS['cfg']['Server']['DisableIS']) {
                     $db = $dbi->escapeString($db);
                     $table = $dbi->escapeString($table);
                     $query = 'SELECT COUNT(*) ';
                     $query .= 'FROM `INFORMATION_SCHEMA`.`TRIGGERS` ';
                     $query .= 'WHERE `EVENT_OBJECT_SCHEMA` '
-                    . Util::getCollateForIS() . "='" . $db . "' ";
+                            . Util::getCollateForIS() . "='" . $db . "' ";
                     $query .= 'AND `EVENT_OBJECT_TABLE` '
-                    . Util::getCollateForIS() . "='" . $table . "'";
+                            . Util::getCollateForIS() . "='" . $table . "'";
                     $retval = (int) $dbi->fetchValue($query);
                 } else {
                     $db = Util::backquote($db);
                     $table = $dbi->escapeString($table);
                     $query = 'SHOW TRIGGERS FROM ' . $db . " WHERE `Table` = '" . $table . "'";
                     $retval = (int) $dbi->numRows(
-                        $dbi->tryQuery($query)
+                                    $dbi->tryQuery($query)
                     );
                 }
                 break;
@@ -165,8 +163,7 @@ class NodeTable extends NodeDatabaseChild
      *
      * @return array
      */
-    public function getData($type, $pos, $searchClause = '')
-    {
+    public function getData($type, $pos, $searchClause = '') {
         global $dbi;
 
         $maxItems = $GLOBALS['cfg']['MaxNavigationItems'];
@@ -175,7 +172,7 @@ class NodeTable extends NodeDatabaseChild
         $table = $this->realName;
         switch ($type) {
             case 'columns':
-                if (! $GLOBALS['cfg']['Server']['DisableIS']) {
+                if (!$GLOBALS['cfg']['Server']['DisableIS']) {
                     $db = $dbi->escapeString($db);
                     $table = $dbi->escapeString($table);
                     $query = 'SELECT `COLUMN_NAME` AS `name` ';
@@ -211,7 +208,7 @@ class NodeTable extends NodeDatabaseChild
                             'name' => $arr['Field'],
                             'key' => $arr['Key'],
                             'type' => Util::extractColumnSpec($arr['Type'])['type'],
-                            'default' =>  $arr['Default'],
+                            'default' => $arr['Default'],
                             'nullable' => ($arr['Null'] === 'NO' ? '' : 'nullable'),
                         ];
                         $count++;
@@ -240,15 +237,15 @@ class NodeTable extends NodeDatabaseChild
                 }
                 break;
             case 'triggers':
-                if (! $GLOBALS['cfg']['Server']['DisableIS']) {
+                if (!$GLOBALS['cfg']['Server']['DisableIS']) {
                     $db = $dbi->escapeString($db);
                     $table = $dbi->escapeString($table);
                     $query = 'SELECT `TRIGGER_NAME` AS `name` ';
                     $query .= 'FROM `INFORMATION_SCHEMA`.`TRIGGERS` ';
                     $query .= 'WHERE `EVENT_OBJECT_SCHEMA` '
-                    . Util::getCollateForIS() . "='" . $db . "' ";
+                            . Util::getCollateForIS() . "='" . $db . "' ";
                     $query .= 'AND `EVENT_OBJECT_TABLE` '
-                    . Util::getCollateForIS() . "='" . $table . "' ";
+                            . Util::getCollateForIS() . "='" . $table . "' ";
                     $query .= 'ORDER BY `TRIGGER_NAME` ASC ';
                     $query .= 'LIMIT ' . intval($pos) . ', ' . $maxItems;
                     $retval = $dbi->fetchResult($query);
@@ -287,8 +284,7 @@ class NodeTable extends NodeDatabaseChild
      *
      * @return string type of the item
      */
-    protected function getItemType()
-    {
+    protected function getItemType() {
         return 'table';
     }
 
@@ -299,8 +295,7 @@ class NodeTable extends NodeDatabaseChild
      *
      * @return void
      */
-    private function addIcon($page)
-    {
+    private function addIcon($page) {
         if (empty($page)) {
             return;
         }
@@ -323,4 +318,5 @@ class NodeTable extends NodeDatabaseChild
                 break;
         }
     }
+
 }

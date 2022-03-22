@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Parses an array.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\SqlParser\Components;
@@ -11,7 +11,6 @@ use PhpMyAdmin\SqlParser\Component;
 use PhpMyAdmin\SqlParser\Parser;
 use PhpMyAdmin\SqlParser\Token;
 use PhpMyAdmin\SqlParser\TokensList;
-
 use function implode;
 use function is_array;
 use function strlen;
@@ -22,8 +21,8 @@ use function trim;
  *
  * @final
  */
-class ArrayObj extends Component
-{
+class ArrayObj extends Component {
+
     /**
      * The array that contains the unprocessed value of each token.
      *
@@ -42,8 +41,7 @@ class ArrayObj extends Component
      * @param array $raw    the unprocessed values
      * @param array $values the processed values
      */
-    public function __construct(array $raw = [], array $values = [])
-    {
+    public function __construct(array $raw = [], array $values = []) {
         $this->raw = $raw;
         $this->values = $values;
     }
@@ -55,8 +53,7 @@ class ArrayObj extends Component
      *
      * @return ArrayObj|Component[]
      */
-    public static function parse(Parser $parser, TokensList $list, array $options = [])
-    {
+    public static function parse(Parser $parser, TokensList $list, array $options = []) {
         $ret = empty($options['type']) ? new static() : [];
 
         /**
@@ -140,9 +137,9 @@ class ArrayObj extends Component
                 $lastValue .= $token->value;
             } else {
                 $ret[] = $options['type']::parse(
-                    $parser,
-                    $list,
-                    empty($options['typeOptions']) ? [] : $options['typeOptions']
+                                $parser,
+                                $list,
+                                empty($options['typeOptions']) ? [] : $options['typeOptions']
                 );
             }
         }
@@ -171,16 +168,16 @@ class ArrayObj extends Component
      *
      * @return string
      */
-    public static function build($component, array $options = [])
-    {
+    public static function build($component, array $options = []) {
         if (is_array($component)) {
             return implode(', ', $component);
         }
 
-        if (! empty($component->raw)) {
+        if (!empty($component->raw)) {
             return '(' . implode(', ', $component->raw) . ')';
         }
 
         return '(' . implode(', ', $component->values) . ')';
     }
+
 }

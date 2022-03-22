@@ -1,14 +1,13 @@
 <?php
+
 /**
  * Static methods for URL/hidden inputs generating
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin;
 
 use PhpMyAdmin\Crypto\Crypto;
-
 use function htmlentities;
 use function htmlspecialchars;
 use function http_build_query;
@@ -25,8 +24,8 @@ use function base64_decode;
 /**
  * Static methods for URL/hidden inputs generating
  */
-class Url
-{
+class Url {
+
     /**
      * Generates text with hidden inputs.
      *
@@ -44,15 +43,15 @@ class Url
      * @access public
      */
     public static function getHiddenInputs(
-        $db = '',
-        $table = '',
-        $indent = 0,
-        $skip = []
+            $db = '',
+            $table = '',
+            $indent = 0,
+            $skip = []
     ) {
         global $PMA_Config;
 
         if (is_array($db)) {
-            $params  =& $db;
+            $params = & $db;
         } else {
             $params = [];
             if (strlen((string) $db) > 0) {
@@ -63,22 +62,21 @@ class Url
             }
         }
 
-        if (! empty($GLOBALS['server'])
-            && $GLOBALS['server'] != $GLOBALS['cfg']['ServerDefault']
+        if (!empty($GLOBALS['server']) && $GLOBALS['server'] != $GLOBALS['cfg']['ServerDefault']
         ) {
             $params['server'] = $GLOBALS['server'];
         }
-        if (empty($PMA_Config->getCookie('pma_lang')) && ! empty($GLOBALS['lang'])) {
+        if (empty($PMA_Config->getCookie('pma_lang')) && !empty($GLOBALS['lang'])) {
             $params['lang'] = $GLOBALS['lang'];
         }
 
-        if (! is_array($skip)) {
+        if (!is_array($skip)) {
             if (isset($params[$skip])) {
                 unset($params[$skip]);
             }
         } else {
             foreach ($skip as $skipping) {
-                if (! isset($params[$skipping])) {
+                if (!isset($params[$skipping])) {
                     continue;
                 }
 
@@ -120,8 +118,7 @@ class Url
      *
      * @return string form fields of type hidden
      */
-    public static function getHiddenFields(array $values, $pre = '', $is_token = false)
-    {
+    public static function getHiddenFields(array $values, $pre = '', $is_token = false) {
         $fields = '';
 
         /* Always include token in plain forms */
@@ -130,7 +127,7 @@ class Url
         }
 
         foreach ($values as $name => $value) {
-            if (! empty($pre)) {
+            if (!empty($pre)) {
                 $name = $pre . '[' . $name . ']';
             }
 
@@ -141,7 +138,7 @@ class Url
                 // Url::getHiddenInputs() is sometimes called
                 // from a JS document.write()
                 $fields .= '<input type="hidden" name="' . htmlspecialchars((string) $name)
-                    . '" value="' . htmlspecialchars((string) $value) . '">';
+                        . '" value="' . htmlspecialchars((string) $value) . '">';
             }
         }
 
@@ -179,8 +176,7 @@ class Url
      *
      * @access public
      */
-    public static function getCommon(array $params = [], $divider = '?', $encrypt = true)
-    {
+    public static function getCommon(array $params = [], $divider = '?', $encrypt = true) {
         return self::getCommonRaw($params, $divider, $encrypt);
     }
 
@@ -215,22 +211,18 @@ class Url
      *
      * @access public
      */
-    public static function getCommonRaw(array $params = [], $divider = '?', $encrypt = true)
-    {
+    public static function getCommonRaw(array $params = [], $divider = '?', $encrypt = true) {
         global $PMA_Config;
 
         // avoid overwriting when creating navigation panel links to servers
-        if (isset($GLOBALS['server'])
-            && $GLOBALS['server'] != $GLOBALS['cfg']['ServerDefault']
-            && ! isset($params['server'])
-            && ! $PMA_Config->get('is_setup')
+        if (isset($GLOBALS['server']) && $GLOBALS['server'] != $GLOBALS['cfg']['ServerDefault'] && !isset($params['server']) && !$PMA_Config->get('is_setup')
         ) {
             $params['server'] = $GLOBALS['server'];
         }
 
         // Can be null when the user is missing an extension.
         // See: Core::checkExtensions()
-        if ($PMA_Config !== null && empty($PMA_Config->getCookie('pma_lang')) && ! empty($GLOBALS['lang'])) {
+        if ($PMA_Config !== null && empty($PMA_Config->getCookie('pma_lang')) && !empty($GLOBALS['lang'])) {
             $params['lang'] = $GLOBALS['lang'];
         }
 
@@ -249,13 +241,12 @@ class Url
      *
      * @return string
      */
-    public static function buildHttpQuery($params, $encrypt = true)
-    {
+    public static function buildHttpQuery($params, $encrypt = true) {
         global $PMA_Config;
 
         $separator = self::getArgSeparator();
 
-        if (! $encrypt || ! $PMA_Config->get('URLQueryEncryption')) {
+        if (!$encrypt || !$PMA_Config->get('URLQueryEncryption')) {
             return http_build_query($params, '', $separator);
         }
 
@@ -279,7 +270,7 @@ class Url
         ];
         $paramsToEncrypt = [];
         foreach ($params as $paramKey => $paramValue) {
-            if (! in_array($paramKey, $keys)) {
+            if (!in_array($paramKey, $keys)) {
                 continue;
             }
 
@@ -299,8 +290,7 @@ class Url
      *
      * @return string
      */
-    public static function encryptQuery($query)
-    {
+    public static function encryptQuery($query) {
         $crypto = new Crypto();
 
         return strtr(base64_encode($crypto->encrypt($query)), '+/', '-_');
@@ -311,8 +301,7 @@ class Url
      *
      * @return string|null
      */
-    public static function decryptQuery($query)
-    {
+    public static function decryptQuery($query) {
         $crypto = new Crypto();
 
         return $crypto->decrypt(base64_decode(strtr($query, '-_', '+/')));
@@ -331,8 +320,7 @@ class Url
      *
      * @access public
      */
-    public static function getArgSeparator($encode = 'none')
-    {
+    public static function getArgSeparator($encode = 'none') {
         static $separator = null;
         static $html_separator = null;
 
@@ -366,8 +354,8 @@ class Url
      * @param string $route                Route to use
      * @param array  $additionalParameters Additional URL parameters
      */
-    public static function getFromRoute(string $route, array $additionalParameters = []): string
-    {
+    public static function getFromRoute(string $route, array $additionalParameters = []): string {
         return 'index.php?route=' . $route . self::getCommon($additionalParameters, '&');
     }
+
 }

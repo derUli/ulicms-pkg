@@ -16,10 +16,9 @@ use Symfony\Component\DependencyInjection\Definition;
 /**
  * Replaces env var placeholders by their current values.
  */
-class ResolveEnvPlaceholdersPass extends AbstractRecursivePass
-{
-    protected function processValue($value, $isRoot = false)
-    {
+class ResolveEnvPlaceholdersPass extends AbstractRecursivePass {
+
+    protected function processValue($value, $isRoot = false) {
         if (\is_string($value)) {
             return $this->container->resolveEnvPlaceholders($value, true);
         }
@@ -41,4 +40,5 @@ class ResolveEnvPlaceholdersPass extends AbstractRecursivePass
 
         return $value;
     }
+
 }

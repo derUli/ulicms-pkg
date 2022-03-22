@@ -15,8 +15,8 @@ use PhpMyAdmin\SqlParser\Token;
  *
  * @see https://dev.mysql.com/doc/refman/5.6/en/keywords.html
  */
-class ContextMySql50600 extends Context
-{
+class ContextMySql50600 extends Context {
+
     /**
      * List of keywords.
      *
@@ -108,7 +108,6 @@ class ContextMySql50600 extends Context
         'MAX_UPDATES_PER_HOUR' => 1, 'MAX_USER_CONNECTIONS' => 1,
         'MASTER_HEARTBEAT_PERIOD' => 1,
         'MAX_CONNECTIONS_PER_HOUR' => 1,
-
         'AS' => 3, 'BY' => 3, 'IS' => 3, 'ON' => 3, 'OR' => 3, 'TO' => 3,
         'ADD' => 3, 'ALL' => 3, 'AND' => 3, 'ASC' => 3, 'DEC' => 3, 'DIV' => 3,
         'FOR' => 3, 'GET' => 3, 'NOT' => 3, 'OUT' => 3, 'SQL' => 3, 'SSL' => 3,
@@ -153,7 +152,6 @@ class ContextMySql50600 extends Context
         'MINUTE_MICROSECOND' => 3, 'NO_WRITE_TO_BINLOG' => 3, 'SECOND_MICROSECOND' => 3,
         'SQL_CALC_FOUND_ROWS' => 3,
         'MASTER_SSL_VERIFY_SERVER_CERT' => 3,
-
         'GROUP BY' => 7, 'NOT NULL' => 7, 'ORDER BY' => 7, 'SET NULL' => 7,
         'AND CHAIN' => 7, 'FULL JOIN' => 7, 'IF EXISTS' => 7, 'LEFT JOIN' => 7,
         'LESS THAN' => 7, 'LOAD DATA' => 7, 'NO ACTION' => 7, 'ON DELETE' => 7,
@@ -173,7 +171,6 @@ class ContextMySql50600 extends Context
         'DEFAULT CHARACTER SET' => 7,
         'NATURAL LEFT OUTER JOIN' => 7,
         'NATURAL RIGHT OUTER JOIN' => 7, 'WITH CONSISTENT SNAPSHOT' => 7,
-
         'BIT' => 9, 'XML' => 9,
         'ENUM' => 9, 'JSON' => 9, 'TEXT' => 9,
         'ARRAY' => 9,
@@ -182,7 +179,6 @@ class ContextMySql50600 extends Context
         'DATETIME' => 9, 'GEOMETRY' => 9, 'MULTISET' => 9,
         'MULTILINEPOINT' => 9,
         'MULTILINEPOLYGON' => 9,
-
         'INT' => 11, 'SET' => 11,
         'BLOB' => 11, 'REAL' => 11,
         'FLOAT' => 11,
@@ -191,22 +187,18 @@ class ContextMySql50600 extends Context
         'LONGBLOB' => 11, 'LONGTEXT' => 11, 'SMALLINT' => 11, 'TINYBLOB' => 11, 'TINYTEXT' => 11,
         'CHARACTER' => 11, 'MEDIUMINT' => 11, 'VARBINARY' => 11,
         'MEDIUMBLOB' => 11, 'MEDIUMTEXT' => 11,
-
         'BINARY VARYING' => 15,
-
         'KEY' => 19,
         'INDEX' => 19,
         'UNIQUE' => 19,
         'SPATIAL' => 19,
         'FULLTEXT' => 19,
-
         'INDEX KEY' => 23,
         'UNIQUE KEY' => 23,
         'FOREIGN KEY' => 23, 'PRIMARY KEY' => 23, 'SPATIAL KEY' => 23,
         'FULLTEXT KEY' => 23, 'UNIQUE INDEX' => 23,
         'SPATIAL INDEX' => 23,
         'FULLTEXT INDEX' => 23,
-
         'X' => 33, 'Y' => 33,
         'LN' => 33, 'PI' => 33,
         'ABS' => 33, 'AVG' => 33, 'BIN' => 33, 'COS' => 33, 'COT' => 33, 'DAY' => 33,
@@ -294,7 +286,6 @@ class ContextMySql50600 extends Context
         'ST_GEOMETRYCOLLECTIONFROMWKB' => 33,
         'ST_GEOMETRYCOLLECTIONFROMTEXT' => 33,
         'WAIT_UNTIL_SQL_THREAD_AFTER_GTIDS' => 33,
-
         'IF' => 35, 'IN' => 35,
         'MOD' => 35,
         'LEFT' => 35,
@@ -307,9 +298,7 @@ class ContextMySql50600 extends Context
         'UTC_TIMESTAMP' => 35,
         'LOCALTIMESTAMP' => 35,
         'CURRENT_TIMESTAMP' => 35,
-
         'NOT IN' => 39,
-
         'DATE' => 41, 'TIME' => 41, 'YEAR' => 41,
         'POINT' => 41,
         'POLYGON' => 41,
@@ -317,9 +306,9 @@ class ContextMySql50600 extends Context
         'LINESTRING' => 41,
         'MULTILINESTRING' => 41,
         'GEOMETRYCOLLECTION' => 41,
-
         'CHAR' => 43,
         'BINARY' => 43,
         'INTERVAL' => 43,
     ];
+
 }

@@ -18,18 +18,16 @@ use Symfony\Contracts\Service\ResetInterface;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class Compiler implements ResetInterface
-{
+class Compiler implements ResetInterface {
+
     private $source;
     private $functions;
 
-    public function __construct(array $functions)
-    {
+    public function __construct(array $functions) {
         $this->functions = $functions;
     }
 
-    public function getFunction($name)
-    {
+    public function getFunction($name) {
         return $this->functions[$name];
     }
 
@@ -38,13 +36,11 @@ class Compiler implements ResetInterface
      *
      * @return string The PHP code
      */
-    public function getSource()
-    {
+    public function getSource() {
         return $this->source;
     }
 
-    public function reset()
-    {
+    public function reset() {
         $this->source = '';
 
         return $this;
@@ -55,15 +51,13 @@ class Compiler implements ResetInterface
      *
      * @return $this
      */
-    public function compile(Node\Node $node)
-    {
+    public function compile(Node\Node $node) {
         $node->compile($this);
 
         return $this;
     }
 
-    public function subcompile(Node\Node $node)
-    {
+    public function subcompile(Node\Node $node) {
         $current = $this->source;
         $this->source = '';
 
@@ -82,8 +76,7 @@ class Compiler implements ResetInterface
      *
      * @return $this
      */
-    public function raw($string)
-    {
+    public function raw($string) {
         $this->source .= $string;
 
         return $this;
@@ -96,8 +89,7 @@ class Compiler implements ResetInterface
      *
      * @return $this
      */
-    public function string($value)
-    {
+    public function string($value) {
         $this->source .= sprintf('"%s"', addcslashes($value, "\0\t\"\$\\"));
 
         return $this;
@@ -110,8 +102,7 @@ class Compiler implements ResetInterface
      *
      * @return $this
      */
-    public function repr($value)
-    {
+    public function repr($value) {
         if (\is_int($value) || \is_float($value)) {
             if (false !== $locale = setlocale(\LC_NUMERIC, 0)) {
                 setlocale(\LC_NUMERIC, 'C');
@@ -145,4 +136,5 @@ class Compiler implements ResetInterface
 
         return $this;
     }
+
 }

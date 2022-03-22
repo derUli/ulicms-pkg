@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Abstract class for the export plugins
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Plugins;
@@ -19,8 +19,8 @@ use function stripos;
  * methods, but those are not declared here, because they are not implemented
  * by all export plugins.
  */
-abstract class ExportPlugin
-{
+abstract class ExportPlugin {
+
     /**
      * PhpMyAdmin\Properties\Plugins\ExportPluginProperties object containing
      * the specific export plugin type properties
@@ -38,8 +38,7 @@ abstract class ExportPlugin
     /** @var Transformations */
     protected $transformations;
 
-    public function __construct()
-    {
+    public function __construct() {
         global $dbi;
 
         $this->relation = new Relation($dbi);
@@ -104,12 +103,12 @@ abstract class ExportPlugin
      * @return bool Whether it succeeded
      */
     abstract public function exportData(
-        $db,
-        $table,
-        $crlf,
-        $error_url,
-        $sql_query,
-        array $aliases = []
+            $db,
+            $table,
+            $crlf,
+            $error_url,
+            $sql_query,
+            array $aliases = []
     );
 
     /**
@@ -125,8 +124,7 @@ abstract class ExportPlugin
      *
      * @return bool Whether it succeeded
      */
-    public function exportRoutines($db, array $aliases = [])
-    {
+    public function exportRoutines($db, array $aliases = []) {
         return true;
     }
 
@@ -137,8 +135,7 @@ abstract class ExportPlugin
      *
      * @return bool Whether it succeeded
      */
-    public function exportEvents($db)
-    {
+    public function exportEvents($db) {
         return true;
     }
 
@@ -152,9 +149,9 @@ abstract class ExportPlugin
      * @return bool if succeeded
      */
     public function exportRawQuery(
-        string $err_url,
-        string $sql_query,
-        string $crlf
+            string $err_url,
+            string $sql_query,
+            string $crlf
     ): bool {
         return false;
     }
@@ -182,17 +179,17 @@ abstract class ExportPlugin
      * @return bool Whether it succeeded
      */
     public function exportStructure(
-        $db,
-        $table,
-        $crlf,
-        $error_url,
-        $export_mode,
-        $export_type,
-        $relation = false,
-        $comments = false,
-        $mime = false,
-        $dates = false,
-        array $aliases = []
+            $db,
+            $table,
+            $crlf,
+            $error_url,
+            $export_mode,
+            $export_type,
+            $relation = false,
+            $comments = false,
+            $mime = false,
+            $dates = false,
+            array $aliases = []
     ) {
         return true;
     }
@@ -207,9 +204,9 @@ abstract class ExportPlugin
      * @return bool Whether it succeeded
      */
     public function exportMetadata(
-        $db,
-        $tables,
-        array $metadataTypes
+            $db,
+            $tables,
+            array $metadataTypes
     ) {
         return true;
     }
@@ -224,8 +221,7 @@ abstract class ExportPlugin
      *
      * @return string resulting definition
      */
-    public function getTableDefStandIn($db, $view, $crlf, $aliases = [])
-    {
+    public function getTableDefStandIn($db, $view, $crlf, $aliases = []) {
         return '';
     }
 
@@ -237,8 +233,7 @@ abstract class ExportPlugin
      *
      * @return string Formatted triggers list
      */
-    protected function getTriggers($db, $table)
-    {
+    protected function getTriggers($db, $table) {
         return '';
     }
 
@@ -247,8 +242,8 @@ abstract class ExportPlugin
      *
      * @return void
      */
-    protected function initSpecificVariables()
-    {
+    protected function initSpecificVariables() {
+        
     }
 
     /* ~~~~~~~~~~~~~~~~~~~~ Getters and Setters ~~~~~~~~~~~~~~~~~~~~ */
@@ -258,8 +253,7 @@ abstract class ExportPlugin
      *
      * @return ExportPluginProperties
      */
-    public function getProperties()
-    {
+    public function getProperties() {
         return $this->properties;
     }
 
@@ -287,9 +281,8 @@ abstract class ExportPlugin
      *
      * @return void
      */
-    public function initAlias($aliases, &$db, &$table = null)
-    {
-        if (! empty($aliases[$db]['tables'][$table]['alias'])) {
+    public function initAlias($aliases, &$db, &$table = null) {
+        if (!empty($aliases[$db]['tables'][$table]['alias'])) {
             $table = $aliases[$db]['tables'][$table]['alias'];
         }
         if (empty($aliases[$db]['alias'])) {
@@ -311,9 +304,8 @@ abstract class ExportPlugin
      *
      * @return string alias of the identifier if found or ''
      */
-    public function getAlias(array $aliases, $id, $type = 'dbtblcol', $db = '', $tbl = '')
-    {
-        if (! empty($db) && isset($aliases[$db])) {
+    public function getAlias(array $aliases, $id, $type = 'dbtblcol', $db = '', $tbl = '') {
+        if (!empty($db) && isset($aliases[$db])) {
             $aliases = [
                 $db => $aliases[$db],
             ];
@@ -321,16 +313,14 @@ abstract class ExportPlugin
         // search each database
         foreach ($aliases as $db_key => $db) {
             // check if id is database and has alias
-            if (stripos($type, 'db') !== false
-                && $db_key === $id
-                && ! empty($db['alias'])
+            if (stripos($type, 'db') !== false && $db_key === $id && !empty($db['alias'])
             ) {
                 return $db['alias'];
             }
             if (empty($db['tables'])) {
                 continue;
             }
-            if (! empty($tbl) && isset($db['tables'][$tbl])) {
+            if (!empty($tbl) && isset($db['tables'][$tbl])) {
                 $db['tables'] = [
                     $tbl => $db['tables'][$tbl],
                 ];
@@ -338,9 +328,7 @@ abstract class ExportPlugin
             // search each of its tables
             foreach ($db['tables'] as $table_key => $table) {
                 // check if id is table and has alias
-                if (stripos($type, 'tbl') !== false
-                    && $table_key === $id
-                    && ! empty($table['alias'])
+                if (stripos($type, 'tbl') !== false && $table_key === $id && !empty($table['alias'])
                 ) {
                     return $table['alias'];
                 }
@@ -350,9 +338,7 @@ abstract class ExportPlugin
                 // search each of its columns
                 foreach ($table['columns'] as $col_key => $col) {
                     // check if id is column
-                    if (stripos($type, 'col') !== false
-                        && $col_key === $id
-                        && ! empty($col)
+                    if (stripos($type, 'col') !== false && $col_key === $id && !empty($col)
                     ) {
                         return $col;
                     }
@@ -377,20 +363,20 @@ abstract class ExportPlugin
      * @return string the Relation string
      */
     public function getRelationString(
-        array $res_rel,
-        $field_name,
-        $db,
-        array $aliases = []
+            array $res_rel,
+            $field_name,
+            $db,
+            array $aliases = []
     ) {
         $relation = '';
         $foreigner = $this->relation->searchColumnInForeigners($res_rel, $field_name);
         if ($foreigner) {
             $ftable = $foreigner['foreign_table'];
             $ffield = $foreigner['foreign_field'];
-            if (! empty($aliases[$db]['tables'][$ftable]['columns'][$ffield])) {
+            if (!empty($aliases[$db]['tables'][$ftable]['columns'][$ffield])) {
                 $ffield = $aliases[$db]['tables'][$ftable]['columns'][$ffield];
             }
-            if (! empty($aliases[$db]['tables'][$ftable]['alias'])) {
+            if (!empty($aliases[$db]['tables'][$ftable]['alias'])) {
                 $ftable = $aliases[$db]['tables'][$ftable]['alias'];
             }
             $relation = $ftable . ' (' . $ffield . ')';
@@ -398,4 +384,5 @@ abstract class ExportPlugin
 
         return $relation;
     }
+
 }

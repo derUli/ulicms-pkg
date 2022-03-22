@@ -99,7 +99,7 @@ use PhpMyAdmin\Controllers\VersionCheckController;
 use PhpMyAdmin\Controllers\ViewCreateController;
 use PhpMyAdmin\Controllers\ViewOperationsController;
 
-if (! defined('PHPMYADMIN')) {
+if (!defined('PHPMYADMIN')) {
     exit;
 }
 

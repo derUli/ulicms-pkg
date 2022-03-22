@@ -20,15 +20,15 @@ var TableSelect = {};
 TableSelect.checkIfDataTypeNumericOrDate = function (dataType) {
     // To test for numeric data-types.
     var numericRegExp = new RegExp(
-        'TINYINT|SMALLINT|MEDIUMINT|INT|BIGINT|DECIMAL|FLOAT|DOUBLE|REAL',
-        'i'
-    );
+            'TINYINT|SMALLINT|MEDIUMINT|INT|BIGINT|DECIMAL|FLOAT|DOUBLE|REAL',
+            'i'
+            );
 
     // To test for date data-types.
     var dateRegExp = new RegExp(
-        'DATETIME|DATE|TIMESTAMP|TIME|YEAR',
-        'i'
-    );
+            'DATETIME|DATE|TIMESTAMP|TIME|YEAR',
+            'i'
+            );
 
     // Return matched data-type
     if (numericRegExp.test(dataType)) {
@@ -59,23 +59,23 @@ AJAX.registerOnload('table/select.js', function () {
      * after a couple of clicks
      */
     $('<div id="togglesearchformdiv"><a id="togglesearchformlink"></a></div>')
-        .insertAfter('#tbl_search_form')
-        // don't show it until we have results on-screen
-        .hide();
+            .insertAfter('#tbl_search_form')
+            // don't show it until we have results on-screen
+            .hide();
 
     $('#togglesearchformlink')
-        .html(Messages.strShowSearchCriteria)
-        .on('click', function () {
-            var $link = $(this);
-            $('#tbl_search_form').slideToggle();
-            if ($link.text() === Messages.strHideSearchCriteria) {
-                $link.text(Messages.strShowSearchCriteria);
-            } else {
-                $link.text(Messages.strHideSearchCriteria);
-            }
-            // avoid default click action
-            return false;
-        });
+            .html(Messages.strShowSearchCriteria)
+            .on('click', function () {
+                var $link = $(this);
+                $('#tbl_search_form').slideToggle();
+                if ($link.text() === Messages.strHideSearchCriteria) {
+                    $link.text(Messages.strShowSearchCriteria);
+                } else {
+                    $link.text(Messages.strHideSearchCriteria);
+                }
+                // avoid default click action
+                return false;
+            });
 
     var tableRows = $('#fieldset_table_qbe select.column-operator');
     $.each(tableRows, function (index, item) {
@@ -132,7 +132,7 @@ AJAX.registerOnload('table/select.js', function () {
             }
 
             if (values['geom_func[' + a + ']'] &&
-                $.inArray(values['geom_func[' + a + ']'], geomUnaryFunctions) >= 0) {
+                    $.inArray(values['geom_func[' + a + ']'], geomUnaryFunctions) >= 0) {
                 continue;
             }
 
@@ -164,18 +164,18 @@ AJAX.registerOnload('table/select.js', function () {
                     $('.sqlqueryresults').trigger('makegrid');
                 }
                 $('#tbl_search_form')
-                    // workaround for bug #3168569 - Issue on toggling the "Hide search criteria" in chrome.
-                    .slideToggle()
-                    .hide();
+                        // workaround for bug #3168569 - Issue on toggling the "Hide search criteria" in chrome.
+                        .slideToggle()
+                        .hide();
                 $('#togglesearchformlink')
-                    // always start with the Show message
-                    .text(Messages.strShowSearchCriteria);
+                        // always start with the Show message
+                        .text(Messages.strShowSearchCriteria);
                 $('#togglesearchformdiv')
-                    // now it's time to show the div containing the link
-                    .show();
+                        // now it's time to show the div containing the link
+                        .show();
                 // needed for the display options slider in the results
                 Functions.initSlider();
-                $('html, body').animate({ scrollTop: 0 }, 'fast');
+                $('html, body').animate({scrollTop: 0}, 'fast');
             } else {
                 $('#sqlqueryresultsouter').html(data.error);
             }
@@ -280,16 +280,16 @@ AJAX.registerOnload('table/select.js', function () {
         var $sourceSelect = $(this);
         // Get the column name.
         var columnName = $(this)
-            .closest('tr')
-            .find('th')
-            .first()
-            .text();
+                .closest('tr')
+                .find('th')
+                .first()
+                .text();
 
         // Get the data-type of column excluding size.
         var dataType = $(this)
-            .closest('tr')
-            .find('td[data-type]')
-            .attr('data-type');
+                .closest('tr')
+                .find('td[data-type]')
+                .attr('data-type');
         dataType = TableSelect.checkIfDataTypeNumericOrDate(dataType);
 
         // Get the operator.
@@ -313,14 +313,14 @@ AJAX.registerOnload('table/select.js', function () {
                     if (response.success) {
                         // Get the column min value.
                         var min = response.column_data.min
-                            ? '(' + Messages.strColumnMin +
+                                ? '(' + Messages.strColumnMin +
                                 ' ' + response.column_data.min + ')'
-                            : '';
+                                : '';
                         // Get the column max value.
                         var max = response.column_data.max
-                            ? '(' + Messages.strColumnMax +
+                                ? '(' + Messages.strColumnMax +
                                 ' ' + response.column_data.max + ')'
-                            : '';
+                                : '';
                         var buttonOptions = {};
                         buttonOptions[Messages.strGo] = function () {
                             var minValue = $('#min_value').val();
@@ -328,10 +328,10 @@ AJAX.registerOnload('table/select.js', function () {
                             var finalValue = '';
                             if (minValue.length && maxValue.length) {
                                 finalValue = minValue + ', ' +
-                                    maxValue;
+                                        maxValue;
                             }
                             var $targetField = $sourceSelect.closest('tr')
-                                .find('[name*="criteriaValues"]');
+                                    .find('[name*="criteriaValues"]');
 
                             // If target field is a select list.
                             if ($targetField.is('select')) {
@@ -342,16 +342,16 @@ AJAX.registerOnload('table/select.js', function () {
                                 // Find closest min and max value.
                                 $options.each(function () {
                                     if (
-                                        $closestMin === null
-                                        || Math.abs($(this).val() - minValue) < Math.abs($closestMin.val() - minValue)
-                                    ) {
+                                            $closestMin === null
+                                            || Math.abs($(this).val() - minValue) < Math.abs($closestMin.val() - minValue)
+                                            ) {
                                         $closestMin = $(this);
                                     }
 
                                     if (
-                                        $closestMax === null
-                                        || Math.abs($(this).val() - maxValue) < Math.abs($closestMax.val() - maxValue)
-                                    ) {
+                                            $closestMax === null
+                                            || Math.abs($(this).val() - maxValue) < Math.abs($closestMax.val() - maxValue)
+                                            ) {
                                         $closestMax = $(this);
                                     }
                                 });
@@ -369,18 +369,18 @@ AJAX.registerOnload('table/select.js', function () {
 
                         // Display dialog box.
                         $('<div></div>').append(
-                            '<fieldset>' +
-                            '<legend>' + operator + '</legend>' +
-                            '<label for="min_value">' + Messages.strMinValue +
-                            '</label>' +
-                            '<input type="text" id="min_value">' + '<br>' +
-                            '<span class="small_font">' + min + '</span>' + '<br>' +
-                            '<label for="max_value">' + Messages.strMaxValue +
-                            '</label>' +
-                            '<input type="text" id="max_value">' + '<br>' +
-                            '<span class="small_font">' + max + '</span>' +
-                            '</fieldset>'
-                        ).dialog({
+                                '<fieldset>' +
+                                '<legend>' + operator + '</legend>' +
+                                '<label for="min_value">' + Messages.strMinValue +
+                                '</label>' +
+                                '<input type="text" id="min_value">' + '<br>' +
+                                '<span class="small_font">' + min + '</span>' + '<br>' +
+                                '<label for="max_value">' + Messages.strMaxValue +
+                                '</label>' +
+                                '<input type="text" id="max_value">' + '<br>' +
+                                '<span class="small_font">' + max + '</span>' +
+                                '</fieldset>'
+                                ).dialog({
                             width: 'auto',
                             maxHeight: 400,
                             modal: true,

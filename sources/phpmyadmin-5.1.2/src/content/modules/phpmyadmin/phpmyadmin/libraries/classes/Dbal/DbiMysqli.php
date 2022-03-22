@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Interface to the MySQL Improved extension (MySQLi)
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Dbal;
@@ -81,8 +81,8 @@ use const E_USER_ERROR;
 /**
  * Interface to the MySQL Improved extension (MySQLi)
  */
-class DbiMysqli implements DbiExtension
-{
+class DbiMysqli implements DbiExtension {
+
     /** @var array */
     private static $flagNames = [
         MYSQLI_NUM_FLAG => 'num',
@@ -109,12 +109,9 @@ class DbiMysqli implements DbiExtension
      *
      * @return mysqli|bool false on error or a mysqli object on success
      */
-    public function connect($user, $password, array $server)
-    {
+    public function connect($user, $password, array $server) {
         if ($server) {
-            $server['host'] = empty($server['host'])
-                ? 'localhost'
-                : $server['host'];
+            $server['host'] = empty($server['host']) ? 'localhost' : $server['host'];
         }
 
         mysqli_report(MYSQLI_REPORT_OFF);
@@ -131,18 +128,18 @@ class DbiMysqli implements DbiExtension
         /* Optionally enable SSL */
         if ($server['ssl']) {
             $client_flags |= MYSQLI_CLIENT_SSL;
-            if (! empty($server['ssl_key']) ||
-                ! empty($server['ssl_cert']) ||
-                ! empty($server['ssl_ca']) ||
-                ! empty($server['ssl_ca_path']) ||
-                ! empty($server['ssl_ciphers'])
+            if (!empty($server['ssl_key']) ||
+                    !empty($server['ssl_cert']) ||
+                    !empty($server['ssl_ca']) ||
+                    !empty($server['ssl_ca_path']) ||
+                    !empty($server['ssl_ciphers'])
             ) {
                 $mysqli->ssl_set(
-                    $server['ssl_key'] ?? '',
-                    $server['ssl_cert'] ?? '',
-                    $server['ssl_ca'] ?? '',
-                    $server['ssl_ca_path'] ?? '',
-                    $server['ssl_ciphers'] ?? ''
+                        $server['ssl_key'] ?? '',
+                        $server['ssl_cert'] ?? '',
+                        $server['ssl_ca'] ?? '',
+                        $server['ssl_ca_path'] ?? '',
+                        $server['ssl_ciphers'] ?? ''
                 );
             }
             /*
@@ -150,10 +147,10 @@ class DbiMysqli implements DbiExtension
              * @link https://bugs.php.net/bug.php?id=68344
              * @link https://github.com/phpmyadmin/phpmyadmin/pull/11838
              */
-            if (! $server['ssl_verify']) {
+            if (!$server['ssl_verify']) {
                 $mysqli->options(
-                    MYSQLI_OPT_SSL_VERIFY_SERVER_CERT,
-                    $server['ssl_verify']
+                        MYSQLI_OPT_SSL_VERIFY_SERVER_CERT,
+                        $server['ssl_verify']
                 );
                 $client_flags |= MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT;
             }
@@ -167,23 +164,23 @@ class DbiMysqli implements DbiExtension
 
         if ($server['hide_connection_errors']) {
             $return_value = @$mysqli->real_connect(
-                $host,
-                $user,
-                $password,
-                '',
-                $server['port'],
-                (string) $server['socket'],
-                $client_flags
+                            $host,
+                            $user,
+                            $password,
+                            '',
+                            $server['port'],
+                            (string) $server['socket'],
+                            $client_flags
             );
         } else {
             $return_value = $mysqli->real_connect(
-                $host,
-                $user,
-                $password,
-                '',
-                $server['port'],
-                (string) $server['socket'],
-                $client_flags
+                    $host,
+                    $user,
+                    $password,
+                    '',
+                    $server['port'],
+                    (string) $server['socket'],
+                    $client_flags
             );
         }
 
@@ -198,14 +195,11 @@ class DbiMysqli implements DbiExtension
              */
             $error_number = $mysqli->connect_errno;
             $error_message = $mysqli->connect_error;
-            if (! $server['ssl']
-                && ($error_number == 3159
-                    || (($error_number == 2001 || $error_number == 9002)
-                        && stripos($error_message, 'SSL Connection is required') !== false))
+            if (!$server['ssl'] && ($error_number == 3159 || (($error_number == 2001 || $error_number == 9002) && stripos($error_message, 'SSL Connection is required') !== false))
             ) {
                 trigger_error(
-                    __('SSL connection enforced by server, automatically enabling it.'),
-                    E_USER_WARNING
+                        __('SSL connection enforced by server, automatically enabling it.'),
+                        E_USER_WARNING
                 );
                 $server['ssl'] = true;
 
@@ -214,15 +208,15 @@ class DbiMysqli implements DbiExtension
 
             if ($error_number === 1045 && $server['hide_connection_errors']) {
                 trigger_error(
-                    sprintf(
-                        __(
-                            'Error 1045: Access denied for user. Additional error information'
-                            . ' may be available, but is being hidden by the %s configuration directive.'
+                        sprintf(
+                                __(
+                                        'Error 1045: Access denied for user. Additional error information'
+                                        . ' may be available, but is being hidden by the %s configuration directive.'
+                                ),
+                                '[code][doc@cfg_Servers_hide_connection_errors]'
+                                . '$cfg[\'Servers\'][$i][\'hide_connection_errors\'][/doc][/code]'
                         ),
-                        '[code][doc@cfg_Servers_hide_connection_errors]'
-                        . '$cfg[\'Servers\'][$i][\'hide_connection_errors\'][/doc][/code]'
-                    ),
-                    E_USER_ERROR
+                        E_USER_ERROR
                 );
             }
 
@@ -246,8 +240,7 @@ class DbiMysqli implements DbiExtension
      *
      * @return bool
      */
-    public function selectDb($databaseName, $mysqli)
-    {
+    public function selectDb($databaseName, $mysqli) {
         return $mysqli->select_db($databaseName);
     }
 
@@ -260,8 +253,7 @@ class DbiMysqli implements DbiExtension
      *
      * @return mysqli_result|bool
      */
-    public function realQuery($query, $mysqli, $options)
-    {
+    public function realQuery($query, $mysqli, $options) {
         if ($options == ($options | DatabaseInterface::QUERY_STORE)) {
             $method = MYSQLI_STORE_RESULT;
         } elseif ($options == ($options | DatabaseInterface::QUERY_UNBUFFERED)) {
@@ -281,8 +273,7 @@ class DbiMysqli implements DbiExtension
      *
      * @return bool
      */
-    public function realMultiQuery($mysqli, $query)
-    {
+    public function realMultiQuery($mysqli, $query) {
         return $mysqli->multi_query($query);
     }
 
@@ -291,9 +282,8 @@ class DbiMysqli implements DbiExtension
      *
      * @param mysqli_result $result result set identifier
      */
-    public function fetchArray($result): ?array
-    {
-        if (! $result instanceof mysqli_result) {
+    public function fetchArray($result): ?array {
+        if (!$result instanceof mysqli_result) {
             return null;
         }
 
@@ -305,9 +295,8 @@ class DbiMysqli implements DbiExtension
      *
      * @param mysqli_result $result result set identifier
      */
-    public function fetchAssoc($result): ?array
-    {
-        if (! $result instanceof mysqli_result) {
+    public function fetchAssoc($result): ?array {
+        if (!$result instanceof mysqli_result) {
             return null;
         }
 
@@ -319,9 +308,8 @@ class DbiMysqli implements DbiExtension
      *
      * @param mysqli_result $result result set identifier
      */
-    public function fetchRow($result): ?array
-    {
-        if (! $result instanceof mysqli_result) {
+    public function fetchRow($result): ?array {
+        if (!$result instanceof mysqli_result) {
             return null;
         }
 
@@ -336,8 +324,7 @@ class DbiMysqli implements DbiExtension
      *
      * @return bool true on success, false on failure
      */
-    public function dataSeek($result, $offset)
-    {
+    public function dataSeek($result, $offset) {
         return $result->data_seek($offset);
     }
 
@@ -348,9 +335,8 @@ class DbiMysqli implements DbiExtension
      *
      * @return void
      */
-    public function freeResult($result)
-    {
-        if (! ($result instanceof mysqli_result)) {
+    public function freeResult($result) {
+        if (!($result instanceof mysqli_result)) {
             return;
         }
 
@@ -364,8 +350,7 @@ class DbiMysqli implements DbiExtension
      *
      * @return bool true or false
      */
-    public function moreResults($mysqli)
-    {
+    public function moreResults($mysqli) {
         return $mysqli->more_results();
     }
 
@@ -376,8 +361,7 @@ class DbiMysqli implements DbiExtension
      *
      * @return bool true or false
      */
-    public function nextResult($mysqli)
-    {
+    public function nextResult($mysqli) {
         return $mysqli->next_result();
     }
 
@@ -388,8 +372,7 @@ class DbiMysqli implements DbiExtension
      *
      * @return mysqli_result|bool false when empty results / result set when not empty
      */
-    public function storeResult($mysqli)
-    {
+    public function storeResult($mysqli) {
         return $mysqli->store_result();
     }
 
@@ -400,8 +383,7 @@ class DbiMysqli implements DbiExtension
      *
      * @return string type of connection used
      */
-    public function getHostInfo($mysqli)
-    {
+    public function getHostInfo($mysqli) {
         return $mysqli->host_info;
     }
 
@@ -412,8 +394,7 @@ class DbiMysqli implements DbiExtension
      *
      * @return string version of the MySQL protocol used
      */
-    public function getProtoInfo($mysqli)
-    {
+    public function getProtoInfo($mysqli) {
         return $mysqli->protocol_version;
     }
 
@@ -422,8 +403,7 @@ class DbiMysqli implements DbiExtension
      *
      * @return string MySQL client library version
      */
-    public function getClientInfo()
-    {
+    public function getClientInfo() {
         return mysqli_get_client_info();
     }
 
@@ -434,8 +414,7 @@ class DbiMysqli implements DbiExtension
      *
      * @return string|bool error or false
      */
-    public function getError($mysqli)
-    {
+    public function getError($mysqli) {
         $GLOBALS['errno'] = 0;
 
         if ($mysqli !== null && $mysqli !== false) {
@@ -463,8 +442,7 @@ class DbiMysqli implements DbiExtension
      *
      * @return string|int
      */
-    public function numRows($result)
-    {
+    public function numRows($result) {
         // see the note for tryQuery();
         if (is_bool($result)) {
             return 0;
@@ -480,8 +458,7 @@ class DbiMysqli implements DbiExtension
      *
      * @return int
      */
-    public function affectedRows($mysqli)
-    {
+    public function affectedRows($mysqli) {
         return $mysqli->affected_rows;
     }
 
@@ -492,54 +469,53 @@ class DbiMysqli implements DbiExtension
      *
      * @return array|bool meta info for fields in $result
      */
-    public function getFieldsMeta($result)
-    {
-        if (! $result instanceof mysqli_result) {
+    public function getFieldsMeta($result) {
+        if (!$result instanceof mysqli_result) {
             return false;
         }
         // Issue #16043 - client API mysqlnd seem not to have MYSQLI_TYPE_JSON defined
-        if (! defined('MYSQLI_TYPE_JSON')) {
+        if (!defined('MYSQLI_TYPE_JSON')) {
             define('MYSQLI_TYPE_JSON', 245);
         }
         // Build an associative array for a type look up
         $typeAr = [];
-        $typeAr[MYSQLI_TYPE_DECIMAL]     = 'real';
-        $typeAr[MYSQLI_TYPE_NEWDECIMAL]  = 'real';
-        $typeAr[MYSQLI_TYPE_BIT]         = 'int';
-        $typeAr[MYSQLI_TYPE_TINY]        = 'int';
-        $typeAr[MYSQLI_TYPE_SHORT]       = 'int';
-        $typeAr[MYSQLI_TYPE_LONG]        = 'int';
-        $typeAr[MYSQLI_TYPE_FLOAT]       = 'real';
-        $typeAr[MYSQLI_TYPE_DOUBLE]      = 'real';
-        $typeAr[MYSQLI_TYPE_NULL]        = 'null';
-        $typeAr[MYSQLI_TYPE_TIMESTAMP]   = 'timestamp';
-        $typeAr[MYSQLI_TYPE_LONGLONG]    = 'int';
-        $typeAr[MYSQLI_TYPE_INT24]       = 'int';
-        $typeAr[MYSQLI_TYPE_DATE]        = 'date';
-        $typeAr[MYSQLI_TYPE_TIME]        = 'time';
-        $typeAr[MYSQLI_TYPE_DATETIME]    = 'datetime';
-        $typeAr[MYSQLI_TYPE_YEAR]        = 'year';
-        $typeAr[MYSQLI_TYPE_NEWDATE]     = 'date';
-        $typeAr[MYSQLI_TYPE_ENUM]        = 'unknown';
-        $typeAr[MYSQLI_TYPE_SET]         = 'unknown';
-        $typeAr[MYSQLI_TYPE_TINY_BLOB]   = 'blob';
+        $typeAr[MYSQLI_TYPE_DECIMAL] = 'real';
+        $typeAr[MYSQLI_TYPE_NEWDECIMAL] = 'real';
+        $typeAr[MYSQLI_TYPE_BIT] = 'int';
+        $typeAr[MYSQLI_TYPE_TINY] = 'int';
+        $typeAr[MYSQLI_TYPE_SHORT] = 'int';
+        $typeAr[MYSQLI_TYPE_LONG] = 'int';
+        $typeAr[MYSQLI_TYPE_FLOAT] = 'real';
+        $typeAr[MYSQLI_TYPE_DOUBLE] = 'real';
+        $typeAr[MYSQLI_TYPE_NULL] = 'null';
+        $typeAr[MYSQLI_TYPE_TIMESTAMP] = 'timestamp';
+        $typeAr[MYSQLI_TYPE_LONGLONG] = 'int';
+        $typeAr[MYSQLI_TYPE_INT24] = 'int';
+        $typeAr[MYSQLI_TYPE_DATE] = 'date';
+        $typeAr[MYSQLI_TYPE_TIME] = 'time';
+        $typeAr[MYSQLI_TYPE_DATETIME] = 'datetime';
+        $typeAr[MYSQLI_TYPE_YEAR] = 'year';
+        $typeAr[MYSQLI_TYPE_NEWDATE] = 'date';
+        $typeAr[MYSQLI_TYPE_ENUM] = 'unknown';
+        $typeAr[MYSQLI_TYPE_SET] = 'unknown';
+        $typeAr[MYSQLI_TYPE_TINY_BLOB] = 'blob';
         $typeAr[MYSQLI_TYPE_MEDIUM_BLOB] = 'blob';
-        $typeAr[MYSQLI_TYPE_LONG_BLOB]   = 'blob';
-        $typeAr[MYSQLI_TYPE_BLOB]        = 'blob';
-        $typeAr[MYSQLI_TYPE_VAR_STRING]  = 'string';
-        $typeAr[MYSQLI_TYPE_STRING]      = 'string';
+        $typeAr[MYSQLI_TYPE_LONG_BLOB] = 'blob';
+        $typeAr[MYSQLI_TYPE_BLOB] = 'blob';
+        $typeAr[MYSQLI_TYPE_VAR_STRING] = 'string';
+        $typeAr[MYSQLI_TYPE_STRING] = 'string';
         // MySQL returns MYSQLI_TYPE_STRING for CHAR
         // and MYSQLI_TYPE_CHAR === MYSQLI_TYPE_TINY
         // so this would override TINYINT and mark all TINYINT as string
         // see https://github.com/phpmyadmin/phpmyadmin/issues/8569
         //$typeAr[MYSQLI_TYPE_CHAR]        = 'string';
-        $typeAr[MYSQLI_TYPE_GEOMETRY]    = 'geometry';
-        $typeAr[MYSQLI_TYPE_BIT]         = 'bit';
-        $typeAr[MYSQLI_TYPE_JSON]        = 'json';
+        $typeAr[MYSQLI_TYPE_GEOMETRY] = 'geometry';
+        $typeAr[MYSQLI_TYPE_BIT] = 'bit';
+        $typeAr[MYSQLI_TYPE_JSON] = 'json';
 
         $fields = $result->fetch_fields();
 
-        if (! is_array($fields)) {
+        if (!is_array($fields)) {
             return false;
         }
 
@@ -552,22 +528,14 @@ class DbiMysqli implements DbiExtension
             // Enhance the field objects for mysql-extension compatibility
             //$flags = explode(' ', $fields[$k]->flags);
             //array_unshift($flags, 'dummy');
-            $fields[$k]->multiple_key
-                = (int) (bool) ($fields[$k]->_flags & MYSQLI_MULTIPLE_KEY_FLAG);
-            $fields[$k]->primary_key
-                = (int) (bool) ($fields[$k]->_flags & MYSQLI_PRI_KEY_FLAG);
-            $fields[$k]->unique_key
-                = (int) (bool) ($fields[$k]->_flags & MYSQLI_UNIQUE_KEY_FLAG);
-            $fields[$k]->not_null
-                = (int) (bool) ($fields[$k]->_flags & MYSQLI_NOT_NULL_FLAG);
-            $fields[$k]->unsigned
-                = (int) (bool) ($fields[$k]->_flags & MYSQLI_UNSIGNED_FLAG);
-            $fields[$k]->zerofill
-                = (int) (bool) ($fields[$k]->_flags & MYSQLI_ZEROFILL_FLAG);
-            $fields[$k]->numeric
-                = (int) (bool) ($fields[$k]->_flags & MYSQLI_NUM_FLAG);
-            $fields[$k]->blob
-                = (int) (bool) ($fields[$k]->_flags & MYSQLI_BLOB_FLAG);
+            $fields[$k]->multiple_key = (int) (bool) ($fields[$k]->_flags & MYSQLI_MULTIPLE_KEY_FLAG);
+            $fields[$k]->primary_key = (int) (bool) ($fields[$k]->_flags & MYSQLI_PRI_KEY_FLAG);
+            $fields[$k]->unique_key = (int) (bool) ($fields[$k]->_flags & MYSQLI_UNIQUE_KEY_FLAG);
+            $fields[$k]->not_null = (int) (bool) ($fields[$k]->_flags & MYSQLI_NOT_NULL_FLAG);
+            $fields[$k]->unsigned = (int) (bool) ($fields[$k]->_flags & MYSQLI_UNSIGNED_FLAG);
+            $fields[$k]->zerofill = (int) (bool) ($fields[$k]->_flags & MYSQLI_ZEROFILL_FLAG);
+            $fields[$k]->numeric = (int) (bool) ($fields[$k]->_flags & MYSQLI_NUM_FLAG);
+            $fields[$k]->blob = (int) (bool) ($fields[$k]->_flags & MYSQLI_BLOB_FLAG);
         }
 
         return $fields;
@@ -580,8 +548,7 @@ class DbiMysqli implements DbiExtension
      *
      * @return int field count
      */
-    public function numFields($result)
-    {
+    public function numFields($result) {
         return $result->field_count;
     }
 
@@ -593,8 +560,7 @@ class DbiMysqli implements DbiExtension
      *
      * @return int|bool length of field
      */
-    public function fieldLen($result, $i)
-    {
+    public function fieldLen($result, $i) {
         if ($i >= $this->numFields($result)) {
             return false;
         }
@@ -615,8 +581,7 @@ class DbiMysqli implements DbiExtension
      *
      * @return string name of $i. field in $result
      */
-    public function fieldName($result, $i)
-    {
+    public function fieldName($result, $i) {
         if ($i >= $this->numFields($result)) {
             return '';
         }
@@ -637,8 +602,7 @@ class DbiMysqli implements DbiExtension
      *
      * @return string|false field flags
      */
-    public function fieldFlags($result, $i)
-    {
+    public function fieldFlags($result, $i) {
         if ($i >= $this->numFields($result)) {
             return false;
         }
@@ -653,7 +617,7 @@ class DbiMysqli implements DbiExtension
         $fieldDefinitionFlags = $fieldDefinition->flags;
         $flags = [];
         foreach (self::$flagNames as $flag => $name) {
-            if (! ($fieldDefinitionFlags & $flag)) {
+            if (!($fieldDefinitionFlags & $flag)) {
                 continue;
             }
 
@@ -665,10 +629,7 @@ class DbiMysqli implements DbiExtension
         // structure. Watch out: some types like DATE returns 63 in charsetnr
         // so we have to check also the type.
         // Unfortunately there is no equivalent in the mysql extension.
-        if (($type == MYSQLI_TYPE_TINY_BLOB || $type == MYSQLI_TYPE_BLOB
-            || $type == MYSQLI_TYPE_MEDIUM_BLOB || $type == MYSQLI_TYPE_LONG_BLOB
-            || $type == MYSQLI_TYPE_VAR_STRING || $type == MYSQLI_TYPE_STRING)
-            && $charsetNumber == 63
+        if (($type == MYSQLI_TYPE_TINY_BLOB || $type == MYSQLI_TYPE_BLOB || $type == MYSQLI_TYPE_MEDIUM_BLOB || $type == MYSQLI_TYPE_LONG_BLOB || $type == MYSQLI_TYPE_VAR_STRING || $type == MYSQLI_TYPE_STRING) && $charsetNumber == 63
         ) {
             $flags[] = 'binary';
         }
@@ -684,8 +645,7 @@ class DbiMysqli implements DbiExtension
      *
      * @return string a MySQL escaped string
      */
-    public function escapeString($mysqli, $string)
-    {
+    public function escapeString($mysqli, $string) {
         return $mysqli->real_escape_string($string);
     }
 
@@ -697,8 +657,8 @@ class DbiMysqli implements DbiExtension
      *
      * @return mysqli_stmt|false A statement object or false.
      */
-    public function prepare($mysqli, string $query)
-    {
+    public function prepare($mysqli, string $query) {
         return $mysqli->prepare($query);
     }
+
 }

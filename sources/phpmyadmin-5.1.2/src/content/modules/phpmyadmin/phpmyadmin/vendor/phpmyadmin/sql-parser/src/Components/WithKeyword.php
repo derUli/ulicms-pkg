@@ -1,8 +1,8 @@
 <?php
+
 /**
  * `WITH` keyword builder.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\SqlParser\Components;
@@ -16,8 +16,8 @@ use RuntimeException;
  *
  * @final
  */
-final class WithKeyword extends Component
-{
+final class WithKeyword extends Component {
+
     /** @var string */
     public $name;
 
@@ -27,8 +27,7 @@ final class WithKeyword extends Component
     /** @var Parser */
     public $statement;
 
-    public function __construct(string $name)
-    {
+    public function __construct(string $name) {
         $this->name = $name;
     }
 
@@ -38,13 +37,12 @@ final class WithKeyword extends Component
      *
      * @return string
      */
-    public static function build($component, array $options = [])
-    {
-        if (! $component instanceof WithKeyword) {
+    public static function build($component, array $options = []) {
+        if (!$component instanceof WithKeyword) {
             throw new RuntimeException('Can not build a component that is not a WithKeyword');
         }
 
-        if (! isset($component->statement)) {
+        if (!isset($component->statement)) {
             throw new RuntimeException('No statement inside WITH');
         }
 
@@ -64,4 +62,5 @@ final class WithKeyword extends Component
 
         return $str;
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Single signon for phpMyAdmin using OpenID
  *
@@ -11,7 +12,6 @@
  * User first authenticates using OpenID and based on content of $AUTH_MAP
  * the login information is passed to phpMyAdmin in session data.
  */
-
 declare(strict_types=1);
 
 if (false === @include_once 'OpenID/RelyingParty.php') {
@@ -40,8 +40,7 @@ $AUTH_MAP = [
  *
  * @return void
  */
-function Show_page($contents)
-{
+function Show_page($contents) {
     header('Content-Type: text/html; charset=utf-8');
 
     echo '<?xml version="1.0" encoding="utf-8"?>' . "\n";
@@ -71,8 +70,7 @@ function Show_page($contents)
  *
  * @return void
  */
-function Die_error($e)
-{
+function Die_error($e) {
     $contents = "<div class='relyingparty_results'>\n";
     $contents .= '<pre>' . htmlspecialchars($e->getMessage()) . "</pre>\n";
     $contents .= "</div class='relyingparty_results'>";
@@ -104,7 +102,7 @@ if ($returnTo[strlen($returnTo) - 1] !== '/') {
 $returnTo .= 'openid.php';
 
 /* Display form */
-if ((! count($_GET) && ! count($_POST)) || isset($_GET['phpMyAdmin'])) {
+if ((!count($_GET) && !count($_POST)) || isset($_GET['phpMyAdmin'])) {
     /* Show simple form */
     $content = '<form action="openid.php" method="post">
 OpenID: <input type="text" name="identifier"><br>
@@ -145,7 +143,7 @@ if (isset($_POST['start'])) {
 }
 
 /* Grab query string */
-if (! count($_POST)) {
+if (!count($_POST)) {
     [, $queryString] = explode('?', $_SERVER['REQUEST_URI']);
 } else {
     // I hate php sometimes
@@ -161,7 +159,7 @@ try {
 
 $id = $message->get('openid.claimed_id');
 
-if (empty($id) || ! isset($AUTH_MAP[$id])) {
+if (empty($id) || !isset($AUTH_MAP[$id])) {
     Show_page('<p>User not allowed!</p>');
     exit;
 }

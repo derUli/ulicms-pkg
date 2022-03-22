@@ -17,8 +17,8 @@ use function array_key_exists;
 /**
  * Handles viewing binary logs
  */
-class BinlogController extends AbstractController
-{
+class BinlogController extends AbstractController {
+
     /**
      * binary log files
      *
@@ -33,22 +33,20 @@ class BinlogController extends AbstractController
      * @param Response          $response
      * @param DatabaseInterface $dbi
      */
-    public function __construct($response, Template $template, $dbi)
-    {
+    public function __construct($response, Template $template, $dbi) {
         parent::__construct($response, $template);
         $this->dbi = $dbi;
 
         $this->binaryLogs = $this->dbi->fetchResult(
-            'SHOW MASTER LOGS',
-            'Log_name',
-            null,
-            DatabaseInterface::CONNECT_USER,
-            DatabaseInterface::QUERY_STORE
+                'SHOW MASTER LOGS',
+                'Log_name',
+                null,
+                DatabaseInterface::CONNECT_USER,
+                DatabaseInterface::QUERY_STORE
         );
     }
 
-    public function index(): void
-    {
+    public function index(): void {
         global $cfg, $PMA_Theme, $err_url;
 
         $params = [
@@ -62,25 +60,24 @@ class BinlogController extends AbstractController
             $this->dbi->selectDb('mysql');
         }
 
-        $position = ! empty($params['pos']) ? (int) $params['pos'] : 0;
+        $position = !empty($params['pos']) ? (int) $params['pos'] : 0;
 
         $urlParams = [];
-        if (isset($params['log'])
-            && array_key_exists($params['log'], $this->binaryLogs)
+        if (isset($params['log']) && array_key_exists($params['log'], $this->binaryLogs)
         ) {
             $urlParams['log'] = $params['log'];
         }
 
         $isFullQuery = false;
-        if (! empty($params['is_full_query'])) {
+        if (!empty($params['is_full_query'])) {
             $isFullQuery = true;
             $urlParams['is_full_query'] = 1;
         }
 
         $sqlQuery = $this->getSqlQuery(
-            $params['log'] ?? '',
-            $position,
-            (int) $cfg['MaxRows']
+                $params['log'] ?? '',
+                $position,
+                (int) $cfg['MaxRows']
         );
         $result = $this->dbi->query($sqlQuery);
 
@@ -134,16 +131,17 @@ class BinlogController extends AbstractController
      * @param int    $maxRows  Maximum number of rows
      */
     private function getSqlQuery(
-        string $log,
-        int $position,
-        int $maxRows
+            string $log,
+            int $position,
+            int $maxRows
     ): string {
         $sqlQuery = 'SHOW BINLOG EVENTS';
-        if (! empty($log)) {
+        if (!empty($log)) {
             $sqlQuery .= ' IN \'' . $log . '\'';
         }
         $sqlQuery .= ' LIMIT ' . $position . ', ' . $maxRows;
 
         return $sqlQuery;
     }
+
 }

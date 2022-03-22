@@ -1,10 +1,10 @@
 <?php
+
 /**
  * MIME detection code.
  *
  * @todo Maybe we could try to use fileinfo module if loaded
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin;
@@ -17,8 +17,8 @@ use function substr;
 /**
  * PhpMyAdmin\Mime class;
  */
-class Mime
-{
+class Mime {
+
     /**
      * Tries to detect MIME type of content.
      *
@@ -26,8 +26,7 @@ class Mime
      *
      * @return string
      */
-    public static function detect(&$test)
-    {
+    public static function detect(&$test) {
         $len = mb_strlen($test);
         if ($len >= 2 && $test[0] == chr(0xff) && $test[1] == chr(0xd8)) {
             return 'image/jpeg';
@@ -41,4 +40,5 @@ class Mime
 
         return 'application/octet-stream';
     }
+
 }

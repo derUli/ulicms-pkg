@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Controller for database privileges
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Controllers\Database;
@@ -16,8 +16,8 @@ use PhpMyAdmin\Util;
 /**
  * Controller for database privileges
  */
-class PrivilegesController extends AbstractController
-{
+class PrivilegesController extends AbstractController {
+
     /** @var Privileges */
     private $privileges;
 
@@ -29,8 +29,7 @@ class PrivilegesController extends AbstractController
      * @param string            $db       Database name
      * @param DatabaseInterface $dbi
      */
-    public function __construct($response, Template $template, $db, Privileges $privileges, $dbi)
-    {
+    public function __construct($response, Template $template, $db, Privileges $privileges, $dbi) {
         parent::__construct($response, $template, $db);
         $this->privileges = $privileges;
         $this->dbi = $dbi;
@@ -39,13 +38,12 @@ class PrivilegesController extends AbstractController
     /**
      * @param array $params Request parameters
      */
-    public function index(array $params): string
-    {
+    public function index(array $params): string {
         global $cfg, $text_dir, $PMA_Theme;
 
         $scriptName = Util::getScriptNameForOption(
-            $cfg['DefaultTabDatabase'],
-            'database'
+                        $cfg['DefaultTabDatabase'],
+                        'database'
         );
 
         $privileges = [];
@@ -54,14 +52,15 @@ class PrivilegesController extends AbstractController
         }
 
         return $this->template->render('database/privileges/index', [
-            'is_superuser' => $this->dbi->isSuperUser(),
-            'db' => $params['checkprivsdb'],
-            'database_url' => $scriptName,
-            'theme_image_path' => $PMA_Theme->getImgPath(),
-            'text_dir' => $text_dir,
-            'is_createuser' => $this->dbi->isCreateUser(),
-            'is_grantuser' => $this->dbi->isGrantUser(),
-            'privileges' => $privileges,
+                    'is_superuser' => $this->dbi->isSuperUser(),
+                    'db' => $params['checkprivsdb'],
+                    'database_url' => $scriptName,
+                    'theme_image_path' => $PMA_Theme->getImgPath(),
+                    'text_dir' => $text_dir,
+                    'is_createuser' => $this->dbi->isCreateUser(),
+                    'is_grantuser' => $this->dbi->isGrantUser(),
+                    'privileges' => $privileges,
         ]);
     }
+
 }

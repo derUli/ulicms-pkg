@@ -1,8 +1,8 @@
 <?php
+
 /**
  * SignOn Authentication plugin for phpMyAdmin
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Plugins\Auth;
@@ -27,15 +27,14 @@ use function version_compare;
 /**
  * Handles the SignOn authentication method
  */
-class AuthenticationSignon extends AuthenticationPlugin
-{
+class AuthenticationSignon extends AuthenticationPlugin {
+
     /**
      * Displays authentication form
      *
      * @return bool always true (no return indeed)
      */
-    public function showLoginForm()
-    {
+    public function showLoginForm() {
         Response::getInstance()->disable();
         unset($_SESSION['LAST_SIGNON_URL']);
         if (empty($GLOBALS['cfg']['Server']['SignonURL'])) {
@@ -44,7 +43,7 @@ class AuthenticationSignon extends AuthenticationPlugin
             Core::sendHeaderLocation($GLOBALS['cfg']['Server']['SignonURL']);
         }
 
-        if (! defined('TESTSUITE')) {
+        if (!defined('TESTSUITE')) {
             exit;
         }
 
@@ -56,8 +55,7 @@ class AuthenticationSignon extends AuthenticationPlugin
      *
      * @param array $sessionCookieParams The cookie params
      */
-    public function setCookieParams(?array $sessionCookieParams = null): void
-    {
+    public function setCookieParams(?array $sessionCookieParams = null): void {
         /* Session cookie params from config */
         if ($sessionCookieParams === null) {
             $sessionCookieParams = (array) $GLOBALS['cfg']['Server']['SignonCookieParams'];
@@ -89,22 +87,21 @@ class AuthenticationSignon extends AuthenticationPlugin
             $sessionCookieParams[$key] = $defaultCookieParams($key);
         }
 
-        if (isset($sessionCookieParams['samesite'])
-            && ! in_array($sessionCookieParams['samesite'], ['Lax', 'Strict'])
+        if (isset($sessionCookieParams['samesite']) && !in_array($sessionCookieParams['samesite'], ['Lax', 'Strict'])
         ) {
-                // Not a valid value for samesite
-                unset($sessionCookieParams['samesite']);
+            // Not a valid value for samesite
+            unset($sessionCookieParams['samesite']);
         }
 
         if (version_compare(PHP_VERSION, '7.3.0', '>=')) {
             session_set_cookie_params($sessionCookieParams);
         } else {
             session_set_cookie_params(
-                $sessionCookieParams['lifetime'],
-                $sessionCookieParams['path'],
-                $sessionCookieParams['domain'],
-                $sessionCookieParams['secure'],
-                $sessionCookieParams['httponly']
+                    $sessionCookieParams['lifetime'],
+                    $sessionCookieParams['path'],
+                    $sessionCookieParams['domain'],
+                    $sessionCookieParams['secure'],
+                    $sessionCookieParams['httponly']
             );
         }
     }
@@ -114,12 +111,10 @@ class AuthenticationSignon extends AuthenticationPlugin
      *
      * @return bool whether we get authentication settings or not
      */
-    public function readCredentials()
-    {
+    public function readCredentials() {
         /* Check if we're using same signon server */
         $signon_url = $GLOBALS['cfg']['Server']['SignonURL'];
-        if (isset($_SESSION['LAST_SIGNON_URL'])
-            && $_SESSION['LAST_SIGNON_URL'] != $signon_url
+        if (isset($_SESSION['LAST_SIGNON_URL']) && $_SESSION['LAST_SIGNON_URL'] != $signon_url
         ) {
             return false;
         }
@@ -143,27 +138,26 @@ class AuthenticationSignon extends AuthenticationPlugin
         $single_signon_cfgupdate = [];
 
         /* Handle script based auth */
-        if (! empty($script_name)) {
-            if (! @file_exists($script_name)) {
+        if (!empty($script_name)) {
+            if (!@file_exists($script_name)) {
                 Core::fatalError(
-                    __('Can not find signon authentication script:')
-                    . ' ' . $script_name
+                        __('Can not find signon authentication script:')
+                        . ' ' . $script_name
                 );
             }
             include $script_name;
 
-            [$this->user, $this->password]
-                = get_login_credentials($GLOBALS['cfg']['Server']['user']);
+            [$this->user, $this->password] = get_login_credentials($GLOBALS['cfg']['Server']['user']);
         } elseif (isset($_COOKIE[$session_name])) { /* Does session exist? */
             /* End current session */
             $old_session = session_name();
             $old_id = session_id();
             $oldCookieParams = session_get_cookie_params();
-            if (! defined('TESTSUITE')) {
+            if (!defined('TESTSUITE')) {
                 session_write_close();
             }
             /* Load single signon session */
-            if (! defined('TESTSUITE')) {
+            if (!defined('TESTSUITE')) {
                 $this->setCookieParams();
                 session_name($session_name);
                 session_id($_COOKIE[$session_name]);
@@ -204,17 +198,17 @@ class AuthenticationSignon extends AuthenticationPlugin
             }
 
             /* End single signon session */
-            if (! defined('TESTSUITE')) {
+            if (!defined('TESTSUITE')) {
                 session_write_close();
             }
 
             /* Restart phpMyAdmin session */
-            if (! defined('TESTSUITE')) {
+            if (!defined('TESTSUITE')) {
                 $this->setCookieParams($oldCookieParams);
                 if ($old_session !== null) {
                     session_name($old_session);
                 }
-                if (! empty($old_id)) {
+                if (!empty($old_id)) {
                     session_id($old_id);
                 }
                 session_start();
@@ -228,12 +222,12 @@ class AuthenticationSignon extends AuthenticationPlugin
 
             /* Configuration update */
             $GLOBALS['cfg']['Server'] = array_merge(
-                $GLOBALS['cfg']['Server'],
-                $single_signon_cfgupdate
+                    $GLOBALS['cfg']['Server'],
+                    $single_signon_cfgupdate
             );
 
             /* Restore our token */
-            if (! empty($pma_token)) {
+            if (!empty($pma_token)) {
                 $_SESSION[' PMA_token '] = $pma_token;
                 $_SESSION[' HMAC_secret '] = $HMACSecret;
             }
@@ -263,8 +257,7 @@ class AuthenticationSignon extends AuthenticationPlugin
      *
      * @return void
      */
-    public function showFailure($failure)
-    {
+    public function showFailure($failure) {
         parent::showFailure($failure);
 
         /* Session name */
@@ -272,7 +265,7 @@ class AuthenticationSignon extends AuthenticationPlugin
 
         /* Does session exist? */
         if (isset($_COOKIE[$session_name])) {
-            if (! defined('TESTSUITE')) {
+            if (!defined('TESTSUITE')) {
                 /* End current session */
                 session_write_close();
 
@@ -294,8 +287,8 @@ class AuthenticationSignon extends AuthenticationPlugin
      *
      * @return string
      */
-    public function getLoginFormURL()
-    {
+    public function getLoginFormURL() {
         return $GLOBALS['cfg']['Server']['SignonURL'];
     }
+
 }

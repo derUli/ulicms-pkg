@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Handles the binary to IPv4/IPv6 transformation for text plain
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Plugins\Transformations\Output;
@@ -16,18 +16,17 @@ use function stripos;
  * Handles the binary to IPv4/IPv6 transformation for text plain
  */
 // @codingStandardsIgnoreLine
-class Text_Plain_Binarytoip extends TransformationsPlugin
-{
+class Text_Plain_Binarytoip extends TransformationsPlugin {
+
     /**
      * Gets the transformation description of the plugin
      *
      * @return string
      */
-    public static function getInfo()
-    {
+    public static function getInfo() {
         return __(
-            'Converts an Internet network address stored as a binary string'
-            . ' into a string in Internet standard (IPv4/IPv6) format.'
+                'Converts an Internet network address stored as a binary string'
+                . ' into a string in Internet standard (IPv4/IPv6) format.'
         );
     }
 
@@ -42,8 +41,7 @@ class Text_Plain_Binarytoip extends TransformationsPlugin
      *
      * @return string IP address
      */
-    public function applyTransformation($buffer, array $options = [], ?stdClass $meta = null)
-    {
+    public function applyTransformation($buffer, array $options = [], ?stdClass $meta = null) {
         $isBinary = false;
         if ($meta !== null && stripos($meta->flags, 'binary') !== false) {
             $isBinary = true;
@@ -59,8 +57,7 @@ class Text_Plain_Binarytoip extends TransformationsPlugin
      *
      * @return string
      */
-    public static function getName()
-    {
+    public static function getName() {
         return 'Binary To IPv4/IPv6';
     }
 
@@ -69,8 +66,7 @@ class Text_Plain_Binarytoip extends TransformationsPlugin
      *
      * @return string
      */
-    public static function getMIMEType()
-    {
+    public static function getMIMEType() {
         return 'Text';
     }
 
@@ -79,8 +75,8 @@ class Text_Plain_Binarytoip extends TransformationsPlugin
      *
      * @return string
      */
-    public static function getMIMESubtype()
-    {
+    public static function getMIMESubtype() {
         return 'Plain';
     }
+
 }

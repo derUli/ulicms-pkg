@@ -17,32 +17,30 @@ use function min;
 /**
  * Normalization process (temporarily specific to 1NF).
  */
-class NormalizationController extends AbstractController
-{
+class NormalizationController extends AbstractController {
+
     /** @var Normalization */
     private $normalization;
 
     /**
      * @param Response $response
      */
-    public function __construct($response, Template $template, Normalization $normalization)
-    {
+    public function __construct($response, Template $template, Normalization $normalization) {
         parent::__construct($response, $template);
         $this->normalization = $normalization;
     }
 
-    public function index(): void
-    {
+    public function index(): void {
         global $db, $table;
 
         if (isset($_POST['getColumns'])) {
             $html = '<option selected disabled>' . __('Select one…') . '</option>'
-                . '<option value="no_such_col">' . __('No such column') . '</option>';
+                    . '<option value="no_such_col">' . __('No such column') . '</option>';
             //get column whose datatype falls under string category
             $html .= $this->normalization->getHtmlForColumnsList(
-                $db,
-                $table,
-                _pgettext('string types', 'String')
+                    $db,
+                    $table,
+                    _pgettext('string types', 'String')
             );
             echo $html;
 
@@ -63,10 +61,10 @@ class NormalizationController extends AbstractController
                 'Extra' => 'auto_increment',
             ];
             $html = $this->normalization->getHtmlForCreateNewColumn(
-                $num_fields,
-                $db,
-                $table,
-                $columnMeta
+                    $num_fields,
+                    $db,
+                    $table,
+                    $columnMeta
             );
             $html .= Url::getHiddenInputs($db, $table);
             echo $html;
@@ -126,12 +124,12 @@ class NormalizationController extends AbstractController
             $newColumn = $_POST['newColumn'];
             $primary_columns = $_POST['primary_columns'];
             $res = $this->normalization->moveRepeatingGroup(
-                $repeatingColumns,
-                $primary_columns,
-                $newTable,
-                $newColumn,
-                $table,
-                $db
+                    $repeatingColumns,
+                    $primary_columns,
+                    $newTable,
+                    $newColumn,
+                    $table,
+                    $db
             );
             $this->response->addJSON($res);
 
@@ -160,4 +158,5 @@ class NormalizationController extends AbstractController
             $this->response->addHTML($this->normalization->getHtmlForNormalizeTable());
         }
     }
+
 }

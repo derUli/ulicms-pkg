@@ -18,28 +18,26 @@ use function usleep;
 /**
  * Import progress bar backend
  */
-class ImportStatusController
-{
+class ImportStatusController {
+
     /** @var Template */
     private $template;
 
     /**
      * @param Template $template Template object
      */
-    public function __construct(Template $template)
-    {
+    public function __construct(Template $template) {
         $this->template = $template;
     }
 
-    public function index(): void
-    {
+    public function index(): void {
         global $SESSION_KEY, $upload_id, $plugins, $timestamp;
 
         [
-            $SESSION_KEY,
-            $upload_id,
-            $plugins,
-        ] = Ajax::uploadProgressSetup();
+                $SESSION_KEY,
+                $upload_id,
+                $plugins,
+                ] = Ajax::uploadProgressSetup();
 
         // $_GET["message"] is used for asking for an import message
         if (isset($_GET['message']) && $_GET['message']) {
@@ -64,8 +62,8 @@ class ImportStatusController
 
                 if (time() - $timestamp > $maximumTime) {
                     $_SESSION['Import_message']['message'] = Message::error(
-                        __('Could not load the progress of the import.')
-                    )->getDisplay();
+                                    __('Could not load the progress of the import.')
+                            )->getDisplay();
                     break;
                 }
             }
@@ -81,4 +79,5 @@ class ImportStatusController
             Ajax::status($_GET['id']);
         }
     }
+
 }

@@ -59,8 +59,8 @@ use function trim;
  * Displays table structure infos like columns, indexes, size, rows
  * and allows manipulation of indexes and columns.
  */
-class StructureController extends AbstractController
-{
+class StructureController extends AbstractController {
+
     /** @var Table  The table object */
     protected $tableObj;
 
@@ -86,15 +86,15 @@ class StructureController extends AbstractController
      * @param DatabaseInterface $dbi
      */
     public function __construct(
-        $response,
-        Template $template,
-        $db,
-        $table,
-        Relation $relation,
-        Transformations $transformations,
-        CreateAddField $createAddField,
-        RelationCleanup $relationCleanup,
-        $dbi
+            $response,
+            Template $template,
+            $db,
+            $table,
+            Relation $relation,
+            Transformations $transformations,
+            CreateAddField $createAddField,
+            RelationCleanup $relationCleanup,
+            $dbi
     ) {
         parent::__construct($response, $template, $db, $table);
         $this->createAddField = $createAddField;
@@ -106,16 +106,15 @@ class StructureController extends AbstractController
         $this->tableObj = $this->dbi->getTable($this->db, $this->table);
     }
 
-    public function index(): void
-    {
+    public function index(): void {
         global $reread_info, $showtable, $db, $table, $cfg, $err_url;
         global $tbl_is_view, $tbl_storage_engine, $tbl_collation, $table_info_num_rows;
 
         $this->dbi->selectDb($this->db);
         $reread_info = $this->tableObj->getStatusInfo(null, true);
         $showtable = $this->tableObj->getStatusInfo(
-            null,
-            (isset($reread_info) && $reread_info)
+                null,
+                (isset($reread_info) && $reread_info)
         );
 
         if ($this->tableObj->isView()) {
@@ -151,36 +150,34 @@ class StructureController extends AbstractController
 
         $primary = Index::getPrimary($this->table, $this->db);
         $columns_with_index = $this->dbi
-            ->getTable($this->db, $this->table)
-            ->getColumnsWithIndex(
-                Index::UNIQUE | Index::INDEX | Index::SPATIAL
-                | Index::FULLTEXT
-            );
+                ->getTable($this->db, $this->table)
+                ->getColumnsWithIndex(
+                Index::UNIQUE | Index::INDEX | Index::SPATIAL | Index::FULLTEXT
+        );
         $columns_with_unique_index = $this->dbi
-            ->getTable($this->db, $this->table)
-            ->getColumnsWithIndex(Index::UNIQUE);
+                ->getTable($this->db, $this->table)
+                ->getColumnsWithIndex(Index::UNIQUE);
 
         $fields = (array) $this->dbi->getColumns(
-            $this->db,
-            $this->table,
-            null,
-            true
+                        $this->db,
+                        $this->table,
+                        null,
+                        true
         );
 
         $this->response->addHTML($this->displayStructure(
-            $cfgRelation,
-            $columns_with_unique_index,
-            $primary,
-            $fields,
-            $columns_with_index,
-            $isSystemSchema
+                        $cfgRelation,
+                        $columns_with_unique_index,
+                        $primary,
+                        $fields,
+                        $columns_with_index,
+                        $isSystemSchema
         ));
     }
 
-    public function save(): void
-    {
+    public function save(): void {
         $regenerate = $this->updateColumns();
-        if (! $regenerate) {
+        if (!$regenerate) {
             // continue to show the table's structure
             unset($_POST['selected']);
         }
@@ -188,8 +185,7 @@ class StructureController extends AbstractController
         $this->index();
     }
 
-    public function addKey(): void
-    {
+    public function addKey(): void {
         global $containerBuilder, $reload;
 
         /** @var SqlController $controller */
@@ -201,8 +197,7 @@ class StructureController extends AbstractController
         $this->index();
     }
 
-    public function browse(): void
-    {
+    public function browse(): void {
         global $PMA_Theme;
 
         if (empty($_POST['selected_fld'])) {
@@ -213,13 +208,12 @@ class StructureController extends AbstractController
         }
 
         $this->displayTableBrowseForSelectedColumns(
-            $GLOBALS['goto'],
-            $PMA_Theme->getImgPath()
+                $GLOBALS['goto'],
+                $PMA_Theme->getImgPath()
         );
     }
 
-    public function change(): void
-    {
+    public function change(): void {
         if (isset($_GET['change_column'])) {
             $this->displayHtmlForColumnChange(null);
 
@@ -238,8 +232,7 @@ class StructureController extends AbstractController
         $this->displayHtmlForColumnChange($selected);
     }
 
-    public function addToCentralColumns(): void
-    {
+    public function addToCentralColumns(): void {
         global $sql_query, $message;
 
         $selected = $_POST['selected_fld'] ?? [];
@@ -253,8 +246,8 @@ class StructureController extends AbstractController
 
         $centralColumns = new CentralColumns($this->dbi);
         $centralColsError = $centralColumns->syncUniqueColumns(
-            $selected,
-            false
+                $selected,
+                false
         );
 
         if ($centralColsError instanceof Message) {
@@ -268,8 +261,7 @@ class StructureController extends AbstractController
         $this->index();
     }
 
-    public function removeFromCentralColumns(): void
-    {
+    public function removeFromCentralColumns(): void {
         global $sql_query, $db, $message;
 
         $selected = $_POST['selected_fld'] ?? [];
@@ -283,9 +275,9 @@ class StructureController extends AbstractController
 
         $centralColumns = new CentralColumns($this->dbi);
         $centralColsError = $centralColumns->deleteColumnsFromList(
-            $db,
-            $selected,
-            false
+                $db,
+                $selected,
+                false
         );
 
         if ($centralColsError instanceof Message) {
@@ -299,8 +291,7 @@ class StructureController extends AbstractController
         $this->index();
     }
 
-    public function fulltext(): void
-    {
+    public function fulltext(): void {
         global $sql_query, $db, $table, $message;
 
         $selected = $_POST['selected_fld'] ?? [];
@@ -324,7 +315,7 @@ class StructureController extends AbstractController
         $this->dbi->selectDb($db);
         $result = $this->dbi->tryQuery($sql_query);
 
-        if (! $result) {
+        if (!$result) {
             $message = Message::error((string) $this->dbi->getError());
         }
 
@@ -335,8 +326,7 @@ class StructureController extends AbstractController
         $this->index();
     }
 
-    public function spatial(): void
-    {
+    public function spatial(): void {
         global $sql_query, $db, $table, $message;
 
         $selected = $_POST['selected_fld'] ?? [];
@@ -360,7 +350,7 @@ class StructureController extends AbstractController
         $this->dbi->selectDb($db);
         $result = $this->dbi->tryQuery($sql_query);
 
-        if (! $result) {
+        if (!$result) {
             $message = Message::error((string) $this->dbi->getError());
         }
 
@@ -371,8 +361,7 @@ class StructureController extends AbstractController
         $this->index();
     }
 
-    public function unique(): void
-    {
+    public function unique(): void {
         global $sql_query, $db, $table, $message;
 
         $selected = $_POST['selected_fld'] ?? [];
@@ -396,7 +385,7 @@ class StructureController extends AbstractController
         $this->dbi->selectDb($db);
         $result = $this->dbi->tryQuery($sql_query);
 
-        if (! $result) {
+        if (!$result) {
             $message = Message::error((string) $this->dbi->getError());
         }
 
@@ -407,8 +396,7 @@ class StructureController extends AbstractController
         $this->index();
     }
 
-    public function addIndex(): void
-    {
+    public function addIndex(): void {
         global $sql_query, $db, $table, $message;
 
         $selected = $_POST['selected_fld'] ?? [];
@@ -432,7 +420,7 @@ class StructureController extends AbstractController
         $this->dbi->selectDb($db);
         $result = $this->dbi->tryQuery($sql_query);
 
-        if (! $result) {
+        if (!$result) {
             $message = Message::error((string) $this->dbi->getError());
         }
 
@@ -443,8 +431,7 @@ class StructureController extends AbstractController
         $this->index();
     }
 
-    public function primary(): void
-    {
+    public function primary(): void {
         global $db, $table, $message, $sql_query, $url_params, $err_url, $cfg;
 
         $selected = $_POST['selected'] ?? [];
@@ -458,7 +445,7 @@ class StructureController extends AbstractController
         }
 
         $primary = $this->getKeyForTablePrimary();
-        if (empty($primary) && ! empty($selected_fld)) {
+        if (empty($primary) && !empty($selected_fld)) {
             // no primary key, so we can safely create new
             $mult_btn = __('Yes');
             $selected = $selected_fld;
@@ -466,7 +453,7 @@ class StructureController extends AbstractController
 
         $mult_btn = $_POST['mult_btn'] ?? $mult_btn ?? '';
 
-        if (! empty($selected_fld) && ! empty($primary)) {
+        if (!empty($selected_fld) && !empty($primary)) {
             Util::checkParameters(['db', 'table']);
 
             $url_params = ['db' => $db, 'table' => $table];
@@ -486,7 +473,7 @@ class StructureController extends AbstractController
 
         if ($mult_btn === __('Yes')) {
             $sql_query = 'ALTER TABLE ' . Util::backquote($table);
-            if (! empty($primary)) {
+            if (!empty($primary)) {
                 $sql_query .= ' DROP PRIMARY KEY,';
             }
             $sql_query .= ' ADD PRIMARY KEY(';
@@ -501,7 +488,7 @@ class StructureController extends AbstractController
             $this->dbi->selectDb($db);
             $result = $this->dbi->tryQuery($sql_query);
 
-            if (! $result) {
+            if (!$result) {
                 $message = Message::error((string) $this->dbi->getError());
             }
         }
@@ -513,8 +500,7 @@ class StructureController extends AbstractController
         $this->index();
     }
 
-    public function drop(): void
-    {
+    public function drop(): void {
         global $db, $table, $message, $sql_query;
 
         $selected = $_POST['selected'] ?? [];
@@ -542,7 +528,7 @@ class StructureController extends AbstractController
             $this->dbi->selectDb($db);
             $result = $this->dbi->tryQuery($sql_query);
 
-            if (! $result) {
+            if (!$result) {
                 $message = Message::error((string) $this->dbi->getError());
             }
         }
@@ -554,8 +540,7 @@ class StructureController extends AbstractController
         $this->index();
     }
 
-    public function dropConfirm(): void
-    {
+    public function dropConfirm(): void {
         global $db, $table, $url_params, $err_url, $cfg;
 
         $selected = $_POST['selected_fld'] ?? null;
@@ -585,11 +570,8 @@ class StructureController extends AbstractController
     /**
      * Moves columns in the table's structure based on $_REQUEST
      */
-    public function moveColumns(): void
-    {
-        if (! isset($_POST['move_columns'])
-            || ! is_array($_POST['move_columns'])
-            || ! $this->response->isAjax()
+    public function moveColumns(): void {
+        if (!isset($_POST['move_columns']) || !is_array($_POST['move_columns']) || !$this->response->isAjax()
         ) {
             return;
         }
@@ -617,8 +599,7 @@ class StructureController extends AbstractController
             // it is not, let's move it to index $i
             $data = $columns[$column];
             $extracted_columnspec = Util::extractColumnSpec($data['Type']);
-            if (isset($data['Extra'])
-                && $data['Extra'] === 'on update CURRENT_TIMESTAMP'
+            if (isset($data['Extra']) && $data['Extra'] === 'on update CURRENT_TIMESTAMP'
             ) {
                 $extracted_columnspec['attribute'] = $data['Extra'];
                 unset($data['Extra']);
@@ -653,22 +634,20 @@ class StructureController extends AbstractController
             }
 
             $changes[] = 'CHANGE ' . Table::generateAlter(
-                $column,
-                $column,
-                mb_strtoupper($extracted_columnspec['type']),
-                $extracted_columnspec['spec_in_brackets'],
-                $extracted_columnspec['attribute'],
-                $data['Collation'] ?? '',
-                $data['Null'] === 'YES' ? 'YES' : 'NO',
-                $default_type,
-                $current_timestamp ? '' : $data['Default'],
-                isset($data['Extra']) && $data['Extra'] !== '' ? $data['Extra']
-                : false,
-                isset($data['COLUMN_COMMENT']) && $data['COLUMN_COMMENT'] !== ''
-                ? $data['COLUMN_COMMENT'] : false,
-                $data['Virtuality'],
-                $data['Expression'],
-                $i === 0 ? '-first' : $column_names[$i - 1]
+                            $column,
+                            $column,
+                            mb_strtoupper($extracted_columnspec['type']),
+                            $extracted_columnspec['spec_in_brackets'],
+                            $extracted_columnspec['attribute'],
+                            $data['Collation'] ?? '',
+                            $data['Null'] === 'YES' ? 'YES' : 'NO',
+                            $default_type,
+                            $current_timestamp ? '' : $data['Default'],
+                            isset($data['Extra']) && $data['Extra'] !== '' ? $data['Extra'] : false,
+                            isset($data['COLUMN_COMMENT']) && $data['COLUMN_COMMENT'] !== '' ? $data['COLUMN_COMMENT'] : false,
+                            $data['Virtuality'],
+                            $data['Expression'],
+                            $i === 0 ? '-first' : $column_names[$i - 1]
             );
             // update current column_names array, first delete old position
             for ($j = 0, $ll = count($column_names); $j < $ll; $j++) {
@@ -681,22 +660,22 @@ class StructureController extends AbstractController
             // insert moved column
             array_splice($column_names, $i, 0, $column);
         }
-        if (empty($changes) && ! isset($_REQUEST['preview_sql'])) { // should never happen
+        if (empty($changes) && !isset($_REQUEST['preview_sql'])) { // should never happen
             $this->response->setRequestStatus(false);
 
             return;
         }
         // query for moving the columns
         $sql_query = sprintf(
-            'ALTER TABLE %s %s',
-            Util::backquote($this->table),
-            implode(', ', $changes)
+                'ALTER TABLE %s %s',
+                Util::backquote($this->table),
+                implode(', ', $changes)
         );
 
         if (isset($_REQUEST['preview_sql'])) { // preview sql
             $this->response->addJSON(
-                'sql_data',
-                $this->template->render('preview_sql', ['query_data' => $sql_query])
+                    'sql_data',
+                    $this->template->render('preview_sql', ['query_data' => $sql_query])
             );
         } else { // move column
             $this->dbi->tryQuery($sql_query);
@@ -706,7 +685,7 @@ class StructureController extends AbstractController
                 $this->response->addJSON('message', Message::error($tmp_error));
             } else {
                 $message = Message::success(
-                    __('The columns have been moved successfully.')
+                                __('The columns have been moved successfully.')
                 );
                 $this->response->addJSON('message', $message);
                 $this->response->addJSON('columns', $column_names);
@@ -719,8 +698,7 @@ class StructureController extends AbstractController
      *
      * @param array|null $selected the selected columns
      */
-    protected function displayHtmlForColumnChange($selected): void
-    {
+    protected function displayHtmlForColumnChange($selected): void {
         global $action, $num_fields;
 
         if (empty($selected)) {
@@ -736,14 +714,14 @@ class StructureController extends AbstractController
         $fields_meta = [];
         for ($i = 0; $i < $selected_cnt; $i++) {
             $value = $this->dbi->getColumns(
-                $this->db,
-                $this->table,
-                $selected[$i],
-                true
+                    $this->db,
+                    $this->table,
+                    $selected[$i],
+                    true
             );
             if (count($value) === 0) {
                 $message = Message::error(
-                    __('Failed to get description of column %s!')
+                                __('Failed to get description of column %s!')
                 );
                 $message->addParam($selected[$i]);
                 $this->response->addHTML($message);
@@ -764,21 +742,20 @@ class StructureController extends AbstractController
         $this->addScriptFiles(['vendor/jquery/jquery.uitablefilter.js', 'indexes.js']);
 
         $templateData = ColumnsDefinition::displayForm(
-            $this->transformations,
-            $this->relation,
-            $this->dbi,
-            $action,
-            $num_fields,
-            null,
-            $selected,
-            $fields_meta
+                        $this->transformations,
+                        $this->relation,
+                        $this->dbi,
+                        $action,
+                        $num_fields,
+                        null,
+                        $selected,
+                        $fields_meta
         );
 
         $this->render('columns_definitions/column_definitions_form', $templateData);
     }
 
-    public function partitioning(): void
-    {
+    public function partitioning(): void {
         if (isset($_POST['save_partitioning'])) {
             $this->dbi->selectDb($this->db);
             $this->updatePartitioning();
@@ -794,7 +771,7 @@ class StructureController extends AbstractController
         $this->addScriptFiles(['table/structure.js', 'indexes.js']);
 
         $partitionDetails = null;
-        if (! isset($_POST['partition_by'])) {
+        if (!isset($_POST['partition_by'])) {
             $partitionDetails = $this->extractPartitionDetails();
         }
 
@@ -814,10 +791,9 @@ class StructureController extends AbstractController
      *
      * @return array[]|null array of partition details
      */
-    private function extractPartitionDetails(): ?array
-    {
+    private function extractPartitionDetails(): ?array {
         $createTable = (new Table($this->table, $this->db))->showCreate();
-        if (! $createTable) {
+        if (!$createTable) {
             return null;
         }
 
@@ -833,14 +809,12 @@ class StructureController extends AbstractController
         $partitionDetails['partition_expr'] = '';
         $partitionDetails['partition_count'] = '';
 
-        if (! empty($stmt->partitionBy)) {
+        if (!empty($stmt->partitionBy)) {
             $openPos = strpos($stmt->partitionBy, '(');
             $closePos = strrpos($stmt->partitionBy, ')');
 
-            $partitionDetails['partition_by']
-                = trim(substr($stmt->partitionBy, 0, $openPos));
-            $partitionDetails['partition_expr']
-                = trim(substr($stmt->partitionBy, $openPos + 1, $closePos - ($openPos + 1)));
+            $partitionDetails['partition_by'] = trim(substr($stmt->partitionBy, 0, $openPos));
+            $partitionDetails['partition_expr'] = trim(substr($stmt->partitionBy, $openPos + 1, $closePos - ($openPos + 1)));
             if (isset($stmt->partitionsNum)) {
                 $count = $stmt->partitionsNum;
             } else {
@@ -853,14 +827,12 @@ class StructureController extends AbstractController
         $partitionDetails['subpartition_expr'] = '';
         $partitionDetails['subpartition_count'] = '';
 
-        if (! empty($stmt->subpartitionBy)) {
+        if (!empty($stmt->subpartitionBy)) {
             $openPos = strpos($stmt->subpartitionBy, '(');
             $closePos = strrpos($stmt->subpartitionBy, ')');
 
-            $partitionDetails['subpartition_by']
-                = trim(substr($stmt->subpartitionBy, 0, $openPos));
-            $partitionDetails['subpartition_expr']
-                = trim(substr($stmt->subpartitionBy, $openPos + 1, $closePos - ($openPos + 1)));
+            $partitionDetails['subpartition_by'] = trim(substr($stmt->subpartitionBy, 0, $openPos));
+            $partitionDetails['subpartition_expr'] = trim(substr($stmt->subpartitionBy, $openPos + 1, $closePos - ($openPos + 1)));
             if (isset($stmt->subpartitionsNum)) {
                 $count = $stmt->subpartitionsNum;
             } else {
@@ -870,24 +842,15 @@ class StructureController extends AbstractController
         }
 
         // Only LIST and RANGE type parameters allow subpartitioning
-        $partitionDetails['can_have_subpartitions']
-            = $partitionDetails['partition_count'] > 1
-                && ($partitionDetails['partition_by'] === 'RANGE'
-                || $partitionDetails['partition_by'] === 'RANGE COLUMNS'
-                || $partitionDetails['partition_by'] === 'LIST'
-                || $partitionDetails['partition_by'] === 'LIST COLUMNS');
+        $partitionDetails['can_have_subpartitions'] = $partitionDetails['partition_count'] > 1 && ($partitionDetails['partition_by'] === 'RANGE' || $partitionDetails['partition_by'] === 'RANGE COLUMNS' || $partitionDetails['partition_by'] === 'LIST' || $partitionDetails['partition_by'] === 'LIST COLUMNS');
 
         // Values are specified only for LIST and RANGE type partitions
-        $partitionDetails['value_enabled'] = isset($partitionDetails['partition_by'])
-            && ($partitionDetails['partition_by'] === 'RANGE'
-            || $partitionDetails['partition_by'] === 'RANGE COLUMNS'
-            || $partitionDetails['partition_by'] === 'LIST'
-            || $partitionDetails['partition_by'] === 'LIST COLUMNS');
+        $partitionDetails['value_enabled'] = isset($partitionDetails['partition_by']) && ($partitionDetails['partition_by'] === 'RANGE' || $partitionDetails['partition_by'] === 'RANGE COLUMNS' || $partitionDetails['partition_by'] === 'LIST' || $partitionDetails['partition_by'] === 'LIST COLUMNS');
 
         $partitionDetails['partitions'] = [];
 
         for ($i = 0, $iMax = (int) $partitionDetails['partition_count']; $i < $iMax; $i++) {
-            if (! isset($stmt->partitions[$i])) {
+            if (!isset($stmt->partitions[$i])) {
                 $partitionDetails['partitions'][$i] = [
                     'name' => 'p' . $i,
                     'value_type' => '',
@@ -924,7 +887,7 @@ class StructureController extends AbstractController
                 ];
             }
 
-            $partition =& $partitionDetails['partitions'][$i];
+            $partition = & $partitionDetails['partitions'][$i];
             $partition['prefix'] = 'partitions[' . $i . ']';
 
             if ($partitionDetails['subpartition_count'] <= 1) {
@@ -935,7 +898,7 @@ class StructureController extends AbstractController
             $partition['subpartitions'] = [];
 
             for ($j = 0, $jMax = (int) $partitionDetails['subpartition_count']; $j < $jMax; $j++) {
-                if (! isset($stmt->partitions[$i]->subpartitions[$j])) {
+                if (!isset($stmt->partitions[$i]->subpartitions[$j])) {
                     $partition['subpartitions'][$j] = [
                         'name' => $partition['name'] . '_s' . $j,
                         'engine' => '',
@@ -962,19 +925,18 @@ class StructureController extends AbstractController
                     ];
                 }
 
-                $subpartition =& $partition['subpartitions'][$j];
+                $subpartition = & $partition['subpartitions'][$j];
                 $subpartition['prefix'] = 'partitions[' . $i . ']'
-                    . '[subpartitions][' . $j . ']';
+                        . '[subpartitions][' . $j . ']';
             }
         }
 
         return $partitionDetails;
     }
 
-    private function updatePartitioning(): void
-    {
+    private function updatePartitioning(): void {
         $sql_query = 'ALTER TABLE ' . Util::backquote($this->table) . ' '
-            . $this->createAddField->getPartitionsDefinition();
+                . $this->createAddField->getPartitionsDefinition();
 
         // Execute alter query
         $result = $this->dbi->tryQuery($sql_query);
@@ -982,21 +944,21 @@ class StructureController extends AbstractController
         if ($result === false) {
             $this->response->setRequestStatus(false);
             $this->response->addJSON(
-                'message',
-                Message::rawError(
-                    __('Query error') . ':<br>' . $this->dbi->getError()
-                )
+                    'message',
+                    Message::rawError(
+                            __('Query error') . ':<br>' . $this->dbi->getError()
+                    )
             );
 
             return;
         }
 
         $message = Message::success(
-            __('Table %1$s has been altered successfully.')
+                        __('Table %1$s has been altered successfully.')
         );
         $message->addParam($this->table);
         $this->response->addHTML(
-            Generator::getMessage($message, $sql_query, 'success')
+                Generator::getMessage($message, $sql_query, 'success')
         );
     }
 
@@ -1008,54 +970,53 @@ class StructureController extends AbstractController
      *
      * @return void
      */
-    protected function displayTableBrowseForSelectedColumns($goto, $themeImagePath)
-    {
+    protected function displayTableBrowseForSelectedColumns($goto, $themeImagePath) {
         $GLOBALS['active_page'] = Url::getFromRoute('/sql');
         $fields = [];
         foreach ($_POST['selected_fld'] as $sval) {
             $fields[] = Util::backquote($sval);
         }
         $sql_query = sprintf(
-            'SELECT %s FROM %s.%s',
-            implode(', ', $fields),
-            Util::backquote($this->db),
-            Util::backquote($this->table)
+                'SELECT %s FROM %s.%s',
+                implode(', ', $fields),
+                Util::backquote($this->db),
+                Util::backquote($this->table)
         );
 
         // Parse and analyze the query
         $db = &$this->db;
         [
-            $analyzed_sql_results,
-            $db,
-        ] = ParseAnalyze::sqlQuery($sql_query, $db);
+                $analyzed_sql_results,
+                $db,
+                ] = ParseAnalyze::sqlQuery($sql_query, $db);
 
         $sql = new Sql(
-            $this->dbi,
-            $this->relation,
-            $this->relationCleanup,
-            new Operations($this->dbi, $this->relation),
-            $this->transformations,
-            $this->template
+                $this->dbi,
+                $this->relation,
+                $this->relationCleanup,
+                new Operations($this->dbi, $this->relation),
+                $this->transformations,
+                $this->template
         );
 
         $this->response->addHTML(
-            $sql->executeQueryAndGetQueryResponse(
-                $analyzed_sql_results ?? '',
-                false, // is_gotofile
-                $this->db, // db
-                $this->table, // table
-                null, // find_real_end
-                null, // sql_query_for_bookmark
-                null, // extra_data
-                null, // message_to_show
-                null, // sql_data
-                $goto, // goto
-                $themeImagePath,
-                null, // disp_query
-                null, // disp_message
-                $sql_query, // sql_query
-                null // complete_query
-            )
+                $sql->executeQueryAndGetQueryResponse(
+                        $analyzed_sql_results ?? '',
+                        false, // is_gotofile
+                        $this->db, // db
+                        $this->table, // table
+                        null, // find_real_end
+                        null, // sql_query_for_bookmark
+                        null, // extra_data
+                        null, // message_to_show
+                        null, // sql_data
+                        $goto, // goto
+                        $themeImagePath,
+                        null, // disp_query
+                        null, // disp_message
+                        $sql_query, // sql_query
+                        null // complete_query
+                )
         );
     }
 
@@ -1064,66 +1025,62 @@ class StructureController extends AbstractController
      *
      * @return bool true if error occurred
      */
-    protected function updateColumns()
-    {
+    protected function updateColumns() {
         $err_url = Url::getFromRoute('/table/structure', [
-            'db' => $this->db,
-            'table' => $this->table,
+                    'db' => $this->db,
+                    'table' => $this->table,
         ]);
         $regenerate = false;
         $field_cnt = count($_POST['field_name'] ?? []);
         $changes = [];
         $adjust_privileges = [];
         $columns_with_index = $this->dbi
-            ->getTable($this->db, $this->table)
-            ->getColumnsWithIndex(
+                ->getTable($this->db, $this->table)
+                ->getColumnsWithIndex(
                 Index::PRIMARY | Index::UNIQUE
-            );
+        );
         for ($i = 0; $i < $field_cnt; $i++) {
-            if (! $this->columnNeedsAlterTable($i)) {
+            if (!$this->columnNeedsAlterTable($i)) {
                 continue;
             }
 
             $changes[] = 'CHANGE ' . Table::generateAlter(
-                Util::getValueByKey($_POST, "field_orig.${i}", ''),
-                $_POST['field_name'][$i],
-                $_POST['field_type'][$i],
-                $_POST['field_length'][$i],
-                $_POST['field_attribute'][$i],
-                Util::getValueByKey($_POST, "field_collation.${i}", ''),
-                Util::getValueByKey($_POST, "field_null.${i}", 'NO'),
-                $_POST['field_default_type'][$i],
-                $_POST['field_default_value'][$i],
-                Util::getValueByKey($_POST, "field_extra.${i}", false),
-                Util::getValueByKey($_POST, "field_comments.${i}", ''),
-                Util::getValueByKey($_POST, "field_virtuality.${i}", ''),
-                Util::getValueByKey($_POST, "field_expression.${i}", ''),
-                Util::getValueByKey($_POST, "field_move_to.${i}", ''),
-                $columns_with_index
+                            Util::getValueByKey($_POST, "field_orig.${i}", ''),
+                            $_POST['field_name'][$i],
+                            $_POST['field_type'][$i],
+                            $_POST['field_length'][$i],
+                            $_POST['field_attribute'][$i],
+                            Util::getValueByKey($_POST, "field_collation.${i}", ''),
+                            Util::getValueByKey($_POST, "field_null.${i}", 'NO'),
+                            $_POST['field_default_type'][$i],
+                            $_POST['field_default_value'][$i],
+                            Util::getValueByKey($_POST, "field_extra.${i}", false),
+                            Util::getValueByKey($_POST, "field_comments.${i}", ''),
+                            Util::getValueByKey($_POST, "field_virtuality.${i}", ''),
+                            Util::getValueByKey($_POST, "field_expression.${i}", ''),
+                            Util::getValueByKey($_POST, "field_move_to.${i}", ''),
+                            $columns_with_index
             );
 
             // find the remembered sort expression
             $sorted_col = $this->tableObj->getUiProp(
-                Table::PROP_SORTED_COLUMN
+                    Table::PROP_SORTED_COLUMN
             );
             // if the old column name is part of the remembered sort expression
             if (mb_strpos(
-                (string) $sorted_col,
-                Util::backquote($_POST['field_orig'][$i])
-            ) !== false) {
+                            (string) $sorted_col,
+                            Util::backquote($_POST['field_orig'][$i])
+                    ) !== false) {
                 // delete the whole remembered sort expression
                 $this->tableObj->removeUiProp(Table::PROP_SORTED_COLUMN);
             }
 
-            if (! isset($_POST['field_adjust_privileges'][$i])
-                || empty($_POST['field_adjust_privileges'][$i])
-                || $_POST['field_orig'][$i] == $_POST['field_name'][$i]
+            if (!isset($_POST['field_adjust_privileges'][$i]) || empty($_POST['field_adjust_privileges'][$i]) || $_POST['field_orig'][$i] == $_POST['field_name'][$i]
             ) {
                 continue;
             }
 
-            $adjust_privileges[$_POST['field_orig'][$i]]
-                = $_POST['field_name'][$i];
+            $adjust_privileges[$_POST['field_orig'][$i]] = $_POST['field_name'][$i];
         }
 
         if (count($changes) > 0 || isset($_POST['preview_sql'])) {
@@ -1136,15 +1093,14 @@ class StructureController extends AbstractController
              *  - no other column with A_I
              *  - the column has an index, if not create one
              */
-
             // To allow replication, we first select the db to use
             // and then run queries on this db.
-            if (! $this->dbi->selectDb($this->db)) {
+            if (!$this->dbi->selectDb($this->db)) {
                 Generator::mysqlDie(
-                    $this->dbi->getError(),
-                    'USE ' . Util::backquote($this->db) . ';',
-                    false,
-                    $err_url
+                        $this->dbi->getError(),
+                        'USE ' . Util::backquote($this->db) . ';',
+                        false,
+                        $err_url
                 );
             }
 
@@ -1163,33 +1119,30 @@ class StructureController extends AbstractController
             }
 
             $columns_with_index = $this->dbi
-                ->getTable($this->db, $this->table)
-                ->getColumnsWithIndex(
-                    Index::PRIMARY | Index::UNIQUE | Index::INDEX
-                    | Index::SPATIAL | Index::FULLTEXT
-                );
+                    ->getTable($this->db, $this->table)
+                    ->getColumnsWithIndex(
+                    Index::PRIMARY | Index::UNIQUE | Index::INDEX | Index::SPATIAL | Index::FULLTEXT
+            );
 
             $changedToBlob = [];
             // While changing the Column Collation
             // First change to BLOB
             for ($i = 0; $i < $field_cnt; $i++) {
-                if (isset($_POST['field_collation'][$i], $_POST['field_collation_orig'][$i])
-                    && $_POST['field_collation'][$i] !== $_POST['field_collation_orig'][$i]
-                    && ! in_array($_POST['field_orig'][$i], $columns_with_index)
+                if (isset($_POST['field_collation'][$i], $_POST['field_collation_orig'][$i]) && $_POST['field_collation'][$i] !== $_POST['field_collation_orig'][$i] && !in_array($_POST['field_orig'][$i], $columns_with_index)
                 ) {
                     $secondary_query = 'ALTER TABLE ' . Util::backquote(
-                        $this->table
-                    )
-                    . ' CHANGE ' . Util::backquote(
-                        $_POST['field_orig'][$i]
-                    )
-                    . ' ' . Util::backquote($_POST['field_orig'][$i])
-                    . ' BLOB';
+                                    $this->table
+                            )
+                            . ' CHANGE ' . Util::backquote(
+                                    $_POST['field_orig'][$i]
+                            )
+                            . ' ' . Util::backquote($_POST['field_orig'][$i])
+                            . ' BLOB';
 
                     if (isset($_POST['field_virtuality'][$i], $_POST['field_expression'][$i])) {
                         if ($_POST['field_virtuality'][$i]) {
                             $secondary_query .= ' AS (' . $_POST['field_expression'][$i] . ') '
-                                . $_POST['field_virtuality'][$i];
+                                    . $_POST['field_virtuality'][$i];
                         }
                     }
 
@@ -1207,59 +1160,58 @@ class StructureController extends AbstractController
 
             if ($result !== false) {
                 $changed_privileges = $this->adjustColumnPrivileges(
-                    $adjust_privileges
+                        $adjust_privileges
                 );
 
                 if ($changed_privileges) {
                     $message = Message::success(
-                        __(
-                            'Table %1$s has been altered successfully. Privileges ' .
-                            'have been adjusted.'
-                        )
+                                    __(
+                                            'Table %1$s has been altered successfully. Privileges ' .
+                                            'have been adjusted.'
+                                    )
                     );
                 } else {
                     $message = Message::success(
-                        __('Table %1$s has been altered successfully.')
+                                    __('Table %1$s has been altered successfully.')
                     );
                 }
                 $message->addParam($this->table);
 
                 $this->response->addHTML(
-                    Generator::getMessage($message, $sql_query, 'success')
+                        Generator::getMessage($message, $sql_query, 'success')
                 );
             } else {
                 // An error happened while inserting/updating a table definition
-
                 // Save the Original Error
                 $orig_error = $this->dbi->getError();
                 $changes_revert = [];
 
                 // Change back to Original Collation and data type
                 for ($i = 0; $i < $field_cnt; $i++) {
-                    if (! $changedToBlob[$i]) {
+                    if (!$changedToBlob[$i]) {
                         continue;
                     }
 
                     $changes_revert[] = 'CHANGE ' . Table::generateAlter(
-                        Util::getValueByKey($_POST, "field_orig.${i}", ''),
-                        $_POST['field_name'][$i],
-                        $_POST['field_type_orig'][$i],
-                        $_POST['field_length_orig'][$i],
-                        $_POST['field_attribute_orig'][$i],
-                        Util::getValueByKey($_POST, "field_collation_orig.${i}", ''),
-                        Util::getValueByKey($_POST, "field_null_orig.${i}", 'NO'),
-                        $_POST['field_default_type_orig'][$i],
-                        $_POST['field_default_value_orig'][$i],
-                        Util::getValueByKey($_POST, "field_extra_orig.${i}", false),
-                        Util::getValueByKey($_POST, "field_comments_orig.${i}", ''),
-                        Util::getValueByKey($_POST, "field_virtuality_orig.${i}", ''),
-                        Util::getValueByKey($_POST, "field_expression_orig.${i}", ''),
-                        Util::getValueByKey($_POST, "field_move_to_orig.${i}", '')
+                                    Util::getValueByKey($_POST, "field_orig.${i}", ''),
+                                    $_POST['field_name'][$i],
+                                    $_POST['field_type_orig'][$i],
+                                    $_POST['field_length_orig'][$i],
+                                    $_POST['field_attribute_orig'][$i],
+                                    Util::getValueByKey($_POST, "field_collation_orig.${i}", ''),
+                                    Util::getValueByKey($_POST, "field_null_orig.${i}", 'NO'),
+                                    $_POST['field_default_type_orig'][$i],
+                                    $_POST['field_default_value_orig'][$i],
+                                    Util::getValueByKey($_POST, "field_extra_orig.${i}", false),
+                                    Util::getValueByKey($_POST, "field_comments_orig.${i}", ''),
+                                    Util::getValueByKey($_POST, "field_virtuality_orig.${i}", ''),
+                                    Util::getValueByKey($_POST, "field_expression_orig.${i}", ''),
+                                    Util::getValueByKey($_POST, "field_move_to_orig.${i}", '')
                     );
                 }
 
                 $revert_query = 'ALTER TABLE ' . Util::backquote($this->table)
-                    . ' ';
+                        . ' ';
                 $revert_query .= implode(', ', $changes_revert) . '';
                 $revert_query .= ';';
 
@@ -1268,10 +1220,10 @@ class StructureController extends AbstractController
 
                 $this->response->setRequestStatus(false);
                 $message = Message::rawError(
-                    __('Query error') . ':<br>' . $orig_error
+                                __('Query error') . ':<br>' . $orig_error
                 );
                 $this->response->addHTML(
-                    Generator::getMessage($message, $sql_query, 'error')
+                        Generator::getMessage($message, $sql_query, 'error')
                 );
                 $regenerate = true;
             }
@@ -1285,35 +1237,32 @@ class StructureController extends AbstractController
                 }
 
                 $this->relation->renameField(
-                    $this->db,
-                    $this->table,
-                    $fieldcontent,
-                    $_POST['field_name'][$fieldindex]
+                        $this->db,
+                        $this->table,
+                        $fieldcontent,
+                        $_POST['field_name'][$fieldindex]
                 );
             }
         }
 
         // update mime types
-        if (isset($_POST['field_mimetype'])
-            && is_array($_POST['field_mimetype'])
-            && $GLOBALS['cfg']['BrowseMIME']
+        if (isset($_POST['field_mimetype']) && is_array($_POST['field_mimetype']) && $GLOBALS['cfg']['BrowseMIME']
         ) {
             foreach ($_POST['field_mimetype'] as $fieldindex => $mimetype) {
-                if (! isset($_POST['field_name'][$fieldindex])
-                    || strlen($_POST['field_name'][$fieldindex]) <= 0
+                if (!isset($_POST['field_name'][$fieldindex]) || strlen($_POST['field_name'][$fieldindex]) <= 0
                 ) {
                     continue;
                 }
 
                 $this->transformations->setMime(
-                    $this->db,
-                    $this->table,
-                    $_POST['field_name'][$fieldindex],
-                    $mimetype,
-                    $_POST['field_transformation'][$fieldindex],
-                    $_POST['field_transformation_options'][$fieldindex],
-                    $_POST['field_input_transformation'][$fieldindex],
-                    $_POST['field_input_transformation_options'][$fieldindex]
+                        $this->db,
+                        $this->table,
+                        $_POST['field_name'][$fieldindex],
+                        $mimetype,
+                        $_POST['field_transformation'][$fieldindex],
+                        $_POST['field_transformation_options'][$fieldindex],
+                        $_POST['field_input_transformation'][$fieldindex],
+                        $_POST['field_input_transformation_options'][$fieldindex]
                 );
             }
         }
@@ -1330,29 +1279,27 @@ class StructureController extends AbstractController
      * @return bool boolean whether at least one column privileges
      * adjusted
      */
-    protected function adjustColumnPrivileges(array $adjust_privileges)
-    {
+    protected function adjustColumnPrivileges(array $adjust_privileges) {
         $changed = false;
 
-        if (Util::getValueByKey($GLOBALS, 'col_priv', false)
-            && Util::getValueByKey($GLOBALS, 'is_reload_priv', false)
+        if (Util::getValueByKey($GLOBALS, 'col_priv', false) && Util::getValueByKey($GLOBALS, 'is_reload_priv', false)
         ) {
             $this->dbi->selectDb('mysql');
 
             // For Column specific privileges
             foreach ($adjust_privileges as $oldCol => $newCol) {
                 $this->dbi->query(
-                    sprintf(
-                        'UPDATE %s SET Column_name = "%s"
+                        sprintf(
+                                'UPDATE %s SET Column_name = "%s"
                         WHERE Db = "%s"
                         AND Table_name = "%s"
                         AND Column_name = "%s";',
-                        Util::backquote('columns_priv'),
-                        $newCol,
-                        $this->db,
-                        $this->table,
-                        $oldCol
-                    )
+                                Util::backquote('columns_priv'),
+                                $newCol,
+                                $this->db,
+                                $this->table,
+                                $oldCol
+                        )
                 );
 
                 // i.e. if atleast one column privileges adjusted
@@ -1375,14 +1322,13 @@ class StructureController extends AbstractController
      *
      * @return bool true if we need to generate ALTER TABLE
      */
-    protected function columnNeedsAlterTable($i)
-    {
+    protected function columnNeedsAlterTable($i) {
         // these two fields are checkboxes so might not be part of the
         // request; therefore we define them to avoid notices below
-        if (! isset($_POST['field_null'][$i])) {
+        if (!isset($_POST['field_null'][$i])) {
             $_POST['field_null'][$i] = 'NO';
         }
-        if (! isset($_POST['field_extra'][$i])) {
+        if (!isset($_POST['field_extra'][$i])) {
             $_POST['field_extra'][$i] = '';
         }
 
@@ -1408,7 +1354,7 @@ class StructureController extends AbstractController
             }
         }
 
-        return ! empty($_POST['field_move_to'][$i]);
+        return !empty($_POST['field_move_to'][$i]);
     }
 
     /**
@@ -1424,12 +1370,12 @@ class StructureController extends AbstractController
      * @return string
      */
     protected function displayStructure(
-        array $cfgRelation,
-        array $columns_with_unique_index,
-        $primary_index,
-        array $fields,
-        array $columns_with_index,
-        bool $isSystemSchema
+            array $cfgRelation,
+            array $columns_with_unique_index,
+            $primary_index,
+            array $fields,
+            array $columns_with_index,
+            bool $isSystemSchema
     ) {
         global $route, $tbl_is_view, $tbl_storage_engine, $PMA_Theme;
 
@@ -1445,8 +1391,8 @@ class StructureController extends AbstractController
         }
         $centralColumns = new CentralColumns($this->dbi);
         $central_list = $centralColumns->getFromTable(
-            $this->db,
-            $this->table
+                $this->db,
+                $this->table
         );
 
         /**
@@ -1496,19 +1442,17 @@ class StructureController extends AbstractController
             }
 
             if ($primary_index && $primary_index->hasColumn($field['Field'])) {
-                $displayed_fields[$rownum]->icon .=
-                    Generator::getImage('b_primary', __('Primary'));
+                $displayed_fields[$rownum]->icon .= Generator::getImage('b_primary', __('Primary'));
             }
 
             if (in_array($field['Field'], $columns_with_index)) {
-                $displayed_fields[$rownum]->icon .=
-                    Generator::getImage('bd_primary', __('Index'));
+                $displayed_fields[$rownum]->icon .= Generator::getImage('bd_primary', __('Index'));
             }
 
             $collation = Charsets::findCollationByName(
-                $this->dbi,
-                $GLOBALS['cfg']['Server']['DisableIS'],
-                $field['Collation'] ?? ''
+                            $this->dbi,
+                            $GLOBALS['cfg']['Server']['DisableIS'],
+                            $field['Collation'] ?? ''
             );
             if ($collation === null) {
                 continue;
@@ -1523,46 +1467,46 @@ class StructureController extends AbstractController
         $engine = $this->tableObj->getStorageEngine();
 
         return $this->template->render('table/structure/display_structure', [
-            'collations' => $collations,
-            'is_foreign_key_supported' => Util::isForeignKeySupported($engine),
-            'indexes' => Index::getFromTable($this->table, $this->db),
-            'indexes_duplicates' => Index::findDuplicates($this->table, $this->db),
-            'cfg_relation' => $this->relation->getRelationsParam(),
-            'hide_structure_actions' => $hideStructureActions,
-            'db' => $this->db,
-            'table' => $this->table,
-            'db_is_system_schema' => $isSystemSchema,
-            'tbl_is_view' => $tbl_is_view,
-            'mime_map' => $mime_map,
-            'tbl_storage_engine' => $tbl_storage_engine,
-            'primary' => $primary_index,
-            'columns_with_unique_index' => $columns_with_unique_index,
-            'columns_list' => $columns_list,
-            'table_stats' => $tablestats ?? null,
-            'fields' => $fields,
-            'extracted_columnspecs' => $extracted_columnspecs,
-            'columns_with_index' => $columns_with_index,
-            'central_list' => $central_list,
-            'comments_map' => $comments_map,
-            'browse_mime' => $GLOBALS['cfg']['BrowseMIME'],
-            'show_column_comments' => $GLOBALS['cfg']['ShowColumnComments'],
-            'show_stats' => $GLOBALS['cfg']['ShowStats'],
-            'relation_commwork' => $GLOBALS['cfgRelation']['commwork'],
-            'relation_mimework' => $GLOBALS['cfgRelation']['mimework'],
-            'central_columns_work' => $GLOBALS['cfgRelation']['centralcolumnswork'],
-            'mysql_int_version' => $this->dbi->getVersion(),
-            'is_mariadb' => $this->dbi->isMariaDB(),
-            'theme_image_path' => $PMA_Theme->getImgPath(),
-            'text_dir' => $GLOBALS['text_dir'],
-            'is_active' => Tracker::isActive(),
-            'have_partitioning' => Partition::havePartitioning(),
-            'partitions' => Partition::getPartitions($this->db, $this->table),
-            'partition_names' => Partition::getPartitionNames($this->db, $this->table),
-            'default_sliders_state' => $GLOBALS['cfg']['InitialSlidersState'],
-            'attributes' => $attributes,
-            'displayed_fields' => $displayed_fields,
-            'row_comments' => $row_comments,
-            'route' => $route,
+                    'collations' => $collations,
+                    'is_foreign_key_supported' => Util::isForeignKeySupported($engine),
+                    'indexes' => Index::getFromTable($this->table, $this->db),
+                    'indexes_duplicates' => Index::findDuplicates($this->table, $this->db),
+                    'cfg_relation' => $this->relation->getRelationsParam(),
+                    'hide_structure_actions' => $hideStructureActions,
+                    'db' => $this->db,
+                    'table' => $this->table,
+                    'db_is_system_schema' => $isSystemSchema,
+                    'tbl_is_view' => $tbl_is_view,
+                    'mime_map' => $mime_map,
+                    'tbl_storage_engine' => $tbl_storage_engine,
+                    'primary' => $primary_index,
+                    'columns_with_unique_index' => $columns_with_unique_index,
+                    'columns_list' => $columns_list,
+                    'table_stats' => $tablestats ?? null,
+                    'fields' => $fields,
+                    'extracted_columnspecs' => $extracted_columnspecs,
+                    'columns_with_index' => $columns_with_index,
+                    'central_list' => $central_list,
+                    'comments_map' => $comments_map,
+                    'browse_mime' => $GLOBALS['cfg']['BrowseMIME'],
+                    'show_column_comments' => $GLOBALS['cfg']['ShowColumnComments'],
+                    'show_stats' => $GLOBALS['cfg']['ShowStats'],
+                    'relation_commwork' => $GLOBALS['cfgRelation']['commwork'],
+                    'relation_mimework' => $GLOBALS['cfgRelation']['mimework'],
+                    'central_columns_work' => $GLOBALS['cfgRelation']['centralcolumnswork'],
+                    'mysql_int_version' => $this->dbi->getVersion(),
+                    'is_mariadb' => $this->dbi->isMariaDB(),
+                    'theme_image_path' => $PMA_Theme->getImgPath(),
+                    'text_dir' => $GLOBALS['text_dir'],
+                    'is_active' => Tracker::isActive(),
+                    'have_partitioning' => Partition::havePartitioning(),
+                    'partitions' => Partition::getPartitions($this->db, $this->table),
+                    'partition_names' => Partition::getPartitionNames($this->db, $this->table),
+                    'default_sliders_state' => $GLOBALS['cfg']['InitialSlidersState'],
+                    'attributes' => $attributes,
+                    'displayed_fields' => $displayed_fields,
+                    'row_comments' => $row_comments,
+                    'route' => $route,
         ]);
     }
 
@@ -1571,16 +1515,15 @@ class StructureController extends AbstractController
      *
      * @return string
      */
-    protected function getTableStats(bool $isSystemSchema)
-    {
+    protected function getTableStats(bool $isSystemSchema) {
         global $showtable, $tbl_is_view;
         global $tbl_storage_engine, $table_info_num_rows, $tbl_collation;
 
         if (empty($showtable)) {
             $showtable = $this->dbi->getTable(
-                $this->db,
-                $this->table
-            )->getStatusInfo(null, true);
+                            $this->db,
+                            $this->table
+                    )->getStatusInfo(null, true);
         }
 
         if (is_string($showtable)) {
@@ -1594,8 +1537,7 @@ class StructureController extends AbstractController
             $showtable['Index_length'] = 0;
         }
 
-        $is_innodb = (isset($showtable['Type'])
-            && $showtable['Type'] === 'InnoDB');
+        $is_innodb = (isset($showtable['Type']) && $showtable['Type'] === 'InnoDB');
 
         $mergetable = $this->tableObj->isMerge();
 
@@ -1603,50 +1545,45 @@ class StructureController extends AbstractController
         $max_digits = 3;
         $decimals = 1;
         [$data_size, $data_unit] = Util::formatByteDown(
-            $showtable['Data_length'],
-            $max_digits,
-            $decimals
+                        $showtable['Data_length'],
+                        $max_digits,
+                        $decimals
         );
         if ($mergetable === false) {
             [$index_size, $index_unit] = Util::formatByteDown(
-                $showtable['Index_length'],
-                $max_digits,
-                $decimals
+                            $showtable['Index_length'],
+                            $max_digits,
+                            $decimals
             );
         }
         if (isset($showtable['Data_free'])) {
             [$free_size, $free_unit] = Util::formatByteDown(
-                $showtable['Data_free'],
-                $max_digits,
-                $decimals
+                            $showtable['Data_free'],
+                            $max_digits,
+                            $decimals
             );
             [$effect_size, $effect_unit] = Util::formatByteDown(
-                $showtable['Data_length']
-                + $showtable['Index_length']
-                - $showtable['Data_free'],
-                $max_digits,
-                $decimals
+                            $showtable['Data_length'] + $showtable['Index_length'] - $showtable['Data_free'],
+                            $max_digits,
+                            $decimals
             );
         } else {
             [$effect_size, $effect_unit] = Util::formatByteDown(
-                $showtable['Data_length']
-                + $showtable['Index_length'],
-                $max_digits,
-                $decimals
+                            $showtable['Data_length'] + $showtable['Index_length'],
+                            $max_digits,
+                            $decimals
             );
         }
         [$tot_size, $tot_unit] = Util::formatByteDown(
-            $showtable['Data_length'] + $showtable['Index_length'],
-            $max_digits,
-            $decimals
+                        $showtable['Data_length'] + $showtable['Index_length'],
+                        $max_digits,
+                        $decimals
         );
         if ($table_info_num_rows > 0) {
             [$avg_size, $avg_unit] = Util::formatByteDown(
-                ($showtable['Data_length']
-                + $showtable['Index_length'])
-                / $showtable['Rows'],
-                6,
-                1
+                            ($showtable['Data_length'] + $showtable['Index_length']) / $showtable['Rows'],
+                            6,
+                            1
             );
         } else {
             $avg_size = $avg_unit = '';
@@ -1659,9 +1596,9 @@ class StructureController extends AbstractController
 
         $tableCollation = [];
         $collation = Charsets::findCollationByName(
-            $this->dbi,
-            $GLOBALS['cfg']['Server']['DisableIS'],
-            $tbl_collation
+                        $this->dbi,
+                        $GLOBALS['cfg']['Server']['DisableIS'],
+                        $tbl_collation
         );
         if ($collation !== null) {
             $tableCollation = [
@@ -1671,31 +1608,31 @@ class StructureController extends AbstractController
         }
 
         return $this->template->render('table/structure/display_table_stats', [
-            'db' => $GLOBALS['db'],
-            'table' => $GLOBALS['table'],
-            'is_foreign_key_supported' => Util::isForeignKeySupported($engine),
-            'cfg_relation' => $this->relation->getRelationsParam(),
-            'showtable' => $showtable,
-            'table_info_num_rows' => $table_info_num_rows,
-            'tbl_is_view' => $tbl_is_view,
-            'db_is_system_schema' => $isSystemSchema,
-            'tbl_storage_engine' => $tbl_storage_engine,
-            'table_collation' => $tableCollation,
-            'is_innodb' => $is_innodb,
-            'mergetable' => $mergetable,
-            'avg_size' => $avg_size ?? null,
-            'avg_unit' => $avg_unit ?? null,
-            'data_size' => $data_size,
-            'data_unit' => $data_unit,
-            'index_size' => $index_size ?? null,
-            'index_unit' => $index_unit ?? null,
-            'innodb_file_per_table' => $innodb_file_per_table,
-            'free_size' => $free_size ?? null,
-            'free_unit' => $free_unit ?? null,
-            'effect_size' => $effect_size,
-            'effect_unit' => $effect_unit,
-            'tot_size' => $tot_size,
-            'tot_unit' => $tot_unit,
+                    'db' => $GLOBALS['db'],
+                    'table' => $GLOBALS['table'],
+                    'is_foreign_key_supported' => Util::isForeignKeySupported($engine),
+                    'cfg_relation' => $this->relation->getRelationsParam(),
+                    'showtable' => $showtable,
+                    'table_info_num_rows' => $table_info_num_rows,
+                    'tbl_is_view' => $tbl_is_view,
+                    'db_is_system_schema' => $isSystemSchema,
+                    'tbl_storage_engine' => $tbl_storage_engine,
+                    'table_collation' => $tableCollation,
+                    'is_innodb' => $is_innodb,
+                    'mergetable' => $mergetable,
+                    'avg_size' => $avg_size ?? null,
+                    'avg_unit' => $avg_unit ?? null,
+                    'data_size' => $data_size,
+                    'data_unit' => $data_unit,
+                    'index_size' => $index_size ?? null,
+                    'index_unit' => $index_unit ?? null,
+                    'innodb_file_per_table' => $innodb_file_per_table,
+                    'free_size' => $free_size ?? null,
+                    'free_unit' => $free_unit ?? null,
+                    'effect_size' => $effect_size,
+                    'effect_unit' => $effect_unit,
+                    'tot_size' => $tot_size,
+                    'tot_unit' => $tot_unit,
         ]);
     }
 
@@ -1704,16 +1641,15 @@ class StructureController extends AbstractController
      *
      * @return string
      */
-    protected function getKeyForTablePrimary()
-    {
+    protected function getKeyForTablePrimary() {
         $this->dbi->selectDb($this->db);
         $result = $this->dbi->query(
-            'SHOW KEYS FROM ' . Util::backquote($this->table) . ';'
+                'SHOW KEYS FROM ' . Util::backquote($this->table) . ';'
         );
         $primary = '';
         while ($row = $this->dbi->fetchAssoc($result)) {
             // Backups the list of primary keys
-            if (! is_array($row) || $row['Key_name'] !== 'PRIMARY') {
+            if (!is_array($row) || $row['Key_name'] !== 'PRIMARY') {
                 continue;
             }
 
@@ -1727,8 +1663,7 @@ class StructureController extends AbstractController
     /**
      * Handles MySQL reserved words columns check.
      */
-    public function reservedWordCheck(): void
-    {
+    public function reservedWordCheck(): void {
         if ($GLOBALS['cfg']['ReservedWordDisableWarning'] !== false) {
             $this->response->setRequestStatus(false);
 
@@ -1738,7 +1673,7 @@ class StructureController extends AbstractController
         $columns_names = $_POST['field_name'];
         $reserved_keywords_names = [];
         foreach ($columns_names as $column) {
-            if (! Context::isKeyword(trim($column), true)) {
+            if (!Context::isKeyword(trim($column), true)) {
                 continue;
             }
 
@@ -1751,15 +1686,16 @@ class StructureController extends AbstractController
             $this->response->setRequestStatus(false);
         }
         $this->response->addJSON(
-            'message',
-            sprintf(
-                _ngettext(
-                    'The name \'%s\' is a MySQL reserved keyword.',
-                    'The names \'%s\' are MySQL reserved keywords.',
-                    count($reserved_keywords_names)
-                ),
-                implode(',', $reserved_keywords_names)
-            )
+                'message',
+                sprintf(
+                        _ngettext(
+                                'The name \'%s\' is a MySQL reserved keyword.',
+                                'The names \'%s\' are MySQL reserved keywords.',
+                                count($reserved_keywords_names)
+                        ),
+                        implode(',', $reserved_keywords_names)
+                )
         );
     }
+
 }

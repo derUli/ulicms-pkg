@@ -27,8 +27,8 @@ use Symfony\Component\Cache\Marshaller\MarshallerInterface;
 /**
  * @internal
  */
-trait PdoTrait
-{
+trait PdoTrait {
+
     private $marshaller;
     private $conn;
     private $dsn;
@@ -44,8 +44,7 @@ trait PdoTrait
     private $connectionOptions = [];
     private $namespace;
 
-    private function init($connOrDsn, string $namespace, int $defaultLifetime, array $options, ?MarshallerInterface $marshaller)
-    {
+    private function init($connOrDsn, string $namespace, int $defaultLifetime, array $options, ?MarshallerInterface $marshaller) {
         if (isset($namespace[0]) && preg_match('#[^-+.A-Za-z0-9]#', $namespace, $match)) {
             throw new InvalidArgumentException(sprintf('Namespace contains "%s" but only characters in [-+.A-Za-z0-9] are allowed.', $match[0]));
         }
@@ -89,8 +88,7 @@ trait PdoTrait
      * @throws Exception        When the table already exists
      * @throws \DomainException When an unsupported PDO driver is used
      */
-    public function createTable()
-    {
+    public function createTable() {
         // connect if we are not yet
         $conn = $this->getConnection();
 
@@ -160,8 +158,7 @@ trait PdoTrait
     /**
      * {@inheritdoc}
      */
-    public function prune()
-    {
+    public function prune() {
         $deleteSql = "DELETE FROM $this->table WHERE $this->lifetimeCol + $this->timeCol <= :time";
 
         if ('' !== $this->namespace) {
@@ -202,8 +199,7 @@ trait PdoTrait
     /**
      * {@inheritdoc}
      */
-    protected function doFetch(array $ids)
-    {
+    protected function doFetch(array $ids) {
         $connection = $this->getConnection();
         $useDbalConstants = $connection instanceof Connection;
 
@@ -249,8 +245,7 @@ trait PdoTrait
     /**
      * {@inheritdoc}
      */
-    protected function doHave($id)
-    {
+    protected function doHave($id) {
         $connection = $this->getConnection();
         $useDbalConstants = $connection instanceof Connection;
 
@@ -267,8 +262,7 @@ trait PdoTrait
     /**
      * {@inheritdoc}
      */
-    protected function doClear($namespace)
-    {
+    protected function doClear($namespace) {
         $conn = $this->getConnection();
 
         if ('' === $namespace) {
@@ -288,7 +282,9 @@ trait PdoTrait
                 $conn->exec($sql);
             }
         } catch (TableNotFoundException $e) {
+            
         } catch (\PDOException $e) {
+            
         }
 
         return true;
@@ -297,15 +293,16 @@ trait PdoTrait
     /**
      * {@inheritdoc}
      */
-    protected function doDelete(array $ids)
-    {
+    protected function doDelete(array $ids) {
         $sql = str_pad('', (\count($ids) << 1) - 1, '?,');
         $sql = "DELETE FROM $this->table WHERE $this->idCol IN ($sql)";
         try {
             $stmt = $this->getConnection()->prepare($sql);
             $stmt->execute(array_values($ids));
         } catch (TableNotFoundException $e) {
+            
         } catch (\PDOException $e) {
+            
         }
 
         return true;
@@ -314,8 +311,7 @@ trait PdoTrait
     /**
      * {@inheritdoc}
      */
-    protected function doSave(array $values, int $lifetime)
-    {
+    protected function doSave(array $values, int $lifetime) {
         if (!$values = $this->marshaller->marshall($values, $failed)) {
             return $failed;
         }
@@ -328,26 +324,26 @@ trait PdoTrait
 
         switch (true) {
             case 'mysql' === $driver:
-                $sql = $insertSql." ON DUPLICATE KEY UPDATE $this->dataCol = VALUES($this->dataCol), $this->lifetimeCol = VALUES($this->lifetimeCol), $this->timeCol = VALUES($this->timeCol)";
+                $sql = $insertSql . " ON DUPLICATE KEY UPDATE $this->dataCol = VALUES($this->dataCol), $this->lifetimeCol = VALUES($this->lifetimeCol), $this->timeCol = VALUES($this->timeCol)";
                 break;
             case 'oci' === $driver:
                 // DUAL is Oracle specific dummy table
-                $sql = "MERGE INTO $this->table USING DUAL ON ($this->idCol = ?) ".
-                    "WHEN NOT MATCHED THEN INSERT ($this->idCol, $this->dataCol, $this->lifetimeCol, $this->timeCol) VALUES (?, ?, ?, ?) ".
-                    "WHEN MATCHED THEN UPDATE SET $this->dataCol = ?, $this->lifetimeCol = ?, $this->timeCol = ?";
+                $sql = "MERGE INTO $this->table USING DUAL ON ($this->idCol = ?) " .
+                        "WHEN NOT MATCHED THEN INSERT ($this->idCol, $this->dataCol, $this->lifetimeCol, $this->timeCol) VALUES (?, ?, ?, ?) " .
+                        "WHEN MATCHED THEN UPDATE SET $this->dataCol = ?, $this->lifetimeCol = ?, $this->timeCol = ?";
                 break;
             case 'sqlsrv' === $driver && version_compare($this->getServerVersion(), '10', '>='):
                 // MERGE is only available since SQL Server 2008 and must be terminated by semicolon
                 // It also requires HOLDLOCK according to http://weblogs.sqlteam.com/dang/archive/2009/01/31/UPSERT-Race-Condition-With-MERGE.aspx
-                $sql = "MERGE INTO $this->table WITH (HOLDLOCK) USING (SELECT 1 AS dummy) AS src ON ($this->idCol = ?) ".
-                    "WHEN NOT MATCHED THEN INSERT ($this->idCol, $this->dataCol, $this->lifetimeCol, $this->timeCol) VALUES (?, ?, ?, ?) ".
-                    "WHEN MATCHED THEN UPDATE SET $this->dataCol = ?, $this->lifetimeCol = ?, $this->timeCol = ?;";
+                $sql = "MERGE INTO $this->table WITH (HOLDLOCK) USING (SELECT 1 AS dummy) AS src ON ($this->idCol = ?) " .
+                        "WHEN NOT MATCHED THEN INSERT ($this->idCol, $this->dataCol, $this->lifetimeCol, $this->timeCol) VALUES (?, ?, ?, ?) " .
+                        "WHEN MATCHED THEN UPDATE SET $this->dataCol = ?, $this->lifetimeCol = ?, $this->timeCol = ?;";
                 break;
             case 'sqlite' === $driver:
-                $sql = 'INSERT OR REPLACE'.substr($insertSql, 6);
+                $sql = 'INSERT OR REPLACE' . substr($insertSql, 6);
                 break;
             case 'pgsql' === $driver && version_compare($this->getServerVersion(), '9.5', '>='):
-                $sql = $insertSql." ON CONFLICT ($this->idCol) DO UPDATE SET ($this->dataCol, $this->lifetimeCol, $this->timeCol) = (EXCLUDED.$this->dataCol, EXCLUDED.$this->lifetimeCol, EXCLUDED.$this->timeCol)";
+                $sql = $insertSql . " ON CONFLICT ($this->idCol) DO UPDATE SET ($this->dataCol, $this->lifetimeCol, $this->timeCol) = (EXCLUDED.$this->dataCol, EXCLUDED.$this->lifetimeCol, EXCLUDED.$this->timeCol)";
                 break;
             default:
                 $driver = null;
@@ -412,7 +408,8 @@ trait PdoTrait
             if (null === $driver && !(\is_object($result) ? $result->rowCount() : $stmt->rowCount())) {
                 try {
                     $insertStmt->execute();
-                } catch (DBALException|Exception $e) {
+                } catch (DBALException | Exception $e) {
+                    
                 } catch (\PDOException $e) {
                     // A concurrent write won, let it be
                 }
@@ -425,8 +422,7 @@ trait PdoTrait
     /**
      * @return \PDO|Connection
      */
-    private function getConnection()
-    {
+    private function getConnection() {
         if (null === $this->conn) {
             if (strpos($this->dsn, '://')) {
                 if (!class_exists(DriverManager::class)) {
@@ -470,12 +466,12 @@ trait PdoTrait
                         break;
                     case $driver instanceof \Doctrine\DBAL\Driver:
                         $this->driver = [
-                                'mssql' => 'sqlsrv',
-                                'oracle' => 'oci',
-                                'postgresql' => 'pgsql',
-                                'sqlite' => 'sqlite',
-                                'mysql' => 'mysql',
-                            ][$driver->getDatabasePlatform()->getName()] ?? \get_class($driver);
+                            'mssql' => 'sqlsrv',
+                            'oracle' => 'oci',
+                            'postgresql' => 'pgsql',
+                            'sqlite' => 'sqlite',
+                            'mysql' => 'mysql',
+                                ][$driver->getDatabasePlatform()->getName()] ?? \get_class($driver);
                         break;
                     default:
                         $this->driver = \get_class($driver);
@@ -487,8 +483,7 @@ trait PdoTrait
         return $this->conn;
     }
 
-    private function getServerVersion(): string
-    {
+    private function getServerVersion(): string {
         if (null === $this->serverVersion) {
             $conn = $this->conn instanceof \PDO ? $this->conn : $this->conn->getWrappedConnection();
             if ($conn instanceof \PDO) {
@@ -502,4 +497,5 @@ trait PdoTrait
 
         return $this->serverVersion;
     }
+
 }

@@ -23,8 +23,8 @@ use Symfony\Component\Config\Definition\Exception\InvalidTypeException;
  *
  * @author Johannes M. Schmitt <schmittjoh@gmail.com>
  */
-interface NodeInterface
-{
+interface NodeInterface {
+
     /**
      * Returns the name of the node.
      *

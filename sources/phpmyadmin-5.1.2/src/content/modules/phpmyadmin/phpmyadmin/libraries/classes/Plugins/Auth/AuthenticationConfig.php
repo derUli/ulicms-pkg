@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Config Authentication plugin for phpMyAdmin
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Plugins\Auth;
@@ -22,15 +22,14 @@ use function trigger_error;
 /**
  * Handles the config authentication method
  */
-class AuthenticationConfig extends AuthenticationPlugin
-{
+class AuthenticationConfig extends AuthenticationPlugin {
+
     /**
      * Displays authentication form
      *
      * @return bool always true
      */
-    public function showLoginForm()
-    {
+    public function showLoginForm() {
         $response = Response::getInstance();
         if ($response->isAjax()) {
             $response->setRequestStatus(false);
@@ -51,8 +50,7 @@ class AuthenticationConfig extends AuthenticationPlugin
      *
      * @return bool always true
      */
-    public function readCredentials()
-    {
+    public function readCredentials() {
         if ($GLOBALS['token_provided'] && $GLOBALS['token_mismatch']) {
             return false;
         }
@@ -70,20 +68,19 @@ class AuthenticationConfig extends AuthenticationPlugin
      *
      * @return void
      */
-    public function showFailure($failure)
-    {
+    public function showFailure($failure) {
         global $dbi;
 
         parent::showFailure($failure);
         $conn_error = $dbi->getError();
-        if (! $conn_error) {
+        if (!$conn_error) {
             $conn_error = __('Cannot connect: invalid settings.');
         }
 
         /* HTML header */
         $response = Response::getInstance();
         $response->getFooter()
-            ->setMinimal();
+                ->setMinimal();
         $header = $response->getHeader();
         $header->setBodyId('loginform');
         $header->setTitle(__('Access denied!'));
@@ -98,25 +95,22 @@ class AuthenticationConfig extends AuthenticationPlugin
     <table cellpadding="0" cellspacing="3" class= "pma-table auth_config_tbl" width="80%">
         <tr>
             <td>';
-        if (isset($GLOBALS['allowDeny_forbidden'])
-            && $GLOBALS['allowDeny_forbidden']
+        if (isset($GLOBALS['allowDeny_forbidden']) && $GLOBALS['allowDeny_forbidden']
         ) {
             trigger_error(__('Access denied!'), E_USER_NOTICE);
         } else {
             // Check whether user has configured something
             if ($GLOBALS['PMA_Config']->sourceMtime == 0) {
-                echo '<p>' , sprintf(
-                    __(
-                        'You probably did not create a configuration file.'
-                        . ' You might want to use the %1$ssetup script%2$s to'
-                        . ' create one.'
-                    ),
-                    '<a href="setup/">',
-                    '</a>'
-                ) , '</p>' , "\n";
-            } elseif (! isset($GLOBALS['errno'])
-                || (isset($GLOBALS['errno']) && $GLOBALS['errno'] != 2002)
-                && $GLOBALS['errno'] != 2003
+                echo '<p>', sprintf(
+                        __(
+                                'You probably did not create a configuration file.'
+                                . ' You might want to use the %1$ssetup script%2$s to'
+                                . ' create one.'
+                        ),
+                        '<a href="setup/">',
+                        '</a>'
+                ), '</p>', "\n";
+            } elseif (!isset($GLOBALS['errno']) || (isset($GLOBALS['errno']) && $GLOBALS['errno'] != 2002) && $GLOBALS['errno'] != 2003
             ) {
                 // if we display the "Server not responding" error, do not confuse
                 // users by telling them they have a settings problem
@@ -126,50 +120,51 @@ class AuthenticationConfig extends AuthenticationPlugin
                 // 2002 is the error given by mysqli
                 // 2003 is the error given by mysql
                 trigger_error(
-                    __(
-                        'phpMyAdmin tried to connect to the MySQL server, and the'
-                        . ' server rejected the connection. You should check the'
-                        . ' host, username and password in your configuration and'
-                        . ' make sure that they correspond to the information given'
-                        . ' by the administrator of the MySQL server.'
-                    ),
-                    E_USER_WARNING
+                        __(
+                                'phpMyAdmin tried to connect to the MySQL server, and the'
+                                . ' server rejected the connection. You should check the'
+                                . ' host, username and password in your configuration and'
+                                . ' make sure that they correspond to the information given'
+                                . ' by the administrator of the MySQL server.'
+                        ),
+                        E_USER_WARNING
                 );
             }
             echo Generator::mysqlDie(
-                $conn_error,
-                '',
-                true,
-                '',
-                false
+                    $conn_error,
+                    '',
+                    true,
+                    '',
+                    false
             );
         }
         $GLOBALS['error_handler']->dispUserErrors();
         echo '</td>
         </tr>
         <tr>
-            <td>' , "\n";
+            <td>', "\n";
         echo '<a href="'
-            , Util::getScriptNameForOption(
+        , Util::getScriptNameForOption(
                 $GLOBALS['cfg']['DefaultTabServer'],
                 'server'
-            )
-            , '" class="btn button mt-1 disableAjax">'
-            , __('Retry to connect')
-            , '</a>' , "\n";
+        )
+        , '" class="btn button mt-1 disableAjax">'
+        , __('Retry to connect')
+        , '</a>', "\n";
         echo '</td>
-        </tr>' , "\n";
+        </tr>', "\n";
         if (count($GLOBALS['cfg']['Servers']) > 1) {
             // offer a chance to login to other servers if the current one failed
-            echo '<tr>' , "\n";
-            echo ' <td>' , "\n";
+            echo '<tr>', "\n";
+            echo ' <td>', "\n";
             echo Select::render(true, true);
-            echo ' </td>' , "\n";
-            echo '</tr>' , "\n";
+            echo ' </td>', "\n";
+            echo '</tr>', "\n";
         }
-        echo '</table>' , "\n";
-        if (! defined('TESTSUITE')) {
+        echo '</table>', "\n";
+        if (!defined('TESTSUITE')) {
             exit;
         }
     }
+
 }

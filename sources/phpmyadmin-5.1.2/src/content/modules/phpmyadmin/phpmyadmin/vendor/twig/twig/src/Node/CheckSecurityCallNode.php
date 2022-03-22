@@ -16,13 +16,13 @@ use Twig\Compiler;
 /**
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class CheckSecurityCallNode extends Node
-{
-    public function compile(Compiler $compiler)
-    {
+class CheckSecurityCallNode extends Node {
+
+    public function compile(Compiler $compiler) {
         $compiler
-            ->write("\$this->sandbox = \$this->env->getExtension('\Twig\Extension\SandboxExtension');\n")
-            ->write("\$this->checkSecurity();\n")
+                ->write("\$this->sandbox = \$this->env->getExtension('\Twig\Extension\SandboxExtension');\n")
+                ->write("\$this->checkSecurity();\n")
         ;
     }
+
 }

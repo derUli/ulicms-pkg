@@ -1,16 +1,16 @@
 <?php
+
 /**
  * User preferences form
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Config\Forms\User;
 
 use PhpMyAdmin\Config\Forms\BaseFormList;
 
-class UserFormList extends BaseFormList
-{
+class UserFormList extends BaseFormList {
+
     /** @var array */
     protected static $all = [
         'Features',
@@ -20,6 +20,8 @@ class UserFormList extends BaseFormList
         'Export',
         'Import',
     ];
+
     /** @var string */
     protected static $ns = '\\PhpMyAdmin\\Config\\Forms\\User\\';
+
 }

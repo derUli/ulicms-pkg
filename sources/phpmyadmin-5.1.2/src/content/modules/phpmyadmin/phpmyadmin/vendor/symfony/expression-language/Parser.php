@@ -21,8 +21,8 @@ namespace Symfony\Component\ExpressionLanguage;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class Parser
-{
+class Parser {
+
     public const OPERATOR_LEFT = 1;
     public const OPERATOR_RIGHT = 2;
 
@@ -32,8 +32,7 @@ class Parser
     private $functions;
     private $names;
 
-    public function __construct(array $functions)
-    {
+    public function __construct(array $functions) {
         $this->functions = $functions;
 
         $this->unaryOperators = [
@@ -91,8 +90,7 @@ class Parser
      *
      * @throws SyntaxError
      */
-    public function parse(TokenStream $stream, $names = [])
-    {
+    public function parse(TokenStream $stream, $names = []) {
         $this->stream = $stream;
         $this->names = $names;
 
@@ -104,8 +102,7 @@ class Parser
         return $node;
     }
 
-    public function parseExpression($precedence = 0)
-    {
+    public function parseExpression($precedence = 0) {
         $expr = $this->getPrimary();
         $token = $this->stream->current;
         while ($token->test(Token::OPERATOR_TYPE) && isset($this->binaryOperators[$token->value]) && $this->binaryOperators[$token->value]['precedence'] >= $precedence) {
@@ -125,8 +122,7 @@ class Parser
         return $expr;
     }
 
-    protected function getPrimary()
-    {
+    protected function getPrimary() {
         $token = $this->stream->current;
 
         if ($token->test(Token::OPERATOR_TYPE) && isset($this->unaryOperators[$token->value])) {
@@ -148,8 +144,7 @@ class Parser
         return $this->parsePrimaryExpression();
     }
 
-    protected function parseConditionalExpression($expr)
-    {
+    protected function parseConditionalExpression($expr) {
         while ($this->stream->current->test(Token::PUNCTUATION_TYPE, '?')) {
             $this->stream->next();
             if (!$this->stream->current->test(Token::PUNCTUATION_TYPE, ':')) {
@@ -172,8 +167,7 @@ class Parser
         return $expr;
     }
 
-    public function parsePrimaryExpression()
-    {
+    public function parsePrimaryExpression() {
         $token = $this->stream->current;
         switch ($token->type) {
             case Token::NAME_TYPE:
@@ -233,8 +227,7 @@ class Parser
         return $this->parsePostfixExpression($node);
     }
 
-    public function parseArrayExpression()
-    {
+    public function parseArrayExpression() {
         $this->stream->expect(Token::PUNCTUATION_TYPE, '[', 'An array element was expected');
 
         $node = new Node\ArrayNode();
@@ -257,8 +250,7 @@ class Parser
         return $node;
     }
 
-    public function parseHashExpression()
-    {
+    public function parseHashExpression() {
         $this->stream->expect(Token::PUNCTUATION_TYPE, '{', 'A hash element was expected');
 
         $node = new Node\ArrayNode();
@@ -301,8 +293,7 @@ class Parser
         return $node;
     }
 
-    public function parsePostfixExpression($node)
-    {
+    public function parsePostfixExpression($node) {
         $token = $this->stream->current;
         while (Token::PUNCTUATION_TYPE == $token->type) {
             if ('.' === $token->value) {
@@ -311,20 +302,19 @@ class Parser
                 $this->stream->next();
 
                 if (
-                    Token::NAME_TYPE !== $token->type
-                    &&
-                    // Operators like "not" and "matches" are valid method or property names,
-                    //
-                    // In other words, besides NAME_TYPE, OPERATOR_TYPE could also be parsed as a property or method.
-                    // This is because operators are processed by the lexer prior to names. So "not" in "foo.not()" or "matches" in "foo.matches" will be recognized as an operator first.
-                    // But in fact, "not" and "matches" in such expressions shall be parsed as method or property names.
-                    //
-                    // And this ONLY works if the operator consists of valid characters for a property or method name.
-                    //
-                    // Other types, such as STRING_TYPE and NUMBER_TYPE, can't be parsed as property nor method names.
-                    //
-                    // As a result, if $token is NOT an operator OR $token->value is NOT a valid property or method name, an exception shall be thrown.
-                    (Token::OPERATOR_TYPE !== $token->type || !preg_match('/[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*/A', $token->value))
+                        Token::NAME_TYPE !== $token->type &&
+                        // Operators like "not" and "matches" are valid method or property names,
+                        //
+                        // In other words, besides NAME_TYPE, OPERATOR_TYPE could also be parsed as a property or method.
+                        // This is because operators are processed by the lexer prior to names. So "not" in "foo.not()" or "matches" in "foo.matches" will be recognized as an operator first.
+                        // But in fact, "not" and "matches" in such expressions shall be parsed as method or property names.
+                        //
+                        // And this ONLY works if the operator consists of valid characters for a property or method name.
+                        //
+                        // Other types, such as STRING_TYPE and NUMBER_TYPE, can't be parsed as property nor method names.
+                        //
+                        // As a result, if $token is NOT an operator OR $token->value is NOT a valid property or method name, an exception shall be thrown.
+                        (Token::OPERATOR_TYPE !== $token->type || !preg_match('/[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*/A', $token->value))
                 ) {
                     throw new SyntaxError('Expected name.', $token->cursor, $this->stream->getExpression());
                 }
@@ -361,8 +351,7 @@ class Parser
     /**
      * Parses arguments.
      */
-    public function parseArguments()
-    {
+    public function parseArguments() {
         $args = [];
         $this->stream->expect(Token::PUNCTUATION_TYPE, '(', 'A list of arguments must begin with an opening parenthesis');
         while (!$this->stream->current->test(Token::PUNCTUATION_TYPE, ')')) {
@@ -376,4 +365,5 @@ class Parser
 
         return new Node\Node($args);
     }
+
 }

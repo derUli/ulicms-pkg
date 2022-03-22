@@ -22,8 +22,8 @@ use Symfony\Component\DependencyInjection\Reference;
  *
  * @author Johannes M. Schmitt <schmittjoh@gmail.com>
  */
-class InlineServiceDefinitionsPass extends AbstractRecursivePass implements RepeatablePassInterface
-{
+class InlineServiceDefinitionsPass extends AbstractRecursivePass implements RepeatablePassInterface {
+
     private $analyzingPass;
     private $repeatedPass;
     private $cloningIds = [];
@@ -33,22 +33,19 @@ class InlineServiceDefinitionsPass extends AbstractRecursivePass implements Repe
     private $notInlinableIds = [];
     private $graph;
 
-    public function __construct(AnalyzeServiceReferencesPass $analyzingPass = null)
-    {
+    public function __construct(AnalyzeServiceReferencesPass $analyzingPass = null) {
         $this->analyzingPass = $analyzingPass;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function setRepeatedPass(RepeatedPass $repeatedPass)
-    {
+    public function setRepeatedPass(RepeatedPass $repeatedPass) {
         @trigger_error(sprintf('The "%s()" method is deprecated since Symfony 4.2.', __METHOD__), \E_USER_DEPRECATED);
         $this->repeatedPass = $repeatedPass;
     }
 
-    public function process(ContainerBuilder $container)
-    {
+    public function process(ContainerBuilder $container) {
         $this->container = $container;
         if ($this->analyzingPass) {
             $analyzedContainer = new ContainerBuilder();
@@ -121,8 +118,7 @@ class InlineServiceDefinitionsPass extends AbstractRecursivePass implements Repe
     /**
      * {@inheritdoc}
      */
-    protected function processValue($value, $isRoot = false)
-    {
+    protected function processValue($value, $isRoot = false) {
         if ($value instanceof ArgumentInterface) {
             // References found in ArgumentInterface::getValues() are not inlineable
             return $value;
@@ -175,8 +171,7 @@ class InlineServiceDefinitionsPass extends AbstractRecursivePass implements Repe
     /**
      * Checks if the definition is inlineable.
      */
-    private function isInlineableDefinition(string $id, Definition $definition): bool
-    {
+    private function isInlineableDefinition(string $id, Definition $definition): bool {
         if ($definition->hasErrors() || $definition->isDeprecated() || $definition->isLazy() || $definition->isSynthetic()) {
             return false;
         }
@@ -234,4 +229,5 @@ class InlineServiceDefinitionsPass extends AbstractRecursivePass implements Repe
 
         return $this->container->getDefinition($srcId)->isShared();
     }
+
 }

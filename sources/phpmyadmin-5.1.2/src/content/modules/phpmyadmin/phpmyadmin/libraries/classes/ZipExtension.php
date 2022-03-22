@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Interface for the zip extension
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin;
@@ -28,13 +28,12 @@ use function substr;
 /**
  * Transformations class
  */
-class ZipExtension
-{
+class ZipExtension {
+
     /** @var ZipArchive|null */
     private $zip;
 
-    public function __construct(?ZipArchive $zip = null)
-    {
+    public function __construct(?ZipArchive $zip = null) {
         $this->zip = $zip;
     }
 
@@ -47,14 +46,12 @@ class ZipExtension
      * @return array ($error_message, $file_data); $error_message
      *                  is empty if no error
      */
-    public function getContents($file, $specific_entry = null)
-    {
+    public function getContents($file, $specific_entry = null) {
         /**
-        * This function is used to "import" a SQL file which has been exported earlier
-        * That means that this function works on the assumption that the zip file contains only a single SQL file
-        * It might also be an ODS file, look below
-        */
-
+         * This function is used to "import" a SQL file which has been exported earlier
+         * That means that this function works on the assumption that the zip file contains only a single SQL file
+         * It might also be an ODS file, look below
+         */
         if ($this->zip === null) {
             return [
                 'error' => sprintf(__('The %s extension is missing. Please check your PHP configuration.'), 'zip'),
@@ -90,11 +87,11 @@ class ZipExtension
         /* Is the the zip really an ODS file? */
         $ods_mime = 'application/vnd.oasis.opendocument.spreadsheet';
         $first_zip_entry = $this->zip->getFromIndex(0);
-        if (! strcmp($ods_mime, (string) $first_zip_entry)) {
+        if (!strcmp($ods_mime, (string) $first_zip_entry)) {
             $specific_entry = '/^content\.xml$/';
         }
 
-        if (! isset($specific_entry)) {
+        if (!isset($specific_entry)) {
             $file_data = $first_zip_entry;
             $this->zip->close();
 
@@ -115,7 +112,7 @@ class ZipExtension
         /* Couldn't find any files that matched $specific_entry */
         if (empty($file_data)) {
             $error_message = __('Error in ZIP archive:')
-                . ' Could not find "' . $specific_entry . '"';
+                    . ' Could not find "' . $specific_entry . '"';
         }
 
         $this->zip->close();
@@ -134,8 +131,7 @@ class ZipExtension
      *
      * @return string|false the file name of the first file that matches the given regular expression
      */
-    public function findFile($file, $regex)
-    {
+    public function findFile($file, $regex) {
         if ($this->zip === null) {
             return false;
         }
@@ -163,8 +159,7 @@ class ZipExtension
      *
      * @return int the number of files in the zip archive or 0, either if there weren't any files or an error occurred.
      */
-    public function getNumberOfFiles($file)
-    {
+    public function getNumberOfFiles($file) {
         if ($this->zip === null) {
             return 0;
         }
@@ -187,8 +182,7 @@ class ZipExtension
      *
      * @return string|bool data on success, false otherwise
      */
-    public function extract($file, $entry)
-    {
+    public function extract($file, $entry) {
         if ($this->zip === null) {
             return false;
         }
@@ -216,8 +210,7 @@ class ZipExtension
      *
      * @return string|bool the ZIP file contents, or false if there was an error.
      */
-    public function createFile($data, $name, $time = 0)
-    {
+    public function createFile($data, $name, $time = 0) {
         $datasec = []; // Array to store compressed data
         $ctrl_dir = []; // Central directory
         $old_offset = 0; // Last offset position
@@ -231,9 +224,9 @@ class ZipExtension
             $newData = [];
             foreach ($data as $key => $value) {
                 $newName = str_replace(
-                    $extension,
-                    '_' . $key . $extension,
-                    $name
+                        $extension,
+                        '_' . $key . $extension,
+                        $name
                 );
                 $newData[$newName] = $value;
             }
@@ -259,12 +252,7 @@ class ZipExtension
                 $timearray['seconds'] = 0;
             }
 
-            $time = $timearray['year'] - 1980 << 25
-            | ($timearray['mon'] << 21)
-            | ($timearray['mday'] << 16)
-            | ($timearray['hours'] << 11)
-            | ($timearray['minutes'] << 5)
-            | ($timearray['seconds'] >> 1);
+            $time = $timearray['year'] - 1980 << 25 | ($timearray['mon'] << 21) | ($timearray['mday'] << 16) | ($timearray['hours'] << 11) | ($timearray['minutes'] << 5) | ($timearray['seconds'] >> 1);
 
             $hexdtime = pack('V', $time);
 
@@ -274,43 +262,42 @@ class ZipExtension
             $zdata = substr((string) substr($zdata, 0, strlen($zdata) - 4), 2); // fix crc bug
             $c_len = strlen($zdata);
             $fr = "\x50\x4b\x03\x04"
-                . "\x14\x00"        // ver needed to extract
-                . "\x00\x00"        // gen purpose bit flag
-                . "\x08\x00"        // compression method
-                . $hexdtime         // last mod time and date
+                    . "\x14\x00"        // ver needed to extract
+                    . "\x00\x00"        // gen purpose bit flag
+                    . "\x08\x00"        // compression method
+                    . $hexdtime         // last mod time and date
+                    // "local file header" segment
+                    . pack('V', $crc)               // crc32
+                    . pack('V', $c_len)             // compressed filesize
+                    . pack('V', $unc_len)           // uncompressed filesize
+                    . pack('v', strlen($temp_name)) // length of filename
+                    . pack('v', 0)                  // extra field length
+                    . $temp_name
 
-                // "local file header" segment
-                . pack('V', $crc)               // crc32
-                . pack('V', $c_len)             // compressed filesize
-                . pack('V', $unc_len)           // uncompressed filesize
-                . pack('v', strlen($temp_name)) // length of filename
-                . pack('v', 0)                  // extra field length
-                . $temp_name
-
-                // "file data" segment
-                . $zdata;
+                    // "file data" segment
+                    . $zdata;
 
             $datasec[] = $fr;
 
             // now add to central directory record
             $cdrec = "\x50\x4b\x01\x02"
-                . "\x00\x00"                     // version made by
-                . "\x14\x00"                     // version needed to extract
-                . "\x00\x00"                     // gen purpose bit flag
-                . "\x08\x00"                     // compression method
-                . $hexdtime                      // last mod time & date
-                . pack('V', $crc)                // crc32
-                . pack('V', $c_len)              // compressed filesize
-                . pack('V', $unc_len)            // uncompressed filesize
-                . pack('v', strlen($temp_name))  // length of filename
-                . pack('v', 0)                   // extra field length
-                . pack('v', 0)                   // file comment length
-                . pack('v', 0)                   // disk number start
-                . pack('v', 0)                   // internal file attributes
-                . pack('V', 32)                  // external file attributes
-                                                 // - 'archive' bit set
-                . pack('V', $old_offset)         // relative offset of local header
-                . $temp_name;                    // filename
+                    . "\x00\x00"                     // version made by
+                    . "\x14\x00"                     // version needed to extract
+                    . "\x00\x00"                     // gen purpose bit flag
+                    . "\x08\x00"                     // compression method
+                    . $hexdtime                      // last mod time & date
+                    . pack('V', $crc)                // crc32
+                    . pack('V', $c_len)              // compressed filesize
+                    . pack('V', $unc_len)            // uncompressed filesize
+                    . pack('v', strlen($temp_name))  // length of filename
+                    . pack('v', 0)                   // extra field length
+                    . pack('v', 0)                   // file comment length
+                    . pack('v', 0)                   // disk number start
+                    . pack('v', 0)                   // internal file attributes
+                    . pack('V', 32)                  // external file attributes
+                    // - 'archive' bit set
+                    . pack('V', $old_offset)         // relative offset of local header
+                    . $temp_name;                    // filename
             $old_offset += strlen($fr);
             // optional extra field, file comment goes here
             // save to central directory
@@ -320,15 +307,16 @@ class ZipExtension
         /* Build string to return */
         $temp_ctrldir = implode('', $ctrl_dir);
         $header = $temp_ctrldir .
-            $eof_ctrl_dir .
-            pack('v', count($ctrl_dir)) . //total #of entries "on this disk"
-            pack('v', count($ctrl_dir)) . //total #of entries overall
-            pack('V', strlen($temp_ctrldir)) . //size of central dir
-            pack('V', $old_offset) . //offset to start of central dir
-            "\x00\x00";                         //.zip file comment length
+                $eof_ctrl_dir .
+                pack('v', count($ctrl_dir)) . //total #of entries "on this disk"
+                pack('v', count($ctrl_dir)) . //total #of entries overall
+                pack('V', strlen($temp_ctrldir)) . //size of central dir
+                pack('V', $old_offset) . //offset to start of central dir
+                "\x00\x00";                         //.zip file comment length
 
         $data = implode('', $datasec);
 
         return $data . $header;
     }
+
 }

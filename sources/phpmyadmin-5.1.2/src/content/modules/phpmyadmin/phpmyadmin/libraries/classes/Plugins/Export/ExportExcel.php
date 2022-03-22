@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Class for exporting CSV dumps of tables for excel
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Plugins\Export;
@@ -18,15 +18,14 @@ use PhpMyAdmin\Properties\Plugins\ExportPluginProperties;
 /**
  * Handles the export for the CSV-Excel format
  */
-class ExportExcel extends ExportCsv
-{
+class ExportExcel extends ExportCsv {
+
     /**
      * Sets the export CSV for Excel properties
      *
      * @return void
      */
-    protected function setProperties()
-    {
+    protected function setProperties() {
         $exportPluginProperties = new ExportPluginProperties();
         $exportPluginProperties->setText('CSV for MS Excel');
         $exportPluginProperties->setExtension('csv');
@@ -37,41 +36,41 @@ class ExportExcel extends ExportCsv
         // $exportPluginProperties
         // this will be shown as "Format specific options"
         $exportSpecificOptions = new OptionsPropertyRootGroup(
-            'Format Specific Options'
+                'Format Specific Options'
         );
 
         // general options main group
         $generalOptions = new OptionsPropertyMainGroup('general_opts');
         // create primary items and add them to the group
         $leaf = new TextPropertyItem(
-            'null',
-            __('Replace NULL with:')
+                'null',
+                __('Replace NULL with:')
         );
         $generalOptions->addProperty($leaf);
         $leaf = new BoolPropertyItem(
-            'removeCRLF',
-            __('Remove carriage return/line feed characters within columns')
+                'removeCRLF',
+                __('Remove carriage return/line feed characters within columns')
         );
         $generalOptions->addProperty($leaf);
         $leaf = new BoolPropertyItem(
-            'columns',
-            __('Put columns names in the first row')
+                'columns',
+                __('Put columns names in the first row')
         );
         $generalOptions->addProperty($leaf);
         $leaf = new SelectPropertyItem(
-            'edition',
-            __('Excel edition:')
+                'edition',
+                __('Excel edition:')
         );
         $leaf->setValues(
-            [
-                'win'           => 'Windows',
-                'mac_excel2003' => 'Excel 2003 / Macintosh',
-                'mac_excel2008' => 'Excel 2008 / Macintosh',
-            ]
+                [
+                    'win' => 'Windows',
+                    'mac_excel2003' => 'Excel 2003 / Macintosh',
+                    'mac_excel2008' => 'Excel 2008 / Macintosh',
+                ]
         );
         $generalOptions->addProperty($leaf);
         $leaf = new HiddenPropertyItem(
-            'structure_or_data'
+                'structure_or_data'
         );
         $generalOptions->addProperty($leaf);
         // add the main group to the root group
@@ -81,4 +80,5 @@ class ExportExcel extends ExportCsv
         $exportPluginProperties->setOptions($exportSpecificOptions);
         $this->properties = $exportPluginProperties;
     }
+
 }

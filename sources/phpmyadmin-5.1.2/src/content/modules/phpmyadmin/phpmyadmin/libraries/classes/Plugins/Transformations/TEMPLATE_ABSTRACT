@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file contains the basic structure for an abstract class defining a
  * transformation.
@@ -7,8 +8,7 @@
  * @package    PhpMyAdmin-Transformations
  * @subpackage [TransformationName]
  */
-
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace PhpMyAdmin\Plugins\Transformations\Abs;
 
@@ -21,53 +21,51 @@ use stdClass;
  * @package PhpMyAdmin
  */
 abstract class [TransformationName]TransformationsPlugin
-    extends IOTransformationsPlugin
+extends IOTransformationsPlugin
 {
-    /**
-     * Gets the transformation description of the specific plugin
-     *
-     * @return string
-     */
-    public static function getInfo()
-    {
-        return __(
-            'Description of the transformation.'
-        );
-    }
+/**
+ * Gets the transformation description of the specific plugin
+ *
+ * @return string
+ */
+public static function getInfo()
+{
+return __(
+'Description of the transformation.'
+);
+}
 
-    /**
-     * Does the actual work of each specific transformations plugin.
-     *
-     * @param string        $buffer  text to be transformed
-     * @param array         $options transformation options
-     * @param stdClass|null $meta    meta information
-     *
-     * @return string
-     */
-    public function applyTransformation($buffer, array $options = [], ?stdClass $meta = null)
-    {
-        // possibly use a global transform and feed it with special options
+/**
+ * Does the actual work of each specific transformations plugin.
+ *
+ * @param string        $buffer  text to be transformed
+ * @param array         $options transformation options
+ * @param stdClass|null $meta    meta information
+ *
+ * @return string
+ */
+public function applyTransformation($buffer, array $options = [], ?stdClass $meta = null)
+{
+// possibly use a global transform and feed it with special options
+// further operations on $buffer using the $options[] array.
+// You can evaluate the propagated $meta Object. It's contained fields are described in https://www.php.net/mysql_fetch_field.
+// This stored information can be used to get the field information about the transformed field.
+// $meta->mimetype contains the original MimeType of the field (i.e. 'text/plain', 'image/jpeg' etc.)
 
-        // further operations on $buffer using the $options[] array.
+return $buffer;
+}
 
-        // You can evaluate the propagated $meta Object. It's contained fields are described in https://www.php.net/mysql_fetch_field.
-        // This stored information can be used to get the field information about the transformed field.
-        // $meta->mimetype contains the original MimeType of the field (i.e. 'text/plain', 'image/jpeg' etc.)
-
-        return $buffer;
-    }
-
-    /* ~~~~~~~~~~~~~~~~~~~~ Getters and Setters ~~~~~~~~~~~~~~~~~~~~ */
+/* ~~~~~~~~~~~~~~~~~~~~ Getters and Setters ~~~~~~~~~~~~~~~~~~~~ */
 
 
-    /**
-     * Gets the TransformationName of the specific plugin
-     *
-     * @return string
-     */
-    public static function getName()
-    {
-        return '[TransformationName]';
-    }
+/**
+ * Gets the TransformationName of the specific plugin
+ *
+ * @return string
+ */
+public static function getName()
+{
+return '[TransformationName]';
+}
 }
 ?>

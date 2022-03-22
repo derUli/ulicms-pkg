@@ -24,8 +24,8 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
  *
  * @author Roland Franssen <franssen.roland@gmail.com>
  */
-class ValidateEnvPlaceholdersPass implements CompilerPassInterface
-{
+class ValidateEnvPlaceholdersPass implements CompilerPassInterface {
+
     private const TYPE_FIXTURES = ['array' => [], 'bool' => false, 'float' => 0.0, 'int' => 0, 'string' => ''];
 
     private $extensionConfig = [];
@@ -33,8 +33,7 @@ class ValidateEnvPlaceholdersPass implements CompilerPassInterface
     /**
      * {@inheritdoc}
      */
-    public function process(ContainerBuilder $container)
-    {
+    public function process(ContainerBuilder $container) {
         $this->extensionConfig = [];
 
         if (!class_exists(BaseNode::class) || !$extensions = $container->getExtensions()) {
@@ -83,6 +82,7 @@ class ValidateEnvPlaceholdersPass implements CompilerPassInterface
                 try {
                     $this->extensionConfig[$name] = $processor->processConfiguration($configuration, $config);
                 } catch (TreeWithoutRootNodeException $e) {
+                    
                 }
             }
         } finally {
@@ -95,8 +95,7 @@ class ValidateEnvPlaceholdersPass implements CompilerPassInterface
     /**
      * @internal
      */
-    public function getExtensionConfig(): array
-    {
+    public function getExtensionConfig(): array {
         try {
             return $this->extensionConfig;
         } finally {
@@ -104,8 +103,7 @@ class ValidateEnvPlaceholdersPass implements CompilerPassInterface
         }
     }
 
-    private static function getType($value): string
-    {
+    private static function getType($value): string {
         switch ($type = \gettype($value)) {
             case 'boolean':
                 return 'bool';
@@ -117,4 +115,5 @@ class ValidateEnvPlaceholdersPass implements CompilerPassInterface
 
         return $type;
     }
+
 }

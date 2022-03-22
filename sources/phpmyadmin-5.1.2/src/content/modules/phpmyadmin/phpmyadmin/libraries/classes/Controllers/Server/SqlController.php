@@ -15,8 +15,8 @@ use PhpMyAdmin\Url;
 /**
  * Server SQL executor
  */
-class SqlController extends AbstractController
-{
+class SqlController extends AbstractController {
+
     /** @var SqlQueryForm */
     private $sqlQueryForm;
 
@@ -27,15 +27,13 @@ class SqlController extends AbstractController
      * @param Response          $response
      * @param DatabaseInterface $dbi
      */
-    public function __construct($response, Template $template, SqlQueryForm $sqlQueryForm, $dbi)
-    {
+    public function __construct($response, Template $template, SqlQueryForm $sqlQueryForm, $dbi) {
         parent::__construct($response, $template);
         $this->sqlQueryForm = $sqlQueryForm;
         $this->dbi = $dbi;
     }
 
-    public function index(): void
-    {
+    public function index(): void {
         global $err_url;
 
         $this->addScriptFiles([
@@ -56,4 +54,5 @@ class SqlController extends AbstractController
 
         $this->response->addHTML($this->sqlQueryForm->getHtml());
     }
+
 }

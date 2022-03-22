@@ -21,14 +21,14 @@ use Symfony\Contracts\Cache\CacheInterface;
 /**
  * @deprecated since Symfony 4.3, use MemcachedAdapter and type-hint for CacheInterface instead.
  */
-class MemcachedCache extends AbstractCache
-{
+class MemcachedCache extends AbstractCache {
+
     use MemcachedTrait;
 
     protected $maxIdLength = 250;
 
-    public function __construct(\Memcached $client, string $namespace = '', int $defaultLifetime = 0, MarshallerInterface $marshaller = null)
-    {
+    public function __construct(\Memcached $client, string $namespace = '', int $defaultLifetime = 0, MarshallerInterface $marshaller = null) {
         $this->init($client, $namespace, $defaultLifetime, $marshaller);
     }
+
 }

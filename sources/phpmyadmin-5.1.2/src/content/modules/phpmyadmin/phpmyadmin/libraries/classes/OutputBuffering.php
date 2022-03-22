@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Output buffering wrapper
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin;
@@ -24,8 +24,8 @@ use function register_shutdown_function;
 /**
  * Output buffering wrapper class
  */
-class OutputBuffering
-{
+class OutputBuffering {
+
     /** @var self */
     private static $instance;
 
@@ -41,8 +41,7 @@ class OutputBuffering
     /**
      * Initializes class
      */
-    private function __construct()
-    {
+    private function __construct() {
         $this->mode = $this->getMode();
         $this->on = false;
     }
@@ -52,8 +51,7 @@ class OutputBuffering
      *
      * @return int the output buffer mode
      */
-    private function getMode()
-    {
+    private function getMode() {
         $mode = 0;
         if ($GLOBALS['cfg']['OBGzip'] && function_exists('ob_start')) {
             if (ini_get('output_handler') === 'ob_gzhandler') {
@@ -83,8 +81,7 @@ class OutputBuffering
      *
      * @return OutputBuffering object
      */
-    public static function getInstance()
-    {
+    public static function getInstance() {
         if (empty(self::$instance)) {
             self::$instance = new OutputBuffering();
         }
@@ -99,8 +96,7 @@ class OutputBuffering
      *
      * @return void
      */
-    public function start()
-    {
+    public function start() {
         if ($this->on) {
             return;
         }
@@ -109,14 +105,14 @@ class OutputBuffering
             ob_start('ob_gzhandler');
         }
         ob_start();
-        if (! defined('TESTSUITE')) {
+        if (!defined('TESTSUITE')) {
             header('X-ob_mode: ' . $this->mode);
         }
         register_shutdown_function(
-            [
-                self::class,
-                'stop',
-            ]
+                [
+                    self::class,
+                    'stop',
+                ]
         );
         $this->on = true;
     }
@@ -128,10 +124,9 @@ class OutputBuffering
      *
      * @return void
      */
-    public static function stop()
-    {
+    public static function stop() {
         $buffer = self::getInstance();
-        if (! $buffer->on) {
+        if (!$buffer->on) {
             return;
         }
 
@@ -149,8 +144,7 @@ class OutputBuffering
      *
      * @return string buffer content
      */
-    public function getContents()
-    {
+    public function getContents() {
         return $this->content;
     }
 
@@ -159,12 +153,12 @@ class OutputBuffering
      *
      * @return void
      */
-    public function flush()
-    {
+    public function flush() {
         if (ob_get_status() && $this->mode) {
             ob_flush();
         } else {
             flush();
         }
     }
+
 }

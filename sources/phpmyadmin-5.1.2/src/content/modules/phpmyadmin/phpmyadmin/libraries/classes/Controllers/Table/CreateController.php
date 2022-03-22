@@ -25,8 +25,8 @@ use function strlen;
 /**
  * Displays table create form and handles it.
  */
-class CreateController extends AbstractController
-{
+class CreateController extends AbstractController {
+
     /** @var Transformations */
     private $transformations;
 
@@ -46,14 +46,14 @@ class CreateController extends AbstractController
      * @param DatabaseInterface $dbi
      */
     public function __construct(
-        $response,
-        Template $template,
-        $db,
-        $table,
-        Transformations $transformations,
-        Config $config,
-        Relation $relation,
-        $dbi
+            $response,
+            Template $template,
+            $db,
+            $table,
+            Transformations $transformations,
+            Config $config,
+            Relation $relation,
+            $dbi
     ) {
         parent::__construct($response, $template, $db, $table);
         $this->transformations = $transformations;
@@ -62,8 +62,7 @@ class CreateController extends AbstractController
         $this->dbi = $dbi;
     }
 
-    public function index(): void
-    {
+    public function index(): void {
         global $num_fields, $action, $sql_query, $result, $db, $table;
 
         Util::checkParameters(['db']);
@@ -73,32 +72,32 @@ class CreateController extends AbstractController
         /* Check if database name is empty */
         if (strlen($db) === 0) {
             Generator::mysqlDie(
-                __('The database name is empty!'),
-                '',
-                false,
-                'index.php'
+                    __('The database name is empty!'),
+                    '',
+                    false,
+                    'index.php'
             );
         }
 
         /**
          * Selects the database to work with
          */
-        if (! $this->dbi->selectDb($db)) {
+        if (!$this->dbi->selectDb($db)) {
             Generator::mysqlDie(
-                sprintf(__('\'%s\' database does not exist.'), htmlspecialchars($db)),
-                '',
-                false,
-                'index.php'
+                    sprintf(__('\'%s\' database does not exist.'), htmlspecialchars($db)),
+                    '',
+                    false,
+                    'index.php'
             );
         }
 
         if ($this->dbi->getColumns($db, $table)) {
             // table exists already
             Generator::mysqlDie(
-                sprintf(__('Table %s already exists!'), htmlspecialchars($table)),
-                '',
-                false,
-                Url::getFromRoute('/database/structure', ['db' => $db])
+                    sprintf(__('Table %s already exists!'), htmlspecialchars($table)),
+                    '',
+                    false,
+                    Url::getFromRoute('/database/structure', ['db' => $db])
             );
         }
 
@@ -115,10 +114,10 @@ class CreateController extends AbstractController
             // lower_case_table_names=1 `DB` becomes `db`
             if ($this->dbi->getLowerCaseNames() === '1') {
                 $db = mb_strtolower(
-                    $db
+                        $db
                 );
                 $table = mb_strtolower(
-                    $table
+                        $table
                 );
             }
             $sql_query = $createAddField->getTableCreationQuery($db, $table);
@@ -134,26 +133,23 @@ class CreateController extends AbstractController
 
             if ($result) {
                 // Update comment table for mime types [MIME]
-                if (isset($_POST['field_mimetype'])
-                    && is_array($_POST['field_mimetype'])
-                    && $cfg['BrowseMIME']
+                if (isset($_POST['field_mimetype']) && is_array($_POST['field_mimetype']) && $cfg['BrowseMIME']
                 ) {
                     foreach ($_POST['field_mimetype'] as $fieldindex => $mimetype) {
-                        if (! isset($_POST['field_name'][$fieldindex])
-                            || strlen($_POST['field_name'][$fieldindex]) <= 0
+                        if (!isset($_POST['field_name'][$fieldindex]) || strlen($_POST['field_name'][$fieldindex]) <= 0
                         ) {
                             continue;
                         }
 
                         $this->transformations->setMime(
-                            $db,
-                            $table,
-                            $_POST['field_name'][$fieldindex],
-                            $mimetype,
-                            $_POST['field_transformation'][$fieldindex],
-                            $_POST['field_transformation_options'][$fieldindex],
-                            $_POST['field_input_transformation'][$fieldindex],
-                            $_POST['field_input_transformation_options'][$fieldindex]
+                                $db,
+                                $table,
+                                $_POST['field_name'][$fieldindex],
+                                $mimetype,
+                                $_POST['field_transformation'][$fieldindex],
+                                $_POST['field_transformation_options'][$fieldindex],
+                                $_POST['field_input_transformation'][$fieldindex],
+                                $_POST['field_input_transformation_options'][$fieldindex]
                         );
                     }
                 }
@@ -171,13 +167,14 @@ class CreateController extends AbstractController
         $this->addScriptFiles(['vendor/jquery/jquery.uitablefilter.js', 'indexes.js']);
 
         $templateData = ColumnsDefinition::displayForm(
-            $this->transformations,
-            $this->relation,
-            $this->dbi,
-            $action,
-            $num_fields
+                        $this->transformations,
+                        $this->relation,
+                        $this->dbi,
+                        $action,
+                        $num_fields
         );
 
         $this->render('columns_definitions/column_definitions_form', $templateData);
     }
+
 }

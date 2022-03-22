@@ -16,8 +16,8 @@ use function htmlspecialchars;
 /**
  * Table SQL executor
  */
-final class SqlController extends AbstractController
-{
+final class SqlController extends AbstractController {
+
     /** @var SqlQueryForm */
     private $sqlQueryForm;
 
@@ -26,14 +26,12 @@ final class SqlController extends AbstractController
      * @param string   $db       Database name.
      * @param string   $table    Table name.
      */
-    public function __construct($response, Template $template, $db, $table, SqlQueryForm $sqlQueryForm)
-    {
+    public function __construct($response, Template $template, $db, $table, SqlQueryForm $sqlQueryForm) {
         parent::__construct($response, $template, $db, $table);
         $this->sqlQueryForm = $sqlQueryForm;
     }
 
-    public function index(): void
-    {
+    public function index(): void {
         global $err_url, $goto, $back, $db, $table, $cfg;
 
         $this->addScriptFiles([
@@ -63,11 +61,10 @@ final class SqlController extends AbstractController
         $back = Url::getFromRoute('/table/sql');
 
         $this->response->addHTML($this->sqlQueryForm->getHtml(
-            $_GET['sql_query'] ?? true,
-            false,
-            isset($_POST['delimiter'])
-                ? htmlspecialchars($_POST['delimiter'])
-                : ';'
+                        $_GET['sql_query'] ?? true,
+                        false,
+                        isset($_POST['delimiter']) ? htmlspecialchars($_POST['delimiter']) : ';'
         ));
     }
+
 }

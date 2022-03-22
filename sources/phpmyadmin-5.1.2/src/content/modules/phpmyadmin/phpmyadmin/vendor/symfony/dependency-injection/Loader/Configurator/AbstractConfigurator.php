@@ -18,17 +18,16 @@ use Symfony\Component\DependencyInjection\Parameter;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\ExpressionLanguage\Expression;
 
-abstract class AbstractConfigurator
-{
+abstract class AbstractConfigurator {
+
     public const FACTORY = 'unknown';
 
     /** @internal */
     protected $definition;
 
-    public function __call($method, $args)
-    {
-        if (method_exists($this, 'set'.$method)) {
-            return $this->{'set'.$method}(...$args);
+    public function __call($method, $args) {
+        if (method_exists($this, 'set' . $method)) {
+            return $this->{'set' . $method}(...$args);
         }
 
         throw new \BadMethodCallException(sprintf('Call to undefined method "%s::%s()".', static::class, $method));
@@ -37,14 +36,12 @@ abstract class AbstractConfigurator
     /**
      * @return array
      */
-    public function __sleep()
-    {
-        throw new \BadMethodCallException('Cannot serialize '.__CLASS__);
+    public function __sleep() {
+        throw new \BadMethodCallException('Cannot serialize ' . __CLASS__);
     }
 
-    public function __wakeup()
-    {
-        throw new \BadMethodCallException('Cannot unserialize '.__CLASS__);
+    public function __wakeup() {
+        throw new \BadMethodCallException('Cannot unserialize ' . __CLASS__);
     }
 
     /**
@@ -55,8 +52,7 @@ abstract class AbstractConfigurator
      *
      * @return mixed the value, optionally cast to a Definition/Reference
      */
-    public static function processValue($value, $allowServices = false)
-    {
+    public static function processValue($value, $allowServices = false) {
         if (\is_array($value)) {
             foreach ($value as $k => $v) {
                 $value[$k] = static::processValue($v, $allowServices);
@@ -97,4 +93,5 @@ abstract class AbstractConfigurator
 
         throw new InvalidArgumentException(sprintf('Cannot use values of type "%s" in service configuration files.', \is_object($value) ? \get_class($value) : \gettype($value)));
     }
+
 }

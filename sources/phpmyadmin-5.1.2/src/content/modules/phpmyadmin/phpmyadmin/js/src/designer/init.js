@@ -44,7 +44,7 @@ AJAX.registerOnload('designer/init.js', function () {
 
     DesignerMove.main();
 
-    if (! designerTablesEnabled) {
+    if (!designerTablesEnabled) {
         DesignerOfflineDB.open(function (success) {
             if (success) {
                 DesignerPage.showTablesInLandingPage(db);

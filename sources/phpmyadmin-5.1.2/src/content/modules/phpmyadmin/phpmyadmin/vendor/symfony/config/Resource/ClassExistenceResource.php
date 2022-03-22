@@ -21,11 +21,10 @@ namespace Symfony\Component\Config\Resource;
  *
  * @final since Symfony 4.3
  */
-class ClassExistenceResource implements SelfCheckingResourceInterface
-{
+class ClassExistenceResource implements SelfCheckingResourceInterface {
+
     private $resource;
     private $exists;
-
     private static $autoloadLevel = 0;
     private static $autoloadedClass;
     private static $existsCache = [];
@@ -34,24 +33,21 @@ class ClassExistenceResource implements SelfCheckingResourceInterface
      * @param string    $resource The fully-qualified class name
      * @param bool|null $exists   Boolean when the existency check has already been done
      */
-    public function __construct(string $resource, bool $exists = null)
-    {
+    public function __construct(string $resource, bool $exists = null) {
         $this->resource = $resource;
         if (null !== $exists) {
             $this->exists = [$exists, null];
         }
     }
 
-    public function __toString()
-    {
+    public function __toString() {
         return $this->resource;
     }
 
     /**
      * @return string The file path to the resource
      */
-    public function getResource()
-    {
+    public function getResource() {
         return $this->resource;
     }
 
@@ -60,8 +56,7 @@ class ClassExistenceResource implements SelfCheckingResourceInterface
      *
      * @throws \ReflectionException when a parent class/interface/trait is not found
      */
-    public function isFresh($timestamp)
-    {
+    public function isFresh($timestamp) {
         $loaded = class_exists($this->resource, false) || interface_exists($this->resource, false) || trait_exists($this->resource, false);
 
         if (null !== $exists = &self::$existsCache[$this->resource]) {
@@ -72,7 +67,7 @@ class ClassExistenceResource implements SelfCheckingResourceInterface
             }
         } elseif ([false, null] === $exists = [$loaded, null]) {
             if (!self::$autoloadLevel++) {
-                spl_autoload_register(__CLASS__.'::throwOnRequiredClass');
+                spl_autoload_register(__CLASS__ . '::throwOnRequiredClass');
             }
             $autoloadedClass = self::$autoloadedClass;
             self::$autoloadedClass = ltrim($this->resource, '\\');
@@ -96,7 +91,7 @@ class ClassExistenceResource implements SelfCheckingResourceInterface
             } finally {
                 self::$autoloadedClass = $autoloadedClass;
                 if (!--self::$autoloadLevel) {
-                    spl_autoload_unregister(__CLASS__.'::throwOnRequiredClass');
+                    spl_autoload_unregister(__CLASS__ . '::throwOnRequiredClass');
                 }
             }
         }
@@ -105,14 +100,13 @@ class ClassExistenceResource implements SelfCheckingResourceInterface
             $this->exists = $exists;
         }
 
-        return $this->exists[0] xor !$exists[0];
+        return $this->exists[0] xor!$exists[0];
     }
 
     /**
      * @internal
      */
-    public function __sleep(): array
-    {
+    public function __sleep(): array {
         if (null === $this->exists) {
             $this->isFresh(0);
         }
@@ -123,8 +117,7 @@ class ClassExistenceResource implements SelfCheckingResourceInterface
     /**
      * @internal
      */
-    public function __wakeup()
-    {
+    public function __wakeup() {
         if (\is_bool($this->exists)) {
             $this->exists = [$this->exists, null];
         }
@@ -146,8 +139,7 @@ class ClassExistenceResource implements SelfCheckingResourceInterface
      *
      * @internal
      */
-    public static function throwOnRequiredClass($class, \Exception $previous = null)
-    {
+    public static function throwOnRequiredClass($class, \Exception $previous = null) {
         // If the passed class is the resource being checked, we shouldn't throw.
         if (null === $previous && self::$autoloadedClass === $class) {
             return;
@@ -232,4 +224,5 @@ class ClassExistenceResource implements SelfCheckingResourceInterface
 
         throw $e;
     }
+
 }

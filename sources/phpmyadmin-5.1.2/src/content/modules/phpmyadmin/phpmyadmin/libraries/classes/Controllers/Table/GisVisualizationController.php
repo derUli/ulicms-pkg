@@ -17,8 +17,8 @@ use function array_merge;
 /**
  * Handles creation of the GIS visualizations.
  */
-final class GisVisualizationController extends AbstractController
-{
+final class GisVisualizationController extends AbstractController {
+
     /** @var GisVisualization */
     private $visualization;
 
@@ -31,14 +31,12 @@ final class GisVisualizationController extends AbstractController
      * @param string            $table    Table name.
      * @param DatabaseInterface $dbi
      */
-    public function __construct($response, Template $template, $db, $table, $dbi)
-    {
+    public function __construct($response, Template $template, $db, $table, $dbi) {
         parent::__construct($response, $template, $db, $table);
         $this->dbi = $dbi;
     }
 
-    public function index(): void
-    {
+    public function index(): void {
         global $cfg, $url_params, $PMA_Theme, $db, $err_url;
 
         Util::checkParameters(['db']);
@@ -46,7 +44,7 @@ final class GisVisualizationController extends AbstractController
         $err_url = Util::getScriptNameForOption($cfg['DefaultTabDatabase'], 'database');
         $err_url .= Url::getCommon(['db' => $db], '&');
 
-        if (! $this->hasDatabase()) {
+        if (!$this->hasDatabase()) {
             return;
         }
 
@@ -64,7 +62,7 @@ final class GisVisualizationController extends AbstractController
         if ($sqlQuery == '') {
             $this->response->setRequestStatus(false);
             $this->response->addHTML(
-                Message::error(__('No SQL query was set to fetch data.'))
+                    Message::error(__('No SQL query was set to fetch data.'))
             );
 
             return;
@@ -99,14 +97,13 @@ final class GisVisualizationController extends AbstractController
         $visualizationSettings['mysqlVersion'] = $this->dbi->getVersion();
         $visualizationSettings['isMariaDB'] = $this->dbi->isMariaDB();
 
-        if (! isset($visualizationSettings['labelColumn'])
-            && isset($labelCandidates[0])
+        if (!isset($visualizationSettings['labelColumn']) && isset($labelCandidates[0])
         ) {
             $visualizationSettings['labelColumn'] = '';
         }
 
         // If spatial column is not set, use first geometric column as spatial column
-        if (! isset($visualizationSettings['spatialColumn'])) {
+        if (!isset($visualizationSettings['spatialColumn'])) {
             $visualizationSettings['spatialColumn'] = $spatialCandidates[0];
         }
 
@@ -123,10 +120,10 @@ final class GisVisualizationController extends AbstractController
             }
         }
         $this->visualization = GisVisualization::get(
-            $sqlQuery,
-            $visualizationSettings,
-            $rows,
-            $pos
+                        $sqlQuery,
+                        $visualizationSettings,
+                        $rows,
+                        $pos
         );
 
         if (isset($_GET['saveToFile'])) {
@@ -142,7 +139,7 @@ final class GisVisualizationController extends AbstractController
         ]);
 
         // If all the rows contain SRID, use OpenStreetMaps on the initial loading.
-        if (! isset($_POST['displayVisualization'])) {
+        if (!isset($_POST['displayVisualization'])) {
             if ($this->visualization->hasSrid()) {
                 $visualizationSettings['choice'] = 'useBaseLayer';
             } else {
@@ -165,21 +162,21 @@ final class GisVisualizationController extends AbstractController
          * Displays the page
          */
         $url_params['goto'] = Util::getScriptNameForOption(
-            $cfg['DefaultTabDatabase'],
-            'database'
+                        $cfg['DefaultTabDatabase'],
+                        'database'
         );
         $url_params['back'] = Url::getFromRoute('/sql');
         $url_params['sql_query'] = $sqlQuery;
         $url_params['sql_signature'] = Core::signSqlQuery($sqlQuery);
         $downloadUrl = Url::getFromRoute('/table/gis-visualization', array_merge(
-            $url_params,
-            [
-                'saveToFile' => true,
-                'session_max_rows' => $rows,
-                'pos' => $pos,
-                'visualizationSettings[spatialColumn]' => $visualizationSettings['spatialColumn'],
-                'visualizationSettings[labelColumn]' => $visualizationSettings['labelColumn'],
-            ]
+                                $url_params,
+                                [
+                                    'saveToFile' => true,
+                                    'session_max_rows' => $rows,
+                                    'pos' => $pos,
+                                    'visualizationSettings[spatialColumn]' => $visualizationSettings['spatialColumn'],
+                                    'visualizationSettings[labelColumn]' => $visualizationSettings['labelColumn'],
+                                ]
         ));
         $html = $this->template->render('table/gis_visualization/gis_visualization', [
             'url_params' => $url_params,
@@ -200,9 +197,9 @@ final class GisVisualizationController extends AbstractController
      * @param string $filename File name
      * @param string $format   Save format
      */
-    private function saveToFile(string $filename, string $format): void
-    {
+    private function saveToFile(string $filename, string $format): void {
         $this->response->disable();
         $this->visualization->toFile($filename, $format);
     }
+
 }

@@ -32,8 +32,8 @@ use function substr;
 /**
  * Wrapper script for rendering transformations
  */
-class TransformationWrapperController extends AbstractController
-{
+class TransformationWrapperController extends AbstractController {
+
     /** @var Transformations */
     private $transformations;
 
@@ -48,11 +48,11 @@ class TransformationWrapperController extends AbstractController
      * @param DatabaseInterface $dbi
      */
     public function __construct(
-        $response,
-        Template $template,
-        Transformations $transformations,
-        Relation $relation,
-        $dbi
+            $response,
+            Template $template,
+            Transformations $transformations,
+            Relation $relation,
+            $dbi
     ) {
         parent::__construct($response, $template);
         $this->transformations = $transformations;
@@ -60,8 +60,7 @@ class TransformationWrapperController extends AbstractController
         $this->dbi = $dbi;
     }
 
-    public function index(): void
-    {
+    public function index(): void {
         global $cn, $db, $table, $transform_key, $request_params, $size_params, $where_clause, $row;
         global $default_ct, $mime_map, $mime_options, $ct, $mime_type, $srcImage, $srcWidth, $srcHeight;
         global $ratioWidth, $ratioHeight, $destWidth, $destHeight, $destImage;
@@ -87,7 +86,7 @@ class TransformationWrapperController extends AbstractController
             'newWidth',
         ];
         foreach ($request_params as $one_request_param) {
-            if (! isset($_REQUEST[$one_request_param])) {
+            if (!isset($_REQUEST[$one_request_param])) {
                 continue;
             }
 
@@ -106,7 +105,7 @@ class TransformationWrapperController extends AbstractController
          */
         $this->dbi->selectDb($db);
         if (isset($where_clause)) {
-            if (! Core::checkSqlQuerySignature($where_clause, $_GET['where_clause_sign'] ?? '')) {
+            if (!Core::checkSqlQuerySignature($where_clause, $_GET['where_clause_sign'] ?? '')) {
                 /* l10n: In case a SQL query did not pass a security check  */
                 Core::fatalError(__('There is an issue with your request.'));
 
@@ -114,23 +113,23 @@ class TransformationWrapperController extends AbstractController
             }
 
             $result = $this->dbi->query(
-                'SELECT * FROM ' . Util::backquote($table)
-                . ' WHERE ' . $where_clause . ';',
-                DatabaseInterface::CONNECT_USER,
-                DatabaseInterface::QUERY_STORE
+                    'SELECT * FROM ' . Util::backquote($table)
+                    . ' WHERE ' . $where_clause . ';',
+                    DatabaseInterface::CONNECT_USER,
+                    DatabaseInterface::QUERY_STORE
             );
             $row = $this->dbi->fetchAssoc($result);
         } else {
             $result = $this->dbi->query(
-                'SELECT * FROM ' . Util::backquote($table) . ' LIMIT 1;',
-                DatabaseInterface::CONNECT_USER,
-                DatabaseInterface::QUERY_STORE
+                    'SELECT * FROM ' . Util::backquote($table) . ' LIMIT 1;',
+                    DatabaseInterface::CONNECT_USER,
+                    DatabaseInterface::QUERY_STORE
             );
             $row = $this->dbi->fetchAssoc($result);
         }
 
         // No row returned
-        if (! $row) {
+        if (!$row) {
             return;
         }
 
@@ -144,7 +143,7 @@ class TransformationWrapperController extends AbstractController
             }
 
             $mime_options = $this->transformations->getOptions(
-                $mime_map[$transform_key]['transformation_options'] ?? ''
+                    $mime_map[$transform_key]['transformation_options'] ?? ''
             );
 
             foreach ($mime_options as $key => $option) {
@@ -159,18 +158,16 @@ class TransformationWrapperController extends AbstractController
         $this->response->getHeader()->sendHttpHeaders();
 
         // [MIME]
-        if (isset($ct) && ! empty($ct)) {
+        if (isset($ct) && !empty($ct)) {
             $mime_type = $ct;
         } else {
-            $mime_type = (! empty($mime_map[$transform_key]['mimetype'])
-                    ? str_replace('_', '/', $mime_map[$transform_key]['mimetype'])
-                    : $default_ct)
-                . ($mime_options['charset'] ?? '');
+            $mime_type = (!empty($mime_map[$transform_key]['mimetype']) ? str_replace('_', '/', $mime_map[$transform_key]['mimetype']) : $default_ct)
+                    . ($mime_options['charset'] ?? '');
         }
 
         Core::downloadHeader($cn ?? '', $mime_type ?? '');
 
-        if (! isset($_REQUEST['resize'])) {
+        if (!isset($_REQUEST['resize'])) {
             if (stripos($mime_type ?? '', 'html') === false) {
                 echo $row[$transform_key];
             } else {
@@ -214,16 +211,16 @@ class TransformationWrapperController extends AbstractController
                 // $destWidth, $destHeight, $srcWidth, $srcHeight);
                 // better quality but slower:
                 imagecopyresampled(
-                    $destImage,
-                    $srcImage,
-                    0,
-                    0,
-                    0,
-                    0,
-                    $destWidth,
-                    $destHeight,
-                    $srcWidth,
-                    $srcHeight
+                        $destImage,
+                        $srcImage,
+                        0,
+                        0,
+                        0,
+                        0,
+                        $destWidth,
+                        $destHeight,
+                        $srcWidth,
+                        $srcHeight
                 );
                 if ($_REQUEST['resize'] === 'jpeg') {
                     imagejpeg($destImage, null, 75);
@@ -236,4 +233,5 @@ class TransformationWrapperController extends AbstractController
             imagedestroy($srcImage);
         }
     }
+
 }

@@ -1,5 +1,5 @@
 {
-	"version" : "1.0.1",
-	"embed" : false,
-	"custom_acl" : ["device_info"]
+    "version": "1.0.1",
+    "embed": false,
+    "custom_acl": ["device_info"]
 }

@@ -28,10 +28,9 @@ use Twig\Token;
  *
  * @see https://twig.symfony.com/doc/templates.html#horizontal-reuse for details.
  */
-final class UseTokenParser extends AbstractTokenParser
-{
-    public function parse(Token $token)
-    {
+final class UseTokenParser extends AbstractTokenParser {
+
+    public function parse(Token $token) {
         $template = $this->parser->getExpressionParser()->parseExpression();
         $stream = $this->parser->getStream();
 
@@ -64,10 +63,10 @@ final class UseTokenParser extends AbstractTokenParser
         return new Node();
     }
 
-    public function getTag()
-    {
+    public function getTag() {
         return 'use';
     }
+
 }
 
 class_alias('Twig\TokenParser\UseTokenParser', 'Twig_TokenParser_Use');

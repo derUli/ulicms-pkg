@@ -1,8 +1,8 @@
 <?php
+
 /**
  * SQL import plugin for phpMyAdmin
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Plugins\Import;
@@ -24,10 +24,9 @@ use function preg_replace;
 /**
  * Handles the import for the SQL format
  */
-class ImportSql extends ImportPlugin
-{
-    public function __construct()
-    {
+class ImportSql extends ImportPlugin {
+
+    public function __construct() {
         parent::__construct();
         $this->setProperties();
     }
@@ -38,8 +37,7 @@ class ImportSql extends ImportPlugin
      *
      * @return void
      */
-    protected function setProperties()
-    {
+    protected function setProperties() {
         global $dbi;
 
         $importPluginProperties = new ImportPluginProperties();
@@ -58,34 +56,34 @@ class ImportSql extends ImportPlugin
             // $importPluginProperties
             // this will be shown as "Format specific options"
             $importSpecificOptions = new OptionsPropertyRootGroup(
-                'Format Specific Options'
+                    'Format Specific Options'
             );
 
             // general options main group
             $generalOptions = new OptionsPropertyMainGroup('general_opts');
             // create primary items and add them to the group
             $leaf = new SelectPropertyItem(
-                'compatibility',
-                __('SQL compatibility mode:')
+                    'compatibility',
+                    __('SQL compatibility mode:')
             );
             $leaf->setValues($values);
             $leaf->setDoc(
-                [
-                    'manual_MySQL_Database_Administration',
-                    'Server_SQL_mode',
-                ]
+                    [
+                        'manual_MySQL_Database_Administration',
+                        'Server_SQL_mode',
+                    ]
             );
             $generalOptions->addProperty($leaf);
             $leaf = new BoolPropertyItem(
-                'no_auto_value_on_zero',
-                __('Do not use <code>AUTO_INCREMENT</code> for zero values')
+                    'no_auto_value_on_zero',
+                    __('Do not use <code>AUTO_INCREMENT</code> for zero values')
             );
             $leaf->setDoc(
-                [
-                    'manual_MySQL_Database_Administration',
-                    'Server_SQL_mode',
-                    'sqlmode_no_auto_value_on_zero',
-                ]
+                    [
+                        'manual_MySQL_Database_Administration',
+                        'Server_SQL_mode',
+                        'sqlmode_no_auto_value_on_zero',
+                    ]
             );
             $generalOptions->addProperty($leaf);
 
@@ -105,8 +103,7 @@ class ImportSql extends ImportPlugin
      *
      * @return void
      */
-    public function doImport(?File $importHandle = null, array &$sql_data = [])
-    {
+    public function doImport(?File $importHandle = null, array &$sql_data = []) {
         global $error, $timeout_passed, $dbi;
 
         // Handle compatibility options.
@@ -124,7 +121,7 @@ class ImportSql extends ImportPlugin
          */
         $GLOBALS['finished'] = false;
 
-        while (! $error && (! $timeout_passed)) {
+        while (!$error && (!$timeout_passed)) {
             // Getting the first statement, the remaining data and the last
             // delimiter.
             $statement = $bq->extract();
@@ -158,7 +155,7 @@ class ImportSql extends ImportPlugin
         }
 
         // Extracting remaining statements.
-        while (! $error && ! $timeout_passed && ! empty($bq->query)) {
+        while (!$error && !$timeout_passed && !empty($bq->query)) {
             $statement = $bq->extract(true);
             if (empty($statement)) {
                 continue;
@@ -179,11 +176,9 @@ class ImportSql extends ImportPlugin
      *
      * @return void
      */
-    private function setSQLMode($dbi, array $request)
-    {
+    private function setSQLMode($dbi, array $request) {
         $sql_modes = [];
-        if (isset($request['sql_compatibility'])
-            && $request['sql_compatibility'] !== 'NONE'
+        if (isset($request['sql_compatibility']) && $request['sql_compatibility'] !== 'NONE'
         ) {
             $sql_modes[] = $request['sql_compatibility'];
         }
@@ -195,7 +190,8 @@ class ImportSql extends ImportPlugin
         }
 
         $dbi->tryQuery(
-            'SET SQL_MODE="' . implode(',', $sql_modes) . '"'
+                'SET SQL_MODE="' . implode(',', $sql_modes) . '"'
         );
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 // _                   _   _     _
 // _ __| |_  _ __  __ _ _ _| |_(_)_ _(_)_ _ _  _ ___
 // | '_ \ ' \| '_ \/ _` | ' \  _| \ V / | '_| || (_-<
@@ -57,9 +58,7 @@ echo '</div>';
 // output full report
 echo $report;
 
-
-function file_scan($folder, $defs, $debug)
-{
+function file_scan($folder, $defs, $debug) {
     // hunts files/folders recursively for scannable items
     global $dircount, $report;
     $dircount++;
@@ -67,7 +66,7 @@ function file_scan($folder, $defs, $debug)
         $report .= "<p class=\"d\">Scanning folder $folder ...</p>";
     }
     if ($d = @dir($folder)) {
-        while (false !== ($entry = $d -> read())) {
+        while (false !== ($entry = $d->read())) {
             $isdir = @is_dir($folder . '/' . $entry);
             if (!$isdir and $entry != '.' and $entry != '..') {
                 virus_check($folder . '/' . $entry, $defs, $debug);
@@ -75,14 +74,13 @@ function file_scan($folder, $defs, $debug)
                 file_scan($folder . '/' . $entry, $defs, $debug);
             }
         }
-        $d -> close();
+        $d->close();
     }
 }
 
-function virus_check($file, $defs, $debug)
-{
+function virus_check($file, $defs, $debug) {
     global $filecount, $infected, $report, $CONFIG;
-    
+
     // find scannable files
     $scannable = 0;
     foreach ($CONFIG['extensions'] as $ext) {
@@ -90,7 +88,7 @@ function virus_check($file, $defs, $debug)
             $scannable = 1;
         }
     }
-    
+
     // compare against defs
     if ($scannable) {
         // affectable formats
@@ -112,8 +110,7 @@ function virus_check($file, $defs, $debug)
     }
 }
 
-function load_defs($file, $debug)
-{
+function load_defs($file, $debug) {
     // reads tab-delimited defs file
     $defs = file($file);
     $counter = 0;
@@ -128,8 +125,7 @@ function load_defs($file, $debug)
     return $defs;
 }
 
-function check_defs($file)
-{
+function check_defs($file) {
     // check for >755 perms on virus defs
     clearstatcache();
     $perms = substr(decoct(fileperms($file)), -2);
@@ -140,37 +136,37 @@ function check_defs($file)
     }
 }
 
-function renderhead()
-{
+function renderhead() {
     ?>
 
-<style type="text/css">
+    <style type="text/css">
 
-.g {
-	color: #009900;
-}
+        .g {
+            color: #009900;
+        }
 
-.r {
-	color: #990000;
-	font-weight: bold;
-}
+        .r {
+            color: #990000;
+            font-weight: bold;
+        }
 
-.d {
-	color: #ccc;
-}
+        .d {
+            color: #ccc;
+        }
 
-#summary {
-	border: #333 solid 1px;
-	background: #f0efca;
-	padding: 10px;
-	margin: 10px;
-}
+        #summary {
+            border: #333 solid 1px;
+            background: #f0efca;
+            padding: 10px;
+            margin: 10px;
+        }
 
-#summary p {
-	font-size: 12px;
-}
-</style>
+        #summary p {
+            font-size: 12px;
+        }
+    </style>
 
-<?php
+    <?php
+
 }
 ?>

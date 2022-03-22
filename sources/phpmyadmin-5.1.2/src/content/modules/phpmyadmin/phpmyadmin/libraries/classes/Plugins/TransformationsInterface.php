@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Interface for the transformations plugins
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Plugins;
@@ -11,8 +11,8 @@ namespace PhpMyAdmin\Plugins;
  * Provides a common interface that will have to be implemented by all of the
  * transformations plugins.
  */
-interface TransformationsInterface
-{
+interface TransformationsInterface {
+
     /**
      * Gets the transformation description
      *

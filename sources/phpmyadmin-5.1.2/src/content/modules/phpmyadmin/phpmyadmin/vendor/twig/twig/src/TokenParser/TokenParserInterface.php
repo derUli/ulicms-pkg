@@ -21,8 +21,8 @@ use Twig\Token;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-interface TokenParserInterface
-{
+interface TokenParserInterface {
+
     /**
      * Sets the parser associated with this token parser.
      */

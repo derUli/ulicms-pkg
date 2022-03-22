@@ -12,15 +12,14 @@ use PhpMyAdmin\LanguageManager;
 use PhpMyAdmin\Setup\Index;
 use function is_string;
 
-class HomeController extends AbstractController
-{
+class HomeController extends AbstractController {
+
     /**
      * @param array $params Request parameters
      *
      * @return string HTML
      */
-    public function index(array $params): string
-    {
+    public function index(array $params): string {
         $formset = isset($params['formset']) && is_string($params['formset']) ? $params['formset'] : '';
 
         $pages = $this->getPages();
@@ -38,13 +37,13 @@ class HomeController extends AbstractController
         $configChecker->performConfigChecks();
 
         $text = __(
-            'You are not using a secure connection; all data (including potentially '
-            . 'sensitive information, like passwords) is transferred unencrypted!'
+                'You are not using a secure connection; all data (including potentially '
+                . 'sensitive information, like passwords) is transferred unencrypted!'
         );
         $text .= ' <a href="#">';
         $text .= __(
-            'If your server is also configured to accept HTTPS requests '
-            . 'follow this link to use a secure connection.'
+                'If your server is also configured to accept HTTPS requests '
+                . 'follow this link to use a secure connection.'
         );
         $text .= '</a>';
         Index::messagesSet('notice', 'no_https', __('Insecure connection'), $text);
@@ -116,33 +115,33 @@ class HomeController extends AbstractController
 
         $formDisplayTemplate = new FormDisplayTemplate($GLOBALS['PMA_Config']);
         $serversFormTopHtml = $formDisplayTemplate->displayFormTop(
-            'index.php',
-            'get',
-            [
-                'page' => 'servers',
-                'mode' => 'add',
-            ]
+                'index.php',
+                'get',
+                [
+                    'page' => 'servers',
+                    'mode' => 'add',
+                ]
         );
         $configFormTopHtml = $formDisplayTemplate->displayFormTop('config.php');
         $formBottomHtml = $formDisplayTemplate->displayFormBottom();
 
         $defaultLanguageInput = $formDisplayTemplate->displayInput(
-            'DefaultLang',
-            __('Default language'),
-            'select',
-            $this->config->getValue('DefaultLang'),
-            '',
-            true,
-            $defaultLanguageOptions
+                'DefaultLang',
+                __('Default language'),
+                'select',
+                $this->config->getValue('DefaultLang'),
+                '',
+                true,
+                $defaultLanguageOptions
         );
         $serverDefaultInput = $formDisplayTemplate->displayInput(
-            'ServerDefault',
-            __('Default server'),
-            'select',
-            $this->config->getValue('ServerDefault'),
-            '',
-            true,
-            $serverDefaultOptions
+                'ServerDefault',
+                __('Default server'),
+                'select',
+                $this->config->getValue('ServerDefault'),
+                '',
+                true,
+                $serverDefaultOptions
         );
 
         $eolOptions = [
@@ -154,28 +153,29 @@ class HomeController extends AbstractController
         ];
         $eol = Core::ifSetOr($_SESSION['eol'], (PMA_IS_WINDOWS ? 'win' : 'unix'));
         $eolInput = $formDisplayTemplate->displayInput(
-            'eol',
-            __('End of line'),
-            'select',
-            $eol,
-            '',
-            true,
-            $eolOptions
+                'eol',
+                __('End of line'),
+                'select',
+                $eol,
+                '',
+                true,
+                $eolOptions
         );
 
         return $this->template->render('setup/home/index', [
-            'formset' => $formset,
-            'languages' => $languages,
-            'messages' => $messages,
-            'servers_form_top_html' => $serversFormTopHtml,
-            'config_form_top_html' => $configFormTopHtml,
-            'form_bottom_html' => $formBottomHtml,
-            'server_count' => $this->config->getServerCount(),
-            'servers' => $servers,
-            'default_language_input' => $defaultLanguageInput,
-            'server_default_input' => $serverDefaultInput,
-            'eol_input' => $eolInput,
-            'pages' => $pages,
+                    'formset' => $formset,
+                    'languages' => $languages,
+                    'messages' => $messages,
+                    'servers_form_top_html' => $serversFormTopHtml,
+                    'config_form_top_html' => $configFormTopHtml,
+                    'form_bottom_html' => $formBottomHtml,
+                    'server_count' => $this->config->getServerCount(),
+                    'servers' => $servers,
+                    'default_language_input' => $defaultLanguageInput,
+                    'server_default_input' => $serverDefaultInput,
+                    'eol_input' => $eolInput,
+                    'pages' => $pages,
         ]);
     }
+
 }

@@ -21,21 +21,19 @@ use Symfony\Component\DependencyInjection\Reference;
  *
  * @author Nicolas Grekas <p@tchwork.com>
  */
-class ResolveHotPathPass extends AbstractRecursivePass
-{
+class ResolveHotPathPass extends AbstractRecursivePass {
+
     private $tagName;
     private $resolvedIds = [];
 
-    public function __construct(string $tagName = 'container.hot_path')
-    {
+    public function __construct(string $tagName = 'container.hot_path') {
         $this->tagName = $tagName;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function process(ContainerBuilder $container)
-    {
+    public function process(ContainerBuilder $container) {
         try {
             parent::process($container);
             $container->getDefinition('service_container')->clearTag($this->tagName);
@@ -47,8 +45,7 @@ class ResolveHotPathPass extends AbstractRecursivePass
     /**
      * {@inheritdoc}
      */
-    protected function processValue($value, $isRoot = false)
-    {
+    protected function processValue($value, $isRoot = false) {
         if ($value instanceof ArgumentInterface) {
             return $value;
         }
@@ -68,4 +65,5 @@ class ResolveHotPathPass extends AbstractRecursivePass
 
         return parent::processValue($value, $isRoot);
     }
+
 }

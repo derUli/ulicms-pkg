@@ -23,10 +23,9 @@ use Symfony\Component\DependencyInjection\Reference;
  *
  * @author Johannes M. Schmitt <schmittjoh@gmail.com>
  */
-class CheckReferenceValidityPass extends AbstractRecursivePass
-{
-    protected function processValue($value, $isRoot = false)
-    {
+class CheckReferenceValidityPass extends AbstractRecursivePass {
+
+    protected function processValue($value, $isRoot = false) {
         if ($isRoot && $value instanceof Definition && ($value->isSynthetic() || $value->isAbstract())) {
             return $value;
         }
@@ -40,4 +39,5 @@ class CheckReferenceValidityPass extends AbstractRecursivePass
 
         return parent::processValue($value, $isRoot);
     }
+
 }

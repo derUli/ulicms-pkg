@@ -28,10 +28,9 @@ use Twig\Token;
  *    </ul>
  *   {% endif %}
  */
-final class IfTokenParser extends AbstractTokenParser
-{
-    public function parse(Token $token)
-    {
+final class IfTokenParser extends AbstractTokenParser {
+
+    public function parse(Token $token) {
         $lineno = $token->getLine();
         $expr = $this->parser->getExpressionParser()->parseExpression();
         $stream = $this->parser->getStream();
@@ -70,20 +69,18 @@ final class IfTokenParser extends AbstractTokenParser
         return new IfNode(new Node($tests), $else, $lineno, $this->getTag());
     }
 
-    public function decideIfFork(Token $token)
-    {
+    public function decideIfFork(Token $token) {
         return $token->test(['elseif', 'else', 'endif']);
     }
 
-    public function decideIfEnd(Token $token)
-    {
+    public function decideIfEnd(Token $token) {
         return $token->test(['endif']);
     }
 
-    public function getTag()
-    {
+    public function getTag() {
         return 'if';
     }
+
 }
 
 class_alias('Twig\TokenParser\IfTokenParser', 'Twig_TokenParser_If');

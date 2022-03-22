@@ -1,8 +1,8 @@
 <?php
+
 /**
  * `ANALYZE` statement.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\SqlParser\Statements;
@@ -16,8 +16,8 @@ use PhpMyAdmin\SqlParser\Statement;
  * ANALYZE [NO_WRITE_TO_BINLOG | LOCAL] TABLE
  *  tbl_name [, tbl_name] ...
  */
-class AnalyzeStatement extends Statement
-{
+class AnalyzeStatement extends Statement {
+
     /**
      * Options of this statement.
      *
@@ -25,7 +25,6 @@ class AnalyzeStatement extends Statement
      */
     public static $OPTIONS = [
         'TABLE' => 1,
-
         'NO_WRITE_TO_BINLOG' => 2,
         'LOCAL' => 3,
     ];
@@ -36,4 +35,5 @@ class AnalyzeStatement extends Statement
      * @var Expression[]
      */
     public $tables;
+
 }

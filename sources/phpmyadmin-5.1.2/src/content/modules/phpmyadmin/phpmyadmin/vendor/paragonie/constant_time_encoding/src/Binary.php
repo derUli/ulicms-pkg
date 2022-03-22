@@ -1,5 +1,7 @@
 <?php
+
 declare(strict_types=1);
+
 namespace ParagonIE\ConstantTime;
 
 /**
@@ -33,8 +35,8 @@ namespace ParagonIE\ConstantTime;
  *
  * @package ParagonIE\ConstantTime
  */
-abstract class Binary
-{
+abstract class Binary {
+
     /**
      * Safe string length
      *
@@ -43,8 +45,7 @@ abstract class Binary
      * @param string $str
      * @return int
      */
-    public static function safeStrlen(string $str): int
-    {
+    public static function safeStrlen(string $str): int {
         if (\function_exists('mb_strlen')) {
             // mb_strlen in PHP 7.x can return false.
             /** @psalm-suppress RedundantCast */
@@ -67,9 +68,9 @@ abstract class Binary
      * @throws \TypeError
      */
     public static function safeSubstr(
-        string $str,
-        int $start = 0,
-        $length = null
+            string $str,
+            int $start = 0,
+            $length = null
     ): string {
         if ($length === 0) {
             return '';
@@ -84,4 +85,5 @@ abstract class Binary
             return \substr($str, $start);
         }
     }
+
 }

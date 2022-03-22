@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Form templates
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Config;
@@ -26,8 +26,8 @@ use function is_string;
 /**
  * PhpMyAdmin\Config\FormDisplayTemplate class
  */
-class FormDisplayTemplate
-{
+class FormDisplayTemplate {
+
     /** @var int */
     public $group;
 
@@ -40,8 +40,7 @@ class FormDisplayTemplate
     /**
      * @param Config $config Config instance
      */
-    public function __construct(Config $config)
-    {
+    public function __construct(Config $config) {
         $this->config = $config;
         $this->template = new Template();
     }
@@ -54,9 +53,9 @@ class FormDisplayTemplate
      * @param array|null $hiddenFields array of form hidden fields (key: field name)
      */
     public function displayFormTop(
-        $action = null,
-        $method = 'post',
-        $hiddenFields = null
+            $action = null,
+            $method = 'post',
+            $hiddenFields = null
     ): string {
         static $hasCheckPageRefresh = false;
 
@@ -71,15 +70,15 @@ class FormDisplayTemplate
          * We do validation on page refresh when browser remembers field values,
          * add a field with known value which will be used for checks.
          */
-        if (! $hasCheckPageRefresh) {
+        if (!$hasCheckPageRefresh) {
             $hasCheckPageRefresh = true;
         }
 
         return $this->template->render('config/form_display/form_top', [
-            'method' => $method,
-            'action' => $action,
-            'has_check_page_refresh' => $hasCheckPageRefresh,
-            'hidden_fields' => (array) $hiddenFields,
+                    'method' => $method,
+                    'action' => $action,
+                    'has_check_page_refresh' => $hasCheckPageRefresh,
+                    'hidden_fields' => (array) $hiddenFields,
         ]);
     }
 
@@ -89,8 +88,7 @@ class FormDisplayTemplate
      *
      * @param array $tabs tab names
      */
-    public function displayTabsTop(array $tabs): string
-    {
+    public function displayTabsTop(array $tabs): string {
         return $this->template->render('config/form_display/tabs_top', ['tabs' => $tabs]);
     }
 
@@ -103,20 +101,20 @@ class FormDisplayTemplate
      * @param array      $attributes  optional extra attributes of fieldset
      */
     public function displayFieldsetTop(
-        $title = '',
-        $description = '',
-        $errors = null,
-        array $attributes = []
+            $title = '',
+            $description = '',
+            $errors = null,
+            array $attributes = []
     ): string {
         $this->group = 0;
 
         $attributes = array_merge(['class' => 'optbox'], $attributes);
 
         return $this->template->render('config/form_display/fieldset_top', [
-            'attributes' => $attributes,
-            'title' => $title,
-            'description' => $description,
-            'errors' => $errors,
+                    'attributes' => $attributes,
+                    'title' => $title,
+                    'description' => $description,
+                    'errors' => $errors,
         ]);
     }
 
@@ -147,13 +145,13 @@ class FormDisplayTemplate
      * @param array|null $opts           see above description
      */
     public function displayInput(
-        $path,
-        $name,
-        $type,
-        $value,
-        $description = '',
-        $valueIsDefault = true,
-        $opts = null
+            $path,
+            $name,
+            $type,
+            $value,
+            $description = '',
+            $valueIsDefault = true,
+            $opts = null
     ): string {
         static $icons;    // An array of IMG tags used further below in the function
 
@@ -169,11 +167,11 @@ class FormDisplayTemplate
             // The first element contains the filename and the second
             // element is used for the "alt" and "title" attributes.
             $iconInit = [
-                'edit'   => [
+                'edit' => [
                     'b_edit',
                     '',
                 ],
-                'help'   => [
+                'help' => [
                     'b_help',
                     __('Documentation'),
                 ],
@@ -192,40 +190,37 @@ class FormDisplayTemplate
                 // has not been loaded, so we generate the img tags manually.
                 foreach ($iconInit as $k => $v) {
                     $title = '';
-                    if (! empty($v[1])) {
+                    if (!empty($v[1])) {
                         $title = ' title="' . $v[1] . '"';
                     }
                     $icons[$k] = sprintf(
-                        '<img alt="%s" src="%s"%s>',
-                        $v[1],
-                        '../themes/pmahomme/img/' . $v[0] . '.png',
-                        $title
+                            '<img alt="%s" src="%s"%s>',
+                            $v[1],
+                            '../themes/pmahomme/img/' . $v[0] . '.png',
+                            $title
                     );
                 }
             } else {
                 // In this case we just use getImage() because it's available
                 foreach ($iconInit as $k => $v) {
                     $icons[$k] = Generator::getImage(
-                        $v[0],
-                        $v[1]
+                                    $v[0],
+                                    $v[1]
                     );
                 }
             }
         }
-        $hasErrors = isset($opts['errors']) && ! empty($opts['errors']);
-        $optionIsDisabled = ! $isSetupScript && isset($opts['userprefs_allow'])
-            && ! $opts['userprefs_allow'];
+        $hasErrors = isset($opts['errors']) && !empty($opts['errors']);
+        $optionIsDisabled = !$isSetupScript && isset($opts['userprefs_allow']) && !$opts['userprefs_allow'];
         $nameId = 'name="' . htmlspecialchars($path) . '" id="'
-            . htmlspecialchars($path) . '"';
+                . htmlspecialchars($path) . '"';
         $fieldClass = $type === 'checkbox' ? 'checkbox' : '';
-        if (! $valueIsDefault) {
+        if (!$valueIsDefault) {
             $fieldClass .= ($fieldClass == '' ? '' : ' ')
-                . ($hasErrors ? 'custom field-error' : 'custom');
+                    . ($hasErrors ? 'custom field-error' : 'custom');
         }
         $fieldClass = $fieldClass ? ' class="' . $fieldClass . '"' : '';
-        $trClass = $this->group > 0
-            ? 'group-field group-field-' . $this->group
-            : '';
+        $trClass = $this->group > 0 ? 'group-field group-field-' . $this->group : '';
         if (isset($opts['setvalue']) && $opts['setvalue'] === ':group') {
             unset($opts['setvalue']);
             $this->group++;
@@ -239,12 +234,12 @@ class FormDisplayTemplate
         $htmlOutput = '<tr' . $trClass . '>';
         $htmlOutput .= '<th>';
         $htmlOutput .= '<label for="' . htmlspecialchars($path) . '">' . htmlspecialchars_decode($name)
-            . '</label>';
+                . '</label>';
 
-        if (! empty($opts['doc'])) {
+        if (!empty($opts['doc'])) {
             $htmlOutput .= '<span class="doc">';
             $htmlOutput .= '<a href="' . $opts['doc']
-                . '" target="documentation">' . $icons['help'] . '</a>';
+                    . '" target="documentation">' . $icons['help'] . '</a>';
             $htmlOutput .= "\n";
             $htmlOutput .= '</span>';
         }
@@ -252,12 +247,12 @@ class FormDisplayTemplate
         if ($optionIsDisabled) {
             $htmlOutput .= '<span class="disabled-notice" title="';
             $htmlOutput .= __(
-                'This setting is disabled, it will not be applied to your configuration.'
+                    'This setting is disabled, it will not be applied to your configuration.'
             );
             $htmlOutput .= '">' . __('Disabled') . '</span>';
         }
 
-        if (! empty($description)) {
+        if (!empty($description)) {
             $htmlOutput .= '<small>' . $description . '</small>';
         }
 
@@ -267,11 +262,11 @@ class FormDisplayTemplate
         switch ($type) {
             case 'text':
                 $htmlOutput .= '<input type="text" class="w-75" ' . $nameId . $fieldClass
-                . ' value="' . htmlspecialchars($value) . '">';
+                        . ' value="' . htmlspecialchars($value) . '">';
                 break;
             case 'password':
                 $htmlOutput .= '<input type="password" class="w-75" ' . $nameId . $fieldClass
-                . ' value="' . htmlspecialchars($value) . '">';
+                        . ' value="' . htmlspecialchars($value) . '">';
                 break;
             case 'short_text':
                 // As seen in the reporting server (#15042) we sometimes receive
@@ -279,28 +274,27 @@ class FormDisplayTemplate
                 // a notice on htmlspecialchars().
                 if (is_string($value)) {
                     $htmlOutput .= '<input type="text" size="25" ' . $nameId
-                    . $fieldClass . ' value="' . htmlspecialchars($value)
-                    . '">';
+                            . $fieldClass . ' value="' . htmlspecialchars($value)
+                            . '">';
                 }
                 break;
             case 'number_text':
                 $htmlOutput .= '<input type="number" ' . $nameId . $fieldClass
-                . ' value="' . htmlspecialchars((string) $value) . '">';
+                        . ' value="' . htmlspecialchars((string) $value) . '">';
                 break;
             case 'checkbox':
                 $htmlOutput .= '<span' . $fieldClass . '><input type="checkbox" ' . $nameId
-                  . ($value ? ' checked="checked"' : '') . '></span>';
+                        . ($value ? ' checked="checked"' : '') . '></span>';
                 break;
             case 'select':
                 $htmlOutput .= '<select class="w-75" ' . $nameId . $fieldClass . '>';
-                $escape = ! (isset($opts['values_escaped']) && $opts['values_escaped']);
-                $valuesDisabled = isset($opts['values_disabled'])
-                ? array_flip($opts['values_disabled']) : [];
+                $escape = !(isset($opts['values_escaped']) && $opts['values_escaped']);
+                $valuesDisabled = isset($opts['values_disabled']) ? array_flip($opts['values_disabled']) : [];
                 foreach ($opts['values'] as $optValueKey => $optValue) {
                     // set names for boolean values
                     if (is_bool($optValue)) {
                         $optValue = mb_strtolower(
-                            $optValue ? __('Yes') : __('No')
+                                $optValue ? __('Yes') : __('No')
                         );
                     }
                     // escape if necessary
@@ -313,9 +307,7 @@ class FormDisplayTemplate
                     }
                     // compare with selected value
                     // boolean values are cast to integers when used as array keys
-                    $selected = is_bool($value)
-                    ? (int) $value === $optValueKey
-                    : $optValueKey === $value;
+                    $selected = is_bool($value) ? (int) $value === $optValueKey : $optValueKey === $value;
                     $htmlOutput .= '<option value="' . $displayValue . '"';
                     if ($selected) {
                         $htmlOutput .= ' selected="selected"';
@@ -333,26 +325,24 @@ class FormDisplayTemplate
                     unset($val['wrapper_params']);
                 }
                 $htmlOutput .= '<textarea cols="35" rows="5" ' . $nameId . $fieldClass
-                . '>' . htmlspecialchars(implode("\n", $val)) . '</textarea>';
+                        . '>' . htmlspecialchars(implode("\n", $val)) . '</textarea>';
                 break;
         }
-        if ($isSetupScript
-            && isset($opts['userprefs_comment'])
-            && $opts['userprefs_comment']
+        if ($isSetupScript && isset($opts['userprefs_comment']) && $opts['userprefs_comment']
         ) {
             $htmlOutput .= '<a class="userprefs-comment" title="'
-                . htmlspecialchars($opts['userprefs_comment']) . '">'
-                . $icons['tblops'] . '</a>';
+                    . htmlspecialchars($opts['userprefs_comment']) . '">'
+                    . $icons['tblops'] . '</a>';
         }
         if (isset($opts['setvalue']) && $opts['setvalue']) {
             $htmlOutput .= '<a class="set-value hide" href="#'
-                . htmlspecialchars($path . '=' . $opts['setvalue']) . '" title="'
-                . sprintf(__('Set value: %s'), htmlspecialchars($opts['setvalue']))
-                . '">' . $icons['edit'] . '</a>';
+                    . htmlspecialchars($path . '=' . $opts['setvalue']) . '" title="'
+                    . sprintf(__('Set value: %s'), htmlspecialchars($opts['setvalue']))
+                    . '">' . $icons['edit'] . '</a>';
         }
         if (isset($opts['show_restore_default']) && $opts['show_restore_default']) {
             $htmlOutput .= '<a class="restore-default hide" href="#' . $path . '" title="'
-                . __('Restore default value') . '">' . $icons['reload'] . '</a>';
+                    . __('Restore default value') . '">' . $icons['reload'] . '</a>';
         }
         // this must match with displayErrors() in scripts/config.js
         if ($hasErrors) {
@@ -365,9 +355,9 @@ class FormDisplayTemplate
         $htmlOutput .= '</td>';
         if ($isSetupScript && isset($opts['userprefs_allow'])) {
             $htmlOutput .= '<td class="userprefs-allow" title="' .
-                __('Allow users to customize this value') . '">';
+                    __('Allow users to customize this value') . '">';
             $htmlOutput .= '<input type="checkbox" name="' . $path
-                . '-userprefs-allow" ';
+                    . '-userprefs-allow" ';
             if ($opts['userprefs_allow']) {
                 $htmlOutput .= 'checked="checked"';
             }
@@ -386,8 +376,7 @@ class FormDisplayTemplate
      *
      * @param string $headerText Text of header
      */
-    public function displayGroupHeader(string $headerText): string
-    {
+    public function displayGroupHeader(string $headerText): string {
         $this->group++;
         if ($headerText === '') {
             return '';
@@ -395,17 +384,16 @@ class FormDisplayTemplate
         $colspan = $this->config->get('is_setup') ? 3 : 2;
 
         return $this->template->render('config/form_display/group_header', [
-            'group' => $this->group,
-            'colspan' => $colspan,
-            'header_text' => $headerText,
+                    'group' => $this->group,
+                    'colspan' => $colspan,
+                    'header_text' => $headerText,
         ]);
     }
 
     /**
      * Display group footer
      */
-    public function displayGroupFooter(): void
-    {
+    public function displayGroupFooter(): void {
         $this->group--;
     }
 
@@ -414,27 +402,24 @@ class FormDisplayTemplate
      *
      * @param bool $showButtons Whether show submit and reset button
      */
-    public function displayFieldsetBottom(bool $showButtons = true): string
-    {
+    public function displayFieldsetBottom(bool $showButtons = true): string {
         return $this->template->render('config/form_display/fieldset_bottom', [
-            'show_buttons' => $showButtons,
-            'is_setup' => $this->config->get('is_setup'),
+                    'show_buttons' => $showButtons,
+                    'is_setup' => $this->config->get('is_setup'),
         ]);
     }
 
     /**
      * Closes form tabs
      */
-    public function displayTabsBottom(): string
-    {
+    public function displayTabsBottom(): string {
         return $this->template->render('config/form_display/tabs_bottom');
     }
 
     /**
      * Displays bottom part of the form
      */
-    public function displayFormBottom(): string
-    {
+    public function displayFormBottom(): string {
         return $this->template->render('config/form_display/form_bottom');
     }
 
@@ -445,8 +430,7 @@ class FormDisplayTemplate
      * @param string|array $validators validators callback
      * @param array        $jsArray    will be updated with javascript code
      */
-    public function addJsValidate($fieldId, $validators, array &$jsArray): void
-    {
+    public function addJsValidate($fieldId, $validators, array &$jsArray): void {
         foreach ((array) $validators as $validator) {
             $validator = (array) $validator;
             $vName = array_shift($validator);
@@ -464,8 +448,7 @@ class FormDisplayTemplate
      *
      * @param array $jsArray lines of javascript code
      */
-    public function displayJavascript(array $jsArray): string
-    {
+    public function displayJavascript(array $jsArray): string {
         if (empty($jsArray)) {
             return '';
         }
@@ -481,11 +464,11 @@ class FormDisplayTemplate
      *
      * @return string HTML for errors
      */
-    public function displayErrors($name, array $errorList): string
-    {
+    public function displayErrors($name, array $errorList): string {
         return $this->template->render('config/form_display/errors', [
-            'name' => $name,
-            'error_list' => $errorList,
+                    'name' => $name,
+                    'error_list' => $errorList,
         ]);
     }
+
 }

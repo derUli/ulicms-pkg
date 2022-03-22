@@ -25,8 +25,8 @@ use Symfony\Component\DependencyInjection\Reference;
 /**
  * @author Nicolas Grekas <p@tchwork.com>
  */
-class CachePoolPass implements CompilerPassInterface
-{
+class CachePoolPass implements CompilerPassInterface {
+
     private $cachePoolTag;
     private $kernelResetTag;
     private $cacheClearerId;
@@ -34,8 +34,7 @@ class CachePoolPass implements CompilerPassInterface
     private $cacheSystemClearerId;
     private $cacheSystemClearerTag;
 
-    public function __construct(string $cachePoolTag = 'cache.pool', string $kernelResetTag = 'kernel.reset', string $cacheClearerId = 'cache.global_clearer', string $cachePoolClearerTag = 'cache.pool.clearer', string $cacheSystemClearerId = 'cache.system_clearer', string $cacheSystemClearerTag = 'kernel.cache_clearer')
-    {
+    public function __construct(string $cachePoolTag = 'cache.pool', string $kernelResetTag = 'kernel.reset', string $cacheClearerId = 'cache.global_clearer', string $cachePoolClearerTag = 'cache.pool.clearer', string $cacheSystemClearerId = 'cache.system_clearer', string $cacheSystemClearerTag = 'kernel.cache_clearer') {
         $this->cachePoolTag = $cachePoolTag;
         $this->kernelResetTag = $kernelResetTag;
         $this->cacheClearerId = $cacheClearerId;
@@ -47,14 +46,13 @@ class CachePoolPass implements CompilerPassInterface
     /**
      * {@inheritdoc}
      */
-    public function process(ContainerBuilder $container)
-    {
+    public function process(ContainerBuilder $container) {
         if ($container->hasParameter('cache.prefix.seed')) {
-            $seed = '.'.$container->getParameterBag()->resolveValue($container->getParameter('cache.prefix.seed'));
+            $seed = '.' . $container->getParameterBag()->resolveValue($container->getParameter('cache.prefix.seed'));
         } else {
-            $seed = '_'.$container->getParameter('kernel.project_dir');
+            $seed = '_' . $container->getParameter('kernel.project_dir');
         }
-        $seed .= '.'.$container->getParameter('kernel.container_class');
+        $seed .= '.' . $container->getParameter('kernel.container_class');
 
         $allPools = [];
         $clearers = [];
@@ -82,7 +80,7 @@ class CachePoolPass implements CompilerPassInterface
             if (!isset($tags[0]['namespace'])) {
                 $namespaceSeed = $seed;
                 if (null !== $class) {
-                    $namespaceSeed .= '.'.$class;
+                    $namespaceSeed .= '.' . $class;
                 }
 
                 $tags[0]['namespace'] = $this->getNamespace($namespaceSeed, $name);
@@ -199,22 +197,20 @@ class CachePoolPass implements CompilerPassInterface
         }
     }
 
-    private function getNamespace(string $seed, string $id)
-    {
-        return substr(str_replace('/', '-', base64_encode(hash('sha256', $id.$seed, true))), 0, 10);
+    private function getNamespace(string $seed, string $id) {
+        return substr(str_replace('/', '-', base64_encode(hash('sha256', $id . $seed, true))), 0, 10);
     }
 
     /**
      * @internal
      */
-    public static function getServiceProvider(ContainerBuilder $container, $name)
-    {
+    public static function getServiceProvider(ContainerBuilder $container, $name) {
         $container->resolveEnvPlaceholders($name, null, $usedEnvs);
 
         if ($usedEnvs || preg_match('#^[a-z]++:#', $name)) {
             $dsn = $name;
 
-            if (!$container->hasDefinition($name = '.cache_connection.'.ContainerBuilder::hash($dsn))) {
+            if (!$container->hasDefinition($name = '.cache_connection.' . ContainerBuilder::hash($dsn))) {
                 $definition = new Definition(AbstractAdapter::class);
                 $definition->setPublic(false);
                 $definition->setFactory([AbstractAdapter::class, 'createConnection']);
@@ -225,4 +221,5 @@ class CachePoolPass implements CompilerPassInterface
 
         return $name;
     }
+
 }

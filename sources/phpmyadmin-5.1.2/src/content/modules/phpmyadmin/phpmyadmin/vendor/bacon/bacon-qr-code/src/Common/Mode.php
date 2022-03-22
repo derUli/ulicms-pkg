@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace BaconQrCode\Common;
 
@@ -19,8 +20,8 @@ use DASPRiD\Enum\AbstractEnum;
  * @method static self FNC1_SECOND_POSITION()
  * @method static self HANZI()
  */
-final class Mode extends AbstractEnum
-{
+final class Mode extends AbstractEnum {
+
     protected const TERMINATOR = [[0, 0, 0], 0x00];
     protected const NUMERIC = [[10, 12, 14], 0x01];
     protected const ALPHANUMERIC = [[9, 11, 13], 0x02];
@@ -42,8 +43,7 @@ final class Mode extends AbstractEnum
      */
     private $bits;
 
-    protected function __construct(array $characterCountBitsForVersions, int $bits)
-    {
+    protected function __construct(array $characterCountBitsForVersions, int $bits) {
         $this->characterCountBitsForVersions = $characterCountBitsForVersions;
         $this->bits = $bits;
     }
@@ -51,8 +51,7 @@ final class Mode extends AbstractEnum
     /**
      * Returns the number of bits used in a specific QR code version.
      */
-    public function getCharacterCountBits(Version $version) : int
-    {
+    public function getCharacterCountBits(Version $version): int {
         $number = $version->getVersionNumber();
 
         if ($number <= 9) {
@@ -69,8 +68,8 @@ final class Mode extends AbstractEnum
     /**
      * Returns the four bits used to encode this mode.
      */
-    public function getBits() : int
-    {
+    public function getBits(): int {
         return $this->bits;
     }
+
 }

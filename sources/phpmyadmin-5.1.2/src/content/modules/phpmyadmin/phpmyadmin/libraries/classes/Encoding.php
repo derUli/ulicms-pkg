@@ -25,8 +25,8 @@ use function iconv;
 /**
  * Encoding conversion helper class
  */
-class Encoding
-{
+class Encoding {
+
     /**
      * None encoding conversion engine
      */
@@ -109,8 +109,7 @@ class Encoding
     /**
      * Initializes encoding engine detecting available backends.
      */
-    public static function initEngine(): void
-    {
+    public static function initEngine(): void {
         $engine = 'auto';
         if (isset($GLOBALS['cfg']['RecodingEngine'])) {
             $engine = $GLOBALS['cfg']['RecodingEngine'];
@@ -145,16 +144,14 @@ class Encoding
      *
      * @param int $engine Engine encoding
      */
-    public static function setEngine(int $engine): void
-    {
+    public static function setEngine(int $engine): void {
         self::$engine = $engine;
     }
 
     /**
      * Checks whether there is any charset conversion supported
      */
-    public static function isSupported(): bool
-    {
+    public static function isSupported(): bool {
         if (self::$engine === null) {
             self::initEngine();
         }
@@ -175,9 +172,9 @@ class Encoding
      * @access public
      */
     public static function convertString(
-        string $src_charset,
-        string $dest_charset,
-        string $what
+            string $src_charset,
+            string $dest_charset,
+            string $what
     ): string {
         if ($src_charset == $dest_charset) {
             return $what;
@@ -188,21 +185,21 @@ class Encoding
         switch (self::$engine) {
             case self::ENGINE_RECODE:
                 return recode_string(
-                    $src_charset . '..' . $dest_charset,
-                    $what
+                        $src_charset . '..' . $dest_charset,
+                        $what
                 );
             case self::ENGINE_ICONV:
                 return iconv(
-                    $src_charset,
-                    $dest_charset .
-                    ($GLOBALS['cfg']['IconvExtraParams'] ?? ''),
-                    $what
+                        $src_charset,
+                        $dest_charset .
+                        ($GLOBALS['cfg']['IconvExtraParams'] ?? ''),
+                        $what
                 );
             case self::ENGINE_MB:
                 return mb_convert_encoding(
-                    $what,
-                    $dest_charset,
-                    $src_charset
+                        $what,
+                        $dest_charset,
+                        $src_charset
                 );
             default:
                 return $what;
@@ -212,16 +209,14 @@ class Encoding
     /**
      * Detects whether Kanji encoding is available
      */
-    public static function canConvertKanji(): bool
-    {
+    public static function canConvertKanji(): bool {
         return $GLOBALS['lang'] === 'ja';
     }
 
     /**
      * Setter for Kanji encodings. Use with caution, mostly useful for testing.
      */
-    public static function getKanjiEncodings(): string
-    {
+    public static function getKanjiEncodings(): string {
         return self::$kanjiEncodings;
     }
 
@@ -230,16 +225,14 @@ class Encoding
      *
      * @param string $value Kanji encodings list
      */
-    public static function setKanjiEncodings(string $value): void
-    {
+    public static function setKanjiEncodings(string $value): void {
         self::$kanjiEncodings = $value;
     }
 
     /**
      * Reverses SJIS & EUC-JP position in the encoding codes list
      */
-    public static function kanjiChangeOrder(): void
-    {
+    public static function kanjiChangeOrder(): void {
         $parts = explode(',', self::$kanjiEncodings);
         if ($parts[1] === 'EUC-JP') {
             self::$kanjiEncodings = 'ASCII,SJIS,EUC-JP,JIS';
@@ -257,8 +250,7 @@ class Encoding
      *
      * @return string   the converted string
      */
-    public static function kanjiStrConv(string $str, string $enc, string $kana): string
-    {
+    public static function kanjiStrConv(string $str, string $enc, string $kana): string {
         if ($enc == '' && $kana == '') {
             return $str;
         }
@@ -270,7 +262,7 @@ class Encoding
 
         if ($kana === 'kana') {
             $dist = mb_convert_kana($str, 'KV', $string_encoding);
-            $str  = $dist;
+            $str = $dist;
         }
         if ($string_encoding != $enc && $enc != '') {
             $dist = mb_convert_encoding($str, $enc, $string_encoding);
@@ -290,16 +282,15 @@ class Encoding
      *
      * @return string   the name of the converted file
      */
-    public static function kanjiFileConv(string $file, string $enc, string $kana): string
-    {
+    public static function kanjiFileConv(string $file, string $enc, string $kana): string {
         if ($enc == '' && $kana == '') {
             return $file;
         }
         $tmpfname = (string) tempnam($GLOBALS['PMA_Config']->getUploadTempDir(), $enc);
-        $fpd      = fopen($tmpfname, 'wb');
-        $fps      = fopen($file, 'r');
+        $fpd = fopen($tmpfname, 'wb');
+        $fps = fopen($file, 'r');
         self::kanjiChangeOrder();
-        while (! feof($fps)) {
+        while (!feof($fps)) {
             $line = fgets($fps, 4096);
             $dist = self::kanjiStrConv($line, $enc, $kana);
             fwrite($fpd, $dist);
@@ -317,8 +308,7 @@ class Encoding
      *
      * @return string HTML code for the radio controls
      */
-    public static function kanjiEncodingForm(): string
-    {
+    public static function kanjiEncodingForm(): string {
         $template = new Template();
 
         return $template->render('encoding/kanji_encoding_form');
@@ -329,8 +319,7 @@ class Encoding
      *
      * @return array
      */
-    public static function listEncodings(): array
-    {
+    public static function listEncodings(): array {
         if (self::$engine === null) {
             self::initEngine();
         }
@@ -340,8 +329,9 @@ class Encoding
         }
 
         return array_intersect(
-            array_map('strtolower', mb_list_encodings()),
-            $GLOBALS['cfg']['AvailableCharsets']
+                array_map('strtolower', mb_list_encodings()),
+                $GLOBALS['cfg']['AvailableCharsets']
         );
     }
+
 }

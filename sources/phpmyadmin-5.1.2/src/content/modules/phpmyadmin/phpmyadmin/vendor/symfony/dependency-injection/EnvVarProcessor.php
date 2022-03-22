@@ -18,8 +18,8 @@ use Symfony\Component\DependencyInjection\Exception\RuntimeException;
 /**
  * @author Nicolas Grekas <p@tchwork.com>
  */
-class EnvVarProcessor implements EnvVarProcessorInterface
-{
+class EnvVarProcessor implements EnvVarProcessorInterface {
+
     private $container;
     private $loaders;
     private $loadedVars = [];
@@ -27,8 +27,7 @@ class EnvVarProcessor implements EnvVarProcessorInterface
     /**
      * @param EnvVarLoaderInterface[] $loaders
      */
-    public function __construct(ContainerInterface $container, \Traversable $loaders = null)
-    {
+    public function __construct(ContainerInterface $container, \Traversable $loaders = null) {
         $this->container = $container;
         $this->loaders = $loaders ?? new \ArrayIterator();
     }
@@ -36,8 +35,7 @@ class EnvVarProcessor implements EnvVarProcessorInterface
     /**
      * {@inheritdoc}
      */
-    public static function getProvidedTypes()
-    {
+    public static function getProvidedTypes() {
         return [
             'base64' => 'string',
             'bool' => 'bool',
@@ -61,8 +59,7 @@ class EnvVarProcessor implements EnvVarProcessorInterface
     /**
      * {@inheritdoc}
      */
-    public function getEnv($prefix, $name, \Closure $getEnv)
-    {
+    public function getEnv($prefix, $name, \Closure $getEnv) {
         $i = strpos($name, ':');
 
         if ('key' === $prefix) {
@@ -227,7 +224,7 @@ class EnvVarProcessor implements EnvVarProcessorInterface
             $env = json_decode($env, true);
 
             if (\JSON_ERROR_NONE !== json_last_error()) {
-                throw new RuntimeException(sprintf('Invalid JSON in env var "%s": ', $name).json_last_error_msg());
+                throw new RuntimeException(sprintf('Invalid JSON in env var "%s": ', $name) . json_last_error_msg());
             }
 
             if (null !== $env && !\is_array($env)) {
@@ -292,4 +289,5 @@ class EnvVarProcessor implements EnvVarProcessorInterface
 
         throw new RuntimeException(sprintf('Unsupported env var prefix "%s".', $prefix));
     }
+
 }

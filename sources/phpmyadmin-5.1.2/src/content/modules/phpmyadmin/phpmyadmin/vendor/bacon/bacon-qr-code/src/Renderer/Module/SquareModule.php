@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace BaconQrCode\Renderer\Module;
 
@@ -10,24 +11,22 @@ use BaconQrCode\Renderer\Path\Path;
 /**
  * Groups modules together to a single path.
  */
-final class SquareModule implements ModuleInterface
-{
+final class SquareModule implements ModuleInterface {
+
     /**
      * @var self|null
      */
     private static $instance;
 
-    private function __construct()
-    {
+    private function __construct() {
+        
     }
 
-    public static function instance() : self
-    {
+    public static function instance(): self {
         return self::$instance ?: self::$instance = new self();
     }
 
-    public function createPath(ByteMatrix $matrix) : Path
-    {
+    public function createPath(ByteMatrix $matrix): Path {
         $path = new Path();
 
         foreach (new EdgeIterator($matrix) as $edge) {
@@ -44,4 +43,5 @@ final class SquareModule implements ModuleInterface
 
         return $path;
     }
+
 }

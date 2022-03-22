@@ -20,15 +20,14 @@ use Symfony\Component\DependencyInjection\Exception\OutOfBoundsException;
  *
  * @author Johannes M. Schmitt <schmittjoh@gmail.com>
  */
-class ChildDefinition extends Definition
-{
+class ChildDefinition extends Definition {
+
     private $parent;
 
     /**
      * @param string $parent The id of Definition instance to decorate
      */
-    public function __construct(string $parent)
-    {
+    public function __construct(string $parent) {
         $this->parent = $parent;
         $this->setPrivate(false);
     }
@@ -38,8 +37,7 @@ class ChildDefinition extends Definition
      *
      * @return string
      */
-    public function getParent()
-    {
+    public function getParent() {
         return $this->parent;
     }
 
@@ -50,8 +48,7 @@ class ChildDefinition extends Definition
      *
      * @return $this
      */
-    public function setParent($parent)
-    {
+    public function setParent($parent) {
         $this->parent = $parent;
 
         return $this;
@@ -69,10 +66,9 @@ class ChildDefinition extends Definition
      *
      * @throws OutOfBoundsException When the argument does not exist
      */
-    public function getArgument($index)
-    {
-        if (\array_key_exists('index_'.$index, $this->arguments)) {
-            return $this->arguments['index_'.$index];
+    public function getArgument($index) {
+        if (\array_key_exists('index_' . $index, $this->arguments)) {
+            return $this->arguments['index_' . $index];
         }
 
         return parent::getArgument($index);
@@ -93,10 +89,9 @@ class ChildDefinition extends Definition
      *
      * @throws InvalidArgumentException when $index isn't an integer
      */
-    public function replaceArgument($index, $value)
-    {
+    public function replaceArgument($index, $value) {
         if (\is_int($index)) {
-            $this->arguments['index_'.$index] = $value;
+            $this->arguments['index_' . $index] = $value;
         } elseif (str_starts_with($index, '$')) {
             $this->arguments[$index] = $value;
         } else {
@@ -109,16 +104,15 @@ class ChildDefinition extends Definition
     /**
      * @internal
      */
-    public function setAutoconfigured($autoconfigured): self
-    {
+    public function setAutoconfigured($autoconfigured): self {
         throw new BadMethodCallException('A ChildDefinition cannot be autoconfigured.');
     }
 
     /**
      * @internal
      */
-    public function setInstanceofConditionals(array $instanceof): self
-    {
+    public function setInstanceofConditionals(array $instanceof): self {
         throw new BadMethodCallException('A ChildDefinition cannot have instanceof conditionals set on it.');
     }
+
 }

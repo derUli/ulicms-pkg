@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Symfony package.
  *
@@ -16,6 +17,6 @@ namespace Symfony\Component\Config\Util\Exception;
  *
  * @author Ole Rößner <ole@roessner.it>
  */
-class InvalidXmlException extends XmlParsingException
-{
+class InvalidXmlException extends XmlParsingException {
+    
 }

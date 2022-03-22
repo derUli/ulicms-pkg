@@ -15,13 +15,12 @@ use function uniqid;
 /**
  * Handles plugins that show the upload progress.
  */
-final class Ajax
-{
+final class Ajax {
+
     /**
      * Sets up some variables for upload progress
      */
-    public static function uploadProgressSetup(): array
-    {
+    public static function uploadProgressSetup(): array {
         /**
          * constant for differentiating array in $_SESSION variable
          */
@@ -54,7 +53,7 @@ final class Ajax
 
             if (self::$check()) {
                 $upload_class = 'PhpMyAdmin\Plugins\Import\Upload\Upload' . ucwords(
-                    $plugin
+                                $plugin
                 );
                 $_SESSION[$SESSION_KEY]['handler'] = $upload_class;
                 break;
@@ -74,11 +73,8 @@ final class Ajax
      * @return bool true if APC extension is available and if rfc1867 is enabled,
      * false if it is not
      */
-    public static function apcCheck()
-    {
-        if (! extension_loaded('apc')
-            || ! function_exists('apc_fetch')
-            || ! function_exists('getallheaders')
+    public static function apcCheck() {
+        if (!extension_loaded('apc') || !function_exists('apc_fetch') || !function_exists('getallheaders')
         ) {
             return false;
         }
@@ -93,10 +89,8 @@ final class Ajax
      * @return bool true if PhpMyAdmin\Plugins\Import\Upload\UploadProgress
      * extension is available, false if it is not
      */
-    public static function progressCheck(): bool
-    {
-        return function_exists('uploadprogress_get_info')
-            && function_exists('getallheaders');
+    public static function progressCheck(): bool {
+        return function_exists('uploadprogress_get_info') && function_exists('getallheaders');
     }
 
     /**
@@ -105,8 +99,7 @@ final class Ajax
      * @return bool true if PHP 5.4 session upload-progress is available,
      * false if it is not
      */
-    public static function sessionCheck(): bool
-    {
+    public static function sessionCheck(): bool {
         return ini_get('session.upload_progress.enabled') === '1';
     }
 
@@ -116,8 +109,7 @@ final class Ajax
      *
      * @return true
      */
-    public static function nopluginCheck(): bool
-    {
+    public static function nopluginCheck(): bool {
         return true;
     }
 
@@ -127,11 +119,11 @@ final class Ajax
      *
      * @param string $id ID of transfer, usually $upload_id
      */
-    public static function status($id): void
-    {
+    public static function status($id): void {
         Core::headerJSON();
         echo json_encode(
-            $_SESSION[$GLOBALS['SESSION_KEY']]['handler']::getUploadStatus($id)
+                $_SESSION[$GLOBALS['SESSION_KEY']]['handler']::getUploadStatus($id)
         );
     }
+
 }

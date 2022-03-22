@@ -26,10 +26,9 @@ use Twig\Token;
  *
  * @deprecated since Twig 2.7, to be removed in 3.0 (use the "spaceless" filter with the "apply" tag instead)
  */
-final class SpacelessTokenParser extends AbstractTokenParser
-{
-    public function parse(Token $token)
-    {
+final class SpacelessTokenParser extends AbstractTokenParser {
+
+    public function parse(Token $token) {
         $stream = $this->parser->getStream();
         $lineno = $token->getLine();
 
@@ -42,15 +41,14 @@ final class SpacelessTokenParser extends AbstractTokenParser
         return new SpacelessNode($body, $lineno, $this->getTag());
     }
 
-    public function decideSpacelessEnd(Token $token)
-    {
+    public function decideSpacelessEnd(Token $token) {
         return $token->test('endspaceless');
     }
 
-    public function getTag()
-    {
+    public function getTag() {
         return 'spaceless';
     }
+
 }
 
 class_alias('Twig\TokenParser\SpacelessTokenParser', 'Twig_TokenParser_Spaceless');

@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Internal relations for information schema and mysql databases.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin;
@@ -10,8 +10,8 @@ namespace PhpMyAdmin;
 /**
  * Internal relations for information schema and mysql databases.
  */
-class InternalRelations
-{
+class InternalRelations {
+
     /** @var array */
     private static $informationSchema = [
         'CHARACTER_SETS' => [
@@ -484,16 +484,15 @@ class InternalRelations
     /**
      * @return array
      */
-    public static function getInformationSchema(): array
-    {
+    public static function getInformationSchema(): array {
         return self::$informationSchema;
     }
 
     /**
      * @return array
      */
-    public static function getMySql(): array
-    {
+    public static function getMySql(): array {
         return self::$mysql;
     }
+
 }

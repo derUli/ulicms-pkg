@@ -1,6 +1,7 @@
 {# Invisible characters will make javascript crash #}
 <script type="text/javascript">
-var designerConfig = {{ designer_config|raw }};
+    var designerConfig
+    = {{ designer_config|raw }};
 </script>
 
 {# side menu #}
@@ -200,19 +201,19 @@ var designerConfig = {{ designer_config|raw }};
             <div class="text-center">
                 <a href="#" class="M_butt" target="_self" >
                     <img title="{% trans 'Hide/Show all' %}"
-                        alt="v"
-                        id="key_HS_all"
-                        src="{{ theme.getImgPath('designer/downarrow1.png') }}"
-                        data-down="{{ theme.getImgPath('designer/downarrow1.png') }}"
-                        data-right="{{ theme.getImgPath('designer/rightarrow1.png') }}">
+                         alt="v"
+                         id="key_HS_all"
+                         src="{{ theme.getImgPath('designer/downarrow1.png') }}"
+                         data-down="{{ theme.getImgPath('designer/downarrow1.png') }}"
+                         data-right="{{ theme.getImgPath('designer/rightarrow1.png') }}">
                 </a>
                 <a href="#" class="M_butt" target="_self" >
                     <img alt="v"
-                        id="key_HS"
-                        title="{% trans 'Hide/Show tables with no relationship' %}"
-                        src="{{ theme.getImgPath('designer/downarrow2.png') }}"
-                        data-down="{{ theme.getImgPath('designer/downarrow2.png') }}"
-                        data-right="{{ theme.getImgPath('designer/rightarrow2.png') }}">
+                         id="key_HS"
+                         title="{% trans 'Hide/Show tables with no relationship' %}"
+                         src="{{ theme.getImgPath('designer/downarrow2.png') }}"
+                         data-down="{{ theme.getImgPath('designer/downarrow2.png') }}"
+                         data-right="{{ theme.getImgPath('designer/rightarrow2.png') }}">
                 </a>
             </div>
             <div id="id_scroll_tab" class="scroll_tab">
@@ -223,10 +224,10 @@ var designerConfig = {{ designer_config|raw }};
                 {% trans 'Number of tables:' %} <span id="tables_counter">0</span>
             </div>
             <div id="layer_menu_sizer">
-                  <img class="icon floatleft"
-                      id="layer_menu_sizer_btn"
-                      data-right="{{ theme.getImgPath('designer/resizeright.png') }}"
-                      src="{{ theme.getImgPath('designer/resize.png') }}">
+                <img class="icon floatleft"
+                     id="layer_menu_sizer_btn"
+                     data-right="{{ theme.getImgPath('designer/resizeright.png') }}"
+                     src="{{ theme.getImgPath('designer/resize.png') }}">
             </div>
         </div>
         {# end layer_menu #}
@@ -335,9 +336,9 @@ var designerConfig = {{ designer_config|raw }};
                         <tr>
                             <td colspan="2" class="text-center nowrap">
                                 <input type="button" id="ok_new_rel_panel" class="btn btn-secondary butt"
-                                    name="Button" value="{% trans 'OK' %}">
+                                       name="Button" value="{% trans 'OK' %}">
                                 <input type="button" id="cancel_new_rel_panel"
-                                    class="btn btn-secondary butt" name="Button" value="{% trans 'Cancel' %}">
+                                       class="btn btn-secondary butt" name="Button" value="{% trans 'Cancel' %}">
                             </td>
                         </tr>
                     </tbody>
@@ -386,9 +387,9 @@ var designerConfig = {{ designer_config|raw }};
                     <tr>
                         <td colspan="3" class="text-center nowrap">
                             <input id="del_button" name="Button" type="button"
-                                class="btn btn-secondary butt" value="{% trans 'Delete' %}">
+                                   class="btn btn-secondary butt" value="{% trans 'Delete' %}">
                             <input id="cancel_button" type="button" class="btn btn-secondary butt"
-                                name="Button" value="{% trans 'Cancel' %}">
+                                   name="Button" value="{% trans 'Cancel' %}">
                         </td>
                     </tr>
                 </table>
@@ -664,9 +665,9 @@ var designerConfig = {{ designer_config|raw }};
                                     <input type="hidden" id="ok_add_object_table_name" />
                                     <input type="hidden" id="ok_add_object_col_name" />
                                     <input type="button" id="ok_add_object" class="btn btn-secondary butt"
-                                        name="Button" value="{% trans 'OK' %}">
+                                           name="Button" value="{% trans 'OK' %}">
                                     <input type="button" id="cancel_close_option" class="btn btn-secondary butt"
-                                        name="Button" value="{% trans 'Cancel' %}">
+                                           name="Button" value="{% trans 'Cancel' %}">
                                 </td>
                             </tr>
                         </tbody>
@@ -728,11 +729,11 @@ var designerConfig = {{ designer_config|raw }};
                             <tr>
                                 <td colspan="2" class="text-center nowrap">
                                     <input type="button" id="ok_edit_rename" class="btn btn-secondary butt"
-                                        name="Button" value="{% trans 'OK' %}">
+                                           name="Button" value="{% trans 'OK' %}">
                                     <input id="query_rename_to_button" type="button"
-                                        class="btn btn-secondary butt"
-                                        name="Button"
-                                        value="{% trans 'Cancel' %}">
+                                           class="btn btn-secondary butt"
+                                           name="Button"
+                                           value="{% trans 'Cancel' %}">
                                 </td>
                             </tr>
                         </tbody>
@@ -812,44 +813,44 @@ var designerConfig = {{ designer_config|raw }};
                                 </td>
                             </tr>
                             <tr>
-                                <tr>
-                                    <td width="58" class="nowrap">
-                                        {% trans 'Operator' %}
-                                    </td>
-                                    <td width="102">
-                                        <select name="hrel_opt" id="hrel_opt">
-                                            <option value="--" selected="selected">
-                                                --
-                                            </option>
-                                            <option value="=">
-                                                =
-                                            </option>
-                                            <option value="&gt;">
-                                                &gt;
-                                            </option>
-                                            <option value="&lt;">
-                                                &lt;
-                                            </option>
-                                            <option value="&gt;=">
-                                                &gt;=
-                                            </option>
-                                            <option value="&lt;=">
-                                                &lt;=
-                                            </option>
-                                            <option value="NOT">
-                                                NOT
-                                            </option>
-                                            <option value="IN">
-                                                IN
-                                            </option>
-                                            <option value="EXCEPT">
-                                                {% trans 'Except' %}
-                                            </option>
-                                            <option value="NOT IN">
-                                                NOT IN
-                                            </option>
-                                        </select>
-                                    </td>
+                            <tr>
+                                <td width="58" class="nowrap">
+                                    {% trans 'Operator' %}
+                                </td>
+                                <td width="102">
+                                    <select name="hrel_opt" id="hrel_opt">
+                                        <option value="--" selected="selected">
+                                            --
+                                        </option>
+                                        <option value="=">
+                                            =
+                                        </option>
+                                        <option value="&gt;">
+                                            &gt;
+                                        </option>
+                                        <option value="&lt;">
+                                            &lt;
+                                        </option>
+                                        <option value="&gt;=">
+                                            &gt;=
+                                        </option>
+                                        <option value="&lt;=">
+                                            &lt;=
+                                        </option>
+                                        <option value="NOT">
+                                            NOT
+                                        </option>
+                                        <option value="IN">
+                                            IN
+                                        </option>
+                                        <option value="EXCEPT">
+                                            {% trans 'Except' %}
+                                        </option>
+                                        <option value="NOT IN">
+                                            NOT IN
+                                        </option>
+                                    </select>
+                                </td>
                             </tr>
                             <tr>
                                 <td class="nowrap">
@@ -867,11 +868,11 @@ var designerConfig = {{ designer_config|raw }};
                             <tr>
                                 <td colspan="2" class="text-center nowrap">
                                     <input type="button" id="ok_edit_having" class="btn btn-secondary butt"
-                                        name="Button" value="{% trans 'OK' %}">
+                                           name="Button" value="{% trans 'OK' %}">
                                     <input id="query_having_button" type="button"
-                                        class="btn btn-secondary butt"
-                                        name="Button"
-                                        value="{% trans 'Cancel' %}">
+                                           class="btn btn-secondary butt"
+                                           name="Button"
+                                           value="{% trans 'Cancel' %}">
                                 </td>
                             </tr>
                         </tbody>
@@ -952,11 +953,11 @@ var designerConfig = {{ designer_config|raw }};
                             <tr>
                                 <td colspan="2" class="text-center nowrap">
                                     <input type="button" id="ok_edit_Aggr" class="btn btn-secondary butt"
-                                        name="Button" value="{% trans 'OK' %}">
+                                           name="Button" value="{% trans 'OK' %}">
                                     <input id="query_Aggregate_Button" type="button"
-                                        class="btn btn-secondary butt"
-                                        name="Button"
-                                        value="{% trans 'Cancel' %}">
+                                           class="btn btn-secondary butt"
+                                           name="Button"
+                                           value="{% trans 'Cancel' %}">
                                 </td>
                             </tr>
                         </tbody>
@@ -1059,7 +1060,7 @@ var designerConfig = {{ designer_config|raw }};
                             <tr>
                                 <td colspan="2" class="text-center nowrap">
                                     <input type="button" id="ok_edit_where" class="btn btn-secondary butt"
-                                        name="Button" value="{% trans 'OK' %}">
+                                           name="Button" value="{% trans 'OK' %}">
                                     <input id="query_where_button" type="button" class="btn btn-secondary butt" name="Button"
                                            value="{% trans 'Cancel' %}">
                                 </td>

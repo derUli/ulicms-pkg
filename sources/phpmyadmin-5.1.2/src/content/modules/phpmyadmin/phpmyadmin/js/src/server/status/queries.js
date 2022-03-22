@@ -30,12 +30,12 @@ AJAX.registerOnload('server/status/queries.js', function () {
                 cdata.push([key, parseInt(value, 10)]);
             });
             $('#serverstatusquerieschart').data(
-                'queryPieChart',
-                Functions.createProfilingChart(
-                    'serverstatusquerieschart',
-                    cdata
-                )
-            );
+                    'queryPieChart',
+                    Functions.createProfilingChart(
+                            'serverstatusquerieschart',
+                            cdata
+                            )
+                    );
         }
     } catch (exception) {
         // Could not load chart, no big deal...

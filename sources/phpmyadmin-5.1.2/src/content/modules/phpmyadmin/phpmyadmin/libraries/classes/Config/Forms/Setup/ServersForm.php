@@ -1,21 +1,20 @@
 <?php
+
 /**
  * User preferences form
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Config\Forms\Setup;
 
 use PhpMyAdmin\Config\Forms\BaseForm;
 
-class ServersForm extends BaseForm
-{
+class ServersForm extends BaseForm {
+
     /**
      * @return array
      */
-    public static function getForms()
-    {
+    public static function getForms() {
         // phpcs:disable Squiz.Arrays.ArrayDeclaration.KeySpecified,Squiz.Arrays.ArrayDeclaration.NoKeySpecified
         return [
             'Server' => [
@@ -108,4 +107,5 @@ class ServersForm extends BaseForm
 
         // phpcs:enable
     }
+
 }

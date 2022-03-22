@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Provides upload functionalities for the import plugins
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Plugins\Import\Upload;
@@ -16,15 +16,14 @@ use function trim;
 /**
  * Implementation for session
  */
-class UploadSession implements UploadInterface
-{
+class UploadSession implements UploadInterface {
+
     /**
      * Gets the specific upload ID Key
      *
      * @return string ID Key
      */
-    public static function getIdKey()
-    {
+    public static function getIdKey() {
         return ini_get('session.upload_progress.name');
     }
 
@@ -37,27 +36,26 @@ class UploadSession implements UploadInterface
      *
      * @return array|null
      */
-    public static function getUploadStatus($id)
-    {
+    public static function getUploadStatus($id) {
         global $SESSION_KEY;
 
         if (trim($id) == '') {
             return null;
         }
 
-        if (! array_key_exists($id, $_SESSION[$SESSION_KEY])) {
+        if (!array_key_exists($id, $_SESSION[$SESSION_KEY])) {
             $_SESSION[$SESSION_KEY][$id] = [
-                'id'       => $id,
+                'id' => $id,
                 'finished' => false,
-                'percent'  => 0,
-                'total'    => 0,
+                'percent' => 0,
+                'total' => 0,
                 'complete' => 0,
-                'plugin'   => self::getIdKey(),
+                'plugin' => self::getIdKey(),
             ];
         }
         $ret = $_SESSION[$SESSION_KEY][$id];
 
-        if (! Ajax::sessionCheck() || $ret['finished']) {
+        if (!Ajax::sessionCheck() || $ret['finished']) {
             return $ret;
         }
 
@@ -78,12 +76,12 @@ class UploadSession implements UploadInterface
             }
         } else {
             $ret = [
-                'id'       => $id,
+                'id' => $id,
                 'finished' => true,
-                'percent'  => 100,
-                'total'    => $ret['total'],
+                'percent' => 100,
+                'total' => $ret['total'],
                 'complete' => $ret['total'],
-                'plugin'   => self::getIdKey(),
+                'plugin' => self::getIdKey(),
             ];
         }
 
@@ -91,4 +89,5 @@ class UploadSession implements UploadInterface
 
         return $ret;
     }
+
 }

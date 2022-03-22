@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Code for displaying server selection
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Server;
@@ -18,8 +18,8 @@ use function strpos;
 /**
  * Displays the MySQL servers choice form
  */
-class Select
-{
+class Select {
+
     /**
      * Renders the server selection in list or selectbox form, or option tags only
      *
@@ -28,33 +28,32 @@ class Select
      *
      * @return string
      */
-    public static function render($not_only_options, $omit_fieldset)
-    {
+    public static function render($not_only_options, $omit_fieldset) {
         $retval = '';
 
         // Show as list?
         if ($not_only_options) {
             $list = $GLOBALS['cfg']['DisplayServersList'];
-            $not_only_options = ! $list;
+            $not_only_options = !$list;
         } else {
             $list = false;
         }
 
         if ($not_only_options) {
             $retval .= '<form method="post" action="'
-                . Util::getScriptNameForOption(
-                    $GLOBALS['cfg']['DefaultTabServer'],
-                    'server'
-                )
-                . '" class="disableAjax">';
+                    . Util::getScriptNameForOption(
+                            $GLOBALS['cfg']['DefaultTabServer'],
+                            'server'
+                    )
+                    . '" class="disableAjax">';
 
-            if (! $omit_fieldset) {
+            if (!$omit_fieldset) {
                 $retval .= '<fieldset>';
             }
 
             $retval .= Url::getHiddenFields([]);
             $retval .= '<label for="select_server">'
-                . __('Current server:') . '</label> ';
+                    . __('Current server:') . '</label> ';
 
             $retval .= '<select name="server" id="select_server" class="autosubmit">';
             $retval .= '<option value="">(' . __('Servers') . ') ...</option>' . "\n";
@@ -68,28 +67,28 @@ class Select
                 continue;
             }
 
-            if (! empty($GLOBALS['server']) && (int) $GLOBALS['server'] === (int) $key) {
+            if (!empty($GLOBALS['server']) && (int) $GLOBALS['server'] === (int) $key) {
                 $selected = 1;
             } else {
                 $selected = 0;
             }
-            if (! empty($server['verbose'])) {
+            if (!empty($server['verbose'])) {
                 $label = $server['verbose'];
             } else {
                 $label = $server['host'];
-                if (! empty($server['port'])) {
+                if (!empty($server['port'])) {
                     $label .= ':' . $server['port'];
                 }
             }
-            if (! empty($server['only_db'])) {
-                if (! is_array($server['only_db'])) {
+            if (!empty($server['only_db'])) {
+                if (!is_array($server['only_db'])) {
                     $label .= ' - ' . $server['only_db'];
                     // try to avoid displaying a too wide selector
                 } elseif (count($server['only_db']) < 4) {
                     $label .= ' - ' . implode(', ', $server['only_db']);
                 }
             }
-            if (! empty($server['user']) && $server['auth_type'] === 'config') {
+            if (!empty($server['user']) && $server['auth_type'] === 'config') {
                 $label .= '  (' . $server['user'] . ')';
             }
 
@@ -99,25 +98,25 @@ class Select
                     $retval .= '<strong>' . htmlspecialchars($label) . '</strong>';
                 } else {
                     $scriptName = Util::getScriptNameForOption(
-                        $GLOBALS['cfg']['DefaultTabServer'],
-                        'server'
+                                    $GLOBALS['cfg']['DefaultTabServer'],
+                                    'server'
                     );
                     $retval .= '<a class="disableAjax item" href="'
-                        . $scriptName
-                        . Url::getCommon(['server' => $key], strpos($scriptName, '?') === false ? '?' : '&')
-                        . '" >' . htmlspecialchars($label) . '</a>';
+                            . $scriptName
+                            . Url::getCommon(['server' => $key], strpos($scriptName, '?') === false ? '?' : '&')
+                            . '" >' . htmlspecialchars($label) . '</a>';
                 }
                 $retval .= '</li>';
             } else {
                 $retval .= '<option value="' . $key . '" '
-                    . ($selected ? ' selected="selected"' : '') . '>'
-                    . htmlspecialchars($label) . '</option>' . "\n";
+                        . ($selected ? ' selected="selected"' : '') . '>'
+                        . htmlspecialchars($label) . '</option>' . "\n";
             }
         }
 
         if ($not_only_options) {
             $retval .= '</select>';
-            if (! $omit_fieldset) {
+            if (!$omit_fieldset) {
                 $retval .= '</fieldset>';
             }
             $retval .= '</form>';
@@ -127,4 +126,5 @@ class Select
 
         return $retval;
     }
+
 }

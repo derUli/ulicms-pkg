@@ -18,15 +18,13 @@ use Symfony\Component\ExpressionLanguage\Compiler;
  *
  * @internal
  */
-class ArgumentsNode extends ArrayNode
-{
-    public function compile(Compiler $compiler)
-    {
+class ArgumentsNode extends ArrayNode {
+
+    public function compile(Compiler $compiler) {
         $this->compileArguments($compiler, false);
     }
 
-    public function toArray()
-    {
+    public function toArray() {
         $array = [];
 
         foreach ($this->getKeyValuePairs() as $pair) {
@@ -37,4 +35,5 @@ class ArgumentsNode extends ArrayNode
 
         return $array;
     }
+
 }

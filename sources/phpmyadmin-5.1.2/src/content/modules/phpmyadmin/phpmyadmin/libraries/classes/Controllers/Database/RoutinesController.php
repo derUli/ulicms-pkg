@@ -19,8 +19,8 @@ use function strlen;
 /**
  * Routines management.
  */
-class RoutinesController extends AbstractController
-{
+class RoutinesController extends AbstractController {
+
     /** @var CheckUserPrivileges */
     private $checkUserPrivileges;
 
@@ -32,15 +32,13 @@ class RoutinesController extends AbstractController
      * @param string            $db       Database name
      * @param DatabaseInterface $dbi
      */
-    public function __construct($response, Template $template, $db, CheckUserPrivileges $checkUserPrivileges, $dbi)
-    {
+    public function __construct($response, Template $template, $db, CheckUserPrivileges $checkUserPrivileges, $dbi) {
         parent::__construct($response, $template, $db);
         $this->checkUserPrivileges = $checkUserPrivileges;
         $this->dbi = $dbi;
     }
 
-    public function index(): void
-    {
+    public function index(): void {
         global $db, $table, $tables, $num_tables, $total_num_tables, $sub_part;
         global $tooltip_truename, $tooltip_aliasname, $pos;
         global $errors, $PMA_Theme, $text_dir, $err_url, $url_params, $cfg;
@@ -49,11 +47,11 @@ class RoutinesController extends AbstractController
 
         $this->checkUserPrivileges->getPrivileges();
 
-        if (! $this->response->isAjax()) {
+        if (!$this->response->isAjax()) {
             /**
              * Displays the header and tabs
              */
-            if (! empty($table) && in_array($table, $this->dbi->getTables($db))) {
+            if (!empty($table) && in_array($table, $this->dbi->getTables($db))) {
                 Util::checkParameters(['db', 'table']);
 
                 $url_params = ['db' => $db, 'table' => $table];
@@ -69,19 +67,19 @@ class RoutinesController extends AbstractController
                 $err_url = Util::getScriptNameForOption($cfg['DefaultTabDatabase'], 'database');
                 $err_url .= Url::getCommon(['db' => $db], '&');
 
-                if (! $this->hasDatabase()) {
+                if (!$this->hasDatabase()) {
                     return;
                 }
 
                 [
-                    $tables,
-                    $num_tables,
-                    $total_num_tables,
-                    $sub_part,,,
-                    $tooltip_truename,
-                    $tooltip_aliasname,
-                    $pos,
-                ] = Util::getDbInfo($db, $sub_part ?? '');
+                        $tables,
+                        $num_tables,
+                        $total_num_tables,
+                        $sub_part,,,
+                        $tooltip_truename,
+                        $tooltip_aliasname,
+                        $pos,
+                        ] = Util::getDbInfo($db, $sub_part ?? '');
             }
         } elseif (strlen($db) > 0) {
             $this->dbi->selectDb($db);
@@ -99,7 +97,7 @@ class RoutinesController extends AbstractController
         $routines->handleExecute();
         $routines->export();
 
-        if (! Core::isValid($type, ['FUNCTION', 'PROCEDURE'])) {
+        if (!Core::isValid($type, ['FUNCTION', 'PROCEDURE'])) {
             $type = null;
         }
 
@@ -120,4 +118,5 @@ class RoutinesController extends AbstractController
             'has_privilege' => Util::currentUserHasPrivilege('CREATE ROUTINE', $db, $table),
         ]);
     }
+
 }

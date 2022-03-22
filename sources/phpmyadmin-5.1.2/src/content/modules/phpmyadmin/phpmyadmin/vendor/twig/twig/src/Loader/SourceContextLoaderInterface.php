@@ -14,8 +14,8 @@ namespace Twig\Loader;
 /**
  * Empty interface for Twig 1.x compatibility.
  */
-interface SourceContextLoaderInterface extends LoaderInterface
-{
+interface SourceContextLoaderInterface extends LoaderInterface {
+    
 }
 
 class_alias('Twig\Loader\SourceContextLoaderInterface', 'Twig_SourceContextLoaderInterface');

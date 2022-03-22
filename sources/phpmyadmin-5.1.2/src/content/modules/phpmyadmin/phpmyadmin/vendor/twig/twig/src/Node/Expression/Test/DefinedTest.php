@@ -33,10 +33,9 @@ use Twig\Node\Node;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class DefinedTest extends TestExpression
-{
-    public function __construct(Node $node, string $name, ?Node $arguments, int $lineno)
-    {
+class DefinedTest extends TestExpression {
+
+    public function __construct(Node $node, string $name, ?Node $arguments, int $lineno) {
         if ($node instanceof NameExpression) {
             $node->setAttribute('is_defined_test', true);
         } elseif ($node instanceof GetAttrExpression) {
@@ -57,8 +56,7 @@ class DefinedTest extends TestExpression
         parent::__construct($node, $name, $arguments, $lineno);
     }
 
-    private function changeIgnoreStrictCheck(GetAttrExpression $node)
-    {
+    private function changeIgnoreStrictCheck(GetAttrExpression $node) {
         $node->setAttribute('optimizable', false);
         $node->setAttribute('ignore_strict_check', true);
 
@@ -67,10 +65,10 @@ class DefinedTest extends TestExpression
         }
     }
 
-    public function compile(Compiler $compiler)
-    {
+    public function compile(Compiler $compiler) {
         $compiler->subcompile($this->getNode('node'));
     }
+
 }
 
 class_alias('Twig\Node\Expression\Test\DefinedTest', 'Twig_Node_Expression_Test_Defined');

@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Two authentication factor handling
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin;
@@ -21,8 +21,8 @@ use function ucfirst;
 /**
  * Two factor authentication wrapper class
  */
-class TwoFactor
-{
+class TwoFactor {
+
     /** @var string */
     public $user;
 
@@ -46,8 +46,7 @@ class TwoFactor
      *
      * @param string $user User name
      */
-    public function __construct($user)
-    {
+    public function __construct($user) {
         global $dbi;
 
         $dbi->initRelationParamsCache();
@@ -65,44 +64,39 @@ class TwoFactor
      *
      * @return array
      */
-    public function readConfig()
-    {
+    public function readConfig() {
         $result = [];
         $config = $this->userPreferences->load();
         if (isset($config['config_data']['2fa'])) {
             $result = $config['config_data']['2fa'];
         }
         $result['type'] = $config['type'];
-        if (! isset($result['backend'])) {
+        if (!isset($result['backend'])) {
             $result['backend'] = '';
         }
-        if (! isset($result['settings'])) {
+        if (!isset($result['settings'])) {
             $result['settings'] = [];
         }
 
         return $result;
     }
 
-    public function isWritable(): bool
-    {
+    public function isWritable(): bool {
         return $this->writable;
     }
 
-    public function getBackend(): TwoFactorPlugin
-    {
+    public function getBackend(): TwoFactorPlugin {
         return $this->backend;
     }
 
     /**
      * @return array
      */
-    public function getAvailable(): array
-    {
+    public function getAvailable(): array {
         return $this->available;
     }
 
-    public function showSubmit(): bool
-    {
+    public function showSubmit(): bool {
         $backend = $this->backend;
 
         return $backend::$showSubmit;
@@ -113,8 +107,7 @@ class TwoFactor
      *
      * @return array
      */
-    public function getAvailableBackends()
-    {
+    public function getAvailableBackends() {
         $result = [];
         if ($GLOBALS['cfg']['DBG']['simple2fa']) {
             $result[] = 'simple';
@@ -134,22 +127,21 @@ class TwoFactor
      *
      * @return array
      */
-    public function getMissingDeps()
-    {
+    public function getMissingDeps() {
         $result = [];
-        if (! class_exists(Google2FA::class)) {
+        if (!class_exists(Google2FA::class)) {
             $result[] = [
                 'class' => Application::getName(),
                 'dep' => 'pragmarx/google2fa-qrcode',
             ];
         }
-        if (! class_exists('BaconQrCode\Renderer\Image\Png')) {
+        if (!class_exists('BaconQrCode\Renderer\Image\Png')) {
             $result[] = [
                 'class' => Application::getName(),
                 'dep' => 'bacon/bacon-qr-code',
             ];
         }
-        if (! class_exists(U2FServer::class)) {
+        if (!class_exists(U2FServer::class)) {
             $result[] = [
                 'class' => Key::getName(),
                 'dep' => 'code-lts/u2f-php-server',
@@ -166,12 +158,11 @@ class TwoFactor
      *
      * @return string
      */
-    public function getBackendClass($name)
-    {
+    public function getBackendClass($name) {
         $result = TwoFactorPlugin::class;
         if (in_array($name, $this->available)) {
             $result = 'PhpMyAdmin\\Plugins\\TwoFactor\\' . ucfirst($name);
-        } elseif (! empty($name)) {
+        } elseif (!empty($name)) {
             $result = Invalid::class;
         }
 
@@ -183,8 +174,7 @@ class TwoFactor
      *
      * @return TwoFactorPlugin
      */
-    public function getBackendForCurrentUser()
-    {
+    public function getBackendForCurrentUser() {
         $name = $this->getBackendClass($this->config['backend']);
 
         return new $name($this);
@@ -197,8 +187,7 @@ class TwoFactor
      *
      * @return bool
      */
-    public function check($skip_session = false)
-    {
+    public function check($skip_session = false) {
         if ($skip_session) {
             return $this->backend->check();
         }
@@ -214,8 +203,7 @@ class TwoFactor
      *
      * @return string HTML code
      */
-    public function render()
-    {
+    public function render() {
         return $this->backend->getError() . $this->backend->render();
     }
 
@@ -224,8 +212,7 @@ class TwoFactor
      *
      * @return string HTML code
      */
-    public function setup()
-    {
+    public function setup() {
         return $this->backend->getError() . $this->backend->setup();
     }
 
@@ -234,8 +221,7 @@ class TwoFactor
      *
      * @return true|Message
      */
-    public function save()
-    {
+    public function save() {
         return $this->userPreferences->persistOption('2fa', $this->config, null);
     }
 
@@ -249,21 +235,20 @@ class TwoFactor
      *
      * @return bool
      */
-    public function configure($name)
-    {
+    public function configure($name) {
         $this->config = ['backend' => $name];
         if ($name === '') {
             $cls = $this->getBackendClass($name);
             $this->config['settings'] = [];
             $this->backend = new $cls($this);
         } else {
-            if (! in_array($name, $this->available)) {
+            if (!in_array($name, $this->available)) {
                 return false;
             }
             $cls = $this->getBackendClass($name);
             $this->config['settings'] = [];
             $this->backend = new $cls($this);
-            if (! $this->backend->configure()) {
+            if (!$this->backend->configure()) {
                 return false;
             }
         }
@@ -280,8 +265,7 @@ class TwoFactor
      *
      * @return array
      */
-    public function getAllBackends()
-    {
+    public function getAllBackends() {
         $all = array_merge([''], $this->available);
         $backends = [];
         foreach ($all as $name) {
@@ -295,4 +279,5 @@ class TwoFactor
 
         return $backends;
     }
+
 }

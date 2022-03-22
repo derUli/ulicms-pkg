@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Token utilities.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\SqlParser\Utils;
@@ -11,15 +11,14 @@ use PhpMyAdmin\SqlParser\Lexer;
 use PhpMyAdmin\SqlParser\Token;
 use PhpMyAdmin\SqlParser\TokensList;
 use PhpMyAdmin\SqlParser\UtfString;
-
 use function count;
 use function strcasecmp;
 
 /**
  * Token utilities.
  */
-class Tokens
-{
+class Tokens {
+
     /**
      * Checks if a pattern is a match for the specified token.
      *
@@ -28,8 +27,7 @@ class Tokens
      *
      * @return bool
      */
-    public static function match(Token $token, array $pattern)
-    {
+    public static function match(Token $token, array $pattern) {
         // Token.
         if (isset($pattern['token']) && ($pattern['token'] !== $token->token)) {
             return false;
@@ -50,8 +48,7 @@ class Tokens
         }
 
         // Flags.
-        return ! isset($pattern['flags'])
-            || (! (($pattern['flags'] & $token->flags) === 0));
+        return !isset($pattern['flags']) || (!(($pattern['flags'] & $token->flags) === 0));
     }
 
     /**
@@ -61,8 +58,7 @@ class Tokens
      *
      * @return TokensList
      */
-    public static function replaceTokens($list, array $find, array $replace)
-    {
+    public static function replaceTokens($list, array $find, array $replace) {
         /**
          * Whether the first parameter is a list.
          *
@@ -71,7 +67,7 @@ class Tokens
         $isList = $list instanceof TokensList;
 
         // Parsing the tokens.
-        if (! $isList) {
+        if (!$isList) {
             $list = Lexer::getTokens($list);
         }
 
@@ -131,7 +127,7 @@ class Tokens
                     ++$j;
                 }
 
-                if (! static::match($list->tokens[$j], $find[$k])) {
+                if (!static::match($list->tokens[$j], $find[$k])) {
                     // This token does not match the pattern.
                     break;
                 }
@@ -158,6 +154,7 @@ class Tokens
         }
 
         return $isList ?
-            new TokensList($newList) : TokensList::build($newList);
+                new TokensList($newList) : TokensList::build($newList);
     }
+
 }

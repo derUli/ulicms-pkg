@@ -22,8 +22,8 @@ use Symfony\Component\DependencyInjection\TypedReference;
  *
  * @author Iltar van der Berg <kjarli@gmail.com>
  */
-trait PriorityTaggedServiceTrait
-{
+trait PriorityTaggedServiceTrait {
+
     /**
      * Finds all services with the given tag name and order them by their priority.
      *
@@ -38,8 +38,7 @@ trait PriorityTaggedServiceTrait
      *
      * @return Reference[]
      */
-    private function findAndSortTaggedServices($tagName, ContainerBuilder $container): array
-    {
+    private function findAndSortTaggedServices($tagName, ContainerBuilder $container): array {
         $indexAttribute = $defaultIndexMethod = $needsIndexes = $defaultPriorityMethod = null;
 
         if ($tagName instanceof TaggedIteratorArgument) {
@@ -85,10 +84,12 @@ trait PriorityTaggedServiceTrait
             }
         }
 
-        uasort($services, static function ($a, $b) { return $b[0] <=> $a[0] ?: $a[1] <=> $b[1]; });
+        uasort($services, static function ($a, $b) {
+            return $b[0] <=> $a[0] ?: $a[1] <=> $b[1];
+        });
 
         $refs = [];
-        foreach ($services as [, , $index, $serviceId, $class]) {
+        foreach ($services as [,, $index, $serviceId, $class]) {
             if (!$class) {
                 $reference = new Reference($serviceId);
             } elseif ($index === $serviceId) {
@@ -106,18 +107,18 @@ trait PriorityTaggedServiceTrait
 
         return $refs;
     }
+
 }
 
 /**
  * @internal
  */
-class PriorityTaggedServiceUtil
-{
+class PriorityTaggedServiceUtil {
+
     /**
      * Gets the index defined by the default index method.
      */
-    public static function getDefaultIndex(ContainerBuilder $container, string $serviceId, string $class, string $defaultIndexMethod, string $tagName, ?string $indexAttribute): ?string
-    {
+    public static function getDefaultIndex(ContainerBuilder $container, string $serviceId, string $class, string $defaultIndexMethod, string $tagName, ?string $indexAttribute): ?string {
         if (!($r = $container->getReflectionClass($class)) || !$r->hasMethod($defaultIndexMethod)) {
             return null;
         }
@@ -149,8 +150,7 @@ class PriorityTaggedServiceUtil
     /**
      * Gets the priority defined by the default priority method.
      */
-    public static function getDefaultPriority(ContainerBuilder $container, string $serviceId, string $class, string $defaultPriorityMethod, string $tagName): ?int
-    {
+    public static function getDefaultPriority(ContainerBuilder $container, string $serviceId, string $class, string $defaultPriorityMethod, string $tagName): ?int {
         if (!($r = $container->getReflectionClass($class)) || !$r->hasMethod($defaultPriorityMethod)) {
             return null;
         }
@@ -171,4 +171,5 @@ class PriorityTaggedServiceUtil
 
         return $defaultPriority;
     }
+
 }

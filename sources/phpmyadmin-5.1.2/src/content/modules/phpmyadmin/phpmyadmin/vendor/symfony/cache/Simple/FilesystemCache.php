@@ -23,14 +23,14 @@ use Symfony\Contracts\Cache\CacheInterface;
 /**
  * @deprecated since Symfony 4.3, use FilesystemAdapter and type-hint for CacheInterface instead.
  */
-class FilesystemCache extends AbstractCache implements PruneableInterface
-{
+class FilesystemCache extends AbstractCache implements PruneableInterface {
+
     use FilesystemTrait;
 
-    public function __construct(string $namespace = '', int $defaultLifetime = 0, string $directory = null, MarshallerInterface $marshaller = null)
-    {
+    public function __construct(string $namespace = '', int $defaultLifetime = 0, string $directory = null, MarshallerInterface $marshaller = null) {
         $this->marshaller = $marshaller ?? new DefaultMarshaller();
         parent::__construct('', $defaultLifetime);
         $this->init($namespace, $directory);
     }
+
 }

@@ -9,6 +9,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace PhpMyAdmin\Twig\Extensions\TokenParser;
 
 use PhpMyAdmin\Twig\Extensions\Node\TransNode;
@@ -21,20 +22,19 @@ use Twig\Token;
 use Twig\TokenParser\AbstractTokenParser;
 use function sprintf;
 
-class TransTokenParser extends AbstractTokenParser
-{
+class TransTokenParser extends AbstractTokenParser {
+
     /**
      * {@inheritdoc}
      */
-    public function parse(Token $token)
-    {
+    public function parse(Token $token) {
         $lineno = $token->getLine();
         $stream = $this->parser->getStream();
         $count = null;
         $plural = null;
         $notes = null;
 
-        if (! $stream->test(Token::BLOCK_END_TYPE)) {
+        if (!$stream->test(Token::BLOCK_END_TYPE)) {
             $body = $this->parser->getExpressionParser()->parseExpression();
         } else {
             $stream->expect(Token::BLOCK_END_TYPE);
@@ -66,24 +66,21 @@ class TransTokenParser extends AbstractTokenParser
     /**
      * @return bool
      */
-    public function decideForFork(Token $token)
-    {
+    public function decideForFork(Token $token) {
         return $token->test(['plural', 'notes', 'endtrans']);
     }
 
     /**
      * @return bool
      */
-    public function decideForEnd(Token $token)
-    {
+    public function decideForEnd(Token $token) {
         return $token->test('endtrans');
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getTag()
-    {
+    public function getTag() {
         return 'trans';
     }
 
@@ -92,12 +89,10 @@ class TransTokenParser extends AbstractTokenParser
      *
      * @throws SyntaxError
      */
-    protected function checkTransString(Node $body, $lineno)
-    {
+    protected function checkTransString(Node $body, $lineno) {
         foreach ($body as $i => $node) {
-            if ($node instanceof TextNode
-                ||
-                ($node instanceof PrintNode && $node->getNode('expr') instanceof NameExpression)
+            if ($node instanceof TextNode ||
+                    ($node instanceof PrintNode && $node->getNode('expr') instanceof NameExpression)
             ) {
                 continue;
             }
@@ -105,4 +100,5 @@ class TransTokenParser extends AbstractTokenParser
             throw new SyntaxError(sprintf('The text to be translated with "trans" can only contain references to simple variables'), $lineno);
         }
     }
+
 }

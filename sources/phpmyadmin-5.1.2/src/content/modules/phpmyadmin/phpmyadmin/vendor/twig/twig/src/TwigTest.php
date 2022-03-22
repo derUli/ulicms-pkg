@@ -22,8 +22,8 @@ use Twig\Node\Expression\TestExpression;
  *
  * @see https://twig.symfony.com/doc/templates.html#test-operator
  */
-class TwigTest
-{
+class TwigTest {
+
     private $name;
     private $callable;
     private $options;
@@ -36,10 +36,9 @@ class TwigTest
      * @param callable|null $callable A callable implementing the test. If null, you need to overwrite the "node_class" option to customize compilation.
      * @param array         $options  Options array
      */
-    public function __construct(string $name, $callable = null, array $options = [])
-    {
+    public function __construct(string $name, $callable = null, array $options = []) {
         if (__CLASS__ !== static::class) {
-            @trigger_error('Overriding '.__CLASS__.' is deprecated since Twig 2.4.0 and the class will be final in 3.0.', \E_USER_DEPRECATED);
+            @trigger_error('Overriding ' . __CLASS__ . ' is deprecated since Twig 2.4.0 and the class will be final in 3.0.', \E_USER_DEPRECATED);
         }
 
         $this->name = $name;
@@ -50,11 +49,10 @@ class TwigTest
             'deprecated' => false,
             'alternative' => null,
             'one_mandatory_argument' => false,
-        ], $options);
+                ], $options);
     }
 
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -63,50 +61,42 @@ class TwigTest
      *
      * @return callable|null
      */
-    public function getCallable()
-    {
+    public function getCallable() {
         return $this->callable;
     }
 
-    public function getNodeClass()
-    {
+    public function getNodeClass() {
         return $this->options['node_class'];
     }
 
-    public function setArguments($arguments)
-    {
+    public function setArguments($arguments) {
         $this->arguments = $arguments;
     }
 
-    public function getArguments()
-    {
+    public function getArguments() {
         return $this->arguments;
     }
 
-    public function isVariadic()
-    {
+    public function isVariadic() {
         return $this->options['is_variadic'];
     }
 
-    public function isDeprecated()
-    {
+    public function isDeprecated() {
         return (bool) $this->options['deprecated'];
     }
 
-    public function getDeprecatedVersion()
-    {
+    public function getDeprecatedVersion() {
         return $this->options['deprecated'];
     }
 
-    public function getAlternative()
-    {
+    public function getAlternative() {
         return $this->options['alternative'];
     }
 
-    public function hasOneMandatoryArgument(): bool
-    {
+    public function hasOneMandatoryArgument(): bool {
         return (bool) $this->options['one_mandatory_argument'];
     }
+
 }
 
 // For Twig 1.x compatibility

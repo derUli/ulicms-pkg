@@ -14,8 +14,8 @@ use function in_array;
  * @todo add caching
  * @abstract
  */
-abstract class ListAbstract extends ArrayObject
-{
+abstract class ListAbstract extends ArrayObject {
+
     /** @var mixed   empty item */
     protected $itemEmpty = '';
 
@@ -24,8 +24,7 @@ abstract class ListAbstract extends ArrayObject
      *
      * @return mixed   an empty item
      */
-    public function getEmpty()
-    {
+    public function getEmpty() {
         return $this->itemEmpty;
     }
 
@@ -37,11 +36,10 @@ abstract class ListAbstract extends ArrayObject
      *
      * @return bool true if all items exists, otherwise false
      */
-    public function exists(...$params)
-    {
+    public function exists(...$params) {
         $this_elements = $this->getArrayCopy();
         foreach ($params as $result) {
-            if (! in_array($result, $this_elements)) {
+            if (!in_array($result, $this_elements)) {
                 return false;
             }
         }
@@ -52,8 +50,7 @@ abstract class ListAbstract extends ArrayObject
     /**
      * @return array<int, array<string, bool|string>>
      */
-    public function getList(): array
-    {
+    public function getList(): array {
         $selected = $this->getDefault();
 
         $list = [];
@@ -76,8 +73,7 @@ abstract class ListAbstract extends ArrayObject
      *
      * @return string  default item
      */
-    public function getDefault()
-    {
+    public function getDefault() {
         return $this->getEmpty();
     }
 

@@ -21,8 +21,8 @@ use Symfony\Contracts\Cache\CacheInterface;
 /**
  * @author Nicolas Grekas <p@tchwork.com>
  */
-class ArrayAdapter implements AdapterInterface, CacheInterface, LoggerAwareInterface, ResettableInterface
-{
+class ArrayAdapter implements AdapterInterface, CacheInterface, LoggerAwareInterface, ResettableInterface {
+
     use ArrayTrait;
 
     private $createCacheItem;
@@ -31,29 +31,27 @@ class ArrayAdapter implements AdapterInterface, CacheInterface, LoggerAwareInter
     /**
      * @param bool $storeSerialized Disabling serialization can lead to cache corruptions when storing mutable values but increases performance otherwise
      */
-    public function __construct(int $defaultLifetime = 0, bool $storeSerialized = true)
-    {
+    public function __construct(int $defaultLifetime = 0, bool $storeSerialized = true) {
         $this->defaultLifetime = $defaultLifetime;
         $this->storeSerialized = $storeSerialized;
         $this->createCacheItem = \Closure::bind(
-            static function ($key, $value, $isHit) {
-                $item = new CacheItem();
-                $item->key = $key;
-                $item->value = $value;
-                $item->isHit = $isHit;
+                        static function ($key, $value, $isHit) {
+                            $item = new CacheItem();
+                            $item->key = $key;
+                            $item->value = $value;
+                            $item->isHit = $isHit;
 
-                return $item;
-            },
-            null,
-            CacheItem::class
+                            return $item;
+                        },
+                        null,
+                        CacheItem::class
         );
     }
 
     /**
      * {@inheritdoc}
      */
-    public function get(string $key, callable $callback, float $beta = null, array &$metadata = null)
-    {
+    public function get(string $key, callable $callback, float $beta = null, array &$metadata = null) {
         $item = $this->getItem($key);
         $metadata = $item->getMetadata();
 
@@ -69,8 +67,7 @@ class ArrayAdapter implements AdapterInterface, CacheInterface, LoggerAwareInter
     /**
      * {@inheritdoc}
      */
-    public function getItem($key)
-    {
+    public function getItem($key) {
         if (!$isHit = $this->hasItem($key)) {
             $this->values[$key] = $value = null;
         } else {
@@ -84,8 +81,7 @@ class ArrayAdapter implements AdapterInterface, CacheInterface, LoggerAwareInter
     /**
      * {@inheritdoc}
      */
-    public function getItems(array $keys = [])
-    {
+    public function getItems(array $keys = []) {
         foreach ($keys as $key) {
             if (!\is_string($key) || !isset($this->expiries[$key])) {
                 CacheItem::validateKey($key);
@@ -100,8 +96,7 @@ class ArrayAdapter implements AdapterInterface, CacheInterface, LoggerAwareInter
      *
      * @return bool
      */
-    public function deleteItems(array $keys)
-    {
+    public function deleteItems(array $keys) {
         foreach ($keys as $key) {
             $this->deleteItem($key);
         }
@@ -114,8 +109,7 @@ class ArrayAdapter implements AdapterInterface, CacheInterface, LoggerAwareInter
      *
      * @return bool
      */
-    public function save(CacheItemInterface $item)
-    {
+    public function save(CacheItemInterface $item) {
         if (!$item instanceof CacheItem) {
             return false;
         }
@@ -151,8 +145,7 @@ class ArrayAdapter implements AdapterInterface, CacheInterface, LoggerAwareInter
      *
      * @return bool
      */
-    public function saveDeferred(CacheItemInterface $item)
-    {
+    public function saveDeferred(CacheItemInterface $item) {
         return $this->save($item);
     }
 
@@ -161,16 +154,15 @@ class ArrayAdapter implements AdapterInterface, CacheInterface, LoggerAwareInter
      *
      * @return bool
      */
-    public function commit()
-    {
+    public function commit() {
         return true;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function delete(string $key): bool
-    {
+    public function delete(string $key): bool {
         return $this->deleteItem($key);
     }
+
 }

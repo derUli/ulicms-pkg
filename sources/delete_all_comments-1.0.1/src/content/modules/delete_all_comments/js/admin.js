@@ -1,3 +1,3 @@
 function deleteAllCommentsSubmit() {
-	return confirm($("form#cform").data("question"));
+    return confirm($("form#cform").data("question"));
 }

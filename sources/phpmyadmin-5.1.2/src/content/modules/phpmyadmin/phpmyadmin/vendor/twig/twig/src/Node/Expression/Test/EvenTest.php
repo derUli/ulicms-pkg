@@ -21,17 +21,17 @@ use Twig\Node\Expression\TestExpression;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class EvenTest extends TestExpression
-{
-    public function compile(Compiler $compiler)
-    {
+class EvenTest extends TestExpression {
+
+    public function compile(Compiler $compiler) {
         $compiler
-            ->raw('(')
-            ->subcompile($this->getNode('node'))
-            ->raw(' % 2 == 0')
-            ->raw(')')
+                ->raw('(')
+                ->subcompile($this->getNode('node'))
+                ->raw(' % 2 == 0')
+                ->raw(')')
         ;
     }
+
 }
 
 class_alias('Twig\Node\Expression\Test\EvenTest', 'Twig_Node_Expression_Test_Even');

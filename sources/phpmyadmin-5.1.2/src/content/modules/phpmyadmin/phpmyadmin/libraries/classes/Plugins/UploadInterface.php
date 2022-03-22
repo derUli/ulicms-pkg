@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Interface for the import->upload plugins
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Plugins;
@@ -11,8 +11,8 @@ namespace PhpMyAdmin\Plugins;
  * Provides a common interface that will have to implemented by all of the
  * import->upload plugins.
  */
-interface UploadInterface
-{
+interface UploadInterface {
+
     /**
      * Gets the specific upload ID Key
      *

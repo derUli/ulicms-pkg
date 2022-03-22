@@ -11,8 +11,7 @@ if (!$facebook_app_id) {
                 return;
             js = d.createElement(s);
             js.id = id;
-            js.src = "//connect.facebook.net/de_DE/sdk.js#xfbml=1&appId=<?php
-    echo urlencode($facebook_app_id); ?>&version=v2.0";
+            js.src = "//connect.facebook.net/de_DE/sdk.js#xfbml=1&appId=<?php echo urlencode($facebook_app_id); ?>&version=v2.0";
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));</script>
 

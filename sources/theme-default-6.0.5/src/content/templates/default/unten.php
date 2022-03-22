@@ -1,5 +1,5 @@
 <br />
-<p><?php random_banner()?></p>
+<p><?php random_banner() ?></p>
 <br>
 </div>
 </div>
@@ -7,17 +7,16 @@
 <hr>
 
 <div class="navbar_bottom">
-<?php menu("bottom")?>
+    <?php menu("bottom") ?>
 </div>
 <div class="clear"></div>
 
 
 <div class="copyright">
-	<p><?php random_banner()?></p>
-	<p>&copy; <?php year()?> by  <?php homepage_owner()?> | Powered by UliCMS <?php
-    
-echo cms_version();
-    ?></p>
+    <p><?php random_banner() ?></p>
+    <p>&copy; <?php year() ?> by  <?php homepage_owner() ?> | Powered by UliCMS <?php
+        echo cms_version();
+        ?></p>
 </div>
 </body>
 </html>

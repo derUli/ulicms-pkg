@@ -27,8 +27,8 @@ use Symfony\Component\VarExporter\Internal\Values;
  *
  * @author Nicolas Grekas <p@tchwork.com>
  */
-final class VarExporter
-{
+final class VarExporter {
+
     /**
      * Exports a serializable PHP value to PHP code.
      *
@@ -39,8 +39,7 @@ final class VarExporter
      *
      * @throws ExceptionInterface When the provided value cannot be serialized
      */
-    public static function export($value, bool &$isStaticValue = null): string
-    {
+    public static function export($value, bool &$isStaticValue = null): string {
         $isStaticValue = true;
 
         if (!\is_object($value) && !(\is_array($value) && $value) && !$value instanceof \__PHP_Incomplete_Class && !\is_resource($value) || $value instanceof \UnitEnum) {
@@ -111,4 +110,5 @@ final class VarExporter
 
         return Exporter::export($value);
     }
+
 }

@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Set of functions used to build YAML dumps of tables
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Plugins\Export;
@@ -21,10 +21,9 @@ use function strpos;
 /**
  * Handles the export for the YAML format
  */
-class ExportYaml extends ExportPlugin
-{
-    public function __construct()
-    {
+class ExportYaml extends ExportPlugin {
+
+    public function __construct() {
         parent::__construct();
         $this->setProperties();
     }
@@ -34,8 +33,7 @@ class ExportYaml extends ExportPlugin
      *
      * @return void
      */
-    protected function setProperties()
-    {
+    protected function setProperties() {
         $exportPluginProperties = new ExportPluginProperties();
         $exportPluginProperties->setText('YAML');
         $exportPluginProperties->setExtension('yml');
@@ -47,7 +45,7 @@ class ExportYaml extends ExportPlugin
         // $exportPluginProperties
         // this will be shown as "Format specific options"
         $exportSpecificOptions = new OptionsPropertyRootGroup(
-            'Format Specific Options'
+                'Format Specific Options'
         );
 
         // general options main group
@@ -68,10 +66,9 @@ class ExportYaml extends ExportPlugin
      *
      * @return bool Whether it succeeded
      */
-    public function exportHeader()
-    {
+    public function exportHeader() {
         $this->export->outputHandler(
-            '%YAML 1.1' . $GLOBALS['crlf'] . '---' . $GLOBALS['crlf']
+                '%YAML 1.1' . $GLOBALS['crlf'] . '---' . $GLOBALS['crlf']
         );
 
         return true;
@@ -82,8 +79,7 @@ class ExportYaml extends ExportPlugin
      *
      * @return bool Whether it succeeded
      */
-    public function exportFooter()
-    {
+    public function exportFooter() {
         $this->export->outputHandler('...' . $GLOBALS['crlf']);
 
         return true;
@@ -97,8 +93,7 @@ class ExportYaml extends ExportPlugin
      *
      * @return bool Whether it succeeded
      */
-    public function exportDBHeader($db, $db_alias = '')
-    {
+    public function exportDBHeader($db, $db_alias = '') {
         return true;
     }
 
@@ -109,8 +104,7 @@ class ExportYaml extends ExportPlugin
      *
      * @return bool Whether it succeeded
      */
-    public function exportDBFooter($db)
-    {
+    public function exportDBFooter($db) {
         return true;
     }
 
@@ -123,8 +117,7 @@ class ExportYaml extends ExportPlugin
      *
      * @return bool Whether it succeeded
      */
-    public function exportDBCreate($db, $export_type, $db_alias = '')
-    {
+    public function exportDBCreate($db, $export_type, $db_alias = '') {
         return true;
     }
 
@@ -141,12 +134,12 @@ class ExportYaml extends ExportPlugin
      * @return bool Whether it succeeded
      */
     public function exportData(
-        $db,
-        $table,
-        $crlf,
-        $error_url,
-        $sql_query,
-        array $aliases = []
+            $db,
+            $table,
+            $crlf,
+            $error_url,
+            $sql_query,
+            array $aliases = []
     ) {
         global $dbi;
 
@@ -154,9 +147,9 @@ class ExportYaml extends ExportPlugin
         $table_alias = $table;
         $this->initAlias($aliases, $db_alias, $table_alias);
         $result = $dbi->query(
-            $sql_query,
-            DatabaseInterface::CONNECT_USER,
-            DatabaseInterface::QUERY_UNBUFFERED
+                $sql_query,
+                DatabaseInterface::CONNECT_USER,
+                DatabaseInterface::QUERY_UNBUFFERED
         );
 
         $columns_cnt = $dbi->numFields($result);
@@ -165,7 +158,7 @@ class ExportYaml extends ExportPlugin
         $columns = [];
         for ($i = 0; $i < $columns_cnt; $i++) {
             $col_as = $dbi->fieldName($result, $i);
-            if (! empty($aliases[$db]['tables'][$table]['columns'][$col_as])) {
+            if (!empty($aliases[$db]['tables'][$table]['columns'][$col_as])) {
                 $col_as = $aliases[$db]['tables'][$table]['columns'][$col_as];
             }
             $columns[$i] = stripslashes($col_as);
@@ -185,7 +178,7 @@ class ExportYaml extends ExportPlugin
             }
 
             for ($i = 0; $i < $columns_cnt; $i++) {
-                if (! isset($record[$i])) {
+                if (!isset($record[$i])) {
                     continue;
                 }
 
@@ -200,24 +193,24 @@ class ExportYaml extends ExportPlugin
                 }
 
                 $record[$i] = str_replace(
-                    [
-                        '\\',
-                        '"',
-                        "\n",
-                        "\r",
-                    ],
-                    [
-                        '\\\\',
-                        '\"',
-                        '\n',
-                        '\r',
-                    ],
-                    $record[$i]
+                        [
+                            '\\',
+                            '"',
+                            "\n",
+                            "\r",
+                        ],
+                        [
+                            '\\\\',
+                            '\"',
+                            '\n',
+                            '\r',
+                        ],
+                        $record[$i]
                 );
                 $buffer .= '  ' . $columns[$i] . ': "' . $record[$i] . '"' . $crlf;
             }
 
-            if (! $this->export->outputHandler($buffer)) {
+            if (!$this->export->outputHandler($buffer)) {
                 return false;
             }
         }
@@ -235,8 +228,8 @@ class ExportYaml extends ExportPlugin
      *
      * @return bool if succeeded
      */
-    public function exportRawQuery(string $err_url, string $sql_query, string $crlf): bool
-    {
+    public function exportRawQuery(string $err_url, string $sql_query, string $crlf): bool {
         return $this->exportData('', '', $crlf, $err_url, $sql_query);
     }
+
 }

@@ -28,8 +28,8 @@ use Symfony\Component\DependencyInjection\Reference;
  * @author Johannes M. Schmitt <schmittjoh@gmail.com>
  * @author Nicolas Grekas <p@tchwork.com>
  */
-class AnalyzeServiceReferencesPass extends AbstractRecursivePass implements RepeatablePassInterface
-{
+class AnalyzeServiceReferencesPass extends AbstractRecursivePass implements RepeatablePassInterface {
+
     private $graph;
     private $currentDefinition;
     private $onlyConstructorArguments;
@@ -43,8 +43,7 @@ class AnalyzeServiceReferencesPass extends AbstractRecursivePass implements Repe
     /**
      * @param bool $onlyConstructorArguments Sets this Service Reference pass to ignore method calls
      */
-    public function __construct(bool $onlyConstructorArguments = false, bool $hasProxyDumper = true)
-    {
+    public function __construct(bool $onlyConstructorArguments = false, bool $hasProxyDumper = true) {
         $this->onlyConstructorArguments = $onlyConstructorArguments;
         $this->hasProxyDumper = $hasProxyDumper;
         $this->enableExpressionProcessing();
@@ -53,16 +52,14 @@ class AnalyzeServiceReferencesPass extends AbstractRecursivePass implements Repe
     /**
      * {@inheritdoc}
      */
-    public function setRepeatedPass(RepeatedPass $repeatedPass)
-    {
+    public function setRepeatedPass(RepeatedPass $repeatedPass) {
         @trigger_error(sprintf('The "%s()" method is deprecated since Symfony 4.2.', __METHOD__), \E_USER_DEPRECATED);
     }
 
     /**
      * Processes a ContainerBuilder object to populate the service reference graph.
      */
-    public function process(ContainerBuilder $container)
-    {
+    public function process(ContainerBuilder $container) {
         $this->container = $container;
         $this->graph = $container->getCompiler()->getServiceReferenceGraph();
         $this->graph->clear();
@@ -84,8 +81,7 @@ class AnalyzeServiceReferencesPass extends AbstractRecursivePass implements Repe
         }
     }
 
-    protected function processValue($value, $isRoot = false)
-    {
+    protected function processValue($value, $isRoot = false) {
         $lazy = $this->lazy;
         $inExpression = $this->inExpression();
 
@@ -101,26 +97,26 @@ class AnalyzeServiceReferencesPass extends AbstractRecursivePass implements Repe
             $targetDefinition = null !== $targetId ? $this->container->getDefinition($targetId) : null;
 
             $this->graph->connect(
-                $this->currentId,
-                $this->currentDefinition,
-                $targetId,
-                $targetDefinition,
-                $value,
-                $this->lazy || ($this->hasProxyDumper && $targetDefinition && $targetDefinition->isLazy()),
-                ContainerInterface::IGNORE_ON_UNINITIALIZED_REFERENCE === $value->getInvalidBehavior(),
-                $this->byConstructor
+                    $this->currentId,
+                    $this->currentDefinition,
+                    $targetId,
+                    $targetDefinition,
+                    $value,
+                    $this->lazy || ($this->hasProxyDumper && $targetDefinition && $targetDefinition->isLazy()),
+                    ContainerInterface::IGNORE_ON_UNINITIALIZED_REFERENCE === $value->getInvalidBehavior(),
+                    $this->byConstructor
             );
 
             if ($inExpression) {
                 $this->graph->connect(
-                    '.internal.reference_in_expression',
-                    null,
-                    $targetId,
-                    $targetDefinition,
-                    $value,
-                    $this->lazy || ($targetDefinition && $targetDefinition->isLazy()),
-                    true
-               );
+                        '.internal.reference_in_expression',
+                        null,
+                        $targetId,
+                        $targetDefinition,
+                        $value,
+                        $this->lazy || ($targetDefinition && $targetDefinition->isLazy()),
+                        true
+                );
             }
 
             return $value;
@@ -188,12 +184,12 @@ class AnalyzeServiceReferencesPass extends AbstractRecursivePass implements Repe
         return $value;
     }
 
-    private function getDefinitionId(string $id): ?string
-    {
+    private function getDefinitionId(string $id): ?string {
         while (isset($this->aliases[$id])) {
             $id = (string) $this->aliases[$id];
         }
 
         return isset($this->definitions[$id]) ? $id : null;
     }
+
 }

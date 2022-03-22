@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Not implemented (yet) statements.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\SqlParser\Statements;
@@ -17,8 +17,8 @@ use PhpMyAdmin\SqlParser\TokensList;
  *
  * The `after` function makes the parser jump straight to the first delimiter.
  */
-class NotImplementedStatement extends Statement
-{
+class NotImplementedStatement extends Statement {
+
     /**
      * The part of the statement that can't be parsed.
      *
@@ -29,8 +29,7 @@ class NotImplementedStatement extends Statement
     /**
      * @return string
      */
-    public function build()
-    {
+    public function build() {
         // Building the parsed part of the query (if any).
         $query = parent::build() . ' ';
 
@@ -46,8 +45,7 @@ class NotImplementedStatement extends Statement
      * @param Parser     $parser the instance that requests parsing
      * @param TokensList $list   the list of tokens to be parsed
      */
-    public function parse(Parser $parser, TokensList $list)
-    {
+    public function parse(Parser $parser, TokensList $list) {
         for (; $list->idx < $list->count; ++$list->idx) {
             if ($list->tokens[$list->idx]->type === Token::TYPE_DELIMITER) {
                 break;
@@ -56,4 +54,5 @@ class NotImplementedStatement extends Statement
             $this->unknown[] = $list->tokens[$list->idx];
         }
     }
+
 }

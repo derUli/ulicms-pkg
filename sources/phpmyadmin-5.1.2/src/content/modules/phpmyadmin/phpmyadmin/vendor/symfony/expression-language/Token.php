@@ -16,8 +16,8 @@ namespace Symfony\Component\ExpressionLanguage;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class Token
-{
+class Token {
+
     public $value;
     public $type;
     public $cursor;
@@ -34,8 +34,7 @@ class Token
      * @param string|int|float|null $value  The token value
      * @param int                   $cursor The cursor position in the source
      */
-    public function __construct(string $type, $value, ?int $cursor)
-    {
+    public function __construct(string $type, $value, ?int $cursor) {
         $this->type = $type;
         $this->value = $value;
         $this->cursor = $cursor;
@@ -46,8 +45,7 @@ class Token
      *
      * @return string A string representation of the token
      */
-    public function __toString()
-    {
+    public function __toString() {
         return sprintf('%3d %-11s %s', $this->cursor, strtoupper($this->type), $this->value);
     }
 
@@ -59,8 +57,8 @@ class Token
      *
      * @return bool
      */
-    public function test($type, $value = null)
-    {
+    public function test($type, $value = null) {
         return $this->type === $type && (null === $value || $this->value == $value);
     }
+
 }

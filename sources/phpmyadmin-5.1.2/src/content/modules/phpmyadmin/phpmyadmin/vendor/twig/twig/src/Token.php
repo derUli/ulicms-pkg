@@ -17,8 +17,8 @@ namespace Twig;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-final class Token
-{
+final class Token {
+
     private $value;
     private $type;
     private $lineno;
@@ -43,15 +43,13 @@ final class Token
      * @param string $value  The token value
      * @param int    $lineno The line position in the source
      */
-    public function __construct($type, $value, $lineno)
-    {
+    public function __construct($type, $value, $lineno) {
         $this->type = $type;
         $this->value = $value;
         $this->lineno = $lineno;
     }
 
-    public function __toString()
-    {
+    public function __toString() {
         return sprintf('%s(%s)', self::typeToString($this->type, true), $this->value);
     }
 
@@ -68,41 +66,37 @@ final class Token
      *
      * @return bool
      */
-    public function test($type, $values = null)
-    {
+    public function test($type, $values = null) {
         if (null === $values && !\is_int($type)) {
             $values = $type;
             $type = self::NAME_TYPE;
         }
 
         return ($this->type === $type) && (
-            null === $values ||
-            (\is_array($values) && \in_array($this->value, $values)) ||
-            $this->value == $values
-        );
+                null === $values ||
+                (\is_array($values) && \in_array($this->value, $values)) ||
+                $this->value == $values
+                );
     }
 
     /**
      * @return int
      */
-    public function getLine()
-    {
+    public function getLine() {
         return $this->lineno;
     }
 
     /**
      * @return int
      */
-    public function getType()
-    {
+    public function getType() {
         return $this->type;
     }
 
     /**
      * @return string
      */
-    public function getValue()
-    {
+    public function getValue() {
         return $this->value;
     }
 
@@ -114,8 +108,7 @@ final class Token
      *
      * @return string The string representation
      */
-    public static function typeToString($type, $short = false)
-    {
+    public static function typeToString($type, $short = false) {
         switch ($type) {
             case self::EOF_TYPE:
                 $name = 'EOF_TYPE';
@@ -163,7 +156,7 @@ final class Token
                 throw new \LogicException(sprintf('Token of type "%s" does not exist.', $type));
         }
 
-        return $short ? $name : 'Twig\Token::'.$name;
+        return $short ? $name : 'Twig\Token::' . $name;
     }
 
     /**
@@ -173,8 +166,7 @@ final class Token
      *
      * @return string The string representation
      */
-    public static function typeToEnglish($type)
-    {
+    public static function typeToEnglish($type) {
         switch ($type) {
             case self::EOF_TYPE:
                 return 'end of template';
@@ -208,6 +200,7 @@ final class Token
                 throw new \LogicException(sprintf('Token of type "%s" does not exist.', $type));
         }
     }
+
 }
 
 class_alias('Twig\Token', 'Twig_Token');

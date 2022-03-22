@@ -17,8 +17,8 @@ use PhpMyAdmin\UserPreferences;
 use function define;
 use function ltrim;
 
-class MainPanelController extends AbstractController
-{
+class MainPanelController extends AbstractController {
+
     /** @var UserPreferences */
     private $userPreferences;
 
@@ -29,18 +29,17 @@ class MainPanelController extends AbstractController
      * @param Response $response
      */
     public function __construct(
-        $response,
-        Template $template,
-        UserPreferences $userPreferences,
-        Relation $relation
+            $response,
+            Template $template,
+            UserPreferences $userPreferences,
+            Relation $relation
     ) {
         parent::__construct($response, $template);
         $this->userPreferences = $userPreferences;
         $this->relation = $relation;
     }
 
-    public function index(): void
-    {
+    public function index(): void {
         global $cfg, $cf, $error, $tabHash, $hash;
         global $server, $PMA_Config, $route;
 
@@ -58,7 +57,7 @@ class MainPanelController extends AbstractController
         }
 
         $error = null;
-        if ($formDisplay->process(false) && ! $formDisplay->hasErrors()) {
+        if ($formDisplay->process(false) && !$formDisplay->hasErrors()) {
             // Load 2FA settings
             $twoFactor = new TwoFactor($cfg['Server']['user']);
             // save settings
@@ -71,9 +70,9 @@ class MainPanelController extends AbstractController
                 $tabHash = $_POST['tab_hash'] ?? null;
                 $hash = ltrim($tabHash, '#');
                 $this->userPreferences->redirect(
-                    'index.php?route=/preferences/main-panel',
-                    null,
-                    $hash
+                        'index.php?route=/preferences/main-panel',
+                        null,
+                        $hash
                 );
 
                 return;
@@ -88,7 +87,7 @@ class MainPanelController extends AbstractController
 
         $this->render('preferences/header', [
             'route' => $route,
-            'is_saved' => ! empty($_GET['saved']),
+            'is_saved' => !empty($_GET['saved']),
             'has_config_storage' => $cfgRelation['userconfigwork'],
         ]);
 
@@ -101,11 +100,11 @@ class MainPanelController extends AbstractController
             'has_errors' => $formDisplay->hasErrors(),
             'errors' => $formErrors ?? null,
             'form' => $formDisplay->getDisplay(
-                true,
-                true,
-                true,
-                Url::getFromRoute('/preferences/main-panel'),
-                ['server' => $server]
+                    true,
+                    true,
+                    true,
+                    Url::getFromRoute('/preferences/main-panel'),
+                    ['server' => $server]
             ),
         ]);
 
@@ -115,4 +114,5 @@ class MainPanelController extends AbstractController
             define('PMA_DISABLE_NAVI_SETTINGS', true);
         }
     }
+
 }

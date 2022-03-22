@@ -16,8 +16,8 @@ use Symfony\Component\DependencyInjection\Definition;
 /**
  * @author Nicolas Grekas <p@tchwork.com>
  */
-class InstanceofConfigurator extends AbstractServiceConfigurator
-{
+class InstanceofConfigurator extends AbstractServiceConfigurator {
+
     use Traits\AutowireTrait;
     use Traits\BindTrait;
     use Traits\CallTrait;
@@ -32,8 +32,7 @@ class InstanceofConfigurator extends AbstractServiceConfigurator
 
     private $path;
 
-    public function __construct(ServicesConfigurator $parent, Definition $definition, string $id, string $path = null)
-    {
+    public function __construct(ServicesConfigurator $parent, Definition $definition, string $id, string $path = null) {
         parent::__construct($parent, $definition, $id, []);
 
         $this->path = $path;
@@ -42,8 +41,8 @@ class InstanceofConfigurator extends AbstractServiceConfigurator
     /**
      * Defines an instanceof-conditional to be applied to following service definitions.
      */
-    final public function instanceof(string $fqcn): self
-    {
+    final public function instanceof(string $fqcn): self {
         return $this->parent->instanceof($fqcn);
     }
+
 }

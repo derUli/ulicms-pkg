@@ -17,8 +17,8 @@ namespace Twig\Error;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class RuntimeError extends Error
-{
+class RuntimeError extends Error {
+    
 }
 
 class_alias('Twig\Error\RuntimeError', 'Twig_Error_Runtime');

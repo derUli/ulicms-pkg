@@ -13,8 +13,8 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator\Traits;
 
 use Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
 
-trait DeprecateTrait
-{
+trait DeprecateTrait {
+
     /**
      * Whether this definition is deprecated, that means it should not be called anymore.
      *
@@ -24,10 +24,10 @@ trait DeprecateTrait
      *
      * @throws InvalidArgumentException when the message template is invalid
      */
-    final public function deprecate(string $template = null): self
-    {
+    final public function deprecate(string $template = null): self {
         $this->definition->setDeprecated(true, $template);
 
         return $this;
     }
+
 }

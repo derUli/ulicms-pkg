@@ -1,8 +1,8 @@
 <?php
+
 /**
  * PDF schema export code
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Plugins\Schema;
@@ -18,10 +18,9 @@ use PhpMyAdmin\Properties\Plugins\SchemaPluginProperties;
 /**
  * Handles the schema export for the EPS format
  */
-class SchemaEps extends SchemaPlugin
-{
-    public function __construct()
-    {
+class SchemaEps extends SchemaPlugin {
+
+    public function __construct() {
         $this->setProperties();
     }
 
@@ -30,8 +29,7 @@ class SchemaEps extends SchemaPlugin
      *
      * @return void
      */
-    protected function setProperties()
-    {
+    protected function setProperties() {
         $schemaPluginProperties = new SchemaPluginProperties();
         $schemaPluginProperties->setText('EPS');
         $schemaPluginProperties->setExtension('eps');
@@ -41,7 +39,7 @@ class SchemaEps extends SchemaPlugin
         // $schemaPluginProperties
         // this will be shown as "Format specific options"
         $exportSpecificOptions = new OptionsPropertyRootGroup(
-            'Format Specific Options'
+                'Format Specific Options'
         );
 
         // specific options main group
@@ -51,20 +49,20 @@ class SchemaEps extends SchemaPlugin
 
         // create leaf items and add them to the group
         $leaf = new BoolPropertyItem(
-            'all_tables_same_width',
-            __('Same width for all tables')
+                'all_tables_same_width',
+                __('Same width for all tables')
         );
         $specificOptions->addProperty($leaf);
 
         $leaf = new SelectPropertyItem(
-            'orientation',
-            __('Orientation')
+                'orientation',
+                __('Orientation')
         );
         $leaf->setValues(
-            [
-                'L' => __('Landscape'),
-                'P' => __('Portrait'),
-            ]
+                [
+                    'L' => __('Landscape'),
+                    'P' => __('Portrait'),
+                ]
         );
         $specificOptions->addProperty($leaf);
 
@@ -83,11 +81,11 @@ class SchemaEps extends SchemaPlugin
      *
      * @return bool Whether it succeeded
      */
-    public function exportSchema($db)
-    {
+    public function exportSchema($db) {
         $export = new EpsRelationSchema($db);
         $export->showOutput();
 
         return true;
     }
+
 }

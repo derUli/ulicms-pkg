@@ -9,8 +9,8 @@ use PhpMyAdmin\Properties\Options\OptionsPropertyOneItem;
 /**
  * Single property item class of type doc
  */
-class DocPropertyItem extends OptionsPropertyOneItem
-{
+class DocPropertyItem extends OptionsPropertyOneItem {
+
     /**
      * Returns the property item type of either an instance of
      *  - PhpMyAdmin\Properties\Options\OptionsPropertyOneItem ( f.e. "bool",
@@ -21,8 +21,8 @@ class DocPropertyItem extends OptionsPropertyOneItem
      *
      * @return string
      */
-    public function getItemType()
-    {
+    public function getItemType() {
         return 'doc';
     }
+
 }

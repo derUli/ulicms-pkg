@@ -28,8 +28,8 @@ use function substr;
 /**
  * Handles creation of VIEWs.
  */
-class ViewCreateController extends AbstractController
-{
+class ViewCreateController extends AbstractController {
+
     /** @var DatabaseInterface */
     private $dbi;
 
@@ -37,14 +37,12 @@ class ViewCreateController extends AbstractController
      * @param Response          $response
      * @param DatabaseInterface $dbi
      */
-    public function __construct($response, Template $template, $dbi)
-    {
+    public function __construct($response, Template $template, $dbi) {
         parent::__construct($response, $template);
         $this->dbi = $dbi;
     }
 
-    public function index(): void
-    {
+    public function index(): void {
         global $text_dir, $url_params, $view_algorithm_options, $view_with_options, $view_security_options;
         global $message, $sep, $sql_query, $arr, $view_columns, $column_map, $systemDb, $pma_transformation_data;
         global $containerBuilder, $new_transformations_sql, $view, $item, $parts, $db, $cfg, $err_url;
@@ -54,7 +52,7 @@ class ViewCreateController extends AbstractController
         $err_url = Util::getScriptNameForOption($cfg['DefaultTabDatabase'], 'database');
         $err_url .= Url::getCommon(['db' => $db], '&');
 
-        if (! $this->hasDatabase()) {
+        if (!$this->hasDatabase()) {
             return;
         }
 
@@ -78,13 +76,12 @@ class ViewCreateController extends AbstractController
         ];
 
         // View name is a compulsory field
-        if (isset($_POST['view']['name'])
-            && empty($_POST['view']['name'])
+        if (isset($_POST['view']['name']) && empty($_POST['view']['name'])
         ) {
             $message = Message::error(__('View name can not be empty!'));
             $this->response->addJSON(
-                'message',
-                $message
+                    'message',
+                    $message
             );
             $this->response->setRequestStatus(false);
 
@@ -110,10 +107,10 @@ class ViewCreateController extends AbstractController
                 $sql_query .= $sep . ' ALGORITHM = ' . $_POST['view']['algorithm'];
             }
 
-            if (! empty($_POST['view']['definer'])) {
+            if (!empty($_POST['view']['definer'])) {
                 if (strpos($_POST['view']['definer'], '@') === false) {
                     $sql_query .= $sep . 'DEFINER='
-                        . Util::backquote($_POST['view']['definer']);
+                            . Util::backquote($_POST['view']['definer']);
                 } else {
                     $arr = explode('@', $_POST['view']['definer']);
                     $sql_query .= $sep . 'DEFINER=' . Util::backquote($arr[0]);
@@ -121,17 +118,16 @@ class ViewCreateController extends AbstractController
                 }
             }
 
-            if (isset($_POST['view']['sql_security'])
-                && in_array($_POST['view']['sql_security'], $view_security_options)
+            if (isset($_POST['view']['sql_security']) && in_array($_POST['view']['sql_security'], $view_security_options)
             ) {
                 $sql_query .= $sep . ' SQL SECURITY '
-                    . $_POST['view']['sql_security'];
+                        . $_POST['view']['sql_security'];
             }
 
             $sql_query .= $sep . ' VIEW '
-                . Util::backquote($_POST['view']['name']);
+                    . Util::backquote($_POST['view']['name']);
 
-            if (! empty($_POST['view']['column_names'])) {
+            if (!empty($_POST['view']['column_names'])) {
                 $sql_query .= $sep . ' (' . $_POST['view']['column_names'] . ')';
             }
 
@@ -140,23 +136,23 @@ class ViewCreateController extends AbstractController
             if (isset($_POST['view']['with'])) {
                 if (in_array($_POST['view']['with'], $view_with_options)) {
                     $sql_query .= $sep . ' WITH ' . $_POST['view']['with']
-                        . '  CHECK OPTION';
+                            . '  CHECK OPTION';
                 }
             }
 
-            if (! $this->dbi->tryQuery($sql_query)) {
-                if (! isset($_POST['ajax_dialog'])) {
+            if (!$this->dbi->tryQuery($sql_query)) {
+                if (!isset($_POST['ajax_dialog'])) {
                     $message = Message::rawError((string) $this->dbi->getError());
 
                     return;
                 }
 
                 $this->response->addJSON(
-                    'message',
-                    Message::error(
-                        '<i>' . htmlspecialchars($sql_query) . '</i><br><br>'
-                        . $this->dbi->getError()
-                    )
+                        'message',
+                        Message::error(
+                                '<i>' . htmlspecialchars($sql_query) . '</i><br><br>'
+                                . $this->dbi->getError()
+                        )
                 );
                 $this->response->setRequestStatus(false);
 
@@ -170,22 +166,22 @@ class ViewCreateController extends AbstractController
             }
 
             $column_map = $this->dbi->getColumnMapFromSql(
-                $_POST['view']['as'],
-                $view_columns
+                    $_POST['view']['as'],
+                    $view_columns
             );
 
             $systemDb = $this->dbi->getSystemDatabase();
             $pma_transformation_data = $systemDb->getExistingTransformationData(
-                $db
+                    $db
             );
 
             if ($pma_transformation_data !== false) {
                 // SQL for store new transformation details of VIEW
                 $new_transformations_sql = $systemDb->getNewTransformationDataSql(
-                    $pma_transformation_data,
-                    $column_map,
-                    $_POST['view']['name'],
-                    $db
+                        $pma_transformation_data,
+                        $column_map,
+                        $_POST['view']['name'],
+                        $db
                 );
 
                 // Store new transformations
@@ -195,18 +191,18 @@ class ViewCreateController extends AbstractController
             }
             unset($pma_transformation_data);
 
-            if (! isset($_POST['ajax_dialog'])) {
+            if (!isset($_POST['ajax_dialog'])) {
                 $message = Message::success();
                 /** @var StructureController $controller */
                 $controller = $containerBuilder->get(StructureController::class);
                 $controller->index();
             } else {
                 $this->response->addJSON(
-                    'message',
-                    Generator::getMessage(
-                        Message::success(),
-                        $sql_query
-                    )
+                        'message',
+                        Generator::getMessage(
+                                Message::success(),
+                                $sql_query
+                        )
                 );
                 $this->response->setRequestStatus(true);
             }
@@ -214,7 +210,7 @@ class ViewCreateController extends AbstractController
             return;
         }
 
-        $sql_query = ! empty($_POST['sql_query']) ? $_POST['sql_query'] : '';
+        $sql_query = !empty($_POST['sql_query']) ? $_POST['sql_query'] : '';
 
         // prefill values if not already filled from former submission
         $view = [
@@ -232,18 +228,18 @@ class ViewCreateController extends AbstractController
         // Used to prefill the fields when editing a view
         if (isset($_GET['db'], $_GET['table'])) {
             $item = $this->dbi->fetchSingleRow(
-                sprintf(
-                    "SELECT `VIEW_DEFINITION`, `CHECK_OPTION`, `DEFINER`,
+                    sprintf(
+                            "SELECT `VIEW_DEFINITION`, `CHECK_OPTION`, `DEFINER`,
             `SECURITY_TYPE`
             FROM `INFORMATION_SCHEMA`.`VIEWS`
             WHERE TABLE_SCHEMA='%s'
             AND TABLE_NAME='%s';",
-                    $this->dbi->escapeString($_GET['db']),
-                    $this->dbi->escapeString($_GET['table'])
-                )
+                            $this->dbi->escapeString($_GET['db']),
+                            $this->dbi->escapeString($_GET['table'])
+                    )
             );
             $createView = $this->dbi->getTable($_GET['db'], $_GET['table'])
-                ->showCreate();
+                    ->showCreate();
 
             // CREATE ALGORITHM=<ALGORITHM> DE...
             $parts = explode(' ', substr($createView, 17));
@@ -285,4 +281,5 @@ class ViewCreateController extends AbstractController
             'view_security_options' => $view_security_options,
         ]);
     }
+
 }

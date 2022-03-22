@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This is a PHP library that handles calling reCAPTCHA.
  *
@@ -41,8 +42,8 @@ use ReCaptcha\RequestParameters;
 /**
  * Sends POST requests to the reCAPTCHA service.
  */
-class Post implements RequestMethod
-{
+class Post implements RequestMethod {
+
     /**
      * URL for reCAPTCHA siteverify API
      * @var string
@@ -54,8 +55,7 @@ class Post implements RequestMethod
      *
      * @param string $siteVerifyUrl URL for reCAPTCHA siteverify API
      */
-    public function __construct($siteVerifyUrl = null)
-    {
+    public function __construct($siteVerifyUrl = null) {
         $this->siteVerifyUrl = (is_null($siteVerifyUrl)) ? ReCaptcha::SITE_VERIFY_URL : $siteVerifyUrl;
     }
 
@@ -65,8 +65,7 @@ class Post implements RequestMethod
      * @param RequestParameters $params Request parameters
      * @return string Body of the reCAPTCHA response
      */
-    public function submit(RequestParameters $params)
-    {
+    public function submit(RequestParameters $params) {
         $options = array(
             'http' => array(
                 'header' => "Content-type: application/x-www-form-urlencoded\r\n",
@@ -83,6 +82,7 @@ class Post implements RequestMethod
             return $response;
         }
 
-        return '{"success": false, "error-codes": ["'.ReCaptcha::E_CONNECTION_FAILED.'"]}';
+        return '{"success": false, "error-codes": ["' . ReCaptcha::E_CONNECTION_FAILED . '"]}';
     }
+
 }

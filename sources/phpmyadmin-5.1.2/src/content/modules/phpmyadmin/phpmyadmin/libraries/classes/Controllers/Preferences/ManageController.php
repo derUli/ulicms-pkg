@@ -36,8 +36,8 @@ use function var_export;
 /**
  * User preferences management page.
  */
-class ManageController extends AbstractController
-{
+class ManageController extends AbstractController {
+
     /** @var UserPreferences */
     private $userPreferences;
 
@@ -48,18 +48,17 @@ class ManageController extends AbstractController
      * @param Response $response
      */
     public function __construct(
-        $response,
-        Template $template,
-        UserPreferences $userPreferences,
-        Relation $relation
+            $response,
+            Template $template,
+            UserPreferences $userPreferences,
+            Relation $relation
     ) {
         parent::__construct($response, $template);
         $this->userPreferences = $userPreferences;
         $this->relation = $relation;
     }
 
-    public function index(): void
-    {
+    public function index(): void {
         global $cf, $error, $filename, $json, $PMA_Config, $lang, $max_upload_size;
         global $new_config, $config, $return_url, $form_display, $all_ok, $params, $query, $route;
 
@@ -105,10 +104,7 @@ class ManageController extends AbstractController
         if (isset($_POST['submit_import'])) {
             // load from JSON file
             $json = '';
-            if (isset($_POST['import_type'], $_FILES['import_file'])
-                && $_POST['import_type'] === 'text_file'
-                && $_FILES['import_file']['error'] == UPLOAD_ERR_OK
-                && is_uploaded_file($_FILES['import_file']['tmp_name'])
+            if (isset($_POST['import_type'], $_FILES['import_file']) && $_POST['import_type'] === 'text_file' && $_FILES['import_file']['error'] == UPLOAD_ERR_OK && is_uploaded_file($_FILES['import_file']['tmp_name'])
             ) {
                 $importHandle = new File($_FILES['import_file']['tmp_name']);
                 $importHandle->checkUploadedFile();
@@ -128,8 +124,8 @@ class ManageController extends AbstractController
 
             $config = json_decode($json, true);
             $return_url = $_POST['return_url'] ?? null;
-            if (! is_array($config)) {
-                if (! isset($error)) {
+            if (!is_array($config)) {
+                if (!isset($error)) {
                     $error = __('Could not import configuration');
                 }
             } else {
@@ -137,7 +133,7 @@ class ManageController extends AbstractController
                 // they came from HTTP POST request
                 $form_display = new UserFormList($cf);
                 $new_config = $cf->getFlatDefaultConfig();
-                if (! empty($_POST['import_merge'])) {
+                if (!empty($_POST['import_merge'])) {
                     $new_config = array_merge($new_config, $cf->getConfigArray());
                 }
                 $new_config = array_merge($new_config, $config);
@@ -147,20 +143,20 @@ class ManageController extends AbstractController
                 }
                 $cf->resetConfigData();
                 $all_ok = $form_display->process(true, false);
-                $all_ok = $all_ok && ! $form_display->hasErrors();
+                $all_ok = $all_ok && !$form_display->hasErrors();
                 $_POST = $_POST_bak;
 
-                if (! $all_ok && isset($_POST['fix_errors'])) {
+                if (!$all_ok && isset($_POST['fix_errors'])) {
                     $form_display->fixErrors();
                     $all_ok = true;
                 }
-                if (! $all_ok) {
+                if (!$all_ok) {
                     // mimic original form and post json in a hidden field
                     $cfgRelation = $this->relation->getRelationsParam();
 
                     echo $this->template->render('preferences/header', [
                         'route' => $route,
-                        'is_saved' => ! empty($_GET['saved']),
+                        'is_saved' => !empty($_GET['saved']),
                         'has_config_storage' => $cfgRelation['userconfigwork'],
                     ]);
 
@@ -177,15 +173,12 @@ class ManageController extends AbstractController
                 // check for ThemeDefault
                 $params = [];
                 $tmanager = ThemeManager::getInstance();
-                if (isset($config['ThemeDefault'])
-                    && $tmanager->theme->getId() != $config['ThemeDefault']
-                    && $tmanager->checkTheme($config['ThemeDefault'])
+                if (isset($config['ThemeDefault']) && $tmanager->theme->getId() != $config['ThemeDefault'] && $tmanager->checkTheme($config['ThemeDefault'])
                 ) {
                     $tmanager->setActiveTheme($config['ThemeDefault']);
                     $tmanager->setThemeCookie();
                 }
-                if (isset($config['lang'])
-                    && $config['lang'] != $lang
+                if (isset($config['lang']) && $config['lang'] != $lang
                 ) {
                     $params['lang'] = $config['lang'];
                 }
@@ -239,12 +232,12 @@ class ManageController extends AbstractController
 
         echo $this->template->render('preferences/header', [
             'route' => $route,
-            'is_saved' => ! empty($_GET['saved']),
+            'is_saved' => !empty($_GET['saved']),
             'has_config_storage' => $cfgRelation['userconfigwork'],
         ]);
 
         if ($error) {
-            if (! $error instanceof Message) {
+            if (!$error instanceof Message) {
                 $error = Message::error($error);
             }
             $error->getDisplay();
@@ -253,8 +246,7 @@ class ManageController extends AbstractController
         echo $this->template->render('preferences/manage/main', [
             'error' => $error,
             'max_upload_size' => $max_upload_size,
-            'exists_setup_and_not_exists_config' => @file_exists(ROOT_PATH . 'setup/index.php')
-                && ! @file_exists(CONFIG_FILE),
+            'exists_setup_and_not_exists_config' => @file_exists(ROOT_PATH . 'setup/index.php') && !@file_exists(CONFIG_FILE),
         ]);
 
         if ($this->response->isAjax()) {
@@ -263,4 +255,5 @@ class ManageController extends AbstractController
             define('PMA_DISABLE_NAVI_SETTINGS', true);
         }
     }
+
 }

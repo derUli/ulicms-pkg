@@ -22,8 +22,8 @@ use Symfony\Contracts\Service\ResetInterface;
  *
  * @deprecated since Symfony 4.2, use "Symfony\Contracts\Service\ResetInterface" instead.
  */
-interface ResettableContainerInterface extends ContainerInterface, ResetInterface
-{
+interface ResettableContainerInterface extends ContainerInterface, ResetInterface {
+
     /**
      * Resets shared services from the container.
      *

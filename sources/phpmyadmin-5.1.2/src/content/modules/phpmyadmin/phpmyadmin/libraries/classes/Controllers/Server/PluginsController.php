@@ -18,8 +18,8 @@ use function preg_replace;
 /**
  * Handles viewing server plugin details
  */
-class PluginsController extends AbstractController
-{
+class PluginsController extends AbstractController {
+
     /** @var Plugins */
     private $plugins;
 
@@ -30,15 +30,13 @@ class PluginsController extends AbstractController
      * @param Response          $response
      * @param DatabaseInterface $dbi
      */
-    public function __construct($response, Template $template, Plugins $plugins, $dbi)
-    {
+    public function __construct($response, Template $template, Plugins $plugins, $dbi) {
         parent::__construct($response, $template);
         $this->plugins = $plugins;
         $this->dbi = $dbi;
     }
 
-    public function index(): void
-    {
+    public function index(): void {
         global $err_url;
 
         $err_url = Url::getFromRoute('/');
@@ -59,9 +57,9 @@ class PluginsController extends AbstractController
         $cleanTypes = [];
         foreach (array_keys($plugins) as $type) {
             $cleanTypes[$type] = preg_replace(
-                '/[^a-z]/',
-                '',
-                mb_strtolower($type)
+                    '/[^a-z]/',
+                    '',
+                    mb_strtolower($type)
             );
         }
 
@@ -70,4 +68,5 @@ class PluginsController extends AbstractController
             'clean_types' => $cleanTypes,
         ]);
     }
+
 }

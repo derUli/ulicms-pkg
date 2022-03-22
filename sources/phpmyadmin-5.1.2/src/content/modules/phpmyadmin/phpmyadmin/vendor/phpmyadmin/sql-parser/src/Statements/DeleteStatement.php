@@ -1,8 +1,8 @@
 <?php
+
 /**
  * `DELETE` statement.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\SqlParser\Statements;
@@ -19,7 +19,6 @@ use PhpMyAdmin\SqlParser\Parser;
 use PhpMyAdmin\SqlParser\Statement;
 use PhpMyAdmin\SqlParser\Token;
 use PhpMyAdmin\SqlParser\TokensList;
-
 use function count;
 use function stripos;
 use function strlen;
@@ -47,8 +46,8 @@ use function strlen;
  *   USING table_references
  *   [WHERE where_condition]
  */
-class DeleteStatement extends Statement
-{
+class DeleteStatement extends Statement {
+
     /**
      * Options for `DELETE` statements.
      *
@@ -162,8 +161,7 @@ class DeleteStatement extends Statement
     /**
      * @return string
      */
-    public function build()
-    {
+    public function build() {
         $ret = 'DELETE ' . OptionsArray::build($this->options);
 
         if ($this->columns !== null && count($this->columns) > 0) {
@@ -201,10 +199,8 @@ class DeleteStatement extends Statement
      * @param Parser     $parser the instance that requests parsing
      * @param TokensList $list   the list of tokens to be parsed
      */
-    public function parse(Parser $parser, TokensList $list)
-    {
+    public function parse(Parser $parser, TokensList $list) {
         ++$list->idx; // Skipping `DELETE`.
-
         // parse any options if provided
         $this->options = OptionsArray::parse($parser, $list, static::$OPTIONS);
         ++$list->idx;
@@ -374,4 +370,5 @@ class DeleteStatement extends Statement
 
         --$list->idx;
     }
+
 }

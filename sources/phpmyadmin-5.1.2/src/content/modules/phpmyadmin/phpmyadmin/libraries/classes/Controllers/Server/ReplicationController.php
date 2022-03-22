@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Server replications
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Controllers\Server;
@@ -19,8 +19,8 @@ use function is_array;
 /**
  * Server replications
  */
-class ReplicationController extends AbstractController
-{
+class ReplicationController extends AbstractController {
+
     /** @var ReplicationGui */
     private $replicationGui;
 
@@ -31,15 +31,13 @@ class ReplicationController extends AbstractController
      * @param Response          $response
      * @param DatabaseInterface $dbi
      */
-    public function __construct($response, Template $template, ReplicationGui $replicationGui, $dbi)
-    {
+    public function __construct($response, Template $template, ReplicationGui $replicationGui, $dbi) {
         parent::__construct($response, $template);
         $this->replicationGui = $replicationGui;
         $this->dbi = $dbi;
     }
 
-    public function index(): void
-    {
+    public function index(): void {
         global $url_params, $err_url;
 
         $params = [
@@ -79,10 +77,10 @@ class ReplicationController extends AbstractController
         if (isset($params['mr_configure'])) {
             $masterConfigurationHtml = $this->replicationGui->getHtmlForMasterConfiguration();
         } else {
-            if (! isset($params['repl_clear_scr'])) {
+            if (!isset($params['repl_clear_scr'])) {
                 $slaveConfigurationHtml = $this->replicationGui->getHtmlForSlaveConfiguration(
-                    $replicaInfo['status'],
-                    $replicationInfo->getReplicaStatus()
+                        $replicaInfo['status'],
+                        $replicationInfo->getReplicaStatus()
                 );
             }
             if (isset($params['sl_configure'])) {
@@ -104,4 +102,5 @@ class ReplicationController extends AbstractController
             'change_master_html' => $changeMasterHtml ?? '',
         ]);
     }
+
 }

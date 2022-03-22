@@ -38,8 +38,8 @@ use function strlen;
 /**
  * Handles HTTP requests
  */
-class HttpRequest
-{
+class HttpRequest {
+
     /** @var string */
     private $proxyUrl;
 
@@ -49,8 +49,7 @@ class HttpRequest
     /** @var string */
     private $proxyPass;
 
-    public function __construct()
-    {
+    public function __construct() {
         global $cfg;
 
         $this->proxyUrl = $cfg['ProxyUrl'];
@@ -66,8 +65,7 @@ class HttpRequest
      *
      * @return array of updated context information
      */
-    private function handleContext(array $context)
-    {
+    private function handleContext(array $context) {
         if (strlen($this->proxyUrl) > 0) {
             $context['http'] = [
                 'proxy' => $this->proxyUrl,
@@ -75,10 +73,10 @@ class HttpRequest
             ];
             if (strlen($this->proxyUser) > 0) {
                 $auth = base64_encode(
-                    $this->proxyUser . ':' . $this->proxyPass
+                        $this->proxyUser . ':' . $this->proxyPass
                 );
                 $context['http']['header'] .= 'Proxy-Authorization: Basic '
-                    . $auth . "\r\n";
+                        . $auth . "\r\n";
             }
         }
 
@@ -95,9 +93,9 @@ class HttpRequest
      * @return string|bool|null
      */
     private function response(
-        $response,
-        $httpStatus,
-        $returnOnlyStatus
+            $response,
+            $httpStatus,
+            $returnOnlyStatus
     ) {
         if ($httpStatus == 404) {
             return false;
@@ -125,12 +123,12 @@ class HttpRequest
      * @return string|bool|null
      */
     private function curl(
-        $url,
-        $method,
-        $returnOnlyStatus = false,
-        $content = null,
-        $header = '',
-        $ssl = 0
+            $url,
+            $method,
+            $returnOnlyStatus = false,
+            $content = null,
+            $header = '',
+            $ssl = 0
     ) {
         $curlHandle = curl_init($url);
         if ($curlHandle === false) {
@@ -141,9 +139,9 @@ class HttpRequest
             $curlStatus &= curl_setopt($curlHandle, CURLOPT_PROXY, $this->proxyUrl);
             if (strlen($this->proxyUser) > 0) {
                 $curlStatus &= curl_setopt(
-                    $curlHandle,
-                    CURLOPT_PROXYUSERPWD,
-                    $this->proxyUser . ':' . $this->proxyPass
+                        $curlHandle,
+                        CURLOPT_PROXYUSERPWD,
+                        $this->proxyUser . ':' . $this->proxyPass
                 );
             }
         }
@@ -183,7 +181,7 @@ class HttpRequest
         $curlStatus &= curl_setopt($curlHandle, CURLOPT_TIMEOUT, 10);
         $curlStatus &= curl_setopt($curlHandle, CURLOPT_CONNECTTIMEOUT, 10);
 
-        if (! $curlStatus) {
+        if (!$curlStatus) {
             return null;
         }
         $response = @curl_exec($curlHandle);
@@ -229,15 +227,15 @@ class HttpRequest
      * @return string|bool|null
      */
     private function fopen(
-        $url,
-        $method,
-        $returnOnlyStatus = false,
-        $content = null,
-        $header = ''
+            $url,
+            $method,
+            $returnOnlyStatus = false,
+            $content = null,
+            $header = ''
     ) {
         $context = [
             'http' => [
-                'method'  => $method,
+                'method' => $method,
                 'request_fulluri' => true,
                 'timeout' => 10,
                 'user_agent' => 'phpMyAdmin',
@@ -252,12 +250,12 @@ class HttpRequest
         }
         $context = $this->handleContext($context);
         $response = @file_get_contents(
-            $url,
-            false,
-            stream_context_create($context)
+                        $url,
+                        false,
+                        stream_context_create($context)
         );
 
-        if (! isset($http_response_header)) {
+        if (!isset($http_response_header)) {
             return null;
         }
 
@@ -279,11 +277,11 @@ class HttpRequest
      * @return string|bool|null
      */
     public function create(
-        $url,
-        $method,
-        $returnOnlyStatus = false,
-        $content = null,
-        $header = ''
+            $url,
+            $method,
+            $returnOnlyStatus = false,
+            $content = null,
+            $header = ''
     ) {
         if (function_exists('curl_init')) {
             return $this->curl($url, $method, $returnOnlyStatus, $content, $header);
@@ -295,4 +293,5 @@ class HttpRequest
 
         return null;
     }
+
 }

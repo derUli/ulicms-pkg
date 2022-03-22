@@ -21,10 +21,9 @@ use Twig\Token;
  *
  *  {% extends "base.html" %}
  */
-final class ExtendsTokenParser extends AbstractTokenParser
-{
-    public function parse(Token $token)
-    {
+final class ExtendsTokenParser extends AbstractTokenParser {
+
+    public function parse(Token $token) {
         $stream = $this->parser->getStream();
 
         if ($this->parser->peekBlockStack()) {
@@ -43,10 +42,10 @@ final class ExtendsTokenParser extends AbstractTokenParser
         return new Node();
     }
 
-    public function getTag()
-    {
+    public function getTag() {
         return 'extends';
     }
+
 }
 
 class_alias('Twig\TokenParser\ExtendsTokenParser', 'Twig_TokenParser_Extends');

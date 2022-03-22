@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Parses the definition of a key.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\SqlParser\Components;
@@ -12,7 +12,6 @@ use PhpMyAdmin\SqlParser\Context;
 use PhpMyAdmin\SqlParser\Parser;
 use PhpMyAdmin\SqlParser\Token;
 use PhpMyAdmin\SqlParser\TokensList;
-
 use function implode;
 use function trim;
 
@@ -23,8 +22,8 @@ use function trim;
  *
  * @final
  */
-class Key extends Component
-{
+class Key extends Component {
+
     /**
      * All key options.
      *
@@ -111,10 +110,10 @@ class Key extends Component
      * @param OptionsArray $options the options of this key
      */
     public function __construct(
-        $name = null,
-        array $columns = [],
-        $type = null,
-        $options = null
+            $name = null,
+            array $columns = [],
+            $type = null,
+            $options = null
     ) {
         $this->name = $name;
         $this->columns = $columns;
@@ -129,8 +128,7 @@ class Key extends Component
      *
      * @return Key
      */
-    public static function parse(Parser $parser, TokensList $list, array $options = [])
-    {
+    public static function parse(Parser $parser, TokensList $list, array $options = []) {
         $ret = new static();
 
         /**
@@ -184,9 +182,9 @@ class Key extends Component
             } elseif ($state === 1) {
                 if (($token->type === Token::TYPE_OPERATOR) && ($token->value === '(')) {
                     $positionBeforeSearch = $list->idx;
-                    $list->idx++;// Ignore the current token "(" or the search condition will always be true
+                    $list->idx++; // Ignore the current token "(" or the search condition will always be true
                     $nextToken = $list->getNext();
-                    $list->idx = $positionBeforeSearch;// Restore the position
+                    $list->idx = $positionBeforeSearch; // Restore the position
 
                     if ($nextToken !== null && $nextToken->value === '(') {
                         // Switch to expression mode
@@ -203,19 +201,18 @@ class Key extends Component
                         $state = 3;
                     } elseif (($token->value === ',') || ($token->value === ')')) {
                         $state = $token->value === ',' ? 2 : 4;
-                        if (! empty($lastColumn)) {
+                        if (!empty($lastColumn)) {
                             $ret->columns[] = $lastColumn;
                             $lastColumn = [];
                         }
                     }
                 } elseif (
-                    (
+                        (
                         $token->type === Token::TYPE_KEYWORD
-                    )
-                    &&
-                    (
+                        ) &&
+                        (
                         ($token->keyword === 'ASC') || ($token->keyword === 'DESC')
-                    )
+                        )
                 ) {
                     $lastColumn['order'] = $token->keyword;
                 } else {
@@ -235,7 +232,7 @@ class Key extends Component
                 if ($token->type === Token::TYPE_OPERATOR) {
                     // This got back to here and we reached the end of the expression
                     if ($token->value === ')') {
-                        $state = 4;// go back to state 4 to fetch options
+                        $state = 4; // go back to state 4 to fetch options
                         continue;
                     }
 
@@ -274,10 +271,9 @@ class Key extends Component
      *
      * @return string
      */
-    public static function build($component, array $options = [])
-    {
+    public static function build($component, array $options = []) {
         $ret = $component->type . ' ';
-        if (! empty($component->name)) {
+        if (!empty($component->name)) {
             $ret .= Context::escape($component->name) . ' ';
         }
 
@@ -307,4 +303,5 @@ class Key extends Component
 
         return trim($ret);
     }
+
 }

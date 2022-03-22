@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Functionality for the navigation tree
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Navigation\Nodes;
@@ -15,8 +15,8 @@ use function substr;
 /**
  * Represents a columns node in the navigation tree
  */
-class NodeColumn extends Node
-{
+class NodeColumn extends Node {
+
     /**
      * Initialises the class
      *
@@ -25,8 +25,7 @@ class NodeColumn extends Node
      * @param bool  $isGroup Whether this object has been created
      *                       while grouping nodes
      */
-    public function __construct($item, $type = Node::OBJECT, $isGroup = false)
-    {
+    public function __construct($item, $type = Node::OBJECT, $isGroup = false) {
         $this->displayName = $this->getDisplayName($item);
 
         parent::__construct($item['name'], $type, $isGroup);
@@ -51,8 +50,7 @@ class NodeColumn extends Node
      *
      * @return string Icon name for required key.
      */
-    private function getColumnIcon($key)
-    {
+    private function getColumnIcon($key) {
         switch ($key) {
             case 'PRI':
                 $retval = 'b_primary';
@@ -75,8 +73,7 @@ class NodeColumn extends Node
      *
      * @return string Display name for navigation tree
      */
-    private function getDisplayName($item)
-    {
+    private function getDisplayName($item) {
         $retval = $item['name'];
         $flag = 0;
         foreach ($item as $key => $value) {
@@ -100,15 +97,14 @@ class NodeColumn extends Node
      *
      * @return string truncated value
      */
-    public function getTruncateValue($key, $value)
-    {
+    public function getTruncateValue($key, $value) {
         $retval = '';
 
         switch ($key) {
             case 'default':
                 strlen($value) > 6 ?
-                    $retval .= substr($value, 0, 6) . '...' :
-                    $retval = $value;
+                                $retval .= substr($value, 0, 6) . '...' :
+                                $retval = $value;
                 break;
             default:
                 $retval = $value;
@@ -117,4 +113,5 @@ class NodeColumn extends Node
 
         return $retval;
     }
+
 }

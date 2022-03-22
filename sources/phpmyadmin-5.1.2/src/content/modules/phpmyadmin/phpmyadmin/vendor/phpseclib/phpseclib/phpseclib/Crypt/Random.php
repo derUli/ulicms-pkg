@@ -31,8 +31,8 @@ namespace phpseclib\Crypt;
  * @author  Jim Wigginton <terrafrost@php.net>
  * @access  public
  */
-class Random
-{
+class Random {
+
     /**
      * Generate a random string.
      *
@@ -43,8 +43,7 @@ class Random
      * @param int $length
      * @return string
      */
-    static function string($length)
-    {
+    static function string($length) {
         if (!$length) {
             return '';
         }
@@ -112,7 +111,6 @@ class Random
             }
         }
         // at this point we have no choice but to use a pure-PHP CSPRNG
-
         // cascade entropy across multiple PHP instances by fixing the session and collecting all
         // environmental variables, including the previous session data and the current session
         // data.
@@ -147,13 +145,13 @@ class Random
             session_start();
 
             $v = $seed = $_SESSION['seed'] = pack('H*', sha1(
-                (isset($_SERVER) ? phpseclib_safe_serialize($_SERVER) : '') .
-                (isset($_POST) ? phpseclib_safe_serialize($_POST) : '') .
-                (isset($_GET) ? phpseclib_safe_serialize($_GET) : '') .
-                (isset($_COOKIE) ? phpseclib_safe_serialize($_COOKIE) : '') .
-                phpseclib_safe_serialize($GLOBALS) .
-                phpseclib_safe_serialize($_SESSION) .
-                phpseclib_safe_serialize($_OLD_SESSION)
+                            (isset($_SERVER) ? phpseclib_safe_serialize($_SERVER) : '') .
+                            (isset($_POST) ? phpseclib_safe_serialize($_POST) : '') .
+                            (isset($_GET) ? phpseclib_safe_serialize($_GET) : '') .
+                            (isset($_COOKIE) ? phpseclib_safe_serialize($_COOKIE) : '') .
+                            phpseclib_safe_serialize($GLOBALS) .
+                            phpseclib_safe_serialize($_SESSION) .
+                            phpseclib_safe_serialize($_OLD_SESSION)
             ));
             if (!isset($_SESSION['count'])) {
                 $_SESSION['count'] = 0;
@@ -221,7 +219,6 @@ class Random
         }
 
         //return $crypto->encrypt(str_repeat("\0", $length));
-
         // the following is based off of ANSI X9.31:
         //
         // http://csrc.nist.gov/groups/STM/cavp/documents/rng/931rngext.pdf
@@ -235,13 +232,15 @@ class Random
             $i = $crypto->encrypt(microtime()); // strlen(microtime()) == 21
             $r = $crypto->encrypt($i ^ $v); // strlen($v) == 20
             $v = $crypto->encrypt($r ^ $i); // strlen($r) == 20
-            $result.= $r;
+            $result .= $r;
         }
         return substr($result, 0, $length);
     }
+
 }
 
 if (!function_exists('phpseclib_safe_serialize')) {
+
     /**
      * Safely serialize variables
      *
@@ -251,8 +250,7 @@ if (!function_exists('phpseclib_safe_serialize')) {
      * @param mixed $arr
      * @access public
      */
-    function phpseclib_safe_serialize(&$arr)
-    {
+    function phpseclib_safe_serialize(&$arr) {
         if (is_object($arr)) {
             return '';
         }
@@ -274,4 +272,5 @@ if (!function_exists('phpseclib_safe_serialize')) {
         unset($arr['__phpseclib_marker']);
         return serialize($safearr);
     }
+
 }

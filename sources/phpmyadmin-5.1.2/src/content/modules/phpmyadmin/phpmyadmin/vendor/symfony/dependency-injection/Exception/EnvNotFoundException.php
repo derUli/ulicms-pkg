@@ -16,6 +16,6 @@ namespace Symfony\Component\DependencyInjection\Exception;
  *
  * @author Nicolas Grekas <p@tchwork.com>
  */
-class EnvNotFoundException extends InvalidArgumentException
-{
+class EnvNotFoundException extends InvalidArgumentException {
+    
 }

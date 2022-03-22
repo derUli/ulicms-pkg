@@ -19,14 +19,13 @@ use Symfony\Component\Config\Definition\Exception\UnsetKeyException;
  * @author Johannes M. Schmitt <schmittjoh@gmail.com>
  * @author Christophe Coevoet <stof@notk.org>
  */
-class ExprBuilder
-{
+class ExprBuilder {
+
     protected $node;
     public $ifPart;
     public $thenPart;
 
-    public function __construct(NodeDefinition $node)
-    {
+    public function __construct(NodeDefinition $node) {
         $this->node = $node;
     }
 
@@ -35,9 +34,10 @@ class ExprBuilder
      *
      * @return $this
      */
-    public function always(\Closure $then = null)
-    {
-        $this->ifPart = function () { return true; };
+    public function always(\Closure $then = null) {
+        $this->ifPart = function () {
+            return true;
+        };
 
         if (null !== $then) {
             $this->thenPart = $then;
@@ -53,10 +53,11 @@ class ExprBuilder
      *
      * @return $this
      */
-    public function ifTrue(\Closure $closure = null)
-    {
+    public function ifTrue(\Closure $closure = null) {
         if (null === $closure) {
-            $closure = function ($v) { return true === $v; };
+            $closure = function ($v) {
+                return true === $v;
+            };
         }
 
         $this->ifPart = $closure;
@@ -69,9 +70,10 @@ class ExprBuilder
      *
      * @return $this
      */
-    public function ifString()
-    {
-        $this->ifPart = function ($v) { return \is_string($v); };
+    public function ifString() {
+        $this->ifPart = function ($v) {
+            return \is_string($v);
+        };
 
         return $this;
     }
@@ -81,9 +83,10 @@ class ExprBuilder
      *
      * @return $this
      */
-    public function ifNull()
-    {
-        $this->ifPart = function ($v) { return null === $v; };
+    public function ifNull() {
+        $this->ifPart = function ($v) {
+            return null === $v;
+        };
 
         return $this;
     }
@@ -93,9 +96,10 @@ class ExprBuilder
      *
      * @return ExprBuilder
      */
-    public function ifEmpty()
-    {
-        $this->ifPart = function ($v) { return empty($v); };
+    public function ifEmpty() {
+        $this->ifPart = function ($v) {
+            return empty($v);
+        };
 
         return $this;
     }
@@ -105,9 +109,10 @@ class ExprBuilder
      *
      * @return $this
      */
-    public function ifArray()
-    {
-        $this->ifPart = function ($v) { return \is_array($v); };
+    public function ifArray() {
+        $this->ifPart = function ($v) {
+            return \is_array($v);
+        };
 
         return $this;
     }
@@ -117,9 +122,10 @@ class ExprBuilder
      *
      * @return $this
      */
-    public function ifInArray(array $array)
-    {
-        $this->ifPart = function ($v) use ($array) { return \in_array($v, $array, true); };
+    public function ifInArray(array $array) {
+        $this->ifPart = function ($v) use ($array) {
+            return \in_array($v, $array, true);
+        };
 
         return $this;
     }
@@ -129,9 +135,10 @@ class ExprBuilder
      *
      * @return $this
      */
-    public function ifNotInArray(array $array)
-    {
-        $this->ifPart = function ($v) use ($array) { return !\in_array($v, $array, true); };
+    public function ifNotInArray(array $array) {
+        $this->ifPart = function ($v) use ($array) {
+            return !\in_array($v, $array, true);
+        };
 
         return $this;
     }
@@ -141,10 +148,13 @@ class ExprBuilder
      *
      * @return $this
      */
-    public function castToArray()
-    {
-        $this->ifPart = function ($v) { return !\is_array($v); };
-        $this->thenPart = function ($v) { return [$v]; };
+    public function castToArray() {
+        $this->ifPart = function ($v) {
+            return !\is_array($v);
+        };
+        $this->thenPart = function ($v) {
+            return [$v];
+        };
 
         return $this;
     }
@@ -154,8 +164,7 @@ class ExprBuilder
      *
      * @return $this
      */
-    public function then(\Closure $closure)
-    {
+    public function then(\Closure $closure) {
         $this->thenPart = $closure;
 
         return $this;
@@ -166,9 +175,10 @@ class ExprBuilder
      *
      * @return $this
      */
-    public function thenEmptyArray()
-    {
-        $this->thenPart = function () { return []; };
+    public function thenEmptyArray() {
+        $this->thenPart = function () {
+            return [];
+        };
 
         return $this;
     }
@@ -184,9 +194,10 @@ class ExprBuilder
      *
      * @throws \InvalidArgumentException
      */
-    public function thenInvalid($message)
-    {
-        $this->thenPart = function ($v) use ($message) { throw new \InvalidArgumentException(sprintf($message, json_encode($v))); };
+    public function thenInvalid($message) {
+        $this->thenPart = function ($v) use ($message) {
+            throw new \InvalidArgumentException(sprintf($message, json_encode($v)));
+        };
 
         return $this;
     }
@@ -198,9 +209,10 @@ class ExprBuilder
      *
      * @throws UnsetKeyException
      */
-    public function thenUnset()
-    {
-        $this->thenPart = function () { throw new UnsetKeyException('Unsetting key.'); };
+    public function thenUnset() {
+        $this->thenPart = function () {
+            throw new UnsetKeyException('Unsetting key.');
+        };
 
         return $this;
     }
@@ -212,8 +224,7 @@ class ExprBuilder
      *
      * @throws \RuntimeException
      */
-    public function end()
-    {
+    public function end() {
         if (null === $this->ifPart) {
             throw new \RuntimeException('You must specify an if part.');
         }
@@ -231,8 +242,7 @@ class ExprBuilder
      *
      * @return array
      */
-    public static function buildExpressions(array $expressions)
-    {
+    public static function buildExpressions(array $expressions) {
         foreach ($expressions as $k => $expr) {
             if ($expr instanceof self) {
                 $if = $expr->ifPart;
@@ -245,4 +255,5 @@ class ExprBuilder
 
         return $expressions;
     }
+
 }

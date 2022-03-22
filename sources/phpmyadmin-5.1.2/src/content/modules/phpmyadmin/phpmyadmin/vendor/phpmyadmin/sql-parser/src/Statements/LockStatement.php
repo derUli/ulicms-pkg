@@ -1,8 +1,8 @@
 <?php
+
 /**
  * `LOCK` statement.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\SqlParser\Statements;
@@ -12,14 +12,13 @@ use PhpMyAdmin\SqlParser\Parser;
 use PhpMyAdmin\SqlParser\Statement;
 use PhpMyAdmin\SqlParser\Token;
 use PhpMyAdmin\SqlParser\TokensList;
-
 use function trim;
 
 /**
  * `LOCK` statement.
  */
-class LockStatement extends Statement
-{
+class LockStatement extends Statement {
+
     /**
      * Tables with their Lock expressions.
      *
@@ -39,8 +38,7 @@ class LockStatement extends Statement
      * @param Parser     $parser the instance that requests parsing
      * @param TokensList $list   the list of tokens to be parsed
      */
-    public function parse(Parser $parser, TokensList $list)
-    {
+    public function parse(Parser $parser, TokensList $list) {
         if ($list->tokens[$list->idx]->value === 'UNLOCK') {
             // this is in fact an UNLOCK statement
             $this->isLock = false;
@@ -100,7 +98,7 @@ class LockStatement extends Statement
             }
 
             if ($state === 1) {
-                if (! $this->isLock) {
+                if (!$this->isLock) {
                     // UNLOCK statement should not have any more tokens
                     $parser->error('Unexpected token.', $token);
                     break;
@@ -128,9 +126,9 @@ class LockStatement extends Statement
     /**
      * @return string
      */
-    public function build()
-    {
+    public function build() {
         return trim(($this->isLock ? 'LOCK' : 'UNLOCK')
-            . ' TABLES ' . LockExpression::build($this->locked));
+                . ' TABLES ' . LockExpression::build($this->locked));
     }
+
 }

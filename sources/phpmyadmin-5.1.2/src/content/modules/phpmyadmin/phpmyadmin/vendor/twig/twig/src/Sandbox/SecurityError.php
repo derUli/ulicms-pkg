@@ -18,8 +18,8 @@ use Twig\Error\Error;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class SecurityError extends Error
-{
+class SecurityError extends Error {
+    
 }
 
 class_alias('Twig\Sandbox\SecurityError', 'Twig_Sandbox_SecurityError');

@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Contains PhpMyAdmin\Plugins\Schema\Eps\TableStatsEps class
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Plugins\Schema\Eps;
@@ -23,8 +23,8 @@ use function sprintf;
  *
  * @name    TableStatsEps
  */
-class TableStatsEps extends TableStats
-{
+class TableStatsEps extends TableStats {
+
     /** @var int */
     public $height;
 
@@ -49,25 +49,25 @@ class TableStatsEps extends TableStats
      *                                from the browser
      */
     public function __construct(
-        $diagram,
-        $db,
-        $tableName,
-        $font,
-        $fontSize,
-        $pageNumber,
-        &$same_wide_width,
-        $showKeys = false,
-        $tableDimension = false,
-        $offline = false
-    ) {
-        parent::__construct(
             $diagram,
             $db,
-            $pageNumber,
             $tableName,
-            $showKeys,
-            $tableDimension,
-            $offline
+            $font,
+            $fontSize,
+            $pageNumber,
+            &$same_wide_width,
+            $showKeys = false,
+            $tableDimension = false,
+            $offline = false
+    ) {
+        parent::__construct(
+                $diagram,
+                $db,
+                $pageNumber,
+                $tableName,
+                $showKeys,
+                $tableDimension,
+                $offline
         );
 
         // height and width
@@ -87,12 +87,11 @@ class TableStatsEps extends TableStats
      *
      * @return void
      */
-    protected function showMissingTableError()
-    {
+    protected function showMissingTableError() {
         ExportRelationSchema::dieSchema(
-            $this->pageNumber,
-            'EPS',
-            sprintf(__('The %s table doesn\'t exist!'), $this->tableName)
+                $this->pageNumber,
+                'EPS',
+                sprintf(__('The %s table doesn\'t exist!'), $this->tableName)
         );
     }
 
@@ -106,29 +105,27 @@ class TableStatsEps extends TableStats
      *
      * @return void
      */
-    private function setWidthTable($font, $fontSize)
-    {
+    private function setWidthTable($font, $fontSize) {
         foreach ($this->fields as $field) {
             $this->width = max(
-                $this->width,
-                $this->font->getStringWidth($field, $font, (int) $fontSize)
+                    $this->width,
+                    $this->font->getStringWidth($field, $font, (int) $fontSize)
             );
         }
         $this->width += $this->font->getStringWidth(
-            '      ',
-            $font,
-            (int) $fontSize
+                '      ',
+                $font,
+                (int) $fontSize
         );
         /*
          * it is unknown what value must be added, because
-        * table title is affected by the table width value
-        */
-        while ($this->width
-            < $this->font->getStringWidth(
+         * table title is affected by the table width value
+         */
+        while ($this->width < $this->font->getStringWidth(
                 $this->getTitle(),
                 $font,
                 (int) $fontSize
-            )
+        )
         ) {
             $this->width += 7;
         }
@@ -141,8 +138,7 @@ class TableStatsEps extends TableStats
      *
      * @return void
      */
-    private function setHeightTable($fontSize)
-    {
+    private function setHeightTable($fontSize) {
         $this->heightCell = $fontSize + 4;
         $this->height = (count($this->fields) + 1) * $this->heightCell;
     }
@@ -158,30 +154,30 @@ class TableStatsEps extends TableStats
      *
      * @return void
      */
-    public function tableDraw($showColor)
-    {
+    public function tableDraw($showColor) {
         $this->diagram->rect(
-            $this->x,
-            $this->y + 12,
-            $this->width,
-            $this->heightCell,
-            1
+                $this->x,
+                $this->y + 12,
+                $this->width,
+                $this->heightCell,
+                1
         );
         $this->diagram->showXY($this->getTitle(), $this->x + 5, $this->y + 14);
         foreach ($this->fields as $field) {
             $this->currentCell += $this->heightCell;
             $this->diagram->rect(
-                $this->x,
-                $this->y + 12 + $this->currentCell,
-                $this->width,
-                $this->heightCell,
-                1
+                    $this->x,
+                    $this->y + 12 + $this->currentCell,
+                    $this->width,
+                    $this->heightCell,
+                    1
             );
             $this->diagram->showXY(
-                $field,
-                $this->x + 5,
-                $this->y + 14 + $this->currentCell
+                    $field,
+                    $this->x + 5,
+                    $this->y + 14 + $this->currentCell
             );
         }
     }
+
 }

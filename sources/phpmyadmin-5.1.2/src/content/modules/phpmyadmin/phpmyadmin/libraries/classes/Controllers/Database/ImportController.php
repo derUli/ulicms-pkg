@@ -20,8 +20,8 @@ use PhpMyAdmin\Url;
 use PhpMyAdmin\Util;
 use function intval;
 
-final class ImportController extends AbstractController
-{
+final class ImportController extends AbstractController {
+
     /** @var DatabaseInterface */
     private $dbi;
 
@@ -30,14 +30,12 @@ final class ImportController extends AbstractController
      * @param string            $db       Database name.
      * @param DatabaseInterface $dbi
      */
-    public function __construct($response, Template $template, $db, $dbi)
-    {
+    public function __construct($response, Template $template, $db, $dbi) {
         parent::__construct($response, $template, $db);
         $this->dbi = $dbi;
     }
 
-    public function index(): void
-    {
+    public function index(): void {
         global $db, $max_upload_size, $table, $tables, $num_tables, $total_num_tables, $cfg;
         global $tooltip_truename, $tooltip_aliasname, $pos, $sub_part, $SESSION_KEY, $PMA_Theme, $err_url;
 
@@ -52,19 +50,19 @@ final class ImportController extends AbstractController
         $err_url = Util::getScriptNameForOption($cfg['DefaultTabDatabase'], 'database');
         $err_url .= Url::getCommon(['db' => $db], '&');
 
-        if (! $this->hasDatabase()) {
+        if (!$this->hasDatabase()) {
             return;
         }
 
         [
-            $tables,
-            $num_tables,
-            $total_num_tables,
-            $sub_part,,,
-            $tooltip_truename,
-            $tooltip_aliasname,
-            $pos,
-        ] = Util::getDbInfo($db, $sub_part ?? '');
+                $tables,
+                $num_tables,
+                $total_num_tables,
+                $sub_part,,,
+                $tooltip_truename,
+                $tooltip_aliasname,
+                $pos,
+                ] = Util::getDbInfo($db, $sub_part ?? '');
 
         [$SESSION_KEY, $uploadId] = Ajax::uploadProgressSetup();
 
@@ -72,8 +70,8 @@ final class ImportController extends AbstractController
 
         if (empty($importList)) {
             $this->response->addHTML(Message::error(__(
-                'Could not load import plugins, please check your installation!'
-            ))->getDisplay());
+                                    'Could not load import plugins, please check your installation!'
+                            ))->getDisplay());
 
             return;
         }
@@ -132,4 +130,5 @@ final class ImportController extends AbstractController
             'local_files' => Import::getLocalFiles($importList),
         ]);
     }
+
 }

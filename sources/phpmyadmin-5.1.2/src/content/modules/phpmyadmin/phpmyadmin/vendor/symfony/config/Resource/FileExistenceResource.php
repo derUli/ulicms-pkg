@@ -21,39 +21,35 @@ namespace Symfony\Component\Config\Resource;
  *
  * @final since Symfony 4.3
  */
-class FileExistenceResource implements SelfCheckingResourceInterface
-{
-    private $resource;
+class FileExistenceResource implements SelfCheckingResourceInterface {
 
+    private $resource;
     private $exists;
 
     /**
      * @param string $resource The file path to the resource
      */
-    public function __construct(string $resource)
-    {
+    public function __construct(string $resource) {
         $this->resource = $resource;
         $this->exists = file_exists($resource);
     }
 
-    public function __toString()
-    {
+    public function __toString() {
         return $this->resource;
     }
 
     /**
      * @return string The file path to the resource
      */
-    public function getResource()
-    {
+    public function getResource() {
         return $this->resource;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function isFresh($timestamp)
-    {
+    public function isFresh($timestamp) {
         return file_exists($this->resource) === $this->exists;
     }
+
 }

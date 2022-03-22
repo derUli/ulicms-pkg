@@ -16,8 +16,8 @@ namespace Symfony\Component\DependencyInjection;
  *
  * @author Nicolas Grekas <p@tchwork.com>
  */
-class TypedReference extends Reference
-{
+class TypedReference extends Reference {
+
     private $type;
     private $name;
     private $requiringClass;
@@ -28,8 +28,7 @@ class TypedReference extends Reference
      * @param int         $invalidBehavior The behavior when the service does not exist
      * @param string|null $name            The name of the argument targeting the service
      */
-    public function __construct(string $id, string $type, $invalidBehavior = ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE, $name = null)
-    {
+    public function __construct(string $id, string $type, $invalidBehavior = ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE, $name = null) {
         if (\is_string($invalidBehavior ?? '') || \is_int($name)) {
             @trigger_error(sprintf('Passing the $requiringClass as 3rd argument for "%s()" is deprecated since Symfony 4.1. It should be removed, moving all following arguments 1 to the left.', __METHOD__), \E_USER_DEPRECATED);
 
@@ -42,21 +41,18 @@ class TypedReference extends Reference
         $this->type = $type;
     }
 
-    public function getType()
-    {
+    public function getType() {
         return $this->type;
     }
 
-    public function getName(): ?string
-    {
+    public function getName(): ?string {
         return $this->name;
     }
 
     /**
      * @deprecated since Symfony 4.1
      */
-    public function getRequiringClass()
-    {
+    public function getRequiringClass() {
         @trigger_error(sprintf('The "%s()" method is deprecated since Symfony 4.1.', __METHOD__), \E_USER_DEPRECATED);
 
         return $this->requiringClass ?? '';
@@ -65,10 +61,10 @@ class TypedReference extends Reference
     /**
      * @deprecated since Symfony 4.1
      */
-    public function canBeAutoregistered()
-    {
+    public function canBeAutoregistered() {
         @trigger_error(sprintf('The "%s()" method is deprecated since Symfony 4.1.', __METHOD__), \E_USER_DEPRECATED);
 
         return $this->requiringClass && (false !== $i = strpos($this->type, '\\')) && 0 === strncasecmp($this->type, $this->requiringClass, 1 + $i);
     }
+
 }

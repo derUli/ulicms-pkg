@@ -1,10 +1,10 @@
 <?php
+
 /**
  * Session handling
  *
  * @see     https://www.php.net/manual/en/features.sessions.php
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin;
@@ -35,15 +35,14 @@ use const PHP_VERSION_ID;
 /**
  * Session class
  */
-class Session
-{
+class Session {
+
     /**
      * Generates PMA_token session variable.
      *
      * @return void
      */
-    private static function generateToken()
-    {
+    private static function generateToken() {
         $_SESSION[' PMA_token '] = Util::generateRandom(16, true);
         $_SESSION[' HMAC_secret '] = Util::generateRandom(16);
 
@@ -51,12 +50,12 @@ class Session
          * Check if token is properly generated (the generation can fail, for example
          * due to missing /dev/random for openssl).
          */
-        if (! empty($_SESSION[' PMA_token '])) {
+        if (!empty($_SESSION[' PMA_token '])) {
             return;
         }
 
         Core::fatalError(
-            'Failed to generate random CSRF token!'
+                'Failed to generate random CSRF token!'
         );
     }
 
@@ -67,10 +66,9 @@ class Session
      *
      * @return void
      */
-    public static function secure()
-    {
+    public static function secure() {
         // prevent session fixation and XSS
-        if (session_status() === PHP_SESSION_ACTIVE && ! defined('TESTSUITE')) {
+        if (session_status() === PHP_SESSION_ACTIVE && !defined('TESTSUITE')) {
             session_regenerate_id(true);
         }
         // continue with empty session
@@ -85,8 +83,7 @@ class Session
      *
      * @return void
      */
-    private static function sessionFailed(array $errors)
-    {
+    private static function sessionFailed(array $errors) {
         $messages = [];
         foreach ($errors as $error) {
             /*
@@ -102,9 +99,9 @@ class Session
              * will not change in future.
              */
             $messages[] = preg_replace(
-                '/open\(.*, O_RDWR\)/',
-                'open(SESSION_FILE, O_RDWR)',
-                htmlspecialchars($error->getMessage())
+                    '/open\(.*, O_RDWR\)/',
+                    'open(SESSION_FILE, O_RDWR)',
+                    htmlspecialchars($error->getMessage())
             );
         }
 
@@ -113,12 +110,12 @@ class Session
          * can not use translations here.
          */
         Core::fatalError(
-            'Error during session start; please check your PHP and/or '
-            . 'webserver log file and configure your PHP '
-            . 'installation properly. Also ensure that cookies are enabled '
-            . 'in your browser.'
-            . '<br><br>'
-            . implode('<br><br>', $messages)
+                'Error during session start; please check your PHP and/or '
+                . 'webserver log file and configure your PHP '
+                . 'installation properly. Also ensure that cookies are enabled '
+                . 'in your browser.'
+                . '<br><br>'
+                . implode('<br><br>', $messages)
         );
     }
 
@@ -130,14 +127,11 @@ class Session
      *
      * @return void
      */
-    public static function setUp(Config $config, ErrorHandler $errorHandler)
-    {
+    public static function setUp(Config $config, ErrorHandler $errorHandler) {
         // verify if PHP supports session, die if it does not
-        if (! function_exists('session_name')) {
+        if (!function_exists('session_name')) {
             Core::warnMissingExtension('session', true);
-        } elseif (! empty(ini_get('session.auto_start'))
-            && session_name() !== 'phpMyAdmin'
-            && ! empty(session_id())
+        } elseif (!empty(ini_get('session.auto_start')) && session_name() !== 'phpMyAdmin' && !empty(session_id())
         ) {
             // Do not delete the existing non empty session, it might be used by
             // other applications; instead just close it.
@@ -155,11 +149,11 @@ class Session
 
         // session cookie settings
         session_set_cookie_params(
-            0,
-            $config->getRootPath(),
-            '',
-            $config->isHttps(),
-            true
+                0,
+                $config->getRootPath(),
+                '',
+                $config->isHttps(),
+                true
         );
 
         // cookies are safer (use ini_set() in case this function is disabled)
@@ -167,7 +161,7 @@ class Session
 
         // optionally set session_save_path
         $path = $config->get('SessionSavePath');
-        if (! empty($path)) {
+        if (!empty($path)) {
             session_save_path($path);
             // We can not do this unconditionally as this would break
             // any more complex setup (eg. cluster), see
@@ -209,8 +203,7 @@ class Session
 
         $session_result = session_start();
 
-        if ($session_result !== true
-            || $orig_error_count != $errorHandler->countErrors(false)
+        if ($session_result !== true || $orig_error_count != $errorHandler->countErrors(false)
         ) {
             setcookie($httpCookieName, '', 1);
             $errors = $errorHandler->sliceErrors($orig_error_count);
@@ -229,7 +222,7 @@ class Session
          * Token which is used for authenticating access queries.
          * (we use "space PMA_token space" to prevent overwriting)
          */
-        if (! empty($_SESSION[' PMA_token '])) {
+        if (!empty($_SESSION[' PMA_token '])) {
             return;
         }
 
@@ -248,13 +241,14 @@ class Session
             self::sessionFailed($errors);
         }
         session_start();
-        if (! empty($_SESSION[' PMA_token '])) {
+        if (!empty($_SESSION[' PMA_token '])) {
             return;
         }
 
         Core::fatalError(
-            'Failed to store CSRF token in session! ' .
-            'Probably sessions are not working properly.'
+                'Failed to store CSRF token in session! ' .
+                'Probably sessions are not working properly.'
         );
     }
+
 }

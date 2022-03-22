@@ -23,15 +23,15 @@ use Symfony\Contracts\Cache\CacheInterface;
 /**
  * @deprecated since Symfony 4.3, use RedisAdapter and type-hint for CacheInterface instead.
  */
-class RedisCache extends AbstractCache
-{
+class RedisCache extends AbstractCache {
+
     use RedisTrait;
 
     /**
      * @param \Redis|\RedisArray|\RedisCluster|\Predis\ClientInterface|RedisProxy|RedisClusterProxy $redis
      */
-    public function __construct($redis, string $namespace = '', int $defaultLifetime = 0, MarshallerInterface $marshaller = null)
-    {
+    public function __construct($redis, string $namespace = '', int $defaultLifetime = 0, MarshallerInterface $marshaller = null) {
         $this->init($redis, $namespace, $defaultLifetime, $marshaller);
     }
+
 }

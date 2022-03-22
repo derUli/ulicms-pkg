@@ -3,9 +3,9 @@
         configInlineParams = [];
     }
     configInlineParams.push(function () {
-        {{ js_array|join(';\n')|raw }};
-    });
-    if (typeof configScriptLoaded !== 'undefined' && configInlineParams) {
-        loadInlineConfig();
-    }
+    {{ js_array|join(';\n')|raw }};
+        });
+        if (typeof configScriptLoaded !== 'undefined' && configInlineParams) {
+            loadInlineConfig();
+        }
 </script>

@@ -13,12 +13,11 @@ namespace Twig\Node\Expression;
 
 use Twig\Compiler;
 
-class ArrayExpression extends AbstractExpression
-{
+class ArrayExpression extends AbstractExpression {
+
     private $index;
 
-    public function __construct(array $elements, int $lineno)
-    {
+    public function __construct(array $elements, int $lineno) {
         parent::__construct($elements, [], $lineno);
 
         $this->index = -1;
@@ -29,8 +28,7 @@ class ArrayExpression extends AbstractExpression
         }
     }
 
-    public function getKeyValuePairs()
-    {
+    public function getKeyValuePairs() {
         $pairs = [];
 
         foreach (array_chunk($this->nodes, 2) as $pair) {
@@ -43,8 +41,7 @@ class ArrayExpression extends AbstractExpression
         return $pairs;
     }
 
-    public function hasElement(AbstractExpression $key)
-    {
+    public function hasElement(AbstractExpression $key) {
         foreach ($this->getKeyValuePairs() as $pair) {
             // we compare the string representation of the keys
             // to avoid comparing the line numbers which are not relevant here.
@@ -56,8 +53,7 @@ class ArrayExpression extends AbstractExpression
         return false;
     }
 
-    public function addElement(AbstractExpression $value, AbstractExpression $key = null)
-    {
+    public function addElement(AbstractExpression $value, AbstractExpression $key = null) {
         if (null === $key) {
             $key = new ConstantExpression(++$this->index, $value->getTemplateLine());
         }
@@ -65,8 +61,7 @@ class ArrayExpression extends AbstractExpression
         array_push($this->nodes, $key, $value);
     }
 
-    public function compile(Compiler $compiler)
-    {
+    public function compile(Compiler $compiler) {
         $compiler->raw('[');
         $first = true;
         foreach ($this->getKeyValuePairs() as $pair) {
@@ -76,13 +71,14 @@ class ArrayExpression extends AbstractExpression
             $first = false;
 
             $compiler
-                ->subcompile($pair['key'])
-                ->raw(' => ')
-                ->subcompile($pair['value'])
+                    ->subcompile($pair['key'])
+                    ->raw(' => ')
+                    ->subcompile($pair['value'])
             ;
         }
         $compiler->raw(']');
     }
+
 }
 
 class_alias('Twig\Node\Expression\ArrayExpression', 'Twig_Node_Expression_Array');

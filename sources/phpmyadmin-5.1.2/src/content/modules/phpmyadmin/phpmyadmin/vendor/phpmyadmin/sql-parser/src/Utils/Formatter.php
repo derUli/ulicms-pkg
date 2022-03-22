@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Utilities that are used for formatting queries.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\SqlParser\Utils;
@@ -12,7 +12,6 @@ use PhpMyAdmin\SqlParser\Lexer;
 use PhpMyAdmin\SqlParser\Parser;
 use PhpMyAdmin\SqlParser\Token;
 use PhpMyAdmin\SqlParser\TokensList;
-
 use function array_merge;
 use function array_pop;
 use function end;
@@ -23,15 +22,14 @@ use function str_repeat;
 use function str_replace;
 use function strpos;
 use function strtoupper;
-
 use const ENT_NOQUOTES;
 use const PHP_SAPI;
 
 /**
  * Utilities that are used for formatting queries.
  */
-class Formatter
-{
+class Formatter {
+
     /**
      * The formatting options.
      *
@@ -83,8 +81,7 @@ class Formatter
     /**
      * @param array $options the formatting options
      */
-    public function __construct(array $options = [])
-    {
+    public function __construct(array $options = []) {
         $this->options = $this->getMergedOptions($options);
     }
 
@@ -95,11 +92,10 @@ class Formatter
      *
      * @return array
      */
-    private function getMergedOptions(array $options)
-    {
+    private function getMergedOptions(array $options) {
         $options = array_merge(
-            $this->getDefaultOptions(),
-            $options
+                $this->getDefaultOptions(),
+                $options
         );
 
         if (isset($options['formats'])) {
@@ -127,8 +123,7 @@ class Formatter
      *
      * @return array
      */
-    protected function getDefaultOptions()
-    {
+    protected function getDefaultOptions() {
         return [
             /*
              * The format of the result.
@@ -136,7 +131,6 @@ class Formatter
              * @var string The type ('text', 'cli' or 'html')
              */
             'type' => PHP_SAPI === 'cli' ? 'cli' : 'text',
-
             /*
              * The line ending used.
              * By default, for text this is "\n" and for HTML this is "<br/>".
@@ -144,28 +138,24 @@ class Formatter
              * @var string
              */
             'line_ending' => null,
-
             /*
              * The string used for indentation.
              *
              * @var string
              */
             'indentation' => null,
-
             /*
              * Whether comments should be removed or not.
              *
              * @var bool
              */
             'remove_comments' => false,
-
             /*
              * Whether each clause should be on a new line.
              *
              * @var bool
              */
             'clause_newline' => true,
-
             /*
              * Whether each part should be on a new line.
              * Parts are delimited by brackets and commas.
@@ -173,7 +163,6 @@ class Formatter
              * @var bool
              */
             'parts_newline' => true,
-
             /*
              * Whether each part of each clause should be indented.
              *
@@ -189,8 +178,7 @@ class Formatter
      *
      * @return array
      */
-    protected function getDefaultFormats()
-    {
+    protected function getDefaultFormats() {
         return [
             [
                 'type' => Token::TYPE_KEYWORD,
@@ -251,8 +239,7 @@ class Formatter
         ];
     }
 
-    private static function mergeFormats(array $formats, array $newFormats): array
-    {
+    private static function mergeFormats(array $formats, array $newFormats): array {
         $added = [];
         $integers = [
             'flags',
@@ -314,8 +301,7 @@ class Formatter
      *
      * @return string
      */
-    public function formatList($list)
-    {
+    public function formatList($list) {
         /**
          * The query to be returned.
          *
@@ -401,10 +387,10 @@ class Formatter
             if ($curr->type === Token::TYPE_WHITESPACE) {
                 // Keep linebreaks before and after comments
                 if (
-                    strpos($curr->token, "\n") !== false && (
+                        strpos($curr->token, "\n") !== false && (
                         ($prev !== null && $prev->type === Token::TYPE_COMMENT) ||
                         ($next !== null && $next->type === Token::TYPE_COMMENT)
-                    )
+                        )
                 ) {
                     $lineEnded = true;
                 }
@@ -428,16 +414,11 @@ class Formatter
 
                 // The options of a clause should stay on the same line and everything that follows.
                 if (
-                    $this->options['parts_newline']
-                    && ! $formattedOptions
-                    && empty(self::$INLINE_CLAUSES[$lastClause])
-                    && (
-                        $curr->type !== Token::TYPE_KEYWORD
-                        || (
-                            $curr->type === Token::TYPE_KEYWORD
-                            && $curr->flags & Token::FLAG_KEYWORD_FUNCTION
+                        $this->options['parts_newline'] && !$formattedOptions && empty(self::$INLINE_CLAUSES[$lastClause]) && (
+                        $curr->type !== Token::TYPE_KEYWORD || (
+                        $curr->type === Token::TYPE_KEYWORD && $curr->flags & Token::FLAG_KEYWORD_FUNCTION
                         )
-                    )
+                        )
                 ) {
                     $formattedOptions = true;
                     $lineEnded = true;
@@ -449,8 +430,7 @@ class Formatter
 
                 if ($isClause) {
                     if (
-                        ($isClause === 2 || $this->options['clause_newline'])
-                        && empty(self::$SHORT_CLAUSES[$lastClause])
+                            ($isClause === 2 || $this->options['clause_newline']) && empty(self::$SHORT_CLAUSES[$lastClause])
                     ) {
                         $lineEnded = true;
                         if ($this->options['parts_newline'] && $indent > 0) {
@@ -461,11 +441,7 @@ class Formatter
 
                 // Inline JOINs
                 if (
-                    ($prev->type === Token::TYPE_KEYWORD && isset(JoinKeyword::$JOINS[$prev->value]))
-                    || (in_array($curr->value, ['ON', 'USING'], true)
-                        && isset(JoinKeyword::$JOINS[$list->tokens[$list->idx - 2]->value]))
-                    || isset($list->tokens[$list->idx - 4], JoinKeyword::$JOINS[$list->tokens[$list->idx - 4]->value])
-                    || isset($list->tokens[$list->idx - 6], JoinKeyword::$JOINS[$list->tokens[$list->idx - 6]->value])
+                        ($prev->type === Token::TYPE_KEYWORD && isset(JoinKeyword::$JOINS[$prev->value])) || (in_array($curr->value, ['ON', 'USING'], true) && isset(JoinKeyword::$JOINS[$list->tokens[$list->idx - 2]->value])) || isset($list->tokens[$list->idx - 4], JoinKeyword::$JOINS[$list->tokens[$list->idx - 4]->value]) || isset($list->tokens[$list->idx - 6], JoinKeyword::$JOINS[$list->tokens[$list->idx - 6]->value])
                 ) {
                     $lineEnded = false;
                 }
@@ -486,12 +462,9 @@ class Formatter
                     // pieces only if the clause is not inlined or this fragment
                     // is between brackets that are on new line.
                     if (
-                        end($blocksLineEndings) === true
-                        || (
-                            empty(self::$INLINE_CLAUSES[$lastClause])
-                            && ! $shortGroup
-                            && $this->options['parts_newline']
-                        )
+                            end($blocksLineEndings) === true || (
+                            empty(self::$INLINE_CLAUSES[$lastClause]) && !$shortGroup && $this->options['parts_newline']
+                            )
                     ) {
                         $lineEnded = true;
                     }
@@ -522,24 +495,21 @@ class Formatter
                 // Finishing the line.
                 if ($lineEnded) {
                     $ret .= $this->options['line_ending']
-                        . str_repeat($this->options['indentation'], (int) $indent);
+                            . str_repeat($this->options['indentation'], (int) $indent);
 
                     $lineEnded = false;
                 } else {
                     // If the line ended there is no point in adding whitespaces.
                     // Also, some tokens do not have spaces before or after them.
                     if (
-                        // A space after delimiters that are longer than 2 characters.
-                        $prev->keyword === 'DELIMITER'
-                        || ! (
+                    // A space after delimiters that are longer than 2 characters.
+                            $prev->keyword === 'DELIMITER' || !(
                             ($prev->type === Token::TYPE_OPERATOR && ($prev->value === '.' || $prev->value === '('))
                             // No space after . (
-                            || ($curr->type === Token::TYPE_OPERATOR
-                                && ($curr->value === '.' || $curr->value === ','
-                                    || $curr->value === '(' || $curr->value === ')'))
+                            || ($curr->type === Token::TYPE_OPERATOR && ($curr->value === '.' || $curr->value === ',' || $curr->value === '(' || $curr->value === ')'))
                             // No space before . , ( )
                             || $curr->type === Token::TYPE_DELIMITER && mb_strlen((string) $curr->value, 'UTF-8') < 2
-                        )
+                            )
                     ) {
                         $ret .= ' ';
                     }
@@ -557,78 +527,77 @@ class Formatter
         return $ret;
     }
 
-    public function escapeConsole(string $string): string
-    {
+    public function escapeConsole(string $string): string {
         return str_replace(
-            [
-                "\x00",
-                "\x01",
-                "\x02",
-                "\x03",
-                "\x04",
-                "\x05",
-                "\x06",
-                "\x07",
-                "\x08",
-                "\x09",
-                "\x0A",
-                "\x0B",
-                "\x0C",
-                "\x0D",
-                "\x0E",
-                "\x0F",
-                "\x10",
-                "\x11",
-                "\x12",
-                "\x13",
-                "\x14",
-                "\x15",
-                "\x16",
-                "\x17",
-                "\x18",
-                "\x19",
-                "\x1A",
-                "\x1B",
-                "\x1C",
-                "\x1D",
-                "\x1E",
-                "\x1F",
-            ],
-            [
-                '\x00',
-                '\x01',
-                '\x02',
-                '\x03',
-                '\x04',
-                '\x05',
-                '\x06',
-                '\x07',
-                '\x08',
-                '\x09',
-                '\x0A',
-                '\x0B',
-                '\x0C',
-                '\x0D',
-                '\x0E',
-                '\x0F',
-                '\x10',
-                '\x11',
-                '\x12',
-                '\x13',
-                '\x14',
-                '\x15',
-                '\x16',
-                '\x17',
-                '\x18',
-                '\x19',
-                '\x1A',
-                '\x1B',
-                '\x1C',
-                '\x1D',
-                '\x1E',
-                '\x1F',
-            ],
-            $string
+                [
+                    "\x00",
+                    "\x01",
+                    "\x02",
+                    "\x03",
+                    "\x04",
+                    "\x05",
+                    "\x06",
+                    "\x07",
+                    "\x08",
+                    "\x09",
+                    "\x0A",
+                    "\x0B",
+                    "\x0C",
+                    "\x0D",
+                    "\x0E",
+                    "\x0F",
+                    "\x10",
+                    "\x11",
+                    "\x12",
+                    "\x13",
+                    "\x14",
+                    "\x15",
+                    "\x16",
+                    "\x17",
+                    "\x18",
+                    "\x19",
+                    "\x1A",
+                    "\x1B",
+                    "\x1C",
+                    "\x1D",
+                    "\x1E",
+                    "\x1F",
+                ],
+                [
+                    '\x00',
+                    '\x01',
+                    '\x02',
+                    '\x03',
+                    '\x04',
+                    '\x05',
+                    '\x06',
+                    '\x07',
+                    '\x08',
+                    '\x09',
+                    '\x0A',
+                    '\x0B',
+                    '\x0C',
+                    '\x0D',
+                    '\x0E',
+                    '\x0F',
+                    '\x10',
+                    '\x11',
+                    '\x12',
+                    '\x13',
+                    '\x14',
+                    '\x15',
+                    '\x16',
+                    '\x17',
+                    '\x18',
+                    '\x19',
+                    '\x1A',
+                    '\x1B',
+                    '\x1C',
+                    '\x1D',
+                    '\x1E',
+                    '\x1F',
+                ],
+                $string
         );
     }
 
@@ -639,18 +608,17 @@ class Formatter
      *
      * @return string
      */
-    public function toString($token)
-    {
+    public function toString($token) {
         $text = $token->token;
         static $prev;
 
         foreach ($this->options['formats'] as $format) {
-            if ($token->type !== $format['type'] || ! (($token->flags & $format['flags']) === $format['flags'])) {
+            if ($token->type !== $format['type'] || !(($token->flags & $format['flags']) === $format['flags'])) {
                 continue;
             }
 
             // Running transformation function.
-            if (! empty($format['function'])) {
+            if (!empty($format['function'])) {
                 $func = $format['function'];
                 $text = $func($text);
             }
@@ -698,8 +666,7 @@ class Formatter
      *
      * @return string the formatted string
      */
-    public static function format($query, array $options = [])
-    {
+    public static function format($query, array $options = []) {
         $lexer = new Lexer($query);
         $formatter = new self($options);
 
@@ -715,8 +682,7 @@ class Formatter
      *
      * @return int
      */
-    public static function getGroupLength($list)
-    {
+    public static function getGroupLength($list) {
         /**
          * The number of opening brackets found.
          * This counter starts at one because by the time this function called,
@@ -761,11 +727,9 @@ class Formatter
      *
      * @return int|bool
      */
-    public static function isClause($token)
-    {
+    public static function isClause($token) {
         if (
-            ($token->type === Token::TYPE_KEYWORD && isset(Parser::$STATEMENT_PARSERS[$token->keyword]))
-            || ($token->type === Token::TYPE_NONE && strtoupper($token->token) === 'DELIMITER')
+                ($token->type === Token::TYPE_KEYWORD && isset(Parser::$STATEMENT_PARSERS[$token->keyword])) || ($token->type === Token::TYPE_NONE && strtoupper($token->token) === 'DELIMITER')
         ) {
             return 2;
         }
@@ -776,4 +740,5 @@ class Formatter
 
         return false;
     }
+
 }

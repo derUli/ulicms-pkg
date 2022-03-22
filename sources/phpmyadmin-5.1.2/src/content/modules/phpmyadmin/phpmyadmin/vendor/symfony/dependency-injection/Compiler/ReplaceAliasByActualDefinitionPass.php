@@ -22,8 +22,8 @@ use Symfony\Component\DependencyInjection\Reference;
  *
  * @author Johannes M. Schmitt <schmittjoh@gmail.com>
  */
-class ReplaceAliasByActualDefinitionPass extends AbstractRecursivePass
-{
+class ReplaceAliasByActualDefinitionPass extends AbstractRecursivePass {
+
     private $replacements;
 
     /**
@@ -31,8 +31,7 @@ class ReplaceAliasByActualDefinitionPass extends AbstractRecursivePass
      *
      * @throws InvalidArgumentException if the service definition does not exist
      */
-    public function process(ContainerBuilder $container)
-    {
+    public function process(ContainerBuilder $container) {
         // First collect all alias targets that need to be replaced
         $seenAliasTargets = [];
         $replacements = [];
@@ -80,8 +79,7 @@ class ReplaceAliasByActualDefinitionPass extends AbstractRecursivePass
     /**
      * {@inheritdoc}
      */
-    protected function processValue($value, $isRoot = false)
-    {
+    protected function processValue($value, $isRoot = false) {
         if ($value instanceof Reference && isset($this->replacements[$referenceId = (string) $value])) {
             // Perform the replacement
             $newId = $this->replacements[$referenceId];
@@ -91,4 +89,5 @@ class ReplaceAliasByActualDefinitionPass extends AbstractRecursivePass
 
         return parent::processValue($value, $isRoot);
     }
+
 }

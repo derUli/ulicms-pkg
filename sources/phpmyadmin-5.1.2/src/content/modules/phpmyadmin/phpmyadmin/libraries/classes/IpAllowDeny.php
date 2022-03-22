@@ -1,9 +1,9 @@
 <?php
+
 /**
  * This library is used with the server IP allow/deny host authentication
  * feature
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin;
@@ -28,8 +28,8 @@ use function substr_replace;
 /**
  * PhpMyAdmin\IpAllowDeny class
  */
-class IpAllowDeny
-{
+class IpAllowDeny {
+
     /**
      * Matches for IPv4 or IPv6 addresses
      *
@@ -40,10 +40,8 @@ class IpAllowDeny
      *
      * @access public
      */
-    public function ipMaskTest($testRange, $ipToTest)
-    {
-        if (mb_strpos($testRange, ':') > -1
-            || mb_strpos($ipToTest, ':') > -1
+    public function ipMaskTest($testRange, $ipToTest) {
+        if (mb_strpos($testRange, ':') > -1 || mb_strpos($ipToTest, ':') > -1
         ) {
             // assume IPv6
             $result = $this->ipv6MaskTest($testRange, $ipToTest);
@@ -75,22 +73,21 @@ class IpAllowDeny
      *
      * @access public
      */
-    public function ipv4MaskTest($testRange, $ipToTest)
-    {
+    public function ipv4MaskTest($testRange, $ipToTest) {
         $result = true;
         $match = preg_match(
-            '|([0-9]+)\.([0-9]+)\.([0-9]+)\.([0-9]+)/([0-9]+)|',
-            $testRange,
-            $regs
+                '|([0-9]+)\.([0-9]+)\.([0-9]+)\.([0-9]+)/([0-9]+)|',
+                $testRange,
+                $regs
         );
         if ($match) {
             // performs a mask match
-            $ipl    = ip2long($ipToTest);
+            $ipl = ip2long($ipToTest);
             $rangel = ip2long(
-                $regs[1] . '.' . $regs[2] . '.' . $regs[3] . '.' . $regs[4]
+                    $regs[1] . '.' . $regs[2] . '.' . $regs[3] . '.' . $regs[4]
             );
 
-            $maskl  = 0;
+            $maskl = 0;
 
             for ($i = 0; $i < 31; $i++) {
                 if ($i >= $regs[5] - 1) {
@@ -105,7 +102,7 @@ class IpAllowDeny
 
         // range based
         $maskocts = explode('.', $testRange);
-        $ipocts   = explode('.', $ipToTest);
+        $ipocts = explode('.', $ipToTest);
 
         // perform a range match
         for ($i = 0; $i < 4; $i++) {
@@ -147,8 +144,7 @@ class IpAllowDeny
      *
      * @access public
      */
-    public function ipv6MaskTest($test_range, $ip_to_test)
-    {
+    public function ipv6MaskTest($test_range, $ip_to_test) {
         $result = true;
 
         // convert to lowercase for easier comparison
@@ -157,7 +153,7 @@ class IpAllowDeny
 
         $is_cidr = mb_strpos($test_range, '/') > -1;
         $is_range = mb_strpos($test_range, '[') > -1;
-        $is_single = ! $is_cidr && ! $is_range;
+        $is_single = !$is_cidr && !$is_range;
 
         $ip_hex = bin2hex((string) inet_pton($ip_to_test));
 
@@ -171,19 +167,19 @@ class IpAllowDeny
             // what range do we operate on?
             $range_match = [];
             $match = preg_match(
-                '/\[([0-9a-f]+)\-([0-9a-f]+)\]/',
-                $test_range,
-                $range_match
+                    '/\[([0-9a-f]+)\-([0-9a-f]+)\]/',
+                    $test_range,
+                    $range_match
             );
             if ($match) {
                 $range_start = $range_match[1];
-                $range_end   = $range_match[2];
+                $range_end = $range_match[2];
 
                 // get the first and last allowed IPs
-                $first_ip  = str_replace($range_match[0], $range_start, $test_range);
+                $first_ip = str_replace($range_match[0], $range_start, $test_range);
                 $first_hex = bin2hex((string) inet_pton($first_ip));
-                $last_ip   = str_replace($range_match[0], $range_end, $test_range);
-                $last_hex  = bin2hex((string) inet_pton($last_ip));
+                $last_ip = str_replace($range_match[0], $range_end, $test_range);
+                $last_hex = bin2hex((string) inet_pton($last_ip));
 
                 // check if the IP to test is within the range
                 $result = ($ip_hex >= $first_hex && $ip_hex <= $last_hex);
@@ -243,8 +239,7 @@ class IpAllowDeny
      *
      * @access public
      */
-    public function allow()
-    {
+    public function allow() {
         return $this->allowDeny('allow');
     }
 
@@ -257,8 +252,7 @@ class IpAllowDeny
      *
      * @access public
      */
-    public function deny()
-    {
+    public function deny() {
         return $this->allowDeny('deny');
     }
 
@@ -273,8 +267,7 @@ class IpAllowDeny
      *
      * @access public
      */
-    private function allowDeny($type)
-    {
+    private function allowDeny($type) {
         global $cfg;
 
         // Grabs true IP of the user and returns if it can't be found
@@ -284,12 +277,12 @@ class IpAllowDeny
         }
 
         // copy username
-        $username  = $cfg['Server']['user'];
+        $username = $cfg['Server']['user'];
 
         // copy rule database
         if (isset($cfg['Server']['AllowDeny']['rules'])) {
-            $rules     = $cfg['Server']['AllowDeny']['rules'];
-            if (! is_array($rules)) {
+            $rules = $cfg['Server']['AllowDeny']['rules'];
+            if (!is_array($rules)) {
                 $rules = [];
             }
         } else {
@@ -298,7 +291,7 @@ class IpAllowDeny
 
         // lookup table for some name shortcuts
         $shortcuts = [
-            'all'       => '0.0.0.0/0',
+            'all' => '0.0.0.0/0',
             'localhost' => '127.0.0.1/8',
         ];
 
@@ -320,7 +313,7 @@ class IpAllowDeny
 
             // check for username
             if (($rule_data[1] !== '%') //wildcarded first
-                && (! hash_equals($rule_data[1], $username))
+                    && (!hash_equals($rule_data[1], $username))
             ) {
                 continue;
             }
@@ -338,7 +331,6 @@ class IpAllowDeny
 
             // Add code for host lookups here
             // Excluded for the moment
-
             // Do the actual matching now
             if ($this->ipMaskTest($rule_data[2], $remote_ip)) {
                 return true;
@@ -347,4 +339,5 @@ class IpAllowDeny
 
         return false;
     }
+
 }

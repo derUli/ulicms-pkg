@@ -20,8 +20,8 @@ use Psr\Cache\InvalidArgumentException;
  *
  * @author Nicolas Grekas <p@tchwork.com>
  */
-interface ItemInterface extends CacheItemInterface
-{
+interface ItemInterface extends CacheItemInterface {
+
     /**
      * References the Unix timestamp stating when the item will expire.
      */

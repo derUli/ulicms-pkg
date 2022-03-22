@@ -19,9 +19,11 @@
         "php": ">=7.1"
     },
     "autoload": {
-        "psr-4": { "Symfony\\Polyfill\\Php81\\": "" },
-        "files": [ "bootstrap.php" ],
-        "classmap": [ "Resources/stubs" ]
+        "psr-4": {
+            "Symfony\\Polyfill\\Php81\\": ""
+        },
+        "files": ["bootstrap.php"],
+        "classmap": ["Resources/stubs"]
     },
     "minimum-stability": "dev",
     "extra": {

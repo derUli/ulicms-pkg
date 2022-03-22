@@ -23,15 +23,14 @@ use Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
  *
  * @final
  */
-class ServiceReferenceGraph
-{
+class ServiceReferenceGraph {
+
     /**
      * @var ServiceReferenceGraphNode[]
      */
     private $nodes = [];
 
-    public function hasNode(string $id): bool
-    {
+    public function hasNode(string $id): bool {
         return isset($this->nodes[$id]);
     }
 
@@ -40,8 +39,7 @@ class ServiceReferenceGraph
      *
      * @throws InvalidArgumentException if no node matches the supplied identifier
      */
-    public function getNode(string $id): ServiceReferenceGraphNode
-    {
+    public function getNode(string $id): ServiceReferenceGraphNode {
         if (!isset($this->nodes[$id])) {
             throw new InvalidArgumentException(sprintf('There is no node with id "%s".', $id));
         }
@@ -54,16 +52,14 @@ class ServiceReferenceGraph
      *
      * @return ServiceReferenceGraphNode[]
      */
-    public function getNodes(): array
-    {
+    public function getNodes(): array {
         return $this->nodes;
     }
 
     /**
      * Clears all nodes.
      */
-    public function clear()
-    {
+    public function clear() {
         foreach ($this->nodes as $node) {
             $node->clear();
         }
@@ -73,8 +69,7 @@ class ServiceReferenceGraph
     /**
      * Connects 2 nodes together in the Graph.
      */
-    public function connect(?string $sourceId, $sourceValue, ?string $destId, $destValue = null, $reference = null, bool $lazy = false, bool $weak = false, bool $byConstructor = false)
-    {
+    public function connect(?string $sourceId, $sourceValue, ?string $destId, $destValue = null, $reference = null, bool $lazy = false, bool $weak = false, bool $byConstructor = false) {
         if (null === $sourceId || null === $destId) {
             return;
         }
@@ -87,12 +82,12 @@ class ServiceReferenceGraph
         $destNode->addInEdge($edge);
     }
 
-    private function createNode(string $id, $value): ServiceReferenceGraphNode
-    {
+    private function createNode(string $id, $value): ServiceReferenceGraphNode {
         if (isset($this->nodes[$id]) && $this->nodes[$id]->getValue() === $value) {
             return $this->nodes[$id];
         }
 
         return $this->nodes[$id] = new ServiceReferenceGraphNode($id, $value);
     }
+
 }

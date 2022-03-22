@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Handles actions related to GIS MULTIPOINT objects
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Gis;
@@ -22,8 +22,8 @@ use function trim;
 /**
  * Handles actions related to GIS MULTIPOINT objects
  */
-class GisMultiPoint extends GisGeometry
-{
+class GisMultiPoint extends GisGeometry {
+
     /** @var self */
     private static $instance;
 
@@ -32,8 +32,8 @@ class GisMultiPoint extends GisGeometry
      *
      * @access private
      */
-    private function __construct()
-    {
+    private function __construct() {
+        
     }
 
     /**
@@ -43,9 +43,8 @@ class GisMultiPoint extends GisGeometry
      *
      * @access public
      */
-    public static function singleton()
-    {
-        if (! isset(self::$instance)) {
+    public static function singleton() {
+        if (!isset(self::$instance)) {
             self::$instance = new GisMultiPoint();
         }
 
@@ -61,15 +60,13 @@ class GisMultiPoint extends GisGeometry
      *
      * @access public
      */
-    public function scaleRow($spatial)
-    {
+    public function scaleRow($spatial) {
         // Trim to remove leading 'MULTIPOINT(' and trailing ')'
-        $multipoint
-            = mb_substr(
+        $multipoint = mb_substr(
                 $spatial,
                 11,
                 mb_strlen($spatial) - 12
-            );
+        );
 
         return $this->setMinMax($multipoint, []);
     }
@@ -88,11 +85,11 @@ class GisMultiPoint extends GisGeometry
      * @access public
      */
     public function prepareRowAsPng(
-        $spatial,
-        ?string $label,
-        $point_color,
-        array $scale_data,
-        $image
+            $spatial,
+            ?string $label,
+            $point_color,
+            array $scale_data,
+            $image
     ) {
         // allocate colors
         $black = imagecolorallocate($image, 0, 0, 0);
@@ -102,12 +99,11 @@ class GisMultiPoint extends GisGeometry
         $color = imagecolorallocate($image, $red, $green, $blue);
 
         // Trim to remove leading 'MULTIPOINT(' and trailing ')'
-        $multipoint
-            = mb_substr(
+        $multipoint = mb_substr(
                 $spatial,
                 11,
                 mb_strlen($spatial) - 12
-            );
+        );
         $points_arr = $this->extractPoints($multipoint, $scale_data);
 
         foreach ($points_arr as $point) {
@@ -117,27 +113,26 @@ class GisMultiPoint extends GisGeometry
             }
 
             imagearc(
-                $image,
-                (int) round($point[0]),
-                (int) round($point[1]),
-                7,
-                7,
-                0,
-                360,
-                $color
+                    $image,
+                    (int) round($point[0]),
+                    (int) round($point[1]),
+                    7,
+                    7,
+                    0,
+                    360,
+                    $color
             );
         }
         // print label for each point
-        if ((isset($label) && trim($label) != '')
-            && ($points_arr[0][0] != '' && $points_arr[0][1] != '')
+        if ((isset($label) && trim($label) != '') && ($points_arr[0][0] != '' && $points_arr[0][1] != '')
         ) {
             imagestring(
-                $image,
-                1,
-                (int) round($points_arr[0][0]),
-                (int) round($points_arr[0][1]),
-                trim($label),
-                $black
+                    $image,
+                    1,
+                    (int) round($points_arr[0][0]),
+                    (int) round($points_arr[0][1]),
+                    trim($label),
+                    $black
             );
         }
 
@@ -158,11 +153,11 @@ class GisMultiPoint extends GisGeometry
      * @access public
      */
     public function prepareRowAsPdf(
-        $spatial,
-        ?string $label,
-        $point_color,
-        array $scale_data,
-        $pdf
+            $spatial,
+            ?string $label,
+            $point_color,
+            array $scale_data,
+            $pdf
     ) {
         // allocate colors
         $red = hexdec(mb_substr($point_color, 1, 2));
@@ -178,12 +173,11 @@ class GisMultiPoint extends GisGeometry
         ];
 
         // Trim to remove leading 'MULTIPOINT(' and trailing ')'
-        $multipoint
-            = mb_substr(
+        $multipoint = mb_substr(
                 $spatial,
                 11,
                 mb_strlen($spatial) - 12
-            );
+        );
         $points_arr = $this->extractPoints($multipoint, $scale_data);
 
         foreach ($points_arr as $point) {
@@ -195,8 +189,7 @@ class GisMultiPoint extends GisGeometry
             $pdf->Circle($point[0], $point[1], 2, 0, 360, 'D', $line);
         }
         // print label for each point
-        if ((isset($label) && trim($label) != '')
-            && ($points_arr[0][0] != '' && $points_arr[0][1] != '')
+        if ((isset($label) && trim($label) != '') && ($points_arr[0][0] != '' && $points_arr[0][1] != '')
         ) {
             $pdf->SetXY($points_arr[0][0], $points_arr[0][1]);
             $pdf->SetFontSize(5);
@@ -218,23 +211,21 @@ class GisMultiPoint extends GisGeometry
      *
      * @access public
      */
-    public function prepareRowAsSvg($spatial, $label, $point_color, array $scale_data)
-    {
+    public function prepareRowAsSvg($spatial, $label, $point_color, array $scale_data) {
         $point_options = [
-            'name'         => $label,
-            'class'        => 'multipoint vector',
-            'fill'         => 'white',
-            'stroke'       => $point_color,
+            'name' => $label,
+            'class' => 'multipoint vector',
+            'fill' => 'white',
+            'stroke' => $point_color,
             'stroke-width' => 2,
         ];
 
         // Trim to remove leading 'MULTIPOINT(' and trailing ')'
-        $multipoint
-            = mb_substr(
+        $multipoint = mb_substr(
                 $spatial,
                 11,
                 mb_strlen($spatial) - 12
-            );
+        );
         $points_arr = $this->extractPoints($multipoint, $scale_data);
 
         $row = '';
@@ -244,7 +235,7 @@ class GisMultiPoint extends GisGeometry
             }
 
             $row .= '<circle cx="' . $point[0] . '" cy="'
-                . $point[1] . '" r="3"';
+                    . $point[1] . '" r="3"';
             $point_options['id'] = $label . $this->getRandomId();
             foreach ($point_options as $option => $val) {
                 $row .= ' ' . $option . '="' . trim((string) $val) . '"';
@@ -270,11 +261,11 @@ class GisMultiPoint extends GisGeometry
      * @access public
      */
     public function prepareRowAsOl(
-        $spatial,
-        $srid,
-        $label,
-        $point_color,
-        array $scale_data
+            $spatial,
+            $srid,
+            $label,
+            $point_color,
+            array $scale_data
     ) {
         $fill_style = ['color' => 'white'];
         $stroke_style = [
@@ -282,15 +273,15 @@ class GisMultiPoint extends GisGeometry
             'width' => 2,
         ];
         $result = 'var fill = new ol.style.Fill(' . json_encode($fill_style) . ');'
-            . 'var stroke = new ol.style.Stroke(' . json_encode($stroke_style) . ');'
-            . 'var style = new ol.style.Style({'
-            . 'image: new ol.style.Circle({'
-            . 'fill: fill,'
-            . 'stroke: stroke,'
-            . 'radius: 3'
-            . '}),'
-            . 'fill: fill,'
-            . 'stroke: stroke';
+                . 'var stroke = new ol.style.Stroke(' . json_encode($stroke_style) . ');'
+                . 'var style = new ol.style.Style({'
+                . 'image: new ol.style.Circle({'
+                . 'fill: fill,'
+                . 'stroke: stroke,'
+                . 'radius: 3'
+                . '}),'
+                . 'fill: fill,'
+                . 'stroke: stroke';
 
         if (trim($label) !== '') {
             $text_style = [
@@ -308,19 +299,18 @@ class GisMultiPoint extends GisGeometry
         $result .= $this->getBoundsForOl($srid, $scale_data);
 
         // Trim to remove leading 'MULTIPOINT(' and trailing ')'
-        $multipoint
-            = mb_substr(
+        $multipoint = mb_substr(
                 $spatial,
                 11,
                 mb_strlen($spatial) - 12
-            );
+        );
         $points_arr = $this->extractPoints($multipoint, null);
 
         return $result . 'var multiPoint = new ol.geom.MultiPoint('
-            . $this->getPointsArrayForOpenLayers($points_arr, $srid) . ');'
-            . 'var feature = new ol.Feature({geometry: multiPoint});'
-            . 'feature.setStyle(style);'
-            . 'vectorLayer.addFeature(feature);';
+                . $this->getPointsArrayForOpenLayers($points_arr, $srid) . ');'
+                . 'var feature = new ol.Feature({geometry: multiPoint});'
+                . 'feature.setStyle(style);'
+                . 'vectorLayer.addFeature(feature);';
     }
 
     /**
@@ -334,28 +324,22 @@ class GisMultiPoint extends GisGeometry
      *
      * @access public
      */
-    public function generateWkt(array $gis_data, $index, $empty = '')
-    {
+    public function generateWkt(array $gis_data, $index, $empty = '') {
         $no_of_points = $gis_data[$index]['MULTIPOINT']['no_of_points'] ?? 1;
         if ($no_of_points < 1) {
             $no_of_points = 1;
         }
         $wkt = 'MULTIPOINT(';
         for ($i = 0; $i < $no_of_points; $i++) {
-            $wkt .= (isset($gis_data[$index]['MULTIPOINT'][$i]['x'])
-                    && trim((string) $gis_data[$index]['MULTIPOINT'][$i]['x']) != ''
-                    ? $gis_data[$index]['MULTIPOINT'][$i]['x'] : '')
-                . ' ' . (isset($gis_data[$index]['MULTIPOINT'][$i]['y'])
-                    && trim((string) $gis_data[$index]['MULTIPOINT'][$i]['y']) != ''
-                    ? $gis_data[$index]['MULTIPOINT'][$i]['y'] : '') . ',';
+            $wkt .= (isset($gis_data[$index]['MULTIPOINT'][$i]['x']) && trim((string) $gis_data[$index]['MULTIPOINT'][$i]['x']) != '' ? $gis_data[$index]['MULTIPOINT'][$i]['x'] : '')
+                    . ' ' . (isset($gis_data[$index]['MULTIPOINT'][$i]['y']) && trim((string) $gis_data[$index]['MULTIPOINT'][$i]['y']) != '' ? $gis_data[$index]['MULTIPOINT'][$i]['y'] : '') . ',';
         }
 
-        $wkt
-            = mb_substr(
+        $wkt = mb_substr(
                 $wkt,
                 0,
                 mb_strlen($wkt) - 1
-            );
+        );
 
         return $wkt . ')';
     }
@@ -369,20 +353,18 @@ class GisMultiPoint extends GisGeometry
      *
      * @access public
      */
-    public function getShape(array $row_data)
-    {
+    public function getShape(array $row_data) {
         $wkt = 'MULTIPOINT(';
         for ($i = 0; $i < $row_data['numpoints']; $i++) {
             $wkt .= $row_data['points'][$i]['x'] . ' '
-                . $row_data['points'][$i]['y'] . ',';
+                    . $row_data['points'][$i]['y'] . ',';
         }
 
-        $wkt
-            = mb_substr(
+        $wkt = mb_substr(
                 $wkt,
                 0,
                 mb_strlen($wkt) - 1
-            );
+        );
 
         return $wkt . ')';
     }
@@ -397,8 +379,7 @@ class GisMultiPoint extends GisGeometry
      *
      * @access public
      */
-    public function generateParams($value, $index = -1)
-    {
+    public function generateParams($value, $index = -1) {
         $params = [];
         if ($index == -1) {
             $index = 0;
@@ -411,12 +392,11 @@ class GisMultiPoint extends GisGeometry
         }
 
         // Trim to remove leading 'MULTIPOINT(' and trailing ')'
-        $points
-            = mb_substr(
+        $points = mb_substr(
                 $wkt,
                 11,
                 mb_strlen($wkt) - 12
-            );
+        );
         $points_arr = $this->extractPoints($points, null);
 
         $no_of_points = count($points_arr);
@@ -440,8 +420,7 @@ class GisMultiPoint extends GisGeometry
      *
      * @access protected
      */
-    protected function getPointsArrayForOpenLayers(array $points_arr, $srid)
-    {
+    protected function getPointsArrayForOpenLayers(array $points_arr, $srid) {
         $ol_array = 'new Array(';
         foreach ($points_arr as $point) {
             if ($point[0] == '' || $point[1] == '') {
@@ -458,4 +437,5 @@ class GisMultiPoint extends GisGeometry
 
         return $ol_array . ')';
     }
+
 }

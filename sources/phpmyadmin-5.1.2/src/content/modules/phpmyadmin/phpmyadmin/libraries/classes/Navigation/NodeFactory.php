@@ -1,8 +1,8 @@
 <?php
+
 /**
  * This class is responsible for creating Node objects
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Navigation;
@@ -17,8 +17,8 @@ use function trigger_error;
 /**
  * Node factory - instantiates Node objects or objects derived from the Node class
  */
-class NodeFactory
-{
+class NodeFactory {
+
     /** @var string */
     protected static $namespace = 'PhpMyAdmin\\Navigation\\Nodes\\%s';
 
@@ -29,17 +29,16 @@ class NodeFactory
      *
      * @return string
      */
-    private static function sanitizeClass($class)
-    {
-        if (! preg_match('@^Node\w*$@', $class)) {
+    private static function sanitizeClass($class) {
+        if (!preg_match('@^Node\w*$@', $class)) {
             $class = 'Node';
             trigger_error(
-                sprintf(
-                    /* l10n: The word "Node" must not be translated here */
-                    __('Invalid class name "%1$s", using default of "Node"'),
-                    $class
-                ),
-                E_USER_ERROR
+                    sprintf(
+                            /* l10n: The word "Node" must not be translated here */
+                            __('Invalid class name "%1$s", using default of "Node"'),
+                            $class
+                    ),
+                    E_USER_ERROR
             );
         }
 
@@ -55,18 +54,17 @@ class NodeFactory
      *
      * @return string
      */
-    private static function checkClass($class)
-    {
+    private static function checkClass($class) {
         $class = sprintf(self::$namespace, $class);
 
-        if (! class_exists($class)) {
+        if (!class_exists($class)) {
             $class = sprintf(self::$namespace, 'Node');
             trigger_error(
-                sprintf(
-                    __('Could not load class "%1$s"'),
-                    $class
-                ),
-                E_USER_ERROR
+                    sprintf(
+                            __('Could not load class "%1$s"'),
+                            $class
+                    ),
+                    E_USER_ERROR
             );
         }
 
@@ -83,10 +81,10 @@ class NodeFactory
      *                        while grouping nodes
      */
     public static function getInstance(
-        $class = 'Node',
-        $name = 'default',
-        $type = Node::OBJECT,
-        $isGroup = false
+            $class = 'Node',
+            $name = 'default',
+            $type = Node::OBJECT,
+            $isGroup = false
     ): Node {
         $class = self::sanitizeClass($class);
 
@@ -100,8 +98,8 @@ class NodeFactory
      * @param string $classes Extra CSS classes for the node
      */
     public static function getInstanceForNewNode(
-        string $name,
-        string $classes
+            string $name,
+            string $classes
     ): Node {
         $node = new Node($name, Node::OBJECT, false);
         $node->title = $name;
@@ -110,4 +108,5 @@ class NodeFactory
 
         return $node;
     }
+
 }

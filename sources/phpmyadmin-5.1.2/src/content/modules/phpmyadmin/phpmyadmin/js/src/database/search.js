@@ -31,7 +31,7 @@ AJAX.registerTeardown('database/search.js', function () {
 
 AJAX.registerOnload('database/search.js', function () {
     /** Hide the table link in the initial search result */
-    var icon = Functions.getImage('s_tbl', '', { 'id': 'table-image' }).toString();
+    var icon = Functions.getImage('s_tbl', '', {'id': 'table-image'}).toString();
     $('#table-info').prepend(icon).hide();
 
     /** Hide the browse and deleted results in the new search criteria */
@@ -45,51 +45,51 @@ AJAX.registerOnload('database/search.js', function () {
      * Prepare a div containing a link for toggle the search results
      */
     $('#togglesearchresultsdiv')
-    /** don't show it until we have results on-screen */
-        .hide();
+            /** don't show it until we have results on-screen */
+            .hide();
 
     /**
      * Changing the displayed text according to
      * the hide/show criteria in search result forms
      */
     $('#togglesearchresultlink')
-        .html(Messages.strHideSearchResults)
-        .on('click', function () {
-            var $link = $(this);
-            $('#searchresults').slideToggle();
-            if ($link.text() === Messages.strHideSearchResults) {
-                $link.text(Messages.strShowSearchResults);
-            } else {
-                $link.text(Messages.strHideSearchResults);
-            }
-            /** avoid default click action */
-            return false;
-        });
+            .html(Messages.strHideSearchResults)
+            .on('click', function () {
+                var $link = $(this);
+                $('#searchresults').slideToggle();
+                if ($link.text() === Messages.strHideSearchResults) {
+                    $link.text(Messages.strShowSearchResults);
+                } else {
+                    $link.text(Messages.strHideSearchResults);
+                }
+                /** avoid default click action */
+                return false;
+            });
 
     /**
      * Prepare a div containing a link for toggle the search form,
      * otherwise it's incorrectly displayed after a couple of clicks
      */
     $('#togglesearchformdiv')
-        .hide(); // don't show it until we have results on-screen
+            .hide(); // don't show it until we have results on-screen
 
     /**
      * Changing the displayed text according to
      * the hide/show criteria in search form
      */
     $('#togglequerybox')
-        .hide()
-        .on('click', function () {
-            var $link = $(this);
-            $('#sqlqueryform').slideToggle('medium');
-            if ($link.text() === Messages.strHideQueryBox) {
-                $link.text(Messages.strShowQueryBox);
-            } else {
-                $link.text(Messages.strHideQueryBox);
-            }
-            /** avoid default click action */
-            return false;
-        });
+            .hide()
+            .on('click', function () {
+                var $link = $(this);
+                $('#sqlqueryform').slideToggle('medium');
+                if ($link.text() === Messages.strHideQueryBox) {
+                    $link.text(Messages.strShowQueryBox);
+                } else {
+                    $link.text(Messages.strHideQueryBox);
+                }
+                /** avoid default click action */
+                return false;
+            });
 
     /** don't show it until we have results on-screen */
 
@@ -98,18 +98,18 @@ AJAX.registerOnload('database/search.js', function () {
      * the hide/show criteria in search criteria form
      */
     $('#togglesearchformlink')
-        .html(Messages.strShowSearchCriteria)
-        .on('click', function () {
-            var $link = $(this);
-            $('#db_search_form').slideToggle();
-            if ($link.text() === Messages.strHideSearchCriteria) {
-                $link.text(Messages.strShowSearchCriteria);
-            } else {
-                $link.text(Messages.strHideSearchCriteria);
-            }
-            /** avoid default click action */
-            return false;
-        });
+            .html(Messages.strShowSearchCriteria)
+            .on('click', function () {
+                var $link = $(this);
+                $('#db_search_form').slideToggle();
+                if ($link.text() === Messages.strHideSearchCriteria) {
+                    $link.text(Messages.strShowSearchCriteria);
+                } else {
+                    $link.text(Messages.strHideSearchCriteria);
+                }
+                /** avoid default click action */
+                return false;
+            });
 
     /*
      * Ajax Event handler for retrieving the results from a table
@@ -123,14 +123,14 @@ AJAX.registerOnload('database/search.js', function () {
         /**  Load the browse results to the page */
         $('#table-info').show();
         var tableName = $(this).data('table-name');
-        $('#table-link').attr({ 'href' : $(this).attr('href') }).text(tableName);
+        $('#table-link').attr({'href': $(this).attr('href')}).text(tableName);
 
         var url = $(this).attr('href') + '#searchresults';
         var browseSql = $(this).data('browse-sql');
         var params = {
             'ajax_request': true,
             'is_js_confirmed': true,
-            'sql_query' : browseSql
+            'sql_query': browseSql
         };
         $.post(url, params, function (data) {
             if (typeof data !== 'undefined' && data.success) {
@@ -142,9 +142,9 @@ AJAX.registerOnload('database/search.js', function () {
                 $('#browse-results').show();
                 Functions.highlightSql($('#browse-results'));
                 $('html, body')
-                    .animate({
-                        scrollTop: $('#browse-results').offset().top
-                    }, 1000);
+                        .animate({
+                            scrollTop: $('#browse-results').offset().top
+                        }, 1000);
             } else {
                 Functions.ajaxShowMessage(data.error, false);
             }
@@ -162,9 +162,9 @@ AJAX.registerOnload('database/search.js', function () {
         $('#togglequerybox').hide();
         /** Conformation message for deletion */
         var msg = Functions.sprintf(
-            Messages.strConfirmDeleteResults,
-            $(this).data('table-name')
-        );
+                Messages.strConfirmDeleteResults,
+                $(this).data('table-name')
+                );
         if (confirm(msg)) {
             var $msg = Functions.ajaxShowMessage(Messages.strDeleting, false);
             /** Load the deleted option to the page*/
@@ -191,9 +191,9 @@ AJAX.registerOnload('database/search.js', function () {
                 $('#sqlqueryform').show();
                 $('#togglequerybox').show();
                 $('html, body')
-                    .animate({
-                        scrollTop: $('#browse-results').offset().top
-                    }, 1000);
+                        .animate({
+                            scrollTop: $('#browse-results').offset().top
+                        }, 1000);
                 Functions.ajaxRemoveMessage($msg);
             });
         }
@@ -218,24 +218,24 @@ AJAX.registerOnload('database/search.js', function () {
                 $('#searchresults').html(data.message);
 
                 $('#togglesearchresultlink')
-                // always start with the Show message
-                    .text(Messages.strHideSearchResults);
+                        // always start with the Show message
+                        .text(Messages.strHideSearchResults);
                 $('#togglesearchresultsdiv')
-                // now it's time to show the div containing the link
-                    .show();
+                        // now it's time to show the div containing the link
+                        .show();
                 $('#searchresults').show();
 
 
                 $('#db_search_form')
-                    // workaround for Chrome problem (bug #3168569)
-                    .slideToggle()
-                    .hide();
+                        // workaround for Chrome problem (bug #3168569)
+                        .slideToggle()
+                        .hide();
                 $('#togglesearchformlink')
-                    // always start with the Show message
-                    .text(Messages.strShowSearchCriteria);
+                        // always start with the Show message
+                        .text(Messages.strShowSearchCriteria);
                 $('#togglesearchformdiv')
-                    // now it's time to show the div containing the link
-                    .show();
+                        // now it's time to show the div containing the link
+                        .show();
             } else {
                 // error message (zero rows)
                 $('#searchresults').html(data.error).show();

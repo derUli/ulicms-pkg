@@ -16,8 +16,8 @@ use function strpos;
 /**
  * Language object
  */
-class Language
-{
+class Language {
+
     /** @var string */
     protected $code;
 
@@ -42,8 +42,7 @@ class Language
      * @param string $regex  Match regular expression
      * @param string $mysql  MySQL locale code
      */
-    public function __construct($code, $name, $native, $regex, $mysql)
-    {
+    public function __construct($code, $name, $native, $regex, $mysql) {
         $this->code = $code;
         $this->name = $name;
         $this->native = $native;
@@ -59,8 +58,7 @@ class Language
      *
      * @return string
      */
-    public function getNativeName()
-    {
+    public function getNativeName() {
         return $this->native;
     }
 
@@ -69,8 +67,7 @@ class Language
      *
      * @return string
      */
-    public function getEnglishName()
-    {
+    public function getEnglishName() {
         return $this->name;
     }
 
@@ -79,9 +76,8 @@ class Language
      *
      * @return string
      */
-    public function getName()
-    {
-        if (! empty($this->native)) {
+    public function getName() {
+        if (!empty($this->native)) {
             return $this->native . ' - ' . $this->name;
         }
 
@@ -93,8 +89,7 @@ class Language
      *
      * @return string
      */
-    public function getCode()
-    {
+    public function getCode() {
         return $this->code;
     }
 
@@ -103,8 +98,7 @@ class Language
      *
      * @return string
      */
-    public function getMySQLLocale()
-    {
+    public function getMySQLLocale() {
         return $this->mysql;
     }
 
@@ -115,8 +109,7 @@ class Language
      *
      * @return int same as strcmp
      */
-    public function cmp(Language $other): int
-    {
+    public function cmp(Language $other): int {
         return strcmp($this->name, $other->name);
     }
 
@@ -125,8 +118,7 @@ class Language
      *
      * @return bool
      */
-    public function isActive()
-    {
+    public function isActive() {
         return $GLOBALS['lang'] == $this->code;
     }
 
@@ -137,11 +129,10 @@ class Language
      *
      * @return bool
      */
-    public function matchesAcceptLanguage($header)
-    {
+    public function matchesAcceptLanguage($header) {
         $pattern = '/^('
-            . addcslashes($this->regex, '/')
-            . ')(;q=[0-9]\\.[0-9])?$/i';
+                . addcslashes($this->regex, '/')
+                . ')(;q=[0-9]\\.[0-9])?$/i';
 
         return preg_match($pattern, $header);
     }
@@ -153,11 +144,10 @@ class Language
      *
      * @return bool
      */
-    public function matchesUserAgent($header)
-    {
+    public function matchesUserAgent($header) {
         $pattern = '/(\(|\[|;[[:space:]])('
-            . addcslashes($this->regex, '/')
-            . ')(;|\]|\))/i';
+                . addcslashes($this->regex, '/')
+                . ')(;|\]|\))/i';
 
         return preg_match($pattern, $header);
     }
@@ -167,8 +157,7 @@ class Language
      *
      * @return bool
      */
-    public function isRTL()
-    {
+    public function isRTL() {
         return in_array($this->code, ['ar', 'fa', 'he', 'ur']);
     }
 
@@ -177,8 +166,7 @@ class Language
      *
      * @return void
      */
-    public function activate()
-    {
+    public function activate() {
         $GLOBALS['lang'] = $this->code;
 
         // Set locale
@@ -211,4 +199,5 @@ class Language
         /* Show possible warnings from langauge selection */
         LanguageManager::getInstance()->showWarnings();
     }
+
 }

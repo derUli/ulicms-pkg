@@ -19,16 +19,15 @@ use Psr\Container\ContainerInterface;
  *
  * @author Kevin Bond <kevinbond@gmail.com>
  */
-trait ServiceSubscriberTrait
-{
+trait ServiceSubscriberTrait {
+
     /** @var ContainerInterface */
     protected $container;
 
     /**
      * {@inheritdoc}
      */
-    public static function getSubscribedServices(): array
-    {
+    public static function getSubscribedServices(): array {
         static $services;
 
         if (null !== $services) {
@@ -54,7 +53,7 @@ trait ServiceSubscriberTrait
                 continue;
             }
 
-            $services[self::class.'::'.$method->name] = '?'.$returnType->getName();
+            $services[self::class . '::' . $method->name] = '?' . $returnType->getName();
         }
 
         return $services;
@@ -65,8 +64,7 @@ trait ServiceSubscriberTrait
      *
      * @return ContainerInterface|null
      */
-    public function setContainer(ContainerInterface $container)
-    {
+    public function setContainer(ContainerInterface $container) {
         $this->container = $container;
 
         if (\is_callable(['parent', __FUNCTION__])) {
@@ -75,4 +73,5 @@ trait ServiceSubscriberTrait
 
         return null;
     }
+
 }

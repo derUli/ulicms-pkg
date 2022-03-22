@@ -14,8 +14,8 @@ use PhpMyAdmin\Url;
 use function is_numeric;
 use function microtime;
 
-class MonitorController extends AbstractController
-{
+class MonitorController extends AbstractController {
+
     /** @var Monitor */
     private $monitor;
 
@@ -28,15 +28,13 @@ class MonitorController extends AbstractController
      * @param Monitor           $monitor
      * @param DatabaseInterface $dbi
      */
-    public function __construct($response, Template $template, $data, $monitor, $dbi)
-    {
+    public function __construct($response, Template $template, $data, $monitor, $dbi) {
         parent::__construct($response, $template, $data);
         $this->monitor = $monitor;
         $this->dbi = $dbi;
     }
 
-    public function index(): void
-    {
+    public function index(): void {
         global $PMA_Theme, $err_url;
 
         $err_url = Url::getFromRoute('/');
@@ -70,7 +68,7 @@ class MonitorController extends AbstractController
 
         $javascriptVariableNames = [];
         foreach ($this->data->status as $name => $value) {
-            if (! is_numeric($value)) {
+            if (!is_numeric($value)) {
                 continue;
             }
 
@@ -84,8 +82,7 @@ class MonitorController extends AbstractController
         ]);
     }
 
-    public function chartingData(): void
-    {
+    public function chartingData(): void {
         global $err_url;
 
         $params = ['requiredData' => $_POST['requiredData'] ?? null];
@@ -95,19 +92,18 @@ class MonitorController extends AbstractController
             $this->dbi->selectDb('mysql');
         }
 
-        if (! $this->response->isAjax()) {
+        if (!$this->response->isAjax()) {
             return;
         }
 
         $this->response->addJSON([
             'message' => $this->monitor->getJsonForChartingData(
-                $params['requiredData'] ?? ''
+                    $params['requiredData'] ?? ''
             ),
         ]);
     }
 
-    public function logDataTypeSlow(): void
-    {
+    public function logDataTypeSlow(): void {
         global $err_url;
 
         $params = [
@@ -120,20 +116,19 @@ class MonitorController extends AbstractController
             $this->dbi->selectDb('mysql');
         }
 
-        if (! $this->response->isAjax()) {
+        if (!$this->response->isAjax()) {
             return;
         }
 
         $this->response->addJSON([
             'message' => $this->monitor->getJsonForLogDataTypeSlow(
-                (int) $params['time_start'],
-                (int) $params['time_end']
+                    (int) $params['time_start'],
+                    (int) $params['time_end']
             ),
         ]);
     }
 
-    public function logDataTypeGeneral(): void
-    {
+    public function logDataTypeGeneral(): void {
         global $err_url;
 
         $params = [
@@ -148,22 +143,21 @@ class MonitorController extends AbstractController
             $this->dbi->selectDb('mysql');
         }
 
-        if (! $this->response->isAjax()) {
+        if (!$this->response->isAjax()) {
             return;
         }
 
         $this->response->addJSON([
             'message' => $this->monitor->getJsonForLogDataTypeGeneral(
-                (int) $params['time_start'],
-                (int) $params['time_end'],
-                (bool) $params['limitTypes'],
-                (bool) $params['removeVariables']
+                    (int) $params['time_start'],
+                    (int) $params['time_end'],
+                    (bool) $params['limitTypes'],
+                    (bool) $params['removeVariables']
             ),
         ]);
     }
 
-    public function loggingVars(): void
-    {
+    public function loggingVars(): void {
         global $err_url;
 
         $params = [
@@ -176,20 +170,19 @@ class MonitorController extends AbstractController
             $this->dbi->selectDb('mysql');
         }
 
-        if (! $this->response->isAjax()) {
+        if (!$this->response->isAjax()) {
             return;
         }
 
         $this->response->addJSON([
             'message' => $this->monitor->getJsonForLoggingVars(
-                $params['varName'],
-                $params['varValue']
+                    $params['varName'],
+                    $params['varValue']
             ),
         ]);
     }
 
-    public function queryAnalyzer(): void
-    {
+    public function queryAnalyzer(): void {
         global $err_url;
 
         $params = [
@@ -202,15 +195,16 @@ class MonitorController extends AbstractController
             $this->dbi->selectDb('mysql');
         }
 
-        if (! $this->response->isAjax()) {
+        if (!$this->response->isAjax()) {
             return;
         }
 
         $this->response->addJSON([
             'message' => $this->monitor->getJsonForQueryAnalyzer(
-                $params['database'] ?? '',
-                $params['query'] ?? ''
+                    $params['database'] ?? '',
+                    $params['query'] ?? ''
             ),
         ]);
     }
+
 }

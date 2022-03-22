@@ -1,8 +1,7 @@
 <?php
 
-function kundenbereich_render()
-{
-    if (! is_logged_in()) {
+function kundenbereich_render() {
+    if (!is_logged_in()) {
         $html = "";
     } else {
         $files = db_query("SELECT id, title, filename FROM `" . tbname("shared_files") . "` WHERE `user_id` = " . intval($_SESSION["login_id"]) . " ORDER by id");
@@ -17,12 +16,12 @@ function kundenbereich_render()
                 }
                 $html .= "</a></li>";
             }
-            
+
             $html .= "</ol>";
         } else {
             echo "<span class='shared_file_message ulicms-error'>" . "Es sind momentan keine Dateien für Sie freigegeben." . "</span>";
         }
     }
-    
+
     return $html;
 }

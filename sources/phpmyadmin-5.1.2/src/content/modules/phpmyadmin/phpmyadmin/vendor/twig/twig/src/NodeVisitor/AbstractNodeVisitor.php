@@ -21,15 +21,13 @@ use Twig\Node\Node;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-abstract class AbstractNodeVisitor implements NodeVisitorInterface
-{
-    final public function enterNode(Node $node, Environment $env)
-    {
+abstract class AbstractNodeVisitor implements NodeVisitorInterface {
+
+    final public function enterNode(Node $node, Environment $env) {
         return $this->doEnterNode($node, $env);
     }
 
-    final public function leaveNode(Node $node, Environment $env)
-    {
+    final public function leaveNode(Node $node, Environment $env) {
         return $this->doLeaveNode($node, $env);
     }
 

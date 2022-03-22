@@ -1,16 +1,17 @@
 <?php
+
 $ip = $_SERVER ["REMOTE_ADDR"];
 
 // Maximale Anzahl der Loginversuche
 $max_login_attempts = getconfig("max_login_attempts");
-if (! $max_login_attempts) {
+if (!$max_login_attempts) {
     $max_login_attempts = 5;
 }
 
 $ip_blocking_duration = getconfig("ip_blocking_duration");
 
 // 3 Stunden blocken, sofern nicht anders definiert
-if (! $ip_blocking_duration) {
+if (!$ip_blocking_duration) {
     $ip_blocking_duration = 3;
 }
 

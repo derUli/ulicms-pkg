@@ -5,8 +5,7 @@ use function UliCMS\HTML\icon;
 $acl = new ACL();
 if ($acl->hasPermission("umanage_client")) {
     ?>
-    <?php
-    $sites = Sites::getAllSites(); ?>
+    <?php $sites = Sites::getAllSites(); ?>
     <h1><?php translate("list_of_remote_sites") ?></h1>
 
     <p>
@@ -69,7 +68,8 @@ if ($acl->hasPermission("umanage_client")) {
                                     $ulicms_version_color = "red";
                                     $char = " ×";
                                 }
-                            } ?>
+                            }
+                            ?>
                             <tr>
                                 <td><input type="checkbox" name="sites"
                                            id="site-<?php echo $site["id"]; ?>"
@@ -78,7 +78,8 @@ if ($acl->hasPermission("umanage_client")) {
                                        target="_blank"><?php esc($site["domain"]); ?></a></td>
                                 <td><span  style="color: <?php echo $ulicms_version_color; ?>"><?php
                                         esc($ulicms_version);
-                            echo $char; ?></span></td>
+                                        echo $char;
+                                        ?></span></td>
                                 <td><?php esc($client_version); ?></td>
                                 <td style="text-align: center;"><a
                                         href="index.php?action=umanage_edit&id=<?php echo $site["id"]; ?>"><img
@@ -92,8 +93,8 @@ if ($acl->hasPermission("umanage_client")) {
 
                                 </td>
                             </tr>
-                        <?php
-                        } ?>
+                        <?php }
+                        ?>
                     </tbody>
                 </table>
             </div>
@@ -106,8 +107,8 @@ if ($acl->hasPermission("umanage_client")) {
     <?php } ?>
     <?php
 } else {
-                            noperms();
-                        }
+    noperms();
+}
 ?>
 <script type="text/javascript"
 src="<?php echo getModulePath("umanage_client") ?>scripts/list.js"></script>

@@ -33,17 +33,17 @@ AJAX.registerOnload('server/user_groups.js', function () {
             $(this).dialog('close');
         };
         $('<div></div>')
-            .attr('id', 'confirmUserGroupDeleteDialog')
-            .append(Functions.sprintf(Messages.strDropUserGroupWarning, Functions.escapeHtml(groupName)))
-            .dialog({
-                width: 300,
-                minWidth: 200,
-                modal: true,
-                buttons: buttonOptions,
-                title: Messages.strConfirm,
-                close: function () {
-                    $(this).remove();
-                }
-            });
+                .attr('id', 'confirmUserGroupDeleteDialog')
+                .append(Functions.sprintf(Messages.strDropUserGroupWarning, Functions.escapeHtml(groupName)))
+                .dialog({
+                    width: 300,
+                    minWidth: 200,
+                    modal: true,
+                    buttons: buttonOptions,
+                    title: Messages.strConfirm,
+                    close: function () {
+                        $(this).remove();
+                    }
+                });
     });
 });

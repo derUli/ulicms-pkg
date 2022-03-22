@@ -18,15 +18,14 @@ use Symfony\Component\DependencyInjection\Argument\TaggedIteratorArgument;
  *
  * @author Roland Franssen <franssen.roland@gmail.com>
  */
-class ResolveTaggedIteratorArgumentPass extends AbstractRecursivePass
-{
+class ResolveTaggedIteratorArgumentPass extends AbstractRecursivePass {
+
     use PriorityTaggedServiceTrait;
 
     /**
      * {@inheritdoc}
      */
-    protected function processValue($value, $isRoot = false)
-    {
+    protected function processValue($value, $isRoot = false) {
         if (!$value instanceof TaggedIteratorArgument) {
             return parent::processValue($value, $isRoot);
         }
@@ -35,4 +34,5 @@ class ResolveTaggedIteratorArgumentPass extends AbstractRecursivePass
 
         return $value;
     }
+
 }

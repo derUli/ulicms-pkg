@@ -1,8 +1,8 @@
 <?php
+
 /**
  * `CHECK` statement.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\SqlParser\Statements;
@@ -12,8 +12,8 @@ namespace PhpMyAdmin\SqlParser\Statements;
  *
  * CHECK TABLE tbl_name [, tbl_name] ... [option] ...
  */
-class CheckStatement extends MaintenanceStatement
-{
+class CheckStatement extends MaintenanceStatement {
+
     /**
      * Options of this statement.
      *
@@ -21,7 +21,6 @@ class CheckStatement extends MaintenanceStatement
      */
     public static $OPTIONS = [
         'TABLE' => 1,
-
         'FOR UPGRADE' => 2,
         'QUICK' => 3,
         'FAST' => 4,
@@ -29,4 +28,5 @@ class CheckStatement extends MaintenanceStatement
         'EXTENDED' => 6,
         'CHANGED' => 7,
     ];
+
 }

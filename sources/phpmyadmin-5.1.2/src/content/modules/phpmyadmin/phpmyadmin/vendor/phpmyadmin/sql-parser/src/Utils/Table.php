@@ -1,22 +1,21 @@
 <?php
+
 /**
  * Table utilities.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\SqlParser\Utils;
 
 use PhpMyAdmin\SqlParser\Statements\CreateStatement;
-
 use function is_array;
 use function str_replace;
 
 /**
  * Table utilities.
  */
-class Table
-{
+class Table {
+
     /**
      * Gets the foreign keys of the table.
      *
@@ -24,9 +23,8 @@ class Table
      *
      * @return array
      */
-    public static function getForeignKeys($statement)
-    {
-        if (empty($statement->fields) || (! is_array($statement->fields)) || (! $statement->options->has('TABLE'))) {
+    public static function getForeignKeys($statement) {
+        if (empty($statement->fields) || (!is_array($statement->fields)) || (!$statement->options->has('TABLE'))) {
             return [];
         }
 
@@ -39,7 +37,7 @@ class Table
 
             $columns = [];
             foreach ($field->key->columns as $column) {
-                if (! isset($column['name'])) {
+                if (!isset($column['name'])) {
                     continue;
                 }
 
@@ -51,7 +49,7 @@ class Table
                 'index_list' => $columns,
             ];
 
-            if (! empty($field->references)) {
+            if (!empty($field->references)) {
                 $tmp['ref_db_name'] = $field->references->table->database;
                 $tmp['ref_table_name'] = $field->references->table->table;
                 $tmp['ref_index_list'] = $field->references->columns;
@@ -82,9 +80,8 @@ class Table
      *
      * @return array
      */
-    public static function getFields($statement)
-    {
-        if (empty($statement->fields) || (! is_array($statement->fields)) || (! $statement->options->has('TABLE'))) {
+    public static function getFields($statement) {
+        if (empty($statement->fields) || (!is_array($statement->fields)) || (!$statement->options->has('TABLE'))) {
             return [];
         }
 
@@ -101,7 +98,7 @@ class Table
                 'timestamp_not_null' => false,
             ];
 
-            if (! $field->options) {
+            if (!$field->options) {
                 continue;
             }
 
@@ -128,7 +125,7 @@ class Table
 
             $option = $field->options->has('AS');
 
-            if (! $option) {
+            if (!$option) {
                 continue;
             }
 
@@ -138,4 +135,5 @@ class Table
 
         return $ret;
     }
+
 }

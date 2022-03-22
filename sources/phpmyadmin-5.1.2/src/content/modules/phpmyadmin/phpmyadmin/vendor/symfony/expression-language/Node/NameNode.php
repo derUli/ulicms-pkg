@@ -18,28 +18,25 @@ use Symfony\Component\ExpressionLanguage\Compiler;
  *
  * @internal
  */
-class NameNode extends Node
-{
-    public function __construct(string $name)
-    {
+class NameNode extends Node {
+
+    public function __construct(string $name) {
         parent::__construct(
-            [],
-            ['name' => $name]
+                [],
+                ['name' => $name]
         );
     }
 
-    public function compile(Compiler $compiler)
-    {
-        $compiler->raw('$'.$this->attributes['name']);
+    public function compile(Compiler $compiler) {
+        $compiler->raw('$' . $this->attributes['name']);
     }
 
-    public function evaluate($functions, $values)
-    {
+    public function evaluate($functions, $values) {
         return $values[$this->attributes['name']];
     }
 
-    public function toArray()
-    {
+    public function toArray() {
         return [$this->attributes['name']];
     }
+
 }

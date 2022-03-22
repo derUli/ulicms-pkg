@@ -25,10 +25,9 @@ use Twig\Token;
  *  {% set foo, bar = 'foo', 'bar' %}
  *  {% set foo %}Some content{% endset %}
  */
-final class SetTokenParser extends AbstractTokenParser
-{
-    public function parse(Token $token)
-    {
+final class SetTokenParser extends AbstractTokenParser {
+
+    public function parse(Token $token) {
         $lineno = $token->getLine();
         $stream = $this->parser->getStream();
         $names = $this->parser->getExpressionParser()->parseAssignmentExpression();
@@ -58,15 +57,14 @@ final class SetTokenParser extends AbstractTokenParser
         return new SetNode($capture, $names, $values, $lineno, $this->getTag());
     }
 
-    public function decideBlockEnd(Token $token)
-    {
+    public function decideBlockEnd(Token $token) {
         return $token->test('endset');
     }
 
-    public function getTag()
-    {
+    public function getTag() {
         return 'set';
     }
+
 }
 
 class_alias('Twig\TokenParser\SetTokenParser', 'Twig_TokenParser_Set');

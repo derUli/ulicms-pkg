@@ -18,8 +18,8 @@ namespace Symfony\Component\Config\Exception;
  *
  * @deprecated since Symfony 4.2, use LoaderLoadException instead.
  */
-class FileLoaderLoadException extends \Exception
-{
+class FileLoaderLoadException extends \Exception {
+
     /**
      * @param string          $resource       The resource that could not be imported
      * @param string|null     $sourceResource The original resource importing the new resource
@@ -27,20 +27,18 @@ class FileLoaderLoadException extends \Exception
      * @param \Throwable|null $previous       A previous exception
      * @param string|null     $type           The type of resource
      */
-    public function __construct(string $resource, string $sourceResource = null, ?int $code = 0, \Throwable $previous = null, string $type = null)
-    {
+    public function __construct(string $resource, string $sourceResource = null, ?int $code = 0, \Throwable $previous = null, string $type = null) {
         $message = '';
         if ($previous) {
             // Include the previous exception, to help the user see what might be the underlying cause
-
             // Trim the trailing period of the previous message. We only want 1 period remove so no rtrim...
             if (str_ends_with($previous->getMessage(), '.')) {
                 $trimmedMessage = substr($previous->getMessage(), 0, -1);
-                $message .= sprintf('%s', $trimmedMessage).' in ';
+                $message .= sprintf('%s', $trimmedMessage) . ' in ';
             } else {
-                $message .= sprintf('%s', $previous->getMessage()).' in ';
+                $message .= sprintf('%s', $previous->getMessage()) . ' in ';
             }
-            $message .= $resource.' ';
+            $message .= $resource . ' ';
 
             // show tweaked trace to complete the human readable sentence
             if (null === $sourceResource) {
@@ -50,7 +48,7 @@ class FileLoaderLoadException extends \Exception
             }
             $message .= '.';
 
-        // if there's no previous message, present it the default way
+            // if there's no previous message, present it the default way
         } elseif (null === $sourceResource) {
             $message .= sprintf('Cannot load resource "%s".', $resource);
         } else {
@@ -75,8 +73,7 @@ class FileLoaderLoadException extends \Exception
         parent::__construct($message, $code, $previous);
     }
 
-    protected function varToString($var)
-    {
+    protected function varToString($var) {
         if (\is_object($var)) {
             return sprintf('Object(%s)', \get_class($var));
         }
@@ -108,4 +105,5 @@ class FileLoaderLoadException extends \Exception
 
         return (string) $var;
     }
+
 }

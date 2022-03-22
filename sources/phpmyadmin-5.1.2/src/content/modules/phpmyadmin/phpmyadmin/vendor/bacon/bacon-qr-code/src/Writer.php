@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace BaconQrCode;
 
@@ -11,8 +12,8 @@ use BaconQrCode\Renderer\RendererInterface;
 /**
  * QR code writer.
  */
-final class Writer
-{
+final class Writer {
+
     /**
      * Renderer instance.
      *
@@ -23,8 +24,7 @@ final class Writer
     /**
      * Creates a new writer with a specific renderer.
      */
-    public function __construct(RendererInterface $renderer)
-    {
+    public function __construct(RendererInterface $renderer) {
         $this->renderer = $renderer;
     }
 
@@ -37,10 +37,10 @@ final class Writer
      * @throws InvalidArgumentException if the content is empty
      */
     public function writeString(
-        string $content,
-        string $encoding = Encoder::DEFAULT_BYTE_MODE_ECODING,
-        ?ErrorCorrectionLevel $ecLevel = null
-    ) : string {
+            string $content,
+            string $encoding = Encoder::DEFAULT_BYTE_MODE_ECODING,
+            ?ErrorCorrectionLevel $ecLevel = null
+    ): string {
         if (strlen($content) === 0) {
             throw new InvalidArgumentException('Found empty contents');
         }
@@ -58,11 +58,12 @@ final class Writer
      * @see Writer::writeString()
      */
     public function writeFile(
-        string $content,
-        string $filename,
-        string $encoding = Encoder::DEFAULT_BYTE_MODE_ECODING,
-        ?ErrorCorrectionLevel $ecLevel = null
-    ) : void {
+            string $content,
+            string $filename,
+            string $encoding = Encoder::DEFAULT_BYTE_MODE_ECODING,
+            ?ErrorCorrectionLevel $ecLevel = null
+    ): void {
         file_put_contents($filename, $this->writeString($content, $encoding, $ecLevel));
     }
+
 }

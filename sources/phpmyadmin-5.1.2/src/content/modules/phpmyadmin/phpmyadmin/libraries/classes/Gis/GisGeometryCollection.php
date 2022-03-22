@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Handles actions related to GIS GEOMETRYCOLLECTION objects
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Gis;
@@ -18,8 +18,8 @@ use function str_split;
 /**
  * Handles actions related to GIS GEOMETRYCOLLECTION objects
  */
-class GisGeometryCollection extends GisGeometry
-{
+class GisGeometryCollection extends GisGeometry {
+
     /** @var self */
     private static $instance;
 
@@ -28,8 +28,8 @@ class GisGeometryCollection extends GisGeometry
      *
      * @access private
      */
-    private function __construct()
-    {
+    private function __construct() {
+        
     }
 
     /**
@@ -39,9 +39,8 @@ class GisGeometryCollection extends GisGeometry
      *
      * @access public
      */
-    public static function singleton()
-    {
-        if (! isset(self::$instance)) {
+    public static function singleton() {
+        if (!isset(self::$instance)) {
             self::$instance = new GisGeometryCollection();
         }
 
@@ -57,17 +56,15 @@ class GisGeometryCollection extends GisGeometry
      *
      * @access public
      */
-    public function scaleRow($spatial)
-    {
+    public function scaleRow($spatial) {
         $min_max = [];
 
         // Trim to remove leading 'GEOMETRYCOLLECTION(' and trailing ')'
-        $goem_col
-            = mb_substr(
+        $goem_col = mb_substr(
                 $spatial,
                 19,
                 mb_strlen($spatial) - 20
-            );
+        );
 
         // Split the geometry collection object to get its constituents.
         $sub_parts = $this->explodeGeomCol($goem_col);
@@ -80,24 +77,24 @@ class GisGeometryCollection extends GisGeometry
             $type = mb_substr($sub_part, 0, $type_pos);
 
             $gis_obj = GisFactory::factory($type);
-            if (! $gis_obj) {
+            if (!$gis_obj) {
                 continue;
             }
             $scale_data = $gis_obj->scaleRow($sub_part);
 
             // Update minimum/maximum values for x and y coordinates.
             $c_maxX = (float) $scale_data['maxX'];
-            if (! isset($min_max['maxX']) || $c_maxX > $min_max['maxX']) {
+            if (!isset($min_max['maxX']) || $c_maxX > $min_max['maxX']) {
                 $min_max['maxX'] = $c_maxX;
             }
 
             $c_minX = (float) $scale_data['minX'];
-            if (! isset($min_max['minX']) || $c_minX < $min_max['minX']) {
+            if (!isset($min_max['minX']) || $c_minX < $min_max['minX']) {
                 $min_max['minX'] = $c_minX;
             }
 
             $c_maxY = (float) $scale_data['maxY'];
-            if (! isset($min_max['maxY']) || $c_maxY > $min_max['maxY']) {
+            if (!isset($min_max['maxY']) || $c_maxY > $min_max['maxY']) {
                 $min_max['maxY'] = $c_maxY;
             }
 
@@ -125,15 +122,13 @@ class GisGeometryCollection extends GisGeometry
      *
      * @access public
      */
-    public function prepareRowAsPng($spatial, ?string $label, $color, array $scale_data, $image)
-    {
+    public function prepareRowAsPng($spatial, ?string $label, $color, array $scale_data, $image) {
         // Trim to remove leading 'GEOMETRYCOLLECTION(' and trailing ')'
-        $goem_col
-            = mb_substr(
+        $goem_col = mb_substr(
                 $spatial,
                 19,
                 mb_strlen($spatial) - 20
-            );
+        );
         // Split the geometry collection object to get its constituents.
         $sub_parts = $this->explodeGeomCol($goem_col);
 
@@ -145,15 +140,15 @@ class GisGeometryCollection extends GisGeometry
             $type = mb_substr($sub_part, 0, $type_pos);
 
             $gis_obj = GisFactory::factory($type);
-            if (! $gis_obj) {
+            if (!$gis_obj) {
                 continue;
             }
             $image = $gis_obj->prepareRowAsPng(
-                $sub_part,
-                $label,
-                $color,
-                $scale_data,
-                $image
+                    $sub_part,
+                    $label,
+                    $color,
+                    $scale_data,
+                    $image
             );
         }
 
@@ -173,15 +168,13 @@ class GisGeometryCollection extends GisGeometry
      *
      * @access public
      */
-    public function prepareRowAsPdf($spatial, ?string $label, $color, array $scale_data, $pdf)
-    {
+    public function prepareRowAsPdf($spatial, ?string $label, $color, array $scale_data, $pdf) {
         // Trim to remove leading 'GEOMETRYCOLLECTION(' and trailing ')'
-        $goem_col
-            = mb_substr(
+        $goem_col = mb_substr(
                 $spatial,
                 19,
                 mb_strlen($spatial) - 20
-            );
+        );
         // Split the geometry collection object to get its constituents.
         $sub_parts = $this->explodeGeomCol($goem_col);
 
@@ -193,15 +186,15 @@ class GisGeometryCollection extends GisGeometry
             $type = mb_substr($sub_part, 0, $type_pos);
 
             $gis_obj = GisFactory::factory($type);
-            if (! $gis_obj) {
+            if (!$gis_obj) {
                 continue;
             }
             $pdf = $gis_obj->prepareRowAsPdf(
-                $sub_part,
-                $label,
-                $color,
-                $scale_data,
-                $pdf
+                    $sub_part,
+                    $label,
+                    $color,
+                    $scale_data,
+                    $pdf
             );
         }
 
@@ -220,17 +213,15 @@ class GisGeometryCollection extends GisGeometry
      *
      * @access public
      */
-    public function prepareRowAsSvg($spatial, $label, $color, array $scale_data)
-    {
+    public function prepareRowAsSvg($spatial, $label, $color, array $scale_data) {
         $row = '';
 
         // Trim to remove leading 'GEOMETRYCOLLECTION(' and trailing ')'
-        $goem_col
-            = mb_substr(
+        $goem_col = mb_substr(
                 $spatial,
                 19,
                 mb_strlen($spatial) - 20
-            );
+        );
         // Split the geometry collection object to get its constituents.
         $sub_parts = $this->explodeGeomCol($goem_col);
 
@@ -242,14 +233,14 @@ class GisGeometryCollection extends GisGeometry
             $type = mb_substr($sub_part, 0, $type_pos);
 
             $gis_obj = GisFactory::factory($type);
-            if (! $gis_obj) {
+            if (!$gis_obj) {
                 continue;
             }
             $row .= $gis_obj->prepareRowAsSvg(
-                $sub_part,
-                $label,
-                $color,
-                $scale_data
+                    $sub_part,
+                    $label,
+                    $color,
+                    $scale_data
             );
         }
 
@@ -270,17 +261,15 @@ class GisGeometryCollection extends GisGeometry
      *
      * @access public
      */
-    public function prepareRowAsOl($spatial, $srid, $label, $color, array $scale_data)
-    {
+    public function prepareRowAsOl($spatial, $srid, $label, $color, array $scale_data) {
         $row = '';
 
         // Trim to remove leading 'GEOMETRYCOLLECTION(' and trailing ')'
-        $goem_col
-            = mb_substr(
+        $goem_col = mb_substr(
                 $spatial,
                 19,
                 mb_strlen($spatial) - 20
-            );
+        );
         // Split the geometry collection object to get its constituents.
         $sub_parts = $this->explodeGeomCol($goem_col);
 
@@ -292,15 +281,15 @@ class GisGeometryCollection extends GisGeometry
             $type = mb_substr($sub_part, 0, $type_pos);
 
             $gis_obj = GisFactory::factory($type);
-            if (! $gis_obj) {
+            if (!$gis_obj) {
                 continue;
             }
             $row .= $gis_obj->prepareRowAsOl(
-                $sub_part,
-                $srid,
-                $label,
-                $color,
-                $scale_data
+                    $sub_part,
+                    $srid,
+                    $label,
+                    $color,
+                    $scale_data
             );
         }
 
@@ -316,8 +305,7 @@ class GisGeometryCollection extends GisGeometry
      *
      * @access private
      */
-    private function explodeGeomCol($geom_col)
-    {
+    private function explodeGeomCol($geom_col) {
         $sub_parts = [];
         $br_count = 0;
         $start = 0;
@@ -328,12 +316,11 @@ class GisGeometryCollection extends GisGeometry
             } elseif ($char === ')') {
                 $br_count--;
                 if ($br_count == 0) {
-                    $sub_parts[]
-                        = mb_substr(
+                    $sub_parts[] = mb_substr(
                             $geom_col,
                             $start,
                             $count + 1 - $start
-                        );
+                    );
                     $start = $count + 2;
                 }
             }
@@ -354,29 +341,27 @@ class GisGeometryCollection extends GisGeometry
      *
      * @access public
      */
-    public function generateWkt(array $gis_data, $index, $empty = '')
-    {
+    public function generateWkt(array $gis_data, $index, $empty = '') {
         $geom_count = $gis_data['GEOMETRYCOLLECTION']['geom_count'] ?? 1;
         $wkt = 'GEOMETRYCOLLECTION(';
         for ($i = 0; $i < $geom_count; $i++) {
-            if (! isset($gis_data[$i]['gis_type'])) {
+            if (!isset($gis_data[$i]['gis_type'])) {
                 continue;
             }
 
             $type = $gis_data[$i]['gis_type'];
             $gis_obj = GisFactory::factory($type);
-            if (! $gis_obj) {
+            if (!$gis_obj) {
                 continue;
             }
             $wkt .= $gis_obj->generateWkt($gis_data, $i, $empty) . ',';
         }
         if (isset($gis_data[0]['gis_type'])) {
-            $wkt
-                = mb_substr(
+            $wkt = mb_substr(
                     $wkt,
                     0,
                     mb_strlen($wkt) - 1
-                );
+            );
         }
 
         return $wkt . ')';
@@ -391,20 +376,18 @@ class GisGeometryCollection extends GisGeometry
      *
      * @access public
      */
-    public function generateParams($value)
-    {
+    public function generateParams($value) {
         $params = [];
         $data = GisGeometry::generateParams($value);
         $params['srid'] = $data['srid'];
         $wkt = $data['wkt'];
 
         // Trim to remove leading 'GEOMETRYCOLLECTION(' and trailing ')'
-        $goem_col
-            = mb_substr(
+        $goem_col = mb_substr(
                 $wkt,
                 19,
                 mb_strlen($wkt) - 20
-            );
+        );
         // Split the geometry collection object to get its constituents.
         $sub_parts = $this->explodeGeomCol($goem_col);
         $params['GEOMETRYCOLLECTION']['geom_count'] = count($sub_parts);
@@ -420,7 +403,7 @@ class GisGeometryCollection extends GisGeometry
              * @var GisMultiPolygon|GisPolygon|GisMultiPoint|GisPoint|GisMultiLineString|GisLineString $gis_obj
              */
             $gis_obj = GisFactory::factory($type);
-            if (! $gis_obj) {
+            if (!$gis_obj) {
                 continue;
             }
             $params = array_merge($params, $gis_obj->generateParams($sub_part, $i));
@@ -429,4 +412,5 @@ class GisGeometryCollection extends GisGeometry
 
         return $params;
     }
+
 }

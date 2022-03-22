@@ -1,8 +1,8 @@
 <?php
+
 /**
  * TCPDF wrapper class.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin;
@@ -17,8 +17,8 @@ use function strtr;
 /**
  * PDF export base class providing basic configuration.
  */
-class Pdf extends TCPDF
-{
+class Pdf extends TCPDF {
+
     /** @var array */
     public $footerset;
 
@@ -46,22 +46,22 @@ class Pdf extends TCPDF
      * @access public
      */
     public function __construct(
-        $orientation = 'P',
-        $unit = 'mm',
-        $format = 'A4',
-        $unicode = true,
-        $encoding = 'UTF-8',
-        $diskcache = false,
-        $pdfa = false
+            $orientation = 'P',
+            $unit = 'mm',
+            $format = 'A4',
+            $unicode = true,
+            $encoding = 'UTF-8',
+            $diskcache = false,
+            $pdfa = false
     ) {
         parent::__construct(
-            $orientation,
-            $unit,
-            $format,
-            $unicode,
-            $encoding,
-            $diskcache,
-            $pdfa
+                $orientation,
+                $unit,
+                $format,
+                $unicode,
+                $encoding,
+                $diskcache,
+                $pdfa
         );
         $this->SetAuthor('phpMyAdmin ' . PMA_VERSION);
         $this->AddFont('DejaVuSans', '', 'dejavusans.php');
@@ -76,8 +76,7 @@ class Pdf extends TCPDF
      * @return void
      */
     // @codingStandardsIgnoreLine
-    public function Footer()
-    {
+    public function Footer() {
         // Check if footer for this page already exists
         if (isset($this->footerset[$this->page])) {
             return;
@@ -86,13 +85,13 @@ class Pdf extends TCPDF
         $this->SetY(-15);
         $this->SetFont(self::PMA_PDF_FONT, '', 14);
         $this->Cell(
-            0,
-            6,
-            __('Page number:') . ' '
-            . $this->getAliasNumPage() . '/' . $this->getAliasNbPages(),
-            'T',
-            0,
-            'C'
+                0,
+                6,
+                __('Page number:') . ' '
+                . $this->getAliasNumPage() . '/' . $this->getAliasNbPages(),
+                'T',
+                0,
+                'C'
         );
         $this->Cell(0, 6, Util::localisedDate(), 0, 1, 'R');
         $this->SetY(20);
@@ -109,19 +108,18 @@ class Pdf extends TCPDF
      *
      * @return void
      */
-    public function setAlias($name, $value)
-    {
+    public function setAlias($name, $value) {
         $name = TCPDF_FONTS::UTF8ToUTF16BE(
-            $name,
-            false,
-            true,
-            $this->CurrentFont
+                        $name,
+                        false,
+                        true,
+                        $this->CurrentFont
         );
         $this->alias[$name] = TCPDF_FONTS::UTF8ToUTF16BE(
-            $value,
-            false,
-            true,
-            $this->CurrentFont
+                        $value,
+                        false,
+                        true,
+                        $this->CurrentFont
         );
     }
 
@@ -132,8 +130,7 @@ class Pdf extends TCPDF
      *
      * @return void
      */
-    public function _putpages()
-    {
+    public function _putpages() {
         if (count($this->alias) > 0) {
             $nbPages = count($this->pages);
             for ($n = 1; $n <= $nbPages; $n++) {
@@ -152,10 +149,9 @@ class Pdf extends TCPDF
      * @return void
      */
     // @codingStandardsIgnoreLine
-    public function Error($error_message = '')
-    {
+    public function Error($error_message = '') {
         echo Message::error(
-            __('Error while creating PDF:') . ' ' . $error_message
+                __('Error while creating PDF:') . ' ' . $error_message
         )->getDisplay();
         exit;
     }
@@ -167,15 +163,15 @@ class Pdf extends TCPDF
      *
      * @return void
      */
-    public function download($filename)
-    {
+    public function download($filename) {
         $pdfData = $this->getPDFData();
         Response::getInstance()->disable();
         Core::downloadHeader(
-            $filename,
-            'application/pdf',
-            strlen($pdfData)
+                $filename,
+                'application/pdf',
+                strlen($pdfData)
         );
         echo $pdfData;
     }
+
 }

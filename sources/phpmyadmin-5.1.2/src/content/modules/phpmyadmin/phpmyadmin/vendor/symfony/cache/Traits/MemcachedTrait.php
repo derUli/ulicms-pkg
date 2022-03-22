@@ -22,8 +22,8 @@ use Symfony\Component\Cache\Marshaller\MarshallerInterface;
  *
  * @internal
  */
-trait MemcachedTrait
-{
+trait MemcachedTrait {
+
     private static $defaultClientOptions = [
         'persistent_id' => null,
         'username' => null,
@@ -38,18 +38,15 @@ trait MemcachedTrait
      */
     private static $RESERVED_MEMCACHED = " \n\r\t\v\f\0";
     private static $RESERVED_PSR6 = '@()\{}/';
-
     private $marshaller;
     private $client;
     private $lazyClient;
 
-    public static function isSupported()
-    {
+    public static function isSupported() {
         return \extension_loaded('memcached') && version_compare(phpversion('memcached'), '2.2.0', '>=');
     }
 
-    private function init(\Memcached $client, string $namespace, int $defaultLifetime, ?MarshallerInterface $marshaller)
-    {
+    private function init(\Memcached $client, string $namespace, int $defaultLifetime, ?MarshallerInterface $marshaller) {
         if (!static::isSupported()) {
             throw new CacheException('Memcached >= 2.2.0 is required.');
         }
@@ -84,8 +81,7 @@ trait MemcachedTrait
      *
      * @throws \ErrorException When invalid options or servers are provided
      */
-    public static function createConnection($servers, array $options = [])
-    {
+    public static function createConnection($servers, array $options = []) {
         if (\is_string($servers)) {
             $servers = [$servers];
         } elseif (!\is_array($servers)) {
@@ -94,7 +90,9 @@ trait MemcachedTrait
         if (!static::isSupported()) {
             throw new CacheException('Memcached >= 2.2.0 is required.');
         }
-        set_error_handler(function ($type, $msg, $file, $line) { throw new \ErrorException($msg, 0, $type, $file, $line); });
+        set_error_handler(function ($type, $msg, $file, $line) {
+            throw new \ErrorException($msg, 0, $type, $file, $line);
+        });
         try {
             $options += static::$defaultClientOptions;
             $client = new \Memcached($options['persistent_id']);
@@ -114,7 +112,7 @@ trait MemcachedTrait
                         [$username, $password] = explode(':', $m[2], 2) + [1 => null];
                     }
 
-                    return 'file:'.($m[1] ?? '');
+                    return 'file:' . ($m[1] ?? '');
                 }, $dsn);
                 if (false === $params = parse_url($params)) {
                     throw new InvalidArgumentException(sprintf('Invalid Memcached DSN: "%s".', $dsn));
@@ -181,9 +179,9 @@ trait MemcachedTrait
                     continue;
                 }
                 if ('HASH' === $name || 'SERIALIZER' === $name || 'DISTRIBUTION' === $name) {
-                    $value = \constant('Memcached::'.$name.'_'.strtoupper($value));
+                    $value = \constant('Memcached::' . $name . '_' . strtoupper($value));
                 }
-                $opt = \constant('Memcached::OPT_'.$name);
+                $opt = \constant('Memcached::OPT_' . $name);
 
                 unset($options[$name]);
                 $options[$opt] = $value;
@@ -231,8 +229,7 @@ trait MemcachedTrait
     /**
      * {@inheritdoc}
      */
-    protected function doSave(array $values, int $lifetime)
-    {
+    protected function doSave(array $values, int $lifetime) {
         if (!$values = $this->marshaller->marshall($values, $failed)) {
             return $failed;
         }
@@ -252,8 +249,7 @@ trait MemcachedTrait
     /**
      * {@inheritdoc}
      */
-    protected function doFetch(array $ids)
-    {
+    protected function doFetch(array $ids) {
         try {
             $encodedIds = array_map([__CLASS__, 'encodeKey'], $ids);
 
@@ -273,16 +269,14 @@ trait MemcachedTrait
     /**
      * {@inheritdoc}
      */
-    protected function doHave($id)
-    {
+    protected function doHave($id) {
         return false !== $this->getClient()->get(self::encodeKey($id)) || $this->checkResultCode(\Memcached::RES_SUCCESS === $this->client->getResultCode());
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function doDelete(array $ids)
-    {
+    protected function doDelete(array $ids) {
         $ok = true;
         $encodedIds = array_map([__CLASS__, 'encodeKey'], $ids);
         foreach ($this->checkResultCode($this->getClient()->deleteMulti($encodedIds)) as $result) {
@@ -298,24 +292,21 @@ trait MemcachedTrait
     /**
      * {@inheritdoc}
      */
-    protected function doClear($namespace)
-    {
+    protected function doClear($namespace) {
         return '' === $namespace && $this->getClient()->flush();
     }
 
-    private function checkResultCode($result)
-    {
+    private function checkResultCode($result) {
         $code = $this->client->getResultCode();
 
         if (\Memcached::RES_SUCCESS === $code || \Memcached::RES_NOTFOUND === $code) {
             return $result;
         }
 
-        throw new CacheException('MemcachedAdapter client error: '.strtolower($this->client->getResultMessage()));
+        throw new CacheException('MemcachedAdapter client error: ' . strtolower($this->client->getResultMessage()));
     }
 
-    private function getClient(): \Memcached
-    {
+    private function getClient(): \Memcached {
         if ($this->client) {
             return $this->client;
         }
@@ -331,13 +322,12 @@ trait MemcachedTrait
         return $this->client = $this->lazyClient;
     }
 
-    private static function encodeKey(string $key): string
-    {
+    private static function encodeKey(string $key): string {
         return strtr($key, self::$RESERVED_MEMCACHED, self::$RESERVED_PSR6);
     }
 
-    private static function decodeKey(string $key): string
-    {
+    private static function decodeKey(string $key): string {
         return strtr($key, self::$RESERVED_PSR6, self::$RESERVED_MEMCACHED);
     }
+
 }

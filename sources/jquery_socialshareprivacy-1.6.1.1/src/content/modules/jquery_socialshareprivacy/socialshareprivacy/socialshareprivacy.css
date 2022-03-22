@@ -104,14 +104,14 @@
     background-image: url(images/socialshareprivacy_on_off_dark.png);
 }
 .social_share_privacy_area li .switch.on {
-    background-position: 0 -12px; 
+    background-position: 0 -12px;
 }
 /* Switch end */
 /* Tooltips begin */
 .social_share_privacy_area li.help_info {
-    position: relative; 
+    position: relative;
 }
-.social_share_privacy_area li.help_info .info, 
+.social_share_privacy_area li.help_info .info,
 .social_share_privacy_area li .help_info.icon .info {
     display: none;
     position: absolute;
@@ -145,7 +145,7 @@
 .social_share_privacy_area.vertical li .help_info.icon .info {
     left: 0;
 }
-.social_share_privacy_area li.help_info.display .info, 
+.social_share_privacy_area li.help_info.display .info,
 .social_share_privacy_area li .help_info.icon.display .info {
     display: block;
 }
@@ -320,15 +320,15 @@
     border-top-width: 2px;
     border-bottom-width: 0;
     -webkit-border-radius: 0 0 0 5px;
-       -moz-border-radius: 0 0 0 5px;
-            border-radius: 0 0 0 5px;
+    -moz-border-radius: 0 0 0 5px;
+    border-radius: 0 0 0 5px;
 }
 .social_share_privacy_area li.settings_info.top .settings_info_menu.on > a.settings {
     left: 25px;
     border-top-width: 2px;
     border-bottom-width: 0;
     -webkit-border-radius: 0 5px 0 0;
-       -moz-border-radius: 0 5px 0 0;
-            border-radius: 0 5px 0 0;
+    -moz-border-radius: 0 5px 0 0;
+    border-radius: 0 5px 0 0;
 }
 /* Settings/Info end */

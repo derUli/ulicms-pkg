@@ -13,7 +13,7 @@
  *
  * @return boolean  whether the form is validated or not
  */
-function checkAddUser (theForm) {
+function checkAddUser(theForm) {
     if (theForm.elements.hostname.value === '') {
         alert(Messages.strHostEmpty);
         theForm.elements.hostname.focus();
@@ -54,7 +54,7 @@ AJAX.registerTeardown('server/privileges.js', function () {
     $(document).off('click', 'a.edit_user_group_anchor.ajax');
     $(document).off('click', 'button.mult_submit[value=export]');
     $(document).off('click', 'a.export_user_anchor.ajax');
-    $(document).off('click',  '#initials_table a.ajax');
+    $(document).off('click', '#initials_table a.ajax');
     $('#dropUsersDbCheckbox').off('click');
     $(document).off('click', '.checkall_box');
     $(document).off('change', '#checkbox_SSL_priv');
@@ -72,10 +72,10 @@ AJAX.registerOnload('server/privileges.js', function () {
         if ($('#select_pred_username').val() === 'userdefined' && username !== '') {
             var href = $('form[name=\'usersForm\']').attr('action');
             var params = {
-                'ajax_request' : true,
-                'server' : CommonParams.get('server'),
-                'validate_username' : true,
-                'username' : username
+                'ajax_request': true,
+                'server': CommonParams.get('server'),
+                'validate_username': true,
+                'username': username
             };
             $.get(href, params, function (data) {
                 if (data.user_exists) {
@@ -144,7 +144,7 @@ AJAX.registerOnload('server/privileges.js', function () {
             var $dropUsersDbCheckbox = $('#dropUsersDbCheckbox');
             if ($dropUsersDbCheckbox.is(':checked')) {
                 var isConfirmed = confirm(Messages.strDropDatabaseStrongWarning + '\n' + Functions.sprintf(Messages.strDoYouReally, 'DROP DATABASE'));
-                if (! isConfirmed) {
+                if (!isConfirmed) {
                     // Uncheck the drop users database checkbox
                     $dropUsersDbCheckbox.prop('checked', false);
                 }
@@ -173,13 +173,13 @@ AJAX.registerOnload('server/privileges.js', function () {
 
                         // Re-check the classes of each row
                         $form
-                            .find('tbody').find('tr').each(function (index) {
-                                if (index >= 0 && index % 2 === 0) {
-                                    $(this).removeClass('odd').addClass('even');
-                                } else if (index >= 0 && index % 2 !== 0) {
-                                    $(this).removeClass('even').addClass('odd');
-                                }
-                            });
+                                .find('tbody').find('tr').each(function (index) {
+                            if (index >= 0 && index % 2 === 0) {
+                                $(this).removeClass('odd').addClass('even');
+                            } else if (index >= 0 && index % 2 !== 0) {
+                                $(this).removeClass('even').addClass('odd');
+                            }
+                        });
                         // update the checkall checkbox
                         $(Functions.checkboxesSel).trigger('change');
                     });
@@ -195,66 +195,66 @@ AJAX.registerOnload('server/privileges.js', function () {
         $(this).parents('tr').addClass('current_row');
         var $msg = Functions.ajaxShowMessage();
         $.get(
-            $(this).attr('href'),
-            {
-                'ajax_request': true,
-                'edit_user_group_dialog': true
-            },
-            function (data) {
-                if (typeof data !== 'undefined' && data.success === true) {
-                    Functions.ajaxRemoveMessage($msg);
-                    var buttonOptions = {};
-                    buttonOptions[Messages.strGo] = function () {
-                        var usrGroup = $('#changeUserGroupDialog')
-                            .find('select[name="userGroup"]')
-                            .val();
-                        var $message = Functions.ajaxShowMessage();
-                        var argsep = CommonParams.get('arg_separator');
-                        $.post(
-                            'index.php?route=/server/privileges',
-                            $('#changeUserGroupDialog').find('form').serialize() + argsep + 'ajax_request=1',
-                            function (data) {
-                                Functions.ajaxRemoveMessage($message);
-                                if (typeof data !== 'undefined' && data.success === true) {
-                                    $('#usersForm')
-                                        .find('.current_row')
-                                        .removeClass('current_row')
-                                        .find('.usrGroup')
-                                        .text(usrGroup);
-                                } else {
-                                    Functions.ajaxShowMessage(data.error, false);
-                                    $('#usersForm')
-                                        .find('.current_row')
-                                        .removeClass('current_row');
-                                }
-                            }
-                        );
-                        $(this).dialog('close');
-                    };
-                    buttonOptions[Messages.strClose] = function () {
-                        $(this).dialog('close');
-                    };
-                    var $dialog = $('<div></div>')
-                        .attr('id', 'changeUserGroupDialog')
-                        .append(data.message)
-                        .dialog({
-                            width: 500,
-                            minWidth: 300,
-                            modal: true,
-                            buttons: buttonOptions,
-                            title: $('legend', $(data.message)).text(),
-                            close: function () {
-                                $(this).remove();
-                            }
-                        });
-                    $dialog.find('legend').remove();
-                } else {
-                    Functions.ajaxShowMessage(data.error, false);
-                    $('#usersForm')
-                        .find('.current_row')
-                        .removeClass('current_row');
+                $(this).attr('href'),
+                {
+                    'ajax_request': true,
+                    'edit_user_group_dialog': true
+                },
+                function (data) {
+                    if (typeof data !== 'undefined' && data.success === true) {
+                        Functions.ajaxRemoveMessage($msg);
+                        var buttonOptions = {};
+                        buttonOptions[Messages.strGo] = function () {
+                            var usrGroup = $('#changeUserGroupDialog')
+                                    .find('select[name="userGroup"]')
+                                    .val();
+                            var $message = Functions.ajaxShowMessage();
+                            var argsep = CommonParams.get('arg_separator');
+                            $.post(
+                                    'index.php?route=/server/privileges',
+                                    $('#changeUserGroupDialog').find('form').serialize() + argsep + 'ajax_request=1',
+                                    function (data) {
+                                        Functions.ajaxRemoveMessage($message);
+                                        if (typeof data !== 'undefined' && data.success === true) {
+                                            $('#usersForm')
+                                                    .find('.current_row')
+                                                    .removeClass('current_row')
+                                                    .find('.usrGroup')
+                                                    .text(usrGroup);
+                                        } else {
+                                            Functions.ajaxShowMessage(data.error, false);
+                                            $('#usersForm')
+                                                    .find('.current_row')
+                                                    .removeClass('current_row');
+                                        }
+                                    }
+                            );
+                            $(this).dialog('close');
+                        };
+                        buttonOptions[Messages.strClose] = function () {
+                            $(this).dialog('close');
+                        };
+                        var $dialog = $('<div></div>')
+                                .attr('id', 'changeUserGroupDialog')
+                                .append(data.message)
+                                .dialog({
+                                    width: 500,
+                                    minWidth: 300,
+                                    modal: true,
+                                    buttons: buttonOptions,
+                                    title: $('legend', $(data.message)).text(),
+                                    close: function () {
+                                        $(this).remove();
+                                    }
+                                });
+                        $dialog.find('legend').remove();
+                    } else {
+                        Functions.ajaxShowMessage(data.error, false);
+                        $('#usersForm')
+                                .find('.current_row')
+                                .removeClass('current_row');
+                    }
                 }
-            }
         );
     });
 
@@ -282,27 +282,27 @@ AJAX.registerOnload('server/privileges.js', function () {
         var selectedUsers = $('#usersForm input[name*=\'selected_usr\']:checkbox').serialize();
         var postStr = selectedUsers + '&submit_mult=export' + argsep + 'ajax_request=true&server=' + serverId;
         $.post(
-            $(this.form).prop('action'),
-            postStr,
-            function (data) {
-                if (typeof data !== 'undefined' && data.success === true) {
-                    var $ajaxDialog = $('<div></div>')
-                        .append(data.message)
-                        .dialog({
-                            title: data.title,
-                            width: 500,
-                            buttons: buttonOptions,
-                            close: function () {
-                                $(this).remove();
-                            }
-                        });
-                    Functions.ajaxRemoveMessage($msgbox);
-                    // Attach syntax highlighted editor to export dialog
-                    Functions.getSqlEditor($ajaxDialog.find('textarea'));
-                } else {
-                    Functions.ajaxShowMessage(data.error, false);
+                $(this.form).prop('action'),
+                postStr,
+                function (data) {
+                    if (typeof data !== 'undefined' && data.success === true) {
+                        var $ajaxDialog = $('<div></div>')
+                                .append(data.message)
+                                .dialog({
+                                    title: data.title,
+                                    width: 500,
+                                    buttons: buttonOptions,
+                                    close: function () {
+                                        $(this).remove();
+                                    }
+                                });
+                        Functions.ajaxRemoveMessage($msgbox);
+                        // Attach syntax highlighted editor to export dialog
+                        Functions.getSqlEditor($ajaxDialog.find('textarea'));
+                    } else {
+                        Functions.ajaxShowMessage(data.error, false);
+                    }
                 }
-            }
         ); // end $.post
     });
     // if exporting non-ajax, highlight anyways
@@ -318,18 +318,18 @@ AJAX.registerOnload('server/privileges.js', function () {
         buttonOptions[Messages.strClose] = function () {
             $(this).dialog('close');
         };
-        $.get($(this).attr('href'), { 'ajax_request': true }, function (data) {
+        $.get($(this).attr('href'), {'ajax_request': true}, function (data) {
             if (typeof data !== 'undefined' && data.success === true) {
                 var $ajaxDialog = $('<div></div>')
-                    .append(data.message)
-                    .dialog({
-                        title: data.title,
-                        width: 500,
-                        buttons: buttonOptions,
-                        close: function () {
-                            $(this).remove();
-                        }
-                    });
+                        .append(data.message)
+                        .dialog({
+                            title: data.title,
+                            width: 500,
+                            buttons: buttonOptions,
+                            close: function () {
+                                $(this).remove();
+                            }
+                        });
                 Functions.ajaxRemoveMessage($msgbox);
                 // Attach syntax highlighted editor to export dialog
                 Functions.getSqlEditor($ajaxDialog.find('textarea'));
@@ -349,7 +349,7 @@ AJAX.registerOnload('server/privileges.js', function () {
     $(document).on('click', '#initials_table a.ajax', function (event) {
         event.preventDefault();
         var $msgbox = Functions.ajaxShowMessage();
-        $.get($(this).attr('href'), { 'ajax_request' : true }, function (data) {
+        $.get($(this).attr('href'), {'ajax_request': true}, function (data) {
             if (typeof data !== 'undefined' && data.success === true) {
                 Functions.ajaxRemoveMessage($msgbox);
                 // This form is not on screen when first entering Privileges
@@ -358,13 +358,13 @@ AJAX.registerOnload('server/privileges.js', function () {
                 $('#usersForm').hide('medium').remove();
                 $('#fieldset_add_user').hide('medium').remove();
                 $('#initials_table')
-                    .prop('id', 'initials_table_old')
-                    .after(data.message).show('medium')
-                    .siblings('h2').not($('#initials_table')
+                        .prop('id', 'initials_table_old')
+                        .after(data.message).show('medium')
+                        .siblings('h2').not($('#initials_table')
                         .prop('id', 'initials_table_old')
                         .after(data.message).show('medium')
                         .siblings('h2').first())
-                    .remove();
+                        .remove();
                 // prevent double initials table
                 $('#initials_table_old').remove();
             } else {
@@ -416,14 +416,14 @@ AJAX.registerOnload('server/privileges.js', function () {
             submenuLabel = $(this).find('legend[data-submenu-label]').data('submenu-label');
 
             submenuLink = $('<a></a>')
-                .prop('class', 'nav-link')
-                .prop('href', '#')
-                .html(submenuLabel);
+                    .prop('class', 'nav-link')
+                    .prop('href', '#')
+                    .html(submenuLabel);
 
             $('<li></li>')
-                .prop('class', 'nav-item')
-                .append(submenuLink)
-                .appendTo($subNav);
+                    .prop('class', 'nav-item')
+                    .append(submenuLink)
+                    .appendTo($subNav);
         });
 
         // click handlers for submenu
@@ -451,7 +451,7 @@ AJAX.registerOnload('server/privileges.js', function () {
         $('#edit_user_dialog .submenu-item').hide().eq(0).show();
 
         // scroll to the top
-        $('html, body').animate({ scrollTop: 0 }, 'fast');
+        $('html, body').animate({scrollTop: 0}, 'fast');
     };
 
     $('input.autofocus').trigger('focus');

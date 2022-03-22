@@ -19,8 +19,8 @@ use Symfony\Component\Cache\Exception\CacheException;
  *
  * @internal
  */
-trait FilesystemTrait
-{
+trait FilesystemTrait {
+
     use FilesystemCommonTrait;
 
     private $marshaller;
@@ -28,8 +28,7 @@ trait FilesystemTrait
     /**
      * @return bool
      */
-    public function prune()
-    {
+    public function prune() {
         $time = time();
         $pruned = true;
 
@@ -52,8 +51,7 @@ trait FilesystemTrait
     /**
      * {@inheritdoc}
      */
-    protected function doFetch(array $ids)
-    {
+    protected function doFetch(array $ids) {
         $values = [];
         $now = time();
 
@@ -81,8 +79,7 @@ trait FilesystemTrait
     /**
      * {@inheritdoc}
      */
-    protected function doHave($id)
-    {
+    protected function doHave($id) {
         $file = $this->getFile($id);
 
         return file_exists($file) && (@filemtime($file) > time() || $this->doFetch([$id]));
@@ -91,13 +88,12 @@ trait FilesystemTrait
     /**
      * {@inheritdoc}
      */
-    protected function doSave(array $values, int $lifetime)
-    {
+    protected function doSave(array $values, int $lifetime) {
         $expiresAt = $lifetime ? (time() + $lifetime) : 0;
         $values = $this->marshaller->marshall($values, $failed);
 
         foreach ($values as $id => $value) {
-            if (!$this->write($this->getFile($id, true), $expiresAt."\n".rawurlencode($id)."\n".$value, $expiresAt)) {
+            if (!$this->write($this->getFile($id, true), $expiresAt . "\n" . rawurlencode($id) . "\n" . $value, $expiresAt)) {
                 $failed[] = $id;
             }
         }
@@ -109,8 +105,7 @@ trait FilesystemTrait
         return $failed;
     }
 
-    private function getFileKey(string $file): string
-    {
+    private function getFileKey(string $file): string {
         if (!$h = @fopen($file, 'r')) {
             return '';
         }
@@ -121,4 +116,5 @@ trait FilesystemTrait
 
         return rawurldecode(rtrim($encodedKey));
     }
+
 }

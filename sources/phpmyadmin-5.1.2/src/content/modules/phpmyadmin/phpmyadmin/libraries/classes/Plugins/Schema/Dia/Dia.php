@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Classes to create relation schema in Dia format.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Plugins\Schema\Dia;
@@ -22,8 +22,8 @@ use function strlen;
  *
  * @access  public
  */
-class Dia extends XMLWriter
-{
+class Dia extends XMLWriter {
+
     /**
      * Upon instantiation This starts writing the Dia XML document
      *
@@ -31,8 +31,7 @@ class Dia extends XMLWriter
      * @see XMLWriter::setIndent()
      * @see XMLWriter::startDocument()
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->openMemory();
         /*
          * Set indenting using three spaces,
@@ -70,12 +69,12 @@ class Dia extends XMLWriter
      * @access public
      */
     public function startDiaDoc(
-        $paper,
-        $topMargin,
-        $bottomMargin,
-        $leftMargin,
-        $rightMargin,
-        $orientation
+            $paper,
+            $topMargin,
+            $bottomMargin,
+            $leftMargin,
+            $rightMargin,
+            $orientation
     ) {
         if ($orientation === 'P') {
             $isPortrait = 'true';
@@ -86,7 +85,7 @@ class Dia extends XMLWriter
         $this->writeAttribute('xmlns:dia', 'http://www.lysator.liu.se/~alla/dia/');
         $this->startElement('dia:diagramdata');
         $this->writeRaw(
-            '<dia:attribute name="background">
+                '<dia:attribute name="background">
               <dia:color val="#ffffff"/>
             </dia:attribute>
             <dia:attribute name="pagebreak">
@@ -164,8 +163,7 @@ class Dia extends XMLWriter
      *
      * @access public
      */
-    public function endDiaDoc()
-    {
+    public function endDiaDoc() {
         $this->endElement();
         $this->endDocument();
     }
@@ -181,18 +179,18 @@ class Dia extends XMLWriter
      *
      * @access public
      */
-    public function showOutput($fileName)
-    {
+    public function showOutput($fileName) {
         if (ob_get_clean()) {
             ob_end_clean();
         }
         $output = $this->flush();
         Response::getInstance()->disable();
         Core::downloadHeader(
-            $fileName,
-            'application/x-dia-diagram',
-            strlen($output)
+                $fileName,
+                'application/x-dia-diagram',
+                strlen($output)
         );
         print $output;
     }
+
 }

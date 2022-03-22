@@ -1,7 +1,6 @@
 <?php
 
-function jumbotron_get_menu($name = "top", $parent_id = null, $recursive = true, $order = "position")
-{
+function jumbotron_get_menu($name = "top", $parent_id = null, $recursive = true, $order = "position") {
     $html = "";
     $name = db_escape($name);
     $language = $_SESSION ["language"];
@@ -56,7 +55,7 @@ function jumbotron_get_menu($name = "top", $parent_id = null, $recursive = true,
             } else {
                 $html .= "<a class='active" . rtrim($additional_classes) . "' href='" . buildSEOUrl($row->slug, $row->link_url) . "' target='" . $row->target . "'>";
             }
-            if (!is_null($row->menu_image) and ! empty($row->menu_image)) {
+            if (!is_null($row->menu_image) and!empty($row->menu_image)) {
                 $html .= '<img src="' . $row->menu_image . '" alt="' . htmlentities($row->title, ENT_QUOTES, "UTF-8") . '"/>';
             } else {
                 $html .= htmlentities($row->title, ENT_QUOTES, "UTF-8");

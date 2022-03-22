@@ -1,18 +1,17 @@
 <?php
+
 /**
  * The result of the parser is an array of statements are extensions of the
  * class defined here.
  *
  * A statement represents the result of parsing the lexemes.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\SqlParser;
 
 use PhpMyAdmin\SqlParser\Components\FunctionCall;
 use PhpMyAdmin\SqlParser\Components\OptionsArray;
-
 use function array_flip;
 use function array_keys;
 use function count;
@@ -23,8 +22,8 @@ use function trim;
 /**
  * Abstract statement definition.
  */
-abstract class Statement
-{
+abstract class Statement {
+
     /**
      * Options for this statement.
      *
@@ -90,8 +89,7 @@ abstract class Statement
      * @param Parser     $parser the instance that requests parsing
      * @param TokensList $list   the list of tokens to be parsed
      */
-    public function __construct(?Parser $parser = null, ?TokensList $list = null)
-    {
+    public function __construct(?Parser $parser = null, ?TokensList $list = null) {
         if (($parser === null) || ($list === null)) {
             return;
         }
@@ -104,8 +102,7 @@ abstract class Statement
      *
      * @return string
      */
-    public function build()
-    {
+    public function build() {
         /**
          * Query to be returned.
          *
@@ -173,7 +170,7 @@ abstract class Statement
 
             // Checking if this field was already built.
             if ($type & 1) {
-                if (! empty($built[$field])) {
+                if (!empty($built[$field])) {
                     continue;
                 }
 
@@ -186,7 +183,7 @@ abstract class Statement
             }
 
             // Checking if the result of the builder should be added.
-            if (! ($type & 1)) {
+            if (!($type & 1)) {
                 continue;
             }
 
@@ -204,8 +201,7 @@ abstract class Statement
      *
      * @throws Exceptions\ParserException
      */
-    public function parse(Parser $parser, TokensList $list)
-    {
+    public function parse(Parser $parser, TokensList $list) {
         /**
          * Array containing all list of clauses parsed.
          * This is used to check for duplicates.
@@ -259,11 +255,11 @@ abstract class Statement
             // Unions are parsed by the parser because they represent more than
             // one statement.
             if (
-                ($token->keyword === 'UNION') ||
-                ($token->keyword === 'UNION ALL') ||
-                ($token->keyword === 'UNION DISTINCT') ||
-                ($token->keyword === 'EXCEPT') ||
-                ($token->keyword === 'INTERSECT')
+                    ($token->keyword === 'UNION') ||
+                    ($token->keyword === 'UNION ALL') ||
+                    ($token->keyword === 'UNION DISTINCT') ||
+                    ($token->keyword === 'EXCEPT') ||
+                    ($token->keyword === 'INTERSECT')
             ) {
                 break;
             }
@@ -275,17 +271,13 @@ abstract class Statement
             // so look for it and break
             if ($this instanceof Statements\SelectStatement && $token->value === 'ON') {
                 ++$list->idx; // Skip ON
-
                 // look for ON DUPLICATE KEY UPDATE
                 $first = $list->getNextOfType(Token::TYPE_KEYWORD);
                 $second = $list->getNextOfType(Token::TYPE_KEYWORD);
                 $third = $list->getNextOfType(Token::TYPE_KEYWORD);
 
                 if (
-                    $first && $second && $third
-                    && $first->value === 'DUPLICATE'
-                    && $second->value === 'KEY'
-                    && $third->value === 'UPDATE'
+                        $first && $second && $third && $first->value === 'DUPLICATE' && $second->value === 'KEY' && $third->value === 'UPDATE'
                 ) {
                     $list->idx = $lastIdx;
                     break;
@@ -317,10 +309,9 @@ abstract class Statement
 
             // Looking for duplicated clauses.
             if (
-                ! empty(Parser::$KEYWORD_PARSERS[$token->value])
-                || ! empty(Parser::$STATEMENT_PARSERS[$token->value])
+                    !empty(Parser::$KEYWORD_PARSERS[$token->value]) || !empty(Parser::$STATEMENT_PARSERS[$token->value])
             ) {
-                if (! empty($parsedClauses[$token->value])) {
+                if (!empty($parsedClauses[$token->value])) {
                     $parser->error('This type of clause was previously parsed.', $token);
                     break;
                 }
@@ -333,19 +324,19 @@ abstract class Statement
             // but it might be the beginning of a statement of truncate,
             // so let the value use the keyword field for truncate type.
             $tokenValue = in_array($token->keyword, ['TRUNCATE']) ? $token->keyword : $token->value;
-            if (! empty(Parser::$KEYWORD_PARSERS[$tokenValue]) && $list->idx < $list->count) {
+            if (!empty(Parser::$KEYWORD_PARSERS[$tokenValue]) && $list->idx < $list->count) {
                 $class = Parser::$KEYWORD_PARSERS[$tokenValue]['class'];
                 $field = Parser::$KEYWORD_PARSERS[$tokenValue]['field'];
-                if (! empty(Parser::$KEYWORD_PARSERS[$tokenValue]['options'])) {
+                if (!empty(Parser::$KEYWORD_PARSERS[$tokenValue]['options'])) {
                     $options = Parser::$KEYWORD_PARSERS[$tokenValue]['options'];
                 }
             }
 
             // Checking if this is the beginning of the statement.
-            if (! empty(Parser::$STATEMENT_PARSERS[$token->keyword])) {
+            if (!empty(Parser::$STATEMENT_PARSERS[$token->keyword])) {
                 if (
-                    ! empty(static::$CLAUSES) // Undefined for some statements.
-                    && empty(static::$CLAUSES[$token->value])
+                        !empty(static::$CLAUSES) // Undefined for some statements.
+                        && empty(static::$CLAUSES[$token->value])
                 ) {
                     // Some keywords (e.g. `SET`) may be the beginning of a
                     // statement and a clause.
@@ -353,13 +344,13 @@ abstract class Statement
                     // this statement it means it is a new statement, but no
                     // delimiter was found between them.
                     $parser->error(
-                        'A new statement was found, but no delimiter between it and the previous one.',
-                        $token
+                            'A new statement was found, but no delimiter between it and the previous one.',
+                            $token
                     );
                     break;
                 }
 
-                if (! $parsedOptions) {
+                if (!$parsedOptions) {
                     if (empty(static::$OPTIONS[$token->value])) {
                         // Skipping keyword because if it is not a option.
                         ++$list->idx;
@@ -370,17 +361,13 @@ abstract class Statement
                 }
             } elseif ($class === null) {
                 if (
-                    $this instanceof Statements\SelectStatement
-                    && ($token->value === 'FOR UPDATE'
-                        || $token->value === 'LOCK IN SHARE MODE')
+                        $this instanceof Statements\SelectStatement && ($token->value === 'FOR UPDATE' || $token->value === 'LOCK IN SHARE MODE')
                 ) {
                     // Handle special end options in Select statement
                     // See Statements\SelectStatement::$END_OPTIONS
                     $this->end_options = OptionsArray::parse($parser, $list, static::$END_OPTIONS);
                 } elseif (
-                    $this instanceof Statements\SetStatement
-                    && ($token->value === 'COLLATE'
-                        || $token->value === 'DEFAULT')
+                        $this instanceof Statements\SetStatement && ($token->value === 'COLLATE' || $token->value === 'DEFAULT')
                 ) {
                     // Handle special end options in SET statement
                     // See Statements\SetStatement::$END_OPTIONS
@@ -428,8 +415,8 @@ abstract class Statement
      * @param TokensList $list   the list of tokens to be parsed
      * @param Token      $token  the token that is being parsed
      */
-    public function before(Parser $parser, TokensList $list, Token $token)
-    {
+    public function before(Parser $parser, TokensList $list, Token $token) {
+        
     }
 
     /**
@@ -439,8 +426,8 @@ abstract class Statement
      * @param TokensList $list   the list of tokens to be parsed
      * @param Token      $token  the token that is being parsed
      */
-    public function after(Parser $parser, TokensList $list, Token $token)
-    {
+    public function after(Parser $parser, TokensList $list, Token $token) {
+        
     }
 
     /**
@@ -448,8 +435,7 @@ abstract class Statement
      *
      * @return array
      */
-    public function getClauses()
-    {
+    public function getClauses() {
         return static::$CLAUSES;
     }
 
@@ -460,8 +446,7 @@ abstract class Statement
      *
      * @return string
      */
-    public function __toString()
-    {
+    public function __toString() {
         return $this->build();
     }
 
@@ -477,8 +462,7 @@ abstract class Statement
      *
      * @throws Exceptions\ParserException
      */
-    public function validateClauseOrder($parser, $list)
-    {
+    public function validateClauseOrder($parser, $list) {
         $clauses = array_flip(array_keys($this->getClauses()));
 
         if (empty($clauses) || count($clauses) === 0) {
@@ -513,11 +497,7 @@ abstract class Statement
             $clauseStartIdx = Utils\Query::getClauseStartOffset($this, $list, $clauseType);
 
             if (
-                $clauseStartIdx !== -1
-                && $this instanceof Statements\SelectStatement
-                && ($clauseType === 'FORCE'
-                    || $clauseType === 'IGNORE'
-                    || $clauseType === 'USE')
+                    $clauseStartIdx !== -1 && $this instanceof Statements\SelectStatement && ($clauseType === 'FORCE' || $clauseType === 'IGNORE' || $clauseType === 'USE')
             ) {
                 // TODO: ordering of clauses in a SELECT statement with
                 // Index hints is not supported
@@ -529,7 +509,7 @@ abstract class Statement
                 if ($minJoin === 0 && stripos($clauseType, 'JOIN')) {
                     // First JOIN clause is detected
                     $minJoin = $maxJoin = $clauseStartIdx;
-                } elseif ($minJoin !== 0 && ! stripos($clauseType, 'JOIN')) {
+                } elseif ($minJoin !== 0 && !stripos($clauseType, 'JOIN')) {
                     // After a previous JOIN clause, a non-JOIN clause has been detected
                     $maxJoin = $lastIdx;
                 } elseif ($maxJoin < $clauseStartIdx && stripos($clauseType, 'JOIN')) {
@@ -555,4 +535,5 @@ abstract class Statement
 
         return true;
     }
+
 }

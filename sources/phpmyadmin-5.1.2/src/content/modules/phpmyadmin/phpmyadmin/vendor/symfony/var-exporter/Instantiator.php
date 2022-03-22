@@ -21,8 +21,8 @@ use Symfony\Component\VarExporter\Internal\Registry;
  *
  * @author Nicolas Grekas <p@tchwork.com>
  */
-final class Instantiator
-{
+final class Instantiator {
+
     /**
      * Creates an object and sets its properties without calling its constructor nor any other methods.
      *
@@ -57,8 +57,7 @@ final class Instantiator
      *
      * @throws ExceptionInterface When the instance cannot be created
      */
-    public static function instantiate(string $class, array $properties = [], array $privateProperties = [])
-    {
+    public static function instantiate(string $class, array $properties = [], array $privateProperties = []) {
         $reflector = Registry::$reflectors[$class] ?? Registry::getClassReflector($class);
 
         if (Registry::$cloneable[$class]) {
@@ -68,9 +67,9 @@ final class Instantiator
         } elseif (null === Registry::$prototypes[$class]) {
             throw new NotInstantiableTypeException($class);
         } elseif ($reflector->implementsInterface('Serializable') && (\PHP_VERSION_ID < 70400 || !method_exists($class, '__unserialize'))) {
-            $wrappedInstance = [unserialize('C:'.\strlen($class).':"'.$class.'":0:{}')];
+            $wrappedInstance = [unserialize('C:' . \strlen($class) . ':"' . $class . '":0:{}')];
         } else {
-            $wrappedInstance = [unserialize('O:'.\strlen($class).':"'.$class.'":0:{}')];
+            $wrappedInstance = [unserialize('O:' . \strlen($class) . ':"' . $class . '":0:{}')];
         }
 
         if ($properties) {
@@ -91,4 +90,5 @@ final class Instantiator
 
         return $wrappedInstance[0];
     }
+
 }

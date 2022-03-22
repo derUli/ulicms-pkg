@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Functionality for the navigation tree
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Navigation\Nodes;
@@ -13,8 +13,8 @@ use PhpMyAdmin\Url;
 /**
  * Represents a event node in the navigation tree
  */
-class NodeEvent extends NodeDatabaseChild
-{
+class NodeEvent extends NodeDatabaseChild {
+
     /**
      * Initialises the class
      *
@@ -23,8 +23,7 @@ class NodeEvent extends NodeDatabaseChild
      * @param bool   $isGroup Whether this object has been created
      *                        while grouping nodes
      */
-    public function __construct($name, $type = Node::OBJECT, $isGroup = false)
-    {
+    public function __construct($name, $type = Node::OBJECT, $isGroup = false) {
         parent::__construct($name, $type, $isGroup);
         $this->icon = Generator::getImage('b_events');
         $this->links = [
@@ -45,8 +44,8 @@ class NodeEvent extends NodeDatabaseChild
      *
      * @return string type of the item
      */
-    protected function getItemType()
-    {
+    protected function getItemType() {
         return 'event';
     }
+
 }

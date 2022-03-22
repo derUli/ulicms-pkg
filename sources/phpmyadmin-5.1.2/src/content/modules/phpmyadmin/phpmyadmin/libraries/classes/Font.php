@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Class with Font related methods.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin;
@@ -17,8 +17,8 @@ use function str_replace;
 /**
  * Class with Font related methods.
  */
-class Font
-{
+class Font {
+
     /**
      * Get list with characters and the corresponding width modifiers.
      *
@@ -26,8 +26,7 @@ class Font
      *
      * @access public
      */
-    public function getCharLists(): array
-    {
+    public function getCharLists(): array {
         // list of characters and their width modifiers
         $charLists = [];
 
@@ -188,13 +187,12 @@ class Font
      * @access public
      */
     public function getStringWidth(
-        string $text,
-        string $font,
-        int $fontSize,
-        ?array $charLists = null
+            string $text,
+            string $font,
+            int $fontSize,
+            ?array $charLists = null
     ): int {
-        if (! isset($charLists[0]['chars'], $charLists[0]['modifier']) || empty($charLists)
-            || ! is_array($charLists[0]['chars'])
+        if (!isset($charLists[0]['chars'], $charLists[0]['modifier']) || empty($charLists) || !is_array($charLists[0]['chars'])
         ) {
             $charLists = $this->getCharLists();
         }
@@ -205,36 +203,35 @@ class Font
         $count = 0;
 
         foreach ($charLists as $charList) {
-            $count += (mb_strlen($text)
-                - mb_strlen(str_replace($charList['chars'], '', $text))
-                ) * $charList['modifier'];
+            $count += (mb_strlen($text) - mb_strlen(str_replace($charList['chars'], '', $text))
+                    ) * $charList['modifier'];
         }
 
-        $text  = str_replace(' ', '', $text);//remove the " "'s
+        $text = str_replace(' ', '', $text); //remove the " "'s
         //all other chars
         $count += mb_strlen((string) preg_replace('/[a-z0-9]/i', '', $text)) * 0.3;
 
         $modifier = 1;
         $font = mb_strtolower($font);
         switch ($font) {
-        /*
-         * no modifier for arial and sans-serif
-         */
+            /*
+             * no modifier for arial and sans-serif
+             */
             case 'arial':
             case 'sans-serif':
                 break;
-        /*
-         * .92 modifier for time, serif, brushscriptstd, and californian fb
-         */
+            /*
+             * .92 modifier for time, serif, brushscriptstd, and californian fb
+             */
             case 'times':
             case 'serif':
             case 'brushscriptstd':
             case 'californian fb':
                 $modifier = .92;
                 break;
-        /*
-         * 1.23 modifier for broadway
-         */
+            /*
+             * 1.23 modifier for broadway
+             */
             case 'broadway':
                 $modifier = 1.23;
                 break;
@@ -243,4 +240,5 @@ class Font
 
         return (int) ceil($textWidth * $modifier);
     }
+
 }

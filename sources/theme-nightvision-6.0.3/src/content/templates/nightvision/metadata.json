@@ -1,4 +1,4 @@
 {
- "version" : "6.0.3",
- "menus" : ["top", "bottom", "right"]
+    "version": "6.0.3",
+    "menus": ["top", "bottom", "right"]
 }

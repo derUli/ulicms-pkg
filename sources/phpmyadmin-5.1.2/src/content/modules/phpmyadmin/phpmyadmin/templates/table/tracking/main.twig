@@ -4,7 +4,7 @@
         <select name="table" class="autosubmit">
             {% for entry in selectable_tables_entries %}
                 <option value="{{ entry.table_name }}"
-                    {{- entry.table_name == selected_table ? ' selected' }}>
+                        {{- entry.table_name == selected_table ? ' selected' }}>
                     {{ entry.db_name }}.{{ entry.table_name }}
                     {% if entry.is_tracked %}
                         ({% trans 'active' %})
@@ -38,8 +38,8 @@
                     <tr>
                         <td class="text-center">
                             <input type="checkbox" name="selected_versions[]"
-                                class="checkall" id="selected_versions_{{- version['version']|escape }}"
-                                value="{{- version['version']|escape }}">
+                                   class="checkall" id="selected_versions_{{- version['version']|escape }}"
+                                   value="{{- version['version']|escape }}">
                         </td>
                         <td class="floatright">
                             <label for="selected_versions_{{- version['version']|escape }}">
@@ -57,7 +57,7 @@
                         {% endif %}
                         <td>
                             <a class="delete_version_anchor ajax" href="{{ url('/table/tracking') }}" data-post="
-                                {{- get_common(url_params|merge({
+                               {{- get_common(url_params|merge({
                                     'version': version['version'],
                                     'submit_delete_version': true
                                 }), '', false) }}">
@@ -66,14 +66,14 @@
                         </td>
                         <td>
                             <a href="{{ url('/table/tracking') }}" data-post="
-                                {{- get_common(url_params|merge({
+                               {{- get_common(url_params|merge({
                                     'version': version['version'],
                                     'report': 'true'
                                 }), '', false) }}">
                                 {{ get_icon('b_report', 'Tracking report'|trans) }}
                             </a>
                             <a href="{{ url('/table/tracking') }}" data-post="
-                                {{- get_common(url_params|merge({
+                               {{- get_common(url_params|merge({
                                     'version': version['version'],
                                     'snapshot': 'true'
                                 }), '', false) }}">

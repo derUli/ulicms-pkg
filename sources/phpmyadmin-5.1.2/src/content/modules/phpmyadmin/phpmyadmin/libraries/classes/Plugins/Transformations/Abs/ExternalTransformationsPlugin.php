@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Abstract class for the external transformations plugins
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Plugins\Transformations\Abs;
@@ -26,28 +26,27 @@ use function trigger_error;
 /**
  * Provides common methods for all of the external transformations plugins.
  */
-abstract class ExternalTransformationsPlugin extends TransformationsPlugin
-{
+abstract class ExternalTransformationsPlugin extends TransformationsPlugin {
+
     /**
      * Gets the transformation description of the specific plugin
      *
      * @return string
      */
-    public static function getInfo()
-    {
+    public static function getInfo() {
         return __(
-            'LINUX ONLY: Launches an external application and feeds it the column'
-            . ' data via standard input. Returns the standard output of the'
-            . ' application. The default is Tidy, to pretty-print HTML code.'
-            . ' For security reasons, you have to manually edit the file'
-            . ' libraries/classes/Plugins/Transformations/Abs/ExternalTransformationsPlugin.php'
-            . ' and list the tools you want to make available.'
-            . ' The first option is then the number of the program you want to'
-            . ' use. The second option should be blank for historical reasons.'
-            . ' The third option, if set to 1, will convert the output using'
-            . ' htmlspecialchars() (Default 1). The fourth option, if set to 1,'
-            . ' will prevent wrapping and ensure that the output appears all on'
-            . ' one line (Default 1).'
+                'LINUX ONLY: Launches an external application and feeds it the column'
+                . ' data via standard input. Returns the standard output of the'
+                . ' application. The default is Tidy, to pretty-print HTML code.'
+                . ' For security reasons, you have to manually edit the file'
+                . ' libraries/classes/Plugins/Transformations/Abs/ExternalTransformationsPlugin.php'
+                . ' and list the tools you want to make available.'
+                . ' The first option is then the number of the program you want to'
+                . ' use. The second option should be blank for historical reasons.'
+                . ' The third option, if set to 1, will convert the output using'
+                . ' htmlspecialchars() (Default 1). The fourth option, if set to 1,'
+                . ' will prevent wrapping and ensure that the output appears all on'
+                . ' one line (Default 1).'
         );
     }
 
@@ -58,9 +57,8 @@ abstract class ExternalTransformationsPlugin extends TransformationsPlugin
      *
      * @return bool
      */
-    public function applyTransformationNoWrap(array $options = [])
-    {
-        if (! isset($options[3]) || $options[3] == '') {
+    public function applyTransformationNoWrap(array $options = []) {
+        if (!isset($options[3]) || $options[3] == '') {
             $nowrap = true;
         } elseif ($options[3] == '1' || $options[3] == 1) {
             $nowrap = true;
@@ -80,10 +78,8 @@ abstract class ExternalTransformationsPlugin extends TransformationsPlugin
      *
      * @return string
      */
-    public function applyTransformation($buffer, array $options = [], ?stdClass $meta = null)
-    {
+    public function applyTransformation($buffer, array $options = [], ?stdClass $meta = null) {
         // possibly use a global transform and feed it with special options
-
         // further operations on $buffer using the $options[] array.
 
         $allowed_programs = [];
@@ -100,7 +96,6 @@ abstract class ExternalTransformationsPlugin extends TransformationsPlugin
         //
         //$allowed_programs[0] = '/usr/local/bin/tidy';
         //$allowed_programs[1] = '/usr/local/bin/validate';
-
         // no-op when no allowed programs
         if (count($allowed_programs) === 0) {
             return $buffer;
@@ -108,8 +103,8 @@ abstract class ExternalTransformationsPlugin extends TransformationsPlugin
 
         $cfg = $GLOBALS['cfg'];
         $options = $this->getOptions(
-            $options,
-            $cfg['DefaultTransformations']['External']
+                $options,
+                $cfg['DefaultTransformations']['External']
         );
 
         if (isset($allowed_programs[$options[0]])) {
@@ -120,13 +115,13 @@ abstract class ExternalTransformationsPlugin extends TransformationsPlugin
 
         if (isset($options[1]) && strlen((string) $options[1]) > 0) {
             trigger_error(sprintf(
-                __(
-                    'You are using the external transformation command line'
-                    . ' options field, which has been deprecated for security reasons.'
-                    . ' Add all command line options directly to the definition in %s.'
-                ),
-                '[code]libraries/classes/Plugins/Transformations/Abs/ExternalTransformationsPlugin.php[/code]'
-            ), E_USER_DEPRECATED);
+                            __(
+                                    'You are using the external transformation command line'
+                                    . ' options field, which has been deprecated for security reasons.'
+                                    . ' Add all command line options directly to the definition in %s.'
+                            ),
+                            '[code]libraries/classes/Plugins/Transformations/Abs/ExternalTransformationsPlugin.php[/code]'
+                    ), E_USER_DEPRECATED);
         }
 
         // needs PHP >= 4.3.0
@@ -146,7 +141,7 @@ abstract class ExternalTransformationsPlugin extends TransformationsPlugin
             fwrite($pipes[0], $buffer);
             fclose($pipes[0]);
 
-            while (! feof($pipes[1])) {
+            while (!feof($pipes[1])) {
                 $newstring .= fgets($pipes[1], 1024);
             }
             fclose($pipes[1]);
@@ -170,8 +165,8 @@ abstract class ExternalTransformationsPlugin extends TransformationsPlugin
      *
      * @return string
      */
-    public static function getName()
-    {
+    public static function getName() {
         return 'External';
     }
+
 }

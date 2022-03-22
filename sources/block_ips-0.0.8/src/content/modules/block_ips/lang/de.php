@@ -1,4 +1,5 @@
 <?php
+
 define("TRANSLATION_BLOCK_IP_ADRESSES", "IP-Adressen blockieren");
 define("TRANSLATION_BLOCK_IP_HELP_TEXT", "Hier können Sie den Zugriff von bestimmten IP-Adressen auf das System
 blockieren.<br />Sie können je einen Eintrag pro Zeile eingeben.<br />

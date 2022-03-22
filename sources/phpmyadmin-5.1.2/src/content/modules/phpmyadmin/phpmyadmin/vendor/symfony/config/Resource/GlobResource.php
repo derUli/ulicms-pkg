@@ -23,8 +23,8 @@ use Symfony\Component\Finder\Glob;
  *
  * @final since Symfony 4.3
  */
-class GlobResource implements \IteratorAggregate, SelfCheckingResourceInterface
-{
+class GlobResource implements \IteratorAggregate, SelfCheckingResourceInterface {
+
     private $prefix;
     private $pattern;
     private $recursive;
@@ -40,8 +40,7 @@ class GlobResource implements \IteratorAggregate, SelfCheckingResourceInterface
      *
      * @throws \InvalidArgumentException
      */
-    public function __construct(string $prefix, string $pattern, bool $recursive, bool $forExclusion = false, array $excludedPrefixes = [])
-    {
+    public function __construct(string $prefix, string $pattern, bool $recursive, bool $forExclusion = false, array $excludedPrefixes = []) {
         ksort($excludedPrefixes);
         $this->prefix = realpath($prefix) ?: (file_exists($prefix) ? $prefix : false);
         $this->pattern = $pattern;
@@ -55,21 +54,18 @@ class GlobResource implements \IteratorAggregate, SelfCheckingResourceInterface
         }
     }
 
-    public function getPrefix()
-    {
+    public function getPrefix() {
         return $this->prefix;
     }
 
-    public function __toString()
-    {
-        return 'glob.'.$this->prefix.(int) $this->recursive.$this->pattern.(int) $this->forExclusion.implode("\0", $this->excludedPrefixes);
+    public function __toString() {
+        return 'glob.' . $this->prefix . (int) $this->recursive . $this->pattern . (int) $this->forExclusion . implode("\0", $this->excludedPrefixes);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function isFresh($timestamp)
-    {
+    public function isFresh($timestamp) {
         $hash = $this->computeHash();
 
         if (null === $this->hash) {
@@ -82,8 +78,7 @@ class GlobResource implements \IteratorAggregate, SelfCheckingResourceInterface
     /**
      * @internal
      */
-    public function __sleep(): array
-    {
+    public function __sleep(): array {
         if (null === $this->hash) {
             $this->hash = $this->computeHash();
         }
@@ -94,8 +89,7 @@ class GlobResource implements \IteratorAggregate, SelfCheckingResourceInterface
     /**
      * @internal
      */
-    public function __wakeup(): void
-    {
+    public function __wakeup(): void {
         $this->globBrace = \defined('GLOB_BRACE') ? \GLOB_BRACE : 0;
     }
 
@@ -103,8 +97,7 @@ class GlobResource implements \IteratorAggregate, SelfCheckingResourceInterface
      * @return \Traversable
      */
     #[\ReturnTypeWillChange]
-    public function getIterator()
-    {
+    public function getIterator() {
         if (!file_exists($this->prefix) || (!$this->recursive && '' === $this->pattern)) {
             return;
         }
@@ -113,10 +106,10 @@ class GlobResource implements \IteratorAggregate, SelfCheckingResourceInterface
 
         if (!str_starts_with($this->prefix, 'phar://') && !str_contains($this->pattern, '/**/')) {
             if ($this->globBrace || !str_contains($this->pattern, '{')) {
-                $paths = glob($this->prefix.$this->pattern, \GLOB_NOSORT | $this->globBrace);
+                $paths = glob($this->prefix . $this->pattern, \GLOB_NOSORT | $this->globBrace);
             } elseif (!str_contains($this->pattern, '\\') || !preg_match('/\\\\[,{}]/', $this->pattern)) {
                 foreach ($this->expandGlob($this->pattern) as $p) {
-                    $paths[] = glob($this->prefix.$p, \GLOB_NOSORT);
+                    $paths[] = glob($this->prefix . $p, \GLOB_NOSORT);
                 }
                 $paths = array_merge(...$paths);
             }
@@ -148,13 +141,13 @@ class GlobResource implements \IteratorAggregate, SelfCheckingResourceInterface
                     continue;
                 }
                 $files = iterator_to_array(new \RecursiveIteratorIterator(
-                    new \RecursiveCallbackFilterIterator(
-                        new \RecursiveDirectoryIterator($path, \FilesystemIterator::SKIP_DOTS | \FilesystemIterator::FOLLOW_SYMLINKS),
-                        function (\SplFileInfo $file, $path) {
-                            return !isset($this->excludedPrefixes[str_replace('\\', '/', $path)]) && '.' !== $file->getBasename()[0];
-                        }
-                    ),
-                    \RecursiveIteratorIterator::LEAVES_ONLY
+                                new \RecursiveCallbackFilterIterator(
+                                        new \RecursiveDirectoryIterator($path, \FilesystemIterator::SKIP_DOTS | \FilesystemIterator::FOLLOW_SYMLINKS),
+                                        function (\SplFileInfo $file, $path) {
+                                            return !isset($this->excludedPrefixes[str_replace('\\', '/', $path)]) && '.' !== $file->getBasename()[0];
+                                        }
+                                ),
+                                \RecursiveIteratorIterator::LEAVES_ONLY
                 ));
                 uksort($files, 'strnatcmp');
 
@@ -196,19 +189,17 @@ class GlobResource implements \IteratorAggregate, SelfCheckingResourceInterface
         }
     }
 
-    private function computeHash(): string
-    {
+    private function computeHash(): string {
         $hash = hash_init('md5');
 
         foreach ($this->getIterator() as $path => $info) {
-            hash_update($hash, $path."\n");
+            hash_update($hash, $path . "\n");
         }
 
         return hash_final($hash);
     }
 
-    private function expandGlob(string $pattern): array
-    {
+    private function expandGlob(string $pattern): array {
         $segments = preg_split('/\{([^{}]*+)\}/', $pattern, -1, \PREG_SPLIT_DELIM_CAPTURE);
         $paths = [$segments[0]];
         $patterns = [];
@@ -218,7 +209,7 @@ class GlobResource implements \IteratorAggregate, SelfCheckingResourceInterface
 
             foreach (explode(',', $segments[$i]) as $s) {
                 foreach ($paths as $p) {
-                    $patterns[] = $p.$s.$segments[1 + $i];
+                    $patterns[] = $p . $s . $segments[1 + $i];
                 }
             }
 
@@ -236,4 +227,5 @@ class GlobResource implements \IteratorAggregate, SelfCheckingResourceInterface
 
         return $paths;
     }
+
 }

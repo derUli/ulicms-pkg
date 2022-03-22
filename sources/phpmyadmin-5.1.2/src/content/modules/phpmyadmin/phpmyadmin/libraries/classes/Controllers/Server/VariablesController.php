@@ -27,8 +27,8 @@ use function trim;
 /**
  * Handles viewing and editing server variables
  */
-class VariablesController extends AbstractController
-{
+class VariablesController extends AbstractController {
+
     /** @var DatabaseInterface */
     private $dbi;
 
@@ -36,14 +36,12 @@ class VariablesController extends AbstractController
      * @param Response          $response
      * @param DatabaseInterface $dbi
      */
-    public function __construct($response, Template $template, $dbi)
-    {
+    public function __construct($response, Template $template, $dbi) {
         parent::__construct($response, $template);
         $this->dbi = $dbi;
     }
 
-    public function index(): void
-    {
+    public function index(): void {
         global $err_url;
 
         $params = ['filter' => $_GET['filter'] ?? null];
@@ -53,7 +51,7 @@ class VariablesController extends AbstractController
             $this->dbi->selectDb('mysql');
         }
 
-        $filterValue = ! empty($params['filter']) ? $params['filter'] : '';
+        $filterValue = !empty($params['filter']) ? $params['filter'] : '';
 
         $this->addScriptFiles(['server/variables.js']);
 
@@ -72,25 +70,24 @@ class VariablesController extends AbstractController
             $staticVariables = ServerVariablesProvider::getImplementation()->getStaticVariables();
 
             foreach ($serverVars as $name => $value) {
-                $hasSessionValue = isset($serverVarsSession[$name])
-                    && $serverVarsSession[$name] !== $value;
+                $hasSessionValue = isset($serverVarsSession[$name]) && $serverVarsSession[$name] !== $value;
                 $docLink = Generator::linkToVarDocumentation(
-                    $name,
-                    $this->dbi->isMariaDB(),
-                    str_replace('_', '&nbsp;', $name)
+                                $name,
+                                $this->dbi->isMariaDB(),
+                                str_replace('_', '&nbsp;', $name)
                 );
 
                 [$formattedValue, $isEscaped] = $this->formatVariable($name, $value);
                 if ($hasSessionValue) {
                     [$sessionFormattedValue] = $this->formatVariable(
-                        $name,
-                        $serverVarsSession[$name]
+                            $name,
+                            $serverVarsSession[$name]
                     );
                 }
 
                 $variables[] = [
                     'name' => $name,
-                    'is_editable' => ! in_array(strtolower($name), $staticVariables),
+                    'is_editable' => !in_array(strtolower($name), $staticVariables),
                     'doc_link' => $docLink,
                     'value' => $formattedValue,
                     'is_escaped' => $isEscaped,
@@ -113,9 +110,8 @@ class VariablesController extends AbstractController
      *
      * @param array $params Request parameters
      */
-    public function getValue(array $params): void
-    {
-        if (! $this->response->isAjax()) {
+    public function getValue(array $params): void {
+        if (!$this->response->isAjax()) {
             return;
         }
 
@@ -124,9 +120,9 @@ class VariablesController extends AbstractController
         // Do not use double quotes inside the query to avoid a problem
         // when server is running in ANSI_QUOTES sql_mode
         $varValue = $this->dbi->fetchSingleRow(
-            'SHOW GLOBAL VARIABLES WHERE Variable_name=\''
-            . $this->dbi->escapeString($params['name']) . '\';',
-            'NUM'
+                'SHOW GLOBAL VARIABLES WHERE Variable_name=\''
+                . $this->dbi->escapeString($params['name']) . '\';',
+                'NUM'
         );
 
         $json = [
@@ -137,8 +133,8 @@ class VariablesController extends AbstractController
 
         if ($variableType === 'byte') {
             $json['message'] = implode(
-                ' ',
-                Util::formatByteDown($varValue[1], 3, 3)
+                    ' ',
+                    Util::formatByteDown($varValue[1], 3, 3)
             );
         }
 
@@ -150,14 +146,13 @@ class VariablesController extends AbstractController
      *
      * @param array $vars Request parameters
      */
-    public function setValue(array $vars): void
-    {
+    public function setValue(array $vars): void {
         $params = [
             'varName' => $vars['name'],
             'varValue' => $_POST['varValue'] ?? null,
         ];
 
-        if (! $this->response->isAjax()) {
+        if (!$this->response->isAjax()) {
             return;
         }
 
@@ -167,10 +162,10 @@ class VariablesController extends AbstractController
         $variableType = ServerVariablesProvider::getImplementation()->getVariableType($variableName);
 
         if ($variableType === 'byte' && preg_match(
-            '/^\s*(\d+(\.\d+)?)\s*(mb|kb|mib|kib|gb|gib)\s*$/i',
-            $value,
-            $matches
-        )) {
+                        '/^\s*(\d+(\.\d+)?)\s*(mb|kb|mib|kib|gb|gib)\s*$/i',
+                        $value,
+                        $matches
+                )) {
             $exp = [
                 'kb' => 1,
                 'kib' => 1,
@@ -180,33 +175,32 @@ class VariablesController extends AbstractController
                 'gib' => 3,
             ];
             $value = (float) $matches[1] * pow(
-                1024,
-                $exp[mb_strtolower($matches[3])]
+                            1024,
+                            $exp[mb_strtolower($matches[3])]
             );
         } else {
             $value = $this->dbi->escapeString($value);
         }
 
-        if (! is_numeric($value)) {
+        if (!is_numeric($value)) {
             $value = "'" . $value . "'";
         }
 
         $json = [];
-        if (! preg_match('/[^a-zA-Z0-9_]+/', $params['varName'])
-            && $this->dbi->query(
-                'SET GLOBAL ' . $params['varName'] . ' = ' . $value
-            )
+        if (!preg_match('/[^a-zA-Z0-9_]+/', $params['varName']) && $this->dbi->query(
+                        'SET GLOBAL ' . $params['varName'] . ' = ' . $value
+                )
         ) {
             // Some values are rounded down etc.
             $varValue = $this->dbi->fetchSingleRow(
-                'SHOW GLOBAL VARIABLES WHERE Variable_name="'
-                . $this->dbi->escapeString($params['varName'])
-                . '";',
-                'NUM'
+                    'SHOW GLOBAL VARIABLES WHERE Variable_name="'
+                    . $this->dbi->escapeString($params['varName'])
+                    . '";',
+                    'NUM'
             );
             [$formattedValue, $isHtmlFormatted] = $this->formatVariable(
-                $params['varName'],
-                $varValue[1]
+                    $params['varName'],
+                    $varValue[1]
             );
 
             if ($isHtmlFormatted === false) {
@@ -230,8 +224,7 @@ class VariablesController extends AbstractController
      *
      * @return array formatted string and bool if string is HTML formatted
      */
-    private function formatVariable($name, $value): array
-    {
+    private function formatVariable($name, $value): array {
         $isHtmlFormatted = false;
         $formattedValue = $value;
 
@@ -241,13 +234,13 @@ class VariablesController extends AbstractController
             if ($variableType === 'byte') {
                 $isHtmlFormatted = true;
                 $formattedValue = trim(
-                    $this->template->render(
-                        'server/variables/format_variable',
-                        [
-                            'valueTitle' => Util::formatNumber($value, 0),
-                            'value' => implode(' ', Util::formatByteDown($value, 3, 3)),
-                        ]
-                    )
+                        $this->template->render(
+                                'server/variables/format_variable',
+                                [
+                                    'valueTitle' => Util::formatNumber($value, 0),
+                                    'value' => implode(' ', Util::formatByteDown($value, 3, 3)),
+                                ]
+                        )
                 );
             } else {
                 $formattedValue = Util::formatNumber($value, 0);
@@ -259,4 +252,5 @@ class VariablesController extends AbstractController
             $isHtmlFormatted,
         ];
     }
+
 }

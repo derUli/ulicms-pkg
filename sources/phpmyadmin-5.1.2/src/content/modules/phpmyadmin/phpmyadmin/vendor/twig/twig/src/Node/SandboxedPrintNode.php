@@ -25,30 +25,30 @@ use Twig\Node\Expression\ConstantExpression;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class SandboxedPrintNode extends PrintNode
-{
-    public function compile(Compiler $compiler)
-    {
+class SandboxedPrintNode extends PrintNode {
+
+    public function compile(Compiler $compiler) {
         $compiler
-            ->addDebugInfo($this)
-            ->write('echo ')
+                ->addDebugInfo($this)
+                ->write('echo ')
         ;
         $expr = $this->getNode('expr');
         if ($expr instanceof ConstantExpression) {
             $compiler
-                ->subcompile($expr)
-                ->raw(";\n")
+                    ->subcompile($expr)
+                    ->raw(";\n")
             ;
         } else {
             $compiler
-                ->write('$this->extensions[SandboxExtension::class]->ensureToStringAllowed(')
-                ->subcompile($expr)
-                ->raw(', ')
-                ->repr($expr->getTemplateLine())
-                ->raw(", \$this->source);\n")
+                    ->write('$this->extensions[SandboxExtension::class]->ensureToStringAllowed(')
+                    ->subcompile($expr)
+                    ->raw(', ')
+                    ->repr($expr->getTemplateLine())
+                    ->raw(", \$this->source);\n")
             ;
         }
     }
+
 }
 
 class_alias('Twig\Node\SandboxedPrintNode', 'Twig_Node_SandboxedPrint');

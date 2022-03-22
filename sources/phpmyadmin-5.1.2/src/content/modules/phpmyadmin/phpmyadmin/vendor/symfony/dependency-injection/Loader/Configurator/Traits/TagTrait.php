@@ -13,15 +13,14 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator\Traits;
 
 use Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
 
-trait TagTrait
-{
+trait TagTrait {
+
     /**
      * Adds a tag for this definition.
      *
      * @return $this
      */
-    final public function tag(string $name, array $attributes = []): self
-    {
+    final public function tag(string $name, array $attributes = []): self {
         if ('' === $name) {
             throw new InvalidArgumentException(sprintf('The tag name for service "%s" must be a non-empty string.', $this->id));
         }
@@ -36,4 +35,5 @@ trait TagTrait
 
         return $this;
     }
+
 }

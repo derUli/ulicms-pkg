@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Form handling code.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Config;
@@ -28,8 +28,8 @@ use function trigger_error;
  * Base class for forms, loads default configuration options, checks allowed
  * values etc.
  */
-class Form
-{
+class Form {
+
     /**
      * Form name
      *
@@ -88,10 +88,10 @@ class Form
      * @param int        $index    arbitrary index, stored in Form::$index
      */
     public function __construct(
-        $formName,
-        array $form,
-        ConfigFile $cf,
-        $index = null
+            $formName,
+            array $form,
+            ConfigFile $cf,
+            $index = null
     ) {
         $this->index = $index;
         $this->configFile = $cf;
@@ -105,14 +105,13 @@ class Form
      *
      * @return string|null one of: boolean, integer, double, string, select, array
      */
-    public function getOptionType($optionName)
-    {
+    public function getOptionType($optionName) {
         $key = ltrim(
-            mb_substr(
-                $optionName,
-                (int) mb_strrpos($optionName, '/')
-            ),
-            '/'
+                mb_substr(
+                        $optionName,
+                        (int) mb_strrpos($optionName, '/')
+                ),
+                '/'
         );
 
         return $this->fieldsTypes[$key] ?? null;
@@ -125,15 +124,14 @@ class Form
      *
      * @return array
      */
-    public function getOptionValueList($optionPath)
-    {
+    public function getOptionValueList($optionPath) {
         $value = $this->configFile->getDbEntry($optionPath);
         if ($value === null) {
             trigger_error($optionPath . ' - select options not defined', E_USER_ERROR);
 
             return [];
         }
-        if (! is_array($value)) {
+        if (!is_array($value)) {
             trigger_error($optionPath . ' - not a static value list', E_USER_ERROR);
 
             return [];
@@ -151,13 +149,13 @@ class Form
         $hasStringKeys = false;
         $keys = [];
         for ($i = 0, $nb = count($value); $i < $nb; $i++) {
-            if (! isset($value[$i])) {
+            if (!isset($value[$i])) {
                 $hasStringKeys = true;
                 break;
             }
             $keys[] = is_bool($value[$i]) ? (int) $value[$i] : $value[$i];
         }
-        if (! $hasStringKeys) {
+        if (!$hasStringKeys) {
             $value = array_combine($keys, $value);
         }
 
@@ -175,22 +173,21 @@ class Form
      *
      * @return void
      */
-    private function readFormPathsCallback($value, $key, $prefix)
-    {
+    private function readFormPathsCallback($value, $key, $prefix) {
         if (is_array($value)) {
             $prefix .= $key . '/';
             array_walk(
-                $value,
-                function ($value, $key, $prefix) {
-                    $this->readFormPathsCallback($value, $key, $prefix);
-                },
-                $prefix
+                    $value,
+                    function ($value, $key, $prefix) {
+                        $this->readFormPathsCallback($value, $key, $prefix);
+                    },
+                    $prefix
             );
 
             return;
         }
 
-        if (! is_int($key)) {
+        if (!is_int($key)) {
             $this->default[$prefix . $key] = $value;
             $value = $key;
         }
@@ -204,8 +201,7 @@ class Form
     /**
      * Reset the group counter, function for testing purposes
      */
-    public static function resetGroupCounter(): void
-    {
+    public static function resetGroupCounter(): void {
         self::$groupCounter = 0;
     }
 
@@ -216,16 +212,15 @@ class Form
      *
      * @return void
      */
-    protected function readFormPaths(array $form)
-    {
+    protected function readFormPaths(array $form) {
         // flatten form fields' paths and save them to $fields
         $this->fields = [];
         array_walk(
-            $form,
-            function ($value, $key, $prefix) {
-                $this->readFormPathsCallback($value, $key, $prefix);
-            },
-            ''
+                $form,
+                function ($value, $key, $prefix) {
+                    $this->readFormPathsCallback($value, $key, $prefix);
+                },
+                ''
         );
 
         // $this->fields is an array of the form: [0..n] => 'field path'
@@ -234,8 +229,8 @@ class Form
         $this->fields = [];
         foreach ($paths as $path) {
             $key = ltrim(
-                mb_substr($path, (int) mb_strrpos($path, '/')),
-                '/'
+                    mb_substr($path, (int) mb_strrpos($path, '/')),
+                    '/'
             );
             $this->fields[$key] = $path;
         }
@@ -247,8 +242,7 @@ class Form
      *
      * @return void
      */
-    protected function readTypes()
-    {
+    protected function readTypes() {
         $cf = $this->configFile;
         foreach ($this->fields as $name => $path) {
             if (mb_strpos((string) $name, ':group:') === 0) {
@@ -274,10 +268,9 @@ class Form
      *
      * @return array
      */
-    protected function cleanGroupPaths(array $form): array
-    {
+    protected function cleanGroupPaths(array $form): array {
         foreach ($form as &$name) {
-            if (! is_string($name)) {
+            if (!is_string($name)) {
                 continue;
             }
 
@@ -300,11 +293,11 @@ class Form
      *
      * @return void
      */
-    public function loadForm($formName, array $form)
-    {
+    public function loadForm($formName, array $form) {
         $this->name = $formName;
         $form = $this->cleanGroupPaths($form);
         $this->readFormPaths($form);
         $this->readTypes();
     }
+
 }

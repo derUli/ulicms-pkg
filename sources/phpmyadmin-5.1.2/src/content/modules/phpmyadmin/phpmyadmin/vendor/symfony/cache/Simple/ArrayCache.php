@@ -25,8 +25,8 @@ use Symfony\Contracts\Cache\CacheInterface;
 /**
  * @deprecated since Symfony 4.3, use ArrayAdapter and type-hint for CacheInterface instead.
  */
-class ArrayCache implements Psr16CacheInterface, LoggerAwareInterface, ResettableInterface
-{
+class ArrayCache implements Psr16CacheInterface, LoggerAwareInterface, ResettableInterface {
+
     use ArrayTrait {
         ArrayTrait::deleteItem as delete;
         ArrayTrait::hasItem as has;
@@ -37,8 +37,7 @@ class ArrayCache implements Psr16CacheInterface, LoggerAwareInterface, Resettabl
     /**
      * @param bool $storeSerialized Disabling serialization can lead to cache corruptions when storing mutable values but increases performance otherwise
      */
-    public function __construct(int $defaultLifetime = 0, bool $storeSerialized = true)
-    {
+    public function __construct(int $defaultLifetime = 0, bool $storeSerialized = true) {
         $this->defaultLifetime = $defaultLifetime;
         $this->storeSerialized = $storeSerialized;
     }
@@ -46,8 +45,7 @@ class ArrayCache implements Psr16CacheInterface, LoggerAwareInterface, Resettabl
     /**
      * {@inheritdoc}
      */
-    public function get($key, $default = null)
-    {
+    public function get($key, $default = null) {
         if (!\is_string($key) || !isset($this->expiries[$key])) {
             CacheItem::validateKey($key);
         }
@@ -69,8 +67,7 @@ class ArrayCache implements Psr16CacheInterface, LoggerAwareInterface, Resettabl
      *
      * @return iterable
      */
-    public function getMultiple($keys, $default = null)
-    {
+    public function getMultiple($keys, $default = null) {
         if ($keys instanceof \Traversable) {
             $keys = iterator_to_array($keys, false);
         } elseif (!\is_array($keys)) {
@@ -82,7 +79,9 @@ class ArrayCache implements Psr16CacheInterface, LoggerAwareInterface, Resettabl
             }
         }
 
-        return $this->generateItems($keys, microtime(true), function ($k, $v, $hit) use ($default) { return $hit ? $v : $default; });
+        return $this->generateItems($keys, microtime(true), function ($k, $v, $hit) use ($default) {
+                    return $hit ? $v : $default;
+                });
     }
 
     /**
@@ -90,8 +89,7 @@ class ArrayCache implements Psr16CacheInterface, LoggerAwareInterface, Resettabl
      *
      * @return bool
      */
-    public function deleteMultiple($keys)
-    {
+    public function deleteMultiple($keys) {
         if (!\is_array($keys) && !$keys instanceof \Traversable) {
             throw new InvalidArgumentException(sprintf('Cache keys must be array or Traversable, "%s" given.', \is_object($keys) ? \get_class($keys) : \gettype($keys)));
         }
@@ -107,8 +105,7 @@ class ArrayCache implements Psr16CacheInterface, LoggerAwareInterface, Resettabl
      *
      * @return bool
      */
-    public function set($key, $value, $ttl = null)
-    {
+    public function set($key, $value, $ttl = null) {
         if (!\is_string($key)) {
             CacheItem::validateKey($key);
         }
@@ -121,8 +118,7 @@ class ArrayCache implements Psr16CacheInterface, LoggerAwareInterface, Resettabl
      *
      * @return bool
      */
-    public function setMultiple($values, $ttl = null)
-    {
+    public function setMultiple($values, $ttl = null) {
         if (!\is_array($values) && !$values instanceof \Traversable) {
             throw new InvalidArgumentException(sprintf('Cache values must be array or Traversable, "%s" given.', \is_object($values) ? \get_class($values) : \gettype($values)));
         }
@@ -150,8 +146,7 @@ class ArrayCache implements Psr16CacheInterface, LoggerAwareInterface, Resettabl
         return true;
     }
 
-    private function normalizeTtl($ttl)
-    {
+    private function normalizeTtl($ttl) {
         if (null === $ttl) {
             return $this->defaultLifetime;
         }
@@ -164,4 +159,5 @@ class ArrayCache implements Psr16CacheInterface, LoggerAwareInterface, Resettabl
 
         throw new InvalidArgumentException(sprintf('Expiration date must be an integer, a DateInterval or null, "%s" given.', \is_object($ttl) ? \get_class($ttl) : \gettype($ttl)));
     }
+
 }

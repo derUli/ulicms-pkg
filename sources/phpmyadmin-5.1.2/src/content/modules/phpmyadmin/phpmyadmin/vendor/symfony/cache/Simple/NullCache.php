@@ -20,13 +20,12 @@ use Symfony\Contracts\Cache\CacheInterface;
 /**
  * @deprecated since Symfony 4.3, use NullAdapter and type-hint for CacheInterface instead.
  */
-class NullCache implements Psr16CacheInterface
-{
+class NullCache implements Psr16CacheInterface {
+
     /**
      * {@inheritdoc}
      */
-    public function get($key, $default = null)
-    {
+    public function get($key, $default = null) {
         return $default;
     }
 
@@ -35,8 +34,7 @@ class NullCache implements Psr16CacheInterface
      *
      * @return iterable
      */
-    public function getMultiple($keys, $default = null)
-    {
+    public function getMultiple($keys, $default = null) {
         foreach ($keys as $key) {
             yield $key => $default;
         }
@@ -47,8 +45,7 @@ class NullCache implements Psr16CacheInterface
      *
      * @return bool
      */
-    public function has($key)
-    {
+    public function has($key) {
         return false;
     }
 
@@ -57,8 +54,7 @@ class NullCache implements Psr16CacheInterface
      *
      * @return bool
      */
-    public function clear()
-    {
+    public function clear() {
         return true;
     }
 
@@ -67,8 +63,7 @@ class NullCache implements Psr16CacheInterface
      *
      * @return bool
      */
-    public function delete($key)
-    {
+    public function delete($key) {
         return true;
     }
 
@@ -77,8 +72,7 @@ class NullCache implements Psr16CacheInterface
      *
      * @return bool
      */
-    public function deleteMultiple($keys)
-    {
+    public function deleteMultiple($keys) {
         return true;
     }
 
@@ -87,8 +81,7 @@ class NullCache implements Psr16CacheInterface
      *
      * @return bool
      */
-    public function set($key, $value, $ttl = null)
-    {
+    public function set($key, $value, $ttl = null) {
         return false;
     }
 
@@ -97,8 +90,8 @@ class NullCache implements Psr16CacheInterface
      *
      * @return bool
      */
-    public function setMultiple($values, $ttl = null)
-    {
+    public function setMultiple($values, $ttl = null) {
         return false;
     }
+
 }

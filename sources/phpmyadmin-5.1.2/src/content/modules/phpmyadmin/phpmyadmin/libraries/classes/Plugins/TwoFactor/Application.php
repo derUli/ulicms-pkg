@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Second authentication factor handling
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Plugins\TwoFactor;
@@ -21,8 +21,8 @@ use function extension_loaded;
  *
  * Also known as Google, Authy, or OTP
  */
-class Application extends TwoFactorPlugin
-{
+class Application extends TwoFactorPlugin {
+
     /** @var string */
     public static $id = 'application';
 
@@ -34,8 +34,7 @@ class Application extends TwoFactorPlugin
      *
      * @param TwoFactor $twofactor TwoFactor instance
      */
-    public function __construct(TwoFactor $twofactor)
-    {
+    public function __construct(TwoFactor $twofactor) {
         parent::__construct($twofactor);
         if (extension_loaded('imagick')) {
             $this->google2fa = new Google2FA();
@@ -50,8 +49,7 @@ class Application extends TwoFactorPlugin
         $this->twofactor->config['settings']['secret'] = '';
     }
 
-    public function getGoogle2fa(): Google2FA
-    {
+    public function getGoogle2fa(): Google2FA {
         return $this->google2fa;
     }
 
@@ -64,17 +62,16 @@ class Application extends TwoFactorPlugin
      * @throws InvalidCharactersException
      * @throws SecretKeyTooShortException
      */
-    public function check()
-    {
+    public function check() {
         $this->provided = false;
-        if (! isset($_POST['2fa_code'])) {
+        if (!isset($_POST['2fa_code'])) {
             return false;
         }
         $this->provided = true;
 
         return $this->google2fa->verifyKey(
-            $this->twofactor->config['settings']['secret'],
-            $_POST['2fa_code']
+                        $this->twofactor->config['settings']['secret'],
+                        $_POST['2fa_code']
         );
     }
 
@@ -83,8 +80,7 @@ class Application extends TwoFactorPlugin
      *
      * @return string HTML code
      */
-    public function render()
-    {
+    public function render() {
         return $this->template->render('login/twofactor/application');
     }
 
@@ -93,19 +89,18 @@ class Application extends TwoFactorPlugin
      *
      * @return string HTML code
      */
-    public function setup()
-    {
+    public function setup() {
         $secret = $this->twofactor->config['settings']['secret'];
         $inlineUrl = $this->google2fa->getQRCodeInline(
-            'phpMyAdmin (' . $this->getAppId(false) . ')',
-            $this->twofactor->user,
-            $secret
+                'phpMyAdmin (' . $this->getAppId(false) . ')',
+                $this->twofactor->user,
+                $secret
         );
 
         return $this->template->render('login/twofactor/application_configure', [
-            'image' => $inlineUrl,
-            'secret' => $secret,
-            'has_imagick' => extension_loaded('imagick'),
+                    'image' => $inlineUrl,
+                    'secret' => $secret,
+                    'has_imagick' => extension_loaded('imagick'),
         ]);
     }
 
@@ -118,9 +113,8 @@ class Application extends TwoFactorPlugin
      * @throws InvalidCharactersException
      * @throws SecretKeyTooShortException
      */
-    public function configure()
-    {
-        if (! isset($_SESSION['2fa_application_key'])) {
+    public function configure() {
+        if (!isset($_SESSION['2fa_application_key'])) {
             $_SESSION['2fa_application_key'] = $this->google2fa->generateSecretKey();
         }
         $this->twofactor->config['settings']['secret'] = $_SESSION['2fa_application_key'];
@@ -138,8 +132,7 @@ class Application extends TwoFactorPlugin
      *
      * @return string
      */
-    public static function getName()
-    {
+    public static function getName() {
         return __('Authentication Application (2FA)');
     }
 
@@ -148,10 +141,10 @@ class Application extends TwoFactorPlugin
      *
      * @return string
      */
-    public static function getDescription()
-    {
+    public static function getDescription() {
         return __(
-            'Provides authentication using HOTP and TOTP applications such as FreeOTP, Google Authenticator or Authy.'
+                'Provides authentication using HOTP and TOTP applications such as FreeOTP, Google Authenticator or Authy.'
         );
     }
+
 }

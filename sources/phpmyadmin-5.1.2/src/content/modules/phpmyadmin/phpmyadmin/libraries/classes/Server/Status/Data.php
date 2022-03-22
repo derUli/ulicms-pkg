@@ -1,9 +1,9 @@
 <?php
+
 /**
  * PhpMyAdmin\Server\Status\Data class
  * Used by server_status_*.php pages
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Server\Status;
@@ -23,8 +23,8 @@ use function mb_strtolower;
  *       since not all of the server_status_*.php pages need
  *       all the data that this class provides.
  */
-class Data
-{
+class Data {
+
     /** @var array */
     public $status;
 
@@ -61,8 +61,7 @@ class Data
     /** @var ReplicationInfo */
     private $replicationInfo;
 
-    public function getReplicationInfo(): ReplicationInfo
-    {
+    public function getReplicationInfo(): ReplicationInfo {
         return $this->replicationInfo;
     }
 
@@ -74,8 +73,7 @@ class Data
      *
      * @return void
      */
-    public function __set($a, $b)
-    {
+    public function __set($a, $b) {
         // Discard everything
     }
 
@@ -84,52 +82,42 @@ class Data
      *
      * @return array
      */
-    private function getAllocations()
-    {
+    private function getAllocations() {
         return [
             // variable name => section
             // variable names match when they begin with the given string
 
-            'Com_'              => 'com',
-            'Innodb_'           => 'innodb',
-            'Ndb_'              => 'ndb',
-            'Handler_'          => 'handler',
-            'Qcache_'           => 'qcache',
-            'Threads_'          => 'threads',
+            'Com_' => 'com',
+            'Innodb_' => 'innodb',
+            'Ndb_' => 'ndb',
+            'Handler_' => 'handler',
+            'Qcache_' => 'qcache',
+            'Threads_' => 'threads',
             'Slow_launch_threads' => 'threads',
-
-            'Binlog_cache_'     => 'binlog_cache',
-            'Created_tmp_'      => 'created_tmp',
-            'Key_'              => 'key',
-
-            'Delayed_'          => 'delayed',
+            'Binlog_cache_' => 'binlog_cache',
+            'Created_tmp_' => 'created_tmp',
+            'Key_' => 'key',
+            'Delayed_' => 'delayed',
             'Not_flushed_delayed_rows' => 'delayed',
-
-            'Flush_commands'    => 'query',
-            'Last_query_cost'   => 'query',
-            'Slow_queries'      => 'query',
-            'Queries'           => 'query',
+            'Flush_commands' => 'query',
+            'Last_query_cost' => 'query',
+            'Slow_queries' => 'query',
+            'Queries' => 'query',
             'Prepared_stmt_count' => 'query',
-
-            'Select_'           => 'select',
-            'Sort_'             => 'sort',
-
-            'Open_tables'       => 'table',
-            'Opened_tables'     => 'table',
+            'Select_' => 'select',
+            'Sort_' => 'sort',
+            'Open_tables' => 'table',
+            'Opened_tables' => 'table',
             'Open_table_definitions' => 'table',
             'Opened_table_definitions' => 'table',
-            'Table_locks_'      => 'table',
-
-            'Rpl_status'        => 'repl',
-            'Slave_'            => 'repl',
-
-            'Tc_'               => 'tc',
-
-            'Ssl_'              => 'ssl',
-
-            'Open_files'        => 'files',
-            'Open_streams'      => 'files',
-            'Opened_files'      => 'files',
+            'Table_locks_' => 'table',
+            'Rpl_status' => 'repl',
+            'Slave_' => 'repl',
+            'Tc_' => 'tc',
+            'Ssl_' => 'ssl',
+            'Open_files' => 'files',
+            'Open_streams' => 'files',
+            'Opened_files' => 'files',
         ];
     }
 
@@ -138,29 +126,28 @@ class Data
      *
      * @return array
      */
-    private function getSections()
-    {
+    private function getSections() {
         return [
             // section => section name (description)
-            'com'           => 'Com',
-            'query'         => __('SQL query'),
-            'innodb'        => 'InnoDB',
-            'ndb'           => 'NDB',
-            'handler'       => __('Handler'),
-            'qcache'        => __('Query cache'),
-            'threads'       => __('Threads'),
-            'binlog_cache'  => __('Binary log'),
-            'created_tmp'   => __('Temporary data'),
-            'delayed'       => __('Delayed inserts'),
-            'key'           => __('Key cache'),
-            'select'        => __('Joins'),
-            'repl'          => __('Replication'),
-            'sort'          => __('Sorting'),
-            'table'         => __('Tables'),
-            'tc'            => __('Transaction coordinator'),
-            'files'         => __('Files'),
-            'ssl'           => 'SSL',
-            'other'         => __('Other'),
+            'com' => 'Com',
+            'query' => __('SQL query'),
+            'innodb' => 'InnoDB',
+            'ndb' => 'NDB',
+            'handler' => __('Handler'),
+            'qcache' => __('Query cache'),
+            'threads' => __('Threads'),
+            'binlog_cache' => __('Binary log'),
+            'created_tmp' => __('Temporary data'),
+            'delayed' => __('Delayed inserts'),
+            'key' => __('Key cache'),
+            'select' => __('Joins'),
+            'repl' => __('Replication'),
+            'sort' => __('Sorting'),
+            'table' => __('Tables'),
+            'tc' => __('Transaction coordinator'),
+            'files' => __('Files'),
+            'ssl' => 'SSL',
+            'other' => __('Other'),
         ];
     }
 
@@ -169,8 +156,7 @@ class Data
      *
      * @return array
      */
-    private function getLinks()
-    {
+    private function getLinks() {
         $primaryInfo = $this->replicationInfo->getPrimaryInfo();
         $replicaInfo = $this->replicationInfo->getReplicaInfo();
 
@@ -186,7 +172,7 @@ class Data
             'params' => Url::getCommon([
                 'sql_query' => 'SHOW OPEN TABLES',
                 'goto' => $this->selfUrl,
-            ], ''),
+                    ], ''),
         ];
 
         if ($primaryInfo['status']) {
@@ -195,7 +181,7 @@ class Data
                 'params' => Url::getCommon([
                     'sql_query' => 'SHOW SLAVE HOSTS',
                     'goto' => $this->selfUrl,
-                ], ''),
+                        ], ''),
             ];
             $links['repl'][__('Show master status')] = [
                 'url' => '#replication_master',
@@ -246,54 +232,35 @@ class Data
      *
      * @return array
      */
-    private function calculateValues(array $server_status, array $server_variables)
-    {
+    private function calculateValues(array $server_status, array $server_variables) {
         // Key_buffer_fraction
-        if (isset($server_status['Key_blocks_unused'], $server_variables['key_cache_block_size'])
-            && isset($server_variables['key_buffer_size'])
-            && $server_variables['key_buffer_size'] != 0
+        if (isset($server_status['Key_blocks_unused'], $server_variables['key_cache_block_size']) && isset($server_variables['key_buffer_size']) && $server_variables['key_buffer_size'] != 0
         ) {
-            $server_status['Key_buffer_fraction_%']
-                = 100
-                - $server_status['Key_blocks_unused']
-                * $server_variables['key_cache_block_size']
-                / $server_variables['key_buffer_size']
-                * 100;
-        } elseif (isset($server_status['Key_blocks_used'], $server_variables['key_buffer_size'])
-            && $server_variables['key_buffer_size'] != 0
+            $server_status['Key_buffer_fraction_%'] = 100 - $server_status['Key_blocks_unused'] * $server_variables['key_cache_block_size'] / $server_variables['key_buffer_size'] * 100;
+        } elseif (isset($server_status['Key_blocks_used'], $server_variables['key_buffer_size']) && $server_variables['key_buffer_size'] != 0
         ) {
-            $server_status['Key_buffer_fraction_%']
-                = $server_status['Key_blocks_used']
-                * 1024
-                / $server_variables['key_buffer_size'];
+            $server_status['Key_buffer_fraction_%'] = $server_status['Key_blocks_used'] * 1024 / $server_variables['key_buffer_size'];
         }
 
         // Ratio for key read/write
-        if (isset($server_status['Key_writes'], $server_status['Key_write_requests'])
-            && $server_status['Key_write_requests'] > 0
+        if (isset($server_status['Key_writes'], $server_status['Key_write_requests']) && $server_status['Key_write_requests'] > 0
         ) {
             $key_writes = $server_status['Key_writes'];
             $key_write_requests = $server_status['Key_write_requests'];
-            $server_status['Key_write_ratio_%']
-                = 100 * $key_writes / $key_write_requests;
+            $server_status['Key_write_ratio_%'] = 100 * $key_writes / $key_write_requests;
         }
 
-        if (isset($server_status['Key_reads'], $server_status['Key_read_requests'])
-            && $server_status['Key_read_requests'] > 0
+        if (isset($server_status['Key_reads'], $server_status['Key_read_requests']) && $server_status['Key_read_requests'] > 0
         ) {
             $key_reads = $server_status['Key_reads'];
             $key_read_requests = $server_status['Key_read_requests'];
-            $server_status['Key_read_ratio_%']
-                = 100 * $key_reads / $key_read_requests;
+            $server_status['Key_read_ratio_%'] = 100 * $key_reads / $key_read_requests;
         }
 
         // Threads_cache_hitrate
-        if (isset($server_status['Threads_created'], $server_status['Connections'])
-            && $server_status['Connections'] > 0
+        if (isset($server_status['Threads_created'], $server_status['Connections']) && $server_status['Connections'] > 0
         ) {
-            $server_status['Threads_cache_hitrate_%']
-                = 100 - $server_status['Threads_created']
-                / $server_status['Connections'] * 100;
+            $server_status['Threads_cache_hitrate_%'] = 100 - $server_status['Threads_created'] / $server_status['Connections'] * 100;
         }
 
         return $server_status;
@@ -311,11 +278,11 @@ class Data
      * @return array ($allocationMap, $sectionUsed, $used_queries)
      */
     private function sortVariables(
-        array $server_status,
-        array $allocations,
-        array $allocationMap,
-        array $sectionUsed,
-        array $used_queries
+            array $server_status,
+            array $allocations,
+            array $allocationMap,
+            array $sectionUsed,
+            array $used_queries
     ) {
         foreach ($server_status as $name => $value) {
             $section_found = false;
@@ -347,8 +314,7 @@ class Data
         ];
     }
 
-    public function __construct()
-    {
+    public function __construct() {
         global $dbi;
 
         $this->replicationInfo = new ReplicationInfo($dbi);
@@ -371,9 +337,9 @@ class Data
 
         // for some calculations we require also some server settings
         $server_variables = $dbi->fetchResult(
-            'SHOW GLOBAL VARIABLES',
-            0,
-            1
+                'SHOW GLOBAL VARIABLES',
+                0,
+                1
         );
 
         // cleanup of some deprecated values
@@ -381,8 +347,8 @@ class Data
 
         // calculate some values
         $server_status = $this->calculateValues(
-            $server_status,
-            $server_variables
+                $server_status,
+                $server_variables
         );
 
         // split variables in sections
@@ -405,15 +371,15 @@ class Data
 
         // sort vars into arrays
         [
-            $allocationMap,
-            $sectionUsed,
-            $used_queries,
-        ] = $this->sortVariables(
-            $server_status,
-            $allocations,
-            $allocationMap,
-            $sectionUsed,
-            $used_queries
+                $allocationMap,
+                $sectionUsed,
+                $used_queries,
+                ] = $this->sortVariables(
+                $server_status,
+                $allocations,
+                $allocationMap,
+                $sectionUsed,
+                $used_queries
         );
 
         // admin commands are not queries (e.g. they include COM_PING,
@@ -424,11 +390,9 @@ class Data
         $this->dbIsLocal = false;
         // can be null if $cfg['ServerDefault'] = 0;
         $serverHostToLower = mb_strtolower(
-            (string) $GLOBALS['cfg']['Server']['host']
+                (string) $GLOBALS['cfg']['Server']['host']
         );
-        if ($serverHostToLower === 'localhost'
-            || $GLOBALS['cfg']['Server']['host'] === '127.0.0.1'
-            || $GLOBALS['cfg']['Server']['host'] === '::1'
+        if ($serverHostToLower === 'localhost' || $GLOBALS['cfg']['Server']['host'] === '127.0.0.1' || $GLOBALS['cfg']['Server']['host'] === '::1'
         ) {
             $this->dbIsLocal = true;
         }
@@ -448,15 +412,14 @@ class Data
      *
      * @return array
      */
-    public static function cleanDeprecated(array $server_status)
-    {
+    public static function cleanDeprecated(array $server_status) {
         $deprecated = [
             'Com_prepare_sql' => 'Com_stmt_prepare',
             'Com_execute_sql' => 'Com_stmt_execute',
             'Com_dealloc_sql' => 'Com_stmt_close',
         ];
         foreach ($deprecated as $old => $new) {
-            if (! isset($server_status[$old], $server_status[$new])) {
+            if (!isset($server_status[$old], $server_status[$new])) {
                 continue;
             }
 
@@ -465,4 +428,5 @@ class Data
 
         return $server_status;
     }
+
 }

@@ -8,8 +8,8 @@ use PragmaRX\Google2FA\Support\Base32;
 use PragmaRX\Google2FA\Support\Constants;
 use PragmaRX\Google2FA\Support\QRCode;
 
-class Google2FA
-{
+class Google2FA {
+
     use QRCode;
     use Base32;
 
@@ -65,23 +65,21 @@ class Google2FA
      * @return bool|int
      */
     public function findValidOTP(
-        $secret,
-        $key,
-        $window,
-        $startingTimestamp,
-        $timestamp,
-        $oldTimestamp = null
+            $secret,
+            $key,
+            $window,
+            $startingTimestamp,
+            $timestamp,
+            $oldTimestamp = null
     ) {
         for (;
-            $startingTimestamp <= $timestamp + $this->getWindow($window);
-            $startingTimestamp++
+                $startingTimestamp <= $timestamp + $this->getWindow($window);
+                $startingTimestamp++
         ) {
             if (
-                hash_equals($this->oathTotp($secret, $startingTimestamp), $key)
+                    hash_equals($this->oathTotp($secret, $startingTimestamp), $key)
             ) {
-                return is_null($oldTimestamp)
-                    ? true
-                    : $startingTimestamp;
+                return is_null($oldTimestamp) ? true : $startingTimestamp;
             }
         }
 
@@ -96,13 +94,12 @@ class Google2FA
      *
      * @return string
      */
-    protected function generateHotp($secret, $counter)
-    {
+    protected function generateHotp($secret, $counter) {
         return hash_hmac(
-            $this->getAlgorithm(),
-            pack('N*', 0, $counter), // Counter must be 64-bit int
-            $secret,
-            true
+                $this->getAlgorithm(),
+                pack('N*', 0, $counter), // Counter must be 64-bit int
+                $secret,
+                true
         );
     }
 
@@ -118,8 +115,7 @@ class Google2FA
      *
      * @return string
      */
-    public function generateSecretKey($length = 16, $prefix = '')
-    {
+    public function generateSecretKey($length = 16, $prefix = '') {
         return $this->generateBase32RandomKey($length, $prefix);
     }
 
@@ -134,8 +130,7 @@ class Google2FA
      *
      * @return string
      */
-    public function getCurrentOtp($secret)
-    {
+    public function getCurrentOtp($secret) {
         return $this->oathTotp($secret, $this->getTimestamp());
     }
 
@@ -144,8 +139,7 @@ class Google2FA
      *
      * @return string
      */
-    public function getAlgorithm()
-    {
+    public function getAlgorithm() {
         return $this->algorithm;
     }
 
@@ -154,8 +148,7 @@ class Google2FA
      *
      * @return int
      */
-    public function getKeyRegeneration()
-    {
+    public function getKeyRegeneration() {
         return $this->keyRegeneration;
     }
 
@@ -164,8 +157,7 @@ class Google2FA
      *
      * @return int
      */
-    public function getOneTimePasswordLength()
-    {
+    public function getOneTimePasswordLength() {
         return $this->oneTimePasswordLength;
     }
 
@@ -176,8 +168,7 @@ class Google2FA
      *
      * @return string
      */
-    public function getSecret($secret = null)
-    {
+    public function getSecret($secret = null) {
         return is_null($secret) ? $this->secret : $secret;
     }
 
@@ -186,9 +177,8 @@ class Google2FA
      * period.
      *
      * @return int
-     **/
-    public function getTimestamp()
-    {
+     * */
+    public function getTimestamp() {
         return (int) floor(microtime(true) / $this->keyRegeneration);
     }
 
@@ -197,8 +187,7 @@ class Google2FA
      *
      * @return array
      */
-    protected function getValidAlgorithms()
-    {
+    protected function getValidAlgorithms() {
         return [
             Constants::SHA1,
             Constants::SHA256,
@@ -213,8 +202,7 @@ class Google2FA
      *
      * @return int
      */
-    public function getWindow($window = null)
-    {
+    public function getWindow($window = null) {
         return is_null($window) ? $this->window : $window;
     }
 
@@ -227,11 +215,8 @@ class Google2FA
      *
      * @return mixed
      */
-    private function makeStartingTimestamp($window, $timestamp, $oldTimestamp = null)
-    {
-        return is_null($oldTimestamp)
-            ? $timestamp - $this->getWindow($window)
-            : max($timestamp - $this->getWindow($window), $oldTimestamp + 1);
+    private function makeStartingTimestamp($window, $timestamp, $oldTimestamp = null) {
+        return is_null($oldTimestamp) ? $timestamp - $this->getWindow($window) : max($timestamp - $this->getWindow($window), $oldTimestamp + 1);
     }
 
     /**
@@ -241,8 +226,7 @@ class Google2FA
      *
      * @return int
      */
-    protected function makeTimestamp($timestamp = null)
-    {
+    protected function makeTimestamp($timestamp = null) {
         if (is_null($timestamp)) {
             return $this->getTimestamp();
         }
@@ -263,8 +247,7 @@ class Google2FA
      *
      * @return string
      */
-    public function oathTotp($secret, $counter)
-    {
+    public function oathTotp($secret, $counter) {
         if (strlen($secret) < 8) {
             throw new SecretKeyTooShortException();
         }
@@ -272,10 +255,10 @@ class Google2FA
         $secret = $this->base32Decode($this->getSecret($secret));
 
         return str_pad(
-            $this->oathTruncate($this->generateHotp($secret, $counter)),
-            $this->getOneTimePasswordLength(),
-            '0',
-            STR_PAD_LEFT
+                $this->oathTruncate($this->generateHotp($secret, $counter)),
+                $this->getOneTimePasswordLength(),
+                '0',
+                STR_PAD_LEFT
         );
     }
 
@@ -285,9 +268,8 @@ class Google2FA
      * @param string $hash
      *
      * @return string
-     **/
-    public function oathTruncate($hash)
-    {
+     * */
+    public function oathTruncate($hash) {
         $offset = ord($hash[strlen($hash) - 1]) & 0xf;
 
         $temp = unpack('N', substr($hash, $offset, 4));
@@ -295,8 +277,8 @@ class Google2FA
         $temp = $temp[1] & 0x7fffffff;
 
         return substr(
-            (string) $temp,
-            -$this->getOneTimePasswordLength()
+                (string) $temp,
+                -$this->getOneTimePasswordLength()
         );
     }
 
@@ -307,12 +289,11 @@ class Google2FA
      *
      * @return string|null
      */
-    public function removeInvalidChars($string)
-    {
+    public function removeInvalidChars($string) {
         return preg_replace(
-            '/[^'.Constants::VALID_FOR_B32.']/',
-            '',
-            $string
+                '/[^' . Constants::VALID_FOR_B32 . ']/',
+                '',
+                $string
         );
     }
 
@@ -324,7 +305,7 @@ class Google2FA
      * @return $this
      */
     public function setEnforceGoogleAuthenticatorCompatibility(
-        $enforceGoogleAuthenticatorCompatibility
+            $enforceGoogleAuthenticatorCompatibility
     ) {
         $this->enforceGoogleAuthenticatorCompatibility = $enforceGoogleAuthenticatorCompatibility;
 
@@ -340,8 +321,7 @@ class Google2FA
      *
      * @return \PragmaRX\Google2FA\Google2FA
      */
-    public function setAlgorithm($algorithm)
-    {
+    public function setAlgorithm($algorithm) {
         // Default to SHA1 HMAC algorithm
         if (!in_array($algorithm, $this->getValidAlgorithms())) {
             throw new InvalidAlgorithmException();
@@ -357,8 +337,7 @@ class Google2FA
      *
      * @param mixed $keyRegeneration
      */
-    public function setKeyRegeneration($keyRegeneration)
-    {
+    public function setKeyRegeneration($keyRegeneration) {
         $this->keyRegeneration = $keyRegeneration;
     }
 
@@ -367,8 +346,7 @@ class Google2FA
      *
      * @param mixed $oneTimePasswordLength
      */
-    public function setOneTimePasswordLength($oneTimePasswordLength)
-    {
+    public function setOneTimePasswordLength($oneTimePasswordLength) {
         $this->oneTimePasswordLength = $oneTimePasswordLength;
     }
 
@@ -377,8 +355,7 @@ class Google2FA
      *
      * @param mixed $secret
      */
-    public function setSecret($secret)
-    {
+    public function setSecret($secret) {
         $this->secret = $secret;
     }
 
@@ -387,8 +364,7 @@ class Google2FA
      *
      * @param mixed $window
      */
-    public function setWindow($window)
-    {
+    public function setWindow($window) {
         $this->window = $window;
     }
 
@@ -409,18 +385,18 @@ class Google2FA
      * @return bool|int
      */
     public function verify(
-        $key,
-        $secret,
-        $window = null,
-        $timestamp = null,
-        $oldTimestamp = null
+            $key,
+            $secret,
+            $window = null,
+            $timestamp = null,
+            $oldTimestamp = null
     ) {
         return $this->verifyKey(
-            $secret,
-            $key,
-            $window,
-            $timestamp,
-            $oldTimestamp
+                        $secret,
+                        $key,
+                        $window,
+                        $timestamp,
+                        $oldTimestamp
         );
     }
 
@@ -441,21 +417,21 @@ class Google2FA
      * @return bool|int
      */
     public function verifyKey(
-        $secret,
-        $key,
-        $window = null,
-        $timestamp = null,
-        $oldTimestamp = null
+            $secret,
+            $key,
+            $window = null,
+            $timestamp = null,
+            $oldTimestamp = null
     ) {
         $timestamp = $this->makeTimestamp($timestamp);
 
         return $this->findValidOTP(
-            $secret,
-            $key,
-            $window,
-            $this->makeStartingTimestamp($window, $timestamp, $oldTimestamp),
-            $timestamp,
-            $oldTimestamp
+                        $secret,
+                        $key,
+                        $window,
+                        $this->makeStartingTimestamp($window, $timestamp, $oldTimestamp),
+                        $timestamp,
+                        $oldTimestamp
         );
     }
 
@@ -478,18 +454,19 @@ class Google2FA
      * @return bool|int
      */
     public function verifyKeyNewer(
-        $secret,
-        $key,
-        $oldTimestamp,
-        $window = null,
-        $timestamp = null
-    ) {
-        return $this->verifyKey(
             $secret,
             $key,
-            $window,
-            $timestamp,
-            $oldTimestamp
+            $oldTimestamp,
+            $window = null,
+            $timestamp = null
+    ) {
+        return $this->verifyKey(
+                        $secret,
+                        $key,
+                        $window,
+                        $timestamp,
+                        $oldTimestamp
         );
     }
+
 }

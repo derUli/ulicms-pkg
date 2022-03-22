@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Classes to create relation schema in SVG format.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Plugins\Schema\Svg;
@@ -23,8 +23,8 @@ use function strlen;
  *
  * @access  public
  */
-class Svg extends XMLWriter
-{
+class Svg extends XMLWriter {
+
     /** @var string */
     public $title;
 
@@ -44,8 +44,7 @@ class Svg extends XMLWriter
      * @see XMLWriter::setIndent()
      * @see XMLWriter::startDocument()
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->openMemory();
         /*
          * Set indenting using three spaces,
@@ -60,9 +59,9 @@ class Svg extends XMLWriter
 
         $this->startDocument('1.0', 'UTF-8');
         $this->startDtd(
-            'svg',
-            '-//W3C//DTD SVG 1.1//EN',
-            'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'
+                'svg',
+                '-//W3C//DTD SVG 1.1//EN',
+                'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'
         );
         $this->endDtd();
     }
@@ -74,8 +73,7 @@ class Svg extends XMLWriter
      *
      * @return void
      */
-    public function setTitle($value)
-    {
+    public function setTitle($value) {
         $this->title = $value;
     }
 
@@ -86,8 +84,7 @@ class Svg extends XMLWriter
      *
      * @return void
      */
-    public function setAuthor($value)
-    {
+    public function setAuthor($value) {
         $this->author = $value;
     }
 
@@ -98,8 +95,7 @@ class Svg extends XMLWriter
      *
      * @return void
      */
-    public function setFont($value)
-    {
+    public function setFont($value) {
         $this->font = $value;
     }
 
@@ -108,8 +104,7 @@ class Svg extends XMLWriter
      *
      * @return string returns the font name
      */
-    public function getFont()
-    {
+    public function getFont() {
         return $this->font;
     }
 
@@ -120,8 +115,7 @@ class Svg extends XMLWriter
      *
      * @return void
      */
-    public function setFontSize($value)
-    {
+    public function setFontSize($value) {
         $this->fontSize = $value;
     }
 
@@ -130,8 +124,7 @@ class Svg extends XMLWriter
      *
      * @return int returns the font size
      */
-    public function getFontSize()
-    {
+    public function getFontSize() {
         return $this->fontSize;
     }
 
@@ -152,15 +145,14 @@ class Svg extends XMLWriter
      *
      * @return void
      */
-    public function startSvgDoc($width, $height, $x = 0, $y = 0)
-    {
+    public function startSvgDoc($width, $height, $x = 0, $y = 0) {
         $this->startElement('svg');
 
-        if (! is_int($width)) {
+        if (!is_int($width)) {
             $width = intval($width);
         }
 
-        if (! is_int($height)) {
+        if (!is_int($height)) {
             $height = intval($height);
         }
 
@@ -181,8 +173,7 @@ class Svg extends XMLWriter
      *
      * @return void
      */
-    public function endSvgDoc()
-    {
+    public function endSvgDoc() {
         $this->endElement();
         $this->endDocument();
     }
@@ -201,15 +192,14 @@ class Svg extends XMLWriter
      *
      * @return void
      */
-    public function showOutput($fileName)
-    {
+    public function showOutput($fileName) {
         //ob_get_clean();
         $output = $this->flush();
         Response::getInstance()->disable();
         Core::downloadHeader(
-            $fileName,
-            'image/svg+xml',
-            strlen($output)
+                $fileName,
+                'image/svg+xml',
+                strlen($output)
         );
         print $output;
     }
@@ -242,13 +232,13 @@ class Svg extends XMLWriter
      * @return void
      */
     public function printElement(
-        $name,
-        $x,
-        $y,
-        $width = '',
-        $height = '',
-        ?string $text = '',
-        $styles = ''
+            $name,
+            $x,
+            $y,
+            $width = '',
+            $height = '',
+            ?string $text = '',
+            $styles = ''
     ) {
         $this->startElement($name);
         $this->writeAttribute('width', (string) $width);
@@ -285,8 +275,7 @@ class Svg extends XMLWriter
      *
      * @return void
      */
-    public function printElementLine($name, $x1, $y1, $x2, $y2, $styles)
-    {
+    public function printElementLine($name, $x1, $y1, $x2, $y2, $styles) {
         $this->startElement($name);
         $this->writeAttribute('x1', (string) $x1);
         $this->writeAttribute('y1', (string) $y1);
@@ -295,4 +284,5 @@ class Svg extends XMLWriter
         $this->writeAttribute('style', (string) $styles);
         $this->endElement();
     }
+
 }

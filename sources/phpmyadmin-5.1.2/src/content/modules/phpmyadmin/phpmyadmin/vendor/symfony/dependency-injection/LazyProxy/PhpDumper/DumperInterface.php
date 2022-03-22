@@ -18,8 +18,8 @@ use Symfony\Component\DependencyInjection\Definition;
  *
  * @author Marco Pivetta <ocramius@gmail.com>
  */
-interface DumperInterface
-{
+interface DumperInterface {
+
     /**
      * Inspects whether the given definitions should produce proxy instantiation logic in the dumped container.
      *

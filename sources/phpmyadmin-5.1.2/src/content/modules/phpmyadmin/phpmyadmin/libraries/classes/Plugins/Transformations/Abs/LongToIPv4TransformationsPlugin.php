@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Abstract class for the long to IPv4 transformations plugins
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Plugins\Transformations\Abs;
@@ -15,18 +15,17 @@ use function htmlspecialchars;
 /**
  * Provides common methods for all of the long to IPv4 transformations plugins.
  */
-abstract class LongToIPv4TransformationsPlugin extends TransformationsPlugin
-{
+abstract class LongToIPv4TransformationsPlugin extends TransformationsPlugin {
+
     /**
      * Gets the transformation description of the specific plugin
      *
      * @return string
      */
-    public static function getInfo()
-    {
+    public static function getInfo() {
         return __(
-            'Converts an (IPv4) Internet network address stored as a BIGINT'
-            . ' into a string in Internet standard dotted format.'
+                'Converts an (IPv4) Internet network address stored as a BIGINT'
+                . ' into a string in Internet standard dotted format.'
         );
     }
 
@@ -39,8 +38,7 @@ abstract class LongToIPv4TransformationsPlugin extends TransformationsPlugin
      *
      * @return string
      */
-    public function applyTransformation($buffer, array $options = [], ?stdClass $meta = null)
-    {
+    public function applyTransformation($buffer, array $options = [], ?stdClass $meta = null) {
         return htmlspecialchars(FormatConverter::longToIp($buffer));
     }
 
@@ -51,8 +49,8 @@ abstract class LongToIPv4TransformationsPlugin extends TransformationsPlugin
      *
      * @return string
      */
-    public static function getName()
-    {
+    public static function getName() {
         return 'Long To IPv4';
     }
+
 }

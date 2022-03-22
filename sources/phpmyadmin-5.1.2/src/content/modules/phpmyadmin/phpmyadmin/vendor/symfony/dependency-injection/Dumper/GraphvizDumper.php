@@ -28,19 +28,19 @@ use Symfony\Component\DependencyInjection\Reference;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class GraphvizDumper extends Dumper
-{
+class GraphvizDumper extends Dumper {
+
     private $nodes;
     private $edges;
     // All values should be strings
     private $options = [
-            'graph' => ['ratio' => 'compress'],
-            'node' => ['fontsize' => '11', 'fontname' => 'Arial', 'shape' => 'record'],
-            'edge' => ['fontsize' => '9', 'fontname' => 'Arial', 'color' => 'grey', 'arrowhead' => 'open', 'arrowsize' => '0.5'],
-            'node.instance' => ['fillcolor' => '#9999ff', 'style' => 'filled'],
-            'node.definition' => ['fillcolor' => '#eeeeee'],
-            'node.missing' => ['fillcolor' => '#ff9999', 'style' => 'filled'],
-        ];
+        'graph' => ['ratio' => 'compress'],
+        'node' => ['fontsize' => '11', 'fontname' => 'Arial', 'shape' => 'record'],
+        'edge' => ['fontsize' => '9', 'fontname' => 'Arial', 'color' => 'grey', 'arrowhead' => 'open', 'arrowsize' => '0.5'],
+        'node.instance' => ['fillcolor' => '#9999ff', 'style' => 'filled'],
+        'node.definition' => ['fillcolor' => '#eeeeee'],
+        'node.missing' => ['fillcolor' => '#ff9999', 'style' => 'filled'],
+    ];
 
     /**
      * Dumps the service container as a graphviz graph.
@@ -56,8 +56,7 @@ class GraphvizDumper extends Dumper
      *
      * @return string The dot representation of the service container
      */
-    public function dump(array $options = [])
-    {
+    public function dump(array $options = []) {
         foreach (['graph', 'node', 'edge', 'node.instance', 'node.definition', 'node.missing'] as $key) {
             if (isset($options[$key])) {
                 $this->options[$key] = array_merge($this->options[$key], $options[$key]);
@@ -69,35 +68,33 @@ class GraphvizDumper extends Dumper
         $this->edges = [];
         foreach ($this->container->getDefinitions() as $id => $definition) {
             $this->edges[$id] = array_merge(
-                $this->findEdges($id, $definition->getArguments(), true, ''),
-                $this->findEdges($id, $definition->getProperties(), false, '')
+                    $this->findEdges($id, $definition->getArguments(), true, ''),
+                    $this->findEdges($id, $definition->getProperties(), false, '')
             );
 
             foreach ($definition->getMethodCalls() as $call) {
                 $this->edges[$id] = array_merge(
-                    $this->edges[$id],
-                    $this->findEdges($id, $call[1], false, $call[0].'()')
+                        $this->edges[$id],
+                        $this->findEdges($id, $call[1], false, $call[0] . '()')
                 );
             }
         }
 
-        return $this->container->resolveEnvPlaceholders($this->startDot().$this->addNodes().$this->addEdges().$this->endDot(), '__ENV_%s__');
+        return $this->container->resolveEnvPlaceholders($this->startDot() . $this->addNodes() . $this->addEdges() . $this->endDot(), '__ENV_%s__');
     }
 
-    private function addNodes(): string
-    {
+    private function addNodes(): string {
         $code = '';
         foreach ($this->nodes as $id => $node) {
             $aliases = $this->getAliases($id);
 
-            $code .= sprintf("  node_%s [label=\"%s\\n%s\\n\", shape=%s%s];\n", $this->dotize($id), $id.($aliases ? ' ('.implode(', ', $aliases).')' : ''), $node['class'], $this->options['node']['shape'], $this->addAttributes($node['attributes']));
+            $code .= sprintf("  node_%s [label=\"%s\\n%s\\n\", shape=%s%s];\n", $this->dotize($id), $id . ($aliases ? ' (' . implode(', ', $aliases) . ')' : ''), $node['class'], $this->options['node']['shape'], $this->addAttributes($node['attributes']));
         }
 
         return $code;
     }
 
-    private function addEdges(): string
-    {
+    private function addEdges(): string {
         $code = '';
         foreach ($this->edges as $id => $edges) {
             foreach ($edges as $edge) {
@@ -111,8 +108,7 @@ class GraphvizDumper extends Dumper
     /**
      * Finds all edges belonging to a specific service id.
      */
-    private function findEdges(string $id, array $arguments, bool $required, string $name, bool $lazy = false): array
-    {
+    private function findEdges(string $id, array $arguments, bool $required, string $name, bool $lazy = false): array {
         $edges = [];
         foreach ($arguments as $argument) {
             if ($argument instanceof Parameter) {
@@ -135,11 +131,11 @@ class GraphvizDumper extends Dumper
                 $edges = array_merge($edges, $this->findEdges($id, $argument->getValues(), $required, $name, true));
             } elseif ($argument instanceof Definition) {
                 $edges = array_merge($edges,
-                    $this->findEdges($id, $argument->getArguments(), $required, ''),
-                    $this->findEdges($id, $argument->getProperties(), false, '')
+                        $this->findEdges($id, $argument->getArguments(), $required, ''),
+                        $this->findEdges($id, $argument->getProperties(), false, '')
                 );
                 foreach ($argument->getMethodCalls() as $call) {
-                    $edges = array_merge($edges, $this->findEdges($id, $call[1], false, $call[0].'()'));
+                    $edges = array_merge($edges, $this->findEdges($id, $call[1], false, $call[0] . '()'));
                 }
             } elseif (\is_array($argument)) {
                 $edges = array_merge($edges, $this->findEdges($id, $argument, $required, $name, $lazy));
@@ -149,8 +145,7 @@ class GraphvizDumper extends Dumper
         return $edges;
     }
 
-    private function findNodes(): array
-    {
+    private function findNodes(): array {
         $nodes = [];
 
         $container = $this->cloneContainer();
@@ -165,6 +160,7 @@ class GraphvizDumper extends Dumper
             try {
                 $class = $this->container->getParameterBag()->resolveValue($class);
             } catch (ParameterNotFoundException $e) {
+                
             }
 
             $nodes[$id] = ['class' => str_replace('\\', '\\\\', $class), 'attributes' => array_merge($this->options['node.definition'], ['style' => $definition->isShared() ? 'filled' : 'dotted'])];
@@ -184,8 +180,7 @@ class GraphvizDumper extends Dumper
         return $nodes;
     }
 
-    private function cloneContainer(): ContainerBuilder
-    {
+    private function cloneContainer(): ContainerBuilder {
         $parameterBag = new ParameterBag($this->container->getParameterBag()->all());
 
         $container = new ContainerBuilder($parameterBag);
@@ -199,32 +194,28 @@ class GraphvizDumper extends Dumper
         return $container;
     }
 
-    private function startDot(): string
-    {
+    private function startDot(): string {
         return sprintf("digraph sc {\n  %s\n  node [%s];\n  edge [%s];\n\n",
-            $this->addOptions($this->options['graph']),
-            $this->addOptions($this->options['node']),
-            $this->addOptions($this->options['edge'])
+                $this->addOptions($this->options['graph']),
+                $this->addOptions($this->options['node']),
+                $this->addOptions($this->options['edge'])
         );
     }
 
-    private function endDot(): string
-    {
+    private function endDot(): string {
         return "}\n";
     }
 
-    private function addAttributes(array $attributes): string
-    {
+    private function addAttributes(array $attributes): string {
         $code = [];
         foreach ($attributes as $k => $v) {
             $code[] = sprintf('%s="%s"', $k, $v);
         }
 
-        return $code ? ', '.implode(', ', $code) : '';
+        return $code ? ', ' . implode(', ', $code) : '';
     }
 
-    private function addOptions(array $options): string
-    {
+    private function addOptions(array $options): string {
         $code = [];
         foreach ($options as $k => $v) {
             $code[] = sprintf('%s="%s"', $k, $v);
@@ -233,13 +224,11 @@ class GraphvizDumper extends Dumper
         return implode(' ', $code);
     }
 
-    private function dotize(string $id): string
-    {
+    private function dotize(string $id): string {
         return preg_replace('/\W/i', '_', $id);
     }
 
-    private function getAliases(string $id): array
-    {
+    private function getAliases(string $id): array {
         $aliases = [];
         foreach ($this->container->getAliases() as $alias => $origin) {
             if ($id == $origin) {
@@ -249,4 +238,5 @@ class GraphvizDumper extends Dumper
 
         return $aliases;
     }
+
 }

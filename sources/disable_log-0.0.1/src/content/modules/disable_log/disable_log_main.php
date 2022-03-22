@@ -1,5 +1,5 @@
 <?php
-function disable_log_render()
-{
+
+function disable_log_render() {
     return "";
 }

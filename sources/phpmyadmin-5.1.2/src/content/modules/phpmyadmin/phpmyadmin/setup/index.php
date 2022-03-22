@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Front controller for setup script
  */
-
 declare(strict_types=1);
 
 use PhpMyAdmin\Controllers\Setup\ConfigController;
@@ -13,7 +13,7 @@ use PhpMyAdmin\Core;
 use PhpMyAdmin\Template;
 use PhpMyAdmin\Url;
 
-if (! defined('ROOT_PATH')) {
+if (!defined('ROOT_PATH')) {
     // phpcs:disable PSR1.Files.SideEffects
     define('ROOT_PATH', dirname(__DIR__) . DIRECTORY_SEPARATOR);
     // phpcs:enable
@@ -23,7 +23,7 @@ global $cfg;
 
 require ROOT_PATH . 'setup/lib/common.inc.php';
 
-if (@file_exists(CONFIG_FILE) && ! $cfg['DBG']['demo']) {
+if (@file_exists(CONFIG_FILE) && !$cfg['DBG']['demo']) {
     Core::fatalError(__('Configuration already exists, setup is disabled!'));
 }
 

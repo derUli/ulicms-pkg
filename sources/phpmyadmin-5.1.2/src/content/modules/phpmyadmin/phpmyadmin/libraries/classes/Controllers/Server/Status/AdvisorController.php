@@ -12,8 +12,8 @@ use PhpMyAdmin\Template;
 /**
  * Displays the advisor feature
  */
-class AdvisorController extends AbstractController
-{
+class AdvisorController extends AbstractController {
+
     /** @var Advisor */
     private $advisor;
 
@@ -21,14 +21,12 @@ class AdvisorController extends AbstractController
      * @param Response $response
      * @param Data     $data
      */
-    public function __construct($response, Template $template, $data, Advisor $advisor)
-    {
+    public function __construct($response, Template $template, $data, Advisor $advisor) {
         parent::__construct($response, $template, $data);
         $this->advisor = $advisor;
     }
 
-    public function index(): void
-    {
+    public function index(): void {
         $data = [];
         if ($this->data->dataLoaded) {
             $data = $this->advisor->run();
@@ -36,4 +34,5 @@ class AdvisorController extends AbstractController
 
         $this->render('server/status/advisor/index', ['data' => $data]);
     }
+
 }

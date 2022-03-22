@@ -3,11 +3,11 @@
 
 body{
 
-  -moz-hyphens: auto;
-  -o-hyphens: auto;
-  -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+    -o-hyphens: auto;
+    -webkit-hyphens: auto;
 
-  -ms-hyphens: auto;
-  -hyphens: auto;
-  hyphens: auto;
+    -ms-hyphens: auto;
+    -hyphens: auto;
+    hyphens: auto;
 }

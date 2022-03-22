@@ -1,21 +1,20 @@
 <?php
+
 /**
  * User preferences form
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Config\Forms\User;
 
 use PhpMyAdmin\Config\Forms\BaseForm;
 
-class ExportForm extends BaseForm
-{
+class ExportForm extends BaseForm {
+
     /**
      * @return array
      */
-    public static function getForms()
-    {
+    public static function getForms() {
         // phpcs:disable Squiz.Arrays.ArrayDeclaration.KeySpecified,Squiz.Arrays.ArrayDeclaration.NoKeySpecified
         return [
             'Export_defaults' => [
@@ -146,8 +145,8 @@ class ExportForm extends BaseForm
     /**
      * @return string
      */
-    public static function getName()
-    {
+    public static function getName() {
         return __('Export');
     }
+
 }

@@ -27,8 +27,8 @@ use Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-abstract class FileLoader extends BaseFileLoader
-{
+abstract class FileLoader extends BaseFileLoader {
+
     public const ANONYMOUS_ID_REGEXP = '/^\.\d+_[^~]*+~[._a-zA-Z\d]{7}$/';
 
     protected $container;
@@ -38,8 +38,7 @@ abstract class FileLoader extends BaseFileLoader
     protected $singlyImplemented = [];
     protected $autoRegisterAliasesForSinglyImplementedInterfaces = true;
 
-    public function __construct(ContainerBuilder $container, FileLocatorInterface $locator)
-    {
+    public function __construct(ContainerBuilder $container, FileLocatorInterface $locator) {
         $this->container = $container;
 
         parent::__construct($locator);
@@ -51,8 +50,7 @@ abstract class FileLoader extends BaseFileLoader
      * @param bool|string          $ignoreErrors Whether errors should be ignored; pass "not_found" to ignore only when the loaded resource is not found
      * @param string|string[]|null $exclude      Glob patterns to exclude from the import
      */
-    public function import($resource, $type = null, $ignoreErrors = false, $sourceResource = null/*, $exclude = null*/)
-    {
+    public function import($resource, $type = null, $ignoreErrors = false, $sourceResource = null/* , $exclude = null */) {
         $args = \func_get_args();
 
         if ($ignoreNotFound = 'not_found' === $ignoreErrors) {
@@ -89,8 +87,7 @@ abstract class FileLoader extends BaseFileLoader
      * @param string               $resource  The directory to look for classes, glob-patterns allowed
      * @param string|string[]|null $exclude   A globbed path of files to exclude or an array of globbed paths of files to exclude
      */
-    public function registerClasses(Definition $prototype, $namespace, $resource, $exclude = null)
-    {
+    public function registerClasses(Definition $prototype, $namespace, $resource, $exclude = null) {
         if (!str_ends_with($namespace, '\\')) {
             throw new InvalidArgumentException(sprintf('Namespace prefix must end with a "\\": "%s".', $namespace));
         }
@@ -123,8 +120,7 @@ abstract class FileLoader extends BaseFileLoader
         }
     }
 
-    public function registerAliasesForSinglyImplementedInterfaces()
-    {
+    public function registerAliasesForSinglyImplementedInterfaces() {
         foreach ($this->interfaces as $interface) {
             if (!empty($this->singlyImplemented[$interface]) && !$this->container->has($interface)) {
                 $this->container->setAlias($interface, $this->singlyImplemented[$interface])->setPublic(false);
@@ -139,8 +135,7 @@ abstract class FileLoader extends BaseFileLoader
      *
      * @param string $id
      */
-    protected function setDefinition($id, Definition $definition)
-    {
+    protected function setDefinition($id, Definition $definition) {
         $this->container->removeBindings($id);
 
         if ($this->isLoadingInstanceof) {
@@ -153,8 +148,7 @@ abstract class FileLoader extends BaseFileLoader
         }
     }
 
-    private function findClasses(string $namespace, string $pattern, array $excludePatterns): array
-    {
+    private function findClasses(string $namespace, string $pattern, array $excludePatterns): array {
         $parameterBag = $this->container->getParameterBag();
 
         $excludePaths = [];
@@ -191,7 +185,7 @@ abstract class FileLoader extends BaseFileLoader
             if (!preg_match($extRegexp, $path, $m) || !$info->isReadable()) {
                 continue;
             }
-            $class = $namespace.ltrim(str_replace('/', '\\', substr($path, $prefixLen, -\strlen($m[0]))), '\\');
+            $class = $namespace . ltrim(str_replace('/', '\\', substr($path, $prefixLen, -\strlen($m[0]))), '\\');
 
             if (!preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*+(?:\\\\[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*+)*+$/', $class)) {
                 continue;
@@ -224,4 +218,5 @@ abstract class FileLoader extends BaseFileLoader
 
         return $classes;
     }
+
 }

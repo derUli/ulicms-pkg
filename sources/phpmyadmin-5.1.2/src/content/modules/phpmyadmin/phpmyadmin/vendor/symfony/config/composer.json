@@ -36,7 +36,9 @@
         "symfony/yaml": "To use the yaml reference dumper"
     },
     "autoload": {
-        "psr-4": { "Symfony\\Component\\Config\\": "" },
+        "psr-4": {
+            "Symfony\\Component\\Config\\": ""
+        },
         "exclude-from-classmap": [
             "/Tests/"
         ]

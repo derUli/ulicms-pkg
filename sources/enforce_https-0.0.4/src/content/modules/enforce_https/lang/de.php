@@ -1,4 +1,5 @@
 <?php
+
 define("TRANSLATION_ENFORCE_HTTPS", "HTTPS Erzwingen");
 define("TRANSLATION_ENFORCE_HTTPS_INFO_MESSAGE_1", "Bevor Sie diese Option aktivieren, stellen Sie unbedingt sicher, dass
 		Ihr Webserver HTTPS unterstützt. Klicken Sie dafür auf <a href=\"%link%\" 

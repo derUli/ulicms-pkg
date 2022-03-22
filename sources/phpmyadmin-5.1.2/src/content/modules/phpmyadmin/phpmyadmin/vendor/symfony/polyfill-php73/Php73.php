@@ -17,8 +17,8 @@ namespace Symfony\Polyfill\Php73;
  *
  * @internal
  */
-final class Php73
-{
+final class Php73 {
+
     public static $startAt = 1533462603;
 
     /**
@@ -26,8 +26,7 @@ final class Php73
      *
      * @return array|float|int
      */
-    public static function hrtime($asNum = false)
-    {
+    public static function hrtime($asNum = false) {
         $ns = microtime(false);
         $s = substr($ns, 11) - self::$startAt;
         $ns = 1E9 * (float) $ns;
@@ -40,4 +39,5 @@ final class Php73
 
         return [$s, (int) $ns];
     }
+
 }

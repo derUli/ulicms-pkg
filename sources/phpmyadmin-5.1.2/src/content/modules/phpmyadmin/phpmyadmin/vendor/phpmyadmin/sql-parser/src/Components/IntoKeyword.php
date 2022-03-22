@@ -1,8 +1,8 @@
 <?php
+
 /**
  * `INTO` keyword parser.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\SqlParser\Components;
@@ -11,7 +11,6 @@ use PhpMyAdmin\SqlParser\Component;
 use PhpMyAdmin\SqlParser\Parser;
 use PhpMyAdmin\SqlParser\Token;
 use PhpMyAdmin\SqlParser\TokensList;
-
 use function implode;
 use function trim;
 
@@ -20,8 +19,8 @@ use function trim;
  *
  * @final
  */
-class IntoKeyword extends Component
-{
+class IntoKeyword extends Component {
+
     /**
      * FIELDS/COLUMNS Options for `SELECT...INTO` statements.
      *
@@ -121,12 +120,12 @@ class IntoKeyword extends Component
      * @param bool              $fieldsKeyword options for OPTIONS keyword
      */
     public function __construct(
-        $type = null,
-        $dest = null,
-        $columns = null,
-        $values = null,
-        $fieldsOptions = null,
-        $fieldsKeyword = null
+            $type = null,
+            $dest = null,
+            $columns = null,
+            $values = null,
+            $fieldsOptions = null,
+            $fieldsKeyword = null
     ) {
         $this->type = $type;
         $this->dest = $dest;
@@ -143,8 +142,7 @@ class IntoKeyword extends Component
      *
      * @return IntoKeyword
      */
-    public static function parse(Parser $parser, TokensList $list, array $options = [])
-    {
+    public static function parse(Parser $parser, TokensList $list, array $options = []) {
         $ret = new static();
 
         /**
@@ -196,18 +194,15 @@ class IntoKeyword extends Component
 
             if ($state === 0) {
                 if (
-                    (isset($options['fromInsert'])
-                    && $options['fromInsert'])
-                    || (isset($options['fromReplace'])
-                    && $options['fromReplace'])
+                        (isset($options['fromInsert']) && $options['fromInsert']) || (isset($options['fromReplace']) && $options['fromReplace'])
                 ) {
                     $ret->dest = Expression::parse(
-                        $parser,
-                        $list,
-                        [
-                            'parseField' => 'table',
-                            'breakOnAlias' => true,
-                        ]
+                                    $parser,
+                                    $list,
+                                    [
+                                        'parseField' => 'table',
+                                        'breakOnAlias' => true,
+                                    ]
                     );
                 } else {
                     $ret->values = ExpressionArray::parse($parser, $list);
@@ -250,8 +245,7 @@ class IntoKeyword extends Component
      *
      * @return void
      */
-    public function parseFileOptions(Parser $parser, TokensList $list, $keyword = 'FIELDS')
-    {
+    public function parseFileOptions(Parser $parser, TokensList $list, $keyword = 'FIELDS') {
         ++$list->idx;
 
         if ($keyword === 'FIELDS' || $keyword === 'COLUMNS') {
@@ -271,10 +265,9 @@ class IntoKeyword extends Component
      *
      * @return string
      */
-    public static function build($component, array $options = [])
-    {
+    public static function build($component, array $options = []) {
         if ($component->dest instanceof Expression) {
-            $columns = ! empty($component->columns) ? '(`' . implode('`, `', $component->columns) . '`)' : '';
+            $columns = !empty($component->columns) ? '(`' . implode('`, `', $component->columns) . '`)' : '';
 
             return $component->dest . $columns;
         }
@@ -298,4 +291,5 @@ class IntoKeyword extends Component
 
         return $ret;
     }
+
 }

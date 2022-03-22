@@ -16,8 +16,8 @@ namespace Symfony\Component\DependencyInjection;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-interface TaggedContainerInterface extends ContainerInterface
-{
+interface TaggedContainerInterface extends ContainerInterface {
+
     /**
      * Returns service ids for a given tag.
      *

@@ -9,8 +9,8 @@ use PhpMyAdmin\Message;
 use PhpMyAdmin\Response;
 use PhpMyAdmin\Template;
 
-final class ColumnController extends AbstractController
-{
+final class ColumnController extends AbstractController {
+
     /** @var DatabaseInterface */
     private $dbi;
 
@@ -18,15 +18,13 @@ final class ColumnController extends AbstractController
      * @param Response          $response
      * @param DatabaseInterface $dbi
      */
-    public function __construct($response, Template $template, $dbi)
-    {
+    public function __construct($response, Template $template, $dbi) {
         parent::__construct($response, $template);
         $this->dbi = $dbi;
     }
 
-    public function all(): void
-    {
-        if (! isset($_POST['db'], $_POST['table'])) {
+    public function all(): void {
+        if (!isset($_POST['db'], $_POST['table'])) {
             $this->response->setRequestStatus(false);
             $this->response->addJSON(['message' => Message::error()]);
 
@@ -35,4 +33,5 @@ final class ColumnController extends AbstractController
 
         $this->response->addJSON(['columns' => $this->dbi->getColumnNames($_POST['db'], $_POST['table'])]);
     }
+
 }

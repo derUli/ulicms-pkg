@@ -21,14 +21,13 @@ use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
  *
  * @author Jeremy Mikola <jmikola@gmail.com>
  */
-class VariableNode extends BaseNode implements PrototypeNodeInterface
-{
+class VariableNode extends BaseNode implements PrototypeNodeInterface {
+
     protected $defaultValueSet = false;
     protected $defaultValue;
     protected $allowEmptyValue = true;
 
-    public function setDefaultValue($value)
-    {
+    public function setDefaultValue($value) {
         $this->defaultValueSet = true;
         $this->defaultValue = $value;
     }
@@ -36,16 +35,14 @@ class VariableNode extends BaseNode implements PrototypeNodeInterface
     /**
      * {@inheritdoc}
      */
-    public function hasDefaultValue()
-    {
+    public function hasDefaultValue() {
         return $this->defaultValueSet;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getDefaultValue()
-    {
+    public function getDefaultValue() {
         $v = $this->defaultValue;
 
         return $v instanceof \Closure ? $v() : $v;
@@ -56,31 +53,28 @@ class VariableNode extends BaseNode implements PrototypeNodeInterface
      *
      * @param bool $boolean True if this entity will accept empty values
      */
-    public function setAllowEmptyValue($boolean)
-    {
+    public function setAllowEmptyValue($boolean) {
         $this->allowEmptyValue = (bool) $boolean;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function validateType($value)
-    {
+    protected function validateType($value) {
+        
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function finalizeValue($value)
-    {
+    protected function finalizeValue($value) {
         // deny environment variables only when using custom validators
         // this avoids ever passing an empty value to final validation closures
         if (!$this->allowEmptyValue && $this->isHandlingPlaceholder() && $this->finalValidationClosures) {
@@ -110,16 +104,14 @@ class VariableNode extends BaseNode implements PrototypeNodeInterface
     /**
      * {@inheritdoc}
      */
-    protected function normalizeValue($value)
-    {
+    protected function normalizeValue($value) {
         return $value;
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function mergeValues($leftSide, $rightSide)
-    {
+    protected function mergeValues($leftSide, $rightSide) {
         return $rightSide;
     }
 
@@ -136,8 +128,8 @@ class VariableNode extends BaseNode implements PrototypeNodeInterface
      *
      * @see finalizeValue()
      */
-    protected function isValueEmpty($value)
-    {
+    protected function isValueEmpty($value) {
         return empty($value);
     }
+
 }

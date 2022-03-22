@@ -1,8 +1,8 @@
 <?php
+
 /**
  * `SET` keyword parser.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\SqlParser\Components;
@@ -11,7 +11,6 @@ use PhpMyAdmin\SqlParser\Component;
 use PhpMyAdmin\SqlParser\Parser;
 use PhpMyAdmin\SqlParser\Token;
 use PhpMyAdmin\SqlParser\TokensList;
-
 use function implode;
 use function is_array;
 use function trim;
@@ -21,8 +20,8 @@ use function trim;
  *
  * @final
  */
-class SetOperation extends Component
-{
+class SetOperation extends Component {
+
     /**
      * The name of the column that is being updated.
      *
@@ -41,8 +40,7 @@ class SetOperation extends Component
      * @param string $column Field's name..
      * @param string $value  new value
      */
-    public function __construct($column = '', $value = '')
-    {
+    public function __construct($column = '', $value = '') {
         $this->column = $column;
         $this->value = $value;
     }
@@ -54,8 +52,7 @@ class SetOperation extends Component
      *
      * @return SetOperation[]
      */
-    public static function parse(Parser $parser, TokensList $list, array $options = [])
-    {
+    public static function parse(Parser $parser, TokensList $list, array $options = []) {
         $ret = [];
 
         $expr = new static();
@@ -101,9 +98,7 @@ class SetOperation extends Component
 
             // No keyword is expected.
             if (
-                ($token->type === Token::TYPE_KEYWORD)
-                && ($token->flags & Token::FLAG_KEYWORD_RESERVED)
-                && ($state === 0)
+                    ($token->type === Token::TYPE_KEYWORD) && ($token->flags & Token::FLAG_KEYWORD_RESERVED) && ($state === 0)
             ) {
                 break;
             }
@@ -118,9 +113,9 @@ class SetOperation extends Component
                 }
             } elseif ($state === 1) {
                 $tmp = Expression::parse(
-                    $parser,
-                    $list,
-                    ['breakOnAlias' => true]
+                                $parser,
+                                $list,
+                                ['breakOnAlias' => true]
                 );
                 if ($tmp === null) {
                     $parser->error('Missing expression.', $token);
@@ -152,12 +147,12 @@ class SetOperation extends Component
      *
      * @return string
      */
-    public static function build($component, array $options = [])
-    {
+    public static function build($component, array $options = []) {
         if (is_array($component)) {
             return implode(', ', $component);
         }
 
         return $component->column . ' = ' . $component->value;
     }
+
 }

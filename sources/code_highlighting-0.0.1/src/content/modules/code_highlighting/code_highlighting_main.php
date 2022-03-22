@@ -1,5 +1,5 @@
 <?php
-function code_highlighting_render()
-{
+
+function code_highlighting_render() {
     return "";
 }

@@ -99,7 +99,7 @@ $.ajaxPrefilter(function (options, originalOptions) {
     if (typeof options.data === 'string') {
         options.data += '&_nocache=' + nocache + '&token=' + encodeURIComponent(CommonParams.get('token'));
     } else if (typeof options.data === 'object') {
-        options.data = $.extend(originalOptions.data, { '_nocache' : nocache, 'token': CommonParams.get('token') });
+        options.data = $.extend(originalOptions.data, {'_nocache': nocache, 'token': CommonParams.get('token')});
     }
 });
 
@@ -122,7 +122,7 @@ Functions.addDatepicker = function ($thisElement, type, options) {
     var currentDateTime = new Date();
 
     var defaultOptions = {
-        timeInput : true,
+        timeInput: true,
         hour: currentDateTime.getHours(),
         minute: currentDateTime.getMinutes(),
         second: currentDateTime.getSeconds(),
@@ -272,8 +272,8 @@ Functions.getSqlEditor = function ($textarea, options, resize, lintOptions) {
         var defaults = {
             lineNumbers: true,
             matchBrackets: true,
-            extraKeys: { 'Ctrl-Space': 'autocomplete' },
-            hintOptions: { 'completeSingle': false, 'completeOnSingleClick': true },
+            extraKeys: {'Ctrl-Space': 'autocomplete'},
+            hintOptions: {'completeSingle': false, 'completeOnSingleClick': true},
             indentUnit: 4,
             mode: 'text/x-mysql',
             lineWrapping: true
@@ -295,7 +295,7 @@ Functions.getSqlEditor = function ($textarea, options, resize, lintOptions) {
         // create CodeMirror editor
         var codemirrorEditor = CodeMirror.fromTextArea($textarea[0], defaults);
         // allow resizing
-        if (! resizeType) {
+        if (!resizeType) {
             resizeType = 'vertical';
         }
         var handles = '';
@@ -309,13 +309,13 @@ Functions.getSqlEditor = function ($textarea, options, resize, lintOptions) {
             handles = 'e, w';
         }
         $(codemirrorEditor.getWrapperElement())
-            .css('resize', resizeType)
-            .resizable({
-                handles: handles,
-                resize: function () {
-                    codemirrorEditor.setSize($(this).width(), $(this).height());
-                }
-            });
+                .css('resize', resizeType)
+                .resizable({
+                    handles: handles,
+                    resize: function () {
+                        codemirrorEditor.setSize($(this).width(), $(this).height());
+                    }
+                });
         // enable autocomplete
         codemirrorEditor.on('inputRead', Functions.codeMirrorAutoCompleteOnInputRead);
 
@@ -367,7 +367,7 @@ Functions.tooltip = function ($elements, item, myContent, additionalOptions) {
 
     var defaultOptions = {
         content: myContent,
-        items:  item,
+        items: item,
         tooltipClass: 'tooltip',
         track: true,
         show: false,
@@ -381,32 +381,32 @@ Functions.tooltip = function ($elements, item, myContent, additionalOptions) {
  * HTML escaping
  */
 Functions.escapeHtml = function (unsafe) {
-    if (typeof(unsafe) !== 'undefined') {
+    if (typeof (unsafe) !== 'undefined') {
         return unsafe
-            .toString()
-            .replace(/&/g, '&amp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;')
-            .replace(/"/g, '&quot;')
-            .replace(/'/g, '&#039;');
+                .toString()
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
     } else {
         return false;
     }
 };
 
 Functions.escapeJsString = function (unsafe) {
-    if (typeof(unsafe) !== 'undefined') {
+    if (typeof (unsafe) !== 'undefined') {
         return unsafe
-            .toString()
-            .replace('\x00', '')
-            .replace('\\', '\\\\')
-            .replace('\'', '\\\'')
-            .replace('&#039;', '\\&#039;')
-            .replace('"', '\\"')
-            .replace('&quot;', '\\&quot;')
-            .replace('\n', '\n')
-            .replace('\r', '\r')
-            .replace(/<\/script/gi, '</\' + \'script');
+                .toString()
+                .replace('\x00', '')
+                .replace('\\', '\\\\')
+                .replace('\'', '\\\'')
+                .replace('&#039;', '\\&#039;')
+                .replace('"', '\\"')
+                .replace('&quot;', '\\&quot;')
+                .replace('\n', '\n')
+                .replace('\r', '\r')
+                .replace(/<\/script/gi, '</\' + \'script');
     } else {
         return false;
     }
@@ -477,7 +477,7 @@ Functions.verifyColumnsProperties = function () {
  * @param $form object   the form
  */
 Functions.prepareForAjaxRequest = function ($form) {
-    if (! $form.find('input:hidden').is('#ajax_request_hidden')) {
+    if (!$form.find('input:hidden').is('#ajax_request_hidden')) {
         $form.append('<input type="hidden" id="ajax_request_hidden" name="ajax_request" value="true">');
     }
 };
@@ -500,15 +500,20 @@ Functions.checkPasswordStrength = function (value, meterObject, meterObjectLabel
     strength = parseInt(strength);
     meterObject.val(strength);
     switch (strength) {
-    case 0: meterObjectLabel.html(Messages.strExtrWeak);
-        break;
-    case 1: meterObjectLabel.html(Messages.strVeryWeak);
-        break;
-    case 2: meterObjectLabel.html(Messages.strWeak);
-        break;
-    case 3: meterObjectLabel.html(Messages.strGood);
-        break;
-    case 4: meterObjectLabel.html(Messages.strStrong);
+        case 0:
+            meterObjectLabel.html(Messages.strExtrWeak);
+            break;
+        case 1:
+            meterObjectLabel.html(Messages.strVeryWeak);
+            break;
+        case 2:
+            meterObjectLabel.html(Messages.strWeak);
+            break;
+        case 3:
+            meterObjectLabel.html(Messages.strGood);
+            break;
+        case 4:
+            meterObjectLabel.html(Messages.strStrong);
     }
 };
 
@@ -566,7 +571,7 @@ Functions.suggestPassword = function (passwordForm) {
  * Version string to integer conversion.
  */
 Functions.parseVersionString = function (str) {
-    if (typeof(str) !== 'string') {
+    if (typeof (str) !== 'string') {
         return false;
     }
     var add = 0;
@@ -574,11 +579,11 @@ Functions.parseVersionString = function (str) {
     var state = str.split('-');
     if (state.length >= 2) {
         if (state[1].substr(0, 2) === 'rc') {
-            add = - 20 - parseInt(state[1].substr(2), 10);
+            add = -20 - parseInt(state[1].substr(2), 10);
         } else if (state[1].substr(0, 4) === 'beta') {
-            add =  - 40 - parseInt(state[1].substr(4), 10);
+            add = -40 - parseInt(state[1].substr(4), 10);
         } else if (state[1].substr(0, 5) === 'alpha') {
-            add =  - 60 - parseInt(state[1].substr(5), 10);
+            add = -60 - parseInt(state[1].substr(5), 10);
         } else if (state[1].substr(0, 3) === 'dev') {
             /* We don't handle dev, it's git snapshot */
             add = 0;
@@ -614,10 +619,10 @@ Functions.currentVersion = function (data) {
         versionInformationMessage.appendChild(versionInformationMessageLink);
         if (latest > current) {
             var message = Functions.sprintf(
-                Messages.strNewerVersion,
-                Functions.escapeHtml(data.version),
-                Functions.escapeHtml(data.date)
-            );
+                    Messages.strNewerVersion,
+                    Functions.escapeHtml(data.version),
+                    Functions.escapeHtml(data.date)
+                    );
             var htmlClass = 'alert alert-primary';
             if (Math.floor(latest / 10000) === Math.floor(current / 10000)) {
                 /* Security update */
@@ -656,17 +661,17 @@ Functions.displayGitRevision = function () {
     $('#is_git_revision').remove();
     $('#li_pma_version_git').remove();
     $.get(
-        'index.php?route=/git-revision',
-        {
-            'server': CommonParams.get('server'),
-            'ajax_request': true,
-            'no_debug': true
-        },
-        function (data) {
-            if (typeof data !== 'undefined' && data.success === true) {
-                $(data.message).insertAfter('#li_pma_version');
+            'index.php?route=/git-revision',
+            {
+                'server': CommonParams.get('server'),
+                'ajax_request': true,
+                'no_debug': true
+            },
+            function (data) {
+                if (typeof data !== 'undefined' && data.success === true) {
+                    $(data.message).insertAfter('#li_pma_version');
+                }
             }
-        }
     );
 };
 
@@ -678,13 +683,13 @@ Functions.displayPasswordGenerateButton = function () {
     $('<td></td>').html(Messages.strGeneratePassword).appendTo(generatePwdRow);
     var pwdCell = $('<td></td>').appendTo(generatePwdRow);
     var pwdButton = $('<input>')
-        .attr({ type: 'button', id: 'button_generate_password', value: Messages.strGenerate })
-        .addClass('btn btn-secondary button')
-        .on('click', function () {
-            Functions.suggestPassword(this.form);
-        });
+            .attr({type: 'button', id: 'button_generate_password', value: Messages.strGenerate})
+            .addClass('btn btn-secondary button')
+            .on('click', function () {
+                Functions.suggestPassword(this.form);
+            });
     var pwdTextbox = $('<input>')
-        .attr({ type: 'text', name: 'generated_pw', id: 'generated_pw' });
+            .attr({type: 'text', name: 'generated_pw', id: 'generated_pw'});
     pwdCell.append(pwdButton).append(pwdTextbox);
 
     if (document.getElementById('button_generate_password') === null) {
@@ -692,11 +697,11 @@ Functions.displayPasswordGenerateButton = function () {
     }
 
     var generatePwdDiv = $('<div></div>').addClass('item');
-    $('<label></label>').attr({ for: 'button_generate_password' })
-        .html(Messages.strGeneratePassword + ':')
-        .appendTo(generatePwdDiv);
+    $('<label></label>').attr({for : 'button_generate_password'})
+            .html(Messages.strGeneratePassword + ':')
+            .appendTo(generatePwdDiv);
     var optionsSpan = $('<span></span>').addClass('options')
-        .appendTo(generatePwdDiv);
+            .appendTo(generatePwdDiv);
     pwdButton.clone(true).appendTo(optionsSpan);
     pwdTextbox.clone(true).appendTo(generatePwdDiv);
 
@@ -738,15 +743,15 @@ Functions.selectContent = function (element, lock, onlyOnce) {
 Functions.confirmLink = function (theLink, theSqlQuery) {
     // Confirmation is not required in the configuration file
     // or browser is Opera (crappy js implementation)
-    if (Messages.strDoYouReally === '' || typeof(window.opera) !== 'undefined') {
+    if (Messages.strDoYouReally === '' || typeof (window.opera) !== 'undefined') {
         return true;
     }
 
     var isConfirmed = confirm(Functions.sprintf(Messages.strDoYouReally, theSqlQuery));
     if (isConfirmed) {
-        if (typeof(theLink.href) !== 'undefined') {
+        if (typeof (theLink.href) !== 'undefined') {
             theLink.href += CommonParams.get('arg_separator') + 'is_js_confirmed=1';
-        } else if (typeof(theLink.form) !== 'undefined') {
+        } else if (typeof (theLink.form) !== 'undefined') {
             theLink.form.action += '?is_js_confirmed=1';
         }
     }
@@ -786,10 +791,10 @@ Functions.confirmQuery = function (theForm1, sqlQuery1) {
     var doConfirmRegExp4 = new RegExp('^(?=.*UPDATE\\b)^((?!WHERE).)*$', 'i');
 
     if (doConfirmRegExp0.test(sqlQuery1) ||
-        doConfirmRegExp1.test(sqlQuery1) ||
-        doConfirmRegExp2.test(sqlQuery1) ||
-        doConfirmRegExp3.test(sqlQuery1) ||
-        doConfirmRegExp4.test(sqlQuery1)) {
+            doConfirmRegExp1.test(sqlQuery1) ||
+            doConfirmRegExp2.test(sqlQuery1) ||
+            doConfirmRegExp3.test(sqlQuery1) ||
+            doConfirmRegExp4.test(sqlQuery1)) {
         var message;
         if (sqlQuery1.length > 100) {
             message = sqlQuery1.substr(0, 100) + '\n    ...';
@@ -833,11 +838,11 @@ Functions.checkSqlQuery = function (theForm) {
         sqlQuery = theForm.elements.sql_query.value;
     }
     var spaceRegExp = new RegExp('\\s+');
-    if (typeof(theForm.elements.sql_file) !== 'undefined' &&
+    if (typeof (theForm.elements.sql_file) !== 'undefined' &&
             theForm.elements.sql_file.value.replace(spaceRegExp, '') !== '') {
         return true;
     }
-    if (typeof(theForm.elements.id_bookmark) !== 'undefined' &&
+    if (typeof (theForm.elements.id_bookmark) !== 'undefined' &&
             (theForm.elements.id_bookmark.value !== null || theForm.elements.id_bookmark.value !== '') &&
             theForm.elements.id_bookmark.selectedIndex !== 0) {
         return true;
@@ -884,15 +889,15 @@ Functions.emptyCheckTheField = function (theForm, theFieldName) {
  * @return boolean  whether a valid number has been submitted or not
  */
 Functions.checkFormElementInRange = function (theForm, theFieldName, message, minimum, maximum) {
-    var theField         = theForm.elements[theFieldName];
-    var val              = parseInt(theField.value, 10);
+    var theField = theForm.elements[theFieldName];
+    var val = parseInt(theField.value, 10);
     var min = 0;
     var max = Number.MAX_VALUE;
 
-    if (typeof(minimum) !== 'undefined') {
+    if (typeof (minimum) !== 'undefined') {
         min = minimum;
     }
-    if (typeof(maximum) !== 'undefined' && maximum !== null) {
+    if (typeof (maximum) !== 'undefined' && maximum !== null) {
         max = maximum;
     }
 
@@ -994,35 +999,35 @@ AJAX.registerOnload('functions.js', function () {
     document.onclick = function () {
         idleSecondsCounter = 0;
     };
-    $(document).on('mousemove',function () {
+    $(document).on('mousemove', function () {
         idleSecondsCounter = 0;
     });
     document.onkeypress = function () {
         idleSecondsCounter = 0;
     };
-    function guid () {
-        function s4 () {
+    function guid() {
+        function s4() {
             return Math.floor((1 + Math.random()) * 0x10000)
-                .toString(16)
-                .substring(1);
+                    .toString(16)
+                    .substring(1);
         }
         return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
-            s4() + '-' + s4() + s4() + s4();
+                s4() + '-' + s4() + s4() + s4();
     }
 
-    function SetIdleTime () {
+    function SetIdleTime() {
         idleSecondsCounter++;
     }
-    function UpdateIdleTime () {
+    function UpdateIdleTime() {
         var href = 'index.php?route=/';
         var guid = 'default';
         if (isStorageSupported('sessionStorage')) {
             guid = window.sessionStorage.guid;
         }
         var params = {
-            'ajax_request' : true,
-            'server' : CommonParams.get('server'),
-            'db' : CommonParams.get('db'),
+            'ajax_request': true,
+            'server': CommonParams.get('server'),
+            'db': CommonParams.get('db'),
             'guid': guid,
             'access_time': idleSecondsCounter,
             'check_timeout': 1
@@ -1038,11 +1043,11 @@ AJAX.registerOnload('functions.js', function () {
                         idleSecondsCounter = 0;
                     }
                     var remaining = Math.min(
-                        /* Remaining login validity */
-                        CommonParams.get('LoginCookieValidity') - idleSecondsCounter,
-                        /* Remaining time till session GC */
-                        CommonParams.get('session_gc_maxlifetime')
-                    );
+                            /* Remaining login validity */
+                            CommonParams.get('LoginCookieValidity') - idleSecondsCounter,
+                            /* Remaining time till session GC */
+                            CommonParams.get('session_gc_maxlifetime')
+                            );
                     var interval = 1000;
                     if (remaining > 5) {
                         // max value for setInterval() function
@@ -1075,9 +1080,9 @@ AJAX.registerOnload('functions.js', function () {
     if (CommonParams.get('logged_in')) {
         incInterval = window.setInterval(SetIdleTime, 1000);
         var sessionTimeout = Math.min(
-            CommonParams.get('LoginCookieValidity'),
-            CommonParams.get('session_gc_maxlifetime')
-        );
+                CommonParams.get('LoginCookieValidity'),
+                CommonParams.get('session_gc_maxlifetime')
+                );
         if (isStorageSupported('sessionStorage')) {
             window.sessionStorage.setItem('guid', guid());
         }
@@ -1139,11 +1144,11 @@ AJAX.registerOnload('functions.js', function () {
                     end = lastClickedRow;
                 }
                 $tr.parent().find('tr:not(.noclick)')
-                    .slice(start, end + 1)
-                    .removeClass('marked table-active')
-                    .find(':checkbox')
-                    .prop('checked', false)
-                    .trigger('change');
+                        .slice(start, end + 1)
+                        .removeClass('marked table-active')
+                        .find(':checkbox')
+                        .prop('checked', false)
+                        .trigger('change');
             }
 
             // handle new shift click
@@ -1156,11 +1161,11 @@ AJAX.registerOnload('functions.js', function () {
                 end = lastClickedRow;
             }
             $tr.parent().find('tr:not(.noclick)')
-                .slice(start, end + 1)
-                .addClass('marked table-active')
-                .find(':checkbox')
-                .prop('checked', true)
-                .trigger('change');
+                    .slice(start, end + 1)
+                    .addClass('marked table-active')
+                    .find(':checkbox')
+                    .prop('checked', true)
+                    .trigger('change');
 
             // remember the last shift clicked row
             lastShiftClickedRow = currRow;
@@ -1178,14 +1183,14 @@ AJAX.registerOnload('functions.js', function () {
 });
 
 /**
-  * Checks/unchecks all options of a <select> element
-  *
-  * @param string   the form name
-  * @param string   the element name
-  * @param boolean  whether to check or to uncheck options
-  *
-  * @return boolean  always true
-  */
+ * Checks/unchecks all options of a <select> element
+ *
+ * @param string   the form name
+ * @param string   the element name
+ * @param boolean  whether to check or to uncheck options
+ *
+ * @return boolean  always true
+ */
 Functions.setSelectOptions = function (theForm, theSelect, doCheck) {
     $('form[name=\'' + theForm + '\'] select[name=\'' + theSelect + '\']').find('option').prop('selected', doCheck);
     return true;
@@ -1222,12 +1227,12 @@ Functions.handleSimulateQueryButton = function () {
 
     var $simulateDml = $('#simulate_dml');
     if (updateRegExp.test(query) || deleteRegExp.test(query)) {
-        if (! $simulateDml.length) {
+        if (!$simulateDml.length) {
             $('#button_submit_query')
-                .before('<input type="button" id="simulate_dml"' +
-                'tabindex="199" class="btn btn-primary" value="' +
-                Messages.strSimulateDML +
-                '">');
+                    .before('<input type="button" id="simulate_dml"' +
+                            'tabindex="199" class="btn btn-primary" value="' +
+                            Messages.strSimulateDML +
+                            '">');
         }
     } else {
         if ($simulateDml.length) {
@@ -1237,9 +1242,9 @@ Functions.handleSimulateQueryButton = function () {
 };
 
 /**
-  * Create quick sql statements.
-  *
-  */
+ * Create quick sql statements.
+ *
+ */
 Functions.insertQuery = function (queryType) {
     var table;
     if (queryType === 'clear') {
@@ -1248,8 +1253,8 @@ Functions.insertQuery = function (queryType) {
     } else if (queryType === 'format') {
         if (codeMirrorEditor) {
             $('#querymessage').html(Messages.strFormatting +
-                '&nbsp;<img class="ajaxIcon" src="' +
-                themeImagePath + 'ajax_clock_small.gif" alt="">');
+                    '&nbsp;<img class="ajaxIcon" src="' +
+                    themeImagePath + 'ajax_clock_small.gif" alt="">');
             var params = {
                 'ajax_request': true,
                 'sql': codeMirrorEditor.getValue(),
@@ -1277,7 +1282,7 @@ Functions.insertQuery = function (queryType) {
         }
         key = 'autoSavedSql_' + key;
         if (isStorageSupported('localStorage') &&
-            typeof window.localStorage.getItem(key) === 'string') {
+                typeof window.localStorage.getItem(key) === 'string') {
             Functions.setQuery(window.localStorage.getItem(key));
         } else if (Cookies.get(key)) {
             Functions.setQuery(Cookies.get(key));
@@ -1325,9 +1330,9 @@ Functions.insertQuery = function (queryType) {
 };
 
 /**
-  * Inserts multiple fields.
-  *
-  */
+ * Inserts multiple fields.
+ *
+ */
 Functions.insertValueQuery = function () {
     var myQuery = document.sqlform.sql_query;
     var myListBox = document.sqlform.dummy;
@@ -1350,12 +1355,12 @@ Functions.insertValueQuery = function () {
         if (codeMirrorEditor) {
             codeMirrorEditor.replaceSelection(columnsList);
             codeMirrorEditor.focus();
-        // IE support
+            // IE support
         } else if (document.selection) {
             myQuery.focus();
             var sel = document.selection.createRange();
             sel.text = columnsList;
-        // MOZILLA/NETSCAPE support
+            // MOZILLA/NETSCAPE support
         } else if (document.sqlform.sql_query.selectionStart || document.sqlform.sql_query.selectionStart === '0') {
             var startPos = document.sqlform.sql_query.selectionStart;
             var endPos = document.sqlform.sql_query.selectionEnd;
@@ -1400,7 +1405,7 @@ Functions.updateQueryParameters = function () {
         $.each(parameters, function (i, parameter) {
             var paramName = parameter.substring(1);
             var $param = $temp.find('#paramSpan_' + paramName);
-            if (! $param.length) {
+            if (!$param.length) {
                 $param = $('<span class="parameter" id="paramSpan_' + paramName + '"></span>');
                 $('<label for="param_' + paramName + '"></label>').text(parameter).appendTo($param);
                 $('<input type="text" name="parameters[' + parameter + ']" id="param_' + paramName + '">').appendTo($param);
@@ -1413,8 +1418,8 @@ Functions.updateQueryParameters = function () {
 };
 
 /**
-  * Refresh/resize the WYSIWYG scratchboard
-  */
+ * Refresh/resize the WYSIWYG scratchboard
+ */
 Functions.refreshLayout = function () {
     var $elm = $('#pdflayout');
     var orientation = $('#orientation_opt').val();
@@ -1513,251 +1518,251 @@ $(function () {
  */
 Functions.pdfPaperSize = function (format, axis) {
     switch (format.toUpperCase()) {
-    case '4A0':
-        if (axis === 'x') {
+        case '4A0':
+            if (axis === 'x') {
+                return 4767.87;
+            }
+            return 6740.79;
+        case '2A0':
+            if (axis === 'x') {
+                return 3370.39;
+            }
             return 4767.87;
-        }
-        return 6740.79;
-    case '2A0':
-        if (axis === 'x') {
+        case 'A0':
+            if (axis === 'x') {
+                return 2383.94;
+            }
             return 3370.39;
-        }
-        return 4767.87;
-    case 'A0':
-        if (axis === 'x') {
+        case 'A1':
+            if (axis === 'x') {
+                return 1683.78;
+            }
             return 2383.94;
-        }
-        return 3370.39;
-    case 'A1':
-        if (axis === 'x') {
+        case 'A2':
+            if (axis === 'x') {
+                return 1190.55;
+            }
             return 1683.78;
-        }
-        return 2383.94;
-    case 'A2':
-        if (axis === 'x') {
+        case 'A3':
+            if (axis === 'x') {
+                return 841.89;
+            }
             return 1190.55;
-        }
-        return 1683.78;
-    case 'A3':
-        if (axis === 'x') {
+        case 'A4':
+            if (axis === 'x') {
+                return 595.28;
+            }
             return 841.89;
-        }
-        return 1190.55;
-    case 'A4':
-        if (axis === 'x') {
+        case 'A5':
+            if (axis === 'x') {
+                return 419.53;
+            }
             return 595.28;
-        }
-        return 841.89;
-    case 'A5':
-        if (axis === 'x') {
+        case 'A6':
+            if (axis === 'x') {
+                return 297.64;
+            }
             return 419.53;
-        }
-        return 595.28;
-    case 'A6':
-        if (axis === 'x') {
+        case 'A7':
+            if (axis === 'x') {
+                return 209.76;
+            }
             return 297.64;
-        }
-        return 419.53;
-    case 'A7':
-        if (axis === 'x') {
+        case 'A8':
+            if (axis === 'x') {
+                return 147.40;
+            }
             return 209.76;
-        }
-        return 297.64;
-    case 'A8':
-        if (axis === 'x') {
+        case 'A9':
+            if (axis === 'x') {
+                return 104.88;
+            }
             return 147.40;
-        }
-        return 209.76;
-    case 'A9':
-        if (axis === 'x') {
+        case 'A10':
+            if (axis === 'x') {
+                return 73.70;
+            }
             return 104.88;
-        }
-        return 147.40;
-    case 'A10':
-        if (axis === 'x') {
-            return 73.70;
-        }
-        return 104.88;
-    case 'B0':
-        if (axis === 'x') {
+        case 'B0':
+            if (axis === 'x') {
+                return 2834.65;
+            }
+            return 4008.19;
+        case 'B1':
+            if (axis === 'x') {
+                return 2004.09;
+            }
             return 2834.65;
-        }
-        return 4008.19;
-    case 'B1':
-        if (axis === 'x') {
+        case 'B2':
+            if (axis === 'x') {
+                return 1417.32;
+            }
             return 2004.09;
-        }
-        return 2834.65;
-    case 'B2':
-        if (axis === 'x') {
+        case 'B3':
+            if (axis === 'x') {
+                return 1000.63;
+            }
             return 1417.32;
-        }
-        return 2004.09;
-    case 'B3':
-        if (axis === 'x') {
+        case 'B4':
+            if (axis === 'x') {
+                return 708.66;
+            }
             return 1000.63;
-        }
-        return 1417.32;
-    case 'B4':
-        if (axis === 'x') {
+        case 'B5':
+            if (axis === 'x') {
+                return 498.90;
+            }
             return 708.66;
-        }
-        return 1000.63;
-    case 'B5':
-        if (axis === 'x') {
+        case 'B6':
+            if (axis === 'x') {
+                return 354.33;
+            }
             return 498.90;
-        }
-        return 708.66;
-    case 'B6':
-        if (axis === 'x') {
+        case 'B7':
+            if (axis === 'x') {
+                return 249.45;
+            }
             return 354.33;
-        }
-        return 498.90;
-    case 'B7':
-        if (axis === 'x') {
+        case 'B8':
+            if (axis === 'x') {
+                return 175.75;
+            }
             return 249.45;
-        }
-        return 354.33;
-    case 'B8':
-        if (axis === 'x') {
+        case 'B9':
+            if (axis === 'x') {
+                return 124.72;
+            }
             return 175.75;
-        }
-        return 249.45;
-    case 'B9':
-        if (axis === 'x') {
+        case 'B10':
+            if (axis === 'x') {
+                return 87.87;
+            }
             return 124.72;
-        }
-        return 175.75;
-    case 'B10':
-        if (axis === 'x') {
-            return 87.87;
-        }
-        return 124.72;
-    case 'C0':
-        if (axis === 'x') {
+        case 'C0':
+            if (axis === 'x') {
+                return 2599.37;
+            }
+            return 3676.54;
+        case 'C1':
+            if (axis === 'x') {
+                return 1836.85;
+            }
             return 2599.37;
-        }
-        return 3676.54;
-    case 'C1':
-        if (axis === 'x') {
+        case 'C2':
+            if (axis === 'x') {
+                return 1298.27;
+            }
             return 1836.85;
-        }
-        return 2599.37;
-    case 'C2':
-        if (axis === 'x') {
+        case 'C3':
+            if (axis === 'x') {
+                return 918.43;
+            }
             return 1298.27;
-        }
-        return 1836.85;
-    case 'C3':
-        if (axis === 'x') {
+        case 'C4':
+            if (axis === 'x') {
+                return 649.13;
+            }
             return 918.43;
-        }
-        return 1298.27;
-    case 'C4':
-        if (axis === 'x') {
+        case 'C5':
+            if (axis === 'x') {
+                return 459.21;
+            }
             return 649.13;
-        }
-        return 918.43;
-    case 'C5':
-        if (axis === 'x') {
+        case 'C6':
+            if (axis === 'x') {
+                return 323.15;
+            }
             return 459.21;
-        }
-        return 649.13;
-    case 'C6':
-        if (axis === 'x') {
+        case 'C7':
+            if (axis === 'x') {
+                return 229.61;
+            }
             return 323.15;
-        }
-        return 459.21;
-    case 'C7':
-        if (axis === 'x') {
+        case 'C8':
+            if (axis === 'x') {
+                return 161.57;
+            }
             return 229.61;
-        }
-        return 323.15;
-    case 'C8':
-        if (axis === 'x') {
+        case 'C9':
+            if (axis === 'x') {
+                return 113.39;
+            }
             return 161.57;
-        }
-        return 229.61;
-    case 'C9':
-        if (axis === 'x') {
+        case 'C10':
+            if (axis === 'x') {
+                return 79.37;
+            }
             return 113.39;
-        }
-        return 161.57;
-    case 'C10':
-        if (axis === 'x') {
-            return 79.37;
-        }
-        return 113.39;
-    case 'RA0':
-        if (axis === 'x') {
+        case 'RA0':
+            if (axis === 'x') {
+                return 2437.80;
+            }
+            return 3458.27;
+        case 'RA1':
+            if (axis === 'x') {
+                return 1729.13;
+            }
             return 2437.80;
-        }
-        return 3458.27;
-    case 'RA1':
-        if (axis === 'x') {
+        case 'RA2':
+            if (axis === 'x') {
+                return 1218.90;
+            }
             return 1729.13;
-        }
-        return 2437.80;
-    case 'RA2':
-        if (axis === 'x') {
+        case 'RA3':
+            if (axis === 'x') {
+                return 864.57;
+            }
             return 1218.90;
-        }
-        return 1729.13;
-    case 'RA3':
-        if (axis === 'x') {
+        case 'RA4':
+            if (axis === 'x') {
+                return 609.45;
+            }
             return 864.57;
-        }
-        return 1218.90;
-    case 'RA4':
-        if (axis === 'x') {
-            return 609.45;
-        }
-        return 864.57;
-    case 'SRA0':
-        if (axis === 'x') {
+        case 'SRA0':
+            if (axis === 'x') {
+                return 2551.18;
+            }
+            return 3628.35;
+        case 'SRA1':
+            if (axis === 'x') {
+                return 1814.17;
+            }
             return 2551.18;
-        }
-        return 3628.35;
-    case 'SRA1':
-        if (axis === 'x') {
+        case 'SRA2':
+            if (axis === 'x') {
+                return 1275.59;
+            }
             return 1814.17;
-        }
-        return 2551.18;
-    case 'SRA2':
-        if (axis === 'x') {
+        case 'SRA3':
+            if (axis === 'x') {
+                return 907.09;
+            }
             return 1275.59;
-        }
-        return 1814.17;
-    case 'SRA3':
-        if (axis === 'x') {
+        case 'SRA4':
+            if (axis === 'x') {
+                return 637.80;
+            }
             return 907.09;
-        }
-        return 1275.59;
-    case 'SRA4':
-        if (axis === 'x') {
-            return 637.80;
-        }
-        return 907.09;
-    case 'LETTER':
-        if (axis === 'x') {
-            return 612.00;
-        }
-        return 792.00;
-    case 'LEGAL':
-        if (axis === 'x') {
-            return 612.00;
-        }
-        return 1008.00;
-    case 'EXECUTIVE':
-        if (axis === 'x') {
-            return 521.86;
-        }
-        return 756.00;
-    case 'FOLIO':
-        if (axis === 'x') {
-            return 612.00;
-        }
-        return 936.00;
+        case 'LETTER':
+            if (axis === 'x') {
+                return 612.00;
+            }
+            return 792.00;
+        case 'LEGAL':
+            if (axis === 'x') {
+                return 612.00;
+            }
+            return 1008.00;
+        case 'EXECUTIVE':
+            if (axis === 'x') {
+                return 521.86;
+            }
+            return 756.00;
+        case 'FOLIO':
+            if (axis === 'x') {
+                return 612.00;
+            }
+            return 936.00;
     }
     return 0;
 };
@@ -1769,11 +1774,11 @@ Functions.pdfPaperSize = function (format, axis) {
  */
 Functions.getForeignKeyCheckboxLoader = function () {
     var html = '';
-    html    += '<div>';
-    html    += '<div class="load-default-fk-check-value">';
-    html    += Functions.getImage('ajax_clock_small');
-    html    += '</div>';
-    html    += '</div>';
+    html += '<div>';
+    html += '<div class="load-default-fk-check-value">';
+    html += Functions.getImage('ajax_clock_small');
+    html += '</div>';
+    html += '</div>';
     return html;
 };
 
@@ -1785,9 +1790,9 @@ Functions.loadForeignKeyCheckbox = function () {
     };
     $.get('index.php?route=/sql/get-default-fk-check-value', params, function (data) {
         var html = '<input type="hidden" name="fk_checks" value="0">' +
-            '<input type="checkbox" name="fk_checks" id="fk_checks"' +
-            (data.default_fk_check_value ? ' checked="checked"' : '') + '>' +
-            '<label for="fk_checks">' + Messages.strForeignKeyCheck + '</label>';
+                '<input type="checkbox" name="fk_checks" id="fk_checks"' +
+                (data.default_fk_check_value ? ' checked="checked"' : '') + '>' +
+                '<label for="fk_checks">' + Messages.strForeignKeyCheck + '</label>';
         $('.load-default-fk-check-value').replaceWith(html);
     });
 };
@@ -1798,7 +1803,7 @@ Functions.getJsConfirmCommonParam = function (elem, parameters) {
     var sep = CommonParams.get('arg_separator');
     if (params) {
         // Strip possible leading ?
-        if (params.substring(0,1) === '?') {
+        if (params.substring(0, 1) === '?') {
             params = params.substr(1);
         }
         params += sep;
@@ -1854,13 +1859,13 @@ AJAX.registerOnload('functions.js', function () {
         }
 
         var $form = $(this).prev('form');
-        var sqlQuery  = $form.find('input[name=\'sql_query\']').val().trim();
+        var sqlQuery = $form.find('input[name=\'sql_query\']').val().trim();
         var $innerSql = $(this).parent().prev().find('code.sql');
 
         var newContent = '<textarea name="sql_query_edit" id="sql_query_edit">' + Functions.escapeHtml(sqlQuery) + '</textarea>\n';
-        newContent    += Functions.getForeignKeyCheckboxLoader();
-        newContent    += '<input type="submit" id="sql_query_edit_save" class="btn btn-secondary button btnSave" value="' + Messages.strGo + '">\n';
-        newContent    += '<input type="button" id="sql_query_edit_discard" class="btn btn-secondary button btnDiscard" value="' + Messages.strCancel + '">\n';
+        newContent += Functions.getForeignKeyCheckboxLoader();
+        newContent += '<input type="submit" id="sql_query_edit_save" class="btn btn-secondary button btnSave" value="' + Messages.strGo + '">\n';
+        newContent += '<input type="button" id="sql_query_edit_discard" class="btn btn-secondary button btnDiscard" value="' + Messages.strCancel + '">\n';
         var $editorArea = $('div#inline_editor');
         if ($editorArea.length === 0) {
             $editorArea = $('<div id="inline_editor_outer"></div>');
@@ -1886,13 +1891,13 @@ AJAX.registerOnload('functions.js', function () {
         var fkCheck = $(this).parent().find('#fk_checks').is(':checked');
 
         var $form = $('a.inline_edit_sql').prev('form');
-        var $fakeForm = $('<form>', { action: 'index.php?route=/import', method: 'post' })
-            .append($form.find('input[name=server], input[name=db], input[name=table], input[name=token]').clone())
-            .append($('<input>', { type: 'hidden', name: 'show_query', value: 1 }))
-            .append($('<input>', { type: 'hidden', name: 'is_js_confirmed', value: 0 }))
-            .append($('<input>', { type: 'hidden', name: 'sql_query', value: sqlQuery }))
-            .append($('<input>', { type: 'hidden', name: 'fk_checks', value: fkCheck ? 1 : 0 }));
-        if (! Functions.checkSqlQuery($fakeForm[0])) {
+        var $fakeForm = $('<form>', {action: 'index.php?route=/import', method: 'post'})
+                .append($form.find('input[name=server], input[name=db], input[name=table], input[name=token]').clone())
+                .append($('<input>', {type: 'hidden', name: 'show_query', value: 1}))
+                .append($('<input>', {type: 'hidden', name: 'is_js_confirmed', value: 0}))
+                .append($('<input>', {type: 'hidden', name: 'sql_query', value: sqlQuery}))
+                .append($('<input>', {type: 'hidden', name: 'fk_checks', value: fkCheck ? 1 : 0}));
+        if (!Functions.checkSqlQuery($fakeForm[0])) {
             return false;
         }
         $('.alert-success').hide();
@@ -1928,7 +1933,7 @@ AJAX.registerOnload('functions.js', function () {
  */
 Functions.codeMirrorAutoCompleteOnInputRead = function (instance) {
     if (!sqlAutoCompleteInProgress
-        && (!instance.options.hintOptions.tables || !sqlAutoComplete)) {
+            && (!instance.options.hintOptions.tables || !sqlAutoComplete)) {
         if (!sqlAutoComplete) {
             // Reset after teardown
             instance.options.hintOptions.tables = false;
@@ -1945,11 +1950,11 @@ Functions.codeMirrorAutoCompleteOnInputRead = function (instance) {
 
             var columnHintRender = function (elem, self, data) {
                 $('<div class="autocomplete-column-name">')
-                    .text(data.columnName)
-                    .appendTo(elem);
+                        .text(data.columnName)
+                        .appendTo(elem);
                 $('<div class="autocomplete-column-hint">')
-                    .text(data.columnHint)
-                    .appendTo(elem);
+                        .text(data.columnHint)
+                        .appendTo(elem);
             };
 
             $.ajax({
@@ -1978,7 +1983,7 @@ Functions.codeMirrorAutoCompleteOnInputRead = function (instance) {
                                         }
                                         table.columns.push({
                                             text: column,
-                                            displayText: column + ' | ' +  displayText,
+                                            displayText: column + ' | ' + displayText,
                                             columnName: column,
                                             columnHint: displayText,
                                             render: columnHintRender
@@ -2036,11 +2041,11 @@ Functions.bindCodeMirrorToInlineEditor = function () {
             codeMirrorInlineEditor.refresh();
             codeMirrorInlineEditor.focus();
             $(codeMirrorInlineEditor.getWrapperElement())
-                .on('keydown', Functions.catchKeypressesFromSqlInlineEdit);
+                    .on('keydown', Functions.catchKeypressesFromSqlInlineEdit);
         } else {
             $inlineEditor
-                .trigger('focus')
-                .on('keydown', Functions.catchKeypressesFromSqlInlineEdit);
+                    .trigger('focus')
+                    .on('keydown', Functions.catchKeypressesFromSqlInlineEdit);
         }
     }
 };
@@ -2061,9 +2066,9 @@ Functions.documentationAdd = function ($elm, params) {
     }
 
     var url = Functions.sprintf(
-        decodeURIComponent(mysqlDocTemplate),
-        params[0]
-    );
+            decodeURIComponent(mysqlDocTemplate),
+            params[0]
+            );
     if (params.length > 1) {
         // The # needs to be escaped to be part of the destination URL
         url += encodeURIComponent('#') + params[1];
@@ -2165,7 +2170,7 @@ Functions.updateCode = function ($base, htmlValue, rawValue) {
     // Determines the type of the content and appropriate CodeMirror mode.
     var type = '';
     var mode = '';
-    if  ($code.hasClass('json')) {
+    if ($code.hasClass('json')) {
         type = 'json';
         mode = 'application/json';
     } else if ($code.hasClass('sql')) {
@@ -2248,7 +2253,7 @@ Functions.ajaxShowMessage = function (message, timeout, type) {
     // We don't want the empty message
     if (msg === '') {
         return true;
-    } else if (! msg) {
+    } else if (!msg) {
         // If the message is undefined, show the default
         msg = Messages.strLoading;
         dismissable = false;
@@ -2273,7 +2278,7 @@ Functions.ajaxShowMessage = function (message, timeout, type) {
     // Create a parent element for the AJAX messages, if necessary
     if ($('#loading_parent').length === 0) {
         $('<div id="loading_parent"></div>')
-            .prependTo('#page_content');
+                .prependTo('#page_content');
     }
     // Update message count to create distinct message elements every time
     ajaxMessageCount++;
@@ -2284,25 +2289,25 @@ Functions.ajaxShowMessage = function (message, timeout, type) {
      *                 to the created AJAX message
      */
     var $retval = $(
-        '<span class="ajax_notification" id="ajax_message_num_' +
+            '<span class="ajax_notification" id="ajax_message_num_' +
             ajaxMessageCount +
             '"></span>'
-    )
-        .hide()
-        .appendTo('#loading_parent')
-        .html(msg)
-        .show();
+            )
+            .hide()
+            .appendTo('#loading_parent')
+            .html(msg)
+            .show();
     // If the notification is self-closing we should create a callback to remove it
     if (selfClosing) {
         $retval
-            .delay(newTimeOut)
-            .fadeOut('medium', function () {
-                if ($(this).is(':data(tooltip)')) {
-                    $(this).tooltip('destroy');
-                }
-                // Remove the notification
-                $(this).remove();
-            });
+                .delay(newTimeOut)
+                .fadeOut('medium', function () {
+                    if ($(this).is(':data(tooltip)')) {
+                        $(this).tooltip('destroy');
+                    }
+                    // Remove the notification
+                    $(this).remove();
+                });
     }
     // If the notification is dismissable we need to add the relevant class to it
     // and add a tooltip so that the users know that it can be removed
@@ -2313,10 +2318,10 @@ Functions.ajaxShowMessage = function (message, timeout, type) {
          * can dismiss the ajax notification by clicking on it.
          */
         Functions.tooltip(
-            $retval,
-            'span',
-            Messages.strDismiss
-        );
+                $retval,
+                'span',
+                Messages.strDismiss
+                );
     }
     // Hide spinner if this is not a loading message
     if (msg !== Messages.strLoading) {
@@ -2337,8 +2342,8 @@ Functions.ajaxShowMessage = function (message, timeout, type) {
 Functions.ajaxRemoveMessage = function ($thisMessageBox) {
     if ($thisMessageBox !== undefined && $thisMessageBox instanceof jQuery) {
         $thisMessageBox
-            .stop(true, true)
-            .fadeOut('medium');
+                .stop(true, true)
+                .fadeOut('medium');
         if ($thisMessageBox.is(':data(tooltip)')) {
             $thisMessageBox.tooltip('destroy');
         } else {
@@ -2358,9 +2363,9 @@ Functions.previewSql = function ($form) {
     var formUrl = $form.attr('action');
     var sep = CommonParams.get('arg_separator');
     var formData = $form.serialize() +
-        sep + 'do_save_data=1' +
-        sep + 'preview_sql=1' +
-        sep + 'ajax_request=1';
+            sep + 'do_save_data=1' +
+            sep + 'preview_sql=1' +
+            sep + 'ajax_request=1';
     var $messageBox = Functions.ajaxShowMessage();
     $.ajax({
         type: 'POST',
@@ -2370,7 +2375,7 @@ Functions.previewSql = function ($form) {
             Functions.ajaxRemoveMessage($messageBox);
             if (response.success) {
                 var $dialogContent = $('<div></div>')
-                    .append(response.sql_data);
+                        .append(response.sql_data);
                 var buttonOptions = {};
                 buttonOptions[Messages.strClose] = function () {
                     $(this).dialog('close');
@@ -2416,9 +2421,9 @@ Functions.previewSql = function ($form) {
  */
 Functions.confirmPreviewSql = function (sqlData, url, callback) {
     var $dialogContent = $('<div class="preview_sql"><code class="sql"><pre>'
-        + sqlData
-        + '</pre></code></div>'
-    );
+            + sqlData
+            + '</pre></code></div>'
+            );
     var buttonOptions = [
         {
             text: Messages.strOK,
@@ -2469,7 +2474,7 @@ Functions.checkReservedWordColumns = function ($form) {
                 isConfirmed = confirm(data.message);
             }
         },
-        async:false
+        async: false
     });
     return isConfirmed;
 };
@@ -2515,9 +2520,9 @@ $(function () {
      *
      * @returns bool true|false
      */
-    function copyToClipboard (text) {
+    function copyToClipboard(text) {
         var $temp = $('<input>');
-        $temp.css({ 'position': 'fixed', 'width': '2em', 'border': 0, 'top': 0, 'left': 0, 'padding': 0, 'background': 'transparent' });
+        $temp.css({'position': 'fixed', 'width': '2em', 'border': 0, 'top': 0, 'left': 0, 'padding': 0, 'background': 'transparent'});
         $('body').append($temp);
         $temp.val(text).trigger('select');
         try {
@@ -2583,7 +2588,7 @@ Functions.createProfilingChart = function (target, data) {
     chart.draw(dataTable, {
         seriesDefaults: {
             rendererOptions: {
-                showDataLabels:  true
+                showDataLabels: true
             }
         },
         highlighter: {
@@ -2681,12 +2686,12 @@ Functions.sqlPrettyPrint = function (string) {
         'insert into': ['insert into', 'values']
     };
     // don't put spaces before these tokens
-    var spaceExceptionsBefore = { ';': true, ',': true, '.': true, '(': true };
+    var spaceExceptionsBefore = {';': true, ',': true, '.': true, '(': true};
     // don't put spaces after these tokens
-    var spaceExceptionsAfter = { '.': true };
+    var spaceExceptionsAfter = {'.': true};
 
     // Populate tokens array
-    while (! stream.eol()) {
+    while (!stream.eol()) {
         stream.start = stream.pos;
         token = mode.token(stream, state);
         if (token !== null) {
@@ -2696,7 +2701,7 @@ Functions.sqlPrettyPrint = function (string) {
 
     var currentStatement = tokens[0][1];
 
-    if (! statements[currentStatement]) {
+    if (!statements[currentStatement]) {
         return string;
     }
     // Holds all currently opened code blocks (statement, function or generic)
@@ -2759,11 +2764,11 @@ Functions.sqlPrettyPrint = function (string) {
             output += tabs(indentLevel) + tokens[i][1].toUpperCase();
             output += '\n' + tabs(indentLevel + 1);
             lastStatementPart = tokens[i][1];
-        // Normal indentation and spaces for everything else
+            // Normal indentation and spaces for everything else
         } else {
-            if (! spaceExceptionsBefore[tokens[i][1]] &&
-               ! (i > 0 && spaceExceptionsAfter[tokens[i - 1][1]]) &&
-               output.charAt(output.length - 1) !== ' ') {
+            if (!spaceExceptionsBefore[tokens[i][1]] &&
+                    !(i > 0 && spaceExceptionsAfter[tokens[i - 1][1]]) &&
+                    output.charAt(output.length - 1) !== ' ') {
                 output += ' ';
             }
             if (tokens[i][0] === 'keyword') {
@@ -2774,14 +2779,14 @@ Functions.sqlPrettyPrint = function (string) {
         }
 
         // split columns in select and 'update set' clauses, but only inside statements blocks
-        if ((lastStatementPart === 'select' || lastStatementPart === 'where'  || lastStatementPart === 'set') &&
-            tokens[i][1] === ',' && blockStack[0] === 'statement') {
+        if ((lastStatementPart === 'select' || lastStatementPart === 'where' || lastStatementPart === 'set') &&
+                tokens[i][1] === ',' && blockStack[0] === 'statement') {
             output += '\n' + tabs(indentLevel + 1);
         }
 
         // split conditions in where clauses, but only inside statements blocks
         if (lastStatementPart === 'where' &&
-            (tokens[i][1] === 'and' || tokens[i][1] === 'or' || tokens[i][1] === 'xor')) {
+                (tokens[i][1] === 'and' || tokens[i][1] === 'or' || tokens[i][1] === 'xor')) {
             if (blockStack[0] === 'statement') {
                 output += '\n' + tabs(indentLevel + 1);
             }
@@ -2805,7 +2810,7 @@ Functions.sqlPrettyPrint = function (string) {
  */
 Functions.confirm = function (question, url, callbackFn, openCallback) {
     var confirmState = CommonParams.get('confirm');
-    if (! confirmState) {
+    if (!confirmState) {
         // user does not want to confirm
         if (typeof callbackFn === 'function') {
             callbackFn.call(this, url);
@@ -2840,16 +2845,16 @@ Functions.confirm = function (question, url, callbackFn, openCallback) {
         }
     ];
 
-    $('<div></div>', { 'id': 'confirm_dialog', 'title': Messages.strConfirm })
-        .prepend(question)
-        .dialog({
-            buttons: buttonOptions,
-            close: function () {
-                $(this).remove();
-            },
-            open: openCallback,
-            modal: true
-        });
+    $('<div></div>', {'id': 'confirm_dialog', 'title': Messages.strConfirm})
+            .prepend(question)
+            .dialog({
+                buttons: buttonOptions,
+                close: function () {
+                    $(this).remove();
+                },
+                open: openCallback,
+                modal: true
+            });
 };
 jQuery.fn.confirm = Functions.confirm;
 
@@ -2942,8 +2947,8 @@ AJAX.registerOnload('functions.js', function () {
                 $.post($form.attr('action'), $form.serialize() + CommonParams.get('arg_separator') + 'do_save_data=1', function (data) {
                     if (typeof data !== 'undefined' && data.success === true) {
                         $('#properties_message')
-                            .removeClass('alert-danger')
-                            .html('');
+                                .removeClass('alert-danger')
+                                .html('');
                         Functions.ajaxShowMessage(data.message);
                         // Only if the create table dialog (distinct panel) exists
                         var $createTableDialog = $('#create_table_dialog');
@@ -2959,8 +2964,8 @@ AJAX.registerOnload('functions.js', function () {
                         // this is the first table created in this db
                         if (tablesTable.length === 0) {
                             CommonActions.refreshMain(
-                                CommonParams.get('opendb_url')
-                            );
+                                    CommonParams.get('opendb_url')
+                                    );
                         } else {
                             /**
                              * @var curr_last_row   Object referring to the last <tr> element in {@link tablesTable}
@@ -2986,7 +2991,7 @@ AJAX.registerOnload('functions.js', function () {
                             data.newTableString = data.newTableString.replace(/checkbox_tbl_/, newLastRowId);
                             // append to table
                             $(data.newTableString)
-                                .appendTo(tablesTable);
+                                    .appendTo(tablesTable);
 
                             // Sort the table
                             $(tablesTable).sortTable('th');
@@ -3000,18 +3005,18 @@ AJAX.registerOnload('functions.js', function () {
                         // Redirect to table structure page on creation of new table
                         var argsep = CommonParams.get('arg_separator');
                         var params12 = 'ajax_request=true' + argsep + 'ajax_page_request=true';
-                        if (! (history && history.pushState)) {
+                        if (!(history && history.pushState)) {
                             params12 += MicroHistory.menus.getRequestParam();
                         }
                         var tableStructureUrl = 'index.php?route=/table/structure' + argsep + 'server=' + data.params.server +
-                            argsep + 'db=' + data.params.db + argsep + 'token=' + data.params.token +
-                            argsep + 'goto=' + encodeURIComponent('index.php?route=/database/structure') + argsep + 'table=' + data.params.table + '';
+                                argsep + 'db=' + data.params.db + argsep + 'token=' + data.params.token +
+                                argsep + 'goto=' + encodeURIComponent('index.php?route=/database/structure') + argsep + 'table=' + data.params.table + '';
                         $.get(tableStructureUrl, params12, AJAX.responseHandler);
                     } else {
                         Functions.ajaxShowMessage(
-                            '<div class="alert alert-danger" role="alert">' + data.error + '</div>',
-                            false
-                        );
+                                '<div class="alert alert-danger" role="alert">' + data.error + '</div>',
+                                false
+                                );
                     }
                 }); // end $.post()
             }
@@ -3022,7 +3027,7 @@ AJAX.registerOnload('functions.js', function () {
      * Submits the intermediate changes in the table creation form
      * to refresh the UI accordingly
      */
-    function submitChangesInCreateTableForm (actionParam) {
+    function submitChangesInCreateTableForm(actionParam) {
         /**
          * @var    the_form    object referring to the create table form
          */
@@ -3059,9 +3064,9 @@ AJAX.registerOnload('functions.js', function () {
             event.preventDefault();
             event.stopImmediatePropagation();
             $(this)
-                .closest('form')
-                .find('input[name=submit_num_fields]')
-                .trigger('click');
+                    .closest('form')
+                    .find('input[name=submit_num_fields]')
+                    .trigger('click');
         }
     });
 
@@ -3089,11 +3094,11 @@ AJAX.registerOnload('functions.js', function () {
         }
     });
     $('body')
-        .off('click', 'input.preview_sql')
-        .on('click', 'input.preview_sql', function () {
-            var $form = $(this).closest('form');
-            Functions.previewSql($form);
-        });
+            .off('click', 'input.preview_sql')
+            .on('click', 'input.preview_sql', function () {
+                var $form = $(this).closest('form');
+                Functions.previewSql($form);
+            });
 });
 
 
@@ -3225,7 +3230,7 @@ AJAX.registerOnload('functions.js', function () {
              */
             var $theForm = $('#change_password_form');
 
-            if (! Functions.checkPassword($theForm)) {
+            if (!Functions.checkPassword($theForm)) {
                 return false;
             }
 
@@ -3257,7 +3262,7 @@ AJAX.registerOnload('functions.js', function () {
         buttonOptions[Messages.strCancel] = function () {
             $(this).dialog('close');
         };
-        $.get($(this).attr('href'), { 'ajax_request': true }, function (data) {
+        $.get($(this).attr('href'), {'ajax_request': true}, function (data) {
             if (typeof data === 'undefined' || !data.success) {
                 Functions.ajaxShowMessage(data.error, false);
                 return;
@@ -3268,31 +3273,31 @@ AJAX.registerOnload('functions.js', function () {
             }
 
             $('<div id="change_password_dialog"></div>')
-                .dialog({
-                    title: Messages.strChangePassword,
-                    width: 600,
-                    close: function () {
-                        $(this).remove();
-                    },
-                    buttons: buttonOptions,
-                    modal: true
-                })
-                .append(data.message);
+                    .dialog({
+                        title: Messages.strChangePassword,
+                        width: 600,
+                        close: function () {
+                            $(this).remove();
+                        },
+                        buttons: buttonOptions,
+                        modal: true
+                    })
+                    .append(data.message);
             // for this dialog, we remove the fieldset wrapping due to double headings
             $('fieldset#fieldset_change_password')
-                .find('legend').remove().end()
-                .find('table.noclick').unwrap().addClass('some-margin')
-                .find('input#text_pma_pw').trigger('focus');
+                    .find('legend').remove().end()
+                    .find('table.noclick').unwrap().addClass('some-margin')
+                    .find('input#text_pma_pw').trigger('focus');
             $('#fieldset_change_password_footer').hide();
             Functions.ajaxRemoveMessage($msgbox);
             Functions.displayPasswordGenerateButton();
             $('#change_password_form').on('submit', function (e) {
                 e.preventDefault();
                 $(this)
-                    .closest('.ui-dialog')
-                    .find('.ui-dialog-buttonpane .ui-button')
-                    .first()
-                    .trigger('click');
+                        .closest('.ui-dialog')
+                        .find('.ui-dialog-buttonpane .ui-button')
+                        .first()
+                        .trigger('click');
             });
         }); // end $.get()
     }); // end handler for change password anchor
@@ -3345,13 +3350,13 @@ Functions.hideShowConnection = function ($engineSelector) {
     var $labelTh = $('.create_table_form #storage-engine-connection');
     if ($engineSelector.val() !== 'FEDERATED') {
         $connection
-            .prop('disabled', true)
-            .parent('td').hide();
+                .prop('disabled', true)
+                .parent('td').hide();
         $labelTh.hide();
     } else {
         $connection
-            .prop('disabled', false)
-            .parent('td').show();
+                .prop('disabled', false)
+                .parent('td').show();
         $labelTh.show();
     }
 };
@@ -3360,7 +3365,7 @@ Functions.hideShowConnection = function ($engineSelector) {
  * If the column does not allow NULL values, makes sure that default is not NULL
  */
 Functions.validateDefaultValue = function ($nullCheckbox) {
-    if (! $nullCheckbox.prop('checked')) {
+    if (!$nullCheckbox.prop('checked')) {
         var $default = $nullCheckbox.closest('tr').find('.default_type');
         if ($default.val() === 'NULL') {
             $default.val('NONE');
@@ -3405,14 +3410,14 @@ Functions.autoPopulate = function (inputId, offset) {
         $input6.val(centralColumnList[db + '_' + table][offset].col_extra);
     }
     if (centralColumnList[db + '_' + table][offset].col_extra.toUpperCase() === 'AUTO_INCREMENT') {
-        $('#' + newInputId + '9').prop('checked',true).trigger('change');
+        $('#' + newInputId + '9').prop('checked', true).trigger('change');
     } else {
-        $('#' + newInputId + '9').prop('checked',false);
+        $('#' + newInputId + '9').prop('checked', false);
     }
     if (centralColumnList[db + '_' + table][offset].col_isNull !== '0') {
-        $('#' + newInputId + '7').prop('checked',true);
+        $('#' + newInputId + '7').prop('checked', true);
     } else {
-        $('#' + newInputId + '7').prop('checked',false);
+        $('#' + newInputId + '7').prop('checked', false);
     }
 };
 
@@ -3446,19 +3451,19 @@ AJAX.registerOnload('functions.js', function () {
             title = Messages.enum_newColumnVals;
         } else {
             title = Messages.enum_columnVals.replace(
-                /%s/,
-                '"' + Functions.escapeHtml(decodeURIComponent(colname)) + '"'
-            );
+                    /%s/,
+                    '"' + Functions.escapeHtml(decodeURIComponent(colname)) + '"'
+                    );
         }
         // Get the values as a string
         var inputstring = $(this)
-            .closest('td')
-            .find('input')
-            .val();
+                .closest('td')
+                .find('input')
+                .val();
         // Escape html entities
         inputstring = $('<div></div>')
-            .text(inputstring)
-            .html();
+                .text(inputstring)
+                .html();
         // Parse the values, escaping quotes and
         // slashes on the fly, into an array
         var values = [];
@@ -3469,7 +3474,7 @@ AJAX.registerOnload('functions.js', function () {
         for (i = 0; i < inputstring.length; i++) {
             curr = inputstring.charAt(i);
             next = i === inputstring.length ? '' : inputstring.charAt(i + 1);
-            if (! inString && curr === '\'') {
+            if (!inString && curr === '\'') {
                 inString = true;
             } else if (inString && curr === '\\' && next === '\\') {
                 buffer += '&#92;';
@@ -3499,33 +3504,33 @@ AJAX.registerOnload('functions.js', function () {
         var dropIcon = Functions.getImage('b_drop');
         for (i = 0; i < values.length; i++) {
             fields += '<tr><td>' +
-                   '<input type=\'text\' value=\'' + values[i] + '\'>' +
-                   '</td><td class=\'drop\'>' +
-                   dropIcon +
-                   '</td></tr>';
+                    '<input type=\'text\' value=\'' + values[i] + '\'>' +
+                    '</td><td class=\'drop\'>' +
+                    dropIcon +
+                    '</td></tr>';
         }
         /**
          * @var dialog HTML code for the ENUM/SET dialog
          */
         var dialog = '<div id=\'enum_editor\'>' +
-                   '<fieldset>' +
-                    '<legend>' + title + '</legend>' +
-                    '<p>' + Functions.getImage('s_notice') +
-                    Messages.enum_hint + '</p>' +
-                    '<table class=\'pma-table values\'>' + fields + '</table>' +
-                    '</fieldset><fieldset class=\'tblFooters\'>' +
-                    '<table class=\'pma-table add\'><tr><td>' +
-                    '<div class=\'slider\'></div>' +
-                    '</td><td>' +
-                    '<form><div><input type=\'submit\' class=\'add_value btn btn-primary\' value=\'' +
-                    Functions.sprintf(Messages.enum_addValue, 1) +
-                    '\'></div></form>' +
-                    '</td></tr></table>' +
-                    '<input type=\'hidden\' value=\'' + // So we know which column's data is being edited
-                    $(this).closest('td').find('input').attr('id') +
-                    '\'>' +
-                    '</fieldset>' +
-                    '</div>';
+                '<fieldset>' +
+                '<legend>' + title + '</legend>' +
+                '<p>' + Functions.getImage('s_notice') +
+                Messages.enum_hint + '</p>' +
+                '<table class=\'pma-table values\'>' + fields + '</table>' +
+                '</fieldset><fieldset class=\'tblFooters\'>' +
+                '<table class=\'pma-table add\'><tr><td>' +
+                '<div class=\'slider\'></div>' +
+                '</td><td>' +
+                '<form><div><input type=\'submit\' class=\'add_value btn btn-primary\' value=\'' +
+                Functions.sprintf(Messages.enum_addValue, 1) +
+                '\'></div></form>' +
+                '</td></tr></table>' +
+                '<input type=\'hidden\' value=\'' + // So we know which column's data is being edited
+                $(this).closest('td').find('input').attr('id') +
+                '\'>' +
+                '</fieldset>' +
+                '</div>';
         /**
          * @var {object} buttonOptions Defines functions to be called when the buttons in
          * the buttonOptions jQuery dialog bar are pressed
@@ -3549,10 +3554,10 @@ AJAX.registerOnload('functions.js', function () {
         };
         // Show the dialog
         var width = parseInt(
-            (parseInt($('html').css('font-size'), 10) / 13) * 340,
-            10
-        );
-        if (! width) {
+                (parseInt($('html').css('font-size'), 10) / 13) * 340,
+                10
+                );
+        if (!width) {
             width = 340;
         }
         $enumEditorDialog = $(dialog).dialog({
@@ -3578,8 +3583,8 @@ AJAX.registerOnload('functions.js', function () {
             max: 9,
             slide: function (event, ui) {
                 $(this).closest('table').find('input[type=submit]').val(
-                    Functions.sprintf(Messages.enum_addValue, ui.value)
-                );
+                        Functions.sprintf(Messages.enum_addValue, ui.value)
+                        );
             }
         });
         // Focus the slider, otherwise it looks nearly transparent
@@ -3597,15 +3602,15 @@ AJAX.registerOnload('functions.js', function () {
             pick = true;
         }
         var params = {
-            'ajax_request' : true,
-            'server' : CommonParams.get('server'),
-            'db' : CommonParams.get('db'),
-            'cur_table' : CommonParams.get('table'),
-            'getColumnList':true
+            'ajax_request': true,
+            'server': CommonParams.get('server'),
+            'db': CommonParams.get('db'),
+            'cur_table': CommonParams.get('table'),
+            'getColumnList': true
         };
         var colid = $(this).closest('td').find('input').attr('id');
         var fields = '';
-        if (! (db + '_' + table in centralColumnList)) {
+        if (!(db + '_' + table in centralColumnList)) {
             centralColumnList.push(db + '_' + table);
             $.ajax({
                 type: 'POST',
@@ -3614,7 +3619,7 @@ AJAX.registerOnload('functions.js', function () {
                 success: function (data) {
                     centralColumnList[db + '_' + table] = data.message;
                 },
-                async:false
+                async: false
             });
         }
         var i = 0;
@@ -3622,8 +3627,8 @@ AJAX.registerOnload('functions.js', function () {
         var min = (listSize <= maxRows) ? listSize : maxRows;
         for (i = 0; i < min; i++) {
             fields += '<tr><td><div><span class="font_weight_bold">' +
-                Functions.escapeHtml(centralColumnList[db + '_' + table][i].col_name) +
-                '</span><br><span class="color_gray">' + centralColumnList[db + '_' + table][i].col_type;
+                    Functions.escapeHtml(centralColumnList[db + '_' + table][i].col_name) +
+                    '</span><br><span class="color_gray">' + centralColumnList[db + '_' + table][i].col_type;
 
             if (centralColumnList[db + '_' + table][i].col_attribute !== '') {
                 fields += '(' + Functions.escapeHtml(centralColumnList[db + '_' + table][i].col_attribute) + ') ';
@@ -3632,10 +3637,10 @@ AJAX.registerOnload('functions.js', function () {
                 fields += '(' + Functions.escapeHtml(centralColumnList[db + '_' + table][i].col_length) + ') ';
             }
             fields += Functions.escapeHtml(centralColumnList[db + '_' + table][i].col_extra) + '</span>' +
-                '</div></td>';
+                    '</div></td>';
             if (pick) {
                 fields += '<td><input class="btn btn-secondary pick w-100" type="submit" value="' +
-                    Messages.pickColumn + '" onclick="Functions.autoPopulate(\'' + colid + '\',' + i + ')"></td>';
+                        Messages.pickColumn + '" onclick="Functions.autoPopulate(\'' + colid + '\',' + i + ')"></td>';
             }
             fields += '</tr>';
         }
@@ -3648,21 +3653,21 @@ AJAX.registerOnload('functions.js', function () {
         var seeMore = '';
         if (listSize > maxRows) {
             seeMore = '<fieldset class="tblFooters text-center font_weight_bold">' +
-                '<a href=\'#\' id=\'seeMore\'>' + Messages.seeMore + '</a></fieldset>';
+                    '<a href=\'#\' id=\'seeMore\'>' + Messages.seeMore + '</a></fieldset>';
         }
         var centralColumnsDialog = '<div class=\'max_height_400\'>' +
-            '<fieldset>' +
-            searchIn +
-            '<table id=\'col_list\' class=\'pma-table values w-100\'>' + fields + '</table>' +
-            '</fieldset>' +
-            seeMore +
-            '</div>';
+                '<fieldset>' +
+                searchIn +
+                '<table id=\'col_list\' class=\'pma-table values w-100\'>' + fields + '</table>' +
+                '</fieldset>' +
+                seeMore +
+                '</div>';
 
         var width = parseInt(
-            (parseInt($('html').css('font-size'), 10) / 13) * 500,
-            10
-        );
-        if (! width) {
+                (parseInt($('html').css('font-size'), 10) / 13) * 500,
+                10
+                );
+        if (!width) {
             width = 500;
         }
         var buttonOptions = {};
@@ -3684,9 +3689,9 @@ AJAX.registerOnload('functions.js', function () {
                     min = (listSize <= maxRows + resultPointer) ? listSize : maxRows + resultPointer;
                     for (i = resultPointer; i < min; i++) {
                         fields += '<tr><td><div><span class="font_weight_bold">' +
-                            centralColumnList[db + '_' + table][i].col_name +
-                            '</span><br><span class="color_gray">' +
-                            centralColumnList[db + '_' + table][i].col_type;
+                                centralColumnList[db + '_' + table][i].col_name +
+                                '</span><br><span class="color_gray">' +
+                                centralColumnList[db + '_' + table][i].col_type;
 
                         if (centralColumnList[db + '_' + table][i].col_attribute !== '') {
                             fields += '(' + centralColumnList[db + '_' + table][i].col_attribute + ') ';
@@ -3695,10 +3700,10 @@ AJAX.registerOnload('functions.js', function () {
                             fields += '(' + centralColumnList[db + '_' + table][i].col_length + ') ';
                         }
                         fields += centralColumnList[db + '_' + table][i].col_extra + '</span>' +
-                            '</div></td>';
+                                '</div></td>';
                         if (pick) {
                             fields += '<td><input class="btn btn-secondary pick w-100" type="submit" value="' +
-                                Messages.pickColumn + '" onclick="Functions.autoPopulate(\'' + colid + '\',' + i + ')"></td>';
+                                    Messages.pickColumn + '" onclick="Functions.autoPopulate(\'' + colid + '\',' + i + ')"></td>';
                         }
                         fields += '</tr>';
                     }
@@ -3729,15 +3734,15 @@ AJAX.registerOnload('functions.js', function () {
         var numNewRows = $enumEditorDialog.find('div.slider').slider('value');
         while (numNewRows--) {
             $enumEditorDialog.find('.values')
-                .append(
-                    '<tr class=\'hide\'><td>' +
-                    '<input type=\'text\'>' +
-                    '</td><td class=\'drop\'>' +
-                    Functions.getImage('b_drop') +
-                    '</td></tr>'
-                )
-                .find('tr').last()
-                .show('fast');
+                    .append(
+                            '<tr class=\'hide\'><td>' +
+                            '<input type=\'text\'>' +
+                            '</td><td class=\'drop\'>' +
+                            Functions.getImage('b_drop') +
+                            '</td></tr>'
+                            )
+                    .find('tr').last()
+                    .show('fast');
         }
     });
 
@@ -3791,9 +3796,9 @@ AJAX.registerOnload('functions.js', function () {
         var hadAddButtonHidden = $(this).closest('fieldset').find('.add_fields').hasClass('hide');
         if (hadAddButtonHidden === false) {
             var rowsToAdd = $(this)
-                .closest('fieldset')
-                .find('.slider')
-                .slider('value');
+                    .closest('fieldset')
+                    .find('.slider')
+                    .slider('value');
 
             var tempEmptyVal = function () {
                 $(this).val('');
@@ -3809,11 +3814,11 @@ AJAX.registerOnload('functions.js', function () {
             while (rowsToAdd--) {
                 var $indexColumns = $('#index_columns');
                 var $newrow = $indexColumns
-                    .find('tbody > tr').first()
-                    .clone()
-                    .appendTo(
-                        $indexColumns.find('tbody')
-                    );
+                        .find('tbody > tr').first()
+                        .clone()
+                        .appendTo(
+                                $indexColumns.find('tbody')
+                                );
                 $newrow.find(':input').each(tempEmptyVal);
                 // focus index size input on column picked
                 $newrow.find('select').on('change', tempSetFocus);
@@ -3854,9 +3859,9 @@ Functions.indexDialogModal = function (routeUrl, url, title, callbackSuccess, ca
                 /* Reload the field form*/
                 $('#table_index').remove();
                 $('<div id=\'temp_div\'><div>')
-                    .append(data.index_table)
-                    .find('#table_index')
-                    .insertAfter('#index_header');
+                        .append(data.index_table)
+                        .find('#table_index')
+                        .insertAfter('#index_header');
                 var $editIndexDialog = $('#edit_index_dialog');
                 if ($editIndexDialog.length > 0) {
                     $editIndexDialog.dialog('close');
@@ -3898,17 +3903,17 @@ Functions.indexDialogModal = function (routeUrl, url, title, callbackSuccess, ca
             Functions.ajaxRemoveMessage($msgbox);
             // Show dialog if the request was successful
             $div
-                .append(data.message)
-                .dialog({
-                    title: title,
-                    width: 'auto',
-                    open: Functions.verifyColumnsProperties,
-                    modal: true,
-                    buttons: buttonOptions,
-                    close: function () {
-                        $(this).remove();
-                    }
-                });
+                    .append(data.message)
+                    .dialog({
+                        title: title,
+                        width: 'auto',
+                        open: Functions.verifyColumnsProperties,
+                        modal: true,
+                        buttons: buttonOptions,
+                        close: function () {
+                            $(this).remove();
+                        }
+                    });
             $div.find('.tblFooters').remove();
             Functions.showIndexEditDialog($div);
         }
@@ -3945,8 +3950,8 @@ Functions.showIndexEditDialog = function ($outer) {
         max: 16,
         slide: function (event, ui) {
             $(this).closest('fieldset').find('input[type=submit]').val(
-                Functions.sprintf(Messages.strAddToIndex, ui.value)
-            );
+                    Functions.sprintf(Messages.strAddToIndex, ui.value)
+                    );
         }
     });
     $('div.add_fields').removeClass('hide');
@@ -3961,7 +3966,7 @@ Functions.showIndexEditDialog = function ($outer) {
     $('a.ui-slider-handle').addClass('ui-state-focus');
     // set focus on index name input, if empty
     var input = $outer.find('input#input_index_name');
-    if (! input.val()) {
+    if (!input.val()) {
         input.trigger('focus');
     }
 };
@@ -3982,10 +3987,10 @@ Functions.showHints = function ($div) {
     }
     $newDiv.find('.pma_hint').each(function () {
         Functions.tooltip(
-            $(this).children('img'),
-            'img',
-            $(this).children('span').html()
-        );
+                $(this).children('img'),
+                'img',
+                $(this).children('span').html()
+                );
     });
 };
 
@@ -4047,7 +4052,7 @@ Functions.toggleButton = function ($obj) {
      *  var  on   Width of the "ON" part of the toggle switch
      *  var  off  Width of the "OFF" part of the toggle switch
      */
-    var on  = $('td.toggleOn', $obj).width();
+    var on = $('td.toggleOn', $obj).width();
     var off = $('td.toggleOff', $obj).width();
     // Make the "ON" and "OFF" parts of the switch the same size
     // + 2 pixels to avoid overflowed
@@ -4089,9 +4094,9 @@ Functions.toggleButton = function ($obj) {
     // OFF state we need to move it now.
     if ($('div.toggle-container', $obj).hasClass('off')) {
         if (right === 'right') {
-            $('div.toggle-container', $obj).animate({ 'left': '-=' + move + 'px' }, 0);
+            $('div.toggle-container', $obj).animate({'left': '-=' + move + 'px'}, 0);
         } else {
-            $('div.toggle-container', $obj).animate({ 'left': '+=' + move + 'px' }, 0);
+            $('div.toggle-container', $obj).animate({'left': '+=' + move + 'px'}, 0);
         }
     }
     // Attach an 'onclick' event to the switch
@@ -4134,11 +4139,11 @@ Functions.toggleButton = function ($obj) {
             if (typeof data !== 'undefined' && data.success === true) {
                 Functions.ajaxRemoveMessage($msg);
                 $container
-                    .removeClass(removeClass)
-                    .addClass(addClass)
-                    .animate({ 'left': operator + move + 'px' }, function () {
-                        $container.removeClass('isActive');
-                    });
+                        .removeClass(removeClass)
+                        .addClass(addClass)
+                        .animate({'left': operator + move + 'px'}, function () {
+                            $container.removeClass('isActive');
+                        });
                 // eslint-disable-next-line no-eval
                 eval(callback);
             } else {
@@ -4225,13 +4230,13 @@ AJAX.registerOnload('functions.js', function () {
     var $updateRecentTables = $('#update_recent_tables');
     if ($updateRecentTables.length) {
         $.get(
-            $updateRecentTables.attr('href'),
-            { 'no_debug': true },
-            function (data) {
-                if (typeof data !== 'undefined' && data.success === true) {
-                    $('#pma_recent_list').html(data.list);
+                $updateRecentTables.attr('href'),
+                {'no_debug': true},
+                function (data) {
+                    if (typeof data !== 'undefined' && data.success === true) {
+                        $('#pma_recent_list').html(data.list);
+                    }
                 }
-            }
         );
     }
 
@@ -4243,8 +4248,8 @@ AJAX.registerOnload('functions.js', function () {
             type: 'POST',
             data: {
                 'favoriteTables': (isStorageSupported('localStorage') && typeof window.localStorage.favoriteTables !== 'undefined')
-                    ? window.localStorage.favoriteTables
-                    : '',
+                        ? window.localStorage.favoriteTables
+                        : '',
                 'server': CommonParams.get('server'),
                 'no_debug': true
             },
@@ -4268,25 +4273,25 @@ Functions.initSlider = function () {
         if ($this.data('slider_init_done')) {
             return;
         }
-        var $wrapper = $('<div>', { 'class': 'slide-wrapper' });
+        var $wrapper = $('<div>', {'class': 'slide-wrapper'});
         $wrapper.toggle($this.is(':visible'));
-        $('<a>', { href: '#' + this.id, 'class': 'ajax', id: 'slide-handle' })
-            .text($this.attr('title'))
-            .prepend($('<span>'))
-            .insertBefore($this)
-            .on('click', function () {
-                var $wrapper = $this.closest('.slide-wrapper');
-                var visible = $this.is(':visible');
-                if (!visible) {
-                    $wrapper.show();
-                }
-                $this[visible ? 'hide' : 'show']('blind', function () {
-                    $wrapper.toggle(!visible);
-                    $wrapper.parent().toggleClass('print_ignore', visible);
-                    Functions.setStatusLabel($this);
+        $('<a>', {href: '#' + this.id, 'class': 'ajax', id: 'slide-handle'})
+                .text($this.attr('title'))
+                .prepend($('<span>'))
+                .insertBefore($this)
+                .on('click', function () {
+                    var $wrapper = $this.closest('.slide-wrapper');
+                    var visible = $this.is(':visible');
+                    if (!visible) {
+                        $wrapper.show();
+                    }
+                    $this[visible ? 'hide' : 'show']('blind', function () {
+                        $wrapper.toggle(!visible);
+                        $wrapper.parent().toggleClass('print_ignore', visible);
+                        Functions.setStatusLabel($this);
+                    });
+                    return false;
                 });
-                return false;
-            });
         $this.wrap($wrapper);
         $this.removeAttr('title');
         Functions.setStatusLabel($this);
@@ -4336,9 +4341,9 @@ Functions.slidingMessage = function (msg, $object) {
         // we might have to create a new DOM node.
         if ($('#PMA_slidingMessage').length === 0) {
             $('#page_content').prepend(
-                '<span id="PMA_slidingMessage" ' +
-                'class="pma_sliding_message"></span>'
-            );
+                    '<span id="PMA_slidingMessage" ' +
+                    'class="pma_sliding_message"></span>'
+                    );
         }
         $obj = $('#PMA_slidingMessage');
     }
@@ -4346,57 +4351,57 @@ Functions.slidingMessage = function (msg, $object) {
         // If there already is a message inside the
         // target object, we must get rid of it
         $obj
-            .find('div')
-            .first()
-            .fadeOut(function () {
-                $obj
-                    .children()
-                    .remove();
-                $obj
-                    .append('<div>' + msg + '</div>');
-                // highlight any sql before taking height;
-                Functions.highlightSql($obj);
-                $obj.find('div')
-                    .first()
-                    .hide();
-                $obj
-                    .animate({
-                        height: $obj.find('div').first().height()
-                    })
-                    .find('div')
-                    .first()
-                    .fadeIn();
-            });
+                .find('div')
+                .first()
+                .fadeOut(function () {
+                    $obj
+                            .children()
+                            .remove();
+                    $obj
+                            .append('<div>' + msg + '</div>');
+                    // highlight any sql before taking height;
+                    Functions.highlightSql($obj);
+                    $obj.find('div')
+                            .first()
+                            .hide();
+                    $obj
+                            .animate({
+                                height: $obj.find('div').first().height()
+                            })
+                            .find('div')
+                            .first()
+                            .fadeIn();
+                });
     } else {
         // Object does not already have a message
         // inside it, so we simply slide it down
         $obj.width('100%')
-            .html('<div>' + msg + '</div>');
+                .html('<div>' + msg + '</div>');
         // highlight any sql before taking height;
         Functions.highlightSql($obj);
         var h = $obj
-            .find('div')
-            .first()
-            .hide()
-            .height();
+                .find('div')
+                .first()
+                .hide()
+                .height();
         $obj
-            .find('div')
-            .first()
-            .css('height', 0)
-            .show()
-            .animate({
-                height: h
-            }, function () {
-            // Set the height of the parent
-            // to the height of the child
-                $obj
-                    .height(
-                        $obj
-                            .find('div')
-                            .first()
-                            .height()
-                    );
-            });
+                .find('div')
+                .first()
+                .css('height', 0)
+                .show()
+                .animate({
+                    height: h
+                }, function () {
+                    // Set the height of the parent
+                    // to the height of the child
+                    $obj
+                            .height(
+                                    $obj
+                                    .find('div')
+                                    .first()
+                                    .height()
+                                    );
+                });
     }
     return true;
 };
@@ -4470,10 +4475,10 @@ Functions.getCellValue = function (td) {
     var $td = $(td);
     if ($td.is('.null')) {
         return '';
-    } else if ((! $td.is('.to_be_saved')
-        || $td.is('.set'))
-        && $td.data('original_data')
-    ) {
+    } else if ((!$td.is('.to_be_saved')
+            || $td.is('.set'))
+            && $td.data('original_data')
+            ) {
         return $td.data('original_data');
     } else {
         return $td.text();
@@ -4481,7 +4486,7 @@ Functions.getCellValue = function (td) {
 };
 
 $(window).on('popstate', function () {
-    $('#printcss').attr('media','print');
+    $('#printcss').attr('media', 'print');
     return true;
 });
 
@@ -4500,10 +4505,10 @@ AJAX.registerOnload('functions.js', function () {
      */
     $(document).on('click', 'a.themeselect', function (e) {
         window.open(
-            e.target,
-            'themes',
-            'left=10,top=20,width=510,height=350,scrollbars=yes,status=yes,resizable=yes'
-        );
+                e.target,
+                'themes',
+                'left=10,top=20,width=510,height=350,scrollbars=yes,status=yes,resizable=yes'
+                );
         return false;
     });
 
@@ -4535,7 +4540,7 @@ AJAX.registerOnload('functions.js', function () {
  * Produce print preview
  */
 Functions.printPreview = function () {
-    $('#printcss').attr('media','all');
+    $('#printcss').attr('media', 'all');
     Functions.createPrintAndBackButtons();
 };
 
@@ -4543,7 +4548,7 @@ Functions.printPreview = function () {
  * Create print and back buttons in preview page
  */
 Functions.createPrintAndBackButtons = function () {
-    var backButton = $('<input>',{
+    var backButton = $('<input>', {
         type: 'button',
         value: Messages.back,
         class: 'btn btn-secondary',
@@ -4551,7 +4556,7 @@ Functions.createPrintAndBackButtons = function () {
     });
     backButton.on('click', Functions.removePrintAndBackButton);
     backButton.appendTo('#page_content');
-    var printButton = $('<input>',{
+    var printButton = $('<input>', {
         type: 'button',
         value: Messages.print,
         class: 'btn btn-primary',
@@ -4565,7 +4570,7 @@ Functions.createPrintAndBackButtons = function () {
  * Remove print and back buttons and revert to normal view
  */
 Functions.removePrintAndBackButton = function () {
-    $('#printcss').attr('media','print');
+    $('#printcss').attr('media', 'print');
     $('#back_button_print_view').remove();
     $('#print_button_print_view').remove();
 };
@@ -4574,7 +4579,7 @@ Functions.removePrintAndBackButton = function () {
  * Print page
  */
 Functions.printPage = function () {
-    if (typeof(window.print) !== 'undefined') {
+    if (typeof (window.print) !== 'undefined') {
         window.print();
     }
 };
@@ -4593,10 +4598,10 @@ AJAX.registerOnload('functions.js', function () {
     $('input#print').on('click', Functions.printPage);
     $('.logout').on('click', function () {
         var form = $(
-            '<form method="POST" action="' + $(this).attr('href') + '" class="disableAjax">' +
-            '<input type="hidden" name="token" value="' + Functions.escapeHtml(CommonParams.get('token')) + '">' +
-            '</form>'
-        );
+                '<form method="POST" action="' + $(this).attr('href') + '" class="disableAjax">' +
+                '<input type="hidden" name="token" value="' + Functions.escapeHtml(CommonParams.get('token')) + '">' +
+                '</form>'
+                );
         $('body').append(form);
         form.submit();
         sessionStorage.clear();
@@ -4687,22 +4692,22 @@ $(function () {
     if ($('#floating_menubar').length && $('#PMA_disable_floating_menubar').length === 0) {
         var left = $('html').attr('dir') === 'ltr' ? 'left' : 'right';
         $('#floating_menubar')
-            .css('margin-' + left, $('#pma_navigation').width() + $('#pma_navigation_resizer').width())
-            .css(left, 0)
-            .css({
-                'position': 'fixed',
-                'top': 0,
-                'width': '100%',
-                'z-index': 99
-            })
-            .append($('#server-breadcrumb'))
-            .append($('#topmenucontainer'));
+                .css('margin-' + left, $('#pma_navigation').width() + $('#pma_navigation_resizer').width())
+                .css(left, 0)
+                .css({
+                    'position': 'fixed',
+                    'top': 0,
+                    'width': '100%',
+                    'z-index': 99
+                })
+                .append($('#server-breadcrumb'))
+                .append($('#topmenucontainer'));
         // Allow the DOM to render, then adjust the padding on the body
         setTimeout(function () {
             $('body').css(
-                'padding-top',
-                $('#floating_menubar').outerHeight(true)
-            );
+                    'padding-top',
+                    $('#floating_menubar').outerHeight(true)
+                    );
             $('#topmenu').menuResizer('resize');
         }, 4);
     }
@@ -4714,7 +4719,7 @@ $(function () {
 $(function () {
     $(document).on('click', '#server-breadcrumb, #goto_pagetop', function (event) {
         event.preventDefault();
-        $('html, body').animate({ scrollTop: 0 }, 'fast');
+        $('html, body').animate({scrollTop: 0}, 'fast');
     });
 });
 
@@ -4732,11 +4737,11 @@ Functions.checkboxesChanged = function () {
     var checkedBoxes = $form.find(checkboxesSel + ':checked').length;
     var $checkall = $form.find('input.checkall_box');
     if (totalBoxes === checkedBoxes) {
-        $checkall.prop({ checked: true, indeterminate: false });
+        $checkall.prop({checked: true, indeterminate: false});
     } else if (checkedBoxes > 0) {
-        $checkall.prop({ checked: true, indeterminate: true });
+        $checkall.prop({checked: true, indeterminate: true});
     } else {
-        $checkall.prop({ checked: false, indeterminate: false });
+        $checkall.prop({checked: false, indeterminate: false});
     }
 };
 
@@ -4745,7 +4750,7 @@ $(document).on('change', checkboxesSel, Functions.checkboxesChanged);
 $(document).on('change', 'input.checkall_box', function () {
     var isChecked = $(this).is(':checked');
     $(this.form).find(checkboxesSel).not('.row-hidden').prop('checked', isChecked)
-        .parents('tr').toggleClass('marked table-active', isChecked);
+            .parents('tr').toggleClass('marked table-active', isChecked);
 });
 
 $(document).on('click', '.checkall-filter', function () {
@@ -4753,7 +4758,7 @@ $(document).on('click', '.checkall-filter', function () {
     var selector = $this.data('checkall-selector');
     $('input.checkall_box').prop('checked', false);
     $this.parents('form').find(checkboxesSel).filter(selector).prop('checked', true).trigger('change')
-        .parents('tr').toggleClass('marked', true);
+            .parents('tr').toggleClass('marked', true);
     return false;
 });
 
@@ -4768,11 +4773,11 @@ Functions.subCheckboxesChanged = function () {
     var checkedBoxes = $form.find(checkboxesSel + ':checked').length;
     var $checkall = $form.find('input.sub_checkall_box');
     if (totalBoxes === checkedBoxes) {
-        $checkall.prop({ checked: true, indeterminate: false });
+        $checkall.prop({checked: true, indeterminate: false});
     } else if (checkedBoxes > 0) {
-        $checkall.prop({ checked: true, indeterminate: true });
+        $checkall.prop({checked: true, indeterminate: true});
     } else {
-        $checkall.prop({ checked: false, indeterminate: false });
+        $checkall.prop({checked: false, indeterminate: false});
     }
 };
 
@@ -4782,7 +4787,7 @@ $(document).on('change', 'input.sub_checkall_box', function () {
     var isChecked = $(this).is(':checked');
     var $form = $(this).parent().parent();
     $form.find(checkboxesSel).prop('checked', isChecked)
-        .parents('tr').toggleClass('marked', isChecked);
+            .parents('tr').toggleClass('marked', isChecked);
 });
 
 /**
@@ -4882,11 +4887,11 @@ Functions.formatDateTime = function (date, seconds) {
         timefmt = 'HH:mm:ss';
     }
     return result + ' ' + $.datepicker.formatTime(
-        timefmt, {
-            hour: date.getHours(),
-            minute: date.getMinutes(),
-            second: date.getSeconds()
-        }
+            timefmt, {
+                hour: date.getHours(),
+                minute: date.getMinutes(),
+                second: date.getSeconds()
+            }
     );
 };
 
@@ -4923,9 +4928,9 @@ Functions.checkNumberOfFields = function () {
  */
 Functions.ignorePhpErrors = function (clearPrevErrors) {
     var clearPrevious = clearPrevErrors;
-    if (typeof(clearPrevious) === 'undefined' ||
-        clearPrevious === null
-    ) {
+    if (typeof (clearPrevious) === 'undefined' ||
+            clearPrevious === null
+            ) {
         clearPrevious = false;
     }
     // send AJAX request to /error-report with send_error_report=0, exception_type=php & token.
@@ -4957,9 +4962,9 @@ Functions.toggleDatepickerIfInvalid = function ($td, $inputField) {
         ':((0[0-9])|([1-5][0-9]))(.[0-9]{1,6}){0,1}$'].join(''));
 
     // If key-ed in Time or Date values are unsupported by the UI, close it
-    if ($td.attr('data-type') === 'date' && ! dtexpDate.test($inputField.val())) {
+    if ($td.attr('data-type') === 'date' && !dtexpDate.test($inputField.val())) {
         $inputField.datepicker('hide');
-    } else if ($td.attr('data-type') === 'time' && ! dtexpTime.test($inputField.val())) {
+    } else if ($td.attr('data-type') === 'time' && !dtexpTime.test($inputField.val())) {
         $inputField.datepicker('hide');
     } else {
         $inputField.datepicker('show');
@@ -4992,9 +4997,9 @@ AJAX.registerOnload('functions.js', function () {
 
             // There could be multiple submit buttons on the same form,
             // we assume all of them behave identical and just click one.
-            if (! $form.find('input[type="submit"]').first() ||
-                ! $form.find('input[type="submit"]').first().trigger('click')
-            ) {
+            if (!$form.find('input[type="submit"]').first() ||
+                    !$form.find('input[type="submit"]').first().trigger('click')
+                    ) {
                 $form.trigger('submit');
             }
         }
@@ -5142,7 +5147,7 @@ Functions.configSet = function (key, value) {
         },
         success: function (data) {
             // Updating value in local storage.
-            if (! data.success) {
+            if (!data.success) {
                 if (data.error) {
                     Functions.ajaxShowMessage(data.error);
                 } else {
@@ -5208,7 +5213,7 @@ Functions.configGet = function (key, cached, successCallback) {
 Functions.getPostData = function () {
     var dataPost = this.attr('data-post');
     // Strip possible leading ?
-    if (dataPost !== undefined && dataPost.substring(0,1) === '?') {
+    if (dataPost !== undefined && dataPost.substring(0, 1) === '?') {
         dataPost = dataPost.substr(1);
     }
     return dataPost;

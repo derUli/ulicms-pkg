@@ -20,29 +20,27 @@ use Symfony\Component\DependencyInjection\Definition;
  *
  * @final
  */
-class NullDumper implements DumperInterface
-{
+class NullDumper implements DumperInterface {
+
     /**
      * {@inheritdoc}
      */
-    public function isProxyCandidate(Definition $definition): bool
-    {
+    public function isProxyCandidate(Definition $definition): bool {
         return false;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getProxyFactoryCode(Definition $definition, $id, $factoryCode = null): string
-    {
+    public function getProxyFactoryCode(Definition $definition, $id, $factoryCode = null): string {
         return '';
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getProxyCode(Definition $definition): string
-    {
+    public function getProxyCode(Definition $definition): string {
         return '';
     }
+
 }

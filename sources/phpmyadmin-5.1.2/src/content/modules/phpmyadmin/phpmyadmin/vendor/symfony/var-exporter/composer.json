@@ -23,7 +23,9 @@
         "symfony/var-dumper": "^4.4.9|^5.0.9"
     },
     "autoload": {
-        "psr-4": { "Symfony\\Component\\VarExporter\\": "" },
+        "psr-4": {
+            "Symfony\\Component\\VarExporter\\": ""
+        },
         "exclude-from-classmap": [
             "/Tests/"
         ]

@@ -18,13 +18,12 @@ use Symfony\Component\Config\Definition\Exception\InvalidTypeException;
  *
  * @author Johannes M. Schmitt <schmittjoh@gmail.com>
  */
-class BooleanNode extends ScalarNode
-{
+class BooleanNode extends ScalarNode {
+
     /**
      * {@inheritdoc}
      */
-    protected function validateType($value)
-    {
+    protected function validateType($value) {
         if (!\is_bool($value)) {
             $ex = new InvalidTypeException(sprintf('Invalid type for path "%s". Expected boolean, but got %s.', $this->getPath(), \gettype($value)));
             if ($hint = $this->getInfo()) {
@@ -39,8 +38,7 @@ class BooleanNode extends ScalarNode
     /**
      * {@inheritdoc}
      */
-    protected function isValueEmpty($value)
-    {
+    protected function isValueEmpty($value) {
         // a boolean value cannot be empty
         return false;
     }
@@ -48,8 +46,8 @@ class BooleanNode extends ScalarNode
     /**
      * {@inheritdoc}
      */
-    protected function getValidPlaceholderTypes(): array
-    {
+    protected function getValidPlaceholderTypes(): array {
         return ['bool'];
     }
+
 }

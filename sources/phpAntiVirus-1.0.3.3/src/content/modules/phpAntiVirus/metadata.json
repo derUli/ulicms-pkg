@@ -1,6 +1,6 @@
 {
-	 "version" : "1.0.3.3",
-	 "admin_permission" : "phpAntiVirus",
-	 "embed" : false
+    "version": "1.0.3.3",
+    "admin_permission": "phpAntiVirus",
+    "embed": false
 }
 

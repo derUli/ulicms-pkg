@@ -1,8 +1,8 @@
 <?php
+
 /**
  * CSV import plugin for phpMyAdmin using LOAD DATA
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Plugins\Import;
@@ -21,7 +21,7 @@ use function trim;
 
 // phpcs:disable PSR1.Files.SideEffects
 // We need relations enabled and we work only on database
-if (! isset($GLOBALS['plugin_param']) || $GLOBALS['plugin_param'] !== 'table') {
+if (!isset($GLOBALS['plugin_param']) || $GLOBALS['plugin_param'] !== 'table') {
     $GLOBALS['skip_import'] = true;
 
     return;
@@ -31,10 +31,9 @@ if (! isset($GLOBALS['plugin_param']) || $GLOBALS['plugin_param'] !== 'table') {
 /**
  * Handles the import for the CSV format using load data
  */
-class ImportLdi extends AbstractImportCsv
-{
-    public function __construct()
-    {
+class ImportLdi extends AbstractImportCsv {
+
+    public function __construct() {
         parent::__construct();
         $this->setProperties();
     }
@@ -45,15 +44,14 @@ class ImportLdi extends AbstractImportCsv
      *
      * @return void
      */
-    protected function setProperties()
-    {
+    protected function setProperties() {
         global $dbi;
 
         if ($GLOBALS['cfg']['Import']['ldi_local_option'] === 'auto') {
             $GLOBALS['cfg']['Import']['ldi_local_option'] = false;
 
             $result = $dbi->tryQuery(
-                'SELECT @@local_infile;'
+                    'SELECT @@local_infile;'
             );
             if ($result != false && $dbi->numRows($result) > 0) {
                 $tmp = $dbi->fetchRow($result);
@@ -70,20 +68,20 @@ class ImportLdi extends AbstractImportCsv
         $this->properties->setExtension('ldi');
 
         $leaf = new TextPropertyItem(
-            'columns',
-            __('Column names: ')
+                'columns',
+                __('Column names: ')
         );
         $generalOptions->addProperty($leaf);
 
         $leaf = new BoolPropertyItem(
-            'ignore',
-            __('Do not abort on INSERT error')
+                'ignore',
+                __('Do not abort on INSERT error')
         );
         $generalOptions->addProperty($leaf);
 
         $leaf = new BoolPropertyItem(
-            'local_option',
-            __('Use LOCAL keyword')
+                'local_option',
+                __('Use LOCAL keyword')
         );
         $generalOptions->addProperty($leaf);
     }
@@ -95,24 +93,21 @@ class ImportLdi extends AbstractImportCsv
      *
      * @return void
      */
-    public function doImport(?File $importHandle = null, array &$sql_data = [])
-    {
+    public function doImport(?File $importHandle = null, array &$sql_data = []) {
         global $finished, $import_file, $charset_conversion, $table, $dbi;
         global $ldi_local_option, $ldi_replace, $ldi_ignore, $ldi_terminated,
-               $ldi_enclosed, $ldi_escaped, $ldi_new_line, $skip_queries, $ldi_columns;
+        $ldi_enclosed, $ldi_escaped, $ldi_new_line, $skip_queries, $ldi_columns;
 
         $compression = '';
         if ($importHandle !== null) {
             $compression = $importHandle->getCompression();
         }
 
-        if ($import_file === 'none'
-            || $compression !== 'none'
-            || $charset_conversion
+        if ($import_file === 'none' || $compression !== 'none' || $charset_conversion
         ) {
             // We handle only some kind of data!
             $GLOBALS['message'] = Message::error(
-                __('This plugin does not support compressed imports!')
+                            __('This plugin does not support compressed imports!')
             );
             $GLOBALS['error'] = true;
 
@@ -124,7 +119,7 @@ class ImportLdi extends AbstractImportCsv
             $sql .= ' LOCAL';
         }
         $sql .= ' INFILE \'' . $dbi->escapeString($import_file)
-            . '\'';
+                . '\'';
         if (isset($ldi_replace)) {
             $sql .= ' REPLACE';
         } elseif (isset($ldi_ignore)) {
@@ -137,18 +132,15 @@ class ImportLdi extends AbstractImportCsv
         }
         if (strlen((string) $ldi_enclosed) > 0) {
             $sql .= ' ENCLOSED BY \''
-                . $dbi->escapeString($ldi_enclosed) . '\'';
+                    . $dbi->escapeString($ldi_enclosed) . '\'';
         }
         if (strlen((string) $ldi_escaped) > 0) {
             $sql .= ' ESCAPED BY \''
-                . $dbi->escapeString($ldi_escaped) . '\'';
+                    . $dbi->escapeString($ldi_escaped) . '\'';
         }
         if (strlen((string) $ldi_new_line) > 0) {
             if ($ldi_new_line === 'auto') {
-                $ldi_new_line
-                    = PHP_EOL == "\n"
-                    ? '\n'
-                    : '\r\n';
+                $ldi_new_line = PHP_EOL == "\n" ? '\n' : '\r\n';
             }
             $sql .= ' LINES TERMINATED BY \'' . $ldi_new_line . '\'';
         }
@@ -160,7 +152,7 @@ class ImportLdi extends AbstractImportCsv
             $sql .= ' (';
             $tmp = preg_split('/,( ?)/', $ldi_columns);
 
-            if (! is_array($tmp)) {
+            if (!is_array($tmp)) {
                 $tmp = [];
             }
 
@@ -171,7 +163,7 @@ class ImportLdi extends AbstractImportCsv
                 }
                 /* Trim also `, if user already included backquoted fields */
                 $sql .= Util::backquote(
-                    trim($tmp[$i], " \t\r\n\0\x0B`")
+                                trim($tmp[$i], " \t\r\n\0\x0B`")
                 );
             }
             $sql .= ')';
@@ -181,4 +173,5 @@ class ImportLdi extends AbstractImportCsv
         $this->import->runQuery('', '', $sql_data);
         $finished = true;
     }
+
 }

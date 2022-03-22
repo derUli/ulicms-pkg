@@ -1,24 +1,24 @@
 {% if not is_ajax %}
-  </div>
+</div>
 {% endif %}
 {% if not is_ajax and not is_minimal %}
-  {{ self_link|raw }}
+    {{ self_link|raw }}
 
-  <div class="clearfloat" id="pma_errors">
-    {{ error_messages|raw }}
-  </div>
-
-  {{ scripts|raw }}
-
-  {% if is_demo %}
-    <div id="pma_demo">
-      {{ demo_message|raw }}
+    <div class="clearfloat" id="pma_errors">
+        {{ error_messages|raw }}
     </div>
-  {% endif %}
 
-  {{ footer|raw }}
+    {{ scripts|raw }}
+
+    {% if is_demo %}
+        <div id="pma_demo">
+            {{ demo_message|raw }}
+        </div>
+    {% endif %}
+
+    {{ footer|raw }}
 {% endif %}
 {% if not is_ajax %}
-  </body>
+</body>
 </html>
 {% endif %}

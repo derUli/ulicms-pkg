@@ -1,8 +1,8 @@
 <?php
+
 /**
  * ESRI Shape file import plugin for phpMyAdmin
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Plugins\Import;
@@ -37,16 +37,15 @@ use function unlink;
 /**
  * Handles the import for ESRI Shape files
  */
-class ImportShp extends ImportPlugin
-{
+class ImportShp extends ImportPlugin {
+
     /** @var ZipExtension */
     private $zipExtension;
 
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct();
         $this->setProperties();
-        if (! extension_loaded('zip')) {
+        if (!extension_loaded('zip')) {
             return;
         }
 
@@ -59,8 +58,7 @@ class ImportShp extends ImportPlugin
      *
      * @return void
      */
-    protected function setProperties()
-    {
+    protected function setProperties() {
         $importPluginProperties = new ImportPluginProperties();
         $importPluginProperties->setText(__('ESRI Shape File'));
         $importPluginProperties->setExtension('shp');
@@ -77,8 +75,7 @@ class ImportShp extends ImportPlugin
      *
      * @return void
      */
-    public function doImport(?File $importHandle = null, array &$sql_data = [])
-    {
+    public function doImport(?File $importHandle = null, array &$sql_data = []) {
         global $db, $error, $finished, $import_file, $local_import_file, $message, $dbi;
 
         $GLOBALS['finished'] = false;
@@ -95,12 +92,11 @@ class ImportShp extends ImportPlugin
         $shp = new ShapeFileImport(1);
         // If the zip archive has more than one file,
         // get the correct content to the buffer from .shp file.
-        if ($compression === 'application/zip'
-            && $this->zipExtension->getNumberOfFiles($import_file) > 1
+        if ($compression === 'application/zip' && $this->zipExtension->getNumberOfFiles($import_file) > 1
         ) {
             if ($importHandle->openZip('/^.*\.shp$/i') === false) {
                 $message = Message::error(
-                    __('There was an error importing the ESRI shape file: "%s".')
+                                __('There was an error importing the ESRI shape file: "%s".')
                 );
                 $message->addParam($importHandle->getError());
 
@@ -116,15 +112,15 @@ class ImportShp extends ImportPlugin
             // and use the files in it for import
             if ($compression === 'application/zip' && $temp !== null) {
                 $dbf_file_name = $this->zipExtension->findFile(
-                    $import_file,
-                    '/^.*\.dbf$/i'
+                        $import_file,
+                        '/^.*\.dbf$/i'
                 );
                 // If the corresponding .dbf file is in the zip archive
                 if ($dbf_file_name) {
                     // Extract the .dbf file and point to it.
                     $extracted = $this->zipExtension->extract(
-                        $import_file,
-                        $dbf_file_name
+                            $import_file,
+                            $dbf_file_name
                     );
                     if ($extracted !== false) {
                         // remove filename extension, e.g.
@@ -148,19 +144,17 @@ class ImportShp extends ImportPlugin
                         }
                     }
                 }
-            } elseif (! empty($local_import_file)
-                && ! empty($GLOBALS['cfg']['UploadDir'])
-                && $compression === 'none'
+            } elseif (!empty($local_import_file) && !empty($GLOBALS['cfg']['UploadDir']) && $compression === 'none'
             ) {
                 // If file is in UploadDir, use .dbf file in the same UploadDir
                 // to load extra data.
                 // Replace the .shp with .*,
                 // so the bsShapeFiles library correctly locates .dbf file.
                 $file_name = mb_substr(
-                    $import_file,
-                    0,
-                    mb_strlen($import_file) - 4
-                ) . '.*';
+                                $import_file,
+                                0,
+                                mb_strlen($import_file) - 4
+                        ) . '.*';
                 $shp->FileName = $file_name;
             }
         }
@@ -169,9 +163,7 @@ class ImportShp extends ImportPlugin
         $shp->loadFromFile('');
 
         // Delete the .dbf file extracted to 'TempDir'
-        if ($temp_dbf_file
-            && isset($dbf_file_path)
-            && @file_exists($dbf_file_path)
+        if ($temp_dbf_file && isset($dbf_file_path) && @file_exists($dbf_file_path)
         ) {
             unlink($dbf_file_path);
         }
@@ -179,7 +171,7 @@ class ImportShp extends ImportPlugin
         if ($shp->lastError != '') {
             $error = true;
             $message = Message::error(
-                __('There was an error importing the ESRI shape file: "%s".')
+                            __('There was an error importing the ESRI shape file: "%s".')
             );
             $message->addParam($shp->lastError);
 
@@ -209,7 +201,7 @@ class ImportShp extends ImportPlugin
             default:
                 $error = true;
                 $message = Message::error(
-                    __('MySQL Spatial Extension does not support ESRI type "%s".')
+                                __('MySQL Spatial Extension does not support ESRI type "%s".')
                 );
                 $message->addParam($shp->getShapeName());
 
@@ -236,14 +228,14 @@ class ImportShp extends ImportPlugin
                     $tempRow[] = null;
                 } else {
                     $tempRow[] = "GeomFromText('"
-                        . $gis_obj->getShape($record->SHPData) . "')";
+                            . $gis_obj->getShape($record->SHPData) . "')";
                 }
 
                 if ($shp->getDBFHeader() !== null) {
                     foreach ($shp->getDBFHeader() as $c) {
                         $cell = trim((string) $record->DBFData[$c[0]]);
 
-                        if (! strcmp($cell, '')) {
+                        if (!strcmp($cell, '')) {
                             $cell = 'NULL';
                         }
 
@@ -257,7 +249,7 @@ class ImportShp extends ImportPlugin
         if (count($rows) === 0) {
             $error = true;
             $message = Message::error(
-                __('The imported file does not contain any data!')
+                            __('The imported file does not contain any data!')
             );
 
             return;
@@ -326,8 +318,7 @@ class ImportShp extends ImportPlugin
      *
      * @return string
      */
-    public static function readFromBuffer($length)
-    {
+    public static function readFromBuffer($length) {
         global $buffer, $eof, $importHandle;
 
         $import = new Import();
@@ -344,4 +335,5 @@ class ImportShp extends ImportPlugin
 
         return $result;
     }
+
 }

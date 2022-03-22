@@ -1,4 +1,5 @@
 <?php
+
 Database::query("CREATE TABLE IF NOT EXISTS `{prefix}device_infos` (
   `mobile` mediumint(9) NOT NULL DEFAULT '0',
   `tablet` mediumint(9) NOT NULL DEFAULT '0',

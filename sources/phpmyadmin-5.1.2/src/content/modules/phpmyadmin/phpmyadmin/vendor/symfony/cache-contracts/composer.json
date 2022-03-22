@@ -23,7 +23,9 @@
         "symfony/cache-implementation": ""
     },
     "autoload": {
-        "psr-4": { "Symfony\\Contracts\\Cache\\": "" }
+        "psr-4": {
+            "Symfony\\Contracts\\Cache\\": ""
+        }
     },
     "minimum-stability": "dev",
     "extra": {

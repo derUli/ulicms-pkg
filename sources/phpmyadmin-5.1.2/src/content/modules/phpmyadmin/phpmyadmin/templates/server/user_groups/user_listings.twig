@@ -2,21 +2,21 @@
 {% if num_rows == 0 %}
     <p>{% trans 'No users were found belonging to this user group.' %}</p>
 {% else %}
-<table class="pma-table">
-    <thead>
-        <tr>
-            <th>#</th>
-            <th>{% trans 'User' %}</th>
-        </tr>
-    </thead>
-    <tbody>
-    {% for obj in users %}
-        <tr>
-            <td>{{ obj.count }}</td>
-            <td>{{ obj.user }}</td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
+    <table class="pma-table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>{% trans 'User' %}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for obj in users %}
+                <tr>
+                    <td>{{ obj.count }}</td>
+                    <td>{{ obj.user }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
 {% endif %}

@@ -1,5 +1,5 @@
 <?php
-function jquery_socialshareprivacy_render()
-{
+
+function jquery_socialshareprivacy_render() {
     return "";
 }

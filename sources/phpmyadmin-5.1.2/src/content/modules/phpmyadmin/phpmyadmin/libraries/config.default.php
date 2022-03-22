@@ -1,4 +1,5 @@
 <?php
+
 /**
  * <code>
  * N   N  OOO  !!   DDDD   OOO    N   N  OOO  TTTTT   EEEE DDDD  I TTTTT !!
@@ -15,7 +16,6 @@
  *
  * All directives are explained in the documentation
  */
-
 declare(strict_types=1);
 
 /**
@@ -108,8 +108,7 @@ $cfg['AllowThirdPartyFraming'] = false;
  */
 $cfg['blowfish_secret'] = '';
 
-
-/*******************************************************************************
+/* * *****************************************************************************
  * Server(s) configuration
  *
  * The $cfg['Servers'] array starts with $cfg['Servers'][1].  Do not use
@@ -577,10 +576,9 @@ $cfg['Servers'][$i]['tracking_version_auto_create'] = false;
  *
  * @global string $cfg['Servers'][$i]['tracking_default_statements']
  */
-$cfg['Servers'][$i]['tracking_default_statements']
-    = 'CREATE TABLE,ALTER TABLE,DROP TABLE,RENAME TABLE,CREATE INDEX,' .
-      'DROP INDEX,INSERT,UPDATE,DELETE,TRUNCATE,REPLACE,CREATE VIEW,' .
-      'ALTER VIEW,DROP VIEW,CREATE DATABASE,ALTER DATABASE,DROP DATABASE';
+$cfg['Servers'][$i]['tracking_default_statements'] = 'CREATE TABLE,ALTER TABLE,DROP TABLE,RENAME TABLE,CREATE INDEX,' .
+        'DROP INDEX,INSERT,UPDATE,DELETE,TRUNCATE,REPLACE,CREATE VIEW,' .
+        'ALTER VIEW,DROP VIEW,CREATE DATABASE,ALTER DATABASE,DROP DATABASE';
 
 /**
  * Whether a DROP VIEW IF EXISTS statement will be added
@@ -800,7 +798,7 @@ $cfg['Confirm'] = true;
  *
  * @global string $cfg['CookieSameSite']
  */
- $cfg['CookieSameSite'] = 'Strict';
+$cfg['CookieSameSite'] = 'Strict';
 
 /**
  * recall previous login in cookie authentication mode or not
@@ -895,7 +893,7 @@ $cfg['CaptchaApi'] = 'https://www.google.com/recaptcha/api.js';
  * @global string $cfg['CaptchaCsp']
  */
 $cfg['CaptchaCsp'] = 'https://apis.google.com https://www.google.com/recaptcha/'
-    . ' https://www.gstatic.com/recaptcha/ https://ssl.gstatic.com/';
+        . ' https://www.gstatic.com/recaptcha/ https://ssl.gstatic.com/';
 
 /**
  * reCaptcha API's request parameter name
@@ -941,7 +939,7 @@ $cfg['CaptchaSiteVerifyURL'] = '';
  */
 $cfg['enable_drag_drop_import'] = true;
 
-/*******************************************************************************
+/* * *****************************************************************************
  * Navigation panel setup
  */
 
@@ -1154,7 +1152,7 @@ $cfg['NavigationWidth'] = 240;
  */
 $cfg['NavigationTreeAutoexpandSingleDb'] = true;
 
-/*******************************************************************************
+/* * *****************************************************************************
  * In the main panel, at startup...
  */
 
@@ -1194,8 +1192,7 @@ $cfg['ShowChgPassword'] = true;
  */
 $cfg['ShowCreateDb'] = true;
 
-
-/*******************************************************************************
+/* * *****************************************************************************
  * Database structure
  */
 
@@ -1247,8 +1244,7 @@ $cfg['HideStructureActions'] = true;
  */
 $cfg['ShowColumnComments'] = true;
 
-
-/*******************************************************************************
+/* * *****************************************************************************
  * In browse mode...
  */
 
@@ -1316,8 +1312,7 @@ $cfg['GridEditing'] = 'double-click';
  */
 $cfg['RelationalDisplay'] = 'K';
 
-
-/*******************************************************************************
+/* * *****************************************************************************
  * In edit mode...
  */
 
@@ -1402,7 +1397,7 @@ $cfg['ForeignKeyMaxLimit'] = 100;
  */
 $cfg['DefaultForeignKeyChecks'] = 'default';
 
-/*******************************************************************************
+/* * *****************************************************************************
  * For the export features...
  */
 
@@ -1435,8 +1430,7 @@ $cfg['BZipDump'] = true;
  */
 $cfg['CompressOnFly'] = true;
 
-
-/*******************************************************************************
+/* * *****************************************************************************
  * Tabs display settings
  */
 
@@ -1504,7 +1498,7 @@ $cfg['DefaultTabTable'] = 'browse';
  */
 $cfg['RowActionType'] = 'both';
 
-/*******************************************************************************
+/* * *****************************************************************************
  * Export defaults
  */
 $cfg['Export'] = [];
@@ -1784,8 +1778,7 @@ $cfg['Export']['latex_structure_caption'] = 'strLatexStructure';
 /**
  * @global string $cfg['Export']['latex_structure_continued_caption']
  */
-$cfg['Export']['latex_structure_continued_caption']
-    = 'strLatexStructure strLatexContinued';
+$cfg['Export']['latex_structure_continued_caption'] = 'strLatexStructure strLatexContinued';
 
 /**
  * @global string $cfg['Export']['latex_data_caption']
@@ -2095,7 +2088,7 @@ $cfg['Export']['xml_export_contents'] = true;
  */
 $cfg['Export']['yaml_structure_or_data'] = 'data';
 
-/*******************************************************************************
+/* * *****************************************************************************
  * Import defaults
  */
 $cfg['Import'] = [];
@@ -2239,16 +2232,16 @@ $cfg['Import']['ods_recognize_percentages'] = true;
  */
 $cfg['Import']['ods_recognize_currency'] = true;
 
-/*******************************************************************************
+/* * *****************************************************************************
  * Schema export defaults
-*/
+ */
 $cfg['Schema'] = [];
 
 /**
  * pdf/eps/dia/svg
  *
  * @global string $cfg['Schema']['format']
-*/
+ */
 $cfg['Schema']['format'] = 'pdf';
 
 /**
@@ -2352,7 +2345,7 @@ $cfg['Schema']['svg_show_keys'] = false;
  */
 $cfg['Schema']['svg_all_tables_same_width'] = false;
 
-/*******************************************************************************
+/* * *****************************************************************************
  * PDF options
  */
 
@@ -2372,8 +2365,7 @@ $cfg['PDFPageSizes'] = [
  */
 $cfg['PDFDefaultPageSize'] = 'A4';
 
-
-/*******************************************************************************
+/* * *****************************************************************************
  * Language and character set conversion settings
  */
 
@@ -2473,8 +2465,7 @@ $cfg['AvailableCharsets'] = [
     'SJIS-win',
 ];
 
-
-/*******************************************************************************
+/* * *****************************************************************************
  * Customization & design
  *
  * The graphical settings are now located in themes/theme-name/scss/_variables.scss
@@ -2667,7 +2658,7 @@ $cfg['UserprefsDisallow'] = [];
  */
 $cfg['UserprefsDeveloperTab'] = false;
 
-/*******************************************************************************
+/* * *****************************************************************************
  * Window title settings
  */
 
@@ -2699,8 +2690,7 @@ $cfg['TitleServer'] = '@HTTP_HOST@ / @VSERVER@ | @PHPMYADMIN@';
  */
 $cfg['TitleDefault'] = '@HTTP_HOST@ | @PHPMYADMIN@';
 
-
-/*******************************************************************************
+/* * *****************************************************************************
  * theme manager
  */
 
@@ -2727,7 +2717,6 @@ $cfg['ThemeDefault'] = 'pmahomme';
  */
 $cfg['ThemePerServer'] = false;
 
-
 /**
  * Default query for table
  *
@@ -2742,8 +2731,7 @@ $cfg['DefaultQueryTable'] = 'SELECT * FROM @TABLE@ WHERE 1';
  */
 $cfg['DefaultQueryDatabase'] = '';
 
-
-/*******************************************************************************
+/* * *****************************************************************************
  * SQL Query box settings
  * These are the links display in all of the SQL Query boxes
  *
@@ -2786,8 +2774,7 @@ $cfg['SQLQuery']['Refresh'] = true;
  */
 $cfg['EnableAutocompleteForTablesAndColumns'] = true;
 
-
-/*******************************************************************************
+/* * *****************************************************************************
  * Web server upload/save/import directories
  */
 
@@ -2824,7 +2811,6 @@ if (defined('TEMP_DIR')) {
 /**
  * Misc. settings
  */
-
 /**
  * Is GD >= 2 available? Set to yes/no/auto. 'auto' does auto-detection,
  * which is the only safe way to determine GD version.
@@ -2862,7 +2848,7 @@ $cfg['LinkLengthLimit'] = 1000;
 /**
  * Additional string to allow in CSP headers.
  */
- $cfg['CSPAllow'] = '';
+$cfg['CSPAllow'] = '';
 
 /**
  * Disable the table maintenance mass operations, like optimizing or
@@ -2896,7 +2882,7 @@ $cfg['ConsoleEnterExecutes'] = false;
  */
 $cfg['ZeroConf'] = true;
 
-/*******************************************************************************
+/* * *****************************************************************************
  * Developers ONLY!
  *
  * @global array $cfg['DBG']
@@ -2941,7 +2927,7 @@ $cfg['DBG']['simple2fa'] = false;
  */
 $cfg['environment'] = 'production';
 
-/*******************************************************************************
+/* * *****************************************************************************
  * MySQL settings
  */
 
@@ -3006,8 +2992,7 @@ $cfg['Console'] = [
     'Order' => 'asc',
 ];
 
-
-/*******************************************************************************
+/* * *****************************************************************************
  * Default options for transformations
  */
 

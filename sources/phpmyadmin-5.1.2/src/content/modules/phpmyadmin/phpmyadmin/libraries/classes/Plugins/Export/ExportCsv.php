@@ -1,8 +1,8 @@
 <?php
+
 /**
  * CSV export code
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Plugins\Export;
@@ -25,10 +25,9 @@ use function trim;
 /**
  * Handles the export for the CSV format
  */
-class ExportCsv extends ExportPlugin
-{
-    public function __construct()
-    {
+class ExportCsv extends ExportPlugin {
+
+    public function __construct() {
         parent::__construct();
         $this->setProperties();
     }
@@ -38,8 +37,7 @@ class ExportCsv extends ExportPlugin
      *
      * @return void
      */
-    protected function setProperties()
-    {
+    protected function setProperties() {
         $exportPluginProperties = new ExportPluginProperties();
         $exportPluginProperties->setText('CSV');
         $exportPluginProperties->setExtension('csv');
@@ -50,49 +48,49 @@ class ExportCsv extends ExportPlugin
         // $exportPluginProperties
         // this will be shown as "Format specific options"
         $exportSpecificOptions = new OptionsPropertyRootGroup(
-            'Format Specific Options'
+                'Format Specific Options'
         );
 
         // general options main group
         $generalOptions = new OptionsPropertyMainGroup('general_opts');
         // create leaf items and add them to the group
         $leaf = new TextPropertyItem(
-            'separator',
-            __('Columns separated with:')
+                'separator',
+                __('Columns separated with:')
         );
         $generalOptions->addProperty($leaf);
         $leaf = new TextPropertyItem(
-            'enclosed',
-            __('Columns enclosed with:')
+                'enclosed',
+                __('Columns enclosed with:')
         );
         $generalOptions->addProperty($leaf);
         $leaf = new TextPropertyItem(
-            'escaped',
-            __('Columns escaped with:')
+                'escaped',
+                __('Columns escaped with:')
         );
         $generalOptions->addProperty($leaf);
         $leaf = new TextPropertyItem(
-            'terminated',
-            __('Lines terminated with:')
+                'terminated',
+                __('Lines terminated with:')
         );
         $generalOptions->addProperty($leaf);
         $leaf = new TextPropertyItem(
-            'null',
-            __('Replace NULL with:')
+                'null',
+                __('Replace NULL with:')
         );
         $generalOptions->addProperty($leaf);
         $leaf = new BoolPropertyItem(
-            'removeCRLF',
-            __('Remove carriage return/line feed characters within columns')
+                'removeCRLF',
+                __('Remove carriage return/line feed characters within columns')
         );
         $generalOptions->addProperty($leaf);
         $leaf = new BoolPropertyItem(
-            'columns',
-            __('Put columns names in the first row')
+                'columns',
+                __('Put columns names in the first row')
         );
         $generalOptions->addProperty($leaf);
         $leaf = new HiddenPropertyItem(
-            'structure_or_data'
+                'structure_or_data'
         );
         $generalOptions->addProperty($leaf);
         // add the main group to the root group
@@ -108,8 +106,7 @@ class ExportCsv extends ExportPlugin
      *
      * @return bool Whether it succeeded
      */
-    public function exportHeader()
-    {
+    public function exportHeader() {
         global $what, $csv_terminated, $csv_separator, $csv_enclosed, $csv_escaped;
         //Enable columns names by default for CSV
         if ($what === 'csv') {
@@ -136,23 +133,22 @@ class ExportCsv extends ExportPlugin
                 $GLOBALS['csv_columns'] = 'yes';
             }
         } else {
-            if (empty($csv_terminated)
-                || mb_strtolower($csv_terminated) === 'auto'
+            if (empty($csv_terminated) || mb_strtolower($csv_terminated) === 'auto'
             ) {
                 $csv_terminated = $GLOBALS['crlf'];
             } else {
                 $csv_terminated = str_replace(
-                    [
-                        '\\r',
-                        '\\n',
-                        '\\t',
-                    ],
-                    [
-                        "\015",
-                        "\012",
-                        "\011",
-                    ],
-                    $csv_terminated
+                        [
+                            '\\r',
+                            '\\n',
+                            '\\t',
+                        ],
+                        [
+                            "\015",
+                            "\012",
+                            "\011",
+                        ],
+                        $csv_terminated
                 );
             }
             $csv_separator = str_replace('\\t', "\011", $csv_separator);
@@ -166,8 +162,7 @@ class ExportCsv extends ExportPlugin
      *
      * @return bool Whether it succeeded
      */
-    public function exportFooter()
-    {
+    public function exportFooter() {
         return true;
     }
 
@@ -179,8 +174,7 @@ class ExportCsv extends ExportPlugin
      *
      * @return bool Whether it succeeded
      */
-    public function exportDBHeader($db, $db_alias = '')
-    {
+    public function exportDBHeader($db, $db_alias = '') {
         return true;
     }
 
@@ -191,8 +185,7 @@ class ExportCsv extends ExportPlugin
      *
      * @return bool Whether it succeeded
      */
-    public function exportDBFooter($db)
-    {
+    public function exportDBFooter($db) {
         return true;
     }
 
@@ -205,8 +198,7 @@ class ExportCsv extends ExportPlugin
      *
      * @return bool Whether it succeeded
      */
-    public function exportDBCreate($db, $export_type, $db_alias = '')
-    {
+    public function exportDBCreate($db, $export_type, $db_alias = '') {
         return true;
     }
 
@@ -223,12 +215,12 @@ class ExportCsv extends ExportPlugin
      * @return bool Whether it succeeded
      */
     public function exportData(
-        $db,
-        $table,
-        $crlf,
-        $error_url,
-        $sql_query,
-        array $aliases = []
+            $db,
+            $table,
+            $crlf,
+            $error_url,
+            $sql_query,
+            array $aliases = []
     ) {
         global $what, $csv_terminated, $csv_separator, $csv_enclosed, $csv_escaped, $dbi;
 
@@ -238,9 +230,9 @@ class ExportCsv extends ExportPlugin
 
         // Gets the data from the database
         $result = $dbi->query(
-            $sql_query,
-            DatabaseInterface::CONNECT_USER,
-            DatabaseInterface::QUERY_UNBUFFERED
+                $sql_query,
+                DatabaseInterface::CONNECT_USER,
+                DatabaseInterface::QUERY_UNBUFFERED
         );
         $fields_cnt = $dbi->numFields($result);
 
@@ -249,7 +241,7 @@ class ExportCsv extends ExportPlugin
             $schema_insert = '';
             for ($i = 0; $i < $fields_cnt; $i++) {
                 $col_as = $dbi->fieldName($result, $i);
-                if (! empty($aliases[$db]['tables'][$table]['columns'][$col_as])) {
+                if (!empty($aliases[$db]['tables'][$table]['columns'][$col_as])) {
                     $col_as = $aliases[$db]['tables'][$table]['columns'][$col_as];
                 }
                 $col_as = stripslashes($col_as);
@@ -257,17 +249,17 @@ class ExportCsv extends ExportPlugin
                     $schema_insert .= $col_as;
                 } else {
                     $schema_insert .= $csv_enclosed
-                        . str_replace(
-                            $csv_enclosed,
-                            $csv_escaped . $csv_enclosed,
-                            $col_as
-                        )
-                        . $csv_enclosed;
+                            . str_replace(
+                                    $csv_enclosed,
+                                    $csv_escaped . $csv_enclosed,
+                                    $col_as
+                            )
+                            . $csv_enclosed;
                 }
                 $schema_insert .= $csv_separator;
             }
             $schema_insert = trim(mb_substr($schema_insert, 0, -1));
-            if (! $this->export->outputHandler($schema_insert . $csv_terminated)) {
+            if (!$this->export->outputHandler($schema_insert . $csv_terminated)) {
                 return false;
             }
         }
@@ -276,7 +268,7 @@ class ExportCsv extends ExportPlugin
         while ($row = $dbi->fetchRow($result)) {
             $schema_insert = '';
             for ($j = 0; $j < $fields_cnt; $j++) {
-                if (! isset($row[$j]) || $row[$j] === null) {
+                if (!isset($row[$j]) || $row[$j] === null) {
                     $schema_insert .= $GLOBALS[$what . '_null'];
                 } elseif ($row[$j] == '0' || $row[$j] != '') {
                     // always enclose fields
@@ -284,16 +276,15 @@ class ExportCsv extends ExportPlugin
                         $row[$j] = preg_replace("/\015(\012)?/", "\012", $row[$j]);
                     }
                     // remove CRLF characters within field
-                    if (isset($GLOBALS[$what . '_removeCRLF'])
-                        && $GLOBALS[$what . '_removeCRLF']
+                    if (isset($GLOBALS[$what . '_removeCRLF']) && $GLOBALS[$what . '_removeCRLF']
                     ) {
                         $row[$j] = str_replace(
-                            [
-                                "\r",
-                                "\n",
-                            ],
-                            '',
-                            $row[$j]
+                                [
+                                    "\r",
+                                    "\n",
+                                ],
+                                '',
+                                $row[$j]
                         );
                     }
                     if ($csv_enclosed == '') {
@@ -302,25 +293,25 @@ class ExportCsv extends ExportPlugin
                         // also double the escape string if found in the data
                         if ($csv_escaped != $csv_enclosed) {
                             $schema_insert .= $csv_enclosed
-                                . str_replace(
-                                    $csv_enclosed,
-                                    $csv_escaped . $csv_enclosed,
-                                    str_replace(
-                                        $csv_escaped,
-                                        $csv_escaped . $csv_escaped,
-                                        $row[$j]
+                                    . str_replace(
+                                            $csv_enclosed,
+                                            $csv_escaped . $csv_enclosed,
+                                            str_replace(
+                                                    $csv_escaped,
+                                                    $csv_escaped . $csv_escaped,
+                                                    $row[$j]
+                                            )
                                     )
-                                )
-                                . $csv_enclosed;
+                                    . $csv_enclosed;
                         } else {
                             // avoid a problem when escape string equals enclose
                             $schema_insert .= $csv_enclosed
-                                . str_replace(
-                                    $csv_enclosed,
-                                    $csv_escaped . $csv_enclosed,
-                                    $row[$j]
-                                )
-                                . $csv_enclosed;
+                                    . str_replace(
+                                            $csv_enclosed,
+                                            $csv_escaped . $csv_enclosed,
+                                            $row[$j]
+                                    )
+                                    . $csv_enclosed;
                         }
                     }
                 } else {
@@ -333,7 +324,7 @@ class ExportCsv extends ExportPlugin
                 $schema_insert .= $csv_separator;
             }
 
-            if (! $this->export->outputHandler($schema_insert . $csv_terminated)) {
+            if (!$this->export->outputHandler($schema_insert . $csv_terminated)) {
                 return false;
             }
         }
@@ -351,8 +342,8 @@ class ExportCsv extends ExportPlugin
      *
      * @return bool if succeeded
      */
-    public function exportRawQuery(string $err_url, string $sql_query, string $crlf): bool
-    {
+    public function exportRawQuery(string $err_url, string $sql_query, string $crlf): bool {
         return $this->exportData('', '', $crlf, $err_url, $sql_query);
     }
+
 }

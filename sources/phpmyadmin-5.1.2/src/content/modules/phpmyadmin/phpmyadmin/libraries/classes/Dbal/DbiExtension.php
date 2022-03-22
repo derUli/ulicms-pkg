@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Contract for every database extension supported by phpMyAdmin
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Dbal;
@@ -10,8 +10,8 @@ namespace PhpMyAdmin\Dbal;
 /**
  * Contract for every database extension supported by phpMyAdmin
  */
-interface DbiExtension
-{
+interface DbiExtension {
+
     /**
      * connects to the database server
      *
@@ -22,9 +22,9 @@ interface DbiExtension
      * @return mixed false on error or a connection object on success
      */
     public function connect(
-        $user,
-        $password,
-        array $server
+            $user,
+            $password,
+            array $server
     );
 
     /**

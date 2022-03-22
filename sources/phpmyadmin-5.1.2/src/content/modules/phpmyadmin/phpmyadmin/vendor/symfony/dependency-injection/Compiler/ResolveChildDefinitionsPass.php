@@ -25,12 +25,11 @@ use Symfony\Component\DependencyInjection\Exception\ServiceCircularReferenceExce
  * @author Johannes M. Schmitt <schmittjoh@gmail.com>
  * @author Nicolas Grekas <p@tchwork.com>
  */
-class ResolveChildDefinitionsPass extends AbstractRecursivePass
-{
+class ResolveChildDefinitionsPass extends AbstractRecursivePass {
+
     private $currentPath;
 
-    protected function processValue($value, $isRoot = false)
-    {
+    protected function processValue($value, $isRoot = false) {
         if (!$value instanceof Definition) {
             return parent::processValue($value, $isRoot);
         }
@@ -55,8 +54,7 @@ class ResolveChildDefinitionsPass extends AbstractRecursivePass
      *
      * @throws RuntimeException When the definition is invalid
      */
-    private function resolveDefinition(ChildDefinition $definition): Definition
-    {
+    private function resolveDefinition(ChildDefinition $definition): Definition {
         try {
             return $this->doResolveDefinition($definition);
         } catch (ServiceCircularReferenceException $e) {
@@ -70,8 +68,7 @@ class ResolveChildDefinitionsPass extends AbstractRecursivePass
         }
     }
 
-    private function doResolveDefinition(ChildDefinition $definition): Definition
-    {
+    private function doResolveDefinition(ChildDefinition $definition): Definition {
         if (!$this->container->has($parent = $definition->getParent())) {
             throw new RuntimeException(sprintf('Parent definition "%s" does not exist.', $parent));
         }
@@ -187,4 +184,5 @@ class ResolveChildDefinitionsPass extends AbstractRecursivePass
 
         return $def;
     }
+
 }

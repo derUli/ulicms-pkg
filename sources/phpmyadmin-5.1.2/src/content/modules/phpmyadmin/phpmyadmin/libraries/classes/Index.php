@@ -12,12 +12,12 @@ use function strlen;
 /**
  * Index manipulation class
  */
-class Index
-{
-    public const PRIMARY  = 1;
-    public const UNIQUE   = 2;
-    public const INDEX    = 4;
-    public const SPATIAL  = 8;
+class Index {
+
+    public const PRIMARY = 1;
+    public const UNIQUE = 2;
+    public const INDEX = 4;
+    public const SPATIAL = 8;
     public const FULLTEXT = 16;
 
     /**
@@ -99,8 +99,7 @@ class Index
     /**
      * @param array $params parameters
      */
-    public function __construct(array $params = [])
-    {
+    public function __construct(array $params = []) {
         $this->set($params);
     }
 
@@ -113,10 +112,9 @@ class Index
      *
      * @return Index corresponding Index object
      */
-    public static function singleton($schema, $table, $index_name = '')
-    {
+    public static function singleton($schema, $table, $index_name = '') {
         self::loadIndexes($table, $schema);
-        if (! isset(self::$registry[$schema][$table][$index_name])) {
+        if (!isset(self::$registry[$schema][$table][$index_name])) {
             $index = new Index();
             if (strlen($index_name) > 0) {
                 $index->setName($index_name);
@@ -137,8 +135,7 @@ class Index
      *
      * @return Index[]  array of indexes
      */
-    public static function getFromTable($table, $schema)
-    {
+    public static function getFromTable($table, $schema) {
         self::loadIndexes($table, $schema);
 
         if (isset(self::$registry[$schema][$table])) {
@@ -157,32 +154,26 @@ class Index
      *
      * @return Index[] array of indexes
      */
-    public static function getFromTableByChoice($table, $schema, $choices = 31)
-    {
+    public static function getFromTableByChoice($table, $schema, $choices = 31) {
         $indexes = [];
         foreach (self::getFromTable($table, $schema) as $index) {
-            if (($choices & self::PRIMARY)
-                && $index->getChoice() === 'PRIMARY'
+            if (($choices & self::PRIMARY) && $index->getChoice() === 'PRIMARY'
             ) {
                 $indexes[] = $index;
             }
-            if (($choices & self::UNIQUE)
-                && $index->getChoice() === 'UNIQUE'
+            if (($choices & self::UNIQUE) && $index->getChoice() === 'UNIQUE'
             ) {
                 $indexes[] = $index;
             }
-            if (($choices & self::INDEX)
-                && $index->getChoice() === 'INDEX'
+            if (($choices & self::INDEX) && $index->getChoice() === 'INDEX'
             ) {
                 $indexes[] = $index;
             }
-            if (($choices & self::SPATIAL)
-                && $index->getChoice() === 'SPATIAL'
+            if (($choices & self::SPATIAL) && $index->getChoice() === 'SPATIAL'
             ) {
                 $indexes[] = $index;
             }
-            if ((! ($choices & self::FULLTEXT))
-                || $index->getChoice() !== 'FULLTEXT'
+            if ((!($choices & self::FULLTEXT)) || $index->getChoice() !== 'FULLTEXT'
             ) {
                 continue;
             }
@@ -201,8 +192,7 @@ class Index
      *
      * @return Index|false primary index or false if no one exists
      */
-    public static function getPrimary($table, $schema)
-    {
+    public static function getPrimary($table, $schema) {
         self::loadIndexes($table, $schema);
 
         if (isset(self::$registry[$schema][$table]['PRIMARY'])) {
@@ -220,8 +210,7 @@ class Index
      *
      * @return bool whether loading was successful
      */
-    private static function loadIndexes($table, $schema)
-    {
+    private static function loadIndexes($table, $schema) {
         global $dbi;
 
         if (isset(self::$registry[$schema][$table])) {
@@ -232,7 +221,7 @@ class Index
         foreach ($_raw_indexes as $_each_index) {
             $_each_index['Schema'] = $schema;
             $keyName = $_each_index['Key_name'];
-            if (! isset(self::$registry[$schema][$table][$keyName])) {
+            if (!isset(self::$registry[$schema][$table][$keyName])) {
                 $key = new Index($_each_index);
                 self::$registry[$schema][$table][$keyName] = $key;
             } else {
@@ -252,8 +241,7 @@ class Index
      *
      * @return void
      */
-    public function addColumn(array $params)
-    {
+    public function addColumn(array $params) {
         $key = $params['Column_name'] ?? $params['Expression'] ?? '';
         if (isset($params['Expression'])) {
             // The Expression only does not make the key unique, add a sequence number
@@ -273,8 +261,7 @@ class Index
      *
      * @return void
      */
-    public function addColumns(array $columns)
-    {
+    public function addColumns(array $columns) {
         $_columns = [];
 
         if (isset($columns['names'])) {
@@ -284,8 +271,8 @@ class Index
             foreach ($columns['names'] as $key => $name) {
                 $sub_part = $columns['sub_parts'][$key] ?? '';
                 $_columns[] = [
-                    'Column_name'   => $name,
-                    'Sub_part'      => $sub_part,
+                    'Column_name' => $name,
+                    'Sub_part' => $sub_part,
                 ];
             }
         } else {
@@ -308,8 +295,7 @@ class Index
      *
      * @return bool true if $column indexed in this index
      */
-    public function hasColumn($column)
-    {
+    public function hasColumn($column) {
         return isset($this->columns[$column]);
     }
 
@@ -320,8 +306,7 @@ class Index
      *
      * @return void
      */
-    public function set(array $params)
-    {
+    public function set(array $params) {
         if (isset($params['columns'])) {
             $this->addColumns($params['columns']);
         }
@@ -368,7 +353,7 @@ class Index
             $this->keyBlockSize = $params['Key_block_size'];
         }
 
-        if (! isset($params['Parser'])) {
+        if (!isset($params['Parser'])) {
             return;
         }
 
@@ -380,8 +365,7 @@ class Index
      *
      * @return int the number of the columns
      */
-    public function getColumnCount()
-    {
+    public function getColumnCount() {
         return count($this->columns);
     }
 
@@ -390,8 +374,7 @@ class Index
      *
      * @return string index comment
      */
-    public function getComment()
-    {
+    public function getComment() {
         return $this->comment;
     }
 
@@ -400,8 +383,7 @@ class Index
      *
      * @return string index remarks
      */
-    public function getRemarks()
-    {
+    public function getRemarks() {
         return $this->remarks;
     }
 
@@ -410,8 +392,7 @@ class Index
      *
      * @return int
      */
-    public function getKeyBlockSize()
-    {
+    public function getKeyBlockSize() {
         return $this->keyBlockSize;
     }
 
@@ -420,8 +401,7 @@ class Index
      *
      * @return string
      */
-    public function getParser()
-    {
+    public function getParser() {
         return $this->parser;
     }
 
@@ -430,8 +410,7 @@ class Index
      *
      * @return string concatenated remarks and comment
      */
-    public function getComments()
-    {
+    public function getComments() {
         $comments = $this->getRemarks();
         if (strlen($comments) > 0) {
             $comments .= "\n";
@@ -446,8 +425,7 @@ class Index
      *
      * @return string index type
      */
-    public function getType()
-    {
+    public function getType() {
         return $this->type;
     }
 
@@ -456,8 +434,7 @@ class Index
      *
      * @return string index choice
      */
-    public function getChoice()
-    {
+    public function getChoice() {
         return $this->choice;
     }
 
@@ -466,16 +443,14 @@ class Index
      *
      * @return string[] index types
      */
-    public static function getIndexTypes()
-    {
+    public static function getIndexTypes() {
         return [
             'BTREE',
             'HASH',
         ];
     }
 
-    public function hasPrimary(): bool
-    {
+    public function hasPrimary(): bool {
         return (bool) self::getPrimary($this->table, $this->schema);
     }
 
@@ -484,8 +459,7 @@ class Index
      *
      * @return string how the index is packed
      */
-    public function getPacked()
-    {
+    public function getPacked() {
         return $this->packed;
     }
 
@@ -495,8 +469,7 @@ class Index
      *
      * @return string
      */
-    public function isPacked()
-    {
+    public function isPacked() {
         if ($this->packed === null) {
             return __('No');
         }
@@ -509,8 +482,7 @@ class Index
      *
      * @return int 0 if the index cannot contain duplicates, 1 if it can
      */
-    public function getNonUnique()
-    {
+    public function getNonUnique() {
         return $this->nonUnique;
     }
 
@@ -521,8 +493,7 @@ class Index
      *
      * @return mixed whether the index is a 'Unique' index
      */
-    public function isUnique($as_text = false)
-    {
+    public function isUnique($as_text = false) {
         if ($as_text) {
             $r = [
                 '0' => __('Yes'),
@@ -543,8 +514,7 @@ class Index
      *
      * @return string the name of the index
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -555,8 +525,7 @@ class Index
      *
      * @return void
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = (string) $name;
     }
 
@@ -565,8 +534,7 @@ class Index
      *
      * @return IndexColumn[] the columns of the index
      */
-    public function getColumns()
-    {
+    public function getColumns() {
         return $this->columns;
     }
 
@@ -575,11 +543,10 @@ class Index
      *
      * @return array an array containing the properties of the index
      */
-    public function getCompareData()
-    {
+    public function getCompareData() {
         $data = [
-            'Packed'        => $this->packed,
-            'Index_choice'    => $this->choice,
+            'Packed' => $this->packed,
+            'Index_choice' => $this->choice,
         ];
 
         foreach ($this->columns as $column) {
@@ -599,11 +566,10 @@ class Index
      *
      * @access public
      */
-    public static function findDuplicates($table, $schema)
-    {
+    public static function findDuplicates($table, $schema) {
         $indexes = self::getFromTable($table, $schema);
 
-        $output  = '';
+        $output = '';
 
         // count($indexes) < 2:
         //   there is no need to check if there less than two indexes
@@ -624,10 +590,10 @@ class Index
                 // so it makes no sense to have this two equal indexes
 
                 $message = Message::notice(
-                    __(
-                        'The indexes %1$s and %2$s seem to be equal and one of them '
-                        . 'could possibly be removed.'
-                    )
+                                __(
+                                        'The indexes %1$s and %2$s seem to be equal and one of them '
+                                        . 'could possibly be removed.'
+                                )
                 );
                 $message->addParam($each_index->getName());
                 $message->addParam($while_index->getName());
@@ -641,4 +607,5 @@ class Index
 
         return $output;
     }
+
 }

@@ -16,8 +16,8 @@ namespace Symfony\Component\DependencyInjection\Argument;
  *
  * @author Titouan Galopin <galopintitouan@gmail.com>
  */
-interface ArgumentInterface
-{
+interface ArgumentInterface {
+
     /**
      * @return array
      */

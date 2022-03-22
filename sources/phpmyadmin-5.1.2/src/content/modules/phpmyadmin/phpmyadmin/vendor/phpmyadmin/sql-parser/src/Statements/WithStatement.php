@@ -1,8 +1,8 @@
 <?php
+
 /**
  * `WITH` statement.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\SqlParser\Statements;
@@ -16,7 +16,6 @@ use PhpMyAdmin\SqlParser\Statement;
 use PhpMyAdmin\SqlParser\Token;
 use PhpMyAdmin\SqlParser\TokensList;
 use PhpMyAdmin\SqlParser\Translator;
-
 use function array_slice;
 use function count;
 
@@ -25,8 +24,8 @@ use function count;
 
  *  WITH [RECURSIVE] query_name [ (column_name [,...]) ] AS (SELECT ...) [, ...]
  */
-final class WithStatement extends Statement
-{
+final class WithStatement extends Statement {
+
     /**
      * Options for `WITH` statements and their slot ID.
      *
@@ -64,10 +63,8 @@ final class WithStatement extends Statement
      * @param Parser     $parser the instance that requests parsing
      * @param TokensList $list   the list of tokens to be parsed
      */
-    public function parse(Parser $parser, TokensList $list)
-    {
+    public function parse(Parser $parser, TokensList $list) {
         ++$list->idx; // Skipping `WITH`.
-
         // parse any options if provided
         $this->options = OptionsArray::parse($parser, $list, static::$OPTIONS);
         ++$list->idx;
@@ -156,8 +153,7 @@ final class WithStatement extends Statement
     /**
      * {@inheritdoc}
      */
-    public function build()
-    {
+    public function build() {
         $str = 'WITH ';
 
         foreach ($this->withers as $wither) {
@@ -173,8 +169,7 @@ final class WithStatement extends Statement
      *
      * @return ParserException|TokensList
      */
-    private function getSubTokenList(TokensList $list)
-    {
+    private function getSubTokenList(TokensList $list) {
         $idx = $list->idx;
         /** @var Token $token */
         $token = $list->tokens[$list->idx];
@@ -190,7 +185,7 @@ final class WithStatement extends Statement
             }
 
             ++$list->idx;
-            if (! isset($list->tokens[$list->idx])) {
+            if (!isset($list->tokens[$list->idx])) {
                 break;
             }
 
@@ -202,8 +197,8 @@ final class WithStatement extends Statement
             --$list->idx;
 
             return new ParserException(
-                Translator::gettext('A closing bracket was expected.'),
-                $token
+                    Translator::gettext('A closing bracket was expected.'),
+                    $token
             );
         }
 
@@ -211,4 +206,5 @@ final class WithStatement extends Statement
 
         return new TokensList(array_slice($list->tokens, $idx, $length), $length);
     }
+
 }

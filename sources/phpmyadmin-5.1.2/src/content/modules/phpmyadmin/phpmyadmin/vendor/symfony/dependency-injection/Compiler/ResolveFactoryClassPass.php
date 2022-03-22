@@ -17,13 +17,12 @@ use Symfony\Component\DependencyInjection\Exception\RuntimeException;
 /**
  * @author Maxime Steinhausser <maxime.steinhausser@gmail.com>
  */
-class ResolveFactoryClassPass extends AbstractRecursivePass
-{
+class ResolveFactoryClassPass extends AbstractRecursivePass {
+
     /**
      * {@inheritdoc}
      */
-    protected function processValue($value, $isRoot = false)
-    {
+    protected function processValue($value, $isRoot = false) {
         if ($value instanceof Definition && \is_array($factory = $value->getFactory()) && null === $factory[0]) {
             if (null === $class = $value->getClass()) {
                 throw new RuntimeException(sprintf('The "%s" service is defined to be created by a factory, but is missing the factory class. Did you forget to define the factory or service class?', $this->currentId));
@@ -35,4 +34,5 @@ class ResolveFactoryClassPass extends AbstractRecursivePass
 
         return parent::processValue($value, $isRoot);
     }
+
 }

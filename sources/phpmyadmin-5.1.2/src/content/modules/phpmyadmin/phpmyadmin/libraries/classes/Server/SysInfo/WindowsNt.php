@@ -14,8 +14,8 @@ use function trim;
 /**
  * Windows NT based SysInfo class
  */
-class WindowsNt extends Base
-{
+class WindowsNt extends Base {
+
     /** @var COM|null */
     private $wmi;
 
@@ -29,9 +29,8 @@ class WindowsNt extends Base
     /**
      * Constructor to access to wmi database.
      */
-    public function __construct()
-    {
-        if (! class_exists('COM')) {
+    public function __construct() {
+        if (!class_exists('COM')) {
             $this->wmi = null;
         } else {
             // initialize the wmi object
@@ -45,8 +44,7 @@ class WindowsNt extends Base
      *
      * @return array with load data
      */
-    public function loadavg()
-    {
+    public function loadavg() {
         $sum = 0;
         $buffer = $this->getWMI('Win32_Processor', ['LoadPercentage']);
 
@@ -63,8 +61,7 @@ class WindowsNt extends Base
      *
      * @return bool true on success
      */
-    public function supported()
-    {
+    public function supported() {
         return $this->wmi !== null;
     }
 
@@ -76,8 +73,7 @@ class WindowsNt extends Base
      *
      * @return array with results
      */
-    private function getWMI($strClass, array $strValue = [])
-    {
+    private function getWMI($strClass, array $strValue = []) {
         $arrData = [];
 
         $objWEBM = $this->wmi->Get($strClass);
@@ -87,7 +83,7 @@ class WindowsNt extends Base
             $arrInstance = [];
             foreach ($arrProp as $propItem) {
                 $name = $propItem->Name;
-                if (! empty($strValue) && ! in_array($name, $strValue)) {
+                if (!empty($strValue) && !in_array($name, $strValue)) {
                     continue;
                 }
 
@@ -109,14 +105,13 @@ class WindowsNt extends Base
      *
      * @return array with memory usage data
      */
-    public function memory()
-    {
+    public function memory() {
         $buffer = $this->getWMI(
-            'Win32_OperatingSystem',
-            [
-                'TotalVisibleMemorySize',
-                'FreePhysicalMemory',
-            ]
+                'Win32_OperatingSystem',
+                [
+                    'TotalVisibleMemorySize',
+                    'FreePhysicalMemory',
+                ]
         );
         $mem = [];
         $mem['MemTotal'] = $buffer[0]['TotalVisibleMemorySize'];
@@ -137,4 +132,5 @@ class WindowsNt extends Base
 
         return $mem;
     }
+
 }

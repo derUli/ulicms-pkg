@@ -18,8 +18,8 @@ use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
  *
  * @author David Jeanmonod <david.jeanmonod@gmail.com>
  */
-class NumericNode extends ScalarNode
-{
+class NumericNode extends ScalarNode {
+
     protected $min;
     protected $max;
 
@@ -27,8 +27,7 @@ class NumericNode extends ScalarNode
      * @param int|float|null $min
      * @param int|float|null $max
      */
-    public function __construct(?string $name, NodeInterface $parent = null, $min = null, $max = null, string $pathSeparator = BaseNode::DEFAULT_PATH_SEPARATOR)
-    {
+    public function __construct(?string $name, NodeInterface $parent = null, $min = null, $max = null, string $pathSeparator = BaseNode::DEFAULT_PATH_SEPARATOR) {
         parent::__construct($name, $parent, $pathSeparator);
         $this->min = $min;
         $this->max = $max;
@@ -37,8 +36,7 @@ class NumericNode extends ScalarNode
     /**
      * {@inheritdoc}
      */
-    protected function finalizeValue($value)
-    {
+    protected function finalizeValue($value) {
         $value = parent::finalizeValue($value);
 
         $errorMsg = null;
@@ -60,9 +58,9 @@ class NumericNode extends ScalarNode
     /**
      * {@inheritdoc}
      */
-    protected function isValueEmpty($value)
-    {
+    protected function isValueEmpty($value) {
         // a numeric value cannot be empty
         return false;
     }
+
 }

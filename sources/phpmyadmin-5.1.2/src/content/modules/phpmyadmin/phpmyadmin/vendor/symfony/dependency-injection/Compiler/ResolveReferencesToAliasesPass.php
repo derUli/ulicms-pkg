@@ -20,13 +20,12 @@ use Symfony\Component\DependencyInjection\Reference;
  *
  * @author Johannes M. Schmitt <schmittjoh@gmail.com>
  */
-class ResolveReferencesToAliasesPass extends AbstractRecursivePass
-{
+class ResolveReferencesToAliasesPass extends AbstractRecursivePass {
+
     /**
      * {@inheritdoc}
      */
-    public function process(ContainerBuilder $container)
-    {
+    public function process(ContainerBuilder $container) {
         parent::process($container);
 
         foreach ($container->getAliases() as $id => $alias) {
@@ -42,8 +41,7 @@ class ResolveReferencesToAliasesPass extends AbstractRecursivePass
     /**
      * {@inheritdoc}
      */
-    protected function processValue($value, $isRoot = false)
-    {
+    protected function processValue($value, $isRoot = false) {
         if (!$value instanceof Reference) {
             return parent::processValue($value, $isRoot);
         }
@@ -53,8 +51,7 @@ class ResolveReferencesToAliasesPass extends AbstractRecursivePass
         return $defId !== $id ? new Reference($defId, $value->getInvalidBehavior()) : $value;
     }
 
-    private function getDefinitionId(string $id, ContainerBuilder $container): string
-    {
+    private function getDefinitionId(string $id, ContainerBuilder $container): string {
         if (!$container->hasAlias($id)) {
             return $id;
         }
@@ -80,4 +77,5 @@ class ResolveReferencesToAliasesPass extends AbstractRecursivePass
 
         return $id;
     }
+
 }

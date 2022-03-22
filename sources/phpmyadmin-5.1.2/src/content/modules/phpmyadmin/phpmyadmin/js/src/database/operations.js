@@ -63,15 +63,15 @@ AJAX.registerOnload('database/operations.js', function () {
 
                     Navigation.reload(function () {
                         $('#pma_navigation_tree')
-                            .find('a:not(\'.expander\')')
-                            .each(function () {
-                                var $thisAnchor = $(this);
-                                if ($thisAnchor.text() === data.newname) {
-                                    // simulate a click on the new db name
-                                    // in navigation
-                                    $thisAnchor.trigger('click');
-                                }
-                            });
+                                .find('a:not(\'.expander\')')
+                                .each(function () {
+                                    var $thisAnchor = $(this);
+                                    if ($thisAnchor.text() === data.newname) {
+                                        // simulate a click on the new db name
+                                        // in navigation
+                                        $thisAnchor.trigger('click');
+                                    }
+                                });
                     });
                 } else {
                     Functions.ajaxShowMessage(data.error, false);
@@ -150,9 +150,9 @@ AJAX.registerOnload('database/operations.js', function () {
          */
         var question = Messages.strDropDatabaseStrongWarning + ' ';
         question += Functions.sprintf(
-            Messages.strDoYouReally,
-            'DROP DATABASE `' + Functions.escapeHtml(CommonParams.get('db') + '`')
-        );
+                Messages.strDoYouReally,
+                'DROP DATABASE `' + Functions.escapeHtml(CommonParams.get('db') + '`')
+                );
         var params = Functions.getJsConfirmCommonParam(this, $link.getPostData());
 
         $(this).confirm(question, $(this).attr('href'), function (url) {
@@ -163,10 +163,10 @@ AJAX.registerOnload('database/operations.js', function () {
                     Navigation.reload();
                     CommonParams.set('db', '');
                     CommonActions.refreshMain(
-                        'index.php?route=/server/databases',
-                        function () {
-                            Functions.ajaxShowMessage(data.message);
-                        }
+                            'index.php?route=/server/databases',
+                            function () {
+                                Functions.ajaxShowMessage(data.message);
+                            }
                     );
                 } else {
                     Functions.ajaxShowMessage(data.error, false);

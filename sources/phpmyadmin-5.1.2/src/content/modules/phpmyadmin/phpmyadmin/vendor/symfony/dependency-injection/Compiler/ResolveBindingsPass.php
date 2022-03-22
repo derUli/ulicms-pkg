@@ -25,8 +25,8 @@ use Symfony\Component\DependencyInjection\TypedReference;
 /**
  * @author Guilhem Niot <guilhem.niot@gmail.com>
  */
-class ResolveBindingsPass extends AbstractRecursivePass
-{
+class ResolveBindingsPass extends AbstractRecursivePass {
+
     private $usedBindings = [];
     private $unusedBindings = [];
     private $errorMessages = [];
@@ -34,8 +34,7 @@ class ResolveBindingsPass extends AbstractRecursivePass
     /**
      * {@inheritdoc}
      */
-    public function process(ContainerBuilder $container)
-    {
+    public function process(ContainerBuilder $container) {
         $this->usedBindings = $container->getRemovedBindingIds();
 
         try {
@@ -78,7 +77,7 @@ class ResolveBindingsPass extends AbstractRecursivePass
                     $message .= sprintf("\nCould be related to%s:", 1 < \count($this->errorMessages) ? ' one of' : '');
                 }
                 foreach ($this->errorMessages as $m) {
-                    $message .= "\n - ".$m;
+                    $message .= "\n - " . $m;
                 }
                 throw new InvalidArgumentException($message);
             }
@@ -92,14 +91,13 @@ class ResolveBindingsPass extends AbstractRecursivePass
     /**
      * {@inheritdoc}
      */
-    protected function processValue($value, $isRoot = false)
-    {
+    protected function processValue($value, $isRoot = false) {
         if ($value instanceof TypedReference && $value->getType() === (string) $value) {
             // Already checked
             $bindings = $this->container->getDefinition($this->currentId)->getBindings();
             $name = $value->getName();
 
-            if (isset($name, $bindings[$name = $value.' $'.$name])) {
+            if (isset($name, $bindings[$name = $value . ' $' . $name])) {
                 return $this->getBindingValue($bindings[$name]);
             }
 
@@ -183,14 +181,14 @@ class ResolveBindingsPass extends AbstractRecursivePass
 
                 $typeHint = ProxyHelper::getTypeHint($reflectionMethod, $parameter);
 
-                if ($typeHint && \array_key_exists($k = ltrim($typeHint, '\\').' $'.$parameter->name, $bindings)) {
+                if ($typeHint && \array_key_exists($k = ltrim($typeHint, '\\') . ' $' . $parameter->name, $bindings)) {
                     $arguments[$key] = $this->getBindingValue($bindings[$k]);
 
                     continue;
                 }
 
-                if (\array_key_exists('$'.$parameter->name, $bindings)) {
-                    $arguments[$key] = $this->getBindingValue($bindings['$'.$parameter->name]);
+                if (\array_key_exists('$' . $parameter->name, $bindings)) {
+                    $arguments[$key] = $this->getBindingValue($bindings['$' . $parameter->name]);
 
                     continue;
                 }
@@ -232,8 +230,7 @@ class ResolveBindingsPass extends AbstractRecursivePass
     /**
      * @return mixed
      */
-    private function getBindingValue(BoundArgument $binding)
-    {
+    private function getBindingValue(BoundArgument $binding) {
         [$bindingValue, $bindingId] = $binding->getValues();
 
         $this->usedBindings[$bindingId] = true;
@@ -241,4 +238,5 @@ class ResolveBindingsPass extends AbstractRecursivePass
 
         return $bindingValue;
     }
+
 }

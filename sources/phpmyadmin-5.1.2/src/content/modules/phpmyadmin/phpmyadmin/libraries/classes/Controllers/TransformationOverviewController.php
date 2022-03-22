@@ -12,8 +12,8 @@ use function array_keys;
 /**
  * Lists available transformation plugins
  */
-class TransformationOverviewController extends AbstractController
-{
+class TransformationOverviewController extends AbstractController {
+
     /** @var Transformations */
     private $transformations;
 
@@ -21,14 +21,12 @@ class TransformationOverviewController extends AbstractController
      * @param Response        $response
      * @param Transformations $transformations
      */
-    public function __construct($response, Template $template, $transformations)
-    {
+    public function __construct($response, Template $template, $transformations) {
         parent::__construct($response, $template);
         $this->transformations = $transformations;
     }
 
-    public function index(): void
-    {
+    public function index(): void {
         $header = $this->response->getHeader();
         $header->disableMenuAndConsole();
 
@@ -52,7 +50,7 @@ class TransformationOverviewController extends AbstractController
                 $transformations[$type][] = [
                     'name' => $transformation,
                     'description' => $this->transformations->getDescription(
-                        $types[$type . '_file'][$key]
+                            $types[$type . '_file'][$key]
                     ),
                 ];
             }
@@ -63,4 +61,5 @@ class TransformationOverviewController extends AbstractController
             'transformations' => $transformations,
         ]);
     }
+
 }

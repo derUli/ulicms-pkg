@@ -28,12 +28,11 @@ use Twig\Source;
  *
  * @final since Twig 2.4.0
  */
-class ModuleNode extends Node
-{
-    public function __construct(Node $body, ?AbstractExpression $parent, Node $blocks, Node $macros, Node $traits, $embeddedTemplates, Source $source)
-    {
+class ModuleNode extends Node {
+
+    public function __construct(Node $body, ?AbstractExpression $parent, Node $blocks, Node $macros, Node $traits, $embeddedTemplates, Source $source) {
         if (__CLASS__ !== static::class) {
-            @trigger_error('Overriding '.__CLASS__.' is deprecated since Twig 2.4.0 and the class will be final in 3.0.', \E_USER_DEPRECATED);
+            @trigger_error('Overriding ' . __CLASS__ . ' is deprecated since Twig 2.4.0 and the class will be final in 3.0.', \E_USER_DEPRECATED);
         }
 
         $nodes = [
@@ -55,19 +54,17 @@ class ModuleNode extends Node
         parent::__construct($nodes, [
             'index' => null,
             'embedded_templates' => $embeddedTemplates,
-        ], 1);
+                ], 1);
 
         // populate the template name of all node children
         $this->setSourceContext($source);
     }
 
-    public function setIndex($index)
-    {
+    public function setIndex($index) {
         $this->setAttribute('index', $index);
     }
 
-    public function compile(Compiler $compiler)
-    {
+    public function compile(Compiler $compiler) {
         $this->compileTemplate($compiler);
 
         foreach ($this->getAttribute('embedded_templates') as $template) {
@@ -75,8 +72,7 @@ class ModuleNode extends Node
         }
     }
 
-    protected function compileTemplate(Compiler $compiler)
-    {
+    protected function compileTemplate(Compiler $compiler) {
         if (!$this->getAttribute('index')) {
             $compiler->write('<?php');
         }
@@ -104,81 +100,78 @@ class ModuleNode extends Node
         $this->compileClassFooter($compiler);
     }
 
-    protected function compileGetParent(Compiler $compiler)
-    {
+    protected function compileGetParent(Compiler $compiler) {
         if (!$this->hasNode('parent')) {
             return;
         }
         $parent = $this->getNode('parent');
 
         $compiler
-            ->write("protected function doGetParent(array \$context)\n", "{\n")
-            ->indent()
-            ->addDebugInfo($parent)
-            ->write('return ')
+                ->write("protected function doGetParent(array \$context)\n", "{\n")
+                ->indent()
+                ->addDebugInfo($parent)
+                ->write('return ')
         ;
 
         if ($parent instanceof ConstantExpression) {
             $compiler->subcompile($parent);
         } else {
             $compiler
-                ->raw('$this->loadTemplate(')
-                ->subcompile($parent)
-                ->raw(', ')
-                ->repr($this->getSourceContext()->getName())
-                ->raw(', ')
-                ->repr($parent->getTemplateLine())
-                ->raw(')')
+                    ->raw('$this->loadTemplate(')
+                    ->subcompile($parent)
+                    ->raw(', ')
+                    ->repr($this->getSourceContext()->getName())
+                    ->raw(', ')
+                    ->repr($parent->getTemplateLine())
+                    ->raw(')')
             ;
         }
 
         $compiler
-            ->raw(";\n")
-            ->outdent()
-            ->write("}\n\n")
+                ->raw(";\n")
+                ->outdent()
+                ->write("}\n\n")
         ;
     }
 
-    protected function compileClassHeader(Compiler $compiler)
-    {
+    protected function compileClassHeader(Compiler $compiler) {
         $compiler
-            ->write("\n\n")
+                ->write("\n\n")
         ;
         if (!$this->getAttribute('index')) {
             $compiler
-                ->write("use Twig\Environment;\n")
-                ->write("use Twig\Error\LoaderError;\n")
-                ->write("use Twig\Error\RuntimeError;\n")
-                ->write("use Twig\Extension\SandboxExtension;\n")
-                ->write("use Twig\Markup;\n")
-                ->write("use Twig\Sandbox\SecurityError;\n")
-                ->write("use Twig\Sandbox\SecurityNotAllowedTagError;\n")
-                ->write("use Twig\Sandbox\SecurityNotAllowedFilterError;\n")
-                ->write("use Twig\Sandbox\SecurityNotAllowedFunctionError;\n")
-                ->write("use Twig\Source;\n")
-                ->write("use Twig\Template;\n\n")
+                    ->write("use Twig\Environment;\n")
+                    ->write("use Twig\Error\LoaderError;\n")
+                    ->write("use Twig\Error\RuntimeError;\n")
+                    ->write("use Twig\Extension\SandboxExtension;\n")
+                    ->write("use Twig\Markup;\n")
+                    ->write("use Twig\Sandbox\SecurityError;\n")
+                    ->write("use Twig\Sandbox\SecurityNotAllowedTagError;\n")
+                    ->write("use Twig\Sandbox\SecurityNotAllowedFilterError;\n")
+                    ->write("use Twig\Sandbox\SecurityNotAllowedFunctionError;\n")
+                    ->write("use Twig\Source;\n")
+                    ->write("use Twig\Template;\n\n")
             ;
         }
         $compiler
-            // if the template name contains */, add a blank to avoid a PHP parse error
-            ->write('/* '.str_replace('*/', '* /', $this->getSourceContext()->getName())." */\n")
-            ->write('class '.$compiler->getEnvironment()->getTemplateClass($this->getSourceContext()->getName(), $this->getAttribute('index')))
-            ->raw(sprintf(" extends %s\n", $compiler->getEnvironment()->getBaseTemplateClass(false)))
-            ->write("{\n")
-            ->indent()
-            ->write("private \$source;\n")
-            ->write("private \$macros = [];\n\n")
+                // if the template name contains */, add a blank to avoid a PHP parse error
+                ->write('/* ' . str_replace('*/', '* /', $this->getSourceContext()->getName()) . " */\n")
+                ->write('class ' . $compiler->getEnvironment()->getTemplateClass($this->getSourceContext()->getName(), $this->getAttribute('index')))
+                ->raw(sprintf(" extends %s\n", $compiler->getEnvironment()->getBaseTemplateClass(false)))
+                ->write("{\n")
+                ->indent()
+                ->write("private \$source;\n")
+                ->write("private \$macros = [];\n\n")
         ;
     }
 
-    protected function compileConstructor(Compiler $compiler)
-    {
+    protected function compileConstructor(Compiler $compiler) {
         $compiler
-            ->write("public function __construct(Environment \$env)\n", "{\n")
-            ->indent()
-            ->subcompile($this->getNode('constructor_start'))
-            ->write("parent::__construct(\$env);\n\n")
-            ->write("\$this->source = \$this->getSourceContext();\n\n")
+                ->write("public function __construct(Environment \$env)\n", "{\n")
+                ->indent()
+                ->subcompile($this->getNode('constructor_start'))
+                ->write("parent::__construct(\$env);\n\n")
+                ->write("\$this->source = \$this->getSourceContext();\n\n")
         ;
 
         // parent
@@ -193,127 +186,125 @@ class ModuleNode extends Node
                 $node = $trait->getNode('template');
 
                 $compiler
-                    ->addDebugInfo($node)
-                    ->write(sprintf('$_trait_%s = $this->loadTemplate(', $i))
-                    ->subcompile($node)
-                    ->raw(', ')
-                    ->repr($node->getTemplateName())
-                    ->raw(', ')
-                    ->repr($node->getTemplateLine())
-                    ->raw(");\n")
-                    ->write(sprintf("if (!\$_trait_%s->isTraitable()) {\n", $i))
-                    ->indent()
-                    ->write("throw new RuntimeError('Template \"'.")
-                    ->subcompile($trait->getNode('template'))
-                    ->raw(".'\" cannot be used as a trait.', ")
-                    ->repr($node->getTemplateLine())
-                    ->raw(", \$this->source);\n")
-                    ->outdent()
-                    ->write("}\n")
-                    ->write(sprintf("\$_trait_%s_blocks = \$_trait_%s->getBlocks();\n\n", $i, $i))
+                        ->addDebugInfo($node)
+                        ->write(sprintf('$_trait_%s = $this->loadTemplate(', $i))
+                        ->subcompile($node)
+                        ->raw(', ')
+                        ->repr($node->getTemplateName())
+                        ->raw(', ')
+                        ->repr($node->getTemplateLine())
+                        ->raw(");\n")
+                        ->write(sprintf("if (!\$_trait_%s->isTraitable()) {\n", $i))
+                        ->indent()
+                        ->write("throw new RuntimeError('Template \"'.")
+                        ->subcompile($trait->getNode('template'))
+                        ->raw(".'\" cannot be used as a trait.', ")
+                        ->repr($node->getTemplateLine())
+                        ->raw(", \$this->source);\n")
+                        ->outdent()
+                        ->write("}\n")
+                        ->write(sprintf("\$_trait_%s_blocks = \$_trait_%s->getBlocks();\n\n", $i, $i))
                 ;
 
                 foreach ($trait->getNode('targets') as $key => $value) {
                     $compiler
-                        ->write(sprintf('if (!isset($_trait_%s_blocks[', $i))
-                        ->string($key)
-                        ->raw("])) {\n")
-                        ->indent()
-                        ->write("throw new RuntimeError('Block ")
-                        ->string($key)
-                        ->raw(' is not defined in trait ')
-                        ->subcompile($trait->getNode('template'))
-                        ->raw(".', ")
-                        ->repr($node->getTemplateLine())
-                        ->raw(", \$this->source);\n")
-                        ->outdent()
-                        ->write("}\n\n")
-
-                        ->write(sprintf('$_trait_%s_blocks[', $i))
-                        ->subcompile($value)
-                        ->raw(sprintf('] = $_trait_%s_blocks[', $i))
-                        ->string($key)
-                        ->raw(sprintf(']; unset($_trait_%s_blocks[', $i))
-                        ->string($key)
-                        ->raw("]);\n\n")
+                            ->write(sprintf('if (!isset($_trait_%s_blocks[', $i))
+                            ->string($key)
+                            ->raw("])) {\n")
+                            ->indent()
+                            ->write("throw new RuntimeError('Block ")
+                            ->string($key)
+                            ->raw(' is not defined in trait ')
+                            ->subcompile($trait->getNode('template'))
+                            ->raw(".', ")
+                            ->repr($node->getTemplateLine())
+                            ->raw(", \$this->source);\n")
+                            ->outdent()
+                            ->write("}\n\n")
+                            ->write(sprintf('$_trait_%s_blocks[', $i))
+                            ->subcompile($value)
+                            ->raw(sprintf('] = $_trait_%s_blocks[', $i))
+                            ->string($key)
+                            ->raw(sprintf(']; unset($_trait_%s_blocks[', $i))
+                            ->string($key)
+                            ->raw("]);\n\n")
                     ;
                 }
             }
 
             if ($countTraits > 1) {
                 $compiler
-                    ->write("\$this->traits = array_merge(\n")
-                    ->indent()
+                        ->write("\$this->traits = array_merge(\n")
+                        ->indent()
                 ;
 
                 for ($i = 0; $i < $countTraits; ++$i) {
                     $compiler
-                        ->write(sprintf('$_trait_%s_blocks'.($i == $countTraits - 1 ? '' : ',')."\n", $i))
+                            ->write(sprintf('$_trait_%s_blocks' . ($i == $countTraits - 1 ? '' : ',') . "\n", $i))
                     ;
                 }
 
                 $compiler
-                    ->outdent()
-                    ->write(");\n\n")
+                        ->outdent()
+                        ->write(");\n\n")
                 ;
             } else {
                 $compiler
-                    ->write("\$this->traits = \$_trait_0_blocks;\n\n")
+                        ->write("\$this->traits = \$_trait_0_blocks;\n\n")
                 ;
             }
 
             $compiler
-                ->write("\$this->blocks = array_merge(\n")
-                ->indent()
-                ->write("\$this->traits,\n")
-                ->write("[\n")
+                    ->write("\$this->blocks = array_merge(\n")
+                    ->indent()
+                    ->write("\$this->traits,\n")
+                    ->write("[\n")
             ;
         } else {
             $compiler
-                ->write("\$this->blocks = [\n")
+                    ->write("\$this->blocks = [\n")
             ;
         }
 
         // blocks
         $compiler
-            ->indent()
+                ->indent()
         ;
 
         foreach ($this->getNode('blocks') as $name => $node) {
             $compiler
-                ->write(sprintf("'%s' => [\$this, 'block_%s'],\n", $name, $name))
+                    ->write(sprintf("'%s' => [\$this, 'block_%s'],\n", $name, $name))
             ;
         }
 
         if ($countTraits) {
             $compiler
-                ->outdent()
-                ->write("]\n")
-                ->outdent()
-                ->write(");\n")
+                    ->outdent()
+                    ->write("]\n")
+                    ->outdent()
+                    ->write(");\n")
             ;
         } else {
             $compiler
-                ->outdent()
-                ->write("];\n")
+                    ->outdent()
+                    ->write("];\n")
             ;
         }
 
         $compiler
-            ->subcompile($this->getNode('constructor_end'))
-            ->outdent()
-            ->write("}\n\n")
+                ->subcompile($this->getNode('constructor_end'))
+                ->outdent()
+                ->write("}\n\n")
         ;
     }
 
-    protected function compileDisplay(Compiler $compiler)
-    {
+    protected function compileDisplay(Compiler $compiler) {
         $compiler
-            ->write("protected function doDisplay(array \$context, array \$blocks = [])\n", "{\n")
-            ->indent()
-            ->write("\$macros = \$this->macros;\n")
-            ->subcompile($this->getNode('display_start'))
-            ->subcompile($this->getNode('body'))
+                ->write("protected function doDisplay(array \$context, array \$blocks = [])\n", "{\n")
+                ->indent()
+                ->write("\$macros = \$this->macros;\n")
+                ->subcompile($this->getNode('display_start'))
+                ->subcompile($this->getNode('body'))
         ;
 
         if ($this->hasNode('parent')) {
@@ -322,13 +313,13 @@ class ModuleNode extends Node
             $compiler->addDebugInfo($parent);
             if ($parent instanceof ConstantExpression) {
                 $compiler
-                    ->write('$this->parent = $this->loadTemplate(')
-                    ->subcompile($parent)
-                    ->raw(', ')
-                    ->repr($this->getSourceContext()->getName())
-                    ->raw(', ')
-                    ->repr($parent->getTemplateLine())
-                    ->raw(");\n")
+                        ->write('$this->parent = $this->loadTemplate(')
+                        ->subcompile($parent)
+                        ->raw(', ')
+                        ->repr($this->getSourceContext()->getName())
+                        ->raw(', ')
+                        ->repr($parent->getTemplateLine())
+                        ->raw(");\n")
                 ;
                 $compiler->write('$this->parent');
             } else {
@@ -338,41 +329,37 @@ class ModuleNode extends Node
         }
 
         $compiler
-            ->subcompile($this->getNode('display_end'))
-            ->outdent()
-            ->write("}\n\n")
+                ->subcompile($this->getNode('display_end'))
+                ->outdent()
+                ->write("}\n\n")
         ;
     }
 
-    protected function compileClassFooter(Compiler $compiler)
-    {
+    protected function compileClassFooter(Compiler $compiler) {
         $compiler
-            ->subcompile($this->getNode('class_end'))
-            ->outdent()
-            ->write("}\n")
+                ->subcompile($this->getNode('class_end'))
+                ->outdent()
+                ->write("}\n")
         ;
     }
 
-    protected function compileMacros(Compiler $compiler)
-    {
+    protected function compileMacros(Compiler $compiler) {
         $compiler->subcompile($this->getNode('macros'));
     }
 
-    protected function compileGetTemplateName(Compiler $compiler)
-    {
+    protected function compileGetTemplateName(Compiler $compiler) {
         $compiler
-            ->write("public function getTemplateName()\n", "{\n")
-            ->indent()
-            ->write('return ')
-            ->repr($this->getSourceContext()->getName())
-            ->raw(";\n")
-            ->outdent()
-            ->write("}\n\n")
+                ->write("public function getTemplateName()\n", "{\n")
+                ->indent()
+                ->write('return ')
+                ->repr($this->getSourceContext()->getName())
+                ->raw(";\n")
+                ->outdent()
+                ->write("}\n\n")
         ;
     }
 
-    protected function compileIsTraitable(Compiler $compiler)
-    {
+    protected function compileIsTraitable(Compiler $compiler) {
         // A template can be used as a trait if:
         //   * it has no parent
         //   * it has no macros
@@ -415,58 +402,56 @@ class ModuleNode extends Node
         }
 
         $compiler
-            ->write("public function isTraitable()\n", "{\n")
-            ->indent()
-            ->write(sprintf("return %s;\n", $traitable ? 'true' : 'false'))
-            ->outdent()
-            ->write("}\n\n")
+                ->write("public function isTraitable()\n", "{\n")
+                ->indent()
+                ->write(sprintf("return %s;\n", $traitable ? 'true' : 'false'))
+                ->outdent()
+                ->write("}\n\n")
         ;
     }
 
-    protected function compileDebugInfo(Compiler $compiler)
-    {
+    protected function compileDebugInfo(Compiler $compiler) {
         $compiler
-            ->write("public function getDebugInfo()\n", "{\n")
-            ->indent()
-            ->write(sprintf("return %s;\n", str_replace("\n", '', var_export(array_reverse($compiler->getDebugInfo(), true), true))))
-            ->outdent()
-            ->write("}\n\n")
+                ->write("public function getDebugInfo()\n", "{\n")
+                ->indent()
+                ->write(sprintf("return %s;\n", str_replace("\n", '', var_export(array_reverse($compiler->getDebugInfo(), true), true))))
+                ->outdent()
+                ->write("}\n\n")
         ;
     }
 
-    protected function compileGetSourceContext(Compiler $compiler)
-    {
+    protected function compileGetSourceContext(Compiler $compiler) {
         $compiler
-            ->write("public function getSourceContext()\n", "{\n")
-            ->indent()
-            ->write('return new Source(')
-            ->string($compiler->getEnvironment()->isDebug() ? $this->getSourceContext()->getCode() : '')
-            ->raw(', ')
-            ->string($this->getSourceContext()->getName())
-            ->raw(', ')
-            ->string($this->getSourceContext()->getPath())
-            ->raw(");\n")
-            ->outdent()
-            ->write("}\n")
+                ->write("public function getSourceContext()\n", "{\n")
+                ->indent()
+                ->write('return new Source(')
+                ->string($compiler->getEnvironment()->isDebug() ? $this->getSourceContext()->getCode() : '')
+                ->raw(', ')
+                ->string($this->getSourceContext()->getName())
+                ->raw(', ')
+                ->string($this->getSourceContext()->getPath())
+                ->raw(");\n")
+                ->outdent()
+                ->write("}\n")
         ;
     }
 
-    protected function compileLoadTemplate(Compiler $compiler, $node, $var)
-    {
+    protected function compileLoadTemplate(Compiler $compiler, $node, $var) {
         if ($node instanceof ConstantExpression) {
             $compiler
-                ->write(sprintf('%s = $this->loadTemplate(', $var))
-                ->subcompile($node)
-                ->raw(', ')
-                ->repr($node->getTemplateName())
-                ->raw(', ')
-                ->repr($node->getTemplateLine())
-                ->raw(");\n")
+                    ->write(sprintf('%s = $this->loadTemplate(', $var))
+                    ->subcompile($node)
+                    ->raw(', ')
+                    ->repr($node->getTemplateName())
+                    ->raw(', ')
+                    ->repr($node->getTemplateLine())
+                    ->raw(");\n")
             ;
         } else {
             throw new \LogicException('Trait templates can only be constant nodes.');
         }
     }
+
 }
 
 class_alias('Twig\Node\ModuleNode', 'Twig_Node_Module');

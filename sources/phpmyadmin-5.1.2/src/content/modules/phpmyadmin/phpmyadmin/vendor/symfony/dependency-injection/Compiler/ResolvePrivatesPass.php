@@ -16,13 +16,12 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 /**
  * @author Nicolas Grekas <p@tchwork.com>
  */
-class ResolvePrivatesPass implements CompilerPassInterface
-{
+class ResolvePrivatesPass implements CompilerPassInterface {
+
     /**
      * {@inheritdoc}
      */
-    public function process(ContainerBuilder $container)
-    {
+    public function process(ContainerBuilder $container) {
         foreach ($container->getDefinitions() as $id => $definition) {
             if ($definition->isPrivate()) {
                 $definition->setPublic(false);
@@ -37,4 +36,5 @@ class ResolvePrivatesPass implements CompilerPassInterface
             }
         }
     }
+
 }

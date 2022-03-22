@@ -11,8 +11,8 @@ use PhpMyAdmin\Template;
 use PhpMyAdmin\Url;
 use function strlen;
 
-abstract class AbstractController
-{
+abstract class AbstractController {
+
     /** @var Response */
     protected $response;
 
@@ -22,8 +22,7 @@ abstract class AbstractController
     /**
      * @param Response $response
      */
-    public function __construct($response, Template $template)
-    {
+    public function __construct($response, Template $template) {
         $this->response = $response;
         $this->template = $template;
     }
@@ -31,23 +30,20 @@ abstract class AbstractController
     /**
      * @param array<string, mixed> $templateData
      */
-    protected function render(string $templatePath, array $templateData = []): void
-    {
+    protected function render(string $templatePath, array $templateData = []): void {
         $this->response->addHTML($this->template->render($templatePath, $templateData));
     }
 
     /**
      * @param string[] $files
      */
-    protected function addScriptFiles(array $files): void
-    {
+    protected function addScriptFiles(array $files): void {
         $header = $this->response->getHeader();
         $scripts = $header->getScripts();
         $scripts->addFiles($files);
     }
 
-    protected function hasDatabase(): bool
-    {
+    protected function hasDatabase(): bool {
         global $db, $is_db, $errno, $dbi, $message;
 
         if (isset($is_db) && $is_db) {
@@ -66,12 +62,12 @@ abstract class AbstractController
             }
         }
 
-        if (strlen($db) === 0 || ! $is_db) {
+        if (strlen($db) === 0 || !$is_db) {
             if ($this->response->isAjax()) {
                 $this->response->setRequestStatus(false);
                 $this->response->addJSON(
-                    'message',
-                    Message::error(__('No databases selected.'))
+                        'message',
+                        Message::error(__('No databases selected.'))
                 );
 
                 return false;
@@ -90,4 +86,5 @@ abstract class AbstractController
 
         return $is_db;
     }
+
 }

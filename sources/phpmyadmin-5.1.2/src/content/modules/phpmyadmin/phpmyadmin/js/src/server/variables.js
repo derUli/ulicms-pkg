@@ -19,8 +19,8 @@ AJAX.registerOnload('server/variables.js', function () {
     var $cancelLink = $('a.cancelLink');
 
     $('#serverVariables').find('.var-name').find('a').append(
-        $('#docImage').clone().css('display', 'inline-block')
-    );
+            $('#docImage').clone().css('display', 'inline-block')
+            );
 
     /* Launches the variable editor */
     $(document).on('click', 'a.editLink', function (event) {
@@ -29,7 +29,7 @@ AJAX.registerOnload('server/variables.js', function () {
     });
 
     /* Allows the user to edit a server variable */
-    function editVariable (link) {
+    function editVariable(link) {
         var $link = $(link);
         var $cell = $link.parent();
         var $valueCell = $link.parents('.var-row').find('.var-value');
@@ -51,8 +51,8 @@ AJAX.registerOnload('server/variables.js', function () {
             }, function (data) {
                 if (data.success) {
                     $valueCell
-                        .html(data.variable)
-                        .data('content', data.variable);
+                            .html(data.variable)
+                            .data('content', data.variable);
                     Functions.ajaxRemoveMessage($msgbox);
                 } else {
                     if (data.error === '') {
@@ -79,32 +79,32 @@ AJAX.registerOnload('server/variables.js', function () {
         }, function (data) {
             if (typeof data !== 'undefined' && data.success === true) {
                 var $links = $('<div></div>')
-                    .append($myCancelLink)
-                    .append('&nbsp;&nbsp;&nbsp;')
-                    .append($mySaveLink);
-                var $editor = $('<div></div>', { 'class': 'serverVariableEditor' })
-                    .append(
-                        $('<div></div>').append(
-                            $('<input>', { type: 'text', 'class': 'form-control form-control-sm' }).val(data.message)
-                        )
-                    );
-                    // Save and replace content
+                        .append($myCancelLink)
+                        .append('&nbsp;&nbsp;&nbsp;')
+                        .append($mySaveLink);
+                var $editor = $('<div></div>', {'class': 'serverVariableEditor'})
+                        .append(
+                                $('<div></div>').append(
+                                $('<input>', {type: 'text', 'class': 'form-control form-control-sm'}).val(data.message)
+                                )
+                                );
+                // Save and replace content
                 $cell
-                    .html($links)
-                    .children()
-                    .css('display', 'flex');
+                        .html($links)
+                        .children()
+                        .css('display', 'flex');
                 $valueCell
-                    .data('content', $valueCell.html())
-                    .html($editor)
-                    .find('input')
-                    .trigger('focus')
-                    .on('keydown', function (event) { // Keyboard shortcuts
-                        if (event.keyCode === 13) { // Enter key
-                            $mySaveLink.trigger('click');
-                        } else if (event.keyCode === 27) { // Escape key
-                            $myCancelLink.trigger('click');
-                        }
-                    });
+                        .data('content', $valueCell.html())
+                        .html($editor)
+                        .find('input')
+                        .trigger('focus')
+                        .on('keydown', function (event) { // Keyboard shortcuts
+                            if (event.keyCode === 13) { // Enter key
+                                $mySaveLink.trigger('click');
+                            } else if (event.keyCode === 27) { // Escape key
+                                $myCancelLink.trigger('click');
+                            }
+                        });
                 Functions.ajaxRemoveMessage($msgbox);
             } else {
                 $cell.removeClass('edit').html($myEditLink);

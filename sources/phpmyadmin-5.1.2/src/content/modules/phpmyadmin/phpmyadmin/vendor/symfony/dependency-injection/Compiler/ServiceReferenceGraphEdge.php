@@ -18,8 +18,8 @@ namespace Symfony\Component\DependencyInjection\Compiler;
  *
  * @author Johannes M. Schmitt <schmittjoh@gmail.com>
  */
-class ServiceReferenceGraphEdge
-{
+class ServiceReferenceGraphEdge {
+
     private $sourceNode;
     private $destNode;
     private $value;
@@ -27,8 +27,7 @@ class ServiceReferenceGraphEdge
     private $weak;
     private $byConstructor;
 
-    public function __construct(ServiceReferenceGraphNode $sourceNode, ServiceReferenceGraphNode $destNode, $value = null, bool $lazy = false, bool $weak = false, bool $byConstructor = false)
-    {
+    public function __construct(ServiceReferenceGraphNode $sourceNode, ServiceReferenceGraphNode $destNode, $value = null, bool $lazy = false, bool $weak = false, bool $byConstructor = false) {
         $this->sourceNode = $sourceNode;
         $this->destNode = $destNode;
         $this->value = $value;
@@ -42,8 +41,7 @@ class ServiceReferenceGraphEdge
      *
      * @return mixed
      */
-    public function getValue()
-    {
+    public function getValue() {
         return $this->value;
     }
 
@@ -52,8 +50,7 @@ class ServiceReferenceGraphEdge
      *
      * @return ServiceReferenceGraphNode
      */
-    public function getSourceNode()
-    {
+    public function getSourceNode() {
         return $this->sourceNode;
     }
 
@@ -62,8 +59,7 @@ class ServiceReferenceGraphEdge
      *
      * @return ServiceReferenceGraphNode
      */
-    public function getDestNode()
-    {
+    public function getDestNode() {
         return $this->destNode;
     }
 
@@ -72,8 +68,7 @@ class ServiceReferenceGraphEdge
      *
      * @return bool
      */
-    public function isLazy()
-    {
+    public function isLazy() {
         return $this->lazy;
     }
 
@@ -82,8 +77,7 @@ class ServiceReferenceGraphEdge
      *
      * @return bool
      */
-    public function isWeak()
-    {
+    public function isWeak() {
         return $this->weak;
     }
 
@@ -92,8 +86,8 @@ class ServiceReferenceGraphEdge
      *
      * @return bool
      */
-    public function isReferencedByConstructor()
-    {
+    public function isReferencedByConstructor() {
         return $this->byConstructor;
     }
+
 }

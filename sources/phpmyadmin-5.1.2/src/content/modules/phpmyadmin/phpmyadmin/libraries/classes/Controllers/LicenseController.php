@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Simple script to set correct charset for the license
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Controllers;
@@ -14,10 +14,9 @@ use function readfile;
 /**
  * Simple script to set correct charset for the license
  */
-class LicenseController extends AbstractController
-{
-    public function index(): void
-    {
+class LicenseController extends AbstractController {
+
+    public function index(): void {
         $this->response->disable();
         $this->response->header('Content-type: text/plain; charset=utf-8');
 
@@ -28,13 +27,14 @@ class LicenseController extends AbstractController
             readfile($filename);
         } else {
             printf(
-                __(
-                    'The %s file is not available on this system, please visit ' .
-                    '%s for more information.'
-                ),
-                $filename,
-                'https://www.phpmyadmin.net/'
+                    __(
+                            'The %s file is not available on this system, please visit ' .
+                            '%s for more information.'
+                    ),
+                    $filename,
+                    'https://www.phpmyadmin.net/'
             );
         }
     }
+
 }

@@ -77,7 +77,7 @@ $(function () {
             if (databaseOp === true) {
                 isTable = CommonParams.get('table');
                 isDb = CommonParams.get('db');
-                if (isDb && ! isTable) {
+                if (isDb && !isTable) {
                     $('.nav-link .ic_b_props').first().trigger('click');
                 }
             } else if (tableOp === true) {
@@ -93,7 +93,7 @@ $(function () {
             if (databaseOp === true) {
                 isTable = CommonParams.get('table');
                 isDb = CommonParams.get('db');
-                if (isDb && ! isTable) {
+                if (isDb && !isTable) {
                     $('.nav-link .ic_b_search').first().trigger('click');
                 }
             } else if (tableOp === true) {

@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Text Plain JSON Transformations plugin for phpMyAdmin
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Plugins\Transformations\Output;
@@ -16,17 +16,16 @@ use function htmlspecialchars;
  * Handles the json transformation for text plain
  */
 // @codingStandardsIgnoreLine
-class Text_Plain_Json extends TransformationsPlugin
-{
-    public function __construct()
-    {
+class Text_Plain_Json extends TransformationsPlugin {
+
+    public function __construct() {
         if (empty($GLOBALS['cfg']['CodemirrorEnable'])) {
             return;
         }
 
         $response = Response::getInstance();
         $scripts = $response->getHeader()
-            ->getScripts();
+                ->getScripts();
         $scripts->addFile('vendor/codemirror/lib/codemirror.js');
         $scripts->addFile('vendor/codemirror/mode/javascript/javascript.js');
         $scripts->addFile('vendor/codemirror/addon/runmode/runmode.js');
@@ -38,10 +37,9 @@ class Text_Plain_Json extends TransformationsPlugin
      *
      * @return string
      */
-    public static function getInfo()
-    {
+    public static function getInfo() {
         return __(
-            'Formats text as JSON with syntax highlighting.'
+                'Formats text as JSON with syntax highlighting.'
         );
     }
 
@@ -54,11 +52,10 @@ class Text_Plain_Json extends TransformationsPlugin
      *
      * @return string
      */
-    public function applyTransformation($buffer, array $options = [], ?stdClass $meta = null)
-    {
+    public function applyTransformation($buffer, array $options = [], ?stdClass $meta = null) {
         return '<code class="json"><pre>' . "\n"
-        . htmlspecialchars($buffer) . "\n"
-        . '</pre></code>';
+                . htmlspecialchars($buffer) . "\n"
+                . '</pre></code>';
     }
 
     /* ~~~~~~~~~~~~~~~~~~~~ Getters and Setters ~~~~~~~~~~~~~~~~~~~~ */
@@ -68,8 +65,7 @@ class Text_Plain_Json extends TransformationsPlugin
      *
      * @return string
      */
-    public static function getMIMEType()
-    {
+    public static function getMIMEType() {
         return 'Text';
     }
 
@@ -78,8 +74,7 @@ class Text_Plain_Json extends TransformationsPlugin
      *
      * @return string
      */
-    public static function getMIMESubtype()
-    {
+    public static function getMIMESubtype() {
         return 'Plain';
     }
 
@@ -88,8 +83,8 @@ class Text_Plain_Json extends TransformationsPlugin
      *
      * @return string
      */
-    public static function getName()
-    {
+    public static function getName() {
         return 'JSON';
     }
+
 }

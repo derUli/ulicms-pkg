@@ -1,5 +1,5 @@
 <?php
-function MediaElement_js_render()
-{
+
+function MediaElement_js_render() {
     return "";
 }

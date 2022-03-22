@@ -17,17 +17,17 @@ var RTE = {
         this.editorType = type;
 
         switch (type) {
-        case 'routine':
-            $.extend(this, RTE.ROUTINE);
-            break;
-        case 'trigger':
-            // nothing extra yet for triggers
-            break;
-        case 'event':
-            $.extend(this, RTE.EVENT);
-            break;
-        default:
-            break;
+            case 'routine':
+                $.extend(this, RTE.ROUTINE);
+                break;
+            case 'trigger':
+                // nothing extra yet for triggers
+                break;
+            case 'event':
+                $.extend(this, RTE.EVENT);
+                break;
+            default:
+                break;
         }
     },
 
@@ -135,7 +135,7 @@ RTE.COMMON = {
             exportAnchors.each(function () {
                 var h = $(this).attr('href');
                 p = p.then(function () {
-                    return $.get(h, { 'ajax_request': true }, function (data) {
+                    return $.get(h, {'ajax_request': true}, function (data) {
                         returnCount++;
                         if (data.success === true) {
                             combined.message += '\n' + data.message + '\n';
@@ -154,11 +154,11 @@ RTE.COMMON = {
                 });
             });
         } else {
-            $.get($this.attr('href'), { 'ajax_request': true }, showExport);
+            $.get($this.attr('href'), {'ajax_request': true}, showExport);
         }
         Functions.ajaxRemoveMessage($msg);
 
-        function showExport (data) {
+        function showExport(data) {
             if (data.success === true) {
                 Functions.ajaxRemoveMessage($msg);
                 /**
@@ -189,7 +189,7 @@ RTE.COMMON = {
                 Functions.ajaxShowMessage(data.error, false);
             }
         } // end showExport()
-    },  // end exportDialog()
+    }, // end exportDialog()
     editorDialog: function (isNew, $this) {
         var that = this;
         /**
@@ -209,7 +209,7 @@ RTE.COMMON = {
          *           the AJAX message shown to the user
          */
         var $msg = Functions.ajaxShowMessage();
-        $.get($this.attr('href'), { 'ajax_request': true }, function (data) {
+        $.get($this.attr('href'), {'ajax_request': true}, function (data) {
             if (data.success === true) {
                 // We have successfully fetched the editor form
                 Functions.ajaxRemoveMessage($msg);
@@ -228,8 +228,8 @@ RTE.COMMON = {
                          */
                         var data = $('form.rte_form').last().serialize();
                         $msg = Functions.ajaxShowMessage(
-                            Messages.strProcessingRequest
-                        );
+                                Messages.strProcessingRequest
+                                );
                         var url = $('form.rte_form').last().attr('action');
                         $.post(url, data, function (data) {
                             if (data.success === true) {
@@ -265,19 +265,19 @@ RTE.COMMON = {
                                     var inserted = false;
                                     $(tableId + '.data').find('tr').each(function () {
                                         text = $(this)
-                                            .children('td')
-                                            .eq(0)
-                                            .find('strong')
-                                            .text()
-                                            .toUpperCase()
-                                            .trim();
+                                                .children('td')
+                                                .eq(0)
+                                                .find('strong')
+                                                .text()
+                                                .toUpperCase()
+                                                .trim();
                                         if (text !== '' && text > data.name) {
                                             $(this).before(data.new_row);
                                             inserted = true;
                                             return false;
                                         }
                                     });
-                                    if (! inserted) {
+                                    if (!inserted) {
                                         // If we didn't manage to insert the row yet,
                                         // it must belong at the end of the list,
                                         // so we insert it there.
@@ -285,8 +285,8 @@ RTE.COMMON = {
                                     }
                                     // Fade-in the new row
                                     $('tr.ajaxInsert')
-                                        .show('slow')
-                                        .removeClass('ajaxInsert');
+                                            .show('slow')
+                                            .removeClass('ajaxInsert');
                                 } else if ($(tableId + '.data').find('tr').has('td').length === 0) {
                                     // If we are not supposed to insert the new row,
                                     // we will now check if the table is empty and
@@ -319,8 +319,8 @@ RTE.COMMON = {
                                 // If this is the first item being added, remove
                                 // the "No items" message and show the list.
                                 if ($(tableId + '.data').find('tr').has('td').length > 0 &&
-                                    $('#nothing2display').is(':visible')
-                                ) {
+                                        $('#nothing2display').is(':visible')
+                                        ) {
                                     $('#nothing2display').hide('slow', function () {
                                         $(tableId + '.data').show('slow');
                                     });
@@ -399,8 +399,8 @@ RTE.COMMON = {
          * @var question String containing the question to be asked for confirmation
          */
         var question = $('<div></div>').text(
-            $currRow.children('td').children('.drop_sql').html()
-        );
+                $currRow.children('td').children('.drop_sql').html()
+                );
         // We ask for confirmation first here, before submitting the ajax request
         $this.confirm(question, $this.attr('href'), function (url) {
             /**
@@ -529,7 +529,7 @@ RTE.COMMON = {
                             if (success) {
                                 // Get rid of the "Loading" message
                                 Functions.ajaxRemoveMessage($msg);
-                                $('#rteListForm_checkall').prop({ checked: false, indeterminate: false });
+                                $('#rteListForm_checkall').prop({checked: false, indeterminate: false});
                             }
                             Navigation.reload();
                         }
@@ -598,20 +598,20 @@ RTE.ROUTINE = {
         $('table.routine_params_table').last().find('th[colspan=2]').attr('colspan', '1');
         $('table.routine_params_table').last().find('tr').has('td').each(function () {
             that.setOptionsForParameter(
-                $(this).find('select[name^=item_param_type]'),
-                $(this).find('input[name^=item_param_length]'),
-                $(this).find('select[name^=item_param_opts_text]'),
-                $(this).find('select[name^=item_param_opts_num]')
-            );
+                    $(this).find('select[name^=item_param_type]'),
+                    $(this).find('input[name^=item_param_length]'),
+                    $(this).find('select[name^=item_param_opts_text]'),
+                    $(this).find('select[name^=item_param_opts_num]')
+                    );
         });
         // Enable/disable the 'options' dropdowns for
         // function return value as necessary
         this.setOptionsForParameter(
-            $('table.rte_table').last().find('select[name=item_returntype]'),
-            $('table.rte_table').last().find('input[name=item_returnlength]'),
-            $('table.rte_table').last().find('select[name=item_returnopts_text]'),
-            $('table.rte_table').last().find('select[name=item_returnopts_num]')
-        );
+                $('table.rte_table').last().find('select[name=item_returntype]'),
+                $('table.rte_table').last().find('input[name=item_returnlength]'),
+                $('table.rte_table').last().find('select[name=item_returnopts_text]'),
+                $('table.rte_table').last().find('select[name=item_returnopts_num]')
+                );
         // Allow changing parameter order
         $('.routine_params_table tbody').sortable({
             containment: '.routine_params_table tbody',
@@ -675,8 +675,8 @@ RTE.ROUTINE = {
                 $(this).find(':input').each(function () {
                     inputname = $(this).attr('name');
                     if (inputname.substr(0, 14) === 'item_param_dir' ||
-                        inputname.substr(0, 15) === 'item_param_name' ||
-                        inputname.substr(0, 15) === 'item_param_type') {
+                            inputname.substr(0, 15) === 'item_param_name' ||
+                            inputname.substr(0, 15) === 'item_param_type') {
                         if ($(this).val() === '') {
                             $(this).trigger('focus');
                             isSuccess = false;
@@ -688,7 +688,7 @@ RTE.ROUTINE = {
                 return false;
             }
         });
-        if (! isSuccess) {
+        if (!isSuccess) {
             alert(Messages.strFormEmpty);
             return false;
         }
@@ -698,15 +698,15 @@ RTE.ROUTINE = {
             var $inputlen = $(this).find('input[name^=item_param_length]');
             if ($inputtyp.length && $inputlen.length) {
                 if (($inputtyp.val() === 'ENUM' || $inputtyp.val() === 'SET' || $inputtyp.val().substr(0, 3) === 'VAR') &&
-                    $inputlen.val() === ''
-                ) {
+                        $inputlen.val() === ''
+                        ) {
                     $inputlen.trigger('focus');
                     isSuccess = false;
                     return false;
                 }
             }
         });
-        if (! isSuccess) {
+        if (!isSuccess) {
             alert(Messages.strFormEmpty);
             return false;
         }
@@ -716,8 +716,8 @@ RTE.ROUTINE = {
             var $returntyp = this.$ajaxDialog.find('select[name=item_returntype]');
             var $returnlen = this.$ajaxDialog.find('input[name=item_returnlength]');
             if (($returntyp.val() === 'ENUM' || $returntyp.val() === 'SET' || $returntyp.val().substr(0, 3) === 'VAR') &&
-                $returnlen.val() === ''
-            ) {
+                    $returnlen.val() === ''
+                    ) {
                 $returnlen.trigger('focus');
                 alert(Messages.strFormEmpty);
                 return false;
@@ -761,65 +761,65 @@ RTE.ROUTINE = {
          *             to an element to be displayed when no
          *             "length/values" field is available
          */
-        var $noLen  = $len.parent().parent().find('.no_len');
+        var $noLen = $len.parent().parent().find('.no_len');
 
         // Process for parameter options
         switch ($type.val()) {
-        case 'TINYINT':
-        case 'SMALLINT':
-        case 'MEDIUMINT':
-        case 'INT':
-        case 'BIGINT':
-        case 'DECIMAL':
-        case 'FLOAT':
-        case 'DOUBLE':
-        case 'REAL':
-            $text.parent().hide();
-            $num.parent().show();
-            $noOpts.hide();
-            break;
-        case 'TINYTEXT':
-        case 'TEXT':
-        case 'MEDIUMTEXT':
-        case 'LONGTEXT':
-        case 'CHAR':
-        case 'VARCHAR':
-        case 'SET':
-        case 'ENUM':
-            $text.parent().show();
-            $num.parent().hide();
-            $noOpts.hide();
-            break;
-        default:
-            $text.parent().hide();
-            $num.parent().hide();
-            $noOpts.show();
-            break;
+            case 'TINYINT':
+            case 'SMALLINT':
+            case 'MEDIUMINT':
+            case 'INT':
+            case 'BIGINT':
+            case 'DECIMAL':
+            case 'FLOAT':
+            case 'DOUBLE':
+            case 'REAL':
+                $text.parent().hide();
+                $num.parent().show();
+                $noOpts.hide();
+                break;
+            case 'TINYTEXT':
+            case 'TEXT':
+            case 'MEDIUMTEXT':
+            case 'LONGTEXT':
+            case 'CHAR':
+            case 'VARCHAR':
+            case 'SET':
+            case 'ENUM':
+                $text.parent().show();
+                $num.parent().hide();
+                $noOpts.hide();
+                break;
+            default:
+                $text.parent().hide();
+                $num.parent().hide();
+                $noOpts.show();
+                break;
         }
         // Process for parameter length
         switch ($type.val()) {
-        case 'DATE':
-        case 'TINYBLOB':
-        case 'TINYTEXT':
-        case 'BLOB':
-        case 'TEXT':
-        case 'MEDIUMBLOB':
-        case 'MEDIUMTEXT':
-        case 'LONGBLOB':
-        case 'LONGTEXT':
-            $text.closest('tr').find('a').first().hide();
-            $len.parent().hide();
-            $noLen.show();
-            break;
-        default:
-            if ($type.val() === 'ENUM' || $type.val() === 'SET') {
-                $text.closest('tr').find('a').first().show();
-            } else {
+            case 'DATE':
+            case 'TINYBLOB':
+            case 'TINYTEXT':
+            case 'BLOB':
+            case 'TEXT':
+            case 'MEDIUMBLOB':
+            case 'MEDIUMTEXT':
+            case 'LONGBLOB':
+            case 'LONGTEXT':
                 $text.closest('tr').find('a').first().hide();
-            }
-            $len.parent().show();
-            $noLen.hide();
-            break;
+                $len.parent().hide();
+                $noLen.show();
+                break;
+            default:
+                if ($type.val() === 'ENUM' || $type.val() === 'SET') {
+                    $text.closest('tr').find('a').first().show();
+                } else {
+                    $text.closest('tr').find('a').first().hide();
+                }
+                $len.parent().show();
+                $noLen.hide();
+                break;
         }
     },
     executeDialog: function ($this) {
@@ -845,8 +845,8 @@ RTE.ROUTINE = {
                          */
                         var data = $('form.rte_form').last().serialize();
                         $msg = Functions.ajaxShowMessage(
-                            Messages.strProcessingRequest
-                        );
+                                Messages.strProcessingRequest
+                                );
                         $.post('index.php?route=/database/routines', data, function (data) {
                             if (data.success === true) {
                                 // Routine executed successfully
@@ -881,18 +881,18 @@ RTE.ROUTINE = {
                         Functions.addDatepicker($(this).css('width', '95%'));
                     });
                     /*
-                    * Define the function if the user presses enter
-                    */
+                     * Define the function if the user presses enter
+                     */
                     $('form.rte_form').on('keyup', function (event) {
                         event.preventDefault();
                         if (event.keyCode === 13) {
                             /**
-                            * @var data Form data to be sent in the AJAX request
-                            */
+                             * @var data Form data to be sent in the AJAX request
+                             */
                             var data = $(this).serialize();
                             $msg = Functions.ajaxShowMessage(
-                                Messages.strProcessingRequest
-                            );
+                                    Messages.strProcessingRequest
+                                    );
                             var url = $(this).attr('action');
                             $.post(url, data, function (data) {
                                 if (data.success === true) {
@@ -993,9 +993,9 @@ $(function () {
      */
     $(document).on('change', 'select[name=item_type]', function () {
         $(this)
-            .closest('table')
-            .find('tr.recurring_event_row, tr.onetime_event_row, tr.routine_return_row, .routine_direction_cell')
-            .toggle();
+                .closest('table')
+                .find('tr.recurring_event_row, tr.onetime_event_row, tr.routine_return_row, .routine_direction_cell')
+                .toggle();
     }); // end $(document).on()
 
     /**
@@ -1012,11 +1012,11 @@ $(function () {
         var $row = $(this).parents('tr').first();
         var rte = new RTE.Object('routine');
         rte.setOptionsForParameter(
-            $row.find('select[name^=item_param_type]'),
-            $row.find('input[name^=item_param_length]'),
-            $row.find('select[name^=item_param_opts_text]'),
-            $row.find('select[name^=item_param_opts_num]')
-        );
+                $row.find('select[name^=item_param_type]'),
+                $row.find('input[name^=item_param_length]'),
+                $row.find('select[name^=item_param_opts_text]'),
+                $row.find('select[name^=item_param_opts_num]')
+                );
     }); // end $(document).on()
 
     /**
@@ -1028,11 +1028,11 @@ $(function () {
         var rte = new RTE.Object('routine');
         var $table = $(this).closest('table.rte_table');
         rte.setOptionsForParameter(
-            $table.find('select[name=item_returntype]'),
-            $table.find('input[name=item_returnlength]'),
-            $table.find('select[name=item_returnopts_text]'),
-            $table.find('select[name=item_returnopts_num]')
-        );
+                $table.find('select[name=item_returntype]'),
+                $table.find('input[name=item_returnlength]'),
+                $table.find('select[name=item_returnopts_text]'),
+                $table.find('select[name=item_returnopts_num]')
+                );
     }); // end $(document).on()
 
     /**
@@ -1065,11 +1065,11 @@ $(function () {
         // Enable/disable the 'options' dropdowns for parameters as necessary
         var rte = new RTE.Object('routine');
         rte.setOptionsForParameter(
-            $newrow.find('select[name^=item_param_type]'),
-            $newrow.find('input[name^=item_param_length]'),
-            $newrow.find('select[name^=item_param_opts_text]'),
-            $newrow.find('select[name^=item_param_opts_num]')
-        );
+                $newrow.find('select[name^=item_param_type]'),
+                $newrow.find('input[name^=item_param_length]'),
+                $newrow.find('select[name^=item_param_opts_text]'),
+                $newrow.find('select[name^=item_param_opts_num]')
+                );
     }); // end $(document).on()
 
     /**

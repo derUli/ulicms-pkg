@@ -6,8 +6,8 @@ namespace PhpMyAdmin\Database;
 
 use PhpMyAdmin\ListDatabase;
 
-class DatabaseList
-{
+class DatabaseList {
+
     /**
      * Holds database list
      *
@@ -24,8 +24,7 @@ class DatabaseList
      *
      * @return mixed
      */
-    public function __get($param)
-    {
+    public function __get($param) {
         switch ($param) {
             case 'databases':
                 return $this->getDatabaseList();
@@ -37,12 +36,12 @@ class DatabaseList
     /**
      * Accessor to PMA::$databases
      */
-    public function getDatabaseList(): ListDatabase
-    {
+    public function getDatabaseList(): ListDatabase {
         if ($this->databases === null) {
             $this->databases = new ListDatabase();
         }
 
         return $this->databases;
     }
+
 }

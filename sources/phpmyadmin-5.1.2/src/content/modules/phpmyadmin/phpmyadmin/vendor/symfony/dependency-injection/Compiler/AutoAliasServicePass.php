@@ -18,13 +18,12 @@ use Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
 /**
  * Sets a service to be an alias of another one, given a format pattern.
  */
-class AutoAliasServicePass implements CompilerPassInterface
-{
+class AutoAliasServicePass implements CompilerPassInterface {
+
     /**
      * {@inheritdoc}
      */
-    public function process(ContainerBuilder $container)
-    {
+    public function process(ContainerBuilder $container) {
         foreach ($container->findTaggedServiceIds('auto_alias') as $serviceId => $tags) {
             foreach ($tags as $tag) {
                 if (!isset($tag['format'])) {
@@ -38,4 +37,5 @@ class AutoAliasServicePass implements CompilerPassInterface
             }
         }
     }
+
 }

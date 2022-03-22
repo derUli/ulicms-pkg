@@ -23,18 +23,16 @@ use Twig\Node\Expression\NameExpression;
 use Twig\Node\Expression\ParentExpression;
 use Twig\Node\Node;
 
-final class SafeAnalysisNodeVisitor extends AbstractNodeVisitor
-{
+final class SafeAnalysisNodeVisitor extends AbstractNodeVisitor {
+
     private $data = [];
     private $safeVars = [];
 
-    public function setSafeVars($safeVars)
-    {
+    public function setSafeVars($safeVars) {
         $this->safeVars = $safeVars;
     }
 
-    public function getSafe(Node $node)
-    {
+    public function getSafe(Node $node) {
         $hash = spl_object_hash($node);
         if (!isset($this->data[$hash])) {
             return;
@@ -53,8 +51,7 @@ final class SafeAnalysisNodeVisitor extends AbstractNodeVisitor
         }
     }
 
-    private function setSafe(Node $node, array $safe)
-    {
+    private function setSafe(Node $node, array $safe) {
         $hash = spl_object_hash($node);
         if (isset($this->data[$hash])) {
             foreach ($this->data[$hash] as &$bucket) {
@@ -71,13 +68,11 @@ final class SafeAnalysisNodeVisitor extends AbstractNodeVisitor
         ];
     }
 
-    protected function doEnterNode(Node $node, Environment $env)
-    {
+    protected function doEnterNode(Node $node, Environment $env) {
         return $node;
     }
 
-    protected function doLeaveNode(Node $node, Environment $env)
-    {
+    protected function doLeaveNode(Node $node, Environment $env) {
         if ($node instanceof ConstantExpression) {
             // constants are marked safe for all
             $this->setSafe($node, ['all']);
@@ -134,8 +129,7 @@ final class SafeAnalysisNodeVisitor extends AbstractNodeVisitor
         return $node;
     }
 
-    private function intersectSafe(array $a = null, array $b = null): array
-    {
+    private function intersectSafe(array $a = null, array $b = null): array {
         if (null === $a || null === $b) {
             return [];
         }
@@ -151,10 +145,10 @@ final class SafeAnalysisNodeVisitor extends AbstractNodeVisitor
         return array_intersect($a, $b);
     }
 
-    public function getPriority()
-    {
+    public function getPriority() {
         return 0;
     }
+
 }
 
 class_alias('Twig\NodeVisitor\SafeAnalysisNodeVisitor', 'Twig_NodeVisitor_SafeAnalysis');

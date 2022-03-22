@@ -18,8 +18,8 @@ use Psr\Cache\InvalidArgumentException;
  *
  * @author Nicolas Grekas <p@tchwork.com>
  */
-interface TagAwareCacheInterface extends CacheInterface
-{
+interface TagAwareCacheInterface extends CacheInterface {
+
     /**
      * Invalidates cached items using tags.
      *

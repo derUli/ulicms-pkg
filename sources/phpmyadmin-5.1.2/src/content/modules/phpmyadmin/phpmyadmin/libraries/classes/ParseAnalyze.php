@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Parse and analyse a SQL query
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin;
@@ -14,8 +14,8 @@ use function strcasecmp;
 /**
  * PhpMyAdmin\ParseAnalyze class
  */
-class ParseAnalyze
-{
+class ParseAnalyze {
+
     /**
      * Calls the parser on a query
      *
@@ -26,8 +26,7 @@ class ParseAnalyze
      *
      * @access public
      */
-    public static function sqlQuery($sql_query, $db)
-    {
+    public static function sqlQuery($sql_query, $db) {
         // @todo: move to returned results (also in all the calling chain)
         $GLOBALS['unparsed_sql'] = $sql_query;
 
@@ -39,7 +38,7 @@ class ParseAnalyze
         // If the targeted table (and database) are different than the ones that is
         // currently browsed, edit `$db` and `$table` to match them so other elements
         // (page headers, links, navigation panel) can be updated properly.
-        if (! empty($analyzed_sql_results['select_tables'])) {
+        if (!empty($analyzed_sql_results['select_tables'])) {
             // Previous table and database name is stored to check if it changed.
             $prev_db = $db;
 
@@ -54,14 +53,14 @@ class ParseAnalyze
                 $table = '';
             } else {
                 $table = $analyzed_sql_results['select_tables'][0][0];
-                if (! empty($analyzed_sql_results['select_tables'][0][1])) {
+                if (!empty($analyzed_sql_results['select_tables'][0][1])) {
                     $db = $analyzed_sql_results['select_tables'][0][1];
                 }
             }
             // There is no point checking if a reload is required if we already decided
             // to reload. Also, no reload is required for AJAX requests.
             $response = Response::getInstance();
-            if (empty($analyzed_sql_results['reload']) && ! $response->isAjax()) {
+            if (empty($analyzed_sql_results['reload']) && !$response->isAjax()) {
                 // NOTE: Database names are case-insensitive.
                 $analyzed_sql_results['reload'] = strcasecmp($db, $prev_db) != 0;
             }
@@ -73,4 +72,5 @@ class ParseAnalyze
             $table,
         ];
     }
+
 }

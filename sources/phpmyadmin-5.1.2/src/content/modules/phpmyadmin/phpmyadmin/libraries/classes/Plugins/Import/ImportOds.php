@@ -1,11 +1,11 @@
 <?php
+
 /**
  * OpenDocument Spreadsheet import plugin for phpMyAdmin
  *
  * @todo       Pretty much everything
  * @todo       Importing of accented characters seems to fail
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Plugins\Import;
@@ -32,10 +32,9 @@ use const PHP_VERSION_ID;
 /**
  * Handles the import for the ODS format
  */
-class ImportOds extends ImportPlugin
-{
-    public function __construct()
-    {
+class ImportOds extends ImportPlugin {
+
+    public function __construct() {
         parent::__construct();
         $this->setProperties();
     }
@@ -46,8 +45,7 @@ class ImportOds extends ImportPlugin
      *
      * @return void
      */
-    protected function setProperties()
-    {
+    protected function setProperties() {
         $importPluginProperties = new ImportPluginProperties();
         $importPluginProperties->setText('OpenDocument Spreadsheet');
         $importPluginProperties->setExtension('ods');
@@ -57,36 +55,36 @@ class ImportOds extends ImportPlugin
         // $importPluginProperties
         // this will be shown as "Format specific options"
         $importSpecificOptions = new OptionsPropertyRootGroup(
-            'Format Specific Options'
+                'Format Specific Options'
         );
 
         // general options main group
         $generalOptions = new OptionsPropertyMainGroup('general_opts');
         // create primary items and add them to the group
         $leaf = new BoolPropertyItem(
-            'col_names',
-            __(
-                'The first line of the file contains the table column names'
-                . ' <i>(if this is unchecked, the first line will become part'
-                . ' of the data)</i>'
-            )
+                'col_names',
+                __(
+                        'The first line of the file contains the table column names'
+                        . ' <i>(if this is unchecked, the first line will become part'
+                        . ' of the data)</i>'
+                )
         );
         $generalOptions->addProperty($leaf);
         $leaf = new BoolPropertyItem(
-            'empty_rows',
-            __('Do not import empty rows')
+                'empty_rows',
+                __('Do not import empty rows')
         );
         $generalOptions->addProperty($leaf);
         $leaf = new BoolPropertyItem(
-            'recognize_percentages',
-            __(
-                'Import percentages as proper decimals <i>(ex. 12.00% to .12)</i>'
-            )
+                'recognize_percentages',
+                __(
+                        'Import percentages as proper decimals <i>(ex. 12.00% to .12)</i>'
+                )
         );
         $generalOptions->addProperty($leaf);
         $leaf = new BoolPropertyItem(
-            'recognize_currency',
-            __('Import currencies <i>(ex. $5.00 to 5.00)</i>')
+                'recognize_currency',
+                __('Import currencies <i>(ex. $5.00 to 5.00)</i>')
         );
         $generalOptions->addProperty($leaf);
 
@@ -105,8 +103,7 @@ class ImportOds extends ImportPlugin
      *
      * @return void
      */
-    public function doImport(?File $importHandle = null, array &$sql_data = [])
-    {
+    public function doImport(?File $importHandle = null, array &$sql_data = []) {
         global $db, $error, $timeout_passed, $finished;
 
         $i = 0;
@@ -117,7 +114,7 @@ class ImportOds extends ImportPlugin
          * Read in the file via Import::getNextChunk so that
          * it can process compressed files
          */
-        while (! ($finished && $i >= $len) && ! $error && ! $timeout_passed) {
+        while (!($finished && $i >= $len) && !$error && !$timeout_passed) {
             $data = $this->import->getNextChunk($importHandle);
             if ($data === false) {
                 /* subtract data we didn't handle yet and stop processing */
@@ -155,10 +152,10 @@ class ImportOds extends ImportPlugin
         if ($xml === false) {
             $sheets = [];
             $GLOBALS['message'] = Message::error(
-                __(
-                    'The XML file specified was either malformed or incomplete.'
-                    . ' Please correct the issue and try again.'
-                )
+                            __(
+                                    'The XML file specified was either malformed or incomplete.'
+                                    . ' Please correct the issue and try again.'
+                            )
             );
             $GLOBALS['error'] = true;
         } else {
@@ -167,7 +164,7 @@ class ImportOds extends ImportPlugin
             if (empty($root)) {
                 $sheets = [];
                 $GLOBALS['message'] = Message::error(
-                    __('Could not parse OpenDocument Spreadsheet!')
+                                __('Could not parse OpenDocument Spreadsheet!')
                 );
                 $GLOBALS['error'] = true;
             } else {
@@ -188,7 +185,7 @@ class ImportOds extends ImportPlugin
                     continue;
                 }
 
-                if (! isset($tables[$i][Import::COL_NAMES])) {
+                if (!isset($tables[$i][Import::COL_NAMES])) {
                     $tables[$i][] = $rows[$j][Import::COL_NAMES];
                 }
 
@@ -220,7 +217,6 @@ class ImportOds extends ImportPlugin
          *
          * array $options = an associative array of options
          */
-
         /* Set database name to the currently selected one, if applicable */
         [$db_name, $options] = $this->getDbnameAndOptions($db, 'ODS_DB');
 
@@ -244,21 +240,16 @@ class ImportOds extends ImportPlugin
      *
      * @return float|string
      */
-    protected function getValue($cell_attrs, $text)
-    {
-        if (isset($_REQUEST['ods_recognize_percentages'])
-            && $_REQUEST['ods_recognize_percentages']
-            && ! strcmp(
-                'percentage',
-                (string) $cell_attrs['value-type']
-            )
+    protected function getValue($cell_attrs, $text) {
+        if (isset($_REQUEST['ods_recognize_percentages']) && $_REQUEST['ods_recognize_percentages'] && !strcmp(
+                        'percentage',
+                        (string) $cell_attrs['value-type']
+                )
         ) {
             return (float) $cell_attrs['value'];
         }
 
-        if (isset($_REQUEST['ods_recognize_currency'])
-            && $_REQUEST['ods_recognize_currency']
-            && ! strcmp('currency', (string) $cell_attrs['value-type'])
+        if (isset($_REQUEST['ods_recognize_currency']) && $_REQUEST['ods_recognize_currency'] && !strcmp('currency', (string) $cell_attrs['value-type'])
         ) {
             return (float) $cell_attrs['value'];
         }
@@ -273,11 +264,11 @@ class ImportOds extends ImportPlugin
     }
 
     private function iterateOverColumns(
-        SimpleXMLElement $row,
-        bool $col_names_in_first_row,
-        array $tempRow,
-        array $col_names,
-        int $col_count
+            SimpleXMLElement $row,
+            bool $col_names_in_first_row,
+            array $tempRow,
+            array $col_names,
+            int $col_count
     ): array {
         $cellCount = $row->count();
         $a = 0;
@@ -294,7 +285,7 @@ class ImportOds extends ImportPlugin
 
                 for ($k = 0; $k < $num_iterations; $k++) {
                     $value = $this->getValue($cell_attrs, $text);
-                    if (! $col_names_in_first_row) {
+                    if (!$col_names_in_first_row) {
                         $tempRow[] = $value;
                     } else {
                         // MySQL column names can't end with a space
@@ -316,7 +307,7 @@ class ImportOds extends ImportPlugin
             $num_null = (int) $attr['number-columns-repeated'];
 
             if ($num_null) {
-                if (! $col_names_in_first_row) {
+                if (!$col_names_in_first_row) {
                     for ($i = 0; $i < $num_null; ++$i) {
                         $tempRow[] = 'NULL';
                         ++$col_count;
@@ -324,17 +315,17 @@ class ImportOds extends ImportPlugin
                 } else {
                     for ($i = 0; $i < $num_null; ++$i) {
                         $col_names[] = $this->import->getColumnAlphaName(
-                            $col_count + 1
+                                $col_count + 1
                         );
                         ++$col_count;
                     }
                 }
             } else {
-                if (! $col_names_in_first_row) {
+                if (!$col_names_in_first_row) {
                     $tempRow[] = 'NULL';
                 } else {
                     $col_names[] = $this->import->getColumnAlphaName(
-                        $col_count + 1
+                            $col_count + 1
                     );
                 }
 
@@ -346,13 +337,13 @@ class ImportOds extends ImportPlugin
     }
 
     private function iterateOverRows(
-        SimpleXMLElement $sheet,
-        bool $col_names_in_first_row,
-        array $tempRow,
-        array $col_names,
-        int $col_count,
-        int $max_cols,
-        array $tempRows
+            SimpleXMLElement $sheet,
+            bool $col_names_in_first_row,
+            array $tempRow,
+            array $col_names,
+            int $col_count,
+            int $max_cols,
+            array $tempRows
     ): array {
         /** @var SimpleXMLElement $row */
         foreach ($sheet as $row) {
@@ -362,11 +353,11 @@ class ImportOds extends ImportPlugin
             }
 
             [$tempRow, $col_names, $col_count] = $this->iterateOverColumns(
-                $row,
-                $col_names_in_first_row,
-                $tempRow,
-                $col_names,
-                $col_count
+                    $row,
+                    $col_names_in_first_row,
+                    $tempRow,
+                    $col_names,
+                    $col_count
             );
 
             /* Find the widest row */
@@ -375,7 +366,7 @@ class ImportOds extends ImportPlugin
             }
 
             /* Don't include a row that is full of NULL values */
-            if (! $col_names_in_first_row) {
+            if (!$col_names_in_first_row) {
                 if ($_REQUEST['ods_empty_rows'] ?? false) {
                     foreach ($tempRow as $cell) {
                         if (strcmp('NULL', $cell)) {
@@ -401,8 +392,7 @@ class ImportOds extends ImportPlugin
      *
      * @return array|array[]
      */
-    private function iterateOverTables($sheets): array
-    {
+    private function iterateOverTables($sheets): array {
         $tables = [];
         $max_cols = 0;
         $col_count = 0;
@@ -416,13 +406,13 @@ class ImportOds extends ImportPlugin
             $col_names_in_first_row = isset($_REQUEST['ods_col_names']);
 
             [$tempRow, $col_names, $max_cols, $tempRows] = $this->iterateOverRows(
-                $sheet,
-                $col_names_in_first_row,
-                $tempRow,
-                $col_names,
-                $col_count,
-                $max_cols,
-                $tempRows
+                    $sheet,
+                    $col_names_in_first_row,
+                    $tempRow,
+                    $col_names,
+                    $col_count,
+                    $max_cols,
+                    $tempRows
             );
 
             /* Skip over empty sheets */
@@ -438,7 +428,6 @@ class ImportOds extends ImportPlugin
              * every one exactly as wide as the widest
              * row. This included column names.
              */
-
             /* Fill out column names */
             for ($i = count($col_names); $i < $max_cols; ++$i) {
                 $col_names[] = $this->import->getColumnAlphaName($i + 1);
@@ -469,4 +458,5 @@ class ImportOds extends ImportPlugin
 
         return [$tables, $rows];
     }
+
 }

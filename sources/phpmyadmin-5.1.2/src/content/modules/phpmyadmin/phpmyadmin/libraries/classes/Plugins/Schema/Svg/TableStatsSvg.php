@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Contains PhpMyAdmin\Plugins\Schema\Svg\TableStatsSvg class
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Plugins\Schema\Svg;
@@ -24,8 +24,8 @@ use function sprintf;
  *
  * @name    TableStatsSvg
  */
-class TableStatsSvg extends TableStats
-{
+class TableStatsSvg extends TableStats {
+
     /** @var int */
     public $height;
 
@@ -49,25 +49,25 @@ class TableStatsSvg extends TableStats
      * @param bool   $offline         Whether the coordinates are sent
      */
     public function __construct(
-        $diagram,
-        $db,
-        $tableName,
-        $font,
-        $fontSize,
-        $pageNumber,
-        &$same_wide_width,
-        $showKeys = false,
-        $tableDimension = false,
-        $offline = false
-    ) {
-        parent::__construct(
             $diagram,
             $db,
-            $pageNumber,
             $tableName,
-            $showKeys,
-            $tableDimension,
-            $offline
+            $font,
+            $fontSize,
+            $pageNumber,
+            &$same_wide_width,
+            $showKeys = false,
+            $tableDimension = false,
+            $offline = false
+    ) {
+        parent::__construct(
+                $diagram,
+                $db,
+                $pageNumber,
+                $tableName,
+                $showKeys,
+                $tableDimension,
+                $offline
         );
 
         // height and width
@@ -85,12 +85,11 @@ class TableStatsSvg extends TableStats
     /**
      * Displays an error when the table cannot be found.
      */
-    protected function showMissingTableError(): void
-    {
+    protected function showMissingTableError(): void {
         ExportRelationSchema::dieSchema(
-            $this->pageNumber,
-            'SVG',
-            sprintf(__('The %s table doesn\'t exist!'), $this->tableName)
+                $this->pageNumber,
+                'SVG',
+                sprintf(__('The %s table doesn\'t exist!'), $this->tableName)
         );
     }
 
@@ -104,12 +103,11 @@ class TableStatsSvg extends TableStats
      *
      * @access private
      */
-    private function setWidthTable($font, $fontSize): void
-    {
+    private function setWidthTable($font, $fontSize): void {
         foreach ($this->fields as $field) {
             $this->width = max(
-                $this->width,
-                $this->font->getStringWidth($field, $font, $fontSize)
+                    $this->width,
+                    $this->font->getStringWidth($field, $font, $fontSize)
             );
         }
         $this->width += $this->font->getStringWidth('  ', $font, $fontSize);
@@ -118,8 +116,7 @@ class TableStatsSvg extends TableStats
          * it is unknown what value must be added, because
          * table title is affected by the table width value
          */
-        while ($this->width
-            < $this->font->getStringWidth($this->getTitle(), $font, $fontSize)
+        while ($this->width < $this->font->getStringWidth($this->getTitle(), $font, $fontSize)
         ) {
             $this->width += 7;
         }
@@ -130,8 +127,7 @@ class TableStatsSvg extends TableStats
      *
      * @param int $fontSize font size
      */
-    private function setHeightTable($fontSize): void
-    {
+    private function setHeightTable($fontSize): void {
         $this->heightCell = $fontSize + 4;
         $this->height = (count($this->fields) + 1) * $this->heightCell;
     }
@@ -145,25 +141,24 @@ class TableStatsSvg extends TableStats
      *
      * @access public
      */
-    public function tableDraw($showColor): void
-    {
+    public function tableDraw($showColor): void {
         $this->diagram->printElement(
-            'rect',
-            $this->x,
-            $this->y,
-            $this->width,
-            $this->heightCell,
-            null,
-            'fill:#007;stroke:black;'
+                'rect',
+                $this->x,
+                $this->y,
+                $this->width,
+                $this->heightCell,
+                null,
+                'fill:#007;stroke:black;'
         );
         $this->diagram->printElement(
-            'text',
-            $this->x + 5,
-            $this->y + 14,
-            $this->width,
-            $this->heightCell,
-            $this->getTitle(),
-            'fill:#fff;'
+                'text',
+                $this->x + 5,
+                $this->y + 14,
+                $this->width,
+                $this->heightCell,
+                $this->getTitle(),
+                'fill:#fff;'
         );
         foreach ($this->fields as $field) {
             $this->currentCell += $this->heightCell;
@@ -177,23 +172,24 @@ class TableStatsSvg extends TableStats
                 }
             }
             $this->diagram->printElement(
-                'rect',
-                $this->x,
-                $this->y + $this->currentCell,
-                $this->width,
-                $this->heightCell,
-                null,
-                'fill:' . $fillColor . ';stroke:black;'
+                    'rect',
+                    $this->x,
+                    $this->y + $this->currentCell,
+                    $this->width,
+                    $this->heightCell,
+                    null,
+                    'fill:' . $fillColor . ';stroke:black;'
             );
             $this->diagram->printElement(
-                'text',
-                $this->x + 5,
-                $this->y + 14 + $this->currentCell,
-                $this->width,
-                $this->heightCell,
-                $field,
-                'fill:black;'
+                    'text',
+                    $this->x + 5,
+                    $this->y + 14 + $this->currentCell,
+                    $this->width,
+                    $this->heightCell,
+                    $field,
+                    'fill:black;'
             );
         }
     }
+
 }

@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Used to render the footer of PMA's pages
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin;
@@ -22,8 +22,8 @@ use function strlen;
 /**
  * Class used to output the footer
  */
-class Footer
-{
+class Footer {
+
     /**
      * Scripts instance
      *
@@ -31,6 +31,7 @@ class Footer
      * @var Scripts
      */
     private $scripts;
+
     /**
      * Whether we are servicing an ajax request.
      *
@@ -38,6 +39,7 @@ class Footer
      * @var bool
      */
     private $isAjax;
+
     /**
      * Whether to only close the BODY and HTML tags
      * or also include scripts, errors and links
@@ -46,6 +48,7 @@ class Footer
      * @var bool
      */
     private $isMinimal;
+
     /**
      * Whether to display anything
      *
@@ -63,8 +66,7 @@ class Footer
     /**
      * Creates a new class instance
      */
-    public function __construct()
-    {
+    public function __construct() {
         global $dbi;
 
         $this->template = new Template();
@@ -77,8 +79,7 @@ class Footer
     /**
      * Returns the message for demo server to error messages
      */
-    private function getDemoMessage(): string
-    {
+    private function getDemoMessage(): string {
         $message = '<a href="/">' . __('phpMyAdmin Demo Server') . '</a>: ';
         if (@file_exists(ROOT_PATH . 'revision-info.php')) {
             $revision = '';
@@ -88,13 +89,13 @@ class Footer
             $branch = '';
             include ROOT_PATH . 'revision-info.php';
             $message .= sprintf(
-                __('Currently running Git revision %1$s from the %2$s branch.'),
-                '<a target="_blank" rel="noopener noreferrer" href="'
-                . htmlspecialchars($repobase . $fullrevision) . '">'
-                . htmlspecialchars($revision) . '</a>',
-                '<a target="_blank" rel="noopener noreferrer" href="'
-                . htmlspecialchars($repobranchbase . $branch) . '">'
-                . htmlspecialchars($branch) . '</a>'
+                    __('Currently running Git revision %1$s from the %2$s branch.'),
+                    '<a target="_blank" rel="noopener noreferrer" href="'
+                    . htmlspecialchars($repobase . $fullrevision) . '">'
+                    . htmlspecialchars($revision) . '</a>',
+                    '<a target="_blank" rel="noopener noreferrer" href="'
+                    . htmlspecialchars($repobranchbase . $branch) . '">'
+                    . htmlspecialchars($branch) . '</a>'
             );
         } else {
             $message .= __('Git information missing!');
@@ -112,12 +113,11 @@ class Footer
      *
      * @return object Reference passed object
      */
-    private static function removeRecursion(&$object, array $stack = [])
-    {
+    private static function removeRecursion(&$object, array $stack = []) {
         if ((is_object($object) || is_array($object)) && $object) {
             if ($object instanceof Traversable) {
                 $object = '***ITERATOR***';
-            } elseif (! in_array($object, $stack, true)) {
+            } elseif (!in_array($object, $stack, true)) {
                 $stack[] = $object;
                 foreach ($object as &$subobject) {
                     self::removeRecursion($subobject, $stack);
@@ -133,12 +133,9 @@ class Footer
     /**
      * Renders the debug messages
      */
-    public function getDebugMessage(): string
-    {
+    public function getDebugMessage(): string {
         $retval = '\'null\'';
-        if ($GLOBALS['cfg']['DBG']['sql']
-            && empty($_REQUEST['no_debug'])
-            && ! empty($_SESSION['debug'])
+        if ($GLOBALS['cfg']['DBG']['sql'] && empty($_REQUEST['no_debug']) && !empty($_SESSION['debug'])
         ) {
             // Remove recursions and iterators from $_SESSION['debug']
             self::removeRecursion($_SESSION['debug']);
@@ -156,8 +153,7 @@ class Footer
     /**
      * Returns the url of the current page
      */
-    public function getSelfUrl(): string
-    {
+    public function getSelfUrl(): string {
         global $route, $db, $table, $server;
 
         $params = [];
@@ -173,8 +169,7 @@ class Footer
         $params['server'] = $server;
 
         // needed for server privileges tabs
-        if (isset($_GET['viewing_mode'])
-            && in_array($_GET['viewing_mode'], ['server', 'db', 'table'])
+        if (isset($_GET['viewing_mode']) && in_array($_GET['viewing_mode'], ['server', 'db', 'table'])
         ) {
             $params['viewing_mode'] = $_GET['viewing_mode'];
         }
@@ -196,8 +191,7 @@ class Footer
         ) {
             $params['checkprivstable'] = $_GET['checkprivstable'];
         }
-        if (isset($_REQUEST['single_table'])
-            && in_array($_REQUEST['single_table'], [true, false])
+        if (isset($_REQUEST['single_table']) && in_array($_REQUEST['single_table'], [true, false])
         ) {
             $params['single_table'] = $_REQUEST['single_table'];
         }
@@ -210,19 +204,18 @@ class Footer
      *
      * @param string $url The url of the page
      */
-    private function getSelfLink(string $url): string
-    {
-        $retval  = '';
+    private function getSelfLink(string $url): string {
+        $retval = '';
         $retval .= '<div id="selflink" class="print_ignore">';
         $retval .= '<a href="' . htmlspecialchars($url) . '"'
-            . ' title="' . __('Open new phpMyAdmin window') . '" target="_blank" rel="noopener noreferrer">';
+                . ' title="' . __('Open new phpMyAdmin window') . '" target="_blank" rel="noopener noreferrer">';
         if (Util::showIcons('TabsMode')) {
             $retval .= Html\Generator::getImage(
-                'window-new',
-                __('Open new phpMyAdmin window')
+                            'window-new',
+                            __('Open new phpMyAdmin window')
             );
         } else {
-            $retval .=  __('Open new phpMyAdmin window');
+            $retval .= __('Open new phpMyAdmin window');
         }
         $retval .= '</a>';
         $retval .= '</div>';
@@ -233,8 +226,7 @@ class Footer
     /**
      * Renders the link to open a new page
      */
-    public function getErrorMessages(): string
-    {
+    public function getErrorMessages(): string {
         $retval = '';
         if ($GLOBALS['error_handler']->hasDisplayErrors()) {
             $retval .= $GLOBALS['error_handler']->getDispErrors();
@@ -251,32 +243,26 @@ class Footer
     /**
      * Saves query in history
      */
-    private function setHistory(): void
-    {
+    private function setHistory(): void {
         global $dbi;
 
-        if (Core::isValid($_REQUEST['no_history'])
-            || ! empty($GLOBALS['error_message'])
-            || empty($GLOBALS['sql_query'])
-            || ! isset($dbi)
-            || ! $dbi->isConnected()
+        if (Core::isValid($_REQUEST['no_history']) || !empty($GLOBALS['error_message']) || empty($GLOBALS['sql_query']) || !isset($dbi) || !$dbi->isConnected()
         ) {
             return;
         }
 
         $this->relation->setHistory(
-            Core::ifSetOr($GLOBALS['db'], ''),
-            Core::ifSetOr($GLOBALS['table'], ''),
-            $GLOBALS['cfg']['Server']['user'],
-            $GLOBALS['sql_query']
+                Core::ifSetOr($GLOBALS['db'], ''),
+                Core::ifSetOr($GLOBALS['table'], ''),
+                $GLOBALS['cfg']['Server']['user'],
+                $GLOBALS['sql_query']
         );
     }
 
     /**
      * Disables the rendering of the footer
      */
-    public function disable(): void
-    {
+    public function disable(): void {
         $this->isEnabled = false;
     }
 
@@ -286,16 +272,14 @@ class Footer
      *
      * @param bool $isAjax Whether we are servicing an ajax request
      */
-    public function setAjax(bool $isAjax): void
-    {
+    public function setAjax(bool $isAjax): void {
         $this->isAjax = $isAjax;
     }
 
     /**
      * Turn on minimal display mode
      */
-    public function setMinimal(): void
-    {
+    public function setMinimal(): void {
         $this->isMinimal = true;
     }
 
@@ -304,22 +288,18 @@ class Footer
      *
      * @return Scripts object
      */
-    public function getScripts(): Scripts
-    {
+    public function getScripts(): Scripts {
         return $this->scripts;
     }
 
     /**
      * Renders the footer
      */
-    public function getDisplay(): string
-    {
+    public function getDisplay(): string {
         $this->setHistory();
         if ($this->isEnabled) {
-            if (! $this->isAjax && ! $this->isMinimal) {
-                if (Core::getenv('SCRIPT_NAME')
-                    && empty($_POST)
-                    && ! $this->isAjax
+            if (!$this->isAjax && !$this->isMinimal) {
+                if (Core::getenv('SCRIPT_NAME') && empty($_POST) && !$this->isAjax
                 ) {
                     $url = $this->getSelfUrl();
                     $header = Response::getInstance()->getHeader();
@@ -327,27 +307,26 @@ class Footer
                     $menuHash = $header->getMenu()->getHash();
                     // prime the client-side cache
                     $this->scripts->addCode(
-                        sprintf(
-                            'if (! (history && history.pushState)) '
-                            . 'MicroHistory.primer = {'
-                            . ' url: "%s",'
-                            . ' scripts: %s,'
-                            . ' menuHash: "%s"'
-                            . '};',
-                            Sanitize::escapeJsString($url),
-                            json_encode($scripts),
-                            Sanitize::escapeJsString($menuHash)
-                        )
+                            sprintf(
+                                    'if (! (history && history.pushState)) '
+                                    . 'MicroHistory.primer = {'
+                                    . ' url: "%s",'
+                                    . ' scripts: %s,'
+                                    . ' menuHash: "%s"'
+                                    . '};',
+                                    Sanitize::escapeJsString($url),
+                                    json_encode($scripts),
+                                    Sanitize::escapeJsString($menuHash)
+                            )
                     );
                 }
-                if (Core::getenv('SCRIPT_NAME')
-                    && ! $this->isAjax
+                if (Core::getenv('SCRIPT_NAME') && !$this->isAjax
                 ) {
                     $url = $this->getSelfUrl();
                     $selfLink = $this->getSelfLink($url);
                 }
                 $this->scripts->addCode(
-                    'var debugSQLInfo = ' . $this->getDebugMessage() . ';'
+                        'var debugSQLInfo = ' . $this->getDebugMessage() . ';'
                 );
 
                 $errorMessages = $this->getErrorMessages();
@@ -361,17 +340,18 @@ class Footer
             }
 
             return $this->template->render('footer', [
-                'is_ajax' => $this->isAjax,
-                'is_minimal' => $this->isMinimal,
-                'self_link' => $selfLink ?? '',
-                'error_messages' => $errorMessages ?? '',
-                'scripts' => $scripts ?? '',
-                'is_demo' => $GLOBALS['cfg']['DBG']['demo'],
-                'demo_message' => $demoMessage ?? '',
-                'footer' => $footer ?? '',
+                        'is_ajax' => $this->isAjax,
+                        'is_minimal' => $this->isMinimal,
+                        'self_link' => $selfLink ?? '',
+                        'error_messages' => $errorMessages ?? '',
+                        'scripts' => $scripts ?? '',
+                        'is_demo' => $GLOBALS['cfg']['DBG']['demo'],
+                        'demo_message' => $demoMessage ?? '',
+                        'footer' => $footer ?? '',
             ]);
         }
 
         return '';
     }
+
 }

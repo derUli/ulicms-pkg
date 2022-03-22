@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Used to render the console of PMA's pages
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin;
@@ -13,8 +13,8 @@ use function sprintf;
 /**
  * Class used to output the console
  */
-class Console
-{
+class Console {
+
     /**
      * Whether to display anything
      *
@@ -40,8 +40,7 @@ class Console
     /**
      * Creates a new class instance
      */
-    public function __construct()
-    {
+    public function __construct() {
         global $dbi;
 
         $this->isEnabled = true;
@@ -55,16 +54,14 @@ class Console
      *
      * @param bool $isAjax Whether we are servicing an ajax request
      */
-    public function setAjax(bool $isAjax): void
-    {
+    public function setAjax(bool $isAjax): void {
         $this->isAjax = $isAjax;
     }
 
     /**
      * Disables the rendering of the footer
      */
-    public function disable(): void
-    {
+    public function disable(): void {
         $this->isEnabled = false;
     }
 
@@ -73,34 +70,33 @@ class Console
      *
      * @access public
      */
-    public static function getBookmarkContent(): string
-    {
+    public static function getBookmarkContent(): string {
         global $dbi;
 
         $template = new Template();
         $cfgBookmark = Bookmark::getParams($GLOBALS['cfg']['Server']['user']);
         if ($cfgBookmark) {
             $bookmarks = Bookmark::getList(
-                $dbi,
-                $GLOBALS['cfg']['Server']['user']
+                            $dbi,
+                            $GLOBALS['cfg']['Server']['user']
             );
             $count_bookmarks = count($bookmarks);
             if ($count_bookmarks > 0) {
                 $welcomeMessage = sprintf(
-                    _ngettext(
-                        'Showing %1$d bookmark (both private and shared)',
-                        'Showing %1$d bookmarks (both private and shared)',
+                        _ngettext(
+                                'Showing %1$d bookmark (both private and shared)',
+                                'Showing %1$d bookmarks (both private and shared)',
+                                $count_bookmarks
+                        ),
                         $count_bookmarks
-                    ),
-                    $count_bookmarks
                 );
             } else {
                 $welcomeMessage = __('No bookmarks');
             }
 
             return $template->render('console/bookmark_content', [
-                'welcome_message' => $welcomeMessage,
-                'bookmarks' => $bookmarks,
+                        'welcome_message' => $welcomeMessage,
+                        'bookmarks' => $bookmarks,
             ]);
         }
 
@@ -112,8 +108,7 @@ class Console
      *
      * @return array list of scripts
      */
-    public function getScripts(): array
-    {
+    public function getScripts(): array {
         return ['console.js'];
     }
 
@@ -122,27 +117,27 @@ class Console
      *
      * @access public
      */
-    public function getDisplay(): string
-    {
-        if (! $this->isAjax && $this->isEnabled) {
+    public function getDisplay(): string {
+        if (!$this->isAjax && $this->isEnabled) {
             $cfgBookmark = Bookmark::getParams(
-                $GLOBALS['cfg']['Server']['user']
+                            $GLOBALS['cfg']['Server']['user']
             );
 
             $image = Html\Generator::getImage('console', __('SQL Query Console'));
             $_sql_history = $this->relation->getHistory(
-                $GLOBALS['cfg']['Server']['user']
+                    $GLOBALS['cfg']['Server']['user']
             );
             $bookmarkContent = static::getBookmarkContent();
 
             return $this->template->render('console/display', [
-                'cfg_bookmark' => $cfgBookmark,
-                'image' => $image,
-                'sql_history' => $_sql_history,
-                'bookmark_content' => $bookmarkContent,
+                        'cfg_bookmark' => $cfgBookmark,
+                        'image' => $image,
+                        'sql_history' => $_sql_history,
+                        'bookmark_content' => $bookmarkContent,
             ]);
         }
 
         return '';
     }
+
 }

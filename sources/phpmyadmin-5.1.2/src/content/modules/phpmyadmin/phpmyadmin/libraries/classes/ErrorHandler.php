@@ -32,8 +32,8 @@ use const PHP_VERSION_ID;
 /**
  * handling errors
  */
-class ErrorHandler
-{
+class ErrorHandler {
+
     /**
      * holds errors to be displayed or reported later ...
      *
@@ -55,18 +55,17 @@ class ErrorHandler
      */
     protected $errorReporting = 0;
 
-    public function __construct()
-    {
+    public function __construct() {
         /**
          * Do not set ourselves as error handler in case of testsuite.
          *
          * This behavior is not tested there and breaks other tests as they
          * rely on PHPUnit doing it's own error handling which we break here.
          */
-        if (! defined('TESTSUITE')) {
+        if (!defined('TESTSUITE')) {
             set_error_handler([$this, 'handleError']);
         }
-        if (! Util::isErrorReportingAvailable()) {
+        if (!Util::isErrorReportingAvailable()) {
             return;
         }
 
@@ -78,9 +77,8 @@ class ErrorHandler
      *
      * stores errors in session
      */
-    public function __destruct()
-    {
-        if (! isset($_SESSION['errors'])) {
+    public function __destruct() {
+        if (!isset($_SESSION['errors'])) {
             $_SESSION['errors'] = [];
         }
 
@@ -92,17 +90,16 @@ class ErrorHandler
              */
             if (count($_SESSION['errors']) >= 10) {
                 $error = new Error(
-                    0,
-                    __('Too many error messages, some are not displayed.'),
-                    __FILE__,
-                    __LINE__
+                        0,
+                        __('Too many error messages, some are not displayed.'),
+                        __FILE__,
+                        __LINE__
                 );
                 $_SESSION['errors'][$error->getHash()] = $error;
                 break;
             }
 
-            if ((! ($error instanceof Error))
-                || $error->isDisplayed()
+            if ((!($error instanceof Error)) || $error->isDisplayed()
             ) {
                 continue;
             }
@@ -116,8 +113,7 @@ class ErrorHandler
      *
      * @param bool $hide Whether to hide
      */
-    public function setHideLocation(bool $hide): void
-    {
+    public function setHideLocation(bool $hide): void {
         $this->hideLocation = $hide;
     }
 
@@ -128,8 +124,7 @@ class ErrorHandler
      *
      * @return Error[]
      */
-    public function getErrors(bool $check = true): array
-    {
+    public function getErrors(bool $check = true): array {
         if ($check) {
             $this->checkSavedErrors();
         }
@@ -143,8 +138,7 @@ class ErrorHandler
      *
      * @return Error[]
      */
-    public function getCurrentErrors(): array
-    {
+    public function getCurrentErrors(): array {
         return $this->errors;
     }
 
@@ -155,8 +149,7 @@ class ErrorHandler
      *
      * @return Error[] The non spliced elements (total-$count)
      */
-    public function sliceErrors(int $count): array
-    {
+    public function sliceErrors(int $count): array {
         // store the errors before any operation, example number of items: 10
         $errors = $this->getErrors(false);
 
@@ -181,24 +174,24 @@ class ErrorHandler
      * @param int    $errline error line
      */
     public function handleError(
-        int $errno,
-        string $errstr,
-        string $errfile,
-        int $errline
+            int $errno,
+            string $errstr,
+            string $errfile,
+            int $errline
     ): void {
         if (Util::isErrorReportingAvailable()) {
             /**
-            * Check if Error Control Operator (@) was used, but still show
-            * user errors even in this case.
-            * See: https://github.com/phpmyadmin/phpmyadmin/issues/16729
-            */
-            $isSilenced = ! (error_reporting() & $errno);
+             * Check if Error Control Operator (@) was used, but still show
+             * user errors even in this case.
+             * See: https://github.com/phpmyadmin/phpmyadmin/issues/16729
+             */
+            $isSilenced = !(error_reporting() & $errno);
             if (PHP_VERSION_ID < 80000) {
                 $isSilenced = error_reporting() == 0;
             }
             if ($isSilenced &&
-                $this->errorReporting != 0 &&
-                ($errno & (E_USER_WARNING | E_USER_ERROR | E_USER_NOTICE | E_USER_DEPRECATED)) == 0
+                    $this->errorReporting != 0 &&
+                    ($errno & (E_USER_WARNING | E_USER_ERROR | E_USER_NOTICE | E_USER_DEPRECATED)) == 0
             ) {
                 return;
             }
@@ -229,21 +222,21 @@ class ErrorHandler
      * @param bool   $escape  whether to escape the error string
      */
     public function addError(
-        string $errstr,
-        int $errno,
-        string $errfile,
-        int $errline,
-        bool $escape = true
+            string $errstr,
+            int $errno,
+            string $errfile,
+            int $errline,
+            bool $escape = true
     ): void {
         if ($escape) {
             $errstr = htmlspecialchars($errstr);
         }
         // create error object
         $error = new Error(
-            $errno,
-            $errstr,
-            $errfile,
-            $errline
+                $errno,
+                $errstr,
+                $errfile,
+                $errline
         );
         $error->setHideLocation($this->hideLocation);
 
@@ -285,8 +278,7 @@ class ErrorHandler
      * @param string $errorInfo   error message
      * @param int    $errorNumber error number
      */
-    public function triggerError(string $errorInfo, ?int $errorNumber = null): void
-    {
+    public function triggerError(string $errorInfo, ?int $errorNumber = null): void {
         // we could also extract file and line from backtrace
         // and call handleError() directly
         trigger_error($errorInfo, $errorNumber);
@@ -297,9 +289,8 @@ class ErrorHandler
      *
      * @param Error $error the error
      */
-    protected function dispFatalError(Error $error): void
-    {
-        if (! headers_sent()) {
+    protected function dispFatalError(Error $error): void {
+        if (!headers_sent()) {
             $this->dispPageStart($error);
         }
         echo $error->getDisplay();
@@ -310,19 +301,17 @@ class ErrorHandler
     /**
      * Displays user errors not displayed
      */
-    public function dispUserErrors(): void
-    {
+    public function dispUserErrors(): void {
         echo $this->getDispUserErrors();
     }
 
     /**
      * Renders user errors not displayed
      */
-    public function getDispUserErrors(): string
-    {
+    public function getDispUserErrors(): string {
         $retval = '';
         foreach ($this->getErrors() as $error) {
-            if (! $error->isUserError() || $error->isDisplayed()) {
+            if (!$error->isUserError() || $error->isDisplayed()) {
                 continue;
             }
 
@@ -337,8 +326,7 @@ class ErrorHandler
      *
      * @param Error $error the error
      */
-    protected function dispPageStart(?Error $error = null): void
-    {
+    protected function dispPageStart(?Error $error = null): void {
         Response::getInstance()->disable();
         echo '<html><head><title>';
         if ($error) {
@@ -352,16 +340,14 @@ class ErrorHandler
     /**
      * display HTML footer
      */
-    protected function dispPageEnd(): void
-    {
+    protected function dispPageEnd(): void {
         echo '</body></html>';
     }
 
     /**
      * renders errors not displayed
      */
-    public function getDispErrors(): string
-    {
+    public function getDispErrors(): string {
         $retval = '';
         // display errors if SendErrorReports is set to 'ask'.
         if ($GLOBALS['cfg']['SendErrorReports'] !== 'never') {
@@ -377,8 +363,7 @@ class ErrorHandler
         }
         // if preference is not 'never' and
         // there are 'actual' errors to be reported
-        if ($GLOBALS['cfg']['SendErrorReports'] !== 'never'
-            && $this->countErrors() !=  $this->countUserErrors()
+        if ($GLOBALS['cfg']['SendErrorReports'] !== 'never' && $this->countErrors() != $this->countUserErrors()
         ) {
             // add report button.
             $retval .= '<form method="post" action="' . Url::getFromRoute('/error-report')
@@ -387,11 +372,11 @@ class ErrorHandler
                 // in case of 'always', generate 'invisible' form.
                 $retval .= ' class="hide"';
             }
-            $retval .=  '>';
+            $retval .= '>';
             $retval .= Url::getHiddenFields([
-                'exception_type' => 'php',
-                'send_error_report' => '1',
-                'server' => $GLOBALS['server'],
+                        'exception_type' => 'php',
+                        'send_error_report' => '1',
+                        'server' => $GLOBALS['server'],
             ]);
             $retval .= '<input type="submit" value="'
                     . __('Report')
@@ -420,15 +405,14 @@ class ErrorHandler
     /**
      * look in session for saved errors
      */
-    protected function checkSavedErrors(): void
-    {
-        if (! isset($_SESSION['errors'])) {
+    protected function checkSavedErrors(): void {
+        if (!isset($_SESSION['errors'])) {
             return;
         }
 
         // restore saved errors
         foreach ($_SESSION['errors'] as $hash => $error) {
-            if (! ($error instanceof Error) || isset($this->errors[$hash])) {
+            if (!($error instanceof Error) || isset($this->errors[$hash])) {
                 continue;
             }
 
@@ -447,8 +431,7 @@ class ErrorHandler
      *
      * @return int number of errors occurred
      */
-    public function countErrors(bool $check = true): int
-    {
+    public function countErrors(bool $check = true): int {
         return count($this->getErrors($check));
     }
 
@@ -457,12 +440,11 @@ class ErrorHandler
      *
      * @return int number of user errors occurred
      */
-    public function countUserErrors(): int
-    {
+    public function countUserErrors(): int {
         $count = 0;
         if ($this->countErrors()) {
             foreach ($this->getErrors() as $error) {
-                if (! $error->isUserError()) {
+                if (!$error->isUserError()) {
                     continue;
                 }
 
@@ -476,16 +458,14 @@ class ErrorHandler
     /**
      * whether use errors occurred or not
      */
-    public function hasUserErrors(): bool
-    {
+    public function hasUserErrors(): bool {
         return (bool) $this->countUserErrors();
     }
 
     /**
      * whether errors occurred or not
      */
-    public function hasErrors(): bool
-    {
+    public function hasErrors(): bool {
         return (bool) $this->countErrors();
     }
 
@@ -494,8 +474,7 @@ class ErrorHandler
      *
      * @return int number of errors to be displayed
      */
-    public function countDisplayErrors(): int
-    {
+    public function countDisplayErrors(): int {
         if ($GLOBALS['cfg']['SendErrorReports'] !== 'never') {
             return $this->countErrors();
         }
@@ -506,8 +485,7 @@ class ErrorHandler
     /**
      * whether there are errors to display or not
      */
-    public function hasDisplayErrors(): bool
-    {
+    public function hasDisplayErrors(): bool {
         return (bool) $this->countDisplayErrors();
     }
 
@@ -516,8 +494,7 @@ class ErrorHandler
      * Saves current errors in session as previous errors.
      * Required to save current errors in case  'ask'
      */
-    public function savePreviousErrors(): void
-    {
+    public function savePreviousErrors(): void {
         unset($_SESSION['prev_errors']);
         $_SESSION['prev_errors'] = $GLOBALS['error_handler']->getCurrentErrors();
     }
@@ -531,10 +508,8 @@ class ErrorHandler
      *
      * @return bool true if there are errors to be "prompted", false otherwise
      */
-    public function hasErrorsForPrompt(): bool
-    {
-        return $GLOBALS['cfg']['SendErrorReports'] !== 'never'
-            && $this->countErrors() !=  $this->countUserErrors();
+    public function hasErrorsForPrompt(): bool {
+        return $GLOBALS['cfg']['SendErrorReports'] !== 'never' && $this->countErrors() != $this->countUserErrors();
     }
 
     /**
@@ -542,11 +517,9 @@ class ErrorHandler
      * Must be called at the end of each script
      *      by the $GLOBALS['error_handler'] only.
      */
-    public function reportErrors(): void
-    {
+    public function reportErrors(): void {
         // if there're no actual errors,
-        if (! $this->hasErrors()
-            || $this->countErrors() ==  $this->countUserErrors()
+        if (!$this->hasErrors() || $this->countErrors() == $this->countUserErrors()
         ) {
             // then simply return.
             return;
@@ -572,7 +545,7 @@ class ErrorHandler
             }
         } elseif ($GLOBALS['cfg']['SendErrorReports'] === 'ask') {
             //ask user whether to submit errors or not.
-            if (! $response->isAjax()) {
+            if (!$response->isAjax()) {
                 // js code to show appropriate msgs, event binding & focusing.
                 $jsCode = 'Functions.ajaxShowMessage(Messages.phpErrorsFound);'
                         . '$("#pma_ignore_errors_popup").on("click", function() {
@@ -600,4 +573,5 @@ class ErrorHandler
         // Just focus on errors division upon load event.
         $response->getFooter()->getScripts()->addCode($jsCode);
     }
+
 }

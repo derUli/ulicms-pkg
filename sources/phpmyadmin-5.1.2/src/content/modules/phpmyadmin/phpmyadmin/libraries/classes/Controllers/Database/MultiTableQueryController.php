@@ -12,8 +12,8 @@ use PhpMyAdmin\Template;
 /**
  * Handles database multi-table querying
  */
-class MultiTableQueryController extends AbstractController
-{
+class MultiTableQueryController extends AbstractController {
+
     /** @var DatabaseInterface */
     private $dbi;
 
@@ -22,14 +22,12 @@ class MultiTableQueryController extends AbstractController
      * @param string            $db       Database name.
      * @param DatabaseInterface $dbi
      */
-    public function __construct($response, Template $template, $db, $dbi)
-    {
+    public function __construct($response, Template $template, $db, $dbi) {
         parent::__construct($response, $template, $db);
         $this->dbi = $dbi;
     }
 
-    public function index(): void
-    {
+    public function index(): void {
         $this->addScriptFiles([
             'vendor/jquery/jquery.md5.js',
             'database/multi_table_query.js',
@@ -41,8 +39,7 @@ class MultiTableQueryController extends AbstractController
         $this->response->addHTML($queryInstance->getFormHtml());
     }
 
-    public function displayResults(): void
-    {
+    public function displayResults(): void {
         global $PMA_Theme;
 
         $params = [
@@ -51,22 +48,22 @@ class MultiTableQueryController extends AbstractController
         ];
 
         $this->response->addHTML(MultiTableQuery::displayResults(
-            $params['sql_query'],
-            $params['db'],
-            $PMA_Theme->getImgPath()
+                        $params['sql_query'],
+                        $params['db'],
+                        $PMA_Theme->getImgPath()
         ));
     }
 
-    public function table(): void
-    {
+    public function table(): void {
         $params = [
             'tables' => $_GET['tables'],
             'db' => $_GET['db'] ?? null,
         ];
         $constrains = $this->dbi->getForeignKeyConstrains(
-            $params['db'],
-            $params['tables']
+                $params['db'],
+                $params['tables']
         );
         $this->response->addJSON(['foreignKeyConstrains' => $constrains]);
     }
+
 }

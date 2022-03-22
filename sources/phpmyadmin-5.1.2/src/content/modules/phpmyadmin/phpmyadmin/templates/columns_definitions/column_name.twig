@@ -17,26 +17,26 @@
 {% endif %}
 
 <input id="field_{{ column_number }}_{{ ci - ci_offset }}"
-    {% if column_meta['column_status'] is defined
+       {% if column_meta['column_status'] is defined
         and not column_meta['column_status']['isEditable'] %}
-        disabled="disabled"
-    {% endif %}
-    type="text"
-    name="field_name[{{ column_number }}]"
-    maxlength="64"
-    class="textfield"
-    title="{{ title }}"
-    size="10"
-    value="{{ column_meta['Field'] is defined ? column_meta['Field'] }}">
+       disabled="disabled"
+       {% endif %}
+           type="text"
+           name="field_name[{{ column_number }}]"
+           maxlength="64"
+           class="textfield"
+           title="{{ title }}"
+           size="10"
+           value="{{ column_meta['Field'] is defined ? column_meta['Field'] }}">
 
-{% if cfg_relation['centralcolumnswork']
+       {% if cfg_relation['centralcolumnswork']
     and not (column_meta['column_status'] is defined
         and not column_meta['column_status']['isEditable']) %}
-    <p class="column_name" id="central_columns_{{ column_number }}_{{ ci - ci_offset }}">
-        <a data-maxrows="{{ max_rows }}"
-            href="#"
-            class="central_columns_dialog">
-            {% trans 'Pick from Central Columns' %}
-        </a>
-    </p>
-{% endif %}
+       <p class="column_name" id="central_columns_{{ column_number }}_{{ ci - ci_offset }}">
+           <a data-maxrows="{{ max_rows }}"
+              href="#"
+              class="central_columns_dialog">
+               {% trans 'Pick from Central Columns' %}
+           </a>
+       </p>
+       {% endif %}

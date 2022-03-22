@@ -1,7 +1,7 @@
 {
-	"version" : "0.0.5",
-	"admin_permission" : "google_analytics",
-	"custom_acl" : ["google_analytics"],
-	"embed" : false
+    "version": "0.0.5",
+    "admin_permission": "google_analytics",
+    "custom_acl": ["google_analytics"],
+    "embed": false
 }
 

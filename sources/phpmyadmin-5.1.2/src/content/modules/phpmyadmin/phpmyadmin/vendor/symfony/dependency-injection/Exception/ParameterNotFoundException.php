@@ -18,8 +18,8 @@ use Psr\Container\NotFoundExceptionInterface;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class ParameterNotFoundException extends InvalidArgumentException implements NotFoundExceptionInterface
-{
+class ParameterNotFoundException extends InvalidArgumentException implements NotFoundExceptionInterface {
+
     private $key;
     private $sourceId;
     private $sourceKey;
@@ -34,8 +34,7 @@ class ParameterNotFoundException extends InvalidArgumentException implements Not
      * @param string[]        $alternatives         Some parameter name alternatives
      * @param string|null     $nonNestedAlternative The alternative parameter name when the user expected dot notation for nested parameters
      */
-    public function __construct(string $key, string $sourceId = null, string $sourceKey = null, \Throwable $previous = null, array $alternatives = [], string $nonNestedAlternative = null)
-    {
+    public function __construct(string $key, string $sourceId = null, string $sourceKey = null, \Throwable $previous = null, array $alternatives = [], string $nonNestedAlternative = null) {
         $this->key = $key;
         $this->sourceId = $sourceId;
         $this->sourceKey = $sourceKey;
@@ -47,8 +46,7 @@ class ParameterNotFoundException extends InvalidArgumentException implements Not
         $this->updateRepr();
     }
 
-    public function updateRepr()
-    {
+    public function updateRepr() {
         if (null !== $this->sourceId) {
             $this->message = sprintf('The service "%s" has a dependency on a non-existent parameter "%s".', $this->sourceId, $this->key);
         } elseif (null !== $this->sourceKey) {
@@ -63,38 +61,34 @@ class ParameterNotFoundException extends InvalidArgumentException implements Not
             } else {
                 $this->message .= ' Did you mean one of these: "';
             }
-            $this->message .= implode('", "', $this->alternatives).'"?';
+            $this->message .= implode('", "', $this->alternatives) . '"?';
         } elseif (null !== $this->nonNestedAlternative) {
-            $this->message .= ' You cannot access nested array items, do you want to inject "'.$this->nonNestedAlternative.'" instead?';
+            $this->message .= ' You cannot access nested array items, do you want to inject "' . $this->nonNestedAlternative . '" instead?';
         }
     }
 
-    public function getKey()
-    {
+    public function getKey() {
         return $this->key;
     }
 
-    public function getSourceId()
-    {
+    public function getSourceId() {
         return $this->sourceId;
     }
 
-    public function getSourceKey()
-    {
+    public function getSourceKey() {
         return $this->sourceKey;
     }
 
-    public function setSourceId($sourceId)
-    {
+    public function setSourceId($sourceId) {
         $this->sourceId = $sourceId;
 
         $this->updateRepr();
     }
 
-    public function setSourceKey($sourceKey)
-    {
+    public function setSourceKey($sourceKey) {
         $this->sourceKey = $sourceKey;
 
         $this->updateRepr();
     }
+
 }

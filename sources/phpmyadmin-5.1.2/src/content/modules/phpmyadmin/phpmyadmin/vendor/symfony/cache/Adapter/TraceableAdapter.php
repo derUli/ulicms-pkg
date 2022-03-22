@@ -25,21 +25,19 @@ use Symfony\Contracts\Service\ResetInterface;
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  * @author Nicolas Grekas <p@tchwork.com>
  */
-class TraceableAdapter implements AdapterInterface, CacheInterface, PruneableInterface, ResettableInterface
-{
+class TraceableAdapter implements AdapterInterface, CacheInterface, PruneableInterface, ResettableInterface {
+
     protected $pool;
     private $calls = [];
 
-    public function __construct(AdapterInterface $pool)
-    {
+    public function __construct(AdapterInterface $pool) {
         $this->pool = $pool;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function get(string $key, callable $callback, float $beta = null, array &$metadata = null)
-    {
+    public function get(string $key, callable $callback, float $beta = null, array &$metadata = null) {
         if (!$this->pool instanceof CacheInterface) {
             throw new \BadMethodCallException(sprintf('Cannot call "%s::get()": this class doesn\'t implement "%s".', \get_class($this->pool), CacheInterface::class));
         }
@@ -70,8 +68,7 @@ class TraceableAdapter implements AdapterInterface, CacheInterface, PruneableInt
     /**
      * {@inheritdoc}
      */
-    public function getItem($key)
-    {
+    public function getItem($key) {
         $event = $this->start(__FUNCTION__);
         try {
             $item = $this->pool->getItem($key);
@@ -92,8 +89,7 @@ class TraceableAdapter implements AdapterInterface, CacheInterface, PruneableInt
      *
      * @return bool
      */
-    public function hasItem($key)
-    {
+    public function hasItem($key) {
         $event = $this->start(__FUNCTION__);
         try {
             return $event->result[$key] = $this->pool->hasItem($key);
@@ -107,8 +103,7 @@ class TraceableAdapter implements AdapterInterface, CacheInterface, PruneableInt
      *
      * @return bool
      */
-    public function deleteItem($key)
-    {
+    public function deleteItem($key) {
         $event = $this->start(__FUNCTION__);
         try {
             return $event->result[$key] = $this->pool->deleteItem($key);
@@ -122,8 +117,7 @@ class TraceableAdapter implements AdapterInterface, CacheInterface, PruneableInt
      *
      * @return bool
      */
-    public function save(CacheItemInterface $item)
-    {
+    public function save(CacheItemInterface $item) {
         $event = $this->start(__FUNCTION__);
         try {
             return $event->result[$item->getKey()] = $this->pool->save($item);
@@ -137,8 +131,7 @@ class TraceableAdapter implements AdapterInterface, CacheInterface, PruneableInt
      *
      * @return bool
      */
-    public function saveDeferred(CacheItemInterface $item)
-    {
+    public function saveDeferred(CacheItemInterface $item) {
         $event = $this->start(__FUNCTION__);
         try {
             return $event->result[$item->getKey()] = $this->pool->saveDeferred($item);
@@ -150,8 +143,7 @@ class TraceableAdapter implements AdapterInterface, CacheInterface, PruneableInt
     /**
      * {@inheritdoc}
      */
-    public function getItems(array $keys = [])
-    {
+    public function getItems(array $keys = []) {
         $event = $this->start(__FUNCTION__);
         try {
             $result = $this->pool->getItems($keys);
@@ -180,8 +172,7 @@ class TraceableAdapter implements AdapterInterface, CacheInterface, PruneableInt
      *
      * @return bool
      */
-    public function clear(/*string $prefix = ''*/)
-    {
+    public function clear(/* string $prefix = '' */) {
         $prefix = 0 < \func_num_args() ? (string) func_get_arg(0) : '';
         $event = $this->start(__FUNCTION__);
         try {
@@ -200,8 +191,7 @@ class TraceableAdapter implements AdapterInterface, CacheInterface, PruneableInt
      *
      * @return bool
      */
-    public function deleteItems(array $keys)
-    {
+    public function deleteItems(array $keys) {
         $event = $this->start(__FUNCTION__);
         $event->result['keys'] = $keys;
         try {
@@ -216,8 +206,7 @@ class TraceableAdapter implements AdapterInterface, CacheInterface, PruneableInt
      *
      * @return bool
      */
-    public function commit()
-    {
+    public function commit() {
         $event = $this->start(__FUNCTION__);
         try {
             return $event->result = $this->pool->commit();
@@ -229,8 +218,7 @@ class TraceableAdapter implements AdapterInterface, CacheInterface, PruneableInt
     /**
      * {@inheritdoc}
      */
-    public function prune()
-    {
+    public function prune() {
         if (!$this->pool instanceof PruneableInterface) {
             return false;
         }
@@ -245,8 +233,7 @@ class TraceableAdapter implements AdapterInterface, CacheInterface, PruneableInt
     /**
      * {@inheritdoc}
      */
-    public function reset()
-    {
+    public function reset() {
         if ($this->pool instanceof ResetInterface) {
             $this->pool->reset();
         }
@@ -257,8 +244,7 @@ class TraceableAdapter implements AdapterInterface, CacheInterface, PruneableInt
     /**
      * {@inheritdoc}
      */
-    public function delete(string $key): bool
-    {
+    public function delete(string $key): bool {
         $event = $this->start(__FUNCTION__);
         try {
             return $event->result[$key] = $this->pool->deleteItem($key);
@@ -267,32 +253,31 @@ class TraceableAdapter implements AdapterInterface, CacheInterface, PruneableInt
         }
     }
 
-    public function getCalls()
-    {
+    public function getCalls() {
         return $this->calls;
     }
 
-    public function clearCalls()
-    {
+    public function clearCalls() {
         $this->calls = [];
     }
 
-    protected function start($name)
-    {
+    protected function start($name) {
         $this->calls[] = $event = new TraceableAdapterEvent();
         $event->name = $name;
         $event->start = microtime(true);
 
         return $event;
     }
+
 }
 
-class TraceableAdapterEvent
-{
+class TraceableAdapterEvent {
+
     public $name;
     public $start;
     public $end;
     public $result;
     public $hits = 0;
     public $misses = 0;
+
 }

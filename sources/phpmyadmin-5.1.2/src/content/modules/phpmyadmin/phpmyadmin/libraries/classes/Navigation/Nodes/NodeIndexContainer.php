@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Functionality for the navigation tree
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Navigation\Nodes;
@@ -14,13 +14,12 @@ use PhpMyAdmin\Url;
 /**
  * Represents a container for index nodes in the navigation tree
  */
-class NodeIndexContainer extends Node
-{
+class NodeIndexContainer extends Node {
+
     /**
      * Initialises the class
      */
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct(__('Indexes'), Node::CONTAINER);
         $this->icon = Generator::getImage('b_index', __('Indexes'));
         $this->links = [
@@ -35,8 +34,8 @@ class NodeIndexContainer extends Node
 
         $newLabel = _pgettext('Create new index', 'New');
         $new = NodeFactory::getInstanceForNewNode(
-            $newLabel,
-            'new_index italics'
+                        $newLabel,
+                        'new_index italics'
         );
         $new->icon = Generator::getImage('b_index_add', $newLabel);
         $new->links = [
@@ -53,4 +52,5 @@ class NodeIndexContainer extends Node
         ];
         $this->addChild($new);
     }
+
 }

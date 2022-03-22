@@ -27,8 +27,8 @@ use Twig\Error\RuntimeError;
  *
  * @internal
  */
-abstract class Template
-{
+abstract class Template {
+
     public const ANY_CALL = 'any';
     public const ARRAY_CALL = 'array';
     public const METHOD_CALL = 'method';
@@ -41,8 +41,7 @@ abstract class Template
     protected $extensions = [];
     protected $sandbox;
 
-    public function __construct(Environment $env)
-    {
+    public function __construct(Environment $env) {
         $this->env = $env;
         $this->extensions = $env->getExtensions();
     }
@@ -50,8 +49,7 @@ abstract class Template
     /**
      * @internal this method will be removed in 3.0 and is only used internally to provide an upgrade path from 1.x to 2.0
      */
-    public function __toString()
-    {
+    public function __toString() {
         return $this->getTemplateName();
     }
 
@@ -74,8 +72,7 @@ abstract class Template
      *
      * @return Source
      */
-    public function getSourceContext()
-    {
+    public function getSourceContext() {
         return new Source('', $this->getTemplateName());
     }
 
@@ -87,8 +84,7 @@ abstract class Template
      *
      * @return Template|TemplateWrapper|false The parent template or false if there is no parent
      */
-    public function getParent(array $context)
-    {
+    public function getParent(array $context) {
         if (null !== $this->parent) {
             return $this->parent;
         }
@@ -117,13 +113,11 @@ abstract class Template
         return $this->parents[$parent];
     }
 
-    protected function doGetParent(array $context)
-    {
+    protected function doGetParent(array $context) {
         return false;
     }
 
-    public function isTraitable()
-    {
+    public function isTraitable() {
         return true;
     }
 
@@ -137,8 +131,7 @@ abstract class Template
      * @param array  $context The context
      * @param array  $blocks  The current set of blocks
      */
-    public function displayParentBlock($name, array $context, array $blocks = [])
-    {
+    public function displayParentBlock($name, array $context, array $blocks = []) {
         if (isset($this->traits[$name])) {
             $this->traits[$name][0]->displayBlock($name, $context, $blocks, false);
         } elseif (false !== $parent = $this->getParent($context)) {
@@ -159,8 +152,7 @@ abstract class Template
      * @param array  $blocks    The current set of blocks
      * @param bool   $useBlocks Whether to use the current set of blocks
      */
-    public function displayBlock($name, array $context, array $blocks = [], $useBlocks = true, self $templateContext = null)
-    {
+    public function displayBlock($name, array $context, array $blocks = [], $useBlocks = true, self $templateContext = null) {
         if ($useBlocks && isset($blocks[$name])) {
             $template = $blocks[$name][0];
             $block = $blocks[$name][1];
@@ -219,12 +211,13 @@ abstract class Template
      *
      * @return string The rendered block
      */
-    public function renderParentBlock($name, array $context, array $blocks = [])
-    {
+    public function renderParentBlock($name, array $context, array $blocks = []) {
         if ($this->env->isDebug()) {
             ob_start();
         } else {
-            ob_start(function () { return ''; });
+            ob_start(function () {
+                return '';
+            });
         }
         $this->displayParentBlock($name, $context, $blocks);
 
@@ -244,12 +237,13 @@ abstract class Template
      *
      * @return string The rendered block
      */
-    public function renderBlock($name, array $context, array $blocks = [], $useBlocks = true)
-    {
+    public function renderBlock($name, array $context, array $blocks = [], $useBlocks = true) {
         if ($this->env->isDebug()) {
             ob_start();
         } else {
-            ob_start(function () { return ''; });
+            ob_start(function () {
+                return '';
+            });
         }
         $this->displayBlock($name, $context, $blocks, $useBlocks);
 
@@ -268,8 +262,7 @@ abstract class Template
      *
      * @return bool true if the block exists, false otherwise
      */
-    public function hasBlock($name, array $context, array $blocks = [])
-    {
+    public function hasBlock($name, array $context, array $blocks = []) {
         if (isset($blocks[$name])) {
             return $blocks[$name][0] instanceof self;
         }
@@ -296,8 +289,7 @@ abstract class Template
      *
      * @return array An array of block names
      */
-    public function getBlockNames(array $context, array $blocks = [])
-    {
+    public function getBlockNames(array $context, array $blocks = []) {
         $names = array_merge(array_keys($blocks), array_keys($this->blocks));
 
         if (false !== $parent = $this->getParent($context)) {
@@ -310,8 +302,7 @@ abstract class Template
     /**
      * @return Template|TemplateWrapper
      */
-    protected function loadTemplate($template, $templateName = null, $line = null, $index = null)
-    {
+    protected function loadTemplate($template, $templateName = null, $line = null, $index = null) {
         try {
             if (\is_array($template)) {
                 return $this->env->resolveTemplate($template);
@@ -355,8 +346,7 @@ abstract class Template
      *
      * @return Template
      */
-    public function unwrap()
-    {
+    public function unwrap() {
         return $this;
     }
 
@@ -368,23 +358,22 @@ abstract class Template
      *
      * @return array An array of blocks
      */
-    public function getBlocks()
-    {
+    public function getBlocks() {
         return $this->blocks;
     }
 
-    public function display(array $context, array $blocks = [])
-    {
+    public function display(array $context, array $blocks = []) {
         $this->displayWithErrorHandling($this->env->mergeGlobals($context), array_merge($this->blocks, $blocks));
     }
 
-    public function render(array $context)
-    {
+    public function render(array $context) {
         $level = ob_get_level();
         if ($this->env->isDebug()) {
             ob_start();
         } else {
-            ob_start(function () { return ''; });
+            ob_start(function () {
+                return '';
+            });
         }
         try {
             $this->display($context);
@@ -399,8 +388,7 @@ abstract class Template
         return ob_get_clean();
     }
 
-    protected function displayWithErrorHandling(array $context, array $blocks = [])
-    {
+    protected function displayWithErrorHandling(array $context, array $blocks = []) {
         try {
             $this->doDisplay($context, $blocks);
         } catch (Error $e) {

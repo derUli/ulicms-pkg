@@ -19,10 +19,9 @@ use Twig\Token;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-final class WithTokenParser extends AbstractTokenParser
-{
-    public function parse(Token $token)
-    {
+final class WithTokenParser extends AbstractTokenParser {
+
+    public function parse(Token $token) {
         $stream = $this->parser->getStream();
 
         $variables = null;
@@ -41,15 +40,14 @@ final class WithTokenParser extends AbstractTokenParser
         return new WithNode($body, $variables, $only, $token->getLine(), $this->getTag());
     }
 
-    public function decideWithEnd(Token $token)
-    {
+    public function decideWithEnd(Token $token) {
         return $token->test('endwith');
     }
 
-    public function getTag()
-    {
+    public function getTag() {
         return 'with';
     }
+
 }
 
 class_alias('Twig\TokenParser\WithTokenParser', 'Twig_TokenParser_With');

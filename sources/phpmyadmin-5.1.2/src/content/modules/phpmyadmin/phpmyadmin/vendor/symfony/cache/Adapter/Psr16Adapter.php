@@ -21,8 +21,8 @@ use Symfony\Component\Cache\Traits\ProxyTrait;
  *
  * @author Nicolas Grekas <p@tchwork.com>
  */
-class Psr16Adapter extends AbstractAdapter implements PruneableInterface, ResettableInterface
-{
+class Psr16Adapter extends AbstractAdapter implements PruneableInterface, ResettableInterface {
+
     use ProxyTrait;
 
     /**
@@ -32,8 +32,7 @@ class Psr16Adapter extends AbstractAdapter implements PruneableInterface, Resett
 
     private $miss;
 
-    public function __construct(CacheInterface $pool, string $namespace = '', int $defaultLifetime = 0)
-    {
+    public function __construct(CacheInterface $pool, string $namespace = '', int $defaultLifetime = 0) {
         parent::__construct($namespace, $defaultLifetime);
 
         $this->pool = $pool;
@@ -43,8 +42,7 @@ class Psr16Adapter extends AbstractAdapter implements PruneableInterface, Resett
     /**
      * {@inheritdoc}
      */
-    protected function doFetch(array $ids)
-    {
+    protected function doFetch(array $ids) {
         foreach ($this->pool->getMultiple($ids, $this->miss) as $key => $value) {
             if ($this->miss !== $value) {
                 yield $key => $value;
@@ -55,32 +53,29 @@ class Psr16Adapter extends AbstractAdapter implements PruneableInterface, Resett
     /**
      * {@inheritdoc}
      */
-    protected function doHave($id)
-    {
+    protected function doHave($id) {
         return $this->pool->has($id);
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function doClear($namespace)
-    {
+    protected function doClear($namespace) {
         return $this->pool->clear();
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function doDelete(array $ids)
-    {
+    protected function doDelete(array $ids) {
         return $this->pool->deleteMultiple($ids);
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function doSave(array $values, int $lifetime)
-    {
+    protected function doSave(array $values, int $lifetime) {
         return $this->pool->setMultiple($values, 0 === $lifetime ? null : $lifetime);
     }
+
 }

@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Central Columns view/edit
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Controllers\Database;
@@ -16,8 +16,8 @@ use function is_bool;
 use function parse_str;
 use function sprintf;
 
-class CentralColumnsController extends AbstractController
-{
+class CentralColumnsController extends AbstractController {
+
     /** @var CentralColumns */
     private $centralColumns;
 
@@ -26,14 +26,12 @@ class CentralColumnsController extends AbstractController
      * @param string         $db             Database name
      * @param CentralColumns $centralColumns
      */
-    public function __construct($response, Template $template, $db, $centralColumns)
-    {
+    public function __construct($response, Template $template, $db, $centralColumns) {
         parent::__construct($response, $template, $db);
         $this->centralColumns = $centralColumns;
     }
 
-    public function index(): void
-    {
+    public function index(): void {
         global $cfg, $db, $message, $pos, $num_cols;
 
         if (isset($_POST['edit_save'])) {
@@ -68,7 +66,7 @@ class CentralColumnsController extends AbstractController
         }
         if (isset($_POST['getColumnList'])) {
             $this->response->addJSON('message', $this->getColumnList([
-                'cur_table' => $_POST['cur_table'] ?? null,
+                        'cur_table' => $_POST['cur_table'] ?? null,
             ]));
 
             return;
@@ -108,7 +106,7 @@ class CentralColumnsController extends AbstractController
                 'field_null' => $_POST['field_null'] ?? null,
                 'col_extra' => $_POST['col_extra'] ?? null,
             ]);
-            if (! is_bool($message)) {
+            if (!is_bool($message)) {
                 $this->response->setRequestStatus(false);
                 $this->response->addJSON('message', $message);
             }
@@ -130,14 +128,14 @@ class CentralColumnsController extends AbstractController
             $pos = (int) $_POST['pos'];
         }
         $num_cols = $this->centralColumns->getColumnsCount(
-            $db,
-            $pos,
-            (int) $cfg['MaxRows']
+                $db,
+                $pos,
+                (int) $cfg['MaxRows']
         );
         $message = Message::success(
-            sprintf(__('Showing rows %1$s - %2$s.'), $pos + 1, $pos + $num_cols)
+                        sprintf(__('Showing rows %1$s - %2$s.'), $pos + 1, $pos + $num_cols)
         );
-        if (! isset($tmp_msg) || $tmp_msg === true) {
+        if (!isset($tmp_msg) || $tmp_msg === true) {
             return;
         }
 
@@ -147,12 +145,10 @@ class CentralColumnsController extends AbstractController
     /**
      * @param array $params Request parameters
      */
-    public function main(array $params): void
-    {
+    public function main(array $params): void {
         global $text_dir, $PMA_Theme;
 
-        if (! empty($params['total_rows'])
-            && Core::isValid($params['total_rows'], 'integer')
+        if (!empty($params['total_rows']) && Core::isValid($params['total_rows'], 'integer')
         ) {
             $totalRows = (int) $params['total_rows'];
         } else {
@@ -165,11 +161,11 @@ class CentralColumnsController extends AbstractController
         }
 
         $variables = $this->centralColumns->getTemplateVariablesForMain(
-            $this->db,
-            $totalRows,
-            $pos,
-            $PMA_Theme->getImgPath(),
-            $text_dir
+                $this->db,
+                $totalRows,
+                $pos,
+                $PMA_Theme->getImgPath(),
+                $text_dir
         );
 
         $this->render('database/central_columns/main', $variables);
@@ -180,16 +176,14 @@ class CentralColumnsController extends AbstractController
      *
      * @return array JSON
      */
-    public function getColumnList(array $params): array
-    {
+    public function getColumnList(array $params): array {
         return $this->centralColumns->getListRaw(
-            $this->db,
-            $params['cur_table'] ?? ''
+                        $this->db,
+                        $params['cur_table'] ?? ''
         );
     }
 
-    public function populateColumns(): void
-    {
+    public function populateColumns(): void {
         $columns = $this->centralColumns->getColumnsNotInCentralList($this->db, $_POST['selectedTable']);
         $this->render('database/central_columns/populate_columns', ['columns' => $columns]);
     }
@@ -199,24 +193,23 @@ class CentralColumnsController extends AbstractController
      *
      * @return true|Message
      */
-    public function editSave(array $params)
-    {
+    public function editSave(array $params) {
         $columnDefault = $params['col_default'];
         if ($columnDefault === 'NONE' && $params['col_default_sel'] !== 'USER_DEFINED') {
             $columnDefault = '';
         }
 
         return $this->centralColumns->updateOneColumn(
-            $this->db,
-            $params['orig_col_name'],
-            $params['col_name'],
-            $params['col_type'],
-            $params['col_attribute'],
-            $params['col_length'],
-            isset($params['col_isNull']) ? 1 : 0,
-            $params['collation'],
-            $params['col_extra'] ?? '',
-            $columnDefault
+                        $this->db,
+                        $params['orig_col_name'],
+                        $params['col_name'],
+                        $params['col_type'],
+                        $params['col_attribute'],
+                        $params['col_length'],
+                        isset($params['col_isNull']) ? 1 : 0,
+                        $params['collation'],
+                        $params['col_extra'] ?? '',
+                        $columnDefault
         );
     }
 
@@ -225,24 +218,23 @@ class CentralColumnsController extends AbstractController
      *
      * @return true|Message
      */
-    public function addNewColumn(array $params)
-    {
+    public function addNewColumn(array $params) {
         $columnDefault = $params['col_default'];
         if ($columnDefault === 'NONE' && $params['col_default_sel'] !== 'USER_DEFINED') {
             $columnDefault = '';
         }
 
         return $this->centralColumns->updateOneColumn(
-            $this->db,
-            '',
-            $params['col_name'],
-            $params['col_type'],
-            $params['col_attribute'],
-            $params['col_length'],
-            isset($params['col_isNull']) ? 1 : 0,
-            $params['collation'],
-            $params['col_extra'] ?? '',
-            $columnDefault
+                        $this->db,
+                        '',
+                        $params['col_name'],
+                        $params['col_type'],
+                        $params['col_attribute'],
+                        $params['col_length'],
+                        isset($params['col_isNull']) ? 1 : 0,
+                        $params['collation'],
+                        $params['col_extra'] ?? '',
+                        $columnDefault
         );
     }
 
@@ -251,23 +243,21 @@ class CentralColumnsController extends AbstractController
      *
      * @return true|Message
      */
-    public function addColumn(array $params)
-    {
+    public function addColumn(array $params) {
         return $this->centralColumns->syncUniqueColumns(
-            [$params['column-select']],
-            false,
-            $params['table-select']
+                        [$params['column-select']],
+                        false,
+                        $params['table-select']
         );
     }
 
     /**
      * @param array $params Request parameters
      */
-    public function editPage(array $params): void
-    {
+    public function editPage(array $params): void {
         $rows = $this->centralColumns->getHtmlForEditingPage(
-            $params['selected_fld'],
-            $params['db']
+                $params['selected_fld'],
+                $params['db']
         );
 
         $this->render('database/central_columns/edit', ['rows' => $rows]);
@@ -278,8 +268,7 @@ class CentralColumnsController extends AbstractController
      *
      * @return true|Message
      */
-    public function updateMultipleColumn(array $params)
-    {
+    public function updateMultipleColumn(array $params) {
         return $this->centralColumns->updateMultipleColumn($params);
     }
 
@@ -288,15 +277,15 @@ class CentralColumnsController extends AbstractController
      *
      * @return true|Message
      */
-    public function deleteSave(array $params)
-    {
+    public function deleteSave(array $params) {
         $name = [];
         parse_str($params['col_name'], $name);
 
         return $this->centralColumns->deleteColumnsFromList(
-            $params['db'],
-            $name['selected_fld'],
-            false
+                        $params['db'],
+                        $name['selected_fld'],
+                        false
         );
     }
+
 }

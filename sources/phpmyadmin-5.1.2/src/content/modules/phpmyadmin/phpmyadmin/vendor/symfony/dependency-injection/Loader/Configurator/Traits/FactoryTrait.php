@@ -14,8 +14,8 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator\Traits;
 use Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ReferenceConfigurator;
 
-trait FactoryTrait
-{
+trait FactoryTrait {
+
     /**
      * Sets a factory.
      *
@@ -23,8 +23,7 @@ trait FactoryTrait
      *
      * @return $this
      */
-    final public function factory($factory): self
-    {
+    final public function factory($factory): self {
         if (\is_string($factory) && 1 === substr_count($factory, ':')) {
             $factoryParts = explode(':', $factory);
 
@@ -35,4 +34,5 @@ trait FactoryTrait
 
         return $this;
     }
+
 }

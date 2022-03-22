@@ -19,8 +19,8 @@ namespace Twig\Extension;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-interface GlobalsInterface
-{
+interface GlobalsInterface {
+
     /**
      * Returns a list of global variables to add to the existing list.
      *

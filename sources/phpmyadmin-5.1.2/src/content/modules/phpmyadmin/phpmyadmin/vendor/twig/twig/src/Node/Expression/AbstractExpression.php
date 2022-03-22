@@ -19,8 +19,8 @@ use Twig\Node\Node;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-abstract class AbstractExpression extends Node
-{
+abstract class AbstractExpression extends Node {
+    
 }
 
 class_alias('Twig\Node\Expression\AbstractExpression', 'Twig_Node_Expression');

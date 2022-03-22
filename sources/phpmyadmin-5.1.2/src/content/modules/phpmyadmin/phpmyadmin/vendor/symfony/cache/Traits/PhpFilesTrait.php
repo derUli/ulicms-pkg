@@ -22,8 +22,8 @@ use Symfony\Component\VarExporter\VarExporter;
  *
  * @internal
  */
-trait PhpFilesTrait
-{
+trait PhpFilesTrait {
+
     use FilesystemCommonTrait {
         doClear as private doCommonClear;
         doDelete as private doCommonDelete;
@@ -33,12 +33,10 @@ trait PhpFilesTrait
     private $appendOnly;
     private $values = [];
     private $files = [];
-
     private static $startTime;
     private static $valuesCache = [];
 
-    public static function isSupported()
-    {
+    public static function isSupported() {
         self::$startTime = self::$startTime ?? $_SERVER['REQUEST_TIME'] ?? time();
 
         return \function_exists('opcache_invalidate') && filter_var(ini_get('opcache.enable'), \FILTER_VALIDATE_BOOLEAN) && (!\in_array(\PHP_SAPI, ['cli', 'phpdbg'], true) || filter_var(ini_get('opcache.enable_cli'), \FILTER_VALIDATE_BOOLEAN));
@@ -47,8 +45,7 @@ trait PhpFilesTrait
     /**
      * @return bool
      */
-    public function prune()
-    {
+    public function prune() {
         $time = time();
         $pruned = true;
         $getExpiry = true;
@@ -78,8 +75,7 @@ trait PhpFilesTrait
     /**
      * {@inheritdoc}
      */
-    protected function doFetch(array $ids)
-    {
+    protected function doFetch(array $ids) {
         if ($this->appendOnly) {
             $now = 0;
             $missingIds = [];
@@ -154,8 +150,7 @@ trait PhpFilesTrait
     /**
      * {@inheritdoc}
      */
-    protected function doHave($id)
-    {
+    protected function doHave($id) {
         if ($this->appendOnly && isset($this->values[$id])) {
             return true;
         }
@@ -194,8 +189,7 @@ trait PhpFilesTrait
     /**
      * {@inheritdoc}
      */
-    protected function doSave(array $values, int $lifetime)
-    {
+    protected function doSave(array $values, int $lifetime) {
         $ok = true;
         $expiry = $lifetime ? time() + $lifetime : 'PHP_INT_MAX';
         $allowCompile = self::isSupported();
@@ -256,8 +250,7 @@ trait PhpFilesTrait
     /**
      * {@inheritdoc}
      */
-    protected function doClear($namespace)
-    {
+    protected function doClear($namespace) {
         $this->values = [];
 
         return $this->doCommonClear($namespace);
@@ -266,8 +259,7 @@ trait PhpFilesTrait
     /**
      * {@inheritdoc}
      */
-    protected function doDelete(array $ids)
-    {
+    protected function doDelete(array $ids) {
         foreach ($ids as $id) {
             unset($this->values[$id]);
         }
@@ -275,8 +267,7 @@ trait PhpFilesTrait
         return $this->doCommonDelete($ids);
     }
 
-    protected function doUnlink($file)
-    {
+    protected function doUnlink($file) {
         unset(self::$valuesCache[$file]);
 
         if (self::isSupported()) {
@@ -286,8 +277,7 @@ trait PhpFilesTrait
         return @unlink($file);
     }
 
-    private function getFileKey(string $file): string
-    {
+    private function getFileKey(string $file): string {
         if (!$h = @fopen($file, 'r')) {
             return '';
         }
@@ -297,17 +287,18 @@ trait PhpFilesTrait
 
         return rawurldecode(rtrim($encodedKey));
     }
+
 }
 
 /**
  * @internal
  */
-class LazyValue
-{
+class LazyValue {
+
     public $file;
 
-    public function __construct(string $file)
-    {
+    public function __construct(string $file) {
         $this->file = $file;
     }
+
 }

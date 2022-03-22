@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Abstract class for the hex transformations plugins
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Plugins\Transformations\Abs;
@@ -16,19 +16,18 @@ use function intval;
 /**
  * Provides common methods for all of the hex transformations plugins.
  */
-abstract class HexTransformationsPlugin extends TransformationsPlugin
-{
+abstract class HexTransformationsPlugin extends TransformationsPlugin {
+
     /**
      * Gets the transformation description of the specific plugin
      *
      * @return string
      */
-    public static function getInfo()
-    {
+    public static function getInfo() {
         return __(
-            'Displays hexadecimal representation of data. Optional first'
-            . ' parameter specifies how often space will be added (defaults'
-            . ' to 2 nibbles).'
+                'Displays hexadecimal representation of data. Optional first'
+                . ' parameter specifies how often space will be added (defaults'
+                . ' to 2 nibbles).'
         );
     }
 
@@ -41,8 +40,7 @@ abstract class HexTransformationsPlugin extends TransformationsPlugin
      *
      * @return string
      */
-    public function applyTransformation($buffer, array $options = [], ?stdClass $meta = null)
-    {
+    public function applyTransformation($buffer, array $options = [], ?stdClass $meta = null) {
         // possibly use a global transform and feed it with special options
         $cfg = $GLOBALS['cfg'];
         $options = $this->getOptions($options, $cfg['DefaultTransformations']['Hex']);
@@ -62,8 +60,8 @@ abstract class HexTransformationsPlugin extends TransformationsPlugin
      *
      * @return string
      */
-    public static function getName()
-    {
+    public static function getName() {
         return 'Hex';
     }
+
 }

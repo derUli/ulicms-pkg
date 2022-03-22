@@ -1,8 +1,8 @@
 <?php
+
 /**
  * The definition of a parameter of a function or procedure.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\SqlParser\Components;
@@ -12,7 +12,6 @@ use PhpMyAdmin\SqlParser\Context;
 use PhpMyAdmin\SqlParser\Parser;
 use PhpMyAdmin\SqlParser\Token;
 use PhpMyAdmin\SqlParser\TokensList;
-
 use function implode;
 use function is_array;
 use function trim;
@@ -22,8 +21,8 @@ use function trim;
  *
  * @final
  */
-class ParameterDefinition extends Component
-{
+class ParameterDefinition extends Component {
+
     /**
      * The name of the new column.
      *
@@ -50,8 +49,7 @@ class ParameterDefinition extends Component
      * @param string   $inOut parameter's directional type (IN / OUT or None)
      * @param DataType $type  parameter's type
      */
-    public function __construct($name = null, $inOut = null, $type = null)
-    {
+    public function __construct($name = null, $inOut = null, $type = null) {
         $this->name = $name;
         $this->inOut = $inOut;
         $this->type = $type;
@@ -64,8 +62,7 @@ class ParameterDefinition extends Component
      *
      * @return ParameterDefinition[]
      */
-    public static function parse(Parser $parser, TokensList $list, array $options = [])
-    {
+    public static function parse(Parser $parser, TokensList $list, array $options = []) {
         $ret = [];
 
         $expr = new static();
@@ -155,19 +152,19 @@ class ParameterDefinition extends Component
      *
      * @return string
      */
-    public static function build($component, array $options = [])
-    {
+    public static function build($component, array $options = []) {
         if (is_array($component)) {
             return '(' . implode(', ', $component) . ')';
         }
 
         $tmp = '';
-        if (! empty($component->inOut)) {
+        if (!empty($component->inOut)) {
             $tmp .= $component->inOut . ' ';
         }
 
         return trim(
-            $tmp . Context::escape($component->name) . ' ' . $component->type
+                $tmp . Context::escape($component->name) . ' ' . $component->type
         );
     }
+
 }

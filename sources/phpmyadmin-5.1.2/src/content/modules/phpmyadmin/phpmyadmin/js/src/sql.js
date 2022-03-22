@@ -93,7 +93,7 @@ Sql.setShowThisQuery = function () {
             var storedQuery = JSON.parse(window.localStorage.showThisQueryObject).query;
         }
         if (window.localStorage.showThisQuery !== undefined
-            && window.localStorage.showThisQuery === '1') {
+                && window.localStorage.showThisQuery === '1') {
             $('input[name="show_query"]').prop('checked', true);
             if (db === storedDb && table === storedTable) {
                 if (codeMirrorEditor) {
@@ -157,15 +157,15 @@ Sql.getFieldName = function ($tableResults, $thisField) {
     // of a sort on multiple columns; however, we dont want this as part
     // of the column name so we strip it ( .clone() to .end() )
     var fieldName = $tableResults
-        .find('thead')
-        .find('th')
-        .eq(thisFieldIndex - leftActionSkip)
-        .find('a')
-        .clone()    // clone the element
-        .children() // select all the children
-        .remove()   // remove all of them
-        .end()      // go back to the selected element
-        .text();    // grab the text
+            .find('thead')
+            .find('th')
+            .eq(thisFieldIndex - leftActionSkip)
+            .find('a')
+            .clone()    // clone the element
+            .children() // select all the children
+            .remove()   // remove all of them
+            .end()      // go back to the selected element
+            .text();    // grab the text
     // happens when just one row (headings contain no a)
     if (fieldName === '') {
         var $heading = $tableResults.find('thead').find('th').eq(thisFieldIndex - leftActionSkip).children('span');
@@ -267,7 +267,7 @@ AJAX.registerOnload('sql.js', function () {
     // Delete row from SQL results
     $(document).on('click', 'a.delete_row.ajax', function (e) {
         e.preventDefault();
-        var question =  Functions.sprintf(Messages.strDoYouReally, Functions.escapeHtml($(this).closest('td').find('div').text()));
+        var question = Functions.sprintf(Messages.strDoYouReally, Functions.escapeHtml($(this).closest('td').find('div').text()));
         var $link = $(this);
         $link.confirm(question, $link.attr('href'), function (url) {
             Functions.ajaxShowMessage();
@@ -305,8 +305,8 @@ AJAX.registerOnload('sql.js', function () {
     /* Hides the bookmarkoptions checkboxes when the bookmark label is empty */
     $('input#bkm_label').on('input', function () {
         $('input#id_bkm_all_users, input#id_bkm_replace')
-            .parent()
-            .toggle($(this).val().length > 0);
+                .parent()
+                .toggle($(this).val().length > 0);
     }).trigger('input');
 
     /**
@@ -426,13 +426,13 @@ AJAX.registerOnload('sql.js', function () {
      * @name    appendToggleSpan
      */
     // do not add this link more than once
-    if (! $('#sqlqueryform').find('button').is('#togglequerybox')) {
+    if (!$('#sqlqueryform').find('button').is('#togglequerybox')) {
         $('<button class="btn btn-secondary" id="togglequerybox"></button>')
-            .html(Messages.strHideQueryBox)
-            .appendTo('#sqlqueryform')
-        // initially hidden because at this point, nothing else
-        // appears under the link
-            .hide();
+                .html(Messages.strHideQueryBox)
+                .appendTo('#sqlqueryform')
+                // initially hidden because at this point, nothing else
+                // appears under the link
+                .hide();
 
         // Attach the toggling of the query box visibility to a click
         $('#togglequerybox').on('click', function () {
@@ -467,7 +467,7 @@ AJAX.registerOnload('sql.js', function () {
         // id_bookmark selector to avoid misinterpretation in
         // /import about what needs to be done
         $form.find('select[name=id_bookmark]').val('');
-        var isShowQuery =  $('input[name="show_query"]').is(':checked');
+        var isShowQuery = $('input[name="show_query"]').is(':checked');
         if (isShowQuery) {
             window.localStorage.showThisQuery = '1';
             var db = $('input[name="db"]').val();
@@ -530,7 +530,7 @@ AJAX.registerOnload('sql.js', function () {
             // same action as the Go button in that section.
             $('#button_submit_bookmark').trigger('click');
             return false;
-        } else  {
+        } else {
             return true;
         }
     });
@@ -549,7 +549,7 @@ AJAX.registerOnload('sql.js', function () {
         if (codeMirrorEditor) {
             $form[0].elements.sql_query.value = codeMirrorEditor.getValue();
         }
-        if (! Functions.checkSqlQuery($form[0])) {
+        if (!Functions.checkSqlQuery($form[0])) {
             return false;
         }
 
@@ -586,24 +586,24 @@ AJAX.registerOnload('sql.js', function () {
                     }
                 }
                 $sqlqueryresultsouter
-                    .show()
-                    .html(data.message);
+                        .show()
+                        .html(data.message);
                 Functions.highlightSql($sqlqueryresultsouter);
 
                 if (data.menu) {
                     if (history && history.pushState) {
                         history.replaceState({
-                            menu : data.menu
+                            menu: data.menu
                         },
-                        null
-                        );
+                                null
+                                );
                         AJAX.handleMenu.replace(data.menu);
                     } else {
                         MicroHistory.menus.replace(data.menu);
                         MicroHistory.menus.add(data.menuHash, data.menu);
                     }
                 } else if (data.menuHash) {
-                    if (! (history && history.pushState)) {
+                    if (!(history && history.pushState)) {
                         MicroHistory.menus.replace(MicroHistory.menus.get(data.menuHash));
                     }
                 }
@@ -636,8 +636,8 @@ AJAX.registerOnload('sql.js', function () {
                     }
                     CommonActions.refreshMain(url, function () {
                         $('#sqlqueryresultsouter')
-                            .show()
-                            .html(data.message);
+                                .show()
+                                .html(data.message);
                         Functions.highlightSql($('#sqlqueryresultsouter'));
                     });
                 }
@@ -656,9 +656,9 @@ AJAX.registerOnload('sql.js', function () {
             } else if (typeof data !== 'undefined' && data.success === false) {
                 // show an error message that stays on screen
                 $sqlqueryresultsouter
-                    .show()
-                    .html(data.error);
-                $('html, body').animate({ scrollTop: $(document).height() }, 200);
+                        .show()
+                        .html(data.error);
+                $('html, body').animate({scrollTop: $(document).height()}, 200);
             }
             Functions.ajaxRemoveMessage($msgbox);
         }); // end $.post()
@@ -680,8 +680,8 @@ AJAX.registerOnload('sql.js', function () {
             Functions.ajaxRemoveMessage($msgbox);
             var $sqlqueryresults = $form.parents('.sqlqueryresults');
             $sqlqueryresults
-                .html(data.message)
-                .trigger('makegrid');
+                    .html(data.message)
+                    .trigger('makegrid');
             Functions.initSlider();
             Functions.highlightSql($sqlqueryresults);
         }); // end $.post()
@@ -695,8 +695,8 @@ AJAX.registerOnload('sql.js', function () {
         var targetColumns = [];
         // To handle colspan=4, in case of edit,copy etc options.
         var dummyTh = ($('.edit_row_anchor').length !== 0 ?
-            '<th class="hide dummy_th"></th><th class="hide dummy_th"></th><th class="hide dummy_th"></th>'
-            : '');
+                '<th class="hide dummy_th"></th><th class="hide dummy_th"></th><th class="hide dummy_th"></th>'
+                : '');
         // Selecting columns that will be considered for filtering and searching.
         $headerCells.each(function () {
             targetColumns.push($(this).text().trim());
@@ -725,7 +725,7 @@ AJAX.registerOnload('sql.js', function () {
             $.post($form.attr('action'), submitData, AJAX.responseHandler);
         };
 
-        if (! $(this).is(':checked')) { // already showing all rows
+        if (!$(this).is(':checked')) { // already showing all rows
             Sql.submitShowAllForm();
         } else {
             $form.confirm(Messages.strShowAllRowsWarning, $form.attr('action'), function () {
@@ -779,10 +779,10 @@ AJAX.registerOnload('sql.js', function () {
                         var len = response.sql_data.length;
                         for (var i = 0; i < len; i++) {
                             dialogContent += '<strong>' + Messages.strSQLQuery +
-                                '</strong>' + response.sql_data[i].sql_query +
-                                Messages.strMatchedRows +
-                                ' <a href="' + response.sql_data[i].matched_rows_url +
-                                '">' + response.sql_data[i].matched_rows + '</a><br>';
+                                    '</strong>' + response.sql_data[i].sql_query +
+                                    Messages.strMatchedRows +
+                                    ' <a href="' + response.sql_data[i].matched_rows_url +
+                                    '">' + response.sql_data[i].matched_rows + '</a><br>';
                             if (i < len - 1) {
                                 dialogContent += '<hr>';
                             }
@@ -854,18 +854,18 @@ AJAX.registerOnload('sql.js', function () {
         var unlimNumRows = $(this).find('input[name="unlim_num_rows"]').val();
 
         var maxRowsCheck = Functions.checkFormElementInRange(
-            this,
-            'session_max_rows',
-            Messages.strNotValidRowNumber,
-            1
-        );
+                this,
+                'session_max_rows',
+                Messages.strNotValidRowNumber,
+                1
+                );
         var posCheck = Functions.checkFormElementInRange(
-            this,
-            'pos',
-            Messages.strNotValidRowNumber,
-            0,
-            unlimNumRows > 0 ? unlimNumRows - 1 : null
-        );
+                this,
+                'pos',
+                Messages.strNotValidRowNumber,
+                0,
+                unlimNumRows > 0 ? unlimNumRows - 1 : null
+                );
 
         return maxRowsCheck && posCheck;
     });
@@ -888,7 +888,7 @@ Sql.changeClassForColumn = function ($thisTh, newClass, isAddClass) {
         thIndex--;
     }
     var $table = $thisTh.parents('.table_results');
-    if (! $table.length) {
+    if (!$table.length) {
         $table = $thisTh.parents('table').siblings('.table_results');
     }
     var $tds = $table.find('tbody tr').find('td.data').eq(thIndex);
@@ -994,7 +994,7 @@ Sql.checkSavedQuery = function () {
     var key = Sql.getAutoSavedKey();
 
     if (isStorageSupported('localStorage') &&
-        typeof window.localStorage.getItem(key) === 'string') {
+            typeof window.localStorage.getItem(key) === 'string') {
         Functions.ajaxShowMessage(Messages.strPreviousSaveQuery);
     } else if (Cookies.get(key)) {
         Functions.ajaxShowMessage(Messages.strPreviousSaveQuery);
@@ -1042,9 +1042,9 @@ AJAX.registerOnload('sql.js', function () {
  */
 Sql.makeProfilingChart = function () {
     if ($('#profilingchart').length === 0 ||
-        $('#profilingchart').html().length !== 0 ||
-        !$.jqplot || !$.jqplot.Highlighter || !$.jqplot.PieRenderer
-    ) {
+            $('#profilingchart').html().length !== 0 ||
+            !$.jqplot || !$.jqplot.Highlighter || !$.jqplot.PieRenderer
+            ) {
         return;
     }
 
@@ -1069,8 +1069,8 @@ Sql.initProfilingTables = function () {
     }
     // Added to allow two direction sorting
     $('#profiletable')
-        .find('thead th')
-        .off('click mousedown');
+            .find('thead th')
+            .off('click mousedown');
 
     $('#profiletable').tablesorter({
         widgets: ['zebra'],
@@ -1085,8 +1085,8 @@ Sql.initProfilingTables = function () {
     });
     // Added to allow two direction sorting
     $('#profilesummarytable')
-        .find('thead th')
-        .off('click mousedown');
+            .find('thead th')
+            .off('click mousedown');
 
     $('#profilesummarytable').tablesorter({
         widgets: ['zebra'],

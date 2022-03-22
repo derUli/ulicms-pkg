@@ -16,21 +16,20 @@ namespace Symfony\Component\Config\Loader;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class GlobFileLoader extends FileLoader
-{
+class GlobFileLoader extends FileLoader {
+
     /**
      * {@inheritdoc}
      */
-    public function load($resource, $type = null)
-    {
+    public function load($resource, $type = null) {
         return $this->import($resource);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function supports($resource, $type = null)
-    {
+    public function supports($resource, $type = null) {
         return 'glob' === $type;
     }
+
 }

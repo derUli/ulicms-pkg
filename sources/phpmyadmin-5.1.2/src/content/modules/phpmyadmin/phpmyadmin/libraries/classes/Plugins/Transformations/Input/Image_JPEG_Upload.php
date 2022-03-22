@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Image JPEG Upload Input Transformations plugin for phpMyAdmin
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Plugins\Transformations\Input;
@@ -14,15 +14,14 @@ use PhpMyAdmin\Plugins\Transformations\Abs\ImageUploadTransformationsPlugin;
  * Has two option: width & height of the thumbnail
  */
 // @codingStandardsIgnoreLine
-class Image_JPEG_Upload extends ImageUploadTransformationsPlugin
-{
+class Image_JPEG_Upload extends ImageUploadTransformationsPlugin {
+
     /**
      * Gets the plugin`s MIME type
      *
      * @return string
      */
-    public static function getMIMEType()
-    {
+    public static function getMIMEType() {
         return 'Image';
     }
 
@@ -31,8 +30,8 @@ class Image_JPEG_Upload extends ImageUploadTransformationsPlugin
      *
      * @return string
      */
-    public static function getMIMESubtype()
-    {
+    public static function getMIMESubtype() {
         return 'JPEG';
     }
+
 }

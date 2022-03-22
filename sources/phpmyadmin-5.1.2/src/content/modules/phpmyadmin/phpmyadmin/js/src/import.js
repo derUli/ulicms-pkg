@@ -8,7 +8,7 @@
  * Toggles the hiding and showing of each plugin's options
  * according to the currently selected plugin from the dropdown list
  */
-function changePluginOpts () {
+function changePluginOpts() {
     $('#format_specific_opts').find('div.format_specific_options').each(function () {
         $(this).hide();
     });
@@ -25,7 +25,7 @@ function changePluginOpts () {
  * Toggles the hiding and showing of each plugin's options and sets the selected value
  * in the plugin dropdown list according to the format of the selected file
  */
-function matchFile (fname) {
+function matchFile(fname) {
     var fnameArray = fname.toLowerCase().split('.');
     var len = fnameArray.length;
     if (len !== 0) {
@@ -146,13 +146,13 @@ AJAX.registerOnload('import.js', function () {
      */
     $('#scroll_to_options_msg').hide();
     $('#format_specific_opts').find('div.format_specific_options')
-        .css({
-            'border': 0,
-            'margin': 0,
-            'padding': 0
-        })
-        .find('h3')
-        .remove();
+            .css({
+                'border': 0,
+                'margin': 0,
+                'padding': 0
+            })
+            .find('h3')
+            .remove();
     // $("form[name=import] *").unwrap();
 
     /**

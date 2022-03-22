@@ -28,8 +28,8 @@ use function mb_strtoupper;
 use function preg_replace;
 use function strlen;
 
-class OperationsController extends AbstractController
-{
+class OperationsController extends AbstractController {
+
     /** @var Operations */
     private $operations;
 
@@ -49,14 +49,14 @@ class OperationsController extends AbstractController
      * @param DatabaseInterface $dbi
      */
     public function __construct(
-        $response,
-        Template $template,
-        $db,
-        $table,
-        Operations $operations,
-        CheckUserPrivileges $checkUserPrivileges,
-        Relation $relation,
-        $dbi
+            $response,
+            Template $template,
+            $db,
+            $table,
+            Operations $operations,
+            CheckUserPrivileges $checkUserPrivileges,
+            Relation $relation,
+            $dbi
     ) {
         parent::__construct($response, $template, $db, $table);
         $this->operations = $operations;
@@ -65,8 +65,7 @@ class OperationsController extends AbstractController
         $this->dbi = $dbi;
     }
 
-    public function index(): void
-    {
+    public function index(): void {
         global $url_params, $reread_info, $tbl_is_view, $tbl_storage_engine;
         global $show_comment, $tbl_collation, $table_info_num_rows, $row_format, $auto_increment, $create_options;
         global $table_alters, $warning_messages, $lowerCaseNames, $db, $table, $reload, $result;
@@ -130,15 +129,13 @@ class OperationsController extends AbstractController
             // or explicit (option found with a value of 0 or 1)
             // ($create_options['transactional'] may have been set by Table class,
             // from the $create_options)
-            $create_options['transactional'] = ($create_options['transactional'] ?? '') == '0'
-                ? '0'
-                : '1';
+            $create_options['transactional'] = ($create_options['transactional'] ?? '') == '0' ? '0' : '1';
             $create_options['page_checksum'] = $create_options['page_checksum'] ?? '';
         }
 
         $pma_table = $this->dbi->getTable(
-            $db,
-            $table
+                $db,
+                $table
         );
         $reread_info = false;
         $table_alters = [];
@@ -149,7 +146,7 @@ class OperationsController extends AbstractController
         if (isset($_POST['submit_move']) || isset($_POST['submit_copy'])) {
             $message = $this->operations->moveOrCopyTable($db, $table);
 
-            if (! $this->response->isAjax()) {
+            if (!$this->response->isAjax()) {
                 return;
             }
 
@@ -157,7 +154,7 @@ class OperationsController extends AbstractController
 
             if ($message->isSuccess()) {
                 if (isset($_POST['submit_move'], $_POST['target_db'])) {
-                    $db = $_POST['target_db'];// Used in Header::getJsParams()
+                    $db = $_POST['target_db']; // Used in Header::getJsParams()
                 }
                 $this->response->addJSON('db', $db);
 
@@ -180,7 +177,7 @@ class OperationsController extends AbstractController
                 // lower_case_table_names=1 `DB` becomes `db`
                 if ($lowerCaseNames) {
                     $_POST['new_name'] = mb_strtolower(
-                        $_POST['new_name']
+                            $_POST['new_name']
                     );
                 }
                 // Get original names before rename operation
@@ -188,14 +185,13 @@ class OperationsController extends AbstractController
                 $oldDb = $pma_table->getDbName();
 
                 if ($pma_table->rename($_POST['new_name'])) {
-                    if (isset($_POST['adjust_privileges'])
-                        && ! empty($_POST['adjust_privileges'])
+                    if (isset($_POST['adjust_privileges']) && !empty($_POST['adjust_privileges'])
                     ) {
                         $this->operations->adjustPrivilegesRenameOrMoveTable(
-                            $oldDb,
-                            $oldTable,
-                            $_POST['db'],
-                            $_POST['new_name']
+                                $oldDb,
+                                $oldTable,
+                                $_POST['db'],
+                                $_POST['new_name']
                         );
                     }
 
@@ -213,15 +209,12 @@ class OperationsController extends AbstractController
                 }
             }
 
-            if (! empty($_POST['new_tbl_storage_engine'])
-                && mb_strtoupper($_POST['new_tbl_storage_engine']) !== $tbl_storage_engine
+            if (!empty($_POST['new_tbl_storage_engine']) && mb_strtoupper($_POST['new_tbl_storage_engine']) !== $tbl_storage_engine
             ) {
                 $new_tbl_storage_engine = mb_strtoupper($_POST['new_tbl_storage_engine']);
 
                 if ($pma_table->isEngine('ARIA')) {
-                    $create_options['transactional'] = ($create_options['transactional'] ?? '') == '0'
-                        ? '0'
-                        : '1';
+                    $create_options['transactional'] = ($create_options['transactional'] ?? '') == '0' ? '0' : '1';
                     $create_options['page_checksum'] = $create_options['page_checksum'] ?? '';
                 }
             } else {
@@ -231,36 +224,34 @@ class OperationsController extends AbstractController
             $row_format = $create_options['row_format'] ?? $pma_table->getRowFormat();
 
             $table_alters = $this->operations->getTableAltersArray(
-                $pma_table,
-                $create_options['pack_keys'],
-                (empty($create_options['checksum']) ? '0' : '1'),
-                ($create_options['page_checksum'] ?? ''),
-                (empty($create_options['delay_key_write']) ? '0' : '1'),
-                $row_format,
-                $new_tbl_storage_engine,
-                (isset($create_options['transactional']) && $create_options['transactional'] == '0' ? '0' : '1'),
-                $tbl_collation
+                    $pma_table,
+                    $create_options['pack_keys'],
+                    (empty($create_options['checksum']) ? '0' : '1'),
+                    ($create_options['page_checksum'] ?? ''),
+                    (empty($create_options['delay_key_write']) ? '0' : '1'),
+                    $row_format,
+                    $new_tbl_storage_engine,
+                    (isset($create_options['transactional']) && $create_options['transactional'] == '0' ? '0' : '1'),
+                    $tbl_collation
             );
 
             if (count($table_alters) > 0) {
-                $sql_query      = 'ALTER TABLE '
-                    . Util::backquote($table);
-                $sql_query     .= "\r\n" . implode("\r\n", $table_alters);
-                $sql_query     .= ';';
-                $result         = (bool) $this->dbi->query($sql_query);
-                $reread_info    = true;
+                $sql_query = 'ALTER TABLE '
+                        . Util::backquote($table);
+                $sql_query .= "\r\n" . implode("\r\n", $table_alters);
+                $sql_query .= ';';
+                $result = (bool) $this->dbi->query($sql_query);
+                $reread_info = true;
                 unset($table_alters);
                 $warning_messages = $this->operations->getWarningMessagesArray();
             }
 
-            if (isset($_POST['tbl_collation'], $_POST['change_all_collations'])
-                && ! empty($_POST['tbl_collation'])
-                && ! empty($_POST['change_all_collations'])
+            if (isset($_POST['tbl_collation'], $_POST['change_all_collations']) && !empty($_POST['tbl_collation']) && !empty($_POST['change_all_collations'])
             ) {
                 $this->operations->changeAllColumnsCollation(
-                    $db,
-                    $table,
-                    $_POST['tbl_collation']
+                        $db,
+                        $table,
+                        $_POST['tbl_collation']
                 );
             }
 
@@ -268,8 +259,8 @@ class OperationsController extends AbstractController
                 if ($this->response->isAjax()) {
                     $this->response->setRequestStatus(false);
                     $this->response->addJSON(
-                        'message',
-                        Message::error(__('No collation provided.'))
+                            'message',
+                            Message::error(__('No collation provided.'))
                     );
 
                     return;
@@ -279,15 +270,14 @@ class OperationsController extends AbstractController
         /**
          * Reordering the table has been requested by the user
          */
-        if (isset($_POST['submitorderby']) && ! empty($_POST['order_field'])) {
+        if (isset($_POST['submitorderby']) && !empty($_POST['order_field'])) {
             [$sql_query, $result] = $this->operations->getQueryAndResultForReorderingTable();
         }
 
         /**
          * A partition operation has been requested by the user
          */
-        if (isset($_POST['submit_partition'])
-            && ! empty($_POST['partition_operation'])
+        if (isset($_POST['submit_partition']) && !empty($_POST['partition_operation'])
         ) {
             [$sql_query, $result] = $this->operations->getQueryAndResultForPartition();
         }
@@ -320,40 +310,36 @@ class OperationsController extends AbstractController
                 if (empty($sql_query)) {
                     $_message = Message::success(__('No change'));
                 } else {
-                    $_message = $result
-                        ? Message::success()
-                        : Message::error();
+                    $_message = $result ? Message::success() : Message::error();
                 }
 
                 if ($this->response->isAjax()) {
                     $this->response->setRequestStatus($_message->isSuccess());
                     $this->response->addJSON('message', $_message);
-                    if (! empty($sql_query)) {
+                    if (!empty($sql_query)) {
                         $this->response->addJSON(
-                            'sql_query',
-                            Generator::getMessage('', $sql_query)
+                                'sql_query',
+                                Generator::getMessage('', $sql_query)
                         );
                     }
 
                     return;
                 }
             } else {
-                $_message = $result
-                    ? Message::success($_message)
-                    : Message::error($_message);
+                $_message = $result ? Message::success($_message) : Message::error($_message);
             }
 
-            if (! empty($warning_messages)) {
+            if (!empty($warning_messages)) {
                 $_message = new Message();
                 $_message->addMessagesString($warning_messages);
                 $_message->isError(true);
                 if ($this->response->isAjax()) {
                     $this->response->setRequestStatus(false);
                     $this->response->addJSON('message', $_message);
-                    if (! empty($sql_query)) {
+                    if (!empty($sql_query)) {
                         $this->response->addJSON(
-                            'sql_query',
-                            Generator::getMessage('', $sql_query)
+                                'sql_query',
+                                Generator::getMessage('', $sql_query)
                         );
                     }
 
@@ -364,11 +350,11 @@ class OperationsController extends AbstractController
 
             if (empty($sql_query)) {
                 $this->response->addHTML(
-                    $_message->getDisplay()
+                        $_message->getDisplay()
                 );
             } else {
                 $this->response->addHTML(
-                    Generator::getMessage($_message, $sql_query)
+                        Generator::getMessage($_message, $sql_query)
                 );
             }
             unset($_message);
@@ -427,12 +413,10 @@ class OperationsController extends AbstractController
         $charsets = Charsets::getCharsets($this->dbi, $GLOBALS['cfg']['Server']['DisableIS']);
         $collations = Charsets::getCollations($this->dbi, $GLOBALS['cfg']['Server']['DisableIS']);
 
-        $hasPackKeys = isset($create_options['pack_keys'])
-            && $pma_table->isEngine(['MYISAM', 'ARIA', 'ISAM']);
+        $hasPackKeys = isset($create_options['pack_keys']) && $pma_table->isEngine(['MYISAM', 'ARIA', 'ISAM']);
         $hasChecksumAndDelayKeyWrite = $pma_table->isEngine(['MYISAM', 'ARIA']);
         $hasTransactionalAndPageChecksum = $pma_table->isEngine('ARIA');
-        $hasAutoIncrement = strlen((string) $auto_increment) > 0
-            && $pma_table->isEngine(['MYISAM', 'ARIA', 'INNODB', 'PBXT', 'ROCKSDB']);
+        $hasAutoIncrement = strlen((string) $auto_increment) > 0 && $pma_table->isEngine(['MYISAM', 'ARIA', 'INNODB', 'PBXT', 'ROCKSDB']);
 
         $possibleRowFormats = $this->operations->getPossibleRowFormat();
 
@@ -441,7 +425,7 @@ class OperationsController extends AbstractController
             $databaseList = $GLOBALS['dblist']->databases->getList();
         }
 
-        $hasForeignKeys = ! empty($this->relation->getForeigners($db, $table, '', 'foreign'));
+        $hasForeignKeys = !empty($this->relation->getForeigners($db, $table, '', 'foreign'));
         $hasPrivileges = $GLOBALS['table_priv'] && $GLOBALS['col_priv'] && $GLOBALS['is_reload_priv'];
         $switchToNew = isset($_SESSION['pma_switch_to_new']) && $_SESSION['pma_switch_to_new'];
 
@@ -457,8 +441,8 @@ class OperationsController extends AbstractController
         }
 
         $foreigners = $this->operations->getForeignersForReferentialIntegrityCheck(
-            $url_params,
-            (bool) $cfgRelation['relwork']
+                $url_params,
+                (bool) $cfgRelation['relwork']
         );
 
         $this->render('table/operations/index', [
@@ -496,4 +480,5 @@ class OperationsController extends AbstractController
             'foreigners' => $foreigners,
         ]);
     }
+
 }

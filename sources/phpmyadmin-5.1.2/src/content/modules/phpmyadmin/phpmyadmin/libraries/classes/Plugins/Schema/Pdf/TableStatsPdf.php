@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Contains PhpMyAdmin\Plugins\Schema\Pdf\TableStatsPdf class
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Plugins\Schema\Pdf;
@@ -25,8 +25,8 @@ use function sprintf;
  *
  * @name    TableStatsPdf
  */
-class TableStatsPdf extends TableStats
-{
+class TableStatsPdf extends TableStats {
+
     /** @var int */
     public $height;
 
@@ -51,32 +51,32 @@ class TableStatsPdf extends TableStats
      *                               from the browser
      */
     public function __construct(
-        $diagram,
-        $db,
-        $tableName,
-        $fontSize,
-        $pageNumber,
-        &$sameWideWidth,
-        $showKeys = false,
-        $tableDimension = false,
-        $offline = false
-    ) {
-        parent::__construct(
             $diagram,
             $db,
-            $pageNumber,
             $tableName,
-            $showKeys,
-            $tableDimension,
-            $offline
+            $fontSize,
+            $pageNumber,
+            &$sameWideWidth,
+            $showKeys = false,
+            $tableDimension = false,
+            $offline = false
+    ) {
+        parent::__construct(
+                $diagram,
+                $db,
+                $pageNumber,
+                $tableName,
+                $showKeys,
+                $tableDimension,
+                $offline
         );
 
         $this->heightCell = 6;
         $this->setHeight();
         /*
          * setWidth must me after setHeight, because title
-        * can include table height which changes table width
-        */
+         * can include table height which changes table width
+         */
         $this->setWidth($fontSize);
         if ($sameWideWidth >= $this->width) {
             return;
@@ -90,12 +90,11 @@ class TableStatsPdf extends TableStats
      *
      * @return void
      */
-    protected function showMissingTableError()
-    {
+    protected function showMissingTableError() {
         ExportRelationSchema::dieSchema(
-            $this->pageNumber,
-            'PDF',
-            sprintf(__('The %s table doesn\'t exist!'), $this->tableName)
+                $this->pageNumber,
+                'PDF',
+                sprintf(__('The %s table doesn\'t exist!'), $this->tableName)
         );
     }
 
@@ -105,8 +104,7 @@ class TableStatsPdf extends TableStats
      *
      * @return string
      */
-    protected function getTitle()
-    {
+    protected function getTitle() {
         $ret = '';
         if ($this->tableDimension) {
             $ret = sprintf('%.0fx%0.f', $this->width, $this->height);
@@ -126,8 +124,7 @@ class TableStatsPdf extends TableStats
      *
      * @access private
      */
-    private function setWidth($fontSize)
-    {
+    private function setWidth($fontSize) {
         foreach ($this->fields as $field) {
             $this->width = max($this->width, $this->diagram->GetStringWidth($field));
         }
@@ -150,8 +147,7 @@ class TableStatsPdf extends TableStats
      *
      * @access private
      */
-    private function setHeight()
-    {
+    private function setHeight() {
         $this->height = (count($this->fields) + 1) * $this->heightCell;
     }
 
@@ -168,8 +164,7 @@ class TableStatsPdf extends TableStats
      *
      * @access public
      */
-    public function tableDraw($fontSize, $withDoc, $setColor = 0)
-    {
+    public function tableDraw($fontSize, $withDoc, $setColor = 0) {
         $this->diagram->setXyScale($this->x, $this->y);
         $this->diagram->SetFont($this->ff, 'B', $fontSize);
         if ($setColor) {
@@ -178,22 +173,22 @@ class TableStatsPdf extends TableStats
         }
         if ($withDoc) {
             $this->diagram->SetLink(
-                $this->diagram->customLinks['RT'][$this->tableName]['-'],
-                -1
+                    $this->diagram->customLinks['RT'][$this->tableName]['-'],
+                    -1
             );
         } else {
             $this->diagram->customLinks['doc'][$this->tableName]['-'] = '';
         }
 
         $this->diagram->cellScale(
-            $this->width,
-            $this->heightCell,
-            $this->getTitle(),
-            1,
-            1,
-            'C',
-            $setColor,
-            $this->diagram->customLinks['doc'][$this->tableName]['-']
+                $this->width,
+                $this->heightCell,
+                $this->getTitle(),
+                1,
+                1,
+                'C',
+                $setColor,
+                $this->diagram->customLinks['doc'][$this->tableName]['-']
         );
         $this->diagram->setXScale($this->x);
         $this->diagram->SetFont($this->ff, '', $fontSize);
@@ -211,25 +206,26 @@ class TableStatsPdf extends TableStats
             }
             if ($withDoc) {
                 $this->diagram->SetLink(
-                    $this->diagram->customLinks['RT'][$this->tableName][$field],
-                    -1
+                        $this->diagram->customLinks['RT'][$this->tableName][$field],
+                        -1
                 );
             } else {
                 $this->diagram->customLinks['doc'][$this->tableName][$field] = '';
             }
 
             $this->diagram->cellScale(
-                $this->width,
-                $this->heightCell,
-                ' ' . $field,
-                1,
-                1,
-                'L',
-                $setColor,
-                $this->diagram->customLinks['doc'][$this->tableName][$field]
+                    $this->width,
+                    $this->heightCell,
+                    ' ' . $field,
+                    1,
+                    1,
+                    'L',
+                    $setColor,
+                    $this->diagram->customLinks['doc'][$this->tableName][$field]
             );
             $this->diagram->setXScale($this->x);
             $this->diagram->SetFillColor(255);
         }
     }
+
 }

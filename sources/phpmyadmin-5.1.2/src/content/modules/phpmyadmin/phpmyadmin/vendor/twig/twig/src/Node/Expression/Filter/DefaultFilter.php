@@ -27,10 +27,9 @@ use Twig\Node\Node;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class DefaultFilter extends FilterExpression
-{
-    public function __construct(Node $node, ConstantExpression $filterName, Node $arguments, int $lineno, string $tag = null)
-    {
+class DefaultFilter extends FilterExpression {
+
+    public function __construct(Node $node, ConstantExpression $filterName, Node $arguments, int $lineno, string $tag = null) {
         $default = new FilterExpression($node, new ConstantExpression('default', $node->getTemplateLine()), $arguments, $node->getTemplateLine());
 
         if ('default' === $filterName->getAttribute('value') && ($node instanceof NameExpression || $node instanceof GetAttrExpression)) {
@@ -45,10 +44,10 @@ class DefaultFilter extends FilterExpression
         parent::__construct($node, $filterName, $arguments, $lineno, $tag);
     }
 
-    public function compile(Compiler $compiler)
-    {
+    public function compile(Compiler $compiler) {
         $compiler->subcompile($this->getNode('node'));
     }
+
 }
 
 class_alias('Twig\Node\Expression\Filter\DefaultFilter', 'Twig_Node_Expression_Filter_Default');

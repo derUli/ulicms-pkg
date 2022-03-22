@@ -19,8 +19,8 @@ use Symfony\Component\Cache\CacheItem;
  *
  * @internal
  */
-trait ArrayTrait
-{
+trait ArrayTrait {
+
     use LoggerAwareTrait;
 
     private $storeSerialized;
@@ -32,8 +32,7 @@ trait ArrayTrait
      *
      * @return array
      */
-    public function getValues()
-    {
+    public function getValues() {
         if (!$this->storeSerialized) {
             return $this->values;
         }
@@ -56,8 +55,7 @@ trait ArrayTrait
      *
      * @return bool
      */
-    public function hasItem($key)
-    {
+    public function hasItem($key) {
         if (\is_string($key) && isset($this->expiries[$key]) && $this->expiries[$key] > microtime(true)) {
             return true;
         }
@@ -73,8 +71,7 @@ trait ArrayTrait
      *
      * @return bool
      */
-    public function clear(/*string $prefix = ''*/)
-    {
+    public function clear(/* string $prefix = '' */) {
         $prefix = 0 < \func_num_args() ? (string) func_get_arg(0) : '';
 
         if ('' !== $prefix) {
@@ -95,8 +92,7 @@ trait ArrayTrait
      *
      * @return bool
      */
-    public function deleteItem($key)
-    {
+    public function deleteItem($key) {
         if (!\is_string($key) || !isset($this->expiries[$key])) {
             CacheItem::validateKey($key);
         }
@@ -108,13 +104,11 @@ trait ArrayTrait
     /**
      * {@inheritdoc}
      */
-    public function reset()
-    {
+    public function reset() {
         $this->clear();
     }
 
-    private function generateItems(array $keys, float $now, callable $f): iterable
-    {
+    private function generateItems(array $keys, float $now, callable $f): iterable {
         foreach ($keys as $i => $key) {
             if (!$isHit = isset($this->expiries[$key]) && ($this->expiries[$key] > $now || !$this->deleteItem($key))) {
                 $this->values[$key] = $value = null;
@@ -131,8 +125,7 @@ trait ArrayTrait
         }
     }
 
-    private function freeze($value, $key)
-    {
+    private function freeze($value, $key) {
         if (null === $value) {
             return 'N;';
         }
@@ -147,7 +140,7 @@ trait ArrayTrait
             } catch (\Exception $e) {
                 unset($this->values[$key]);
                 $type = \is_object($value) ? \get_class($value) : \gettype($value);
-                $message = sprintf('Failed to save key "{key}" of type %s: ', $type).$e->getMessage();
+                $message = sprintf('Failed to save key "{key}" of type %s: ', $type) . $e->getMessage();
                 CacheItem::log($this->logger, $message, ['key' => $key, 'exception' => $e]);
 
                 return null;
@@ -161,8 +154,7 @@ trait ArrayTrait
         return $value;
     }
 
-    private function unfreeze(string $key, bool &$isHit)
-    {
+    private function unfreeze(string $key, bool &$isHit) {
         if ('N;' === $value = $this->values[$key]) {
             return null;
         }
@@ -170,7 +162,7 @@ trait ArrayTrait
             try {
                 $value = unserialize($value);
             } catch (\Exception $e) {
-                CacheItem::log($this->logger, 'Failed to unserialize key "{key}": '.$e->getMessage(), ['key' => $key, 'exception' => $e]);
+                CacheItem::log($this->logger, 'Failed to unserialize key "{key}": ' . $e->getMessage(), ['key' => $key, 'exception' => $e]);
                 $value = false;
             }
             if (false === $value) {
@@ -181,4 +173,5 @@ trait ArrayTrait
 
         return $value;
     }
+
 }

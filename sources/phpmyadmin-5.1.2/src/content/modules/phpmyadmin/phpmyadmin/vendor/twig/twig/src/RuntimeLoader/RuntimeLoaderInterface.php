@@ -16,8 +16,8 @@ namespace Twig\RuntimeLoader;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-interface RuntimeLoaderInterface
-{
+interface RuntimeLoaderInterface {
+
     /**
      * Creates the runtime implementation of a Twig element (filter/function/test).
      *

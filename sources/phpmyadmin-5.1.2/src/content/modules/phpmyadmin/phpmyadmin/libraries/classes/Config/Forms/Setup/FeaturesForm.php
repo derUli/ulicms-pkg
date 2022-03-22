@@ -1,30 +1,29 @@
 <?php
+
 /**
  * User preferences form
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Config\Forms\Setup;
 
 use function array_diff;
 
-class FeaturesForm extends \PhpMyAdmin\Config\Forms\User\FeaturesForm
-{
+class FeaturesForm extends \PhpMyAdmin\Config\Forms\User\FeaturesForm {
+
     /**
      * @return array
      */
-    public static function getForms()
-    {
+    public static function getForms() {
         // phpcs:disable Squiz.Arrays.ArrayDeclaration.KeySpecified,Squiz.Arrays.ArrayDeclaration.NoKeySpecified
         $result = parent::getForms();
         /* Remove only_db/hide_db, we have proper Server form in setup */
         $result['Databases'] = array_diff(
-            $result['Databases'],
-            [
-                'Servers/1/only_db',
-                'Servers/1/hide_db',
-            ]
+                $result['Databases'],
+                [
+                    'Servers/1/only_db',
+                    'Servers/1/hide_db',
+                ]
         );
         /* Following are not available to user */
         $result['Import_export'] = [
@@ -73,4 +72,5 @@ class FeaturesForm extends \PhpMyAdmin\Config\Forms\User\FeaturesForm
 
         // phpcs:enable
     }
+
 }

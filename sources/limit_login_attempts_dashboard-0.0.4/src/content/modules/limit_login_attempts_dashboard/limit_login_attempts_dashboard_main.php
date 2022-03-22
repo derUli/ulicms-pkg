@@ -1,5 +1,5 @@
 <?php
-function limit_login_attempts_dashboard_render()
-{
+
+function limit_login_attempts_dashboard_render() {
     return "";
 }

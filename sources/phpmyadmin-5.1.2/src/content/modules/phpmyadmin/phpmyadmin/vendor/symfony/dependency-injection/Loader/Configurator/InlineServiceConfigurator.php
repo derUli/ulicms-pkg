@@ -16,8 +16,8 @@ use Symfony\Component\DependencyInjection\Definition;
 /**
  * @author Nicolas Grekas <p@tchwork.com>
  */
-class InlineServiceConfigurator extends AbstractConfigurator
-{
+class InlineServiceConfigurator extends AbstractConfigurator {
+
     use Traits\ArgumentTrait;
     use Traits\AutowireTrait;
     use Traits\BindTrait;
@@ -33,8 +33,8 @@ class InlineServiceConfigurator extends AbstractConfigurator
     private $allowParent = true;
     private $path = null;
 
-    public function __construct(Definition $definition)
-    {
+    public function __construct(Definition $definition) {
         $this->definition = $definition;
     }
+
 }

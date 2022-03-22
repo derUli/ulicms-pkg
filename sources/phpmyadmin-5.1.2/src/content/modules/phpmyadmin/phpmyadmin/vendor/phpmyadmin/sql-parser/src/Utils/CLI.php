@@ -1,8 +1,8 @@
 <?php
+
 /**
  * CLI interface.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\SqlParser\Utils;
@@ -10,7 +10,6 @@ namespace PhpMyAdmin\SqlParser\Utils;
 use PhpMyAdmin\SqlParser\Context;
 use PhpMyAdmin\SqlParser\Lexer;
 use PhpMyAdmin\SqlParser\Parser;
-
 use function count;
 use function getopt;
 use function implode;
@@ -19,25 +18,23 @@ use function rtrim;
 use function stream_get_contents;
 use function stream_select;
 use function var_export;
-
 use const STDIN;
 
 /**
  * CLI interface.
  */
-class CLI
-{
+class CLI {
+
     /**
      * @param string[]|false[] $params
      * @param string[]         $longopts
      *
      * @return void
      */
-    public function mergeLongOpts(&$params, &$longopts)
-    {
+    public function mergeLongOpts(&$params, &$longopts) {
         foreach ($longopts as $value) {
             $value = rtrim($value, ':');
-            if (! isset($params[$value])) {
+            if (!isset($params[$value])) {
                 continue;
             }
 
@@ -48,8 +45,7 @@ class CLI
     /**
      * @return void
      */
-    public function usageHighlight()
-    {
+    public function usageHighlight() {
         echo "Usage: highlight-query --query SQL [--format html|cli|text] [--ansi]\n";
         echo "       cat file.sql | highlight-query\n";
     }
@@ -60,16 +56,14 @@ class CLI
      *
      * @return string[]|false[]|false
      */
-    public function getopt($opt, $long)
-    {
+    public function getopt($opt, $long) {
         return getopt($opt, $long);
     }
 
     /**
      * @return mixed|false
      */
-    public function parseHighlight()
-    {
+    public function parseHighlight() {
         $longopts = [
             'help',
             'query:',
@@ -82,11 +76,11 @@ class CLI
         }
 
         $this->mergeLongOpts($params, $longopts);
-        if (! isset($params['f'])) {
+        if (!isset($params['f'])) {
             $params['f'] = 'cli';
         }
 
-        if (! in_array($params['f'], ['html', 'cli', 'text'])) {
+        if (!in_array($params['f'], ['html', 'cli', 'text'])) {
             echo "ERROR: Invalid value for format!\n";
 
             return false;
@@ -98,8 +92,7 @@ class CLI
     /**
      * @return int
      */
-    public function runHighlight()
-    {
+    public function runHighlight() {
         $params = $this->parseHighlight();
         if ($params === false) {
             return 1;
@@ -111,7 +104,7 @@ class CLI
             return 0;
         }
 
-        if (! isset($params['q'])) {
+        if (!isset($params['q'])) {
             $stdIn = $this->readStdin();
 
             if ($stdIn) {
@@ -125,8 +118,8 @@ class CLI
 
         if (isset($params['q'])) {
             echo Formatter::format(
-                $params['q'],
-                ['type' => $params['f']]
+                    $params['q'],
+                    ['type' => $params['f']]
             );
             echo "\n";
 
@@ -142,8 +135,7 @@ class CLI
     /**
      * @return void
      */
-    public function usageLint()
-    {
+    public function usageLint() {
         echo "Usage: lint-query --query SQL [--ansi]\n";
         echo "       cat file.sql | lint-query\n";
     }
@@ -151,8 +143,7 @@ class CLI
     /**
      * @return mixed
      */
-    public function parseLint()
-    {
+    public function parseLint() {
         $longopts = [
             'help',
             'query:',
@@ -168,8 +159,7 @@ class CLI
     /**
      * @return int
      */
-    public function runLint()
-    {
+    public function runLint() {
         $params = $this->parseLint();
         if ($params === false) {
             return 1;
@@ -185,7 +175,7 @@ class CLI
             Context::load($params['c']);
         }
 
-        if (! isset($params['q'])) {
+        if (!isset($params['q'])) {
             $stdIn = $this->readStdin();
 
             if ($stdIn) {
@@ -221,8 +211,7 @@ class CLI
     /**
      * @return void
      */
-    public function usageTokenize()
-    {
+    public function usageTokenize() {
         echo "Usage: tokenize-query --query SQL [--ansi]\n";
         echo "       cat file.sql | tokenize-query\n";
     }
@@ -230,8 +219,7 @@ class CLI
     /**
      * @return mixed
      */
-    public function parseTokenize()
-    {
+    public function parseTokenize() {
         $longopts = [
             'help',
             'query:',
@@ -246,8 +234,7 @@ class CLI
     /**
      * @return int
      */
-    public function runTokenize()
-    {
+    public function runTokenize() {
         $params = $this->parseTokenize();
         if ($params === false) {
             return 1;
@@ -259,7 +246,7 @@ class CLI
             return 0;
         }
 
-        if (! isset($params['q'])) {
+        if (!isset($params['q'])) {
             $stdIn = $this->readStdin();
 
             if ($stdIn) {
@@ -298,8 +285,7 @@ class CLI
     /**
      * @return string|false
      */
-    public function readStdin()
-    {
+    public function readStdin() {
         $read = [STDIN];
         $write = [];
         $except = [];
@@ -316,4 +302,5 @@ class CLI
 
         return $stdin;
     }
+
 }

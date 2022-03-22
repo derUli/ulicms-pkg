@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Parses a reference to a CASE expression.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\SqlParser\Components;
@@ -12,7 +12,6 @@ use PhpMyAdmin\SqlParser\Context;
 use PhpMyAdmin\SqlParser\Parser;
 use PhpMyAdmin\SqlParser\Token;
 use PhpMyAdmin\SqlParser\TokensList;
-
 use function count;
 
 /**
@@ -20,8 +19,8 @@ use function count;
  *
  * @final
  */
-class CaseExpression extends Component
-{
+class CaseExpression extends Component {
+
     /**
      * The value to be compared.
      *
@@ -71,8 +70,8 @@ class CaseExpression extends Component
      */
     public $expr = '';
 
-    public function __construct()
-    {
+    public function __construct() {
+        
     }
 
     /**
@@ -82,8 +81,7 @@ class CaseExpression extends Component
      *
      * @return CaseExpression
      */
-    public static function parse(Parser $parser, TokensList $list, array $options = [])
-    {
+    public static function parse(Parser $parser, TokensList $list, array $options = []) {
         $ret = new static();
 
         /**
@@ -213,7 +211,7 @@ class CaseExpression extends Component
 
                 // Handle optional AS keyword before alias
                 if ($token->type === Token::TYPE_KEYWORD && $token->keyword === 'AS') {
-                    if ($asFound || ! empty($ret->alias)) {
+                    if ($asFound || !empty($ret->alias)) {
                         $parser->error('Potential duplicate alias of CASE expression.', $token);
                         break;
                     }
@@ -223,9 +221,7 @@ class CaseExpression extends Component
                 }
 
                 if (
-                    $asFound
-                    && $token->type === Token::TYPE_KEYWORD
-                    && ($token->flags & Token::FLAG_KEYWORD_RESERVED || $token->flags & Token::FLAG_KEYWORD_FUNCTION)
+                        $asFound && $token->type === Token::TYPE_KEYWORD && ($token->flags & Token::FLAG_KEYWORD_RESERVED || $token->flags & Token::FLAG_KEYWORD_FUNCTION)
                 ) {
                     $parser->error('An alias expected after AS but got ' . $token->value, $token);
                     $asFound = false;
@@ -233,13 +229,10 @@ class CaseExpression extends Component
                 }
 
                 if (
-                    $asFound
-                    || $token->type === Token::TYPE_STRING
-                    || ($token->type === Token::TYPE_SYMBOL && ! $token->flags & Token::FLAG_SYMBOL_VARIABLE)
-                    || $token->type === Token::TYPE_NONE
+                        $asFound || $token->type === Token::TYPE_STRING || ($token->type === Token::TYPE_SYMBOL && !$token->flags & Token::FLAG_SYMBOL_VARIABLE) || $token->type === Token::TYPE_NONE
                 ) {
                     // An alias is expected (the keyword `AS` was previously found).
-                    if (! empty($ret->alias)) {
+                    if (!empty($ret->alias)) {
                         $parser->error('An alias was previously found.', $token);
                         break;
                     }
@@ -271,8 +264,7 @@ class CaseExpression extends Component
      *
      * @return string
      */
-    public static function build($component, array $options = [])
-    {
+    public static function build($component, array $options = []) {
         $ret = 'CASE ';
         if (isset($component->value)) {
             // Syntax type 0
@@ -305,4 +297,5 @@ class CaseExpression extends Component
 
         return $ret;
     }
+
 }

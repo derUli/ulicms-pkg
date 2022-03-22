@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Single signon for phpMyAdmin
  *
@@ -6,7 +7,6 @@
  * phpMyAdmin, it is not intended to be perfect code and look, only
  * shows how you can integrate this functionality in your application.
  */
-
 declare(strict_types=1);
 
 // phpcs:disable Squiz.Functions.GlobalFunction
@@ -20,10 +20,9 @@ declare(strict_types=1);
  *
  * @return array
  */
-function get_login_credentials($user)
-{
+function get_login_credentials($user) {
     /* Optionally we can use passed username */
-    if (! empty($user)) {
+    if (!empty($user)) {
         return [
             $user,
             'password',

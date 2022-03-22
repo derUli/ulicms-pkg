@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Displays query statistics for the server
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Controllers\Server\Status;
@@ -17,8 +17,8 @@ use function arsort;
 use function count;
 use function str_replace;
 
-class QueriesController extends AbstractController
-{
+class QueriesController extends AbstractController {
+
     /** @var DatabaseInterface */
     private $dbi;
 
@@ -27,14 +27,12 @@ class QueriesController extends AbstractController
      * @param Data              $data
      * @param DatabaseInterface $dbi
      */
-    public function __construct($response, Template $template, $data, $dbi)
-    {
+    public function __construct($response, Template $template, $data, $dbi) {
         parent::__construct($response, $template, $data);
         $this->dbi = $dbi;
     }
 
-    public function index(): void
-    {
+    public function index(): void {
         global $err_url;
 
         $err_url = Url::getFromRoute('/');
@@ -106,4 +104,5 @@ class QueriesController extends AbstractController
             'chart' => $chart ?? [],
         ]);
     }
+
 }

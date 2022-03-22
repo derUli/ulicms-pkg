@@ -1,21 +1,20 @@
 <?php
+
 /**
  * User preferences form
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Config\Forms\User;
 
 use PhpMyAdmin\Config\Forms\BaseForm;
 
-class SqlForm extends BaseForm
-{
+class SqlForm extends BaseForm {
+
     /**
      * @return array
      */
-    public static function getForms()
-    {
+    public static function getForms() {
         return [
             'Sql_queries' => [
                 'ShowSQL',
@@ -41,8 +40,8 @@ class SqlForm extends BaseForm
     /**
      * @return string
      */
-    public static function getName()
-    {
+    public static function getName() {
         return __('SQL queries');
     }
+
 }

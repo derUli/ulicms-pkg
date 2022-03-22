@@ -1,5 +1,5 @@
 <?php
-function device_info_render()
-{
+
+function device_info_render() {
     return "";
 }

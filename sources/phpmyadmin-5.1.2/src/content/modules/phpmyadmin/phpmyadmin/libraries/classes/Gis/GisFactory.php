@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Contains the factory class that handles the creation of geometric objects
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Gis;
@@ -12,8 +12,8 @@ use function strtoupper;
 /**
  * Factory class that handles the creation of geometric objects.
  */
-class GisFactory
-{
+class GisFactory {
+
     /**
      * Returns the singleton instance of geometric class of the given type.
      *
@@ -24,8 +24,7 @@ class GisFactory
      * @access public
      * @static
      */
-    public static function factory($type)
-    {
+    public static function factory($type) {
         switch (strtoupper($type)) {
             case 'MULTIPOLYGON':
                 return GisMultiPolygon::singleton();
@@ -45,4 +44,5 @@ class GisFactory
                 return false;
         }
     }
+
 }

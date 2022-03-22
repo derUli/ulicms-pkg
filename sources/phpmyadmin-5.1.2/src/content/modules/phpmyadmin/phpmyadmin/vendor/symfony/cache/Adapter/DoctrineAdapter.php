@@ -14,14 +14,14 @@ namespace Symfony\Component\Cache\Adapter;
 use Doctrine\Common\Cache\CacheProvider;
 use Symfony\Component\Cache\Traits\DoctrineTrait;
 
-class DoctrineAdapter extends AbstractAdapter
-{
+class DoctrineAdapter extends AbstractAdapter {
+
     use DoctrineTrait;
 
-    public function __construct(CacheProvider $provider, string $namespace = '', int $defaultLifetime = 0)
-    {
+    public function __construct(CacheProvider $provider, string $namespace = '', int $defaultLifetime = 0) {
         parent::__construct('', $defaultLifetime);
         $this->provider = $provider;
         $provider->setNamespace($namespace);
     }
+
 }

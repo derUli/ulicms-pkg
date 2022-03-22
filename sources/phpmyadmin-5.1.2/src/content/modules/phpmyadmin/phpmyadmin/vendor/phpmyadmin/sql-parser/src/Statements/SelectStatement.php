@@ -1,8 +1,8 @@
 <?php
+
 /**
  * `SELECT` statement.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\SqlParser\Statements;
@@ -48,8 +48,8 @@ use PhpMyAdmin\SqlParser\Statement;
  *       | INTO var_name [, var_name]]
  *     [FOR UPDATE | LOCK IN SHARE MODE]]
  */
-class SelectStatement extends Statement
-{
+class SelectStatement extends Statement {
+
     /**
      * Options for `SELECT` statements and their slot ID.
      *
@@ -125,7 +125,6 @@ class SelectStatement extends Statement
             'PARTITION',
             3,
         ],
-
         'JOIN' => [
             'JOIN',
             1,
@@ -174,7 +173,6 @@ class SelectStatement extends Statement
             'NATURAL RIGHT JOIN',
             1,
         ],
-
         'WHERE' => [
             'WHERE',
             3,
@@ -215,9 +213,9 @@ class SelectStatement extends Statement
             '_END_OPTIONS',
             1,
         ],
-        // These are available only when `UNION` is present.
-        // 'ORDER BY'                      => ['ORDER BY', 3],
-        // 'LIMIT'                         => ['LIMIT', 3],
+            // These are available only when `UNION` is present.
+            // 'ORDER BY'                      => ['ORDER BY', 3],
+            // 'LIMIT'                         => ['LIMIT', 3],
     ];
 
     /**
@@ -325,12 +323,11 @@ class SelectStatement extends Statement
      *
      * @return array
      */
-    public function getClauses()
-    {
+    public function getClauses() {
         // This is a cheap fix for `SELECT` statements that contain `UNION`.
         // The `ORDER BY` and `LIMIT` clauses should be at the end of the
         // statement.
-        if (! empty($this->union)) {
+        if (!empty($this->union)) {
             $clauses = static::$CLAUSES;
             unset($clauses['ORDER BY'], $clauses['LIMIT']);
             $clauses['ORDER BY'] = [
@@ -347,4 +344,5 @@ class SelectStatement extends Statement
 
         return static::$CLAUSES;
     }
+
 }

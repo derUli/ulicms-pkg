@@ -56,8 +56,8 @@ namespace phpseclib\Crypt;
  * @author  Jim Wigginton <terrafrost@php.net>
  * @access  public
  */
-class AES extends Rijndael
-{
+class AES extends Rijndael {
+
     /**
      * Dummy function
      *
@@ -67,8 +67,7 @@ class AES extends Rijndael
      * @access public
      * @param int $length
      */
-    function setBlockLength($length)
-    {
+    function setBlockLength($length) {
         return;
     }
 
@@ -82,8 +81,7 @@ class AES extends Rijndael
      * @access public
      * @param int $length
      */
-    function setKeyLength($length)
-    {
+    function setKeyLength($length) {
         switch ($length) {
             case 160:
                 $length = 192;
@@ -104,8 +102,7 @@ class AES extends Rijndael
      * @access public
      * @param string $key
      */
-    function setKey($key)
-    {
+    function setKey($key) {
         parent::setKey($key);
 
         if (!$this->explicit_key_length) {
@@ -123,4 +120,5 @@ class AES extends Rijndael
             $this->_setEngine();
         }
     }
+
 }

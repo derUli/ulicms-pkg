@@ -1,8 +1,8 @@
 <?php
+
 /**
  * `UPDATE` statement.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\SqlParser\Statements;
@@ -29,8 +29,8 @@ use PhpMyAdmin\SqlParser\Statement;
  *     SET col_name1={expr1|DEFAULT} [, col_name2={expr2|DEFAULT}] ...
  *     [WHERE where_condition]
  */
-class UpdateStatement extends Statement
-{
+class UpdateStatement extends Statement {
+
     /**
      * Options for `UPDATE` statements and their slot ID.
      *
@@ -115,4 +115,5 @@ class UpdateStatement extends Statement
      * @var Limit
      */
     public $limit;
+
 }

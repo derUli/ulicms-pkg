@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Set of functions used to build dumps of tables as PHP Arrays
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Plugins\Export;
@@ -23,10 +23,9 @@ use function var_export;
 /**
  * Handles the export for the PHP Array class
  */
-class ExportPhparray extends ExportPlugin
-{
-    public function __construct()
-    {
+class ExportPhparray extends ExportPlugin {
+
+    public function __construct() {
         parent::__construct();
         $this->setProperties();
     }
@@ -36,8 +35,7 @@ class ExportPhparray extends ExportPlugin
      *
      * @return void
      */
-    protected function setProperties()
-    {
+    protected function setProperties() {
         $exportPluginProperties = new ExportPluginProperties();
         $exportPluginProperties->setText('PHP array');
         $exportPluginProperties->setExtension('php');
@@ -48,7 +46,7 @@ class ExportPhparray extends ExportPlugin
         // $exportPluginProperties
         // this will be shown as "Format specific options"
         $exportSpecificOptions = new OptionsPropertyRootGroup(
-            'Format Specific Options'
+                'Format Specific Options'
         );
 
         // general options main group
@@ -71,8 +69,7 @@ class ExportPhparray extends ExportPlugin
      *
      * @return string
      */
-    public function commentString($string)
-    {
+    public function commentString($string) {
         return strtr($string, '*/', '-');
     }
 
@@ -81,14 +78,13 @@ class ExportPhparray extends ExportPlugin
      *
      * @return bool Whether it succeeded
      */
-    public function exportHeader()
-    {
+    public function exportHeader() {
         $this->export->outputHandler(
-            '<?php' . $GLOBALS['crlf']
-            . '/**' . $GLOBALS['crlf']
-            . ' * Export to PHP Array plugin for PHPMyAdmin' . $GLOBALS['crlf']
-            . ' * @version ' . PMA_VERSION . $GLOBALS['crlf']
-            . ' */' . $GLOBALS['crlf'] . $GLOBALS['crlf']
+                '<?php' . $GLOBALS['crlf']
+                . '/**' . $GLOBALS['crlf']
+                . ' * Export to PHP Array plugin for PHPMyAdmin' . $GLOBALS['crlf']
+                . ' * @version ' . PMA_VERSION . $GLOBALS['crlf']
+                . ' */' . $GLOBALS['crlf'] . $GLOBALS['crlf']
         );
 
         return true;
@@ -99,8 +95,7 @@ class ExportPhparray extends ExportPlugin
      *
      * @return bool Whether it succeeded
      */
-    public function exportFooter()
-    {
+    public function exportFooter() {
         return true;
     }
 
@@ -112,15 +107,14 @@ class ExportPhparray extends ExportPlugin
      *
      * @return bool Whether it succeeded
      */
-    public function exportDBHeader($db, $db_alias = '')
-    {
+    public function exportDBHeader($db, $db_alias = '') {
         if (empty($db_alias)) {
             $db_alias = $db;
         }
         $this->export->outputHandler(
-            '/**' . $GLOBALS['crlf']
-            . ' * Database ' . $this->commentString(Util::backquote($db_alias))
-            . $GLOBALS['crlf'] . ' */' . $GLOBALS['crlf']
+                '/**' . $GLOBALS['crlf']
+                . ' * Database ' . $this->commentString(Util::backquote($db_alias))
+                . $GLOBALS['crlf'] . ' */' . $GLOBALS['crlf']
         );
 
         return true;
@@ -133,8 +127,7 @@ class ExportPhparray extends ExportPlugin
      *
      * @return bool Whether it succeeded
      */
-    public function exportDBFooter($db)
-    {
+    public function exportDBFooter($db) {
         return true;
     }
 
@@ -147,8 +140,7 @@ class ExportPhparray extends ExportPlugin
      *
      * @return bool Whether it succeeded
      */
-    public function exportDBCreate($db, $export_type, $db_alias = '')
-    {
+    public function exportDBCreate($db, $export_type, $db_alias = '') {
         return true;
     }
 
@@ -165,12 +157,12 @@ class ExportPhparray extends ExportPlugin
      * @return bool Whether it succeeded
      */
     public function exportData(
-        $db,
-        $table,
-        $crlf,
-        $error_url,
-        $sql_query,
-        array $aliases = []
+            $db,
+            $table,
+            $crlf,
+            $error_url,
+            $sql_query,
+            array $aliases = []
     ) {
         global $dbi;
 
@@ -179,16 +171,16 @@ class ExportPhparray extends ExportPlugin
         $this->initAlias($aliases, $db_alias, $table_alias);
 
         $result = $dbi->query(
-            $sql_query,
-            DatabaseInterface::CONNECT_USER,
-            DatabaseInterface::QUERY_UNBUFFERED
+                $sql_query,
+                DatabaseInterface::CONNECT_USER,
+                DatabaseInterface::QUERY_UNBUFFERED
         );
 
         $columns_cnt = $dbi->numFields($result);
         $columns = [];
         for ($i = 0; $i < $columns_cnt; $i++) {
             $col_as = $dbi->fieldName($result, $i);
-            if (! empty($aliases[$db]['tables'][$table]['columns'][$col_as])) {
+            if (!empty($aliases[$db]['tables'][$table]['columns'][$col_as])) {
                 $col_as = $aliases[$db]['tables'][$table]['columns'][$col_as];
             }
             $columns[$i] = stripslashes($col_as);
@@ -196,17 +188,17 @@ class ExportPhparray extends ExportPlugin
 
         // fix variable names (based on
         // https://www.php.net/manual/en/language.variables.basics.php)
-        if (! preg_match(
-            '/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/',
-            $table_alias
-        )
+        if (!preg_match(
+                        '/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/',
+                        $table_alias
+                )
         ) {
             // fix invalid characters in variable names by replacing them with
             // underscores
             $tablefixed = preg_replace(
-                '/[^a-zA-Z0-9_\x7f-\xff]/',
-                '_',
-                $table_alias
+                    '/[^a-zA-Z0-9_\x7f-\xff]/',
+                    '_',
+                    $table_alias
             );
 
             // variable name must not start with a number or dash...
@@ -221,10 +213,10 @@ class ExportPhparray extends ExportPlugin
         $record_cnt = 0;
         // Output table name as comment
         $buffer .= $crlf . '/* '
-            . $this->commentString(Util::backquote($db_alias)) . '.'
-            . $this->commentString(Util::backquote($table_alias)) . ' */' . $crlf;
+                . $this->commentString(Util::backquote($db_alias)) . '.'
+                . $this->commentString(Util::backquote($table_alias)) . ' */' . $crlf;
         $buffer .= '$' . $tablefixed . ' = array(';
-        if (! $this->export->outputHandler($buffer)) {
+        if (!$this->export->outputHandler($buffer)) {
             return false;
         }
         // Reset the buffer
@@ -240,12 +232,12 @@ class ExportPhparray extends ExportPlugin
 
             for ($i = 0; $i < $columns_cnt; $i++) {
                 $buffer .= var_export($columns[$i], true)
-                    . ' => ' . var_export($record[$i], true)
-                    . ($i + 1 >= $columns_cnt ? '' : ',');
+                        . ' => ' . var_export($record[$i], true)
+                        . ($i + 1 >= $columns_cnt ? '' : ',');
             }
 
             $buffer .= ')';
-            if (! $this->export->outputHandler($buffer)) {
+            if (!$this->export->outputHandler($buffer)) {
                 return false;
             }
             // Reset the buffer
@@ -253,7 +245,7 @@ class ExportPhparray extends ExportPlugin
         }
 
         $buffer .= $crlf . ');' . $crlf;
-        if (! $this->export->outputHandler($buffer)) {
+        if (!$this->export->outputHandler($buffer)) {
             return false;
         }
 
@@ -271,8 +263,8 @@ class ExportPhparray extends ExportPlugin
      *
      * @return bool if succeeded
      */
-    public function exportRawQuery(string $err_url, string $sql_query, string $crlf): bool
-    {
+    public function exportRawQuery(string $err_url, string $sql_query, string $crlf): bool {
         return $this->exportData('', '', $crlf, $err_url, $sql_query);
     }
+
 }

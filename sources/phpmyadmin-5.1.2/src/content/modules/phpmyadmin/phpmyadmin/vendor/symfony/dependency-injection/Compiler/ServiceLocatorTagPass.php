@@ -25,12 +25,11 @@ use Symfony\Component\DependencyInjection\ServiceLocator;
  *
  * @author Nicolas Grekas <p@tchwork.com>
  */
-final class ServiceLocatorTagPass extends AbstractRecursivePass
-{
+final class ServiceLocatorTagPass extends AbstractRecursivePass {
+
     use PriorityTaggedServiceTrait;
 
-    protected function processValue($value, $isRoot = false)
-    {
+    protected function processValue($value, $isRoot = false) {
         if ($value instanceof ServiceLocatorArgument) {
             if ($value->getTaggedIteratorArgument()) {
                 $value->setValues($this->findAndSortTaggedServices($value->getTaggedIteratorArgument(), $this->container));
@@ -76,7 +75,7 @@ final class ServiceLocatorTagPass extends AbstractRecursivePass
 
         $value->setArguments($arguments);
 
-        $id = '.service_locator.'.ContainerBuilder::hash($value);
+        $id = '.service_locator.' . ContainerBuilder::hash($value);
 
         if ($isRoot) {
             if ($id !== $this->currentId) {
@@ -94,8 +93,7 @@ final class ServiceLocatorTagPass extends AbstractRecursivePass
     /**
      * @param Reference[] $refMap
      */
-    public static function register(ContainerBuilder $container, array $refMap, string $callerId = null): Reference
-    {
+    public static function register(ContainerBuilder $container, array $refMap, string $callerId = null): Reference {
         foreach ($refMap as $id => $ref) {
             if (!$ref instanceof Reference) {
                 throw new InvalidArgumentException(sprintf('Invalid service locator definition: only services can be referenced, "%s" found for key "%s". Inject parameter values using constructors instead.', \is_object($ref) ? \get_class($ref) : \gettype($ref), $id));
@@ -105,15 +103,15 @@ final class ServiceLocatorTagPass extends AbstractRecursivePass
         ksort($refMap);
 
         $locator = (new Definition(ServiceLocator::class))
-            ->addArgument($refMap)
-            ->setPublic(false)
-            ->addTag('container.service_locator');
+                ->addArgument($refMap)
+                ->setPublic(false)
+                ->addTag('container.service_locator');
 
         if (null !== $callerId && $container->hasDefinition($callerId)) {
             $locator->setBindings($container->getDefinition($callerId)->getBindings());
         }
 
-        if (!$container->hasDefinition($id = '.service_locator.'.ContainerBuilder::hash($locator))) {
+        if (!$container->hasDefinition($id = '.service_locator.' . ContainerBuilder::hash($locator))) {
             $container->setDefinition($id, $locator);
         }
 
@@ -122,14 +120,15 @@ final class ServiceLocatorTagPass extends AbstractRecursivePass
             // Locators are shared when they hold the exact same list of factories;
             // to have them specialized per consumer service, we use a cloning factory
             // to derivate customized instances from the prototype one.
-            $container->register($id .= '.'.$callerId, ServiceLocator::class)
-                ->setPublic(false)
-                ->setFactory([new Reference($locatorId), 'withContext'])
-                ->addTag('container.service_locator_context', ['id' => $callerId])
-                ->addArgument($callerId)
-                ->addArgument(new Reference('service_container'));
+            $container->register($id .= '.' . $callerId, ServiceLocator::class)
+                    ->setPublic(false)
+                    ->setFactory([new Reference($locatorId), 'withContext'])
+                    ->addTag('container.service_locator_context', ['id' => $callerId])
+                    ->addArgument($callerId)
+                    ->addArgument(new Reference('service_container'));
         }
 
         return new Reference($id);
     }
+
 }

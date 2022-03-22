@@ -19,7 +19,7 @@ namespace Symfony\Component\DependencyInjection\Compiler;
  *
  * @deprecated since Symfony 4.2.
  */
-interface RepeatablePassInterface extends CompilerPassInterface
-{
+interface RepeatablePassInterface extends CompilerPassInterface {
+
     public function setRepeatedPass(RepeatedPass $repeatedPass);
 }

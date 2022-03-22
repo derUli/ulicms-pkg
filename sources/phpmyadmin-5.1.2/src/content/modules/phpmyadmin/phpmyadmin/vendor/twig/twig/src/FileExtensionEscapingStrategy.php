@@ -22,8 +22,8 @@ namespace Twig;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class FileExtensionEscapingStrategy
-{
+class FileExtensionEscapingStrategy {
+
     /**
      * Guesses the best autoescaping strategy based on the file name.
      *
@@ -31,8 +31,7 @@ class FileExtensionEscapingStrategy
      *
      * @return string|false The escaping strategy name to use or false to disable
      */
-    public static function guess($name)
-    {
+    public static function guess($name) {
         if (\in_array(substr($name, -1), ['/', '\\'])) {
             return 'html'; // return html for directories
         }
@@ -57,6 +56,7 @@ class FileExtensionEscapingStrategy
                 return 'html';
         }
     }
+
 }
 
 class_alias('Twig\FileExtensionEscapingStrategy', 'Twig_FileExtensionEscapingStrategy');

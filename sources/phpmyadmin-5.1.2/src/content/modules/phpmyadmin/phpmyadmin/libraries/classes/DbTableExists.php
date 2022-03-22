@@ -8,23 +8,21 @@ use PhpMyAdmin\Controllers\Database\SqlController;
 use function defined;
 use function strlen;
 
-final class DbTableExists
-{
+final class DbTableExists {
+
     /**
      * Ensure the database and the table exist (else move to the "parent" script)
      * and display headers
      */
-    public static function check(): void
-    {
+    public static function check(): void {
         self::checkDatabase();
         self::checkTable();
     }
 
-    private static function checkDatabase(): void
-    {
+    private static function checkDatabase(): void {
         global $db, $dbi, $is_db, $message, $show_as_php, $sql_query;
 
-        if (! empty($is_db)) {
+        if (!empty($is_db)) {
             return;
         }
 
@@ -41,8 +39,8 @@ final class DbTableExists
         if ($response->isAjax()) {
             $response->setRequestStatus(false);
             $response->addJSON(
-                'message',
-                Message::error(__('No databases selected.'))
+                    'message',
+                    Message::error(__('No databases selected.'))
             );
 
             exit;
@@ -54,7 +52,7 @@ final class DbTableExists
             $url_params['message'] = $message;
         }
 
-        if (! empty($sql_query)) {
+        if (!empty($sql_query)) {
             $url_params['sql_query'] = $sql_query;
         }
 
@@ -67,13 +65,10 @@ final class DbTableExists
         exit;
     }
 
-    private static function checkTable(): void
-    {
+    private static function checkTable(): void {
         global $containerBuilder, $db, $table, $dbi, $is_table;
 
-        if (! empty($is_table)
-            || defined('PMA_SUBMIT_MULT')
-            || defined('TABLE_MAY_BE_ABSENT')
+        if (!empty($is_table) || defined('PMA_SUBMIT_MULT') || defined('TABLE_MAY_BE_ABSENT')
         ) {
             return;
         }
@@ -86,9 +81,9 @@ final class DbTableExists
             }
 
             $_result = $dbi->tryQuery(
-                'SHOW TABLES LIKE \'' . $dbi->escapeString($table) . '\';',
-                DatabaseInterface::CONNECT_USER,
-                DatabaseInterface::QUERY_STORE
+                    'SHOW TABLES LIKE \'' . $dbi->escapeString($table) . '\';',
+                    DatabaseInterface::CONNECT_USER,
+                    DatabaseInterface::QUERY_STORE
             );
             $is_table = @$dbi->numRows($_result);
             $dbi->freeResult($_result);
@@ -108,9 +103,9 @@ final class DbTableExists
              * (as it can happen just in case temporary table, it should be fast):
              */
             $_result = $dbi->tryQuery(
-                'SELECT COUNT(*) FROM ' . Util::backquote($table) . ';',
-                DatabaseInterface::CONNECT_USER,
-                DatabaseInterface::QUERY_STORE
+                    'SELECT COUNT(*) FROM ' . Util::backquote($table) . ';',
+                    DatabaseInterface::CONNECT_USER,
+                    DatabaseInterface::QUERY_STORE
             );
             $is_table = ($_result && @$dbi->numRows($_result));
             $dbi->freeResult($_result);
@@ -126,4 +121,5 @@ final class DbTableExists
 
         exit;
     }
+
 }

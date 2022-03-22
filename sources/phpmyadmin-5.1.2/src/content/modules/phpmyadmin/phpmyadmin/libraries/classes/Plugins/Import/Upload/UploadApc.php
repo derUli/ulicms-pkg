@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Provides upload functionalities for the import plugins
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Plugins\Import\Upload;
@@ -16,15 +16,14 @@ use function apc_fetch;
 /**
  * Implementation for the APC extension
  */
-class UploadApc implements UploadInterface
-{
+class UploadApc implements UploadInterface {
+
     /**
      * Gets the specific upload ID Key
      *
      * @return string ID Key
      */
-    public static function getIdKey()
-    {
+    public static function getIdKey() {
         return 'APC_UPLOAD_PROGRESS';
     }
 
@@ -37,26 +36,25 @@ class UploadApc implements UploadInterface
      *
      * @return array|null
      */
-    public static function getUploadStatus($id)
-    {
+    public static function getUploadStatus($id) {
         global $SESSION_KEY;
 
         if (trim($id) == '') {
             return null;
         }
-        if (! array_key_exists($id, $_SESSION[$SESSION_KEY])) {
+        if (!array_key_exists($id, $_SESSION[$SESSION_KEY])) {
             $_SESSION[$SESSION_KEY][$id] = [
-                'id'       => $id,
+                'id' => $id,
                 'finished' => false,
-                'percent'  => 0,
-                'total'    => 0,
+                'percent' => 0,
+                'total' => 0,
                 'complete' => 0,
-                'plugin'   => self::getIdKey(),
+                'plugin' => self::getIdKey(),
             ];
         }
         $ret = $_SESSION[$SESSION_KEY][$id];
 
-        if (! Ajax::apcCheck() || $ret['finished']) {
+        if (!Ajax::apcCheck() || $ret['finished']) {
             return $ret;
         }
         $status = apc_fetch('upload_' . $id);
@@ -79,4 +77,5 @@ class UploadApc implements UploadInterface
 
         return $ret;
     }
+
 }

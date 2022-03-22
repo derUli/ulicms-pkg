@@ -19,10 +19,9 @@ use Twig\Node\Expression\ConstantExpression;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class SetNode extends Node implements NodeCaptureInterface
-{
-    public function __construct(bool $capture, Node $names, Node $values, int $lineno, string $tag = null)
-    {
+class SetNode extends Node implements NodeCaptureInterface {
+
+    public function __construct(bool $capture, Node $names, Node $values, int $lineno, string $tag = null) {
         parent::__construct(['names' => $names, 'values' => $values], ['capture' => $capture, 'safe' => false], $lineno, $tag);
 
         /*
@@ -41,8 +40,7 @@ class SetNode extends Node implements NodeCaptureInterface
         }
     }
 
-    public function compile(Compiler $compiler)
-    {
+    public function compile(Compiler $compiler) {
         $compiler->addDebugInfo($this);
 
         if (\count($this->getNode('names')) > 1) {
@@ -63,7 +61,7 @@ class SetNode extends Node implements NodeCaptureInterface
                     $compiler->write("ob_start(function () { return ''; });\n");
                 }
                 $compiler
-                    ->subcompile($this->getNode('values'))
+                        ->subcompile($this->getNode('values'))
                 ;
             }
 
@@ -90,9 +88,9 @@ class SetNode extends Node implements NodeCaptureInterface
             } else {
                 if ($this->getAttribute('safe')) {
                     $compiler
-                        ->raw("('' === \$tmp = ")
-                        ->subcompile($this->getNode('values'))
-                        ->raw(") ? '' : new Markup(\$tmp, \$this->env->getCharset())")
+                            ->raw("('' === \$tmp = ")
+                            ->subcompile($this->getNode('values'))
+                            ->raw(") ? '' : new Markup(\$tmp, \$this->env->getCharset())")
                     ;
                 } else {
                     $compiler->subcompile($this->getNode('values'));
@@ -102,6 +100,7 @@ class SetNode extends Node implements NodeCaptureInterface
 
         $compiler->raw(";\n");
     }
+
 }
 
 class_alias('Twig\Node\SetNode', 'Twig_Node_Set');

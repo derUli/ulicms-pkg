@@ -11,17 +11,17 @@
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator\Traits;
 
-trait FileTrait
-{
+trait FileTrait {
+
     /**
      * Sets a file to require before creating the service.
      *
      * @return $this
      */
-    final public function file(string $file): self
-    {
+    final public function file(string $file): self {
         $this->definition->setFile($file);
 
         return $this;
     }
+
 }

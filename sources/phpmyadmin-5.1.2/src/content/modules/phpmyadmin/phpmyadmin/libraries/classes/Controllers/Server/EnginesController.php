@@ -14,8 +14,8 @@ use PhpMyAdmin\Url;
 /**
  * Handles viewing storage engine details
  */
-class EnginesController extends AbstractController
-{
+class EnginesController extends AbstractController {
+
     /** @var DatabaseInterface */
     private $dbi;
 
@@ -23,14 +23,12 @@ class EnginesController extends AbstractController
      * @param Response          $response
      * @param DatabaseInterface $dbi
      */
-    public function __construct($response, Template $template, $dbi)
-    {
+    public function __construct($response, Template $template, $dbi) {
         parent::__construct($response, $template);
         $this->dbi = $dbi;
     }
 
-    public function index(): void
-    {
+    public function index(): void {
         global $err_url;
 
         $err_url = Url::getFromRoute('/');
@@ -49,8 +47,7 @@ class EnginesController extends AbstractController
      *
      * @param array $params Request params
      */
-    public function show(array $params): void
-    {
+    public function show(array $params): void {
         global $err_url;
 
         $err_url = Url::getFromRoute('/');
@@ -72,7 +69,7 @@ class EnginesController extends AbstractController
                 'info_pages' => $storageEngine->getInfoPages(),
                 'support' => $storageEngine->getSupportInformationMessage(),
                 'variables' => $storageEngine->getHtmlVariables(),
-                'page' => ! empty($page) ? $storageEngine->getPage($page) : '',
+                'page' => !empty($page) ? $storageEngine->getPage($page) : '',
             ];
         }
 
@@ -81,4 +78,5 @@ class EnginesController extends AbstractController
             'page' => $page,
         ]);
     }
+
 }

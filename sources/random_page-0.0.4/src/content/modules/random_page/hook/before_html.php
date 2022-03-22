@@ -1,4 +1,5 @@
 <?php
+
 $allpages = getAllSlugs();
 if (containsModule(get_slug(), "random_page") or isset($_GET ["view_random_page"])) {
     $random = null;

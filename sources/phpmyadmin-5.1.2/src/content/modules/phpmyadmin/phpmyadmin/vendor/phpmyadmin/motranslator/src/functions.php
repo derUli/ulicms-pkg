@@ -3,26 +3,26 @@
 declare(strict_types=1);
 
 /*
-    Copyright (c) 2005 Steven Armstrong <sa at c-area dot ch>
-    Copyright (c) 2009 Danilo Segan <danilo@kvota.net>
-    Copyright (c) 2016 Michal Čihař <michal@cihar.com>
+  Copyright (c) 2005 Steven Armstrong <sa at c-area dot ch>
+  Copyright (c) 2009 Danilo Segan <danilo@kvota.net>
+  Copyright (c) 2016 Michal Čihař <michal@cihar.com>
 
-    This file is part of MoTranslator.
+  This file is part of MoTranslator.
 
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 2 of the License, or
-    (at your option) any later version.
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation; either version 2 of the License, or
+  (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License along
-    with this program; if not, write to the Free Software Foundation, Inc.,
-    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*/
+  You should have received a copy of the GNU General Public License along
+  with this program; if not, write to the Free Software Foundation, Inc.,
+  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
 
 use PhpMyAdmin\MoTranslator\Loader;
 
@@ -34,8 +34,7 @@ use PhpMyAdmin\MoTranslator\Loader;
  *
  * @return string Set or current locale
  */
-function _setlocale(int $category, string $locale): string
-{
+function _setlocale(int $category, string $locale): string {
     return Loader::getInstance()->setlocale($locale);
 }
 
@@ -45,8 +44,7 @@ function _setlocale(int $category, string $locale): string
  * @param string $domain Domain name
  * @param string $path   Path where to find locales
  */
-function _bindtextdomain(string $domain, string $path): void
-{
+function _bindtextdomain(string $domain, string $path): void {
     Loader::getInstance()->bindtextdomain($domain, $path);
 }
 
@@ -61,8 +59,8 @@ function _bindtextdomain(string $domain, string $path): void
  * @param string $domain  Domain where to set character set
  * @param string $codeset Character set to set
  */
-function _bind_textdomain_codeset($domain, $codeset): void
-{
+function _bind_textdomain_codeset($domain, $codeset): void {
+    
 }
 
 /**
@@ -70,8 +68,7 @@ function _bind_textdomain_codeset($domain, $codeset): void
  *
  * @param string $domain Domain name
  */
-function _textdomain(string $domain): void
-{
+function _textdomain(string $domain): void {
     Loader::getInstance()->textdomain($domain);
 }
 
@@ -82,10 +79,9 @@ function _textdomain(string $domain): void
  *
  * @return string translated string (or original, if not found)
  */
-function _gettext(string $msgid): string
-{
+function _gettext(string $msgid): string {
     return Loader::getInstance()->getTranslator()->gettext(
-        $msgid
+                    $msgid
     );
 }
 
@@ -96,10 +92,9 @@ function _gettext(string $msgid): string
  *
  * @return string translated string (or original, if not found)
  */
-function __(string $msgid): string
-{
+function __(string $msgid): string {
     return Loader::getInstance()->getTranslator()->gettext(
-        $msgid
+                    $msgid
     );
 }
 
@@ -112,12 +107,11 @@ function __(string $msgid): string
  *
  * @return string translated plural form
  */
-function _ngettext(string $msgid, string $msgidPlural, int $number): string
-{
+function _ngettext(string $msgid, string $msgidPlural, int $number): string {
     return Loader::getInstance()->getTranslator()->ngettext(
-        $msgid,
-        $msgidPlural,
-        $number
+                    $msgid,
+                    $msgidPlural,
+                    $number
     );
 }
 
@@ -129,11 +123,10 @@ function _ngettext(string $msgid, string $msgidPlural, int $number): string
  *
  * @return string translated plural form
  */
-function _pgettext(string $msgctxt, string $msgid): string
-{
+function _pgettext(string $msgctxt, string $msgid): string {
     return Loader::getInstance()->getTranslator()->pgettext(
-        $msgctxt,
-        $msgid
+                    $msgctxt,
+                    $msgid
     );
 }
 
@@ -147,13 +140,12 @@ function _pgettext(string $msgctxt, string $msgid): string
  *
  * @return string translated plural form
  */
-function _npgettext(string $msgctxt, string $msgid, string $msgidPlural, int $number): string
-{
+function _npgettext(string $msgctxt, string $msgid, string $msgidPlural, int $number): string {
     return Loader::getInstance()->getTranslator()->npgettext(
-        $msgctxt,
-        $msgid,
-        $msgidPlural,
-        $number
+                    $msgctxt,
+                    $msgid,
+                    $msgidPlural,
+                    $number
     );
 }
 
@@ -165,10 +157,9 @@ function _npgettext(string $msgctxt, string $msgid, string $msgidPlural, int $nu
  *
  * @return string translated string (or original, if not found)
  */
-function _dgettext(string $domain, string $msgid): string
-{
+function _dgettext(string $domain, string $msgid): string {
     return Loader::getInstance()->getTranslator($domain)->gettext(
-        $msgid
+                    $msgid
     );
 }
 
@@ -182,12 +173,11 @@ function _dgettext(string $domain, string $msgid): string
  *
  * @return string translated plural form
  */
-function _dngettext(string $domain, string $msgid, string $msgidPlural, int $number): string
-{
+function _dngettext(string $domain, string $msgid, string $msgidPlural, int $number): string {
     return Loader::getInstance()->getTranslator($domain)->ngettext(
-        $msgid,
-        $msgidPlural,
-        $number
+                    $msgid,
+                    $msgidPlural,
+                    $number
     );
 }
 
@@ -200,11 +190,10 @@ function _dngettext(string $domain, string $msgid, string $msgidPlural, int $num
  *
  * @return string translated plural form
  */
-function _dpgettext(string $domain, string $msgctxt, string $msgid): string
-{
+function _dpgettext(string $domain, string $msgctxt, string $msgid): string {
     return Loader::getInstance()->getTranslator($domain)->pgettext(
-        $msgctxt,
-        $msgid
+                    $msgctxt,
+                    $msgid
     );
 }
 
@@ -219,12 +208,11 @@ function _dpgettext(string $domain, string $msgctxt, string $msgid): string
  *
  * @return string translated plural form
  */
-function _dnpgettext(string $domain, string $msgctxt, string $msgid, string $msgidPlural, int $number): string
-{
+function _dnpgettext(string $domain, string $msgctxt, string $msgid, string $msgidPlural, int $number): string {
     return Loader::getInstance()->getTranslator($domain)->npgettext(
-        $msgctxt,
-        $msgid,
-        $msgidPlural,
-        $number
+                    $msgctxt,
+                    $msgid,
+                    $msgidPlural,
+                    $number
     );
 }

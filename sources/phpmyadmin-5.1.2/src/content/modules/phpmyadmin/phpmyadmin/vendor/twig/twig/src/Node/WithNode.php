@@ -18,10 +18,9 @@ use Twig\Compiler;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class WithNode extends Node
-{
-    public function __construct(Node $body, ?Node $variables, bool $only, int $lineno, string $tag = null)
-    {
+class WithNode extends Node {
+
+    public function __construct(Node $body, ?Node $variables, bool $only, int $lineno, string $tag = null) {
         $nodes = ['body' => $body];
         if (null !== $variables) {
             $nodes['variables'] = $variables;
@@ -30,25 +29,24 @@ class WithNode extends Node
         parent::__construct($nodes, ['only' => $only], $lineno, $tag);
     }
 
-    public function compile(Compiler $compiler)
-    {
+    public function compile(Compiler $compiler) {
         $compiler->addDebugInfo($this);
 
         if ($this->hasNode('variables')) {
             $node = $this->getNode('variables');
             $varsName = $compiler->getVarName();
             $compiler
-                ->write(sprintf('$%s = ', $varsName))
-                ->subcompile($node)
-                ->raw(";\n")
-                ->write(sprintf("if (!twig_test_iterable(\$%s)) {\n", $varsName))
-                ->indent()
-                ->write("throw new RuntimeError('Variables passed to the \"with\" tag must be a hash.', ")
-                ->repr($node->getTemplateLine())
-                ->raw(", \$this->getSourceContext());\n")
-                ->outdent()
-                ->write("}\n")
-                ->write(sprintf("\$%s = twig_to_array(\$%s);\n", $varsName, $varsName))
+                    ->write(sprintf('$%s = ', $varsName))
+                    ->subcompile($node)
+                    ->raw(";\n")
+                    ->write(sprintf("if (!twig_test_iterable(\$%s)) {\n", $varsName))
+                    ->indent()
+                    ->write("throw new RuntimeError('Variables passed to the \"with\" tag must be a hash.', ")
+                    ->repr($node->getTemplateLine())
+                    ->raw(", \$this->getSourceContext());\n")
+                    ->outdent()
+                    ->write("}\n")
+                    ->write(sprintf("\$%s = twig_to_array(\$%s);\n", $varsName, $varsName))
             ;
 
             if ($this->getAttribute('only')) {
@@ -63,10 +61,11 @@ class WithNode extends Node
         }
 
         $compiler
-            ->subcompile($this->getNode('body'))
-            ->write("\$context = \$context['_parent'];\n")
+                ->subcompile($this->getNode('body'))
+                ->write("\$context = \$context['_parent'];\n")
         ;
     }
+
 }
 
 class_alias('Twig\Node\WithNode', 'Twig_Node_With');

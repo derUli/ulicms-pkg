@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Parses a list of expressions delimited by a comma.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\SqlParser\Components;
@@ -12,7 +12,6 @@ use PhpMyAdmin\SqlParser\Exceptions\ParserException;
 use PhpMyAdmin\SqlParser\Parser;
 use PhpMyAdmin\SqlParser\Token;
 use PhpMyAdmin\SqlParser\TokensList;
-
 use function count;
 use function implode;
 use function is_array;
@@ -25,8 +24,8 @@ use function substr;
  *
  * @final
  */
-class ExpressionArray extends Component
-{
+class ExpressionArray extends Component {
+
     /**
      * @param Parser     $parser  the parser that serves as context
      * @param TokensList $list    the list of tokens that are being parsed
@@ -36,8 +35,7 @@ class ExpressionArray extends Component
      *
      * @throws ParserException
      */
-    public static function parse(Parser $parser, TokensList $list, array $options = [])
-    {
+    public static function parse(Parser $parser, TokensList $list, array $options = []) {
         $ret = [];
 
         /**
@@ -73,12 +71,7 @@ class ExpressionArray extends Component
             }
 
             if (
-                ($token->type === Token::TYPE_KEYWORD)
-                && ($token->flags & Token::FLAG_KEYWORD_RESERVED)
-                && ((~$token->flags & Token::FLAG_KEYWORD_FUNCTION))
-                && ($token->value !== 'DUAL')
-                && ($token->value !== 'NULL')
-                && ($token->value !== 'CASE')
+                    ($token->type === Token::TYPE_KEYWORD) && ($token->flags & Token::FLAG_KEYWORD_RESERVED) && ((~$token->flags & Token::FLAG_KEYWORD_FUNCTION)) && ($token->value !== 'DUAL') && ($token->value !== 'NULL') && ($token->value !== 'CASE')
             ) {
                 // No keyword is expected.
                 break;
@@ -132,8 +125,7 @@ class ExpressionArray extends Component
      *
      * @return string
      */
-    public static function build($component, array $options = [])
-    {
+    public static function build($component, array $options = []) {
         $ret = [];
         foreach ($component as $frag) {
             $ret[] = $frag::build($frag);
@@ -141,4 +133,5 @@ class ExpressionArray extends Component
 
         return implode(', ', $ret);
     }
+
 }

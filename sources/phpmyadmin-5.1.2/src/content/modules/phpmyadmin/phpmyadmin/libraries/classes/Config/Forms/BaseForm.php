@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Base class for preferences.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Config\Forms;
@@ -14,14 +14,13 @@ use function is_int;
 /**
  * Base form for user preferences
  */
-abstract class BaseForm extends FormDisplay
-{
+abstract class BaseForm extends FormDisplay {
+
     /**
      * @param ConfigFile $cf       Config file instance
      * @param int|null   $serverId 0 if new server, validation; >= 1 if editing a server
      */
-    public function __construct(ConfigFile $cf, $serverId = null)
-    {
+    public function __construct(ConfigFile $cf, $serverId = null) {
         parent::__construct($cf);
         foreach (static::getForms() as $formName => $form) {
             $this->registerForm($formName, $form, $serverId);
@@ -49,8 +48,7 @@ abstract class BaseForm extends FormDisplay
      *
      * @todo This should be abstract, but that does not work in PHP 5
      */
-    public static function getForms()
-    {
+    public static function getForms() {
         return [];
     }
 
@@ -59,8 +57,7 @@ abstract class BaseForm extends FormDisplay
      *
      * @return string[]
      */
-    public static function getFields()
-    {
+    public static function getFields() {
         $names = [];
         foreach (static::getForms() as $form) {
             foreach ($form as $k => $v) {
@@ -78,8 +75,8 @@ abstract class BaseForm extends FormDisplay
      *
      * @todo This should be abstract, but that does not work in PHP 5
      */
-    public static function getName()
-    {
+    public static function getName() {
         return '';
     }
+
 }

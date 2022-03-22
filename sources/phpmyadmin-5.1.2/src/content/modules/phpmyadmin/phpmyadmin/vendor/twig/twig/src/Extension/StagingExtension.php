@@ -24,16 +24,15 @@ use Twig\TwigTest;
  *
  * @internal
  */
-final class StagingExtension extends AbstractExtension
-{
+final class StagingExtension extends AbstractExtension {
+
     private $functions = [];
     private $filters = [];
     private $visitors = [];
     private $tokenParsers = [];
     private $tests = [];
 
-    public function addFunction(TwigFunction $function)
-    {
+    public function addFunction(TwigFunction $function) {
         if (isset($this->functions[$function->getName()])) {
             throw new \LogicException(sprintf('Function "%s" is already registered.', $function->getName()));
         }
@@ -41,13 +40,11 @@ final class StagingExtension extends AbstractExtension
         $this->functions[$function->getName()] = $function;
     }
 
-    public function getFunctions()
-    {
+    public function getFunctions() {
         return $this->functions;
     }
 
-    public function addFilter(TwigFilter $filter)
-    {
+    public function addFilter(TwigFilter $filter) {
         if (isset($this->filters[$filter->getName()])) {
             throw new \LogicException(sprintf('Filter "%s" is already registered.', $filter->getName()));
         }
@@ -55,23 +52,19 @@ final class StagingExtension extends AbstractExtension
         $this->filters[$filter->getName()] = $filter;
     }
 
-    public function getFilters()
-    {
+    public function getFilters() {
         return $this->filters;
     }
 
-    public function addNodeVisitor(NodeVisitorInterface $visitor)
-    {
+    public function addNodeVisitor(NodeVisitorInterface $visitor) {
         $this->visitors[] = $visitor;
     }
 
-    public function getNodeVisitors()
-    {
+    public function getNodeVisitors() {
         return $this->visitors;
     }
 
-    public function addTokenParser(TokenParserInterface $parser)
-    {
+    public function addTokenParser(TokenParserInterface $parser) {
         if (isset($this->tokenParsers[$parser->getTag()])) {
             throw new \LogicException(sprintf('Tag "%s" is already registered.', $parser->getTag()));
         }
@@ -79,13 +72,11 @@ final class StagingExtension extends AbstractExtension
         $this->tokenParsers[$parser->getTag()] = $parser;
     }
 
-    public function getTokenParsers()
-    {
+    public function getTokenParsers() {
         return $this->tokenParsers;
     }
 
-    public function addTest(TwigTest $test)
-    {
+    public function addTest(TwigTest $test) {
         if (isset($this->tests[$test->getName()])) {
             throw new \LogicException(sprintf('Test "%s" is already registered.', $test->getName()));
         }
@@ -93,10 +84,10 @@ final class StagingExtension extends AbstractExtension
         $this->tests[$test->getName()] = $test;
     }
 
-    public function getTests()
-    {
+    public function getTests() {
         return $this->tests;
     }
+
 }
 
 class_alias('Twig\Extension\StagingExtension', 'Twig_Extension_Staging');

@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Page-related settings
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Config;
@@ -16,8 +16,8 @@ use PhpMyAdmin\UserPreferences;
 /**
  * Page-related settings
  */
-class PageSettings
-{
+class PageSettings {
+
     /**
      * Contains id of the form element
      *
@@ -53,8 +53,7 @@ class PageSettings
      * @param string $formGroupName The name of config form group to display
      * @param string $elemId        Id of the div containing settings
      */
-    public function __construct($formGroupName, $elemId = null)
-    {
+    public function __construct($formGroupName, $elemId = null) {
         $this->userPreferences = new UserPreferences();
 
         $formClass = PageFormList::get($formGroupName);
@@ -66,7 +65,7 @@ class PageSettings
             return;
         }
 
-        if (! empty($elemId)) {
+        if (!empty($elemId)) {
             $this->elemId = $elemId;
         }
         $this->groupName = $formGroupName;
@@ -78,8 +77,7 @@ class PageSettings
 
         // Process form
         $error = null;
-        if (isset($_POST['submit_save'])
-            && $_POST['submit_save'] == $formGroupName
+        if (isset($_POST['submit_save']) && $_POST['submit_save'] == $formGroupName
         ) {
             $this->processPageSettings($formDisplay, $cf, $error);
         }
@@ -97,9 +95,8 @@ class PageSettings
      *
      * @return void
      */
-    private function processPageSettings(&$formDisplay, &$cf, &$error)
-    {
-        if (! $formDisplay->process(false) || $formDisplay->hasErrors()) {
+    private function processPageSettings(&$formDisplay, &$cf, &$error) {
+        if (!$formDisplay->process(false) || $formDisplay->hasErrors()) {
             return;
         }
 
@@ -109,7 +106,7 @@ class PageSettings
             // reload page
             $response = Response::getInstance();
             Core::sendHeaderLocation(
-                $response->getFooter()->getSelfUrl()
+                    $response->getFooter()->getSelfUrl()
             );
             exit;
         }
@@ -125,8 +122,7 @@ class PageSettings
      *
      * @return void
      */
-    private function storeError(&$formDisplay, &$error)
-    {
+    private function storeError(&$formDisplay, &$error) {
         $retval = '';
         if ($error) {
             $retval .= $error->getDisplay();
@@ -134,12 +130,12 @@ class PageSettings
         if ($formDisplay->hasErrors()) {
             // form has errors
             $retval .= '<div class="alert alert-danger config-form" role="alert">'
-                . '<b>' . __(
-                    'Cannot save settings, submitted configuration form contains '
-                    . 'errors!'
-                ) . '</b>'
-                . $formDisplay->displayErrors()
-                . '</div>';
+                    . '<b>' . __(
+                            'Cannot save settings, submitted configuration form contains '
+                            . 'errors!'
+                    ) . '</b>'
+                    . $formDisplay->displayErrors()
+                    . '</div>';
         }
         $this->errorHTML = $retval;
     }
@@ -152,8 +148,7 @@ class PageSettings
      *
      * @return string
      */
-    private function getPageSettingsDisplay(&$formDisplay, &$error)
-    {
+    private function getPageSettingsDisplay(&$formDisplay, &$error) {
         $response = Response::getInstance();
 
         $retval = '';
@@ -163,13 +158,13 @@ class PageSettings
         $retval .= '<div id="' . $this->elemId . '">';
         $retval .= '<div class="page_settings">';
         $retval .= $formDisplay->getDisplay(
-            true,
-            true,
-            false,
-            $response->getFooter()->getSelfUrl(),
-            [
-                'submit_save' => $this->groupName,
-            ]
+                true,
+                true,
+                false,
+                $response->getFooter()->getSelfUrl(),
+                [
+                    'submit_save' => $this->groupName,
+                ]
         );
         $retval .= '</div>';
         $retval .= '</div>';
@@ -182,8 +177,7 @@ class PageSettings
      *
      * @return string
      */
-    public function getHTML()
-    {
+    public function getHTML() {
         return $this->HTML;
     }
 
@@ -192,8 +186,8 @@ class PageSettings
      *
      * @return string
      */
-    public function getErrorHTML()
-    {
+    public function getErrorHTML() {
         return $this->errorHTML;
     }
+
 }

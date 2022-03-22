@@ -1,4 +1,4 @@
-<p><?php random_banner()?></p>
+<p><?php random_banner() ?></p>
 </div>
 <!-- end content -->
 </div>
@@ -6,10 +6,9 @@
 </div>
 <!-- end outer -->
 <div id="footer">
-	<h1>&copy; <?php year()?> by <?php homepage_owner()?> | Powered by UliCMS <?php
-    
-echo cms_version();
-    ?></h1>
+    <h1>&copy; <?php year() ?> by <?php homepage_owner() ?> | Powered by UliCMS <?php
+        echo cms_version();
+        ?></h1>
 </div>
 
 </div>

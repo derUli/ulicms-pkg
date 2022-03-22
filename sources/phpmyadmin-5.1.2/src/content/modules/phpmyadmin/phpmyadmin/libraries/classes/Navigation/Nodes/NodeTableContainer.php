@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Functionality for the navigation tree
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Navigation\Nodes;
@@ -14,13 +14,12 @@ use PhpMyAdmin\Url;
 /**
  * Represents a container for table nodes in the navigation tree
  */
-class NodeTableContainer extends NodeDatabaseChildContainer
-{
+class NodeTableContainer extends NodeDatabaseChildContainer {
+
     /**
      * Initialises the class
      */
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct(__('Tables'), Node::CONTAINER);
         $this->icon = Generator::getImage('b_browse', __('Tables'));
         $this->links = [
@@ -38,8 +37,8 @@ class NodeTableContainer extends NodeDatabaseChildContainer
 
         $newLabel = _pgettext('Create new table', 'New');
         $new = NodeFactory::getInstanceForNewNode(
-            $newLabel,
-            'new_table italics'
+                        $newLabel,
+                        'new_table italics'
         );
         $new->icon = Generator::getImage('b_table_add', $newLabel);
         $new->links = [
@@ -52,4 +51,5 @@ class NodeTableContainer extends NodeDatabaseChildContainer
         ];
         $this->addChild($new);
     }
+
 }

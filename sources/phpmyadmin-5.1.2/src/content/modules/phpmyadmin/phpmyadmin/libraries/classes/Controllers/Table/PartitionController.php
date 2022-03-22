@@ -10,8 +10,8 @@ use PhpMyAdmin\Table\Partition;
 use PhpMyAdmin\Template;
 use function strlen;
 
-final class PartitionController extends AbstractController
-{
+final class PartitionController extends AbstractController {
+
     /** @var Partition */
     private $model;
 
@@ -21,14 +21,12 @@ final class PartitionController extends AbstractController
      * @param string    $table
      * @param Partition $partition
      */
-    public function __construct($response, Template $template, $db, $table, $partition)
-    {
+    public function __construct($response, Template $template, $db, $table, $partition) {
         parent::__construct($response, $template, $db, $table);
         $this->model = $partition;
     }
 
-    public function analyze(): void
-    {
+    public function analyze(): void {
         $partitionName = $_POST['partition_name'] ?? '';
 
         if (strlen($partitionName) === 0) {
@@ -38,9 +36,9 @@ final class PartitionController extends AbstractController
         [$rows, $query] = $this->model->analyze($this->db, $this->table, $partitionName);
 
         $message = Generator::getMessage(
-            __('Your SQL query has been executed successfully.'),
-            $query,
-            'success'
+                        __('Your SQL query has been executed successfully.'),
+                        $query,
+                        'success'
         );
 
         $this->render('table/partition/analyze', [
@@ -50,8 +48,7 @@ final class PartitionController extends AbstractController
         ]);
     }
 
-    public function check(): void
-    {
+    public function check(): void {
         $partitionName = $_POST['partition_name'] ?? '';
 
         if (strlen($partitionName) === 0) {
@@ -61,9 +58,9 @@ final class PartitionController extends AbstractController
         [$rows, $query] = $this->model->check($this->db, $this->table, $partitionName);
 
         $message = Generator::getMessage(
-            __('Your SQL query has been executed successfully.'),
-            $query,
-            'success'
+                        __('Your SQL query has been executed successfully.'),
+                        $query,
+                        'success'
         );
 
         $this->render('table/partition/check', [
@@ -73,8 +70,7 @@ final class PartitionController extends AbstractController
         ]);
     }
 
-    public function drop(): void
-    {
+    public function drop(): void {
         $partitionName = $_POST['partition_name'] ?? '';
 
         if (strlen($partitionName) === 0) {
@@ -85,15 +81,15 @@ final class PartitionController extends AbstractController
 
         if ($result) {
             $message = Generator::getMessage(
-                __('Your SQL query has been executed successfully.'),
-                $query,
-                'success'
+                            __('Your SQL query has been executed successfully.'),
+                            $query,
+                            'success'
             );
         } else {
             $message = Generator::getMessage(
-                __('Error'),
-                $query,
-                'error'
+                            __('Error'),
+                            $query,
+                            'error'
             );
         }
 
@@ -103,8 +99,7 @@ final class PartitionController extends AbstractController
         ]);
     }
 
-    public function optimize(): void
-    {
+    public function optimize(): void {
         $partitionName = $_POST['partition_name'] ?? '';
 
         if (strlen($partitionName) === 0) {
@@ -114,9 +109,9 @@ final class PartitionController extends AbstractController
         [$rows, $query] = $this->model->optimize($this->db, $this->table, $partitionName);
 
         $message = Generator::getMessage(
-            __('Your SQL query has been executed successfully.'),
-            $query,
-            'success'
+                        __('Your SQL query has been executed successfully.'),
+                        $query,
+                        'success'
         );
 
         $this->render('table/partition/optimize', [
@@ -126,8 +121,7 @@ final class PartitionController extends AbstractController
         ]);
     }
 
-    public function rebuild(): void
-    {
+    public function rebuild(): void {
         $partitionName = $_POST['partition_name'] ?? '';
 
         if (strlen($partitionName) === 0) {
@@ -138,15 +132,15 @@ final class PartitionController extends AbstractController
 
         if ($result) {
             $message = Generator::getMessage(
-                __('Your SQL query has been executed successfully.'),
-                $query,
-                'success'
+                            __('Your SQL query has been executed successfully.'),
+                            $query,
+                            'success'
             );
         } else {
             $message = Generator::getMessage(
-                __('Error'),
-                $query,
-                'error'
+                            __('Error'),
+                            $query,
+                            'error'
             );
         }
 
@@ -156,8 +150,7 @@ final class PartitionController extends AbstractController
         ]);
     }
 
-    public function repair(): void
-    {
+    public function repair(): void {
         $partitionName = $_POST['partition_name'] ?? '';
 
         if (strlen($partitionName) === 0) {
@@ -167,9 +160,9 @@ final class PartitionController extends AbstractController
         [$rows, $query] = $this->model->repair($this->db, $this->table, $partitionName);
 
         $message = Generator::getMessage(
-            __('Your SQL query has been executed successfully.'),
-            $query,
-            'success'
+                        __('Your SQL query has been executed successfully.'),
+                        $query,
+                        'success'
         );
 
         $this->render('table/partition/repair', [
@@ -179,8 +172,7 @@ final class PartitionController extends AbstractController
         ]);
     }
 
-    public function truncate(): void
-    {
+    public function truncate(): void {
         $partitionName = $_POST['partition_name'] ?? '';
 
         if (strlen($partitionName) === 0) {
@@ -191,15 +183,15 @@ final class PartitionController extends AbstractController
 
         if ($result) {
             $message = Generator::getMessage(
-                __('Your SQL query has been executed successfully.'),
-                $query,
-                'success'
+                            __('Your SQL query has been executed successfully.'),
+                            $query,
+                            'success'
             );
         } else {
             $message = Generator::getMessage(
-                __('Error'),
-                $query,
-                'error'
+                            __('Error'),
+                            $query,
+                            'error'
             );
         }
 
@@ -208,4 +200,5 @@ final class PartitionController extends AbstractController
             'message' => $message,
         ]);
     }
+
 }

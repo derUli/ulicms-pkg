@@ -1,8 +1,8 @@
 <?php
+
 /**
  * `REPAIR` statement.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\SqlParser\Statements;
@@ -14,8 +14,8 @@ namespace PhpMyAdmin\SqlParser\Statements;
  *  tbl_name [, tbl_name] ...
  *  [QUICK] [EXTENDED] [USE_FRM]
  */
-class RepairStatement extends MaintenanceStatement
-{
+class RepairStatement extends MaintenanceStatement {
+
     /**
      * Options of this statement.
      *
@@ -23,12 +23,11 @@ class RepairStatement extends MaintenanceStatement
      */
     public static $OPTIONS = [
         'TABLE' => 1,
-
         'NO_WRITE_TO_BINLOG' => 2,
         'LOCAL' => 3,
-
         'QUICK' => 4,
         'EXTENDED' => 5,
         'USE_FRM' => 6,
     ];
+
 }

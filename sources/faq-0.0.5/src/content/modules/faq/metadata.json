@@ -1,6 +1,6 @@
 {
-	"version" : "0.0.5",
-	"admin_permission" : "faq_edit",
-	"custom_acl" : ["faq_edit"],
-	"embed" : true
+    "version": "0.0.5",
+    "admin_permission": "faq_edit",
+    "custom_acl": ["faq_edit"],
+    "embed": true
 }

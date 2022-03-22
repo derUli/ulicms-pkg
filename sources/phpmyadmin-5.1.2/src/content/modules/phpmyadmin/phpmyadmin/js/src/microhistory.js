@@ -56,13 +56,13 @@ var MicroHistory = {
             this.pages.pop();
         }
         if (rel === 'newpage' ||
-            (
-                typeof rel === 'undefined' && (
-                    typeof this.pages[this.current - 1] === 'undefined' ||
-                    this.pages[this.current - 1].hash !== hash
-                )
-            )
-        ) {
+                (
+                        typeof rel === 'undefined' && (
+                                typeof this.pages[this.current - 1] === 'undefined' ||
+                                this.pages[this.current - 1].hash !== hash
+                                )
+                        )
+                ) {
             this.pages.push({
                 hash: hash,
                 content: $('#page_content').html(),
@@ -86,14 +86,14 @@ var MicroHistory = {
     navigate: function (index) {
         var localIndex = index;
         if (typeof this.pages[localIndex] === 'undefined' ||
-            typeof this.pages[localIndex].content === 'undefined' ||
-            typeof this.pages[localIndex].menu === 'undefined' ||
-            ! MicroHistory.menus.get(this.pages[localIndex].menu)
-        ) {
+                typeof this.pages[localIndex].content === 'undefined' ||
+                typeof this.pages[localIndex].menu === 'undefined' ||
+                !MicroHistory.menus.get(this.pages[localIndex].menu)
+                ) {
             Functions.ajaxShowMessage(
-                '<div class="alert alert-danger" role="alert">' + Messages.strInvalidPage + '</div>',
-                false
-            );
+                    '<div class="alert alert-danger" role="alert">' + Messages.strInvalidPage + '</div>',
+                    false
+                    );
         } else {
             AJAX.active = true;
             var record = this.pages[localIndex];
@@ -158,7 +158,7 @@ var MicroHistory = {
                 var init = 0;
                 for (var i in this.data) {
                     if (this.data[i]) {
-                        if (! init || this.data[i].timestamp.getTime() < oldest.getTime()) {
+                        if (!init || this.data[i].timestamp.getTime() < oldest.getTime()) {
                             oldest = this.data[i].timestamp;
                             key = i;
                             init = 1;
@@ -213,9 +213,9 @@ var MicroHistory = {
          */
         replace: function (content) {
             $('#floating_menubar').html(content)
-                // Remove duplicate wrapper
-                // TODO: don't send it in the response
-                .children().first().remove();
+                    // Remove duplicate wrapper
+                    // TODO: don't send it in the response
+                    .children().first().remove();
             $('#topmenu').menuResizer(Functions.mainMenuResizerCallback);
         }
     }
@@ -250,7 +250,7 @@ MicroHistory.setUrlHash = (function (jQuery, window) {
     var userChange = true;
 
     // Fix favicon disappearing in Firefox when setting location.hash
-    function resetFavicon () {
+    function resetFavicon() {
         if (navigator.userAgent.indexOf('Firefox') > -1) {
             // Move the link tags for the favicon to the bottom
             // of the head element to force a reload of the favicon
@@ -263,7 +263,7 @@ MicroHistory.setUrlHash = (function (jQuery, window) {
      *
      * @access public
      */
-    function setUrlHash (index, hash) {
+    function setUrlHash(index, hash) {
         /*
          * Known problem:
          * Setting hash leads to reload in webkit:
@@ -293,8 +293,8 @@ MicroHistory.setUrlHash = (function (jQuery, window) {
             var hashUrl = urlHash.substring(colonPosition + 1, questionMarkPosition);
             if (hashUrl === 'index.php') {
                 window.location = urlHash.substring(
-                    colonPosition + 1
-                );
+                        colonPosition + 1
+                        );
             }
         }
     } else {
@@ -322,8 +322,8 @@ MicroHistory.setUrlHash = (function (jQuery, window) {
             } else if (/^#PMAURL-\d+:/.test(window.location.hash)) {
                 // Change page if the hash changed was triggered by a user action
                 var index = window.location.hash.substring(
-                    8, window.location.hash.indexOf(':')
-                );
+                        8, window.location.hash.indexOf(':')
+                        );
                 MicroHistory.navigate(index);
             }
         });

@@ -8,8 +8,8 @@ use function count;
 use function explode;
 use function sprintf;
 
-final class ReplicationInfo
-{
+final class ReplicationInfo {
+
     /** @var string[] */
     public $primaryVariables = [
         'File',
@@ -73,18 +73,16 @@ final class ReplicationInfo
     /** @var DatabaseInterface */
     private $dbi;
 
-    public function __construct(DatabaseInterface $dbi)
-    {
+    public function __construct(DatabaseInterface $dbi) {
         $this->dbi = $dbi;
     }
 
-    public function load(?string $connection = null): void
-    {
+    public function load(?string $connection = null): void {
         global $url_params;
 
         $this->setPrimaryStatus();
 
-        if (! empty($connection)) {
+        if (!empty($connection)) {
             $this->setMultiPrimaryStatus();
 
             if ($this->multiPrimaryStatus) {
@@ -98,44 +96,37 @@ final class ReplicationInfo
         $this->setReplicaInfo();
     }
 
-    private function setPrimaryStatus(): void
-    {
+    private function setPrimaryStatus(): void {
         $this->primaryStatus = $this->dbi->fetchResult('SHOW MASTER STATUS');
     }
 
     /**
      * @return array
      */
-    public function getPrimaryStatus()
-    {
+    public function getPrimaryStatus() {
         return $this->primaryStatus;
     }
 
-    private function setReplicaStatus(): void
-    {
+    private function setReplicaStatus(): void {
         $this->replicaStatus = $this->dbi->fetchResult('SHOW SLAVE STATUS');
     }
 
     /**
      * @return array
      */
-    public function getReplicaStatus()
-    {
+    public function getReplicaStatus() {
         return $this->replicaStatus;
     }
 
-    private function setMultiPrimaryStatus(): void
-    {
+    private function setMultiPrimaryStatus(): void {
         $this->multiPrimaryStatus = $this->dbi->fetchResult('SHOW ALL SLAVES STATUS');
     }
 
-    private function setDefaultPrimaryConnection(string $connection): void
-    {
+    private function setDefaultPrimaryConnection(string $connection): void {
         $this->dbi->query(sprintf('SET @@default_master_connection = \'%s\'', $this->dbi->escapeString($connection)));
     }
 
-    private static function fill(array $status, string $key): array
-    {
+    private static function fill(array $status, string $key): array {
         if (empty($status[0][$key])) {
             return [];
         }
@@ -143,15 +134,14 @@ final class ReplicationInfo
         return explode(',', $status[0][$key]);
     }
 
-    private function setPrimaryInfo(): void
-    {
+    private function setPrimaryInfo(): void {
         $this->primaryInfo = ['status' => false];
 
         if (count($this->primaryStatus) > 0) {
             $this->primaryInfo['status'] = true;
         }
 
-        if (! $this->primaryInfo['status']) {
+        if (!$this->primaryInfo['status']) {
             return;
         }
 
@@ -162,20 +152,18 @@ final class ReplicationInfo
     /**
      * @return array
      */
-    public function getPrimaryInfo(): array
-    {
+    public function getPrimaryInfo(): array {
         return $this->primaryInfo;
     }
 
-    private function setReplicaInfo(): void
-    {
+    private function setReplicaInfo(): void {
         $this->replicaInfo = ['status' => false];
 
         if (count($this->replicaStatus) > 0) {
             $this->replicaInfo['status'] = true;
         }
 
-        if (! $this->replicaInfo['status']) {
+        if (!$this->replicaInfo['status']) {
             return;
         }
 
@@ -190,8 +178,8 @@ final class ReplicationInfo
     /**
      * @return array
      */
-    public function getReplicaInfo(): array
-    {
+    public function getReplicaInfo(): array {
         return $this->replicaInfo;
     }
+
 }

@@ -18,8 +18,8 @@ use Symfony\Component\DependencyInjection\Reference;
  *
  * @author Nicolas Grekas <p@tchwork.com>
  */
-class ServiceLocatorArgument implements ArgumentInterface
-{
+class ServiceLocatorArgument implements ArgumentInterface {
+
     use ReferenceSetArgumentTrait;
 
     private $taggedIteratorArgument;
@@ -27,8 +27,7 @@ class ServiceLocatorArgument implements ArgumentInterface
     /**
      * @param Reference[]|TaggedIteratorArgument $values
      */
-    public function __construct($values = [])
-    {
+    public function __construct($values = []) {
         if ($values instanceof TaggedIteratorArgument) {
             $this->taggedIteratorArgument = $values;
             $this->values = [];
@@ -37,8 +36,8 @@ class ServiceLocatorArgument implements ArgumentInterface
         }
     }
 
-    public function getTaggedIteratorArgument(): ?TaggedIteratorArgument
-    {
+    public function getTaggedIteratorArgument(): ?TaggedIteratorArgument {
         return $this->taggedIteratorArgument;
     }
+
 }

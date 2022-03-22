@@ -22,10 +22,9 @@ use Twig\Token;
  *     Body
  *   {% include 'footer.html' %}
  */
-class IncludeTokenParser extends AbstractTokenParser
-{
-    public function parse(Token $token)
-    {
+class IncludeTokenParser extends AbstractTokenParser {
+
+    public function parse(Token $token) {
         $expr = $this->parser->getExpressionParser()->parseExpression();
 
         list($variables, $only, $ignoreMissing) = $this->parseArguments();
@@ -33,8 +32,7 @@ class IncludeTokenParser extends AbstractTokenParser
         return new IncludeNode($expr, $variables, $only, $ignoreMissing, $token->getLine(), $this->getTag());
     }
 
-    protected function parseArguments()
-    {
+    protected function parseArguments() {
         $stream = $this->parser->getStream();
 
         $ignoreMissing = false;
@@ -59,10 +57,10 @@ class IncludeTokenParser extends AbstractTokenParser
         return [$variables, $only, $ignoreMissing];
     }
 
-    public function getTag()
-    {
+    public function getTag() {
         return 'include';
     }
+
 }
 
 class_alias('Twig\TokenParser\IncludeTokenParser', 'Twig_TokenParser_Include');

@@ -27,10 +27,9 @@ use Twig\Token;
  *    <title>{% block title %}{% endblock %} - My Webpage</title>
  *  {% endblock %}
  */
-final class BlockTokenParser extends AbstractTokenParser
-{
-    public function parse(Token $token)
-    {
+final class BlockTokenParser extends AbstractTokenParser {
+
+    public function parse(Token $token) {
         $lineno = $token->getLine();
         $stream = $this->parser->getStream();
         $name = $stream->expect(/* Token::NAME_TYPE */ 5)->getValue();
@@ -64,15 +63,14 @@ final class BlockTokenParser extends AbstractTokenParser
         return new BlockReferenceNode($name, $lineno, $this->getTag());
     }
 
-    public function decideBlockEnd(Token $token)
-    {
+    public function decideBlockEnd(Token $token) {
         return $token->test('endblock');
     }
 
-    public function getTag()
-    {
+    public function getTag() {
         return 'block';
     }
+
 }
 
 class_alias('Twig\TokenParser\BlockTokenParser', 'Twig_TokenParser_Block');

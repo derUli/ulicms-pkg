@@ -18,13 +18,12 @@ use Symfony\Component\DependencyInjection\Definition;
  *
  * @author Nicolas Grekas <p@tchwork.com>
  */
-class AutowireRequiredMethodsPass extends AbstractRecursivePass
-{
+class AutowireRequiredMethodsPass extends AbstractRecursivePass {
+
     /**
      * {@inheritdoc}
      */
-    protected function processValue($value, $isRoot = false)
-    {
+    protected function processValue($value, $isRoot = false) {
         $value = parent::processValue($value, $isRoot);
 
         if (!$value instanceof Definition || !$value->isAutowired() || $value->isAbstract() || !$value->getClass()) {
@@ -81,4 +80,5 @@ class AutowireRequiredMethodsPass extends AbstractRecursivePass
 
         return $value;
     }
+
 }

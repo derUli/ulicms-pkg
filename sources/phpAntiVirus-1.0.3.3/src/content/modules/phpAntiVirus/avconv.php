@@ -1,4 +1,5 @@
 <?php
+
 // _                   _   _     _
 // _ __| |_  _ __  __ _ _ _| |_(_)_ _(_)_ _ _  _ ___
 // | '_ \ ' \| '_ \/ _` | ' \  _| \ V / | '_| || (_-<
@@ -25,7 +26,6 @@
 // Default: Off (0)
 $CONFIG['debug'] = 0;
 
-
 // ROOT PATH TO SCAN
 // -----------------
 // This can be a relative or full path WITHOUT a trailing
@@ -37,7 +37,6 @@ $CONFIG['debug'] = 0;
 // large it may fail.
 // Default: Document root defined in Apache
 $CONFIG['scanpath'] = $_SERVER['DOCUMENT_ROOT'];
-
 
 // SCANABLE FILES
 // --------------
@@ -74,15 +73,15 @@ $CONFIG['extensions'][] = 'php5';
 // Flat file data? Only enable these if you regularly store
 // data in flat files.
 $CONFIG['extensions'][] = 'conf';
- $CONFIG['extensions'][] = 'config';
- $CONFIG['extensions'][] = 'csv';
- $CONFIG['extensions'][] = 'tab';
- $CONFIG['extensions'][] = 'sql';
+$CONFIG['extensions'][] = 'config';
+$CONFIG['extensions'][] = 'csv';
+$CONFIG['extensions'][] = 'tab';
+$CONFIG['extensions'][] = 'sql';
 
 // CGI scripts? Unlikely but entirely possible.
 $CONFIG['extensions'][] = 'pl';
- $CONFIG['extensions'][] = 'perl';
- $CONFIG['extensions'][] = 'cgi';
- $CONFIG['extensions'][] = '';
+$CONFIG['extensions'][] = 'perl';
+$CONFIG['extensions'][] = 'cgi';
+$CONFIG['extensions'][] = '';
 
- @set_time_limit(0); // run script forever
+@set_time_limit(0); // run script forever

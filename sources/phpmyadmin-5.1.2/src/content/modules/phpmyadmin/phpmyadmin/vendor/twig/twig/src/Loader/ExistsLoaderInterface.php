@@ -16,8 +16,8 @@ namespace Twig\Loader;
  *
  * @deprecated since Twig 2.7, to be removed in 3.0
  */
-interface ExistsLoaderInterface extends LoaderInterface
-{
+interface ExistsLoaderInterface extends LoaderInterface {
+    
 }
 
 class_alias('Twig\Loader\ExistsLoaderInterface', 'Twig_ExistsLoaderInterface');

@@ -16,12 +16,11 @@ namespace Symfony\Component\ExpressionLanguage;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class Expression
-{
+class Expression {
+
     protected $expression;
 
-    public function __construct(string $expression)
-    {
+    public function __construct(string $expression) {
         $this->expression = $expression;
     }
 
@@ -30,8 +29,8 @@ class Expression
      *
      * @return string The expression
      */
-    public function __toString()
-    {
+    public function __toString() {
         return $this->expression;
     }
+
 }

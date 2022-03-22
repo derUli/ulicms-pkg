@@ -1,11 +1,11 @@
 <?php
+
 /**
  * Simple wrapper just to enable error reporting and include config
  */
-
 declare(strict_types=1);
 
-if (! defined('ROOT_PATH')) {
+if (!defined('ROOT_PATH')) {
     // phpcs:disable PSR1.Files.SideEffects
     define('ROOT_PATH', __DIR__ . DIRECTORY_SEPARATOR);
     // phpcs:enable
@@ -15,11 +15,10 @@ if (! defined('ROOT_PATH')) {
 header('Expires: ' . gmdate(DATE_RFC1123));
 // HTTP/1.1
 header(
-    'Cache-Control: no-store, no-cache, must-revalidate,'
-    . '  pre-check=0, post-check=0, max-age=0'
+        'Cache-Control: no-store, no-cache, must-revalidate,'
+        . '  pre-check=0, post-check=0, max-age=0'
 );
-if (isset($_SERVER['HTTP_USER_AGENT'])
-    && stripos($_SERVER['HTTP_USER_AGENT'], 'MSIE') !== false
+if (isset($_SERVER['HTTP_USER_AGENT']) && stripos($_SERVER['HTTP_USER_AGENT'], 'MSIE') !== false
 ) {
     /* FIXME: Why is this special case for IE needed? */
     header('Pragma: public');

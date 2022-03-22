@@ -18,8 +18,8 @@ namespace Symfony\Component\Config\Resource;
  *
  * @final since Symfony 4.3
  */
-class DirectoryResource implements SelfCheckingResourceInterface
-{
+class DirectoryResource implements SelfCheckingResourceInterface {
+
     private $resource;
     private $pattern;
 
@@ -29,8 +29,7 @@ class DirectoryResource implements SelfCheckingResourceInterface
      *
      * @throws \InvalidArgumentException
      */
-    public function __construct(string $resource, string $pattern = null)
-    {
+    public function __construct(string $resource, string $pattern = null) {
         $this->resource = realpath($resource) ?: (file_exists($resource) ? $resource : false);
         $this->pattern = $pattern;
 
@@ -39,16 +38,14 @@ class DirectoryResource implements SelfCheckingResourceInterface
         }
     }
 
-    public function __toString()
-    {
+    public function __toString() {
         return md5(serialize([$this->resource, $this->pattern]));
     }
 
     /**
      * @return string The file path to the resource
      */
-    public function getResource()
-    {
+    public function getResource() {
         return $this->resource;
     }
 
@@ -57,16 +54,14 @@ class DirectoryResource implements SelfCheckingResourceInterface
      *
      * @return string|null
      */
-    public function getPattern()
-    {
+    public function getPattern() {
         return $this->pattern;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function isFresh($timestamp)
-    {
+    public function isFresh($timestamp) {
         if (!is_dir($this->resource)) {
             return false;
         }
@@ -102,4 +97,5 @@ class DirectoryResource implements SelfCheckingResourceInterface
 
         return true;
     }
+
 }

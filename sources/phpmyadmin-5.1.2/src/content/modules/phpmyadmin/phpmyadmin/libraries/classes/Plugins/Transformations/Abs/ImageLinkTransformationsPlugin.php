@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Abstract class for the link transformations plugins
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Plugins\Transformations\Abs;
@@ -15,17 +15,16 @@ use function htmlspecialchars;
 /**
  * Provides common methods for all of the link transformations plugins.
  */
-abstract class ImageLinkTransformationsPlugin extends TransformationsPlugin
-{
+abstract class ImageLinkTransformationsPlugin extends TransformationsPlugin {
+
     /**
      * Gets the transformation description of the specific plugin
      *
      * @return string
      */
-    public static function getInfo()
-    {
+    public static function getInfo() {
         return __(
-            'Displays a link to download this image.'
+                'Displays a link to download this image.'
         );
     }
 
@@ -38,8 +37,7 @@ abstract class ImageLinkTransformationsPlugin extends TransformationsPlugin
      *
      * @return string
      */
-    public function applyTransformation($buffer, array $options = [], ?stdClass $meta = null)
-    {
+    public function applyTransformation($buffer, array $options = [], ?stdClass $meta = null) {
         // must disable the page loader, see
         // https://wiki.phpmyadmin.net/pma/Page_loader#Bypassing_the_page_loader
         $link = '<a class="disableAjax" target="_blank" rel="noopener noreferrer" href="';
@@ -57,8 +55,8 @@ abstract class ImageLinkTransformationsPlugin extends TransformationsPlugin
      *
      * @return string
      */
-    public static function getName()
-    {
+    public static function getName() {
         return 'ImageLink';
     }
+
 }

@@ -1,8 +1,8 @@
 <?php
+
 /**
  * The NDBCLUSTER storage engine
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Engines;
@@ -12,15 +12,14 @@ use PhpMyAdmin\StorageEngine;
 /**
  * The NDBCLUSTER storage engine
  */
-class Ndbcluster extends StorageEngine
-{
+class Ndbcluster extends StorageEngine {
+
     /**
      * Returns array with variable names related to NDBCLUSTER storage engine
      *
      * @return array   variable names
      */
-    public function getVariables()
-    {
+    public function getVariables() {
         return [
             'ndb_connectstring' => [],
         ];
@@ -32,8 +31,7 @@ class Ndbcluster extends StorageEngine
      *
      * @return string  SQL query LIKE pattern
      */
-    public function getVariablesLikePattern()
-    {
+    public function getVariablesLikePattern() {
         return 'ndb\\_%';
     }
 
@@ -43,8 +41,8 @@ class Ndbcluster extends StorageEngine
      *
      * @return string  mysql helppage filename
      */
-    public function getMysqlHelpPage()
-    {
+    public function getMysqlHelpPage() {
         return 'ndbcluster';
     }
+
 }

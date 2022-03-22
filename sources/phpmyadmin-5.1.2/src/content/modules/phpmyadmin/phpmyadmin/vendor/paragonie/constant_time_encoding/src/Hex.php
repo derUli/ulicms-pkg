@@ -1,5 +1,7 @@
 <?php
+
 declare(strict_types=1);
+
 namespace ParagonIE\ConstantTime;
 
 /**
@@ -29,8 +31,8 @@ namespace ParagonIE\ConstantTime;
  * Class Hex
  * @package ParagonIE\ConstantTime
  */
-abstract class Hex implements EncoderInterface
-{
+abstract class Hex implements EncoderInterface {
+
     /**
      * Convert a binary string into a hexadecimal string without cache-timing
      * leaks
@@ -39,8 +41,7 @@ abstract class Hex implements EncoderInterface
      * @return string
      * @throws \TypeError
      */
-    public static function encode(string $binString): string
-    {
+    public static function encode(string $binString): string {
         $hex = '';
         $len = Binary::safeStrlen($binString);
         for ($i = 0; $i < $len; ++$i) {
@@ -50,9 +51,9 @@ abstract class Hex implements EncoderInterface
             $b = $chunk[1] >> 4;
 
             $hex .= pack(
-                'CC',
-                (87 + $b + ((($b - 10) >> 8) & ~38)),
-                (87 + $c + ((($c - 10) >> 8) & ~38))
+                    'CC',
+                    (87 + $b + ((($b - 10) >> 8) & ~38)),
+                    (87 + $c + ((($c - 10) >> 8) & ~38))
             );
         }
         return $hex;
@@ -66,8 +67,7 @@ abstract class Hex implements EncoderInterface
      * @return string
      * @throws \TypeError
      */
-    public static function encodeUpper(string $binString): string
-    {
+    public static function encodeUpper(string $binString): string {
         $hex = '';
         $len = Binary::safeStrlen($binString);
 
@@ -78,9 +78,9 @@ abstract class Hex implements EncoderInterface
             $b = $chunk[1] >> 4;
 
             $hex .= pack(
-                'CC',
-                (55 + $b + ((($b - 10) >> 8) & ~6)),
-                (55 + $c + ((($c - 10) >> 8) & ~6))
+                    'CC',
+                    (55 + $b + ((($b - 10) >> 8) & ~6)),
+                    (55 + $c + ((($c - 10) >> 8) & ~6))
             );
         }
         return $hex;
@@ -95,8 +95,7 @@ abstract class Hex implements EncoderInterface
      * @return string (raw binary)
      * @throws \RangeException
      */
-    public static function decode(string $encodedString, bool $strictPadding = false): string
-    {
+    public static function decode(string $encodedString, bool $strictPadding = false): string {
         $hex_pos = 0;
         $bin = '';
         $c_acc = 0;
@@ -105,7 +104,7 @@ abstract class Hex implements EncoderInterface
         if (($hex_len & 1) !== 0) {
             if ($strictPadding) {
                 throw new \RangeException(
-                    'Expected an even number of hexadecimal characters'
+                                'Expected an even number of hexadecimal characters'
                 );
             } else {
                 $encodedString = '0' . $encodedString;
@@ -125,7 +124,7 @@ abstract class Hex implements EncoderInterface
 
             if (($c_num0 | $c_alpha0) === 0) {
                 throw new \RangeException(
-                    'Expected hexadecimal character'
+                                'Expected hexadecimal character'
                 );
             }
             $c_val = ($c_num0 & $c_num) | ($c_alpha & $c_alpha0);
@@ -138,4 +137,5 @@ abstract class Hex implements EncoderInterface
         }
         return $bin;
     }
+
 }

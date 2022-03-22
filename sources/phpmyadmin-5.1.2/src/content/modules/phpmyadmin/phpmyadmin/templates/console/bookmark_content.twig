@@ -3,7 +3,7 @@
 </div>
 {% for bookmark in bookmarks %}
     <div class="message collapsed bookmark" bookmarkid="{{ bookmark.getId() }}"
-        targetdb="{{ bookmark.getDatabase() }}">
+         targetdb="{{ bookmark.getDatabase() }}">
         {% include 'console/query_action.twig' with {
             'parent_div_classes': 'action_content',
             'content_array': [

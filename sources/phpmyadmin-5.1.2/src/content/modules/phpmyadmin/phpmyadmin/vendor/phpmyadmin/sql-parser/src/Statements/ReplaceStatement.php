@@ -1,8 +1,8 @@
 <?php
+
 /**
  * `REPLACE` statement.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\SqlParser\Statements;
@@ -15,7 +15,6 @@ use PhpMyAdmin\SqlParser\Parser;
 use PhpMyAdmin\SqlParser\Statement;
 use PhpMyAdmin\SqlParser\Token;
 use PhpMyAdmin\SqlParser\TokensList;
-
 use function count;
 use function strlen;
 use function trim;
@@ -41,8 +40,8 @@ use function trim;
  *   [(col_name,...)]
  *   SELECT ...
  */
-class ReplaceStatement extends Statement
-{
+class ReplaceStatement extends Statement {
+
     /**
      * Options for `REPLACE` statements and their slot ID.
      *
@@ -86,8 +85,7 @@ class ReplaceStatement extends Statement
     /**
      * @return string
      */
-    public function build()
-    {
+    public function build() {
         $ret = 'REPLACE ' . $this->options;
         $ret = trim($ret) . ' INTO ' . $this->into;
 
@@ -106,10 +104,8 @@ class ReplaceStatement extends Statement
      * @param Parser     $parser the instance that requests parsing
      * @param TokensList $list   the list of tokens to be parsed
      */
-    public function parse(Parser $parser, TokensList $list)
-    {
+    public function parse(Parser $parser, TokensList $list) {
         ++$list->idx; // Skipping `REPLACE`.
-
         // parse any options if provided
         $this->options = OptionsArray::parse($parser, $list, static::$OPTIONS);
 
@@ -154,9 +150,9 @@ class ReplaceStatement extends Statement
 
                 ++$list->idx;
                 $this->into = IntoKeyword::parse(
-                    $parser,
-                    $list,
-                    ['fromReplace' => true]
+                                $parser,
+                                $list,
+                                ['fromReplace' => true]
                 );
 
                 $state = 1;
@@ -187,4 +183,5 @@ class ReplaceStatement extends Statement
 
         --$list->idx;
     }
+
 }

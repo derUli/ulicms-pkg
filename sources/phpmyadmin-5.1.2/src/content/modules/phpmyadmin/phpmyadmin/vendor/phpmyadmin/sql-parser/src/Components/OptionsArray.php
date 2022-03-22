@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Parses a list of options.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\SqlParser\Components;
@@ -12,7 +12,6 @@ use PhpMyAdmin\SqlParser\Parser;
 use PhpMyAdmin\SqlParser\Token;
 use PhpMyAdmin\SqlParser\TokensList;
 use PhpMyAdmin\SqlParser\Translator;
-
 use function array_merge_recursive;
 use function count;
 use function implode;
@@ -27,8 +26,8 @@ use function strtoupper;
  *
  * @final
  */
-class OptionsArray extends Component
-{
+class OptionsArray extends Component {
+
     /**
      * ArrayObj of selected options.
      *
@@ -41,8 +40,7 @@ class OptionsArray extends Component
      *                       must be an array with at least two keys `name` and
      *                       `expr` or `value`.
      */
-    public function __construct(array $options = [])
-    {
+    public function __construct(array $options = []) {
         $this->options = $options;
     }
 
@@ -53,8 +51,7 @@ class OptionsArray extends Component
      *
      * @return OptionsArray
      */
-    public static function parse(Parser $parser, TokensList $list, array $options = [])
-    {
+    public static function parse(Parser $parser, TokensList $list, array $options = []) {
         $ret = new static();
 
         /**
@@ -125,14 +122,14 @@ class OptionsArray extends Component
 
             if ($lastOption === null) {
                 $upper = strtoupper($token->token);
-                if (! isset($options[$upper])) {
+                if (!isset($options[$upper])) {
                     // There is no option to be processed.
                     break;
                 }
 
                 $lastOption = $options[$upper];
                 $lastOptionId = is_array($lastOption) ?
-                    $lastOption[0] : $lastOption;
+                        $lastOption[0] : $lastOption;
                 $state = 0;
 
                 // Checking for option conflicts.
@@ -149,20 +146,18 @@ class OptionsArray extends Component
                 // fake ID is 6).
                 if (isset($ret->options[$lastOptionId])) {
                     $parser->error(
-                        sprintf(
-                            Translator::gettext('This option conflicts with "%1$s".'),
-                            is_array($ret->options[$lastOptionId])
-                            ? $ret->options[$lastOptionId]['name']
-                            : $ret->options[$lastOptionId]
-                        ),
-                        $token
+                            sprintf(
+                                    Translator::gettext('This option conflicts with "%1$s".'),
+                                    is_array($ret->options[$lastOptionId]) ? $ret->options[$lastOptionId]['name'] : $ret->options[$lastOptionId]
+                            ),
+                            $token
                     );
                     $lastOptionId = $lastAssignedId++;
                 }
             }
 
             if ($state === 0) {
-                if (! is_array($lastOption)) {
+                if (!is_array($lastOption)) {
                     // This is a just keyword option without any value.
                     // This is the beginning and the end of it.
                     $ret->options[$lastOptionId] = $token->value;
@@ -188,7 +183,6 @@ class OptionsArray extends Component
                 } elseif ($lastOption[1] === 'expr' || $lastOption[1] === 'expr=') {
                     // This is a keyword that is followed by an expression.
                     // The expression is used by the specialized parser.
-
                     // Skipping this option in order to parse the expression.
                     ++$list->idx;
                     $ret->options[$lastOptionId] = [
@@ -218,13 +212,12 @@ class OptionsArray extends Component
 
             if ($lastOption[1] === 'expr' || $lastOption[1] === 'expr=') {
                 $ret->options[$lastOptionId]['expr'] = Expression::parse(
-                    $parser,
-                    $list,
-                    empty($lastOption[2]) ? [] : $lastOption[2]
+                                $parser,
+                                $list,
+                                empty($lastOption[2]) ? [] : $lastOption[2]
                 );
                 if ($ret->options[$lastOptionId]['expr'] !== null) {
-                    $ret->options[$lastOptionId]['value']
-                        = $ret->options[$lastOptionId]['expr']->expr;
+                    $ret->options[$lastOptionId]['value'] = $ret->options[$lastOptionId]['expr']->expr;
                 }
 
                 $lastOption = null;
@@ -239,8 +232,7 @@ class OptionsArray extends Component
                 $ret->options[$lastOptionId]['expr'] .= $token->token;
 
                 if (
-                    ! (($token->token === '(') && ($brackets === 1)
-                    || (($token->token === ')') && ($brackets === 0)))
+                        !(($token->token === '(') && ($brackets === 1) || (($token->token === ')') && ($brackets === 0)))
                 ) {
                     // First pair of brackets is being skipped.
                     $ret->options[$lastOptionId]['value'] .= $token->value;
@@ -258,19 +250,14 @@ class OptionsArray extends Component
          * for an option for which a value was required
          */
         if (
-            $state === 1
-            && $lastOption
-            && ($lastOption[1] === 'expr'
-            || $lastOption[1] === 'var'
-            || $lastOption[1] === 'var='
-            || $lastOption[1] === 'expr=')
+                $state === 1 && $lastOption && ($lastOption[1] === 'expr' || $lastOption[1] === 'var' || $lastOption[1] === 'var=' || $lastOption[1] === 'expr=')
         ) {
             $parser->error(
-                sprintf(
-                    'Value/Expression for the option %1$s was expected.',
-                    $ret->options[$lastOptionId]['name']
-                ),
-                $list->tokens[$list->idx - 1]
+                    sprintf(
+                            'Value/Expression for the option %1$s was expected.',
+                            $ret->options[$lastOptionId]['name']
+                    ),
+                    $list->tokens[$list->idx - 1]
             );
         }
 
@@ -289,20 +276,19 @@ class OptionsArray extends Component
      *
      * @return string
      */
-    public static function build($component, array $options = [])
-    {
+    public static function build($component, array $options = []) {
         if (empty($component->options)) {
             return '';
         }
 
         $options = [];
         foreach ($component->options as $option) {
-            if (! is_array($option)) {
+            if (!is_array($option)) {
                 $options[] = $option;
             } else {
                 $options[] = $option['name']
-                    . (! empty($option['equals']) && $option['equals'] ? '=' : ' ')
-                    . (! empty($option['expr']) ? $option['expr'] : $option['value']);
+                        . (!empty($option['equals']) && $option['equals'] ? '=' : ' ')
+                        . (!empty($option['expr']) ? $option['expr'] : $option['value']);
             }
         }
 
@@ -318,14 +304,13 @@ class OptionsArray extends Component
      *
      * @return mixed
      */
-    public function has($key, $getExpr = false)
-    {
+    public function has($key, $getExpr = false) {
         foreach ($this->options as $option) {
             if (is_array($option)) {
-                if (! strcasecmp($key, $option['name'])) {
+                if (!strcasecmp($key, $option['name'])) {
                     return $getExpr ? $option['expr'] : $option['value'];
                 }
-            } elseif (! strcasecmp($key, $option)) {
+            } elseif (!strcasecmp($key, $option)) {
                 return true;
             }
         }
@@ -340,16 +325,15 @@ class OptionsArray extends Component
      *
      * @return bool whether the key was found and deleted or not
      */
-    public function remove($key)
-    {
+    public function remove($key) {
         foreach ($this->options as $idx => $option) {
             if (is_array($option)) {
-                if (! strcasecmp($key, $option['name'])) {
+                if (!strcasecmp($key, $option['name'])) {
                     unset($this->options[$idx]);
 
                     return true;
                 }
-            } elseif (! strcasecmp($key, $option)) {
+            } elseif (!strcasecmp($key, $option)) {
                 unset($this->options[$idx]);
 
                 return true;
@@ -365,8 +349,7 @@ class OptionsArray extends Component
      *
      * @param array|OptionsArray $options the options to be merged
      */
-    public function merge($options)
-    {
+    public function merge($options) {
         if (is_array($options)) {
             $this->options = array_merge_recursive($this->options, $options);
         } elseif ($options instanceof self) {
@@ -379,8 +362,8 @@ class OptionsArray extends Component
      *
      * @return bool
      */
-    public function isEmpty()
-    {
+    public function isEmpty() {
         return empty($this->options);
     }
+
 }

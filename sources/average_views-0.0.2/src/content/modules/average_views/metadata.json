@@ -1,6 +1,6 @@
 {
-   "version" : "0.0.2",
-   "embed": false,
-   "custom_acl : ["average_views"],
-   "admin_permission: "average_views"
+    "version": "0.0.2",
+    "embed": false,
+    "custom_acl : ["average_views"],
+            "admin_permission: "average_views"
 }

@@ -66,7 +66,7 @@ $(function () {
  * @param {String}  id      validator id
  * @param {Object}  values  values hash {element1_id: value, ...}
  */
-function ajaxValidate (parent, id, values) {
+function ajaxValidate(parent, id, values) {
     var $parent = $(parent);
     // ensure that parent is a fieldset
     if ($parent.attr('tagName') !== 'FIELDSET') {

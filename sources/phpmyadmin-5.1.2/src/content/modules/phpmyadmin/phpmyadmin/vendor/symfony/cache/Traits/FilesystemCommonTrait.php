@@ -18,15 +18,14 @@ use Symfony\Component\Cache\Exception\InvalidArgumentException;
  *
  * @internal
  */
-trait FilesystemCommonTrait
-{
+trait FilesystemCommonTrait {
+
     private $directory;
     private $tmp;
 
-    private function init(string $namespace, ?string $directory)
-    {
+    private function init(string $namespace, ?string $directory) {
         if (!isset($directory[0])) {
-            $directory = sys_get_temp_dir().\DIRECTORY_SEPARATOR.'symfony-cache';
+            $directory = sys_get_temp_dir() . \DIRECTORY_SEPARATOR . 'symfony-cache';
         } else {
             $directory = realpath($directory) ?: $directory;
         }
@@ -34,9 +33,9 @@ trait FilesystemCommonTrait
             if (preg_match('#[^-+_.A-Za-z0-9]#', $namespace, $match)) {
                 throw new InvalidArgumentException(sprintf('Namespace contains "%s" but only characters in [-+_.A-Za-z0-9] are allowed.', $match[0]));
             }
-            $directory .= \DIRECTORY_SEPARATOR.$namespace;
+            $directory .= \DIRECTORY_SEPARATOR . $namespace;
         } else {
-            $directory .= \DIRECTORY_SEPARATOR.'@';
+            $directory .= \DIRECTORY_SEPARATOR . '@';
         }
         if (!file_exists($directory)) {
             @mkdir($directory, 0777, true);
@@ -53,8 +52,7 @@ trait FilesystemCommonTrait
     /**
      * {@inheritdoc}
      */
-    protected function doClear($namespace)
-    {
+    protected function doClear($namespace) {
         $ok = true;
 
         foreach ($this->scanHashDir($this->directory) as $file) {
@@ -71,8 +69,7 @@ trait FilesystemCommonTrait
     /**
      * {@inheritdoc}
      */
-    protected function doDelete(array $ids)
-    {
+    protected function doDelete(array $ids) {
         $ok = true;
 
         foreach ($ids as $id) {
@@ -83,17 +80,15 @@ trait FilesystemCommonTrait
         return $ok;
     }
 
-    protected function doUnlink($file)
-    {
+    protected function doUnlink($file) {
         return @unlink($file);
     }
 
-    private function write(string $file, string $data, int $expiresAt = null)
-    {
-        set_error_handler(__CLASS__.'::throwError');
+    private function write(string $file, string $data, int $expiresAt = null) {
+        set_error_handler(__CLASS__ . '::throwError');
         try {
             if (null === $this->tmp) {
-                $this->tmp = $this->directory.bin2hex(random_bytes(6));
+                $this->tmp = $this->directory . bin2hex(random_bytes(6));
             }
             try {
                 $h = fopen($this->tmp, 'x');
@@ -102,7 +97,7 @@ trait FilesystemCommonTrait
                     throw $e;
                 }
 
-                $this->tmp = $this->directory.bin2hex(random_bytes(6));
+                $this->tmp = $this->directory . bin2hex(random_bytes(6));
                 $h = fopen($this->tmp, 'x');
             }
             fwrite($h, $data);
@@ -118,26 +113,23 @@ trait FilesystemCommonTrait
         }
     }
 
-    private function getFile(string $id, bool $mkdir = false, string $directory = null)
-    {
+    private function getFile(string $id, bool $mkdir = false, string $directory = null) {
         // Use MD5 to favor speed over security, which is not an issue here
-        $hash = str_replace('/', '-', base64_encode(hash('md5', static::class.$id, true)));
-        $dir = ($directory ?? $this->directory).strtoupper($hash[0].\DIRECTORY_SEPARATOR.$hash[1].\DIRECTORY_SEPARATOR);
+        $hash = str_replace('/', '-', base64_encode(hash('md5', static::class . $id, true)));
+        $dir = ($directory ?? $this->directory) . strtoupper($hash[0] . \DIRECTORY_SEPARATOR . $hash[1] . \DIRECTORY_SEPARATOR);
 
         if ($mkdir && !file_exists($dir)) {
             @mkdir($dir, 0777, true);
         }
 
-        return $dir.substr($hash, 2, 20);
+        return $dir . substr($hash, 2, 20);
     }
 
-    private function getFileKey(string $file): string
-    {
+    private function getFileKey(string $file): string {
         return '';
     }
 
-    private function scanHashDir(string $directory): \Generator
-    {
+    private function scanHashDir(string $directory): \Generator {
         if (!file_exists($directory)) {
             return;
         }
@@ -145,18 +137,18 @@ trait FilesystemCommonTrait
         $chars = '+-ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 
         for ($i = 0; $i < 38; ++$i) {
-            if (!file_exists($directory.$chars[$i])) {
+            if (!file_exists($directory . $chars[$i])) {
                 continue;
             }
 
             for ($j = 0; $j < 38; ++$j) {
-                if (!file_exists($dir = $directory.$chars[$i].\DIRECTORY_SEPARATOR.$chars[$j])) {
+                if (!file_exists($dir = $directory . $chars[$i] . \DIRECTORY_SEPARATOR . $chars[$j])) {
                     continue;
                 }
 
                 foreach (@scandir($dir, \SCANDIR_SORT_NONE) ?: [] as $file) {
                     if ('.' !== $file && '..' !== $file) {
-                        yield $dir.\DIRECTORY_SEPARATOR.$file;
+                        yield $dir . \DIRECTORY_SEPARATOR . $file;
                     }
                 }
             }
@@ -166,26 +158,22 @@ trait FilesystemCommonTrait
     /**
      * @internal
      */
-    public static function throwError($type, $message, $file, $line)
-    {
+    public static function throwError($type, $message, $file, $line) {
         throw new \ErrorException($message, 0, $type, $file, $line);
     }
 
     /**
      * @return array
      */
-    public function __sleep()
-    {
-        throw new \BadMethodCallException('Cannot serialize '.__CLASS__);
+    public function __sleep() {
+        throw new \BadMethodCallException('Cannot serialize ' . __CLASS__);
     }
 
-    public function __wakeup()
-    {
-        throw new \BadMethodCallException('Cannot unserialize '.__CLASS__);
+    public function __wakeup() {
+        throw new \BadMethodCallException('Cannot unserialize ' . __CLASS__);
     }
 
-    public function __destruct()
-    {
+    public function __destruct() {
         if (method_exists(parent::class, '__destruct')) {
             parent::__destruct();
         }
@@ -193,4 +181,5 @@ trait FilesystemCommonTrait
             unlink($this->tmp);
         }
     }
+
 }

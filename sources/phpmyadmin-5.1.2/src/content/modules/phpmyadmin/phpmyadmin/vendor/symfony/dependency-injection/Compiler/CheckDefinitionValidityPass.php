@@ -28,15 +28,14 @@ use Symfony\Component\DependencyInjection\Loader\FileLoader;
  *
  * @author Johannes M. Schmitt <schmittjoh@gmail.com>
  */
-class CheckDefinitionValidityPass implements CompilerPassInterface
-{
+class CheckDefinitionValidityPass implements CompilerPassInterface {
+
     /**
      * Processes the ContainerBuilder to validate the Definition.
      *
      * @throws RuntimeException When the Definition is invalid
      */
-    public function process(ContainerBuilder $container)
-    {
+    public function process(ContainerBuilder $container) {
         foreach ($container->getDefinitions() as $id => $definition) {
             // synthetic service is public
             if ($definition->isSynthetic() && !$definition->isPublic()) {
@@ -87,4 +86,5 @@ class CheckDefinitionValidityPass implements CompilerPassInterface
             }
         }
     }
+
 }

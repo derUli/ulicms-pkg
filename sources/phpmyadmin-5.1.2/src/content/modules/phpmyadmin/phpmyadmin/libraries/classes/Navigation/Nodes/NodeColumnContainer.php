@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Functionality for the navigation tree
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Navigation\Nodes;
@@ -14,13 +14,12 @@ use PhpMyAdmin\Url;
 /**
  * Represents a container for column nodes in the navigation tree
  */
-class NodeColumnContainer extends Node
-{
+class NodeColumnContainer extends Node {
+
     /**
      * Initialises the class
      */
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct(__('Columns'), Node::CONTAINER);
         $this->icon = Generator::getImage('pause', __('Columns'));
         $this->links = [
@@ -35,8 +34,8 @@ class NodeColumnContainer extends Node
 
         $newLabel = _pgettext('Create new column', 'New');
         $new = NodeFactory::getInstanceForNewNode(
-            $newLabel,
-            'new_column italics'
+                        $newLabel,
+                        'new_column italics'
         );
         $new->icon = Generator::getImage('b_column_add', $newLabel);
         $new->links = [
@@ -53,4 +52,5 @@ class NodeColumnContainer extends Node
         ];
         $this->addChild($new);
     }
+
 }

@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Exception thrown by the lexer.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\SqlParser\Exceptions;
@@ -12,8 +12,8 @@ use Exception;
 /**
  * Exception thrown by the lexer.
  */
-class LexerException extends Exception
-{
+class LexerException extends Exception {
+
     /**
      * The character that produced this error.
      *
@@ -34,10 +34,10 @@ class LexerException extends Exception
      * @param int    $pos  the position of the character
      * @param int    $code the code of this error
      */
-    public function __construct($msg = '', $ch = '', $pos = 0, $code = 0)
-    {
+    public function __construct($msg = '', $ch = '', $pos = 0, $code = 0) {
         parent::__construct($msg, $code);
         $this->ch = $ch;
         $this->pos = $pos;
     }
+
 }

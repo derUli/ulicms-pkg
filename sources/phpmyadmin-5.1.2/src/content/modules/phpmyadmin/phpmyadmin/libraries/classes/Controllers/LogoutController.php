@@ -6,10 +6,9 @@ namespace PhpMyAdmin\Controllers;
 
 use PhpMyAdmin\Core;
 
-class LogoutController
-{
-    public function index(): void
-    {
+class LogoutController {
+
+    public function index(): void {
         global $auth_plugin, $token_mismatch;
 
         if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST' || $token_mismatch) {
@@ -20,4 +19,5 @@ class LogoutController
 
         $auth_plugin->logOut();
     }
+
 }

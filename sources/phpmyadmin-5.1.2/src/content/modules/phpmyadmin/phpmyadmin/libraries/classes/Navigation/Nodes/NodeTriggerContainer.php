@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Functionality for the navigation tree
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Navigation\Nodes;
@@ -14,13 +14,12 @@ use PhpMyAdmin\Url;
 /**
  * Represents a container for trigger nodes in the navigation tree
  */
-class NodeTriggerContainer extends Node
-{
+class NodeTriggerContainer extends Node {
+
     /**
      * Initialises the class
      */
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct(__('Triggers'), Node::CONTAINER);
         $this->icon = Generator::getImage('b_triggers');
         $this->links = [
@@ -35,8 +34,8 @@ class NodeTriggerContainer extends Node
 
         $newLabel = _pgettext('Create new trigger', 'New');
         $new = NodeFactory::getInstanceForNewNode(
-            $newLabel,
-            'new_trigger italics'
+                        $newLabel,
+                        'new_trigger italics'
         );
         $new->icon = Generator::getImage('b_trigger_add', '');
         $new->links = [
@@ -51,4 +50,5 @@ class NodeTriggerContainer extends Node
         ];
         $this->addChild($new);
     }
+
 }

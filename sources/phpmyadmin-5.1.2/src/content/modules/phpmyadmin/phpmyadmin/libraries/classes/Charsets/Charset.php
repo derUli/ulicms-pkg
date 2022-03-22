@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Value object class for a character set
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Charsets;
@@ -10,8 +10,8 @@ namespace PhpMyAdmin\Charsets;
 /**
  * Value object class for a character set
  */
-final class Charset
-{
+final class Charset {
+
     /**
      * The character set name
      *
@@ -47,10 +47,10 @@ final class Charset
      * @param int    $maxLength        Maximum length
      */
     private function __construct(
-        string $name,
-        string $description,
-        string $defaultCollation,
-        int $maxLength
+            string $name,
+            string $description,
+            string $defaultCollation,
+            int $maxLength
     ) {
         $this->name = $name;
         $this->description = $description;
@@ -63,33 +63,29 @@ final class Charset
      *
      * @return Charset
      */
-    public static function fromServer(array $state): self
-    {
+    public static function fromServer(array $state): self {
         return new self(
-            $state['Charset'] ?? '',
-            $state['Description'] ?? '',
-            $state['Default collation'] ?? '',
-            (int) ($state['Maxlen'] ?? 0)
+                $state['Charset'] ?? '',
+                $state['Description'] ?? '',
+                $state['Default collation'] ?? '',
+                (int) ($state['Maxlen'] ?? 0)
         );
     }
 
-    public function getName(): string
-    {
+    public function getName(): string {
         return $this->name;
     }
 
-    public function getDescription(): string
-    {
+    public function getDescription(): string {
         return $this->description;
     }
 
-    public function getDefaultCollation(): string
-    {
+    public function getDefaultCollation(): string {
         return $this->defaultCollation;
     }
 
-    public function getMaxLength(): int
-    {
+    public function getMaxLength(): int {
         return $this->maxLength;
     }
+
 }

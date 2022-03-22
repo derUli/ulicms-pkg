@@ -21,8 +21,8 @@ use PhpMyAdmin\Url;
 use PhpMyAdmin\Util;
 use function intval;
 
-final class ImportController extends AbstractController
-{
+final class ImportController extends AbstractController {
+
     /** @var DatabaseInterface */
     private $dbi;
 
@@ -30,14 +30,12 @@ final class ImportController extends AbstractController
      * @param Response          $response
      * @param DatabaseInterface $dbi
      */
-    public function __construct($response, Template $template, $dbi)
-    {
+    public function __construct($response, Template $template, $dbi) {
         parent::__construct($response, $template);
         $this->dbi = $dbi;
     }
 
-    public function index(): void
-    {
+    public function index(): void {
         global $db, $max_upload_size, $table, $SESSION_KEY, $cfg, $PMA_Theme, $err_url;
 
         $pageSettings = new PageSettings('Import');
@@ -57,8 +55,8 @@ final class ImportController extends AbstractController
 
         if (empty($importList)) {
             $this->response->addHTML(Message::error(__(
-                'Could not load import plugins, please check your installation!'
-            ))->getDisplay());
+                                    'Could not load import plugins, please check your installation!'
+                            ))->getDisplay());
 
             return;
         }
@@ -116,4 +114,5 @@ final class ImportController extends AbstractController
             'local_files' => Import::getLocalFiles($importList),
         ]);
     }
+
 }

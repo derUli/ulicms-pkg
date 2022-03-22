@@ -1,12 +1,12 @@
 <?php
+
 /**
  * Database with allowed values for configuration stored in the $cfg array,
  * used by setup script and user preferences to generate forms.
  */
-
 declare(strict_types=1);
 
-if (! defined('PHPMYADMIN')) {
+if (!defined('PHPMYADMIN')) {
     exit;
 }
 
@@ -206,7 +206,6 @@ return [
         'enable' => __('Enable'),
         'disable' => __('Disable'),
     ],
-
     'Import' => [
         'format' => [
             // CSV
@@ -219,8 +218,8 @@ return [
             'sql',
         ],
         'charset' => array_merge(
-            [''],
-            $GLOBALS['cfg']['AvailableCharsets']
+                [''],
+                $GLOBALS['cfg']['AvailableCharsets']
         ),
         'sql_compatibility' => [
             'NONE',
@@ -248,7 +247,6 @@ return [
             false,
         ],
     ],
-
     'Export' => [
         '_sod_select' => [
             'structure' => __('structure'),
@@ -259,7 +257,7 @@ return [
             'quick' => __('Quick - display only the minimal options to configure'),
             'custom' => __('Custom - display all possible options to configure'),
             'custom-no-form' => __(
-                'Custom - like above, but without the quick/custom choice'
+                    'Custom - like above, but without the quick/custom choice'
             ),
         ],
         'format' => [
@@ -283,8 +281,8 @@ return [
             'gzip',
         ],
         'charset' => array_merge(
-            [''],
-            $GLOBALS['cfg']['AvailableCharsets']
+                [''],
+                $GLOBALS['cfg']['AvailableCharsets']
         ),
         'sql_compatibility' => [
             'NONE',
@@ -352,7 +350,6 @@ return [
         ],
         'texytext_null' => 'short_string',
     ],
-
     'Console' => [
         'Mode' => [
             'info',
@@ -369,13 +366,11 @@ return [
             'desc',
         ],
     ],
-
     /**
      * Default values overrides
      * Use only full paths
      */
     '_overrides' => [],
-
     /**
      * Basic validator assignments (functions from libraries/config/Validator.php
      * and 'validators' object in js/config.js)
@@ -458,7 +453,6 @@ return [
         'TextareaRows' => 'validatePositiveNumber',
         'TrustedProxies' => 'validateTrustedProxies',
     ],
-
     /**
      * Additional validators used for user preferences
      */

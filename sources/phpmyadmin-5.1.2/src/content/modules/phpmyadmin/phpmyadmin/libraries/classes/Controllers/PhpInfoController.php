@@ -1,8 +1,8 @@
 <?php
+
 /**
  * phpinfo() wrapper to allow displaying only when configured to do so.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Controllers;
@@ -15,19 +15,19 @@ use function phpinfo;
 /**
  * phpinfo() wrapper to allow displaying only when configured to do so.
  */
-class PhpInfoController extends AbstractController
-{
-    public function index(): void
-    {
+class PhpInfoController extends AbstractController {
+
+    public function index(): void {
         global $cfg;
 
         $this->response->disable();
         $this->response->getHeader()->sendHttpHeaders();
 
-        if (! $cfg['ShowPhpInfo']) {
+        if (!$cfg['ShowPhpInfo']) {
             return;
         }
 
         phpinfo(INFO_GENERAL | INFO_CONFIGURATION | INFO_MODULES);
     }
+
 }

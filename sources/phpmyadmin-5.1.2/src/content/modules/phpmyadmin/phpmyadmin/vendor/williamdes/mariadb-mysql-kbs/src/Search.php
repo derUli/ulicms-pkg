@@ -1,13 +1,13 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Williamdes\MariaDBMySQLKBS;
 
 use stdClass;
 
-class Search
-{
+class Search {
+
     /**
      * Loaded data
      *
@@ -22,10 +22,10 @@ class Search
      */
     public static $loaded = false;
 
-    public const ANY     = -1;
-    public const MYSQL   = 1;
+    public const ANY = -1;
+    public const MYSQL = 1;
     public const MARIADB = 2;
-    public const DS      = DIRECTORY_SEPARATOR;
+    public const DS = DIRECTORY_SEPARATOR;
 
     /**
      * The directory where the data is located
@@ -40,11 +40,10 @@ class Search
      * @return void
      * @throws KBException
      */
-    public static function loadData(): void
-    {
+    public static function loadData(): void {
         if (Search::$loaded === false) {
             $filePath = Search::$DATA_DIR . 'merged-ultraslim.json';
-            if (! is_file($filePath)) {
+            if (!is_file($filePath)) {
                 throw new KBException($filePath . ' does not exist !');
             }
             $contents = file_get_contents($filePath);
@@ -53,7 +52,7 @@ class Search
             }
             $decodedData = json_decode($contents);
             if ($decodedData instanceof stdClass) {
-                Search::$data   = $decodedData;
+                Search::$data = $decodedData;
                 Search::$loaded = true;
                 return;
             }
@@ -67,11 +66,10 @@ class Search
      * @param SlimData $slimData The SlimData object
      * @return void
      */
-    public static function loadTestData(SlimData $slimData): void
-    {
+    public static function loadTestData(SlimData $slimData): void {
         $decodedData = json_decode((string) json_encode($slimData));
         if ($decodedData instanceof stdClass) {
-            Search::$data   = $decodedData;
+            Search::$data = $decodedData;
             Search::$loaded = true;
         }
     }
@@ -84,8 +82,7 @@ class Search
      * @return string
      * @throws KBException
      */
-    public static function getByName(string $name, int $type = Search::ANY): string
-    {
+    public static function getByName(string $name, int $type = Search::ANY): string {
         self::loadData();
         $kbEntries = self::getVariable($name);
         if (isset($kbEntries->a)) {
@@ -114,8 +111,7 @@ class Search
      * @return stdClass
      * @throws KBException
      */
-    public static function getVariable(string $name): stdClass
-    {
+    public static function getVariable(string $name): stdClass {
         self::loadData();
         if (isset(Search::$data->vars->{$name})) {
             return Search::$data->vars->{$name};
@@ -131,8 +127,7 @@ class Search
      * @return string
      * @throws KBException
      */
-    public static function getVariableType(string $name): string
-    {
+    public static function getVariableType(string $name): string {
         self::loadData();
         $kbEntry = self::getVariable($name);
         if (isset($kbEntry->t)) {
@@ -147,8 +142,7 @@ class Search
      *
      * @return array<int,string>
      */
-    public static function getStaticVariables(): array
-    {
+    public static function getStaticVariables(): array {
         return self::getVariablesWithDynamic(false);
     }
 
@@ -157,8 +151,7 @@ class Search
      *
      * @return array<int,string>
      */
-    public static function getDynamicVariables(): array
-    {
+    public static function getDynamicVariables(): array {
         return self::getVariablesWithDynamic(true);
     }
 
@@ -168,8 +161,7 @@ class Search
      * @param bool $dynamic dynamic=true/dynamic=false
      * @return array<int,string>
      */
-    public static function getVariablesWithDynamic(bool $dynamic): array
-    {
+    public static function getVariablesWithDynamic(bool $dynamic): array {
         self::loadData();
         $staticVars = [];
         foreach (Search::$data->vars as $name => $var) {

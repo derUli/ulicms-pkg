@@ -19,8 +19,8 @@ namespace Symfony\Component\Cache\Marshaller;
  *
  * @author Nicolas Grekas <p@tchwork.com>
  */
-interface MarshallerInterface
-{
+interface MarshallerInterface {
+
     /**
      * Serializes a list of values.
      *

@@ -22,8 +22,8 @@ use function strpos;
 /**
  * Set of functions related to database designer
  */
-class Designer
-{
+class Designer {
+
     /** @var DatabaseInterface */
     private $dbi;
 
@@ -38,8 +38,7 @@ class Designer
      * @param Relation          $relation Relation instance
      * @param Template          $template Template instance
      */
-    public function __construct(DatabaseInterface $dbi, Relation $relation, Template $template)
-    {
+    public function __construct(DatabaseInterface $dbi, Relation $relation, Template $template) {
         $this->dbi = $dbi;
         $this->relation = $relation;
         $this->template = $template;
@@ -53,15 +52,14 @@ class Designer
      *
      * @return string html content
      */
-    public function getHtmlForEditOrDeletePages($db, $operation)
-    {
+    public function getHtmlForEditOrDeletePages($db, $operation) {
         $cfgRelation = $this->relation->getRelationsParam();
 
         return $this->template->render('database/designer/edit_delete_pages', [
-            'db' => $db,
-            'operation' => $operation,
-            'pdfwork' => $cfgRelation['pdfwork'],
-            'pages' => $this->getPageIdsAndNames($db),
+                    'db' => $db,
+                    'operation' => $operation,
+                    'pdfwork' => $cfgRelation['pdfwork'],
+                    'pages' => $this->getPageIdsAndNames($db),
         ]);
     }
 
@@ -72,14 +70,13 @@ class Designer
      *
      * @return string html content
      */
-    public function getHtmlForPageSaveAs($db)
-    {
+    public function getHtmlForPageSaveAs($db) {
         $cfgRelation = $this->relation->getRelationsParam();
 
         return $this->template->render('database/designer/page_save_as', [
-            'db' => $db,
-            'pdfwork' => $cfgRelation['pdfwork'],
-            'pages' => $this->getPageIdsAndNames($db),
+                    'db' => $db,
+                    'pdfwork' => $cfgRelation['pdfwork'],
+                    'pages' => $this->getPageIdsAndNames($db),
         ]);
     }
 
@@ -90,23 +87,22 @@ class Designer
      *
      * @return array array of schema page id and names
      */
-    private function getPageIdsAndNames($db)
-    {
+    private function getPageIdsAndNames($db) {
         $result = [];
         $cfgRelation = $this->relation->getRelationsParam();
-        if (! $cfgRelation['pdfwork']) {
+        if (!$cfgRelation['pdfwork']) {
             return $result;
         }
 
         $page_query = 'SELECT `page_nr`, `page_descr` FROM '
-            . Util::backquote($cfgRelation['db']) . '.'
-            . Util::backquote($cfgRelation['pdf_pages'])
-            . " WHERE db_name = '" . $this->dbi->escapeString($db) . "'"
-            . ' ORDER BY `page_descr`';
+                . Util::backquote($cfgRelation['db']) . '.'
+                . Util::backquote($cfgRelation['pdf_pages'])
+                . " WHERE db_name = '" . $this->dbi->escapeString($db) . "'"
+                . ' ORDER BY `page_descr`';
         $page_rs = $this->relation->queryAsControlUser(
-            $page_query,
-            false,
-            DatabaseInterface::QUERY_STORE
+                $page_query,
+                false,
+                DatabaseInterface::QUERY_STORE
         );
 
         while ($curr_page = $this->dbi->fetchAssoc($page_rs)) {
@@ -124,21 +120,20 @@ class Designer
      *
      * @return string
      */
-    public function getHtmlForSchemaExport($db, $page)
-    {
+    public function getHtmlForSchemaExport($db, $page) {
         $export_list = Plugins::getSchema();
 
         /* Fail if we didn't find any schema plugin */
         if (empty($export_list)) {
             return Message::error(
-                __('Could not load schema plugins, please check your installation!')
-            )->getDisplay();
+                            __('Could not load schema plugins, please check your installation!')
+                    )->getDisplay();
         }
 
         return $this->template->render('database/designer/schema_export', [
-            'db' => $db,
-            'page' => $page,
-            'export_list' => $export_list,
+                    'db' => $db,
+                    'page' => $page,
+                    'export_list' => $export_list,
         ]);
     }
 
@@ -147,8 +142,7 @@ class Designer
      *
      * @return array stored values
      */
-    private function getSideMenuParamsArray()
-    {
+    private function getSideMenuParamsArray() {
         /** @var DatabaseInterface $dbi */
         global $dbi;
 
@@ -158,11 +152,11 @@ class Designer
 
         if ($cfgRelation['designersettingswork']) {
             $query = 'SELECT `settings_data` FROM '
-                . Util::backquote($cfgRelation['db']) . '.'
-                . Util::backquote($cfgRelation['designer_settings'])
-                . ' WHERE ' . Util::backquote('username') . ' = "'
-                . $dbi->escapeString($GLOBALS['cfg']['Server']['user'])
-                . '";';
+                    . Util::backquote($cfgRelation['db']) . '.'
+                    . Util::backquote($cfgRelation['designer_settings'])
+                    . ' WHERE ' . Util::backquote('username') . ' = "'
+                    . $dbi->escapeString($GLOBALS['cfg']['Server']['user'])
+                    . '";';
 
             $result = $this->dbi->fetchSingleRow($query);
             if (is_array($result)) {
@@ -178,53 +172,46 @@ class Designer
      *
      * @return array class names of various buttons
      */
-    public function returnClassNamesFromMenuButtons()
-    {
+    public function returnClassNamesFromMenuButtons() {
         $classes_array = [];
         $params_array = $this->getSideMenuParamsArray();
 
-        if (isset($params_array['angular_direct'])
-            && $params_array['angular_direct'] === 'angular'
+        if (isset($params_array['angular_direct']) && $params_array['angular_direct'] === 'angular'
         ) {
             $classes_array['angular_direct'] = 'M_butt_Selected_down';
         } else {
             $classes_array['angular_direct'] = 'M_butt';
         }
 
-        if (isset($params_array['snap_to_grid'])
-            && $params_array['snap_to_grid'] === 'on'
+        if (isset($params_array['snap_to_grid']) && $params_array['snap_to_grid'] === 'on'
         ) {
             $classes_array['snap_to_grid'] = 'M_butt_Selected_down';
         } else {
             $classes_array['snap_to_grid'] = 'M_butt';
         }
 
-        if (isset($params_array['pin_text'])
-            && $params_array['pin_text'] === 'true'
+        if (isset($params_array['pin_text']) && $params_array['pin_text'] === 'true'
         ) {
             $classes_array['pin_text'] = 'M_butt_Selected_down';
         } else {
             $classes_array['pin_text'] = 'M_butt';
         }
 
-        if (isset($params_array['relation_lines'])
-            && $params_array['relation_lines'] === 'false'
+        if (isset($params_array['relation_lines']) && $params_array['relation_lines'] === 'false'
         ) {
             $classes_array['relation_lines'] = 'M_butt_Selected_down';
         } else {
             $classes_array['relation_lines'] = 'M_butt';
         }
 
-        if (isset($params_array['small_big_all'])
-            && $params_array['small_big_all'] === 'v'
+        if (isset($params_array['small_big_all']) && $params_array['small_big_all'] === 'v'
         ) {
             $classes_array['small_big_all'] = 'M_butt_Selected_down';
         } else {
             $classes_array['small_big_all'] = 'M_butt';
         }
 
-        if (isset($params_array['side_menu'])
-            && $params_array['side_menu'] === 'true'
+        if (isset($params_array['side_menu']) && $params_array['side_menu'] === 'true'
         ) {
             $classes_array['side_menu'] = 'M_butt_Selected_down';
         } else {
@@ -248,13 +235,13 @@ class Designer
      * @return string html
      */
     public function getDatabaseTables(
-        string $db,
-        array $designerTables,
-        array $tab_pos,
-        $display_page,
-        array $tab_column,
-        array $tables_all_keys,
-        array $tables_pk_or_unique_keys
+            string $db,
+            array $designerTables,
+            array $tab_pos,
+            $display_page,
+            array $tab_column,
+            array $tables_all_keys,
+            array $tables_pk_or_unique_keys
     ) {
         global $text_dir;
 
@@ -268,19 +255,13 @@ class Designer
                     $columns_type[$table_column_name] = 'designer/FieldKey_small';
                 } else {
                     $columns_type[$table_column_name] = 'designer/Field_small';
-                    if (strpos($tab_column[$table_name]['TYPE'][$j], 'char') !== false
-                        || strpos($tab_column[$table_name]['TYPE'][$j], 'text') !== false
+                    if (strpos($tab_column[$table_name]['TYPE'][$j], 'char') !== false || strpos($tab_column[$table_name]['TYPE'][$j], 'text') !== false
                     ) {
                         $columns_type[$table_column_name] .= '_char';
-                    } elseif (strpos($tab_column[$table_name]['TYPE'][$j], 'int') !== false
-                        || strpos($tab_column[$table_name]['TYPE'][$j], 'float') !== false
-                        || strpos($tab_column[$table_name]['TYPE'][$j], 'double') !== false
-                        || strpos($tab_column[$table_name]['TYPE'][$j], 'decimal') !== false
+                    } elseif (strpos($tab_column[$table_name]['TYPE'][$j], 'int') !== false || strpos($tab_column[$table_name]['TYPE'][$j], 'float') !== false || strpos($tab_column[$table_name]['TYPE'][$j], 'double') !== false || strpos($tab_column[$table_name]['TYPE'][$j], 'decimal') !== false
                     ) {
                         $columns_type[$table_column_name] .= '_int';
-                    } elseif (strpos($tab_column[$table_name]['TYPE'][$j], 'date') !== false
-                        || strpos($tab_column[$table_name]['TYPE'][$j], 'time') !== false
-                        || strpos($tab_column[$table_name]['TYPE'][$j], 'year') !== false
+                    } elseif (strpos($tab_column[$table_name]['TYPE'][$j], 'date') !== false || strpos($tab_column[$table_name]['TYPE'][$j], 'time') !== false || strpos($tab_column[$table_name]['TYPE'][$j], 'year') !== false
                     ) {
                         $columns_type[$table_column_name] .= '_date';
                     }
@@ -289,18 +270,18 @@ class Designer
         }
 
         return $this->template->render('database/designer/database_tables', [
-            'db' => $GLOBALS['db'],
-            'text_dir' => $text_dir,
-            'get_db' => $db,
-            'has_query' => isset($_REQUEST['query']),
-            'tab_pos' => $tab_pos,
-            'display_page' => $display_page,
-            'tab_column' => $tab_column,
-            'tables_all_keys' => $tables_all_keys,
-            'tables_pk_or_unique_keys' => $tables_pk_or_unique_keys,
-            'tables' => $designerTables,
-            'columns_type' => $columns_type,
-            'theme' => $GLOBALS['PMA_Theme'],
+                    'db' => $GLOBALS['db'],
+                    'text_dir' => $text_dir,
+                    'get_db' => $db,
+                    'has_query' => isset($_REQUEST['query']),
+                    'tab_pos' => $tab_pos,
+                    'display_page' => $display_page,
+                    'tab_column' => $tab_column,
+                    'tables_all_keys' => $tables_all_keys,
+                    'tables_pk_or_unique_keys' => $tables_pk_or_unique_keys,
+                    'tables' => $designerTables,
+                    'columns_type' => $columns_type,
+                    'theme' => $GLOBALS['PMA_Theme'],
         ]);
     }
 
@@ -325,20 +306,20 @@ class Designer
      * @return string html
      */
     public function getHtmlForMain(
-        string $db,
-        string $getDb,
-        array $designerTables,
-        array $scriptTables,
-        array $scriptContr,
-        array $scriptDisplayField,
-        $displayPage,
-        bool $visualBuilderMode,
-        $selectedPage,
-        array $paramsArray,
-        ?array $tabPos,
-        array $tabColumn,
-        array $tablesAllKeys,
-        array $tablesPkOrUniqueKeys
+            string $db,
+            string $getDb,
+            array $designerTables,
+            array $scriptTables,
+            array $scriptContr,
+            array $scriptDisplayField,
+            $displayPage,
+            bool $visualBuilderMode,
+            $selectedPage,
+            array $paramsArray,
+            ?array $tabPos,
+            array $tabColumn,
+            array $tablesAllKeys,
+            array $tablesPkOrUniqueKeys
     ): string {
         global $text_dir;
 
@@ -353,19 +334,13 @@ class Designer
                     $columnsType[$tableColumnName] = 'designer/FieldKey_small';
                 } else {
                     $columnsType[$tableColumnName] = 'designer/Field_small';
-                    if (strpos($tabColumn[$tableName]['TYPE'][$j], 'char') !== false
-                        || strpos($tabColumn[$tableName]['TYPE'][$j], 'text') !== false
+                    if (strpos($tabColumn[$tableName]['TYPE'][$j], 'char') !== false || strpos($tabColumn[$tableName]['TYPE'][$j], 'text') !== false
                     ) {
                         $columnsType[$tableColumnName] .= '_char';
-                    } elseif (strpos($tabColumn[$tableName]['TYPE'][$j], 'int') !== false
-                        || strpos($tabColumn[$tableName]['TYPE'][$j], 'float') !== false
-                        || strpos($tabColumn[$tableName]['TYPE'][$j], 'double') !== false
-                        || strpos($tabColumn[$tableName]['TYPE'][$j], 'decimal') !== false
+                    } elseif (strpos($tabColumn[$tableName]['TYPE'][$j], 'int') !== false || strpos($tabColumn[$tableName]['TYPE'][$j], 'float') !== false || strpos($tabColumn[$tableName]['TYPE'][$j], 'double') !== false || strpos($tabColumn[$tableName]['TYPE'][$j], 'decimal') !== false
                     ) {
                         $columnsType[$tableColumnName] .= '_int';
-                    } elseif (strpos($tabColumn[$tableName]['TYPE'][$j], 'date') !== false
-                        || strpos($tabColumn[$tableName]['TYPE'][$j], 'time') !== false
-                        || strpos($tabColumn[$tableName]['TYPE'][$j], 'year') !== false
+                    } elseif (strpos($tabColumn[$tableName]['TYPE'][$j], 'date') !== false || strpos($tabColumn[$tableName]['TYPE'][$j], 'time') !== false || strpos($tabColumn[$tableName]['TYPE'][$j], 'year') !== false
                     ) {
                         $columnsType[$tableColumnName] .= '_date';
                     }
@@ -392,22 +367,23 @@ class Designer
         $designerConfig->tablesEnabled = $cfgRelation['pdfwork'];
 
         return $this->template->render('database/designer/main', [
-            'db' => $db,
-            'text_dir' => $text_dir,
-            'get_db' => $getDb,
-            'designer_config' => json_encode($designerConfig),
-            'display_page' => (int) $displayPage,
-            'has_query' => $visualBuilderMode,
-            'visual_builder' => $visualBuilderMode,
-            'selected_page' => $selectedPage,
-            'params_array' => $paramsArray,
-            'theme' => $GLOBALS['PMA_Theme'],
-            'tab_pos' => $tabPos,
-            'tab_column' => $tabColumn,
-            'tables_all_keys' => $tablesAllKeys,
-            'tables_pk_or_unique_keys' => $tablesPkOrUniqueKeys,
-            'designerTables' => $designerTables,
-            'columns_type' => $columnsType,
+                    'db' => $db,
+                    'text_dir' => $text_dir,
+                    'get_db' => $getDb,
+                    'designer_config' => json_encode($designerConfig),
+                    'display_page' => (int) $displayPage,
+                    'has_query' => $visualBuilderMode,
+                    'visual_builder' => $visualBuilderMode,
+                    'selected_page' => $selectedPage,
+                    'params_array' => $paramsArray,
+                    'theme' => $GLOBALS['PMA_Theme'],
+                    'tab_pos' => $tabPos,
+                    'tab_column' => $tabColumn,
+                    'tables_all_keys' => $tablesAllKeys,
+                    'tables_pk_or_unique_keys' => $tablesPkOrUniqueKeys,
+                    'designerTables' => $designerTables,
+                    'columns_type' => $columnsType,
         ]);
     }
+
 }

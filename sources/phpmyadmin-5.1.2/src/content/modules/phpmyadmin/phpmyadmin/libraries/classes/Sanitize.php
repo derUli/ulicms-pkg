@@ -1,8 +1,8 @@
 <?php
+
 /**
  * This class includes various sanitization methods that can be called statically
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin;
@@ -30,8 +30,8 @@ use function substr;
 /**
  * This class includes various sanitization methods that can be called statically
  */
-class Sanitize
-{
+class Sanitize {
+
     /**
      * Checks whether given link is valid
      *
@@ -41,8 +41,7 @@ class Sanitize
      *
      * @return bool True if string can be used as link
      */
-    public static function checkLink($url, $http = false, $other = false)
-    {
+    public static function checkLink($url, $http = false, $other = false) {
         $url = strtolower($url);
         $valid_starts = [
             'https://',
@@ -84,8 +83,7 @@ class Sanitize
     /**
      * Check if we are currently on a setup folder page
      */
-    public static function isSetup(): bool
-    {
+    public static function isSetup(): bool {
         return $GLOBALS['PMA_Config'] !== null && $GLOBALS['PMA_Config']->get('is_setup');
     }
 
@@ -96,20 +94,19 @@ class Sanitize
      *
      * @return string Replaced string
      */
-    public static function replaceBBLink(array $found)
-    {
+    public static function replaceBBLink(array $found) {
         /* Check for valid link */
-        if (! self::checkLink($found[1])) {
+        if (!self::checkLink($found[1])) {
             return $found[0];
         }
         /* a-z and _ allowed in target */
-        if (! empty($found[3]) && preg_match('/[^a-z_]+/i', $found[3])) {
+        if (!empty($found[3]) && preg_match('/[^a-z_]+/i', $found[3])) {
             return $found[0];
         }
 
         /* Construct target */
         $target = '';
-        if (! empty($found[3])) {
+        if (!empty($found[3])) {
             $target = ' target="' . $found[3] . '"';
             if ($found[3] === '_blank') {
                 $target .= ' rel="noopener noreferrer"';
@@ -133,8 +130,7 @@ class Sanitize
      *
      * @return string Replaced string
      */
-    public static function replaceDocLink(array $found)
-    {
+    public static function replaceDocLink(array $found) {
         if (count($found) >= 4) {
             /* doc@page@anchor pattern */
             $page = $found[1];
@@ -172,30 +168,29 @@ class Sanitize
      * @param bool   $escape  whether to escape html in result
      * @param bool   $safe    whether string is safe (can keep < and > chars)
      */
-    public static function sanitizeMessage(string $message, $escape = false, $safe = false): string
-    {
-        if (! $safe) {
+    public static function sanitizeMessage(string $message, $escape = false, $safe = false): string {
+        if (!$safe) {
             $message = strtr($message, ['<' => '&lt;', '>' => '&gt;']);
         }
 
         /* Interpret bb code */
         $replace_pairs = [
-            '[em]'      => '<em>',
-            '[/em]'     => '</em>',
-            '[strong]'  => '<strong>',
+            '[em]' => '<em>',
+            '[/em]' => '</em>',
+            '[strong]' => '<strong>',
             '[/strong]' => '</strong>',
-            '[code]'    => '<code>',
-            '[/code]'   => '</code>',
-            '[kbd]'     => '<kbd>',
-            '[/kbd]'    => '</kbd>',
-            '[br]'      => '<br>',
-            '[/a]'      => '</a>',
-            '[/doc]'      => '</a>',
-            '[sup]'     => '<sup>',
-            '[/sup]'    => '</sup>',
+            '[code]' => '<code>',
+            '[/code]' => '</code>',
+            '[kbd]' => '<kbd>',
+            '[/kbd]' => '</kbd>',
+            '[br]' => '<br>',
+            '[/a]' => '</a>',
+            '[/doc]' => '</a>',
+            '[sup]' => '<sup>',
+            '[/sup]' => '</sup>',
             // used in common.inc.php:
             '[conferr]' => '<iframe src="show_config_errors.php"><a href='
-                . '"show_config_errors.php">show_config_errors.php</a></iframe>',
+            . '"show_config_errors.php">show_config_errors.php</a></iframe>',
             // used in libraries/Util.php
             '[dochelpicon]' => Html\Generator::getImage('b_help', __('Documentation')),
         ];
@@ -207,16 +202,16 @@ class Sanitize
 
         /* Find and replace all links */
         $message = (string) preg_replace_callback($pattern, static function (array $match) {
-            return self::replaceBBLink($match);
-        }, $message);
+                    return self::replaceBBLink($match);
+                }, $message);
 
         /* Replace documentation links */
         $message = (string) preg_replace_callback(
-            '/\[doc@([a-zA-Z0-9_-]+)(@([a-zA-Z0-9_-]*))?\]/',
-            static function (array $match) {
-                return self::replaceDocLink($match);
-            },
-            $message
+                        '/\[doc@([a-zA-Z0-9_-]+)(@([a-zA-Z0-9_-]*))?\]/',
+                        static function (array $match) {
+                            return self::replaceDocLink($match);
+                        },
+                        $message
         );
 
         /* Possibly escape result */
@@ -241,11 +236,10 @@ class Sanitize
      *
      * @return string  the sanitized filename
      */
-    public static function sanitizeFilename($filename, $replaceDots = false)
-    {
+    public static function sanitizeFilename($filename, $replaceDots = false) {
         $pattern = '/[^A-Za-z0-9_';
         // if we don't have to replace dots
-        if (! $replaceDots) {
+        if (!$replaceDots) {
             // then add the dot to the list of legit characters
             $pattern .= '.';
         }
@@ -268,17 +262,14 @@ class Sanitize
      *
      * @access public
      */
-    public static function jsFormat($a_string = '', $add_backquotes = true)
-    {
+    public static function jsFormat($a_string = '', $add_backquotes = true) {
         $a_string = htmlspecialchars((string) $a_string);
         $a_string = self::escapeJsString($a_string);
         // Needed for inline javascript to prevent some browsers
         // treating it as a anchor
         $a_string = str_replace('#', '\\#', $a_string);
 
-        return $add_backquotes
-            ? Util::backquote($a_string)
-            : $a_string;
+        return $add_backquotes ? Util::backquote($a_string) : $a_string;
     }
 
     /**
@@ -293,22 +284,21 @@ class Sanitize
      *
      * @return string  the escaped string
      */
-    public static function escapeJsString($string)
-    {
+    public static function escapeJsString($string) {
         return preg_replace(
-            '@</script@i',
-            '</\' + \'script',
-            strtr(
-                (string) $string,
-                [
-                    "\000" => '',
-                    '\\' => '\\\\',
-                    '\'' => '\\\'',
-                    '"' => '\"',
-                    "\n" => '\n',
-                    "\r" => '\r',
-                ]
-            )
+                '@</script@i',
+                '</\' + \'script',
+                strtr(
+                        (string) $string,
+                        [
+                            "\000" => '',
+                            '\\' => '\\\\',
+                            '\'' => '\\\'',
+                            '"' => '\"',
+                            "\n" => '\n',
+                            "\r" => '\r',
+                        ]
+                )
         );
     }
 
@@ -319,8 +309,7 @@ class Sanitize
      *
      * @return int|string formatted value.
      */
-    public static function formatJsVal($value)
-    {
+    public static function formatJsVal($value) {
         if (is_bool($value)) {
             if ($value) {
                 return 'true';
@@ -347,10 +336,9 @@ class Sanitize
      *
      * @return string Javascript code.
      */
-    public static function getJsValue($key, $value, $escape = true)
-    {
+    public static function getJsValue($key, $value, $escape = true) {
         $result = $key . ' = ';
-        if (! $escape) {
+        if (!$escape) {
             $result .= $value;
         } elseif (is_array($value)) {
             $result .= '[';
@@ -372,37 +360,37 @@ class Sanitize
      *
      * @access public
      */
-    public static function removeRequestVars(&$allowList): void
-    {
+    public static function removeRequestVars(&$allowList): void {
         // do not check only $_REQUEST because it could have been overwritten
         // and use type casting because the variables could have become
         // strings
         $keys = array_keys(
-            array_merge((array) $_REQUEST, (array) $_GET, (array) $_POST, (array) $_COOKIE)
+                array_merge((array) $_REQUEST, (array) $_GET, (array) $_POST, (array) $_COOKIE)
         );
 
         foreach ($keys as $key) {
-            if (! in_array($key, $allowList)) {
+            if (!in_array($key, $allowList)) {
                 unset($_REQUEST[$key], $_GET[$key], $_POST[$key]);
                 continue;
             }
 
             // allowed stuff could be compromised so escape it
             // we require it to be a string
-            if (isset($_REQUEST[$key]) && ! is_string($_REQUEST[$key])) {
+            if (isset($_REQUEST[$key]) && !is_string($_REQUEST[$key])) {
                 unset($_REQUEST[$key]);
             }
-            if (isset($_POST[$key]) && ! is_string($_POST[$key])) {
+            if (isset($_POST[$key]) && !is_string($_POST[$key])) {
                 unset($_POST[$key]);
             }
-            if (isset($_COOKIE[$key]) && ! is_string($_COOKIE[$key])) {
+            if (isset($_COOKIE[$key]) && !is_string($_COOKIE[$key])) {
                 unset($_COOKIE[$key]);
             }
-            if (! isset($_GET[$key]) || is_string($_GET[$key])) {
+            if (!isset($_GET[$key]) || is_string($_GET[$key])) {
                 continue;
             }
 
             unset($_GET[$key]);
         }
     }
+
 }

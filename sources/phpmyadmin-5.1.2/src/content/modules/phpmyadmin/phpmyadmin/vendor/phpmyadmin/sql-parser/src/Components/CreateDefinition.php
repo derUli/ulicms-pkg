@@ -1,10 +1,10 @@
 <?php
+
 /**
  * Parses the create definition of a column or a key.
  *
  * Used for parsing `CREATE TABLE` statement.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\SqlParser\Components;
@@ -14,7 +14,6 @@ use PhpMyAdmin\SqlParser\Context;
 use PhpMyAdmin\SqlParser\Parser;
 use PhpMyAdmin\SqlParser\Token;
 use PhpMyAdmin\SqlParser\TokensList;
-
 use function implode;
 use function is_array;
 use function trim;
@@ -26,8 +25,8 @@ use function trim;
  *
  * @final
  */
-class CreateDefinition extends Component
-{
+class CreateDefinition extends Component {
+
     /**
      * All field options.
      *
@@ -37,7 +36,6 @@ class CreateDefinition extends Component
         // Tells the `OptionsArray` to not sort the options.
         // See the note below.
         '_UNSORTED' => true,
-
         'NOT NULL' => 1,
         'NULL' => 1,
         'DEFAULT' => [
@@ -72,7 +70,6 @@ class CreateDefinition extends Component
             7,
             'expr',
         ],
-
         // Generated columns options.
         'GENERATED ALWAYS' => 8,
         'AS' => [
@@ -91,20 +88,20 @@ class CreateDefinition extends Component
         'INVISIBLE' => 13,
         'ENFORCED' => 14,
         'NOT' => 15,
-        // Common entries.
-        //
-        // NOTE: Some of the common options are not in the same order which
-        // causes troubles when checking if the options are in the right order.
-        // I should find a way to define multiple sets of options and make the
-        // parser select the right set.
-        //
-        // 'UNIQUE'                        => 4,
-        // 'UNIQUE KEY'                    => 4,
-        // 'COMMENT'                       => [5, 'var'],
-        // 'NOT NULL'                      => 1,
-        // 'NULL'                          => 1,
-        // 'PRIMARY'                       => 4,
-        // 'PRIMARY KEY'                   => 4,
+            // Common entries.
+            //
+            // NOTE: Some of the common options are not in the same order which
+            // causes troubles when checking if the options are in the right order.
+            // I should find a way to define multiple sets of options and make the
+            // parser select the right set.
+            //
+            // 'UNIQUE'                        => 4,
+            // 'UNIQUE KEY'                    => 4,
+            // 'COMMENT'                       => [5, 'var'],
+            // 'NOT NULL'                      => 1,
+            // 'NULL'                          => 1,
+            // 'PRIMARY'                       => 4,
+            // 'PRIMARY KEY'                   => 4,
     ];
 
     /**
@@ -157,11 +154,11 @@ class CreateDefinition extends Component
      * @param Reference    $references   references
      */
     public function __construct(
-        $name = null,
-        $options = null,
-        $type = null,
-        $isConstraint = false,
-        $references = null
+            $name = null,
+            $options = null,
+            $type = null,
+            $isConstraint = false,
+            $references = null
     ) {
         $this->name = $name;
         $this->options = $options;
@@ -181,8 +178,7 @@ class CreateDefinition extends Component
      *
      * @return CreateDefinition[]
      */
-    public static function parse(Parser $parser, TokensList $list, array $options = [])
-    {
+    public static function parse(Parser $parser, TokensList $list, array $options = []) {
         $ret = [];
 
         $expr = new static();
@@ -245,7 +241,7 @@ class CreateDefinition extends Component
                     $state = 4;
                 } elseif ($token->type === Token::TYPE_SYMBOL || $token->type === Token::TYPE_NONE) {
                     $expr->name = $token->value;
-                    if (! $expr->isConstraint) {
+                    if (!$expr->isConstraint) {
                         $state = 2;
                     }
                 } elseif ($token->type === Token::TYPE_KEYWORD) {
@@ -253,10 +249,10 @@ class CreateDefinition extends Component
                         // Reserved keywords can't be used
                         // as field names without backquotes
                         $parser->error(
-                            'A symbol name was expected! '
-                            . 'A reserved keyword can not be used '
-                            . 'as a column name without backquotes.',
-                            $token
+                                'A symbol name was expected! '
+                                . 'A reserved keyword can not be used '
+                                . 'as a column name without backquotes.',
+                                $token
                         );
 
                         return $ret;
@@ -286,7 +282,7 @@ class CreateDefinition extends Component
 
                 $state = 5;
             } elseif ($state === 5) {
-                if (! empty($expr->type) || ! empty($expr->key)) {
+                if (!empty($expr->type) || !empty($expr->key)) {
                     $ret[] = $expr;
                 }
 
@@ -306,7 +302,7 @@ class CreateDefinition extends Component
         }
 
         // Last iteration was not saved.
-        if (! empty($expr->type) || ! empty($expr->key)) {
+        if (!empty($expr->type) || !empty($expr->key)) {
             $ret[] = $expr;
         }
 
@@ -325,8 +321,7 @@ class CreateDefinition extends Component
      *
      * @return string
      */
-    public static function build($component, array $options = [])
-    {
+    public static function build($component, array $options = []) {
         if (is_array($component)) {
             return "(\n  " . implode(",\n  ", $component) . "\n)";
         }
@@ -341,18 +336,18 @@ class CreateDefinition extends Component
             $tmp .= Context::escape($component->name) . ' ';
         }
 
-        if (! empty($component->type)) {
+        if (!empty($component->type)) {
             $tmp .= DataType::build(
-                $component->type,
-                ['lowercase' => true]
-            ) . ' ';
+                            $component->type,
+                            ['lowercase' => true]
+                    ) . ' ';
         }
 
-        if (! empty($component->key)) {
+        if (!empty($component->key)) {
             $tmp .= $component->key . ' ';
         }
 
-        if (! empty($component->references)) {
+        if (!empty($component->references)) {
             $tmp .= 'REFERENCES ' . $component->references . ' ';
         }
 
@@ -360,4 +355,5 @@ class CreateDefinition extends Component
 
         return trim($tmp);
     }
+
 }

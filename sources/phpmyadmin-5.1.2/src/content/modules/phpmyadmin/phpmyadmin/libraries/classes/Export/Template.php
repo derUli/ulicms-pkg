@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace PhpMyAdmin\Export;
 
 /** @psalm-immutable */
-final class Template
-{
+final class Template {
+
     /** @var int */
     private $id;
 
@@ -22,8 +22,7 @@ final class Template
     /** @var string JSON */
     private $data;
 
-    private function __construct(int $id, string $username, string $exportType, string $name, string $data)
-    {
+    private function __construct(int $id, string $username, string $exportType, string $name, string $data) {
         $this->id = $id;
         $this->username = $username;
         $this->exportType = $exportType;
@@ -32,39 +31,34 @@ final class Template
     }
 
     /** @param array<string, mixed> $state */
-    public static function fromArray(array $state): self
-    {
+    public static function fromArray(array $state): self {
         return new self(
-            $state['id'] ?? 0,
-            $state['username'],
-            $state['exportType'] ?? '',
-            $state['name'] ?? '',
-            $state['data']
+                $state['id'] ?? 0,
+                $state['username'],
+                $state['exportType'] ?? '',
+                $state['name'] ?? '',
+                $state['data']
         );
     }
 
-    public function getId(): int
-    {
+    public function getId(): int {
         return $this->id;
     }
 
-    public function getUsername(): string
-    {
+    public function getUsername(): string {
         return $this->username;
     }
 
-    public function getExportType(): string
-    {
+    public function getExportType(): string {
         return $this->exportType;
     }
 
-    public function getName(): string
-    {
+    public function getName(): string {
         return $this->name;
     }
 
-    public function getData(): string
-    {
+    public function getData(): string {
         return $this->data;
     }
+
 }

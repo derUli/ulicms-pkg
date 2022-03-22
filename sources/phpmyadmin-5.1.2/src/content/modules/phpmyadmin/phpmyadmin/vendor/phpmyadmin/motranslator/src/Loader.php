@@ -3,26 +3,26 @@
 declare(strict_types=1);
 
 /*
-    Copyright (c) 2005 Steven Armstrong <sa at c-area dot ch>
-    Copyright (c) 2009 Danilo Segan <danilo@kvota.net>
-    Copyright (c) 2016 Michal Čihař <michal@cihar.com>
+  Copyright (c) 2005 Steven Armstrong <sa at c-area dot ch>
+  Copyright (c) 2009 Danilo Segan <danilo@kvota.net>
+  Copyright (c) 2016 Michal Čihař <michal@cihar.com>
 
-    This file is part of MoTranslator.
+  This file is part of MoTranslator.
 
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 2 of the License, or
-    (at your option) any later version.
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation; either version 2 of the License, or
+  (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License along
-    with this program; if not, write to the Free Software Foundation, Inc.,
-    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*/
+  You should have received a copy of the GNU General Public License along
+  with this program; if not, write to the Free Software Foundation, Inc.,
+  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
 
 namespace PhpMyAdmin\MoTranslator;
 
@@ -33,8 +33,8 @@ use function in_array;
 use function preg_match;
 use function sprintf;
 
-class Loader
-{
+class Loader {
+
     /**
      * Loader instance.
      *
@@ -76,8 +76,7 @@ class Loader
      *
      * @return Loader object
      */
-    public static function getInstance(): Loader
-    {
+    public static function getInstance(): Loader {
         if (empty(self::$instance)) {
             self::$instance = new self();
         }
@@ -88,8 +87,7 @@ class Loader
     /**
      * Loads global localization functions.
      */
-    public static function loadFunctions(): void
-    {
+    public static function loadFunctions(): void {
         require_once __DIR__ . '/functions.php';
     }
 
@@ -102,19 +100,18 @@ class Loader
      *
      * @return string[] list of locales to try for any POSIX-style locale specification
      */
-    public static function listLocales(string $locale): array
-    {
+    public static function listLocales(string $locale): array {
         $localeNames = [];
 
         if ($locale) {
             if (preg_match(
-                '/^(?P<lang>[a-z]{2,3})'      // language code
-                . '(?:_(?P<country>[A-Z]{2}))?'           // country code
-                . '(?:\\.(?P<charset>[-A-Za-z0-9_]+))?'   // charset
-                . '(?:@(?P<modifier>[-A-Za-z0-9_]+))?$/', // @ modifier
-                $locale,
-                $matches
-            )) {
+                            '/^(?P<lang>[a-z]{2,3})'      // language code
+                            . '(?:_(?P<country>[A-Z]{2}))?'           // country code
+                            . '(?:\\.(?P<charset>[-A-Za-z0-9_]+))?'   // charset
+                            . '(?:@(?P<modifier>[-A-Za-z0-9_]+))?$/', // @ modifier
+                            $locale,
+                            $matches
+                    )) {
                 $lang = $matches['lang'] ?? null;
                 $country = $matches['country'] ?? null;
                 $charset = $matches['charset'] ?? null;
@@ -124,44 +121,44 @@ class Loader
                     if ($country) {
                         if ($charset) {
                             array_push(
-                                $localeNames,
-                                sprintf('%s_%s.%s@%s', $lang, $country, $charset, $modifier)
+                                    $localeNames,
+                                    sprintf('%s_%s.%s@%s', $lang, $country, $charset, $modifier)
                             );
                         }
 
                         array_push(
-                            $localeNames,
-                            sprintf('%s_%s@%s', $lang, $country, $modifier)
+                                $localeNames,
+                                sprintf('%s_%s@%s', $lang, $country, $modifier)
                         );
                     } elseif ($charset) {
                         array_push(
-                            $localeNames,
-                            sprintf('%s.%s@%s', $lang, $charset, $modifier)
+                                $localeNames,
+                                sprintf('%s.%s@%s', $lang, $charset, $modifier)
                         );
                     }
 
                     array_push(
-                        $localeNames,
-                        sprintf('%s@%s', $lang, $modifier)
+                            $localeNames,
+                            sprintf('%s@%s', $lang, $modifier)
                     );
                 }
 
                 if ($country) {
                     if ($charset) {
                         array_push(
-                            $localeNames,
-                            sprintf('%s_%s.%s', $lang, $country, $charset)
+                                $localeNames,
+                                sprintf('%s_%s.%s', $lang, $country, $charset)
                         );
                     }
 
                     array_push(
-                        $localeNames,
-                        sprintf('%s_%s', $lang, $country)
+                            $localeNames,
+                            sprintf('%s_%s', $lang, $country)
                     );
                 } elseif ($charset) {
                     array_push(
-                        $localeNames,
-                        sprintf('%s.%s', $lang, $charset)
+                            $localeNames,
+                            sprintf('%s.%s', $lang, $charset)
                     );
                 }
 
@@ -169,7 +166,7 @@ class Loader
             }
 
             // If the locale name doesn't match POSIX style, just include it as-is.
-            if (! in_array($locale, $localeNames)) {
+            if (!in_array($locale, $localeNames)) {
                 array_push($localeNames, $locale);
             }
         }
@@ -182,17 +179,16 @@ class Loader
      *
      * @param string $domain Translation domain
      */
-    public function getTranslator(string $domain = ''): Translator
-    {
+    public function getTranslator(string $domain = ''): Translator {
         if (empty($domain)) {
             $domain = $this->defaultDomain;
         }
 
-        if (! isset($this->domains[$this->locale])) {
+        if (!isset($this->domains[$this->locale])) {
             $this->domains[$this->locale] = [];
         }
 
-        if (! isset($this->domains[$this->locale][$domain])) {
+        if (!isset($this->domains[$this->locale][$domain])) {
             if (isset($this->paths[$domain])) {
                 $base = $this->paths[$domain];
             } else {
@@ -223,8 +219,7 @@ class Loader
      * @param string $domain Domain name
      * @param string $path   Path where to find locales
      */
-    public function bindtextdomain(string $domain, string $path): void
-    {
+    public function bindtextdomain(string $domain, string $path): void {
         $this->paths[$domain] = $path;
     }
 
@@ -233,8 +228,7 @@ class Loader
      *
      * @param string $domain Domain name
      */
-    public function textdomain(string $domain): void
-    {
+    public function textdomain(string $domain): void {
         $this->defaultDomain = $domain;
     }
 
@@ -245,9 +239,8 @@ class Loader
      *
      * @return string Set or current locale
      */
-    public function setlocale(string $locale): string
-    {
-        if (! empty($locale)) {
+    public function setlocale(string $locale): string {
+        if (!empty($locale)) {
             $this->locale = $locale;
         }
 
@@ -264,8 +257,7 @@ class Loader
      *
      * @return string with locale name
      */
-    public function detectlocale(): string
-    {
+    public function detectlocale(): string {
         if (isset($GLOBALS['lang'])) {
             return $GLOBALS['lang'];
         }
@@ -287,4 +279,5 @@ class Loader
 
         return 'en';
     }
+
 }

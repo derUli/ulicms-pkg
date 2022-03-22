@@ -20,8 +20,8 @@ namespace Symfony\Component\Config\Resource;
  *
  * @final since Symfony 4.3
  */
-class FileResource implements SelfCheckingResourceInterface
-{
+class FileResource implements SelfCheckingResourceInterface {
+
     /**
      * @var string|false
      */
@@ -32,8 +32,7 @@ class FileResource implements SelfCheckingResourceInterface
      *
      * @throws \InvalidArgumentException
      */
-    public function __construct(string $resource)
-    {
+    public function __construct(string $resource) {
         $this->resource = realpath($resource) ?: (file_exists($resource) ? $resource : false);
 
         if (false === $this->resource) {
@@ -41,24 +40,22 @@ class FileResource implements SelfCheckingResourceInterface
         }
     }
 
-    public function __toString()
-    {
+    public function __toString() {
         return $this->resource;
     }
 
     /**
      * @return string The canonicalized, absolute path to the resource
      */
-    public function getResource()
-    {
+    public function getResource() {
         return $this->resource;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function isFresh($timestamp)
-    {
+    public function isFresh($timestamp) {
         return false !== ($filemtime = @filemtime($this->resource)) && $filemtime <= $timestamp;
     }
+
 }

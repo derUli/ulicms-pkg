@@ -1,10 +1,10 @@
 /**
  * @fileoverview    function used in this file builds history tab and generates query.
-  *
-  * @requires    jQuery
-  * @requires    move.js
-  * @version $Id$
-  */
+ *
+ * @requires    jQuery
+ * @requires    move.js
+ * @version $Id$
+ */
 
 /* global contr */ // js/designer/init.js
 /* global fromArray:writable */ // js/designer/move.js
@@ -22,7 +22,7 @@ var vqbEditor = null;
  *
  * @param index index of historyArray where change is to be made
  *
-**/
+ **/
 
 DesignerHistory.detail = function (index) {
     var type = historyArray[index].getType();
@@ -63,7 +63,7 @@ DesignerHistory.detail = function (index) {
  * @param {int}  init starting index of unsorted array
  * @param {int} finit   last index of unsorted array
  *
-**/
+ **/
 
 DesignerHistory.display = function (init, finit) {
     var str;
@@ -102,18 +102,18 @@ DesignerHistory.display = function (init, finit) {
                 str += '<img src="' + themeImagePath + 'designer/and_icon.png" onclick="DesignerHistory.andOr(' + i + ')" title="AND"></td>';
             }
             str += '<td style="padding-left: 5px;" class="right">' + Functions.getImage('b_sbrowse', Messages.strColumnName) + '</td>' +
-                '<td width="175" style="padding-left: 5px">' + $('<div/>').text(historyArray[i].getColumnName()).html() + '<td>';
+                    '<td width="175" style="padding-left: 5px">' + $('<div/>').text(historyArray[i].getColumnName()).html() + '<td>';
             if (historyArray[i].getType() === 'GroupBy' || historyArray[i].getType() === 'OrderBy') {
                 var detailDescGroupBy = $('<div/>').text(DesignerHistory.detail(i)).html();
                 str += '<td class="text-center">' + Functions.getImage('s_info', DesignerHistory.detail(i)) + '</td>' +
-                    '<td title="' + detailDescGroupBy + '">' + historyArray[i].getType() + '</td>' +
-                    '<td onclick=DesignerHistory.historyDelete(' + i + ')>' + Functions.getImage('b_drop', Messages.strDelete) + '</td>';
+                        '<td title="' + detailDescGroupBy + '">' + historyArray[i].getType() + '</td>' +
+                        '<td onclick=DesignerHistory.historyDelete(' + i + ')>' + Functions.getImage('b_drop', Messages.strDelete) + '</td>';
             } else {
                 var detailDesc = $('<div/>').text(DesignerHistory.detail(i)).html();
                 str += '<td class="text-center">' + Functions.getImage('s_info', DesignerHistory.detail(i)) + '</td>' +
-                    '<td title="' + detailDesc + '">' + historyArray[i].getType() + '</td>' +
-                    '<td onclick=DesignerHistory.historyEdit(' + i + ')>' + Functions.getImage('b_edit', Messages.strEdit) + '</td>' +
-                    '<td onclick=DesignerHistory.historyDelete(' + i + ')>' + Functions.getImage('b_drop', Messages.strDelete) + '</td>';
+                        '<td title="' + detailDesc + '">' + historyArray[i].getType() + '</td>' +
+                        '<td onclick=DesignerHistory.historyEdit(' + i + ')>' + Functions.getImage('b_edit', Messages.strEdit) + '</td>' +
+                        '<td onclick=DesignerHistory.historyDelete(' + i + ')>' + Functions.getImage('b_drop', Messages.strDelete) + '</td>';
             }
             str += '</tr></thead>';
             i++;
@@ -134,7 +134,7 @@ DesignerHistory.display = function (init, finit) {
  *
  * @param {int} index of historyArray where change is to be made
  *
-**/
+ **/
 
 DesignerHistory.andOr = function (index) {
     if (historyArray[index].getAndOr()) {
@@ -152,7 +152,7 @@ DesignerHistory.andOr = function (index) {
  *
  * @param index index of historyArray[] which is to be deleted
  *
-**/
+ **/
 
 DesignerHistory.historyDelete = function (index) {
     var fromArrayLength = fromArray.length;
@@ -173,7 +173,7 @@ DesignerHistory.historyDelete = function (index) {
  *
  * @param{int} index index of historyArray where change is to be made
  *
-**/
+ **/
 
 DesignerHistory.historyEdit = function (index) {
     gIndex = index;
@@ -181,9 +181,9 @@ DesignerHistory.historyEdit = function (index) {
     if (type === 'Where') {
         document.getElementById('eQuery').value = historyArray[index].getObj().getQuery();
         document.getElementById('erel_opt').value = historyArray[index].getObj().getRelationOperator();
-        document.getElementById('query_where').style.left =  '530px';
-        document.getElementById('query_where').style.top  = '130px';
-        document.getElementById('query_where').style.position  = 'absolute';
+        document.getElementById('query_where').style.left = '530px';
+        document.getElementById('query_where').style.top = '130px';
+        document.getElementById('query_where').style.position = 'absolute';
         document.getElementById('query_where').style.zIndex = '103';
         document.getElementById('query_where').style.visibility = 'visible';
         document.getElementById('query_where').style.display = 'block';
@@ -192,18 +192,18 @@ DesignerHistory.historyEdit = function (index) {
         document.getElementById('hQuery').value = historyArray[index].getObj().getQuery();
         document.getElementById('hrel_opt').value = historyArray[index].getObj().getRelationOperator();
         document.getElementById('hoperator').value = historyArray[index].getObj().getOperator();
-        document.getElementById('query_having').style.left =  '530px';
-        document.getElementById('query_having').style.top  = '130px';
-        document.getElementById('query_having').style.position  = 'absolute';
+        document.getElementById('query_having').style.left = '530px';
+        document.getElementById('query_having').style.top = '130px';
+        document.getElementById('query_having').style.position = 'absolute';
         document.getElementById('query_having').style.zIndex = '103';
         document.getElementById('query_having').style.visibility = 'visible';
         document.getElementById('query_having').style.display = 'block';
     }
     if (type === 'Rename') {
         document.getElementById('e_rename').value = historyArray[index].getObj().getRenameTo();
-        document.getElementById('query_rename_to').style.left =  '530px';
-        document.getElementById('query_rename_to').style.top  = '130px';
-        document.getElementById('query_rename_to').style.position  = 'absolute';
+        document.getElementById('query_rename_to').style.left = '530px';
+        document.getElementById('query_rename_to').style.top = '130px';
+        document.getElementById('query_rename_to').style.position = 'absolute';
         document.getElementById('query_rename_to').style.zIndex = '103';
         document.getElementById('query_rename_to').style.visibility = 'visible';
         document.getElementById('query_rename_to').style.display = 'block';
@@ -211,8 +211,8 @@ DesignerHistory.historyEdit = function (index) {
     if (type === 'Aggregate') {
         document.getElementById('e_operator').value = historyArray[index].getObj().getOperator();
         document.getElementById('query_Aggregate').style.left = '530px';
-        document.getElementById('query_Aggregate').style.top  = '130px';
-        document.getElementById('query_Aggregate').style.position  = 'absolute';
+        document.getElementById('query_Aggregate').style.top = '130px';
+        document.getElementById('query_Aggregate').style.position = 'absolute';
         document.getElementById('query_Aggregate').style.zIndex = '103';
         document.getElementById('query_Aggregate').style.visibility = 'visible';
         document.getElementById('query_Aggregate').style.display = 'block';
@@ -224,7 +224,7 @@ DesignerHistory.historyEdit = function (index) {
  * checks for the type of object and then sets the new value
  *
  * @param index index of historyArray where change is to be made
-**/
+ **/
 
 DesignerHistory.edit = function (type) {
     if (type === 'Rename') {
@@ -270,7 +270,7 @@ DesignerHistory.edit = function (type) {
  * @param nObjNo       object no used for inner join
  * @param nType         type of object
  *
-**/
+ **/
 
 DesignerHistory.HistoryObj = function (nColumnName, nObj, nTab, nObjNo, nType) {
     var andOr;
@@ -332,7 +332,7 @@ DesignerHistory.HistoryObj = function (nColumnName, nObj, nTab, nObjNo, nType) {
  * @param nRelationOperator type of relation operator to be applied
  * @param nQuery             stores value of value/sub-query
  *
-**/
+ **/
 
 
 DesignerHistory.Where = function (nRelationOperator, nQuery) {
@@ -376,7 +376,7 @@ DesignerHistory.OrderBy = function (nOrder) {
  * @param nRelationOperator type of relation operator to be applied
  * @param nQuery             stores value of value/sub-query
  * @param nOperator          operator
-**/
+ **/
 
 DesignerHistory.Having = function (nRelationOperator, nQuery, nOperator) {
     var relationOperator;
@@ -410,7 +410,7 @@ DesignerHistory.Having = function (nRelationOperator, nQuery, nOperator) {
  *
  * @param nRenameTo new name information
  *
-**/
+ **/
 
 DesignerHistory.Rename = function (nRenameTo) {
     var renameTo;
@@ -428,7 +428,7 @@ DesignerHistory.Rename = function (nRenameTo) {
  *
  * @param nOperator aggregte operator
  *
-**/
+ **/
 
 DesignerHistory.Aggregate = function (nOperator) {
     var operator;
@@ -451,7 +451,7 @@ DesignerHistory.Aggregate = function (nOperator) {
 DesignerHistory.unique = function (arrayName) {
     var newArray = [];
     uniquetop:
-    for (var i = 0; i < arrayName.length; i++) {
+            for (var i = 0; i < arrayName.length; i++) {
         var newArrayLength = newArray.length;
         for (var j = 0; j < newArrayLength; j++) {
             if (newArray[j] === arrayName[i]) {
@@ -573,7 +573,7 @@ DesignerHistory.queryOrderBy = function () {
     for (i = 0; i < historyArrayLength; i++) {
         if (historyArray[i].getType() === 'OrderBy') {
             str += '`' + historyArray[i].getColumnName() + '` ' +
-                historyArray[i].getObj().getOrder() + ', ';
+                    historyArray[i].getObj().getOrder() + ', ';
         }
     }
     str = str.substr(0, str.length - 2);
@@ -643,11 +643,11 @@ DesignerHistory.checkRename = function (idThis) {
 };
 
 /**
-  * This function builds from clause of query
-  * makes automatic joins.
-  *
-  *
-  */
+ * This function builds from clause of query
+ * makes automatic joins.
+ *
+ *
+ */
 DesignerHistory.queryFrom = function () {
     var i;
     var tabLeft = [];
@@ -834,7 +834,7 @@ DesignerHistory.buildQuery = function () {
      *           to the query textarea.
      */
     var $elm = $ajaxDialog.find('textarea');
-    if (! vqbEditor) {
+    if (!vqbEditor) {
         vqbEditor = Functions.getSqlEditor($elm);
     }
     if (vqbEditor) {
@@ -869,5 +869,5 @@ AJAX.registerOnload('designer/history.js', function () {
     $('#ok_edit_where').on('click', function () {
         DesignerHistory.edit('Where');
     });
-    $('#ab').accordion({ collapsible : true, active : 'none' });
+    $('#ab').accordion({collapsible: true, active: 'none'});
 });

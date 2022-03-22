@@ -23,8 +23,8 @@ use function str_replace;
 /**
  * Error reporting functions used to generate and submit error reports
  */
-class ErrorReport
-{
+class ErrorReport {
+
     /**
      * The URL where to submit reports to
      *
@@ -46,8 +46,7 @@ class ErrorReport
      * @param Relation    $relation    Relation instance
      * @param Template    $template    Template instance
      */
-    public function __construct(HttpRequest $httpRequest, Relation $relation, Template $template)
-    {
+    public function __construct(HttpRequest $httpRequest, Relation $relation, Template $template) {
         $this->httpRequest = $httpRequest;
         $this->relation = $relation;
         $this->template = $template;
@@ -58,8 +57,7 @@ class ErrorReport
      *
      * @param string $submissionUrl Submission URL
      */
-    public function setSubmissionUrl(string $submissionUrl): void
-    {
+    public function setSubmissionUrl(string $submissionUrl): void {
         $this->submissionUrl = $submissionUrl;
     }
 
@@ -70,8 +68,7 @@ class ErrorReport
      *
      * @return string the report
      */
-    private function getPrettyData(): string
-    {
+    private function getPrettyData(): string {
         $report = $this->getData();
 
         return json_encode($report, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
@@ -85,8 +82,7 @@ class ErrorReport
      *
      * @return array error report if success, Empty Array otherwise
      */
-    public function getData(string $exceptionType = 'js'): array
-    {
+    public function getData(string $exceptionType = 'js'): array {
         global $PMA_Config;
 
         $relParams = $this->relation->getRelationsParam();
@@ -100,7 +96,7 @@ class ErrorReport
             'user_agent_string' => $_SERVER['HTTP_USER_AGENT'],
             'locale' => $PMA_Config->getCookie('pma_lang'),
             'configuration_storage' =>
-                $relParams['db'] === null ? 'disabled' : 'enabled',
+            $relParams['db'] === null ? 'disabled' : 'enabled',
             'php_version' => PHP_VERSION,
         ];
 
@@ -134,23 +130,20 @@ class ErrorReport
                 $report['microhistory'] = $_POST['microhistory'];
             }
 
-            if (! empty($_POST['description'])) {
+            if (!empty($_POST['description'])) {
                 $report['steps'] = $_POST['description'];
             }
         } elseif ($exceptionType === 'php') {
             $errors = [];
             // create php error report
             $i = 0;
-            if (! isset($_SESSION['prev_errors'])
-                || $_SESSION['prev_errors'] == ''
+            if (!isset($_SESSION['prev_errors']) || $_SESSION['prev_errors'] == ''
             ) {
                 return [];
             }
             foreach ($_SESSION['prev_errors'] as $errorObj) {
                 /** @var Error $errorObj */
-                if (! $errorObj->getLine()
-                    || ! $errorObj->getType()
-                    || $errorObj->getNumber() == E_USER_WARNING
+                if (!$errorObj->getLine() || !$errorObj->getType() || $errorObj->getNumber() == E_USER_WARNING
                 ) {
                     continue;
                 }
@@ -190,22 +183,20 @@ class ErrorReport
      *
      * @return array the uri and script name
      */
-    private function sanitizeUrl(string $url): array
-    {
+    private function sanitizeUrl(string $url): array {
         $components = parse_url($url);
 
-        if (! is_array($components)) {
+        if (!is_array($components)) {
             $components = [];
         }
 
-        if (isset($components['fragment'])
-            && preg_match('<PMAURL-\d+:>', $components['fragment'], $matches)
+        if (isset($components['fragment']) && preg_match('<PMAURL-\d+:>', $components['fragment'], $matches)
         ) {
             $uri = str_replace($matches[0], '', $components['fragment']);
             $url = 'https://example.com/' . $uri;
             $components = parse_url($url);
 
-            if (! is_array($components)) {
+            if (!is_array($components)) {
                 $components = [];
             }
         }
@@ -243,14 +234,13 @@ class ErrorReport
      *
      * @return string|bool|null the reply of the server
      */
-    public function send(array $report)
-    {
+    public function send(array $report) {
         return $this->httpRequest->create(
-            $this->submissionUrl,
-            'POST',
-            false,
-            json_encode($report),
-            'Content-Type: application/json'
+                        $this->submissionUrl,
+                        'POST',
+                        false,
+                        json_encode($report),
+                        'Content-Type: application/json'
         );
     }
 
@@ -262,8 +252,7 @@ class ErrorReport
      *
      * @return array the modified stack trace
      */
-    private function translateStacktrace(array $stack): array
-    {
+    private function translateStacktrace(array $stack): array {
         foreach ($stack as &$level) {
             foreach ($level['context'] as &$line) {
                 if (mb_strlen($line) <= 80) {
@@ -288,8 +277,7 @@ class ErrorReport
      *
      * @return string the form
      */
-    public function getForm(): string
-    {
+    public function getForm(): string {
         $datas = [
             'report_data' => $this->getPrettyData(),
             'hidden_inputs' => Url::getHiddenInputs(),
@@ -297,10 +285,11 @@ class ErrorReport
         ];
 
         $reportData = $this->getData();
-        if (! empty($reportData)) {
+        if (!empty($reportData)) {
             $datas['hidden_fields'] = Url::getHiddenFields($reportData, '', true);
         }
 
         return $this->template->render('error/report_form', $datas);
     }
+
 }

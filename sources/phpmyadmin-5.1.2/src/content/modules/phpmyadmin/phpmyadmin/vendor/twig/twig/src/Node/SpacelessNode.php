@@ -22,17 +22,15 @@ use Twig\Compiler;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class SpacelessNode extends Node implements NodeOutputInterface
-{
-    public function __construct(Node $body, int $lineno, string $tag = 'spaceless')
-    {
+class SpacelessNode extends Node implements NodeOutputInterface {
+
+    public function __construct(Node $body, int $lineno, string $tag = 'spaceless') {
         parent::__construct(['body' => $body], [], $lineno, $tag);
     }
 
-    public function compile(Compiler $compiler)
-    {
+    public function compile(Compiler $compiler) {
         $compiler
-            ->addDebugInfo($this)
+                ->addDebugInfo($this)
         ;
         if ($compiler->getEnvironment()->isDebug()) {
             $compiler->write("ob_start();\n");
@@ -40,10 +38,11 @@ class SpacelessNode extends Node implements NodeOutputInterface
             $compiler->write("ob_start(function () { return ''; });\n");
         }
         $compiler
-            ->subcompile($this->getNode('body'))
-            ->write("echo trim(preg_replace('/>\s+</', '><', ob_get_clean()));\n")
+                ->subcompile($this->getNode('body'))
+                ->write("echo trim(preg_replace('/>\s+</', '><', ob_get_clean()));\n")
         ;
     }
+
 }
 
 class_alias('Twig\Node\SpacelessNode', 'Twig_Node_Spaceless');

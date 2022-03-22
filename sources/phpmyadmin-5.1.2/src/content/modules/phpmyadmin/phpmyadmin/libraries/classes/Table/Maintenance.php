@@ -10,13 +10,12 @@ use PhpMyAdmin\Util;
 use function implode;
 use function sprintf;
 
-final class Maintenance
-{
+final class Maintenance {
+
     /** @var DatabaseInterface */
     private $dbi;
 
-    public function __construct(DatabaseInterface $dbi)
-    {
+    public function __construct(DatabaseInterface $dbi) {
         $this->dbi = $dbi;
     }
 
@@ -25,8 +24,7 @@ final class Maintenance
      *
      * @return array
      */
-    public function getAnalyzeTableRows(string $db, array $tables): array
-    {
+    public function getAnalyzeTableRows(string $db, array $tables): array {
         $backQuotedTables = Util::backquote($tables);
         $query = 'ANALYZE TABLE ' . implode(', ', $backQuotedTables) . ';';
 
@@ -46,8 +44,7 @@ final class Maintenance
      *
      * @return array
      */
-    public function getCheckTableRows(string $db, array $tables): array
-    {
+    public function getCheckTableRows(string $db, array $tables): array {
         $backQuotedTables = Util::backquote($tables);
         $query = 'CHECK TABLE ' . implode(', ', $backQuotedTables) . ';';
 
@@ -67,8 +64,7 @@ final class Maintenance
      *
      * @return array
      */
-    public function getChecksumTableRows(string $db, array $tables): array
-    {
+    public function getChecksumTableRows(string $db, array $tables): array {
         $backQuotedTables = Util::backquote($tables);
         $query = 'CHECKSUM TABLE ' . implode(', ', $backQuotedTables) . ';';
 
@@ -80,8 +76,7 @@ final class Maintenance
     }
 
     /** @param string[] $tables */
-    public function getIndexesProblems(string $db, array $tables): string
-    {
+    public function getIndexesProblems(string $db, array $tables): string {
         $indexesProblems = '';
 
         foreach ($tables as $table) {
@@ -103,8 +98,7 @@ final class Maintenance
      *
      * @return array
      */
-    public function getOptimizeTableRows(string $db, array $tables): array
-    {
+    public function getOptimizeTableRows(string $db, array $tables): array {
         $backQuotedTables = Util::backquote($tables);
         $query = 'OPTIMIZE TABLE ' . implode(', ', $backQuotedTables) . ';';
 
@@ -124,8 +118,7 @@ final class Maintenance
      *
      * @return array
      */
-    public function getRepairTableRows(string $db, array $tables): array
-    {
+    public function getRepairTableRows(string $db, array $tables): array {
         $backQuotedTables = Util::backquote($tables);
         $query = 'REPAIR TABLE ' . implode(', ', $backQuotedTables) . ';';
 
@@ -139,4 +132,5 @@ final class Maintenance
 
         return [$rows, $query];
     }
+
 }

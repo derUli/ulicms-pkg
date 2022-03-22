@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Super class of CSV import plugins for phpMyAdmin
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Plugins\Import;
@@ -17,16 +17,15 @@ use PhpMyAdmin\Properties\Plugins\ImportPluginProperties;
 /**
  * Super class of the import plugins for the CSV format
  */
-abstract class AbstractImportCsv extends ImportPlugin
-{
+abstract class AbstractImportCsv extends ImportPlugin {
+
     /**
      * Sets the import plugin properties.
      * Called in the constructor.
      *
      * @return OptionsPropertyMainGroup|void object of the plugin
      */
-    protected function setProperties()
-    {
+    protected function setProperties() {
         $importPluginProperties = new ImportPluginProperties();
         $importPluginProperties->setOptionsText(__('Options'));
 
@@ -34,7 +33,7 @@ abstract class AbstractImportCsv extends ImportPlugin
         // $importPluginProperties
         // this will be shown as "Format specific options"
         $importSpecificOptions = new OptionsPropertyRootGroup(
-            'Format Specific Options'
+                'Format Specific Options'
         );
 
         // general options main group
@@ -42,36 +41,36 @@ abstract class AbstractImportCsv extends ImportPlugin
 
         // create common items and add them to the group
         $leaf = new BoolPropertyItem(
-            'replace',
-            __(
-                'Update data when duplicate keys found on import (add ON DUPLICATE '
-                . 'KEY UPDATE)'
-            )
+                'replace',
+                __(
+                        'Update data when duplicate keys found on import (add ON DUPLICATE '
+                        . 'KEY UPDATE)'
+                )
         );
         $generalOptions->addProperty($leaf);
         $leaf = new TextPropertyItem(
-            'terminated',
-            __('Columns separated with:')
-        );
-        $leaf->setSize(2);
-        $generalOptions->addProperty($leaf);
-        $leaf = new TextPropertyItem(
-            'enclosed',
-            __('Columns enclosed with:')
+                'terminated',
+                __('Columns separated with:')
         );
         $leaf->setSize(2);
-        $leaf->setLen(2);
         $generalOptions->addProperty($leaf);
         $leaf = new TextPropertyItem(
-            'escaped',
-            __('Columns escaped with:')
+                'enclosed',
+                __('Columns enclosed with:')
         );
         $leaf->setSize(2);
         $leaf->setLen(2);
         $generalOptions->addProperty($leaf);
         $leaf = new TextPropertyItem(
-            'new_line',
-            __('Lines terminated with:')
+                'escaped',
+                __('Columns escaped with:')
+        );
+        $leaf->setSize(2);
+        $leaf->setLen(2);
+        $generalOptions->addProperty($leaf);
+        $leaf = new TextPropertyItem(
+                'new_line',
+                __('Lines terminated with:')
         );
         $leaf->setSize(2);
         $generalOptions->addProperty($leaf);
@@ -85,4 +84,5 @@ abstract class AbstractImportCsv extends ImportPlugin
 
         return $generalOptions;
     }
+
 }

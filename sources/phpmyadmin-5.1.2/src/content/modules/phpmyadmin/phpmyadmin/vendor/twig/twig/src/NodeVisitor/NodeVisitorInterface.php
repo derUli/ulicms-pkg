@@ -19,8 +19,8 @@ use Twig\Node\Node;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-interface NodeVisitorInterface
-{
+interface NodeVisitorInterface {
+
     /**
      * Called before child nodes are visited.
      *

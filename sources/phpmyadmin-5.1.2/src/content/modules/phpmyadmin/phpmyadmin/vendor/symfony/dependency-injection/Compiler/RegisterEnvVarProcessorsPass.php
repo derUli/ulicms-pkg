@@ -23,12 +23,11 @@ use Symfony\Component\DependencyInjection\Reference;
  *
  * @author Nicolas Grekas <p@tchwork.com>
  */
-class RegisterEnvVarProcessorsPass implements CompilerPassInterface
-{
+class RegisterEnvVarProcessorsPass implements CompilerPassInterface {
+
     private const ALLOWED_TYPES = ['array', 'bool', 'float', 'int', 'string'];
 
-    public function process(ContainerBuilder $container)
-    {
+    public function process(ContainerBuilder $container) {
         $bag = $container->getParameterBag();
         $types = [];
         $processors = [];
@@ -55,13 +54,12 @@ class RegisterEnvVarProcessorsPass implements CompilerPassInterface
 
         if ($processors) {
             $container->setAlias('container.env_var_processors_locator', (string) ServiceLocatorTagPass::register($container, $processors))
-                ->setPublic(true)
+                    ->setPublic(true)
             ;
         }
     }
 
-    private static function validateProvidedTypes(string $types, string $class): array
-    {
+    private static function validateProvidedTypes(string $types, string $class): array {
         $types = explode('|', $types);
 
         foreach ($types as $type) {
@@ -72,4 +70,5 @@ class RegisterEnvVarProcessorsPass implements CompilerPassInterface
 
         return $types;
     }
+
 }

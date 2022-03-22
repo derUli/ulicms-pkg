@@ -1,8 +1,8 @@
 <?php
+
 /**
  * `DROP` statement.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\SqlParser\Statements;
@@ -13,8 +13,8 @@ use PhpMyAdmin\SqlParser\Statement;
 /**
  * `DROP` statement.
  */
-class DropStatement extends Statement
-{
+class DropStatement extends Statement {
+
     /**
      * Options of this statement.
      *
@@ -34,7 +34,6 @@ class DropStatement extends Statement
         'TABLESPACE' => 1,
         'TRIGGER' => 1,
         'USER' => 1,
-
         'TEMPORARY' => 2,
         'IF EXISTS' => 3,
     ];
@@ -80,4 +79,5 @@ class DropStatement extends Statement
      * @var Expression
      */
     public $table;
+
 }

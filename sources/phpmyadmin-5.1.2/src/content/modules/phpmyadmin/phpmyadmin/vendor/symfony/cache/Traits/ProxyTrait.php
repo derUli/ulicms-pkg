@@ -19,25 +19,24 @@ use Symfony\Contracts\Service\ResetInterface;
  *
  * @internal
  */
-trait ProxyTrait
-{
+trait ProxyTrait {
+
     private $pool;
 
     /**
      * {@inheritdoc}
      */
-    public function prune()
-    {
+    public function prune() {
         return $this->pool instanceof PruneableInterface && $this->pool->prune();
     }
 
     /**
      * {@inheritdoc}
      */
-    public function reset()
-    {
+    public function reset() {
         if ($this->pool instanceof ResetInterface) {
             $this->pool->reset();
         }
     }
+
 }

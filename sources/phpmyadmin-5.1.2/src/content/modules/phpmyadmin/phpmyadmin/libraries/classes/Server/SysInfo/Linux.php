@@ -18,8 +18,8 @@ use function preg_split;
 /**
  * Linux based SysInfo class
  */
-class Linux extends Base
-{
+class Linux extends Base {
+
     /**
      * The OS name
      *
@@ -32,8 +32,7 @@ class Linux extends Base
      *
      * @return array<string, int> with load data
      */
-    public function loadavg()
-    {
+    public function loadavg() {
         $buf = file_get_contents('/proc/stat');
         if ($buf === false) {
             $buf = '';
@@ -43,15 +42,15 @@ class Linux extends Base
             $pos = 0;
         }
         $nums = preg_split(
-            '/\s+/',
-            mb_substr(
-                $buf,
-                0,
-                $pos
-            )
+                '/\s+/',
+                mb_substr(
+                        $buf,
+                        0,
+                        $pos
+                )
         );
 
-        if (! is_array($nums)) {
+        if (!is_array($nums)) {
             return ['busy' => 0, 'idle' => 0];
         }
 
@@ -66,8 +65,7 @@ class Linux extends Base
      *
      * @return bool true on success
      */
-    public function supported()
-    {
+    public function supported() {
         return @is_readable('/proc/meminfo') && @is_readable('/proc/stat');
     }
 
@@ -76,17 +74,16 @@ class Linux extends Base
      *
      * @return array with memory usage data
      */
-    public function memory()
-    {
+    public function memory() {
         $content = @file_get_contents('/proc/meminfo');
         if ($content === false) {
             return [];
         }
 
         preg_match_all(
-            SysInfo::MEMORY_REGEXP,
-            $content,
-            $matches
+                SysInfo::MEMORY_REGEXP,
+                $content,
+                $matches
         );
 
         $mem = array_combine($matches[1], $matches[2]);
@@ -95,12 +92,12 @@ class Linux extends Base
         }
 
         $defaults = [
-            'MemTotal'   => 0,
-            'MemFree'    => 0,
-            'Cached'     => 0,
-            'Buffers'    => 0,
-            'SwapTotal'  => 0,
-            'SwapFree'   => 0,
+            'MemTotal' => 0,
+            'MemFree' => 0,
+            'Cached' => 0,
+            'Buffers' => 0,
+            'SwapTotal' => 0,
+            'SwapFree' => 0,
             'SwapCached' => 0,
         ];
 
@@ -116,4 +113,5 @@ class Linux extends Base
 
         return $mem;
     }
+
 }

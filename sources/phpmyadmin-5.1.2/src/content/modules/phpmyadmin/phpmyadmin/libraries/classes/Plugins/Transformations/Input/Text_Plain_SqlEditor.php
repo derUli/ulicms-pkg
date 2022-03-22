@@ -1,8 +1,8 @@
 <?php
+
 /**
  * SQL editing with syntax highlighted CodeMirror editor
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Plugins\Transformations\Input;
@@ -13,17 +13,16 @@ use PhpMyAdmin\Plugins\Transformations\Abs\CodeMirrorEditorTransformationPlugin;
  * SQL editing with syntax highlighted CodeMirror editor
  */
 // @codingStandardsIgnoreLine
-class Text_Plain_SqlEditor extends CodeMirrorEditorTransformationPlugin
-{
+class Text_Plain_SqlEditor extends CodeMirrorEditorTransformationPlugin {
+
     /**
      * Gets the transformation description of the specific plugin
      *
      * @return string
      */
-    public static function getInfo()
-    {
+    public static function getInfo() {
         return __(
-            'Syntax highlighted CodeMirror editor for SQL.'
+                'Syntax highlighted CodeMirror editor for SQL.'
         );
     }
 
@@ -33,8 +32,7 @@ class Text_Plain_SqlEditor extends CodeMirrorEditorTransformationPlugin
      *
      * @return array javascripts to be included
      */
-    public function getScripts()
-    {
+    public function getScripts() {
         $scripts = [];
         if ($GLOBALS['cfg']['CodemirrorEnable']) {
             $scripts[] = 'vendor/codemirror/lib/codemirror.js';
@@ -52,8 +50,7 @@ class Text_Plain_SqlEditor extends CodeMirrorEditorTransformationPlugin
      *
      * @return string
      */
-    public static function getName()
-    {
+    public static function getName() {
         return 'SQL';
     }
 
@@ -62,8 +59,7 @@ class Text_Plain_SqlEditor extends CodeMirrorEditorTransformationPlugin
      *
      * @return string
      */
-    public static function getMIMEType()
-    {
+    public static function getMIMEType() {
         return 'Text';
     }
 
@@ -72,8 +68,8 @@ class Text_Plain_SqlEditor extends CodeMirrorEditorTransformationPlugin
      *
      * @return string
      */
-    public static function getMIMESubtype()
-    {
+    public static function getMIMESubtype() {
         return 'Plain';
     }
+
 }

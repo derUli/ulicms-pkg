@@ -26,10 +26,9 @@ use Twig\Token;
  *
  * @deprecated since Twig 2.9, to be removed in 3.0 (use the "apply" tag instead)
  */
-final class FilterTokenParser extends AbstractTokenParser
-{
-    public function parse(Token $token)
-    {
+final class FilterTokenParser extends AbstractTokenParser {
+
+    public function parse(Token $token) {
         $stream = $this->parser->getStream();
         $lineno = $token->getLine();
 
@@ -50,15 +49,14 @@ final class FilterTokenParser extends AbstractTokenParser
         return new PrintNode($filter, $lineno, $this->getTag());
     }
 
-    public function decideBlockEnd(Token $token)
-    {
+    public function decideBlockEnd(Token $token) {
         return $token->test('endfilter');
     }
 
-    public function getTag()
-    {
+    public function getTag() {
         return 'filter';
     }
+
 }
 
 class_alias('Twig\TokenParser\FilterTokenParser', 'Twig_TokenParser_Filter');

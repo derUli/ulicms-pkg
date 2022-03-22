@@ -92,18 +92,18 @@ var processList = {
             var interval = parseInt(processList.refreshInterval, 10) * 1000;
             var urlParams = processList.getUrlParams();
             processList.refreshRequest = $.post(processList.refreshUrl,
-                urlParams,
-                function (data) {
-                    if (data.hasOwnProperty('success') && data.success) {
-                        var $newTable = $(data.message);
-                        $('#tableprocesslist').html($newTable.html());
-                        Functions.highlightSql($('#tableprocesslist'));
-                    }
-                    processList.refreshTimeout = setTimeout(
-                        processList.refresh,
-                        interval
-                    );
-                });
+                    urlParams,
+                    function (data) {
+                        if (data.hasOwnProperty('success') && data.success) {
+                            var $newTable = $(data.message);
+                            $('#tableprocesslist').html($newTable.html());
+                            Functions.highlightSql($('#tableprocesslist'));
+                        }
+                        processList.refreshTimeout = setTimeout(
+                                processList.refresh,
+                                interval
+                                );
+                    });
         }
     },
 
@@ -166,10 +166,10 @@ AJAX.registerOnload('server/status/processes.js', function () {
     processList.init();
     // Bind event handler for kill_process
     $('#tableprocesslist').on(
-        'click',
-        'a.kill_process',
-        processList.killProcessHandler
-    );
+            'click',
+            'a.kill_process',
+            processList.killProcessHandler
+            );
     // Bind event handler for toggling refresh of process list
     $('a#toggleRefresh').on('click', function (event) {
         event.preventDefault();

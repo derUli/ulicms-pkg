@@ -7,7 +7,7 @@
  * @required    js/functions.js
  */
 
-function showSettings (selector) {
+function showSettings(selector) {
     var buttons = {};
     buttons[Messages.strApply] = function () {
         $('.config-form').trigger('submit');
@@ -20,26 +20,26 @@ function showSettings (selector) {
     // Keeping a clone to restore in case the user cancels the operation
     var $clone = $(selector + ' .page_settings').clone(true);
     $(selector)
-        .dialog({
-            title: Messages.strPageSettings,
-            width: 700,
-            minHeight: 250,
-            modal: true,
-            open: function () {
-                $(this).dialog('option', 'maxHeight', $(window).height() - $(this).offset().top);
-            },
-            close: function () {
-                $(selector + ' .page_settings').replaceWith($clone);
-            },
-            buttons: buttons
-        });
+            .dialog({
+                title: Messages.strPageSettings,
+                width: 700,
+                minHeight: 250,
+                modal: true,
+                open: function () {
+                    $(this).dialog('option', 'maxHeight', $(window).height() - $(this).offset().top);
+                },
+                close: function () {
+                    $(selector + ' .page_settings').replaceWith($clone);
+                },
+                buttons: buttons
+            });
 }
 
-function showPageSettings () {
+function showPageSettings() {
     showSettings('#page_settings_modal');
 }
 
-function showNaviSettings () {
+function showNaviSettings() {
     showSettings('#pma_navigation_settings');
 }
 

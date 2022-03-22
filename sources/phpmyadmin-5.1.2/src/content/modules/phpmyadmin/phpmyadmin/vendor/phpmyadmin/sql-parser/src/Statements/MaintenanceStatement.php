@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Maintenance statement.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\SqlParser\Statements;
@@ -20,8 +20,8 @@ use PhpMyAdmin\SqlParser\TokensList;
  * They follow the syntax:
  *     STMT [some options] tbl_name [, tbl_name] ... [some more options]
  */
-class MaintenanceStatement extends Statement
-{
+class MaintenanceStatement extends Statement {
+
     /**
      * Tables maintained.
      *
@@ -38,8 +38,7 @@ class MaintenanceStatement extends Statement
      * @param TokensList $list   the list of tokens to be parsed
      * @param Token      $token  the token that is being parsed
      */
-    public function after(Parser $parser, TokensList $list, Token $token)
-    {
+    public function after(Parser $parser, TokensList $list, Token $token) {
         // [some options] is going to be parsed first.
         //
         // There is a parser specified in `Parser::$KEYWORD_PARSERS`
@@ -48,11 +47,12 @@ class MaintenanceStatement extends Statement
         // Finally, we parse here [some more options] and that's all.
         ++$list->idx;
         $this->options->merge(
-            OptionsArray::parse(
-                $parser,
-                $list,
-                static::$OPTIONS
-            )
+                OptionsArray::parse(
+                        $parser,
+                        $list,
+                        static::$OPTIONS
+                )
         );
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This is a PHP library that handles calling reCAPTCHA.
  *
@@ -37,8 +38,8 @@ namespace ReCaptcha;
 /**
  * The response returned from the service.
  */
-class Response
-{
+class Response {
+
     /**
      * Success or failure.
      * @var boolean
@@ -87,8 +88,7 @@ class Response
      * @param string $json
      * @return \ReCaptcha\Response
      */
-    public static function fromJson($json)
-    {
+    public static function fromJson($json) {
         $responseData = json_decode($json, true);
 
         if (!$responseData) {
@@ -123,8 +123,7 @@ class Response
      * @param string $action
      * @param array $errorCodes
      */
-    public function __construct($success, array $errorCodes = array(), $hostname = null, $challengeTs = null, $apkPackageName = null, $score = null, $action = null)
-    {
+    public function __construct($success, array $errorCodes = array(), $hostname = null, $challengeTs = null, $apkPackageName = null, $score = null, $action = null) {
         $this->success = $success;
         $this->hostname = $hostname;
         $this->challengeTs = $challengeTs;
@@ -139,8 +138,7 @@ class Response
      *
      * @return boolean
      */
-    public function isSuccess()
-    {
+    public function isSuccess() {
         return $this->success;
     }
 
@@ -149,8 +147,7 @@ class Response
      *
      * @return array
      */
-    public function getErrorCodes()
-    {
+    public function getErrorCodes() {
         return $this->errorCodes;
     }
 
@@ -159,8 +156,7 @@ class Response
      *
      * @return string
      */
-    public function getHostname()
-    {
+    public function getHostname() {
         return $this->hostname;
     }
 
@@ -169,8 +165,7 @@ class Response
      *
      * @return string
      */
-    public function getChallengeTs()
-    {
+    public function getChallengeTs() {
         return $this->challengeTs;
     }
 
@@ -179,17 +174,16 @@ class Response
      *
      * @return string
      */
-    public function getApkPackageName()
-    {
+    public function getApkPackageName() {
         return $this->apkPackageName;
     }
+
     /**
      * Get score
      *
      * @return float
      */
-    public function getScore()
-    {
+    public function getScore() {
         return $this->score;
     }
 
@@ -198,13 +192,11 @@ class Response
      *
      * @return string
      */
-    public function getAction()
-    {
+    public function getAction() {
         return $this->action;
     }
 
-    public function toArray()
-    {
+    public function toArray() {
         return array(
             'success' => $this->isSuccess(),
             'hostname' => $this->getHostname(),
@@ -215,4 +207,5 @@ class Response
             'error-codes' => $this->getErrorCodes(),
         );
     }
+
 }

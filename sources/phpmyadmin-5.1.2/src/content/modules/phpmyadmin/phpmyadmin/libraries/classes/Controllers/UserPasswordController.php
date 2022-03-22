@@ -14,8 +14,8 @@ use PhpMyAdmin\UserPassword;
 /**
  * Displays and handles the form where the user can change their password.
  */
-class UserPasswordController extends AbstractController
-{
+class UserPasswordController extends AbstractController {
+
     /** @var UserPassword */
     private $userPassword;
 
@@ -26,15 +26,13 @@ class UserPasswordController extends AbstractController
      * @param Response          $response
      * @param DatabaseInterface $dbi
      */
-    public function __construct($response, Template $template, UserPassword $userPassword, $dbi)
-    {
+    public function __construct($response, Template $template, UserPassword $userPassword, $dbi) {
         parent::__construct($response, $template);
         $this->userPassword = $userPassword;
         $this->dbi = $dbi;
     }
 
-    public function index(): void
-    {
+    public function index(): void {
         global $cfg, $hostname, $username, $password, $change_password_message, $msg;
 
         $this->addScriptFiles(['server/privileges.js', 'vendor/zxcvbn.js']);
@@ -43,13 +41,13 @@ class UserPasswordController extends AbstractController
          * Displays an error message and exits if the user isn't allowed to use this
          * script
          */
-        if (! $cfg['ShowChgPassword']) {
+        if (!$cfg['ShowChgPassword']) {
             $cfg['ShowChgPassword'] = $this->dbi->selectDb('mysql');
         }
-        if ($cfg['Server']['auth_type'] === 'config' || ! $cfg['ShowChgPassword']) {
+        if ($cfg['Server']['auth_type'] === 'config' || !$cfg['ShowChgPassword']) {
             $this->response->addHTML(Message::error(
-                __('You don\'t have sufficient privileges to be here right now!')
-            )->getDisplay());
+                            __('You don\'t have sufficient privileges to be here right now!')
+                    )->getDisplay());
 
             return;
         }
@@ -67,7 +65,7 @@ class UserPasswordController extends AbstractController
             $change_password_message = $this->userPassword->setChangePasswordMsg();
             $msg = $change_password_message['msg'];
 
-            if (! $change_password_message['error']) {
+            if (!$change_password_message['error']) {
                 $sql_query = $this->userPassword->changePassword($password);
 
                 if ($this->response->isAjax()) {
@@ -96,7 +94,6 @@ class UserPasswordController extends AbstractController
          * If the "change password" form hasn't been submitted or the values submitted
          * aren't valid -> displays the form
          */
-
         // Displays an error message if required
         if (isset($msg)) {
             $this->response->addHTML($msg->getDisplay());
@@ -104,4 +101,5 @@ class UserPasswordController extends AbstractController
 
         $this->response->addHTML($this->userPassword->getFormForChangePassword($username, $hostname));
     }
+
 }

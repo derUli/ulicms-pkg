@@ -8,30 +8,29 @@ use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
 
-class SanitizeExtension extends AbstractExtension
-{
+class SanitizeExtension extends AbstractExtension {
+
     /**
      * Returns a list of filters to add to the existing list.
      *
      * @return TwigFilter[]
      */
-    public function getFilters()
-    {
+    public function getFilters() {
         return [
             new TwigFilter(
-                'escape_js_string',
-                'PhpMyAdmin\Sanitize::escapeJsString',
-                ['is_safe' => ['html']]
+                    'escape_js_string',
+                    'PhpMyAdmin\Sanitize::escapeJsString',
+                    ['is_safe' => ['html']]
             ),
             new TwigFilter(
-                'js_format',
-                'PhpMyAdmin\Sanitize::jsFormat',
-                ['is_safe' => ['html']]
+                    'js_format',
+                    'PhpMyAdmin\Sanitize::jsFormat',
+                    ['is_safe' => ['html']]
             ),
             new TwigFilter(
-                'sanitize',
-                'PhpMyAdmin\Sanitize::sanitizeMessage',
-                ['is_safe' => ['html']]
+                    'sanitize',
+                    'PhpMyAdmin\Sanitize::sanitizeMessage',
+                    ['is_safe' => ['html']]
             ),
         ];
     }
@@ -41,14 +40,14 @@ class SanitizeExtension extends AbstractExtension
      *
      * @return TwigFunction[]
      */
-    public function getFunctions()
-    {
+    public function getFunctions() {
         return [
             new TwigFunction(
-                'get_js_value',
-                'PhpMyAdmin\Sanitize::getJsValue',
-                ['is_safe' => ['html']]
+                    'get_js_value',
+                    'PhpMyAdmin\Sanitize::getJsValue',
+                    ['is_safe' => ['html']]
             ),
         ];
     }
+
 }

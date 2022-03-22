@@ -22,32 +22,29 @@ namespace Symfony\Component\Cache\Traits;
  *
  * @internal
  */
-class RedisClusterNodeProxy
-{
+class RedisClusterNodeProxy {
+
     private $host;
     private $redis;
 
     /**
      * @param \RedisCluster|RedisClusterProxy $redis
      */
-    public function __construct(array $host, $redis)
-    {
+    public function __construct(array $host, $redis) {
         $this->host = $host;
         $this->redis = $redis;
     }
 
-    public function __call(string $method, array $args)
-    {
+    public function __call(string $method, array $args) {
         return $this->redis->{$method}($this->host, ...$args);
     }
 
-    public function scan(&$iIterator, $strPattern = null, $iCount = null)
-    {
+    public function scan(&$iIterator, $strPattern = null, $iCount = null) {
         return $this->redis->scan($iIterator, $this->host, $strPattern, $iCount);
     }
 
-    public function getOption($name)
-    {
+    public function getOption($name) {
         return $this->redis->getOption($name);
     }
+
 }

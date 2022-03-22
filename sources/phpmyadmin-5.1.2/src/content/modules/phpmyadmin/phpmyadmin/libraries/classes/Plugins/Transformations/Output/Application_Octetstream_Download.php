@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Application OctetStream Download Transformations plugin for phpMyAdmin
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Plugins\Transformations\Output;
@@ -13,15 +13,14 @@ use PhpMyAdmin\Plugins\Transformations\Abs\DownloadTransformationsPlugin;
  * Handles the download transformation for application octetstream
  */
 // @codingStandardsIgnoreLine
-class Application_Octetstream_Download extends DownloadTransformationsPlugin
-{
+class Application_Octetstream_Download extends DownloadTransformationsPlugin {
+
     /**
      * Gets the plugin`s MIME type
      *
      * @return string
      */
-    public static function getMIMEType()
-    {
+    public static function getMIMEType() {
         return 'Application';
     }
 
@@ -30,8 +29,8 @@ class Application_Octetstream_Download extends DownloadTransformationsPlugin
      *
      * @return string
      */
-    public static function getMIMESubtype()
-    {
+    public static function getMIMESubtype() {
         return 'OctetStream';
     }
+
 }

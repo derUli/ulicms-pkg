@@ -25,8 +25,8 @@ use Symfony\Contracts\Cache\TagAwareCacheInterface;
 /**
  * @author Nicolas Grekas <p@tchwork.com>
  */
-class TagAwareAdapter implements TagAwareAdapterInterface, TagAwareCacheInterface, PruneableInterface, ResettableInterface, LoggerAwareInterface
-{
+class TagAwareAdapter implements TagAwareAdapterInterface, TagAwareCacheInterface, PruneableInterface, ResettableInterface, LoggerAwareInterface {
+
     use ContractsTrait;
     use LoggerAwareTrait;
     use ProxyTrait;
@@ -42,77 +42,75 @@ class TagAwareAdapter implements TagAwareAdapterInterface, TagAwareCacheInterfac
     private $knownTagVersions = [];
     private $knownTagVersionsTtl;
 
-    public function __construct(AdapterInterface $itemsPool, AdapterInterface $tagsPool = null, float $knownTagVersionsTtl = 0.15)
-    {
+    public function __construct(AdapterInterface $itemsPool, AdapterInterface $tagsPool = null, float $knownTagVersionsTtl = 0.15) {
         $this->pool = $itemsPool;
         $this->tags = $tagsPool ?: $itemsPool;
         $this->knownTagVersionsTtl = $knownTagVersionsTtl;
         $this->createCacheItem = \Closure::bind(
-            static function ($key, $value, CacheItem $protoItem) {
-                $item = new CacheItem();
-                $item->key = $key;
-                $item->value = $value;
-                $item->expiry = $protoItem->expiry;
-                $item->poolHash = $protoItem->poolHash;
+                        static function ($key, $value, CacheItem $protoItem) {
+                            $item = new CacheItem();
+                            $item->key = $key;
+                            $item->value = $value;
+                            $item->expiry = $protoItem->expiry;
+                            $item->poolHash = $protoItem->poolHash;
 
-                return $item;
-            },
-            null,
-            CacheItem::class
+                            return $item;
+                        },
+                        null,
+                        CacheItem::class
         );
         $this->setCacheItemTags = \Closure::bind(
-            static function (CacheItem $item, $key, array &$itemTags) {
-                $item->isTaggable = true;
-                if (!$item->isHit) {
-                    return $item;
-                }
-                if (isset($itemTags[$key])) {
-                    foreach ($itemTags[$key] as $tag => $version) {
-                        $item->metadata[CacheItem::METADATA_TAGS][$tag] = $tag;
-                    }
-                    unset($itemTags[$key]);
-                } else {
-                    $item->value = null;
-                    $item->isHit = false;
-                }
+                        static function (CacheItem $item, $key, array &$itemTags) {
+                            $item->isTaggable = true;
+                            if (!$item->isHit) {
+                                return $item;
+                            }
+                            if (isset($itemTags[$key])) {
+                                foreach ($itemTags[$key] as $tag => $version) {
+                                    $item->metadata[CacheItem::METADATA_TAGS][$tag] = $tag;
+                                }
+                                unset($itemTags[$key]);
+                            } else {
+                                $item->value = null;
+                                $item->isHit = false;
+                            }
 
-                return $item;
-            },
-            null,
-            CacheItem::class
+                            return $item;
+                        },
+                        null,
+                        CacheItem::class
         );
         $this->getTagsByKey = \Closure::bind(
-            static function ($deferred) {
-                $tagsByKey = [];
-                foreach ($deferred as $key => $item) {
-                    $tagsByKey[$key] = $item->newMetadata[CacheItem::METADATA_TAGS] ?? [];
-                    $item->metadata = $item->newMetadata;
-                }
+                        static function ($deferred) {
+                            $tagsByKey = [];
+                            foreach ($deferred as $key => $item) {
+                                $tagsByKey[$key] = $item->newMetadata[CacheItem::METADATA_TAGS] ?? [];
+                                $item->metadata = $item->newMetadata;
+                            }
 
-                return $tagsByKey;
-            },
-            null,
-            CacheItem::class
+                            return $tagsByKey;
+                        },
+                        null,
+                        CacheItem::class
         );
         $this->invalidateTags = \Closure::bind(
-            static function (AdapterInterface $tagsAdapter, array $tags) {
-                foreach ($tags as $v) {
-                    $v->expiry = 0;
-                    $tagsAdapter->saveDeferred($v);
-                }
+                        static function (AdapterInterface $tagsAdapter, array $tags) {
+                            foreach ($tags as $v) {
+                                $v->expiry = 0;
+                                $tagsAdapter->saveDeferred($v);
+                            }
 
-                return $tagsAdapter->commit();
-            },
-            null,
-            CacheItem::class
+                            return $tagsAdapter->commit();
+                        },
+                        null,
+                        CacheItem::class
         );
     }
 
     /**
      * {@inheritdoc}
      */
-    public function invalidateTags(array $tags)
-    {
+    public function invalidateTags(array $tags) {
         $ok = true;
         $tagsByKey = [];
         $invalidatedTags = [];
@@ -139,7 +137,7 @@ class TagAwareAdapter implements TagAwareAdapterInterface, TagAwareCacheInterfac
         $f = $this->createCacheItem;
 
         foreach ($tagsByKey as $key => $tags) {
-            $this->pool->saveDeferred($f(static::TAGS_PREFIX.$key, array_intersect_key($tagVersions, $tags), $items[$key]));
+            $this->pool->saveDeferred($f(static::TAGS_PREFIX . $key, array_intersect_key($tagVersions, $tags), $items[$key]));
         }
         $ok = $this->pool->commit() && $ok;
 
@@ -156,8 +154,7 @@ class TagAwareAdapter implements TagAwareAdapterInterface, TagAwareCacheInterfac
      *
      * @return bool
      */
-    public function hasItem($key)
-    {
+    public function hasItem($key) {
         if (\is_string($key) && isset($this->deferred[$key])) {
             $this->commit();
         }
@@ -166,7 +163,7 @@ class TagAwareAdapter implements TagAwareAdapterInterface, TagAwareCacheInterfac
             return false;
         }
 
-        $itemTags = $this->pool->getItem(static::TAGS_PREFIX.$key);
+        $itemTags = $this->pool->getItem(static::TAGS_PREFIX . $key);
 
         if (!$itemTags->isHit()) {
             return false;
@@ -188,8 +185,7 @@ class TagAwareAdapter implements TagAwareAdapterInterface, TagAwareCacheInterfac
     /**
      * {@inheritdoc}
      */
-    public function getItem($key)
-    {
+    public function getItem($key) {
         foreach ($this->getItems([$key]) as $item) {
             return $item;
         }
@@ -200,15 +196,14 @@ class TagAwareAdapter implements TagAwareAdapterInterface, TagAwareCacheInterfac
     /**
      * {@inheritdoc}
      */
-    public function getItems(array $keys = [])
-    {
+    public function getItems(array $keys = []) {
         $tagKeys = [];
         $commit = false;
 
         foreach ($keys as $key) {
             if ('' !== $key && \is_string($key)) {
                 $commit = $commit || isset($this->deferred[$key]);
-                $key = static::TAGS_PREFIX.$key;
+                $key = static::TAGS_PREFIX . $key;
                 $tagKeys[$key] = $key;
             }
         }
@@ -235,8 +230,7 @@ class TagAwareAdapter implements TagAwareAdapterInterface, TagAwareCacheInterfac
      *
      * @return bool
      */
-    public function clear(/*string $prefix = ''*/)
-    {
+    public function clear(/* string $prefix = '' */) {
         $prefix = 0 < \func_num_args() ? (string) func_get_arg(0) : '';
 
         if ('' !== $prefix) {
@@ -261,8 +255,7 @@ class TagAwareAdapter implements TagAwareAdapterInterface, TagAwareCacheInterfac
      *
      * @return bool
      */
-    public function deleteItem($key)
-    {
+    public function deleteItem($key) {
         return $this->deleteItems([$key]);
     }
 
@@ -271,11 +264,10 @@ class TagAwareAdapter implements TagAwareAdapterInterface, TagAwareCacheInterfac
      *
      * @return bool
      */
-    public function deleteItems(array $keys)
-    {
+    public function deleteItems(array $keys) {
         foreach ($keys as $key) {
             if ('' !== $key && \is_string($key)) {
-                $keys[] = static::TAGS_PREFIX.$key;
+                $keys[] = static::TAGS_PREFIX . $key;
             }
         }
 
@@ -287,8 +279,7 @@ class TagAwareAdapter implements TagAwareAdapterInterface, TagAwareCacheInterfac
      *
      * @return bool
      */
-    public function save(CacheItemInterface $item)
-    {
+    public function save(CacheItemInterface $item) {
         if (!$item instanceof CacheItem) {
             return false;
         }
@@ -302,8 +293,7 @@ class TagAwareAdapter implements TagAwareAdapterInterface, TagAwareCacheInterfac
      *
      * @return bool
      */
-    public function saveDeferred(CacheItemInterface $item)
-    {
+    public function saveDeferred(CacheItemInterface $item) {
         if (!$item instanceof CacheItem) {
             return false;
         }
@@ -317,37 +307,32 @@ class TagAwareAdapter implements TagAwareAdapterInterface, TagAwareCacheInterfac
      *
      * @return bool
      */
-    public function commit()
-    {
+    public function commit() {
         return $this->invalidateTags([]);
     }
 
     /**
      * @return array
      */
-    public function __sleep()
-    {
-        throw new \BadMethodCallException('Cannot serialize '.__CLASS__);
+    public function __sleep() {
+        throw new \BadMethodCallException('Cannot serialize ' . __CLASS__);
     }
 
-    public function __wakeup()
-    {
-        throw new \BadMethodCallException('Cannot unserialize '.__CLASS__);
+    public function __wakeup() {
+        throw new \BadMethodCallException('Cannot unserialize ' . __CLASS__);
     }
 
-    public function __destruct()
-    {
+    public function __destruct() {
         $this->commit();
     }
 
-    private function generateItems(iterable $items, array $tagKeys)
-    {
+    private function generateItems(iterable $items, array $tagKeys) {
         $bufferedItems = $itemTags = [];
         $f = $this->setCacheItemTags;
 
         foreach ($items as $key => $item) {
             if (!$tagKeys) {
-                yield $key => $f($item, static::TAGS_PREFIX.$key, $itemTags);
+                yield $key => $f($item, static::TAGS_PREFIX . $key, $itemTags);
                 continue;
             }
             if (!isset($tagKeys[$key])) {
@@ -375,15 +360,14 @@ class TagAwareAdapter implements TagAwareAdapterInterface, TagAwareCacheInterfac
                 $tagVersions = $tagKeys = null;
 
                 foreach ($bufferedItems as $key => $item) {
-                    yield $key => $f($item, static::TAGS_PREFIX.$key, $itemTags);
+                    yield $key => $f($item, static::TAGS_PREFIX . $key, $itemTags);
                 }
                 $bufferedItems = null;
             }
         }
     }
 
-    private function getTagVersions(array $tagsByKey, array &$invalidatedTags = [])
-    {
+    private function getTagVersions(array $tagsByKey, array &$invalidatedTags = []) {
         $tagVersions = $invalidatedTags;
 
         foreach ($tagsByKey as $tags) {
@@ -407,7 +391,7 @@ class TagAwareAdapter implements TagAwareAdapterInterface, TagAwareCacheInterfac
         $now = microtime(true);
         $tags = [];
         foreach ($tagVersions as $tag => $version) {
-            $tags[$tag.static::TAGS_PREFIX] = $tag;
+            $tags[$tag . static::TAGS_PREFIX] = $tag;
             if ($fetchTagVersions || !isset($this->knownTagVersions[$tag])) {
                 $fetchTagVersions = true;
                 continue;
@@ -435,4 +419,5 @@ class TagAwareAdapter implements TagAwareAdapterInterface, TagAwareCacheInterfac
 
         return $tagVersions;
     }
+
 }

@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Contains abstract class to hold table preferences/statistics
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Plugins\Schema;
@@ -26,8 +26,8 @@ use function sprintf;
  *
  * @abstract
  */
-abstract class TableStats
-{
+abstract class TableStats {
+
     /** @var Dia\Dia|Eps\Eps|Pdf\Pdf|Svg\Svg */
     protected $diagram;
 
@@ -88,25 +88,25 @@ abstract class TableStats
      *                                                                from the browser
      */
     public function __construct(
-        $diagram,
-        $db,
-        $pageNumber,
-        $tableName,
-        $showKeys,
-        $tableDimension,
-        $offline
+            $diagram,
+            $db,
+            $pageNumber,
+            $tableName,
+            $showKeys,
+            $tableDimension,
+            $offline
     ) {
         global $dbi;
 
-        $this->diagram    = $diagram;
-        $this->db         = $db;
+        $this->diagram = $diagram;
+        $this->db = $db;
         $this->pageNumber = $pageNumber;
-        $this->tableName  = $tableName;
+        $this->tableName = $tableName;
 
-        $this->showKeys   = $showKeys;
-        $this->tableDimension   = $tableDimension;
+        $this->showKeys = $showKeys;
+        $this->tableDimension = $tableDimension;
 
-        $this->offline    = $offline;
+        $this->offline = $offline;
 
         $this->relation = new Relation($dbi);
         $this->font = new Font();
@@ -127,17 +127,16 @@ abstract class TableStats
      *
      * @return void
      */
-    protected function validateTableAndLoadFields()
-    {
+    protected function validateTableAndLoadFields() {
         global $dbi;
 
         $sql = 'DESCRIBE ' . Util::backquote($this->tableName);
         $result = $dbi->tryQuery(
-            $sql,
-            DatabaseInterface::CONNECT_USER,
-            DatabaseInterface::QUERY_STORE
+                $sql,
+                DatabaseInterface::CONNECT_USER,
+                DatabaseInterface::QUERY_STORE
         );
-        if (! $result || ! $dbi->numRows($result)) {
+        if (!$result || !$dbi->numRows($result)) {
             $this->showMissingTableError();
         }
 
@@ -146,8 +145,8 @@ abstract class TableStats
             $all_columns = [];
             foreach ($indexes as $index) {
                 $all_columns = array_merge(
-                    $all_columns,
-                    array_flip(array_keys($index->getColumns()))
+                        $all_columns,
+                        array_flip(array_keys($index->getColumns()))
                 );
             }
             $this->fields = array_keys($all_columns);
@@ -172,9 +171,8 @@ abstract class TableStats
      *
      * @return void
      */
-    protected function loadCoordinates()
-    {
-        if (! isset($_POST['t_h'])) {
+    protected function loadCoordinates() {
+        if (!isset($_POST['t_h'])) {
             return;
         }
 
@@ -194,8 +192,7 @@ abstract class TableStats
      *
      * @return void
      */
-    protected function loadDisplayField()
-    {
+    protected function loadDisplayField() {
         $this->displayfield = $this->relation->getDisplayField($this->db, $this->tableName);
     }
 
@@ -204,14 +201,13 @@ abstract class TableStats
      *
      * @return void
      */
-    protected function loadPrimaryKey()
-    {
+    protected function loadPrimaryKey() {
         global $dbi;
 
         $result = $dbi->query(
-            'SHOW INDEX FROM ' . Util::backquote($this->tableName) . ';',
-            DatabaseInterface::CONNECT_USER,
-            DatabaseInterface::QUERY_STORE
+                'SHOW INDEX FROM ' . Util::backquote($this->tableName) . ';',
+                DatabaseInterface::CONNECT_USER,
+                DatabaseInterface::QUERY_STORE
         );
         if ($dbi->numRows($result) <= 0) {
             return;
@@ -232,12 +228,10 @@ abstract class TableStats
      *
      * @return string title of the current table
      */
-    protected function getTitle()
-    {
-        return ($this->tableDimension
-            ? sprintf('%.0fx%0.f', $this->width, $this->heightCell)
-            : ''
-        )
-        . ' ' . $this->tableName;
+    protected function getTitle() {
+        return ($this->tableDimension ? sprintf('%.0fx%0.f', $this->width, $this->heightCell) : ''
+                )
+                . ' ' . $this->tableName;
     }
+
 }

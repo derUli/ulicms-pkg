@@ -16,8 +16,8 @@ namespace Symfony\Component\DependencyInjection\Dumper;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-interface DumperInterface
-{
+interface DumperInterface {
+
     /**
      * Dumps the service container.
      *

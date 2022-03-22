@@ -1,4 +1,6 @@
-<?php return array(
+<?php
+
+return array(
     'root' => array(
         'pretty_version' => '2022.2.x-dev',
         'version' => '2022.2.9999999.9999999-dev',

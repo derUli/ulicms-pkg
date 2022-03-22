@@ -1,17 +1,16 @@
 <?php
+
 /**
  * Defines a context class that is later extended to define other contexts.
  *
  * A context is a collection of keywords, operators and functions used for
  * parsing.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\SqlParser;
 
 use PhpMyAdmin\SqlParser\Exceptions\LoaderException;
-
 use function class_exists;
 use function constant;
 use function explode;
@@ -27,8 +26,8 @@ use function substr;
 /**
  * Holds the configuration of the context that is currently used.
  */
-abstract class Context
-{
+abstract class Context {
+
     /**
      * The maximum length of a keyword.
      *
@@ -103,14 +102,12 @@ abstract class Context
         //                 SELECT 2 * 3;        # arithmetic
         //              2. SELECT * FROM table WHERE foo = 'bar';
         //                 SET @i = 0;
-
         // @see Token::FLAG_OPERATOR_ARITHMETIC
         '%' => 1,
         '*' => 1,
         '+' => 1,
         '-' => 1,
         '/' => 1,
-
         // @see Token::FLAG_OPERATOR_LOGICAL
         '!' => 2,
         '!=' => 2,
@@ -123,7 +120,6 @@ abstract class Context
         '>' => 2,
         '>=' => 2,
         '||' => 2,
-
         // @see Token::FLAG_OPERATOR_BITWISE
         '&' => 4,
         '<<' => 4,
@@ -131,10 +127,8 @@ abstract class Context
         '^' => 4,
         '|' => 4,
         '~' => 4,
-
         // @see Token::FLAG_OPERATOR_ASSIGNMENT
         ':=' => 8,
-
         // @see Token::FLAG_OPERATOR_SQL
         '(' => 16,
         ')' => 16,
@@ -159,72 +153,49 @@ abstract class Context
     // Compatibility mode for Microsoft's SQL server.
     // This is the equivalent of ANSI_QUOTES.
     public const SQL_MODE_COMPAT_MYSQL = 2;
-
     // https://dev.mysql.com/doc/refman/5.0/en/sql-mode.html#sqlmode_allow_invalid_dates
     public const SQL_MODE_ALLOW_INVALID_DATES = 1;
-
     // https://dev.mysql.com/doc/refman/5.0/en/sql-mode.html#sqlmode_ansi_quotes
     public const SQL_MODE_ANSI_QUOTES = 2;
-
     // https://dev.mysql.com/doc/refman/5.0/en/sql-mode.html#sqlmode_error_for_division_by_zero
     public const SQL_MODE_ERROR_FOR_DIVISION_BY_ZERO = 4;
-
     // https://dev.mysql.com/doc/refman/5.0/en/sql-mode.html#sqlmode_high_not_precedence
     public const SQL_MODE_HIGH_NOT_PRECEDENCE = 8;
-
     // https://dev.mysql.com/doc/refman/5.0/en/sql-mode.html#sqlmode_ignore_space
     public const SQL_MODE_IGNORE_SPACE = 16;
-
     // https://dev.mysql.com/doc/refman/5.0/en/sql-mode.html#sqlmode_no_auto_create_user
     public const SQL_MODE_NO_AUTO_CREATE_USER = 32;
-
     // https://dev.mysql.com/doc/refman/5.0/en/sql-mode.html#sqlmode_no_auto_value_on_zero
     public const SQL_MODE_NO_AUTO_VALUE_ON_ZERO = 64;
-
     // https://dev.mysql.com/doc/refman/5.0/en/sql-mode.html#sqlmode_no_backslash_escapes
     public const SQL_MODE_NO_BACKSLASH_ESCAPES = 128;
-
     // https://dev.mysql.com/doc/refman/5.0/en/sql-mode.html#sqlmode_no_dir_in_create
     public const SQL_MODE_NO_DIR_IN_CREATE = 256;
-
     // https://dev.mysql.com/doc/refman/5.0/en/sql-mode.html#sqlmode_no_dir_in_create
     public const SQL_MODE_NO_ENGINE_SUBSTITUTION = 512;
-
     // https://dev.mysql.com/doc/refman/5.0/en/sql-mode.html#sqlmode_no_field_options
     public const SQL_MODE_NO_FIELD_OPTIONS = 1024;
-
     // https://dev.mysql.com/doc/refman/5.0/en/sql-mode.html#sqlmode_no_key_options
     public const SQL_MODE_NO_KEY_OPTIONS = 2048;
-
     // https://dev.mysql.com/doc/refman/5.0/en/sql-mode.html#sqlmode_no_table_options
     public const SQL_MODE_NO_TABLE_OPTIONS = 4096;
-
     // https://dev.mysql.com/doc/refman/5.0/en/sql-mode.html#sqlmode_no_unsigned_subtraction
     public const SQL_MODE_NO_UNSIGNED_SUBTRACTION = 8192;
-
     // https://dev.mysql.com/doc/refman/5.0/en/sql-mode.html#sqlmode_no_zero_date
     public const SQL_MODE_NO_ZERO_DATE = 16384;
-
     // https://dev.mysql.com/doc/refman/5.0/en/sql-mode.html#sqlmode_no_zero_in_date
     public const SQL_MODE_NO_ZERO_IN_DATE = 32768;
-
     // https://dev.mysql.com/doc/refman/5.0/en/sql-mode.html#sqlmode_only_full_group_by
     public const SQL_MODE_ONLY_FULL_GROUP_BY = 65536;
-
     // https://dev.mysql.com/doc/refman/5.0/en/sql-mode.html#sqlmode_pipes_as_concat
     public const SQL_MODE_PIPES_AS_CONCAT = 131072;
-
     // https://dev.mysql.com/doc/refman/5.0/en/sql-mode.html#sqlmode_real_as_float
     public const SQL_MODE_REAL_AS_FLOAT = 262144;
-
     // https://dev.mysql.com/doc/refman/5.0/en/sql-mode.html#sqlmode_strict_all_tables
     public const SQL_MODE_STRICT_ALL_TABLES = 524288;
-
     // https://dev.mysql.com/doc/refman/5.0/en/sql-mode.html#sqlmode_strict_trans_tables
     public const SQL_MODE_STRICT_TRANS_TABLES = 1048576;
-
     // Custom modes.
-
     // The table and column names and any other field that must be escaped will
     // not be.
     // Reserved keywords are being escaped regardless this mode is used or not.
@@ -234,30 +205,23 @@ abstract class Context
      * Combination SQL Modes
      * https://dev.mysql.com/doc/refman/5.0/en/sql-mode.html#sql-mode-combo
      */
-
     // REAL_AS_FLOAT, PIPES_AS_CONCAT, ANSI_QUOTES, IGNORE_SPACE
     public const SQL_MODE_ANSI = 393234;
-
     // PIPES_AS_CONCAT, ANSI_QUOTES, IGNORE_SPACE, NO_KEY_OPTIONS,
     // NO_TABLE_OPTIONS, NO_FIELD_OPTIONS,
     public const SQL_MODE_DB2 = 138258;
-
     // PIPES_AS_CONCAT, ANSI_QUOTES, IGNORE_SPACE, NO_KEY_OPTIONS,
     // NO_TABLE_OPTIONS, NO_FIELD_OPTIONS, NO_AUTO_CREATE_USER
     public const SQL_MODE_MAXDB = 138290;
-
     // PIPES_AS_CONCAT, ANSI_QUOTES, IGNORE_SPACE, NO_KEY_OPTIONS,
     // NO_TABLE_OPTIONS, NO_FIELD_OPTIONS
     public const SQL_MODE_MSSQL = 138258;
-
     // PIPES_AS_CONCAT, ANSI_QUOTES, IGNORE_SPACE, NO_KEY_OPTIONS,
     // NO_TABLE_OPTIONS, NO_FIELD_OPTIONS, NO_AUTO_CREATE_USER
     public const SQL_MODE_ORACLE = 138290;
-
     // PIPES_AS_CONCAT, ANSI_QUOTES, IGNORE_SPACE, NO_KEY_OPTIONS,
     // NO_TABLE_OPTIONS, NO_FIELD_OPTIONS
     public const SQL_MODE_POSTGRESQL = 138258;
-
     // STRICT_TRANS_TABLES, STRICT_ALL_TABLES, NO_ZERO_IN_DATE, NO_ZERO_DATE,
     // ERROR_FOR_DIVISION_BY_ZERO, NO_AUTO_CREATE_USER
     public const SQL_MODE_TRADITIONAL = 1622052;
@@ -273,12 +237,11 @@ abstract class Context
      *
      * @return int|null
      */
-    public static function isKeyword($str, $isReserved = false)
-    {
+    public static function isKeyword($str, $isReserved = false) {
         $str = strtoupper($str);
 
         if (isset(static::$KEYWORDS[$str])) {
-            if ($isReserved && ! (static::$KEYWORDS[$str] & Token::FLAG_KEYWORD_RESERVED)) {
+            if ($isReserved && !(static::$KEYWORDS[$str] & Token::FLAG_KEYWORD_RESERVED)) {
                 return null;
             }
 
@@ -298,9 +261,8 @@ abstract class Context
      *
      * @return int|null the appropriate flag for the operator
      */
-    public static function isOperator($str)
-    {
-        if (! isset(static::$OPERATORS[$str])) {
+    public static function isOperator($str) {
+        if (!isset(static::$OPERATORS[$str])) {
             return null;
         }
 
@@ -317,8 +279,7 @@ abstract class Context
      *
      * @return bool
      */
-    public static function isWhitespace($str)
-    {
+    public static function isWhitespace($str) {
         return ($str === ' ') || ($str === "\r") || ($str === "\n") || ($str === "\t");
     }
 
@@ -333,8 +294,7 @@ abstract class Context
      *
      * @return int|null the appropriate flag for the comment type
      */
-    public static function isComment($str, $end = false)
-    {
+    public static function isComment($str, $end = false) {
         $len = strlen($str);
         if ($len === 0) {
             return null;
@@ -348,7 +308,7 @@ abstract class Context
         // If comment is opening C style (/*), warning, it could be a MySQL command (/*!)
         if (($len > 1) && ($str[0] === '/') && ($str[1] === '*')) {
             return ($len > 2) && ($str[2] === '!') ?
-                Token::FLAG_COMMENT_MYSQL_CMD : Token::FLAG_COMMENT_C;
+                    Token::FLAG_COMMENT_MYSQL_CMD : Token::FLAG_COMMENT_C;
         }
 
         // If comment is closing C style (*/), warning, it could conflicts with wildcard and a real opening C style.
@@ -381,8 +341,7 @@ abstract class Context
      *
      * @return bool
      */
-    public static function isBool($str)
-    {
+    public static function isBool($str) {
         $str = strtoupper($str);
 
         return ($str === 'TRUE') || ($str === 'FALSE');
@@ -398,10 +357,8 @@ abstract class Context
      *
      * @return bool
      */
-    public static function isNumber($str)
-    {
-        return ($str >= '0') && ($str <= '9') || ($str === '.')
-            || ($str === '-') || ($str === '+') || ($str === 'e') || ($str === 'E');
+    public static function isNumber($str) {
+        return ($str >= '0') && ($str <= '9') || ($str === '.') || ($str === '-') || ($str === '+') || ($str === 'e') || ($str === 'E');
     }
 
     // -------------------------------------------------------------------------
@@ -415,8 +372,7 @@ abstract class Context
      *
      * @return int|null the appropriate flag for the symbol type
      */
-    public static function isSymbol($str)
-    {
+    public static function isSymbol($str) {
         if (strlen($str) === 0) {
             return null;
         }
@@ -446,8 +402,7 @@ abstract class Context
      *
      * @return int|null the appropriate flag for the string type
      */
-    public static function isString($str)
-    {
+    public static function isString($str) {
         if (strlen($str) === 0) {
             return null;
         }
@@ -473,16 +428,10 @@ abstract class Context
      *
      * @return bool
      */
-    public static function isSeparator($str)
-    {
+    public static function isSeparator($str) {
         // NOTES:   Only non alphanumeric ASCII characters may be separators.
         //          `~` is the last printable ASCII character.
-        return ($str <= '~')
-            && ($str !== '_')
-            && ($str !== '$')
-            && (($str < '0') || ($str > '9'))
-            && (($str < 'a') || ($str > 'z'))
-            && (($str < 'A') || ($str > 'Z'));
+        return ($str <= '~') && ($str !== '_') && ($str !== '$') && (($str < '0') || ($str > '9')) && (($str < 'a') || ($str > 'z')) && (($str < 'A') || ($str > 'Z'));
     }
 
     /**
@@ -495,8 +444,7 @@ abstract class Context
      *
      * @throws LoaderException if the specified context doesn't exist.
      */
-    public static function load($context = '')
-    {
+    public static function load($context = '') {
         if (empty($context)) {
             $context = self::$defaultContext;
         }
@@ -506,7 +454,7 @@ abstract class Context
             $context = self::$contextPrefix . $context;
         }
 
-        if (! class_exists($context)) {
+        if (!class_exists($context)) {
             throw @new LoaderException('Specified context ("' . $context . '") does not exist.', $context);
         }
 
@@ -527,8 +475,7 @@ abstract class Context
      *
      * @return string|null The loaded context. `null` if no context was loaded.
      */
-    public static function loadClosest($context = '')
-    {
+    public static function loadClosest($context = '') {
         $length = strlen($context);
         for ($i = $length; $i > 0;) {
             try {
@@ -542,7 +489,7 @@ abstract class Context
                     $i -= 2;
                     $part = substr($context, $i, 2);
                     /* No more numeric parts to strip */
-                    if (! is_numeric($part)) {
+                    if (!is_numeric($part)) {
                         break 2;
                     }
                 } while (intval($part) === 0 && $i > 0);
@@ -568,8 +515,7 @@ abstract class Context
      *
      * @param string $mode The list of modes. If empty, the mode is reset.
      */
-    public static function setMode($mode = '')
-    {
+    public static function setMode($mode = '') {
         static::$MODE = 0;
         if (empty($mode)) {
             return;
@@ -589,8 +535,7 @@ abstract class Context
      *
      * @return string|array
      */
-    public static function escape($str, $quote = '`')
-    {
+    public static function escape($str, $quote = '`') {
         if (is_array($str)) {
             foreach ($str as $key => $value) {
                 $str[$key] = static::escape($value);
@@ -599,7 +544,7 @@ abstract class Context
             return $str;
         }
 
-        if ((static::$MODE & self::SQL_MODE_NO_ENCLOSING_QUOTES) && (! static::isKeyword($str, true))) {
+        if ((static::$MODE & self::SQL_MODE_NO_ENCLOSING_QUOTES) && (!static::isKeyword($str, true))) {
             return $str;
         }
 
@@ -615,8 +560,7 @@ abstract class Context
      *
      * @return string either " (double quote, ansi_quotes mode) or ` (backtick, standard mode)
      */
-    public static function getIdentifierQuote()
-    {
+    public static function getIdentifierQuote() {
         return self::hasMode(self::SQL_MODE_ANSI_QUOTES) ? '"' : '`';
     }
 
@@ -627,14 +571,14 @@ abstract class Context
      *
      * @return bool false on empty param, true/false on given constant/int value
      */
-    public static function hasMode($flag = null)
-    {
+    public static function hasMode($flag = null) {
         if (empty($flag)) {
             return false;
         }
 
         return (self::$MODE & $flag) === $flag;
     }
+
 }
 
 // Initializing the default context.

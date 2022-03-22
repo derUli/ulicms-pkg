@@ -27,8 +27,8 @@ use Symfony\Component\DependencyInjection\TypedReference;
  *
  * @author Johannes M. Schmitt <schmittjoh@gmail.com>
  */
-class ResolveInvalidReferencesPass implements CompilerPassInterface
-{
+class ResolveInvalidReferencesPass implements CompilerPassInterface {
+
     private $container;
     private $signalingException;
     private $currentId;
@@ -36,8 +36,7 @@ class ResolveInvalidReferencesPass implements CompilerPassInterface
     /**
      * Process the ContainerBuilder to resolve invalid references.
      */
-    public function process(ContainerBuilder $container)
-    {
+    public function process(ContainerBuilder $container) {
         $this->container = $container;
         $this->signalingException = new RuntimeException('Invalid reference.');
 
@@ -57,8 +56,7 @@ class ResolveInvalidReferencesPass implements CompilerPassInterface
      *
      * @throws RuntimeException When an invalid reference is found
      */
-    private function processValue($value, int $rootLevel = 0, int $level = 0)
-    {
+    private function processValue($value, int $rootLevel = 0, int $level = 0) {
         if ($value instanceof ServiceClosureArgument) {
             $value->setValues($this->processValue($value->getValues(), 1, 1));
         } elseif ($value instanceof ArgumentInterface) {
@@ -115,7 +113,7 @@ class ResolveInvalidReferencesPass implements CompilerPassInterface
 
                 // since the error message varies by $id and $this->currentId, so should the id of the dummy errored definition
                 $this->container->register($id = sprintf('.errored.%s.%s', $this->currentId, $id), $value->getType())
-                    ->addError($e->getMessage());
+                        ->addError($e->getMessage());
 
                 return new TypedReference($id, $value->getType(), $value->getInvalidBehavior());
             }
@@ -133,4 +131,5 @@ class ResolveInvalidReferencesPass implements CompilerPassInterface
 
         return $value;
     }
+
 }

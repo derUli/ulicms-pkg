@@ -7,9 +7,9 @@ AJAX.registerOnload('server/plugins.js', function () {
     $tables.tablesorter({
         sortList: [[0, 0]],
         headers: {
-            1: { sorter: false }
+            1: {sorter: false}
         }
     });
     $tables.find('thead th')
-        .append('<div class="sorticon"></div>');
+            .append('<div class="sorticon"></div>');
 });

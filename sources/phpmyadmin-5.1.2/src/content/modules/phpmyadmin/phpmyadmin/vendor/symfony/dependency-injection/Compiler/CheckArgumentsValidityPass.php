@@ -20,20 +20,18 @@ use Symfony\Component\DependencyInjection\Exception\RuntimeException;
  * @author Kévin Dunglas <dunglas@gmail.com>
  * @author Nicolas Grekas <p@tchwork.com>
  */
-class CheckArgumentsValidityPass extends AbstractRecursivePass
-{
+class CheckArgumentsValidityPass extends AbstractRecursivePass {
+
     private $throwExceptions;
 
-    public function __construct(bool $throwExceptions = true)
-    {
+    public function __construct(bool $throwExceptions = true) {
         $this->throwExceptions = $throwExceptions;
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function processValue($value, $isRoot = false)
-    {
+    protected function processValue($value, $isRoot = false) {
         if (!$value instanceof Definition) {
             return parent::processValue($value, $isRoot);
         }
@@ -116,4 +114,5 @@ class CheckArgumentsValidityPass extends AbstractRecursivePass
 
         return null;
     }
+
 }

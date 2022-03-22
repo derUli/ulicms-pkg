@@ -16,6 +16,6 @@ namespace Symfony\Component\Config\Exception;
  *
  * @author Ryan Weaver <ryan@thatsquality.com>
  */
-class LoaderLoadException extends FileLoaderLoadException
-{
+class LoaderLoadException extends FileLoaderLoadException {
+    
 }

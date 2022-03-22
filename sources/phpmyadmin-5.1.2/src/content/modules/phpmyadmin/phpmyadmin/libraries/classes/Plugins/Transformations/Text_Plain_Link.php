@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Text Plain Link Transformations plugin for phpMyAdmin
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Plugins\Transformations;
@@ -13,15 +13,14 @@ use PhpMyAdmin\Plugins\Transformations\Abs\TextLinkTransformationsPlugin;
  * Handles the link transformation for text plain
  */
 // @codingStandardsIgnoreLine
-class Text_Plain_Link extends TextLinkTransformationsPlugin
-{
+class Text_Plain_Link extends TextLinkTransformationsPlugin {
+
     /**
      * Gets the plugin`s MIME type
      *
      * @return string
      */
-    public static function getMIMEType()
-    {
+    public static function getMIMEType() {
         return 'Text';
     }
 
@@ -30,8 +29,8 @@ class Text_Plain_Link extends TextLinkTransformationsPlugin
      *
      * @return string
      */
-    public static function getMIMESubtype()
-    {
+    public static function getMIMESubtype() {
         return 'Plain';
     }
+
 }

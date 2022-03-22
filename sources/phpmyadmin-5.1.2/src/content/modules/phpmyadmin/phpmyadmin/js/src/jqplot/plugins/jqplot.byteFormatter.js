@@ -26,8 +26,8 @@
             format = '%.0f';
         }
         return $.jqplot.sprintf(
-            format + ' ' + units[i], val
-        );
+                format + ' ' + units[i], val
+                );
     };
     /**
      * The index indicates what unit the incoming data will be in.

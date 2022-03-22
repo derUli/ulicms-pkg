@@ -13,8 +13,8 @@ namespace Symfony\Component\DependencyInjection\Extension;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-interface PrependExtensionInterface
-{
+interface PrependExtensionInterface {
+
     /**
      * Allow an extension to prepend the extension configurations.
      */

@@ -16,8 +16,8 @@ namespace Twig\Node;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class BodyNode extends Node
-{
+class BodyNode extends Node {
+    
 }
 
 class_alias('Twig\Node\BodyNode', 'Twig_Node_Body');

@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Properties class for the schema export plug-in
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Properties\Plugins;
@@ -10,8 +10,7 @@ namespace PhpMyAdmin\Properties\Plugins;
 /**
  * Defines possible options and getters and setters for them.
  */
-class SchemaPluginProperties extends PluginPropertyItem
-{
+class SchemaPluginProperties extends PluginPropertyItem {
     /* ~~~~~~~~~~~~~~~~~~~~ Getters and Setters ~~~~~~~~~~~~~~~~~~~~ */
 
     /**
@@ -25,8 +24,7 @@ class SchemaPluginProperties extends PluginPropertyItem
      *
      * @return string
      */
-    public function getItemType()
-    {
+    public function getItemType() {
         return 'schema';
     }
 
@@ -35,8 +33,8 @@ class SchemaPluginProperties extends PluginPropertyItem
      *
      * @return bool
      */
-    public function getForceFile()
-    {
+    public function getForceFile() {
         return true;
     }
+
 }

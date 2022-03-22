@@ -15,8 +15,8 @@ use PhpMyAdmin\Template;
 /**
  * Displays the 'User groups' sub page under 'Users' page.
  */
-class UserGroupsController extends AbstractController
-{
+class UserGroupsController extends AbstractController {
+
     /** @var Relation */
     private $relation;
 
@@ -27,17 +27,15 @@ class UserGroupsController extends AbstractController
      * @param Response          $response
      * @param DatabaseInterface $dbi
      */
-    public function __construct($response, Template $template, Relation $relation, $dbi)
-    {
+    public function __construct($response, Template $template, Relation $relation, $dbi) {
         parent::__construct($response, $template);
         $this->relation = $relation;
         $this->dbi = $dbi;
     }
 
-    public function index(): void
-    {
+    public function index(): void {
         $cfgRelation = $this->relation->getRelationsParam();
-        if (! $cfgRelation['menuswork']) {
+        if (!$cfgRelation['menuswork']) {
             return;
         }
 
@@ -46,9 +44,9 @@ class UserGroupsController extends AbstractController
         /**
          * Only allowed to superuser
          */
-        if (! $this->dbi->isSuperUser()) {
+        if (!$this->dbi->isSuperUser()) {
             $this->response->addHTML(
-                Message::error(__('No Privileges'))->getDisplay()
+                    Message::error(__('No Privileges'))->getDisplay()
             );
 
             return;
@@ -63,21 +61,21 @@ class UserGroupsController extends AbstractController
         /**
          * Delete user group
          */
-        if (! empty($_POST['deleteUserGroup'])) {
+        if (!empty($_POST['deleteUserGroup'])) {
             UserGroups::delete($_POST['userGroup']);
         }
 
         /**
          * Add a new user group
          */
-        if (! empty($_POST['addUserGroupSubmit'])) {
+        if (!empty($_POST['addUserGroupSubmit'])) {
             UserGroups::edit($_POST['userGroup'], true);
         }
 
         /**
          * Update a user group
          */
-        if (! empty($_POST['editUserGroupSubmit'])) {
+        if (!empty($_POST['editUserGroupSubmit'])) {
             UserGroups::edit($_POST['userGroup']);
         }
 
@@ -99,4 +97,5 @@ class UserGroupsController extends AbstractController
 
         $this->response->addHTML('</div>');
     }
+
 }

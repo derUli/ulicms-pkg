@@ -18,31 +18,27 @@ use Symfony\Component\ExpressionLanguage\Compiler;
  *
  * @internal
  */
-class ConstantNode extends Node
-{
+class ConstantNode extends Node {
+
     private $isIdentifier;
 
-    public function __construct($value, bool $isIdentifier = false)
-    {
+    public function __construct($value, bool $isIdentifier = false) {
         $this->isIdentifier = $isIdentifier;
         parent::__construct(
-            [],
-            ['value' => $value]
+                [],
+                ['value' => $value]
         );
     }
 
-    public function compile(Compiler $compiler)
-    {
+    public function compile(Compiler $compiler) {
         $compiler->repr($this->attributes['value']);
     }
 
-    public function evaluate($functions, $values)
-    {
+    public function evaluate($functions, $values) {
         return $this->attributes['value'];
     }
 
-    public function toArray()
-    {
+    public function toArray() {
         $array = [];
         $value = $this->attributes['value'];
 
@@ -78,4 +74,5 @@ class ConstantNode extends Node
 
         return $array;
     }
+
 }

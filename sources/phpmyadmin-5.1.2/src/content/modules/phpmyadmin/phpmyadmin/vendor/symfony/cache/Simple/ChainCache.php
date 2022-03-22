@@ -29,8 +29,8 @@ use Symfony\Contracts\Service\ResetInterface;
  *
  * @deprecated since Symfony 4.3, use ChainAdapter and type-hint for CacheInterface instead.
  */
-class ChainCache implements Psr16CacheInterface, PruneableInterface, ResettableInterface
-{
+class ChainCache implements Psr16CacheInterface, PruneableInterface, ResettableInterface {
+
     private $miss;
     private $caches = [];
     private $defaultLifetime;
@@ -40,8 +40,7 @@ class ChainCache implements Psr16CacheInterface, PruneableInterface, ResettableI
      * @param Psr16CacheInterface[] $caches          The ordered list of caches used to fetch cached items
      * @param int                   $defaultLifetime The lifetime of items propagated from lower caches to upper ones
      */
-    public function __construct(array $caches, int $defaultLifetime = 0)
-    {
+    public function __construct(array $caches, int $defaultLifetime = 0) {
         if (!$caches) {
             throw new InvalidArgumentException('At least one cache must be specified.');
         }
@@ -61,8 +60,7 @@ class ChainCache implements Psr16CacheInterface, PruneableInterface, ResettableI
     /**
      * {@inheritdoc}
      */
-    public function get($key, $default = null)
-    {
+    public function get($key, $default = null) {
         $miss = null !== $default && \is_object($default) ? $default : $this->miss;
 
         foreach ($this->caches as $i => $cache) {
@@ -85,15 +83,13 @@ class ChainCache implements Psr16CacheInterface, PruneableInterface, ResettableI
      *
      * @return iterable
      */
-    public function getMultiple($keys, $default = null)
-    {
+    public function getMultiple($keys, $default = null) {
         $miss = null !== $default && \is_object($default) ? $default : $this->miss;
 
         return $this->generateItems($this->caches[0]->getMultiple($keys, $miss), 0, $miss, $default);
     }
 
-    private function generateItems(iterable $values, int $cacheIndex, $miss, $default): iterable
-    {
+    private function generateItems(iterable $values, int $cacheIndex, $miss, $default): iterable {
         $missing = [];
         $nextCacheIndex = $cacheIndex + 1;
         $nextCache = $this->caches[$nextCacheIndex] ?? null;
@@ -128,8 +124,7 @@ class ChainCache implements Psr16CacheInterface, PruneableInterface, ResettableI
      *
      * @return bool
      */
-    public function has($key)
-    {
+    public function has($key) {
         foreach ($this->caches as $cache) {
             if ($cache->has($key)) {
                 return true;
@@ -144,8 +139,7 @@ class ChainCache implements Psr16CacheInterface, PruneableInterface, ResettableI
      *
      * @return bool
      */
-    public function clear()
-    {
+    public function clear() {
         $cleared = true;
         $i = $this->cacheCount;
 
@@ -161,8 +155,7 @@ class ChainCache implements Psr16CacheInterface, PruneableInterface, ResettableI
      *
      * @return bool
      */
-    public function delete($key)
-    {
+    public function delete($key) {
         $deleted = true;
         $i = $this->cacheCount;
 
@@ -178,8 +171,7 @@ class ChainCache implements Psr16CacheInterface, PruneableInterface, ResettableI
      *
      * @return bool
      */
-    public function deleteMultiple($keys)
-    {
+    public function deleteMultiple($keys) {
         if ($keys instanceof \Traversable) {
             $keys = iterator_to_array($keys, false);
         }
@@ -198,8 +190,7 @@ class ChainCache implements Psr16CacheInterface, PruneableInterface, ResettableI
      *
      * @return bool
      */
-    public function set($key, $value, $ttl = null)
-    {
+    public function set($key, $value, $ttl = null) {
         $saved = true;
         $i = $this->cacheCount;
 
@@ -215,8 +206,7 @@ class ChainCache implements Psr16CacheInterface, PruneableInterface, ResettableI
      *
      * @return bool
      */
-    public function setMultiple($values, $ttl = null)
-    {
+    public function setMultiple($values, $ttl = null) {
         if ($values instanceof \Traversable) {
             $valuesIterator = $values;
             $values = function () use ($valuesIterator, &$values) {
@@ -244,8 +234,7 @@ class ChainCache implements Psr16CacheInterface, PruneableInterface, ResettableI
     /**
      * {@inheritdoc}
      */
-    public function prune()
-    {
+    public function prune() {
         $pruned = true;
 
         foreach ($this->caches as $cache) {
@@ -260,12 +249,12 @@ class ChainCache implements Psr16CacheInterface, PruneableInterface, ResettableI
     /**
      * {@inheritdoc}
      */
-    public function reset()
-    {
+    public function reset() {
         foreach ($this->caches as $cache) {
             if ($cache instanceof ResetInterface) {
                 $cache->reset();
             }
         }
     }
+
 }

@@ -12,36 +12,34 @@ use PhpMyAdmin\Template;
 use PhpMyAdmin\TwoFactor;
 use function count;
 
-class TwoFactorController extends AbstractController
-{
+class TwoFactorController extends AbstractController {
+
     /** @var Relation */
     private $relation;
 
     /**
      * @param Response $response
      */
-    public function __construct($response, Template $template, Relation $relation)
-    {
+    public function __construct($response, Template $template, Relation $relation) {
         parent::__construct($response, $template);
         $this->relation = $relation;
     }
 
-    public function index(): void
-    {
+    public function index(): void {
         global $cfg, $route;
 
         $cfgRelation = $this->relation->getRelationsParam();
 
         echo $this->template->render('preferences/header', [
             'route' => $route,
-            'is_saved' => ! empty($_GET['saved']),
+            'is_saved' => !empty($_GET['saved']),
             'has_config_storage' => $cfgRelation['userconfigwork'],
         ]);
 
         $twoFactor = new TwoFactor($cfg['Server']['user']);
 
         if (isset($_POST['2fa_remove'])) {
-            if (! $twoFactor->check(true)) {
+            if (!$twoFactor->check(true)) {
                 echo $this->template->render('preferences/two_factor/confirm', [
                     'form' => $twoFactor->render(),
                 ]);
@@ -52,7 +50,7 @@ class TwoFactorController extends AbstractController
             $twoFactor->configure('');
             echo Message::rawNotice(__('Two-factor authentication has been removed.'))->getDisplay();
         } elseif (isset($_POST['2fa_configure'])) {
-            if (! $twoFactor->configure($_POST['2fa_configure'])) {
+            if (!$twoFactor->configure($_POST['2fa_configure'])) {
                 echo $this->template->render('preferences/two_factor/configure', [
                     'form' => $twoFactor->setup(),
                     'configure' => $_POST['2fa_configure'],
@@ -75,4 +73,5 @@ class TwoFactorController extends AbstractController
             'missing' => $twoFactor->getMissingDeps(),
         ]);
     }
+
 }

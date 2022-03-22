@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Parses a reference to a LOCK expression.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\SqlParser\Components;
@@ -11,7 +11,6 @@ use PhpMyAdmin\SqlParser\Component;
 use PhpMyAdmin\SqlParser\Parser;
 use PhpMyAdmin\SqlParser\Token;
 use PhpMyAdmin\SqlParser\TokensList;
-
 use function implode;
 use function is_array;
 
@@ -20,8 +19,8 @@ use function is_array;
  *
  * @final
  */
-class LockExpression extends Component
-{
+class LockExpression extends Component {
+
     /**
      * The table to be locked.
      *
@@ -43,8 +42,7 @@ class LockExpression extends Component
      *
      * @return LockExpression
      */
-    public static function parse(Parser $parser, TokensList $list, array $options = [])
-    {
+    public static function parse(Parser $parser, TokensList $list, array $options = []) {
         $ret = new static();
 
         /**
@@ -72,9 +70,7 @@ class LockExpression extends Component
 
             // End of statement.
             if (
-                $token->type === Token::TYPE_DELIMITER
-                || ($token->type === Token::TYPE_OPERATOR
-                && $token->value === ',')
+                    $token->type === Token::TYPE_DELIMITER || ($token->type === Token::TYPE_OPERATOR && $token->value === ',')
             ) {
                 break;
             }
@@ -107,8 +103,7 @@ class LockExpression extends Component
      *
      * @return string
      */
-    public static function build($component, array $options = [])
-    {
+    public static function build($component, array $options = []) {
         if (is_array($component)) {
             return implode(', ', $component);
         }
@@ -119,8 +114,7 @@ class LockExpression extends Component
     /**
      * @return string
      */
-    private static function parseLockType(Parser $parser, TokensList $list)
-    {
+    private static function parseLockType(Parser $parser, TokensList $list) {
         $lockType = '';
 
         /**
@@ -150,9 +144,7 @@ class LockExpression extends Component
 
             // End of statement.
             if (
-                $token->type === Token::TYPE_DELIMITER
-                || ($token->type === Token::TYPE_OPERATOR
-                && $token->value === ',')
+                    $token->type === Token::TYPE_DELIMITER || ($token->type === Token::TYPE_OPERATOR && $token->value === ',')
             ) {
                 --$list->idx;
                 break;
@@ -210,4 +202,5 @@ class LockExpression extends Component
 
         return $lockType;
     }
+
 }

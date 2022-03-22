@@ -22,8 +22,8 @@ use function vsprintf;
 /**
  * A simple rules engine, that executes the rules in the advisory_rules files.
  */
-class Advisor
-{
+class Advisor {
+
     private const GENERIC_RULES_FILE = 'libraries/advisory_rules_generic.php';
     private const BEFORE_MYSQL80003_RULES_FILE = 'libraries/advisory_rules_mysql_before80003.php';
 
@@ -49,8 +49,7 @@ class Advisor
      * @param DatabaseInterface  $dbi        DatabaseInterface object
      * @param ExpressionLanguage $expression ExpressionLanguage object
      */
-    public function __construct(DatabaseInterface $dbi, ExpressionLanguage $expression)
-    {
+    public function __construct(DatabaseInterface $dbi, ExpressionLanguage $expression) {
         $this->dbi = $dbi;
         $this->expression = $expression;
         /*
@@ -58,105 +57,112 @@ class Advisor
          * do not implement support for compile as we do not use it.
          */
         $this->expression->register(
-            'round',
-            static function () {
-            },
-            /**
-             * @param array $arguments
-             * @param float $num
-             */
-            static function ($arguments, $num) {
-                return round($num);
-            }
-        );
-        $this->expression->register(
-            'substr',
-            static function () {
-            },
-            /**
-             * @param array $arguments
-             * @param string $string
-             * @param int $start
-             * @param int $length
-             */
-            static function ($arguments, $string, $start, $length) {
-                return substr($string, $start, $length);
-            }
-        );
-        $this->expression->register(
-            'preg_match',
-            static function () {
-            },
-            /**
-             * @param array $arguments
-             * @param string $pattern
-             * @param string $subject
-             */
-            static function ($arguments, $pattern, $subject) {
-                return preg_match($pattern, $subject);
-            }
-        );
-        $this->expression->register(
-            'ADVISOR_bytime',
-            static function () {
-            },
-            /**
-             * @param array $arguments
-             * @param float $num
-             * @param int $precision
-             */
-            static function ($arguments, $num, $precision) {
-                return self::byTime($num, $precision);
-            }
-        );
-        $this->expression->register(
-            'ADVISOR_timespanFormat',
-            static function () {
-            },
-            /**
-             * @param array $arguments
-             * @param string $seconds
-             */
-            static function ($arguments, $seconds) {
-                return Util::timespanFormat((int) $seconds);
-            }
-        );
-        $this->expression->register(
-            'ADVISOR_formatByteDown',
-            static function () {
-            },
-            /**
-             * @param array $arguments
-             * @param int $value
-             * @param int $limes
-             * @param int $comma
-             */
-            static function ($arguments, $value, $limes = 6, $comma = 0) {
-                return implode(' ', (array) Util::formatByteDown($value, $limes, $comma));
-            }
-        );
-        $this->expression->register(
-            'fired',
-            static function () {
-            },
-            /**
-             * @param array $arguments
-             * @param int $value
-             */
-            function ($arguments, $value) {
-                if (! isset($this->runResult['fired'])) {
-                    return 0;
+                'round',
+                static function () {
+                    
+                },
+                /**
+                 * @param array $arguments
+                 * @param float $num
+                 */
+                static function ($arguments, $num) {
+                    return round($num);
                 }
-
-                // Did matching rule fire?
-                foreach ($this->runResult['fired'] as $rule) {
-                    if ($rule['id'] == $value) {
-                        return '1';
+        );
+        $this->expression->register(
+                'substr',
+                static function () {
+                    
+                },
+                /**
+                 * @param array $arguments
+                 * @param string $string
+                 * @param int $start
+                 * @param int $length
+                 */
+                static function ($arguments, $string, $start, $length) {
+                    return substr($string, $start, $length);
+                }
+        );
+        $this->expression->register(
+                'preg_match',
+                static function () {
+                    
+                },
+                /**
+                 * @param array $arguments
+                 * @param string $pattern
+                 * @param string $subject
+                 */
+                static function ($arguments, $pattern, $subject) {
+                    return preg_match($pattern, $subject);
+                }
+        );
+        $this->expression->register(
+                'ADVISOR_bytime',
+                static function () {
+                    
+                },
+                /**
+                 * @param array $arguments
+                 * @param float $num
+                 * @param int $precision
+                 */
+                static function ($arguments, $num, $precision) {
+                    return self::byTime($num, $precision);
+                }
+        );
+        $this->expression->register(
+                'ADVISOR_timespanFormat',
+                static function () {
+                    
+                },
+                /**
+                 * @param array $arguments
+                 * @param string $seconds
+                 */
+                static function ($arguments, $seconds) {
+                    return Util::timespanFormat((int) $seconds);
+                }
+        );
+        $this->expression->register(
+                'ADVISOR_formatByteDown',
+                static function () {
+                    
+                },
+                /**
+                 * @param array $arguments
+                 * @param int $value
+                 * @param int $limes
+                 * @param int $comma
+                 */
+                static function ($arguments, $value, $limes = 6, $comma = 0) {
+                    return implode(' ', (array) Util::formatByteDown($value, $limes, $comma));
+                }
+        );
+        $this->expression->register(
+                'fired',
+                static function () {
+                    
+                },
+                /**
+                 * @param array $arguments
+                 * @param int $value
+                 */
+                function ($arguments, $value) {
+                    if (!isset($this->runResult['fired'])) {
+                        return 0;
                     }
-                }
 
-                return '0';
-            }
+                    // Did matching rule fire?
+                    foreach ($this->runResult['fired'] as $rule) {
+                        if ($rule['id'] == $value) {
+                            return '1';
+                        }
+                    }
+
+                    return '0';
+                }
         );
         /* Some global variables for advisor */
         $this->globals = [
@@ -165,8 +171,7 @@ class Advisor
         ];
     }
 
-    private function setVariables(): void
-    {
+    private function setVariables(): void {
         $globalStatus = $this->dbi->fetchResult('SHOW GLOBAL STATUS', 0, 1);
         $globalVariables = $this->dbi->fetchResult('SHOW GLOBAL VARIABLES', 0, 1);
 
@@ -181,17 +186,15 @@ class Advisor
      * @param string|int $variable Variable to set
      * @param mixed      $value    Value to set
      */
-    public function setVariable($variable, $value): void
-    {
+    public function setVariable($variable, $value): void {
         $this->variables[$variable] = $value;
     }
 
-    private function setRules(): void
-    {
+    private function setRules(): void {
         $isMariaDB = strpos($this->variables['version'], 'MariaDB') !== false;
         $genericRules = include ROOT_PATH . self::GENERIC_RULES_FILE;
 
-        if (! $isMariaDB && $this->globals['PMA_MYSQL_INT_VERSION'] >= 80003) {
+        if (!$isMariaDB && $this->globals['PMA_MYSQL_INT_VERSION'] >= 80003) {
             $this->rules = $genericRules;
 
             return;
@@ -204,16 +207,14 @@ class Advisor
     /**
      * @return array
      */
-    public function getRunResult(): array
-    {
+    public function getRunResult(): array {
         return $this->runResult;
     }
 
     /**
      * @return array
      */
-    public function run(): array
-    {
+    public function run(): array {
         $this->setVariables();
         $this->setRules();
         $this->runRules();
@@ -227,19 +228,17 @@ class Advisor
      * @param string    $description description of an error.
      * @param Throwable $exception   exception raised
      */
-    private function storeError(string $description, Throwable $exception): void
-    {
+    private function storeError(string $description, Throwable $exception): void {
         $this->runResult['errors'][] = $description . ' ' . sprintf(
-            __('Error when evaluating: %s'),
-            $exception->getMessage()
+                        __('Error when evaluating: %s'),
+                        $exception->getMessage()
         );
     }
 
     /**
      * Executes advisor rules
      */
-    private function runRules(): void
-    {
+    private function runRules(): void {
         $this->runResult = [
             'fired' => [],
             'notfired' => [],
@@ -253,20 +252,20 @@ class Advisor
 
             if (isset($rule['precondition'])) {
                 try {
-                     $precondition = $this->evaluateRuleExpression($rule['precondition']);
+                    $precondition = $this->evaluateRuleExpression($rule['precondition']);
                 } catch (Throwable $e) {
                     $this->storeError(
-                        sprintf(
-                            __('Failed evaluating precondition for rule \'%s\'.'),
-                            $rule['name']
-                        ),
-                        $e
+                            sprintf(
+                                    __('Failed evaluating precondition for rule \'%s\'.'),
+                                    $rule['name']
+                            ),
+                            $e
                     );
                     continue;
                 }
             }
 
-            if (! $precondition) {
+            if (!$precondition) {
                 $this->addRule('unchecked', $rule);
 
                 continue;
@@ -276,11 +275,11 @@ class Advisor
                 $value = $this->evaluateRuleExpression($rule['formula']);
             } catch (Throwable $e) {
                 $this->storeError(
-                    sprintf(
-                        __('Failed calculating value for rule \'%s\'.'),
-                        $rule['name']
-                    ),
-                    $e
+                        sprintf(
+                                __('Failed calculating value for rule \'%s\'.'),
+                                $rule['name']
+                        ),
+                        $e
                 );
                 continue;
             }
@@ -295,11 +294,11 @@ class Advisor
                 }
             } catch (Throwable $e) {
                 $this->storeError(
-                    sprintf(
-                        __('Failed running test for rule \'%s\'.'),
-                        $rule['name']
-                    ),
-                    $e
+                        sprintf(
+                                __('Failed running test for rule \'%s\'.'),
+                                $rule['name']
+                        ),
+                        $e
                 );
             }
         }
@@ -311,8 +310,7 @@ class Advisor
      * @param string $type type of rule
      * @param array  $rule rule itself
      */
-    public function addRule(string $type, array $rule): void
-    {
+    public function addRule(string $type, array $rule): void {
         if ($type !== 'notfired' && $type !== 'fired') {
             $this->runResult[$type][] = $rule;
 
@@ -324,8 +322,8 @@ class Advisor
                 $params = $this->evaluateRuleExpression('[' . $rule['justification_formula'] . ']');
             } catch (Throwable $e) {
                 $this->storeError(
-                    sprintf(__('Failed formatting string for rule \'%s\'.'), $rule['name']),
-                    $e
+                        sprintf(__('Failed formatting string for rule \'%s\'.'), $rule['name']),
+                        $e
                 );
 
                 return;
@@ -337,27 +335,27 @@ class Advisor
         // Replaces {server_variable} with 'server_variable'
         // linking to /server/variables
         $rule['recommendation'] = preg_replace_callback(
-            '/\{([a-z_0-9]+)\}/Ui',
-            function (array $matches) {
-                return $this->replaceVariable($matches);
-            },
-            $rule['recommendation']
+                '/\{([a-z_0-9]+)\}/Ui',
+                function (array $matches) {
+                    return $this->replaceVariable($matches);
+                },
+                $rule['recommendation']
         );
         $rule['issue'] = preg_replace_callback(
-            '/\{([a-z_0-9]+)\}/Ui',
-            function (array $matches) {
-                return $this->replaceVariable($matches);
-            },
-            $rule['issue']
+                '/\{([a-z_0-9]+)\}/Ui',
+                function (array $matches) {
+                    return $this->replaceVariable($matches);
+                },
+                $rule['issue']
         );
 
         // Replaces external Links with Core::linkURL() generated links
         $rule['recommendation'] = preg_replace_callback(
-            '#href=("|\')(https?://[^"\']+)\1#i',
-            function (array $matches) {
-                return $this->replaceLinkURL($matches);
-            },
-            $rule['recommendation']
+                '#href=("|\')(https?://[^"\']+)\1#i',
+                function (array $matches) {
+                    return $this->replaceLinkURL($matches);
+                },
+                $rule['recommendation']
         );
 
         $this->runResult[$type][] = $rule;
@@ -370,8 +368,7 @@ class Advisor
      *
      * @return string Replacement value
      */
-    private function replaceLinkURL(array $matches): string
-    {
+    private function replaceLinkURL(array $matches): string {
         return 'href="' . Core::linkURL($matches[2]) . '" target="_blank" rel="noopener noreferrer"';
     }
 
@@ -382,8 +379,7 @@ class Advisor
      *
      * @return string Replacement value
      */
-    private function replaceVariable(array $matches): string
-    {
+    private function replaceVariable(array $matches): string {
         return '<a href="' . Url::getFromRoute('/server/variables', ['filter' => $matches[1]])
                 . '">' . htmlspecialchars($matches[1]) . '</a>';
     }
@@ -393,8 +389,7 @@ class Advisor
      *
      * @return mixed result of evaluated expression
      */
-    private function evaluateRuleExpression(string $expression)
-    {
+    private function evaluateRuleExpression(string $expression) {
         return $this->expression->evaluate($expression, array_merge($this->variables, $this->globals));
     }
 
@@ -406,8 +401,7 @@ class Advisor
      *
      * @return string formatted string
      */
-    public static function byTime(float $num, int $precision): string
-    {
+    public static function byTime(float $num, int $precision): string {
         if ($num >= 1) { // per second
             $per = __('per second');
         } elseif ($num * 60 >= 1) { // per minute
@@ -429,4 +423,5 @@ class Advisor
 
         return $num . ' ' . $per;
     }
+
 }

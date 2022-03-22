@@ -20,23 +20,23 @@ var serverDbIsLocal;
 var chartSize;
 var monitorSettings;
 
-function serverResponseError () {
+function serverResponseError() {
     var btns = {};
     btns[Messages.strReloadPage] = function () {
         window.location.reload();
     };
-    $('#emptyDialog').dialog({ title: Messages.strRefreshFailed });
+    $('#emptyDialog').dialog({title: Messages.strRefreshFailed});
     $('#emptyDialog').html(
-        Functions.getImage('s_attention') +
-        Messages.strInvalidResponseExplanation
-    );
-    $('#emptyDialog').dialog({ buttons: btns });
+            Functions.getImage('s_attention') +
+            Messages.strInvalidResponseExplanation
+            );
+    $('#emptyDialog').dialog({buttons: btns});
 }
 
 /**
  * Destroys all monitor related resources
  */
-function destroyGrid () {
+function destroyGrid() {
     if (runtime.charts) {
         $.each(runtime.charts, function (key, value) {
             try {
@@ -85,17 +85,17 @@ AJAX.registerTeardown('server/status/monitor.js', function () {
  */
 AJAX.registerOnload('server/status/monitor.js', function () {
     $('<div></div>')
-        .attr('id', 'emptyDialog')
-        .appendTo('#page_content');
+            .attr('id', 'emptyDialog')
+            .appendTo('#page_content');
     $('#addChartDialog')
-        .appendTo('#page_content');
+            .appendTo('#page_content');
 
     $('a.popupLink').on('click', function () {
         var $link = $(this);
         $('div.' + $link.attr('href').substr(1))
-            .show()
-            .offset({ top: $link.offset().top + $link.height() + 5, left: $link.offset().left })
-            .addClass('openedPopup');
+                .show()
+                .offset({top: $link.offset().top + $link.height() + 5, left: $link.offset().left})
+                .addClass('openedPopup');
 
         return false;
     });
@@ -105,10 +105,10 @@ AJAX.registerOnload('server/status/monitor.js', function () {
             var pos = $cnt.offset();
             // Hide if the mouseclick is outside the popupcontent
             if (event.pageX < pos.left ||
-                event.pageY < pos.top ||
-                event.pageX > pos.left + $cnt.outerWidth() ||
-                event.pageY > pos.top + $cnt.outerHeight()
-            ) {
+                    event.pageY < pos.top ||
+                    event.pageX > pos.left + $cnt.outerWidth() ||
+                    event.pageY > pos.top + $cnt.outerHeight()
+                    ) {
                 $cnt.hide().removeClass('openedPopup');
             }
         });
@@ -144,18 +144,18 @@ AJAX.registerOnload('server/status/monitor.js', function () {
     $('div.tabLinks').show();
     $('#loadingMonitorIcon').remove();
     // Codemirror is loaded on demand so we might need to initialize it
-    if (! codeMirrorEditor) {
+    if (!codeMirrorEditor) {
         var $elm = $('#sqlquery');
         if ($elm.length > 0 && typeof CodeMirror !== 'undefined') {
             codeMirrorEditor = CodeMirror.fromTextArea(
-                $elm[0],
-                {
-                    lineNumbers: true,
-                    matchBrackets: true,
-                    indentUnit: 4,
-                    mode: 'text/x-mysql',
-                    lineWrapping: true
-                }
+                    $elm[0],
+                    {
+                        lineNumbers: true,
+                        matchBrackets: true,
+                        indentUnit: 4,
+                        mode: 'text/x-mysql',
+                        lineWrapping: true
+                    }
             );
         }
     }
@@ -203,7 +203,7 @@ AJAX.registerOnload('server/status/monitor.js', function () {
 
     var defaultMonitorSettings = {
         columns: 3,
-        chartSize: { width: 295, height: 250 },
+        chartSize: {width: 295, height: 250},
         // Max points in each chart. Settings it to 'auto' sets
         // gridMaxPoints to (chartwidth - 40) / 12
         gridMaxPoints: 'auto',
@@ -220,24 +220,24 @@ AJAX.registerOnload('server/status/monitor.js', function () {
         'qce': {
             title: Messages.strQueryCacheEfficiency,
             series: [{
-                label: Messages.strQueryCacheEfficiency
-            }],
+                    label: Messages.strQueryCacheEfficiency
+                }],
             nodes: [{
-                dataPoints: [{ type: 'statusvar', name: 'Qcache_hits' }, { type: 'statusvar', name: 'Com_select' }],
-                transformFn: 'qce'
-            }],
+                    dataPoints: [{type: 'statusvar', name: 'Qcache_hits'}, {type: 'statusvar', name: 'Com_select'}],
+                    transformFn: 'qce'
+                }],
             maxYLabel: 0
         },
         // Query cache usage
         'qcu': {
             title: Messages.strQueryCacheUsage,
             series: [{
-                label: Messages.strQueryCacheUsed
-            }],
+                    label: Messages.strQueryCacheUsed
+                }],
             nodes: [{
-                dataPoints: [{ type: 'statusvar', name: 'Qcache_free_memory' }, { type: 'servervar', name: 'query_cache_size' }],
-                transformFn: 'qcu'
-            }],
+                    dataPoints: [{type: 'statusvar', name: 'Qcache_free_memory'}, {type: 'servervar', name: 'query_cache_size'}],
+                    transformFn: 'qcu'
+                }],
             maxYLabel: 0
         }
     };
@@ -250,133 +250,133 @@ AJAX.registerOnload('server/status/monitor.js', function () {
 
     /* Add OS specific system info charts to the preset chart list */
     switch (serverOs) {
-    case 'WINNT':
-        $.extend(presetCharts, {
-            'cpu': {
-                title: Messages.strSystemCPUUsage,
-                series: [{
-                    label: Messages.strAverageLoad
-                }],
-                nodes: [{
-                    dataPoints: [{ type: 'cpu', name: 'loadavg' }]
-                }],
-                maxYLabel: 100
-            },
+        case 'WINNT':
+            $.extend(presetCharts, {
+                'cpu': {
+                    title: Messages.strSystemCPUUsage,
+                    series: [{
+                            label: Messages.strAverageLoad
+                        }],
+                    nodes: [{
+                            dataPoints: [{type: 'cpu', name: 'loadavg'}]
+                        }],
+                    maxYLabel: 100
+                },
 
-            'memory': {
-                title: Messages.strSystemMemory,
-                series: [{
-                    label: Messages.strTotalMemory,
-                    fill: true
-                }, {
-                    dataType: 'memory',
-                    label: Messages.strUsedMemory,
-                    fill: true
-                }],
-                nodes: [{ dataPoints: [{ type: 'memory', name: 'MemTotal' }], valueDivisor: 1024 },
-                    { dataPoints: [{ type: 'memory', name: 'MemUsed' }], valueDivisor: 1024 }
-                ],
-                maxYLabel: 0
-            },
+                'memory': {
+                    title: Messages.strSystemMemory,
+                    series: [{
+                            label: Messages.strTotalMemory,
+                            fill: true
+                        }, {
+                            dataType: 'memory',
+                            label: Messages.strUsedMemory,
+                            fill: true
+                        }],
+                    nodes: [{dataPoints: [{type: 'memory', name: 'MemTotal'}], valueDivisor: 1024},
+                        {dataPoints: [{type: 'memory', name: 'MemUsed'}], valueDivisor: 1024}
+                    ],
+                    maxYLabel: 0
+                },
 
-            'swap': {
-                title: Messages.strSystemSwap,
-                series: [{
-                    label: Messages.strTotalSwap,
-                    fill: true
-                }, {
-                    label: Messages.strUsedSwap,
-                    fill: true
-                }],
-                nodes: [{ dataPoints: [{ type: 'memory', name: 'SwapTotal' }] },
-                    { dataPoints: [{ type: 'memory', name: 'SwapUsed' }] }
-                ],
-                maxYLabel: 0
-            }
-        });
-        break;
+                'swap': {
+                    title: Messages.strSystemSwap,
+                    series: [{
+                            label: Messages.strTotalSwap,
+                            fill: true
+                        }, {
+                            label: Messages.strUsedSwap,
+                            fill: true
+                        }],
+                    nodes: [{dataPoints: [{type: 'memory', name: 'SwapTotal'}]},
+                        {dataPoints: [{type: 'memory', name: 'SwapUsed'}]}
+                    ],
+                    maxYLabel: 0
+                }
+            });
+            break;
 
-    case 'Linux':
-        $.extend(presetCharts, {
-            'cpu': {
-                title: Messages.strSystemCPUUsage,
-                series: [{
-                    label: Messages.strAverageLoad
-                }],
-                nodes: [{ dataPoints: [{ type: 'cpu', name: 'irrelevant' }], transformFn: 'cpu-linux' }],
-                maxYLabel: 0
-            },
-            'memory': {
-                title: Messages.strSystemMemory,
-                series: [
-                    { label: Messages.strBufferedMemory, fill: true },
-                    { label: Messages.strUsedMemory, fill: true },
-                    { label: Messages.strCachedMemory, fill: true },
-                    { label: Messages.strFreeMemory, fill: true }
-                ],
-                nodes: [
-                    { dataPoints: [{ type: 'memory', name: 'Buffers' }], valueDivisor: 1024 },
-                    { dataPoints: [{ type: 'memory', name: 'MemUsed' }], valueDivisor: 1024 },
-                    { dataPoints: [{ type: 'memory', name: 'Cached' }],  valueDivisor: 1024 },
-                    { dataPoints: [{ type: 'memory', name: 'MemFree' }], valueDivisor: 1024 }
-                ],
-                maxYLabel: 0
-            },
-            'swap': {
-                title: Messages.strSystemSwap,
-                series: [
-                    { label: Messages.strCachedSwap, fill: true },
-                    { label: Messages.strUsedSwap, fill: true },
-                    { label: Messages.strFreeSwap, fill: true }
-                ],
-                nodes: [
-                    { dataPoints: [{ type: 'memory', name: 'SwapCached' }], valueDivisor: 1024 },
-                    { dataPoints: [{ type: 'memory', name: 'SwapUsed' }], valueDivisor: 1024 },
-                    { dataPoints: [{ type: 'memory', name: 'SwapFree' }], valueDivisor: 1024 }
-                ],
-                maxYLabel: 0
-            }
-        });
-        break;
+        case 'Linux':
+            $.extend(presetCharts, {
+                'cpu': {
+                    title: Messages.strSystemCPUUsage,
+                    series: [{
+                            label: Messages.strAverageLoad
+                        }],
+                    nodes: [{dataPoints: [{type: 'cpu', name: 'irrelevant'}], transformFn: 'cpu-linux'}],
+                    maxYLabel: 0
+                },
+                'memory': {
+                    title: Messages.strSystemMemory,
+                    series: [
+                        {label: Messages.strBufferedMemory, fill: true},
+                        {label: Messages.strUsedMemory, fill: true},
+                        {label: Messages.strCachedMemory, fill: true},
+                        {label: Messages.strFreeMemory, fill: true}
+                    ],
+                    nodes: [
+                        {dataPoints: [{type: 'memory', name: 'Buffers'}], valueDivisor: 1024},
+                        {dataPoints: [{type: 'memory', name: 'MemUsed'}], valueDivisor: 1024},
+                        {dataPoints: [{type: 'memory', name: 'Cached'}], valueDivisor: 1024},
+                        {dataPoints: [{type: 'memory', name: 'MemFree'}], valueDivisor: 1024}
+                    ],
+                    maxYLabel: 0
+                },
+                'swap': {
+                    title: Messages.strSystemSwap,
+                    series: [
+                        {label: Messages.strCachedSwap, fill: true},
+                        {label: Messages.strUsedSwap, fill: true},
+                        {label: Messages.strFreeSwap, fill: true}
+                    ],
+                    nodes: [
+                        {dataPoints: [{type: 'memory', name: 'SwapCached'}], valueDivisor: 1024},
+                        {dataPoints: [{type: 'memory', name: 'SwapUsed'}], valueDivisor: 1024},
+                        {dataPoints: [{type: 'memory', name: 'SwapFree'}], valueDivisor: 1024}
+                    ],
+                    maxYLabel: 0
+                }
+            });
+            break;
 
-    case 'SunOS':
-        $.extend(presetCharts, {
-            'cpu': {
-                title: Messages.strSystemCPUUsage,
-                series: [{
-                    label: Messages.strAverageLoad
-                }],
-                nodes: [{
-                    dataPoints: [{ type: 'cpu', name: 'loadavg' }]
-                }],
-                maxYLabel: 0
-            },
-            'memory': {
-                title: Messages.strSystemMemory,
-                series: [
-                    { label: Messages.strUsedMemory, fill: true },
-                    { label: Messages.strFreeMemory, fill: true }
-                ],
-                nodes: [
-                    { dataPoints: [{ type: 'memory', name: 'MemUsed' }], valueDivisor: 1024 },
-                    { dataPoints: [{ type: 'memory', name: 'MemFree' }], valueDivisor: 1024 }
-                ],
-                maxYLabel: 0
-            },
-            'swap': {
-                title: Messages.strSystemSwap,
-                series: [
-                    { label: Messages.strUsedSwap, fill: true },
-                    { label: Messages.strFreeSwap, fill: true }
-                ],
-                nodes: [
-                    { dataPoints: [{ type: 'memory', name: 'SwapUsed' }], valueDivisor: 1024 },
-                    { dataPoints: [{ type: 'memory', name: 'SwapFree' }], valueDivisor: 1024 }
-                ],
-                maxYLabel: 0
-            }
-        });
-        break;
+        case 'SunOS':
+            $.extend(presetCharts, {
+                'cpu': {
+                    title: Messages.strSystemCPUUsage,
+                    series: [{
+                            label: Messages.strAverageLoad
+                        }],
+                    nodes: [{
+                            dataPoints: [{type: 'cpu', name: 'loadavg'}]
+                        }],
+                    maxYLabel: 0
+                },
+                'memory': {
+                    title: Messages.strSystemMemory,
+                    series: [
+                        {label: Messages.strUsedMemory, fill: true},
+                        {label: Messages.strFreeMemory, fill: true}
+                    ],
+                    nodes: [
+                        {dataPoints: [{type: 'memory', name: 'MemUsed'}], valueDivisor: 1024},
+                        {dataPoints: [{type: 'memory', name: 'MemFree'}], valueDivisor: 1024}
+                    ],
+                    maxYLabel: 0
+                },
+                'swap': {
+                    title: Messages.strSystemSwap,
+                    series: [
+                        {label: Messages.strUsedSwap, fill: true},
+                        {label: Messages.strFreeSwap, fill: true}
+                    ],
+                    nodes: [
+                        {dataPoints: [{type: 'memory', name: 'SwapUsed'}], valueDivisor: 1024},
+                        {dataPoints: [{type: 'memory', name: 'SwapFree'}], valueDivisor: 1024}
+                    ],
+                    maxYLabel: 0
+                }
+            });
+            break;
     }
 
     // Default setting for the chart grid
@@ -384,34 +384,34 @@ AJAX.registerOnload('server/status/monitor.js', function () {
         'c0': {
             title: Messages.strQuestions,
             series: [
-                { label: Messages.strQuestions }
+                {label: Messages.strQuestions}
             ],
             nodes: [
-                { dataPoints: [{ type: 'statusvar', name: 'Questions' }], display: 'differential' }
+                {dataPoints: [{type: 'statusvar', name: 'Questions'}], display: 'differential'}
             ],
             maxYLabel: 0
         },
         'c1': {
             title: Messages.strChartConnectionsTitle,
             series: [
-                { label: Messages.strConnections },
-                { label: Messages.strProcesses }
+                {label: Messages.strConnections},
+                {label: Messages.strProcesses}
             ],
             nodes: [
-                { dataPoints: [{ type: 'statusvar', name: 'Connections' }], display: 'differential' },
-                { dataPoints: [{ type: 'proc', name: 'processes' }] }
+                {dataPoints: [{type: 'statusvar', name: 'Connections'}], display: 'differential'},
+                {dataPoints: [{type: 'proc', name: 'processes'}]}
             ],
             maxYLabel: 0
         },
         'c2': {
             title: Messages.strTraffic,
             series: [
-                { label: Messages.strBytesSent },
-                { label: Messages.strBytesReceived }
+                {label: Messages.strBytesSent},
+                {label: Messages.strBytesReceived}
             ],
             nodes: [
-                { dataPoints: [{ type: 'statusvar', name: 'Bytes_sent' }], display: 'differential', valueDivisor: 1024 },
-                { dataPoints: [{ type: 'statusvar', name: 'Bytes_received' }], display: 'differential', valueDivisor: 1024 }
+                {dataPoints: [{type: 'statusvar', name: 'Bytes_sent'}], display: 'differential', valueDivisor: 1024},
+                {dataPoints: [{type: 'statusvar', name: 'Bytes_received'}], display: 'differential', valueDivisor: 1024}
             ],
             maxYLabel: 0
         }
@@ -535,7 +535,7 @@ AJAX.registerOnload('server/status/monitor.js', function () {
 
     $('a[href="#addNewChart"]').on('click', function (event) {
         event.preventDefault();
-        var dlgButtons = { };
+        var dlgButtons = {};
 
         dlgButtons[Messages.strAddChart] = function () {
             var type = $('input[name="chartType"]:checked').val();
@@ -546,7 +546,7 @@ AJAX.registerOnload('server/status/monitor.js', function () {
                 // If user builds their own chart, it's being set/updated
                 // each time they add a series
                 // So here we only warn if they didn't add a series yet
-                if (! newChart || ! newChart.nodes || newChart.nodes.length === 0) {
+                if (!newChart || !newChart.nodes || newChart.nodes.length === 0) {
                     alert(Messages.strAddOneSeriesWarning);
                     return;
                 }
@@ -577,24 +577,24 @@ AJAX.registerOnload('server/status/monitor.js', function () {
             });
             $presetList.on('change', function () {
                 $('input[name="chartTitle"]').val(
-                    $presetList.find(':selected').text()
-                );
+                        $presetList.find(':selected').text()
+                        );
                 $('#chartPreset').prop('checked', true);
             });
             $('#chartPreset').on('click', function () {
                 $('input[name="chartTitle"]').val(
-                    $presetList.find(':selected').text()
-                );
+                        $presetList.find(':selected').text()
+                        );
             });
             $('#chartStatusVar').on('click', function () {
                 $('input[name="chartTitle"]').val(
-                    $('#chartSeries').find(':selected').text().replace(/_/g, ' ')
-                );
+                        $('#chartSeries').find(':selected').text().replace(/_/g, ' ')
+                        );
             });
             $('#chartSeries').on('change', function () {
                 $('input[name="chartTitle"]').val(
-                    $('#chartSeries').find(':selected').text().replace(/_/g, ' ')
-                );
+                        $('#chartSeries').find(':selected').text().replace(/_/g, ' ')
+                        );
             });
         }
 
@@ -625,7 +625,7 @@ AJAX.registerOnload('server/status/monitor.js', function () {
             monitorSettings: monitorSettings
         };
 
-        var blob = new Blob([JSON.stringify(exportData)], { type: 'application/octet-stream' });
+        var blob = new Blob([JSON.stringify(exportData)], {type: 'application/octet-stream'});
         var url = null;
         var fileName = 'monitor-config.json';
         if (window.navigator && window.navigator.msSaveOrOpenBlob) {
@@ -646,9 +646,9 @@ AJAX.registerOnload('server/status/monitor.js', function () {
 
     $('a[href="#importMonitorConfig"]').on('click', function (event) {
         event.preventDefault();
-        $('#emptyDialog').dialog({ title: Messages.strImportDialogTitle });
+        $('#emptyDialog').dialog({title: Messages.strImportDialogTitle});
         $('#emptyDialog').html(Messages.strImportDialogMessage + ':<br><form>' +
-            '<input type="file" name="file" id="import_file"> </form>');
+                '<input type="file" name="file" id="import_file"> </form>');
 
         var dlgBtns = {};
 
@@ -672,7 +672,7 @@ AJAX.registerOnload('server/status/monitor.js', function () {
                 }
 
                 // Basic check, is this a monitor config json?
-                if (!json || ! json.monitorCharts || ! json.monitorCharts) {
+                if (!json || !json.monitorCharts || !json.monitorCharts) {
                     alert(Messages.strFailedParsingConfig);
                     $('#emptyDialog').dialog('close');
                     return;
@@ -724,12 +724,12 @@ AJAX.registerOnload('server/status/monitor.js', function () {
 
     $('a[href="#pauseCharts"]').on('click', function (event) {
         event.preventDefault();
-        runtime.redrawCharts = ! runtime.redrawCharts;
-        if (! runtime.redrawCharts) {
+        runtime.redrawCharts = !runtime.redrawCharts;
+        if (!runtime.redrawCharts) {
             $(this).html(Functions.getImage('play') + Messages.strResumeMonitor);
         } else {
             $(this).html(Functions.getImage('pause') + Messages.strPauseMonitor);
-            if (! runtime.charts) {
+            if (!runtime.charts) {
                 initGrid();
                 $('a[href="#settingsPopup"]').show();
             }
@@ -761,119 +761,119 @@ AJAX.registerOnload('server/status/monitor.js', function () {
             }
 
             $.post('index.php?route=/server/status/monitor/log-vars', vars,
-                function (data) {
-                    var logVars;
-                    if (typeof data !== 'undefined' && data.success === true) {
-                        logVars = data.message;
-                    } else {
-                        return serverResponseError();
-                    }
-                    var icon = Functions.getImage('s_success');
-                    var msg = '';
-                    var str = '';
+                    function (data) {
+                        var logVars;
+                        if (typeof data !== 'undefined' && data.success === true) {
+                            logVars = data.message;
+                        } else {
+                            return serverResponseError();
+                        }
+                        var icon = Functions.getImage('s_success');
+                        var msg = '';
+                        var str = '';
 
-                    if (logVars.general_log === 'ON') {
+                        if (logVars.general_log === 'ON') {
+                            if (logVars.slow_query_log === 'ON') {
+                                msg = Messages.strBothLogOn;
+                            } else {
+                                msg = Messages.strGenLogOn;
+                            }
+                        }
+
+                        if (msg.length === 0 && logVars.slow_query_log === 'ON') {
+                            msg = Messages.strSlowLogOn;
+                        }
+
+                        if (msg.length === 0) {
+                            icon = Functions.getImage('s_error');
+                            msg = Messages.strBothLogOff;
+                        }
+
+                        str = '<b>' + Messages.strCurrentSettings + '</b><br><div class="smallIndent">';
+                        str += icon + msg + '<br>';
+
+                        if (logVars.log_output !== 'TABLE') {
+                            str += Functions.getImage('s_error') + ' ' + Messages.strLogOutNotTable + '<br>';
+                        } else {
+                            str += Functions.getImage('s_success') + ' ' + Messages.strLogOutIsTable + '<br>';
+                        }
+
                         if (logVars.slow_query_log === 'ON') {
-                            msg = Messages.strBothLogOn;
-                        } else {
-                            msg = Messages.strGenLogOn;
-                        }
-                    }
+                            if (logVars.long_query_time > 2) {
+                                str += Functions.getImage('s_attention') + ' ';
+                                str += Functions.sprintf(Messages.strSmallerLongQueryTimeAdvice, logVars.long_query_time);
+                                str += '<br>';
+                            }
 
-                    if (msg.length === 0 && logVars.slow_query_log === 'ON') {
-                        msg = Messages.strSlowLogOn;
-                    }
-
-                    if (msg.length === 0) {
-                        icon = Functions.getImage('s_error');
-                        msg = Messages.strBothLogOff;
-                    }
-
-                    str = '<b>' + Messages.strCurrentSettings + '</b><br><div class="smallIndent">';
-                    str += icon + msg + '<br>';
-
-                    if (logVars.log_output !== 'TABLE') {
-                        str += Functions.getImage('s_error') + ' ' + Messages.strLogOutNotTable + '<br>';
-                    } else {
-                        str += Functions.getImage('s_success') + ' ' + Messages.strLogOutIsTable + '<br>';
-                    }
-
-                    if (logVars.slow_query_log === 'ON') {
-                        if (logVars.long_query_time > 2) {
-                            str += Functions.getImage('s_attention') + ' ';
-                            str += Functions.sprintf(Messages.strSmallerLongQueryTimeAdvice, logVars.long_query_time);
-                            str += '<br>';
+                            if (logVars.long_query_time < 2) {
+                                str += Functions.getImage('s_success') + ' ';
+                                str += Functions.sprintf(Messages.strLongQueryTimeSet, logVars.long_query_time);
+                                str += '<br>';
+                            }
                         }
 
-                        if (logVars.long_query_time < 2) {
-                            str += Functions.getImage('s_success') + ' ';
-                            str += Functions.sprintf(Messages.strLongQueryTimeSet, logVars.long_query_time);
-                            str += '<br>';
-                        }
-                    }
+                        str += '</div>';
 
-                    str += '</div>';
+                        if (isSuperUser) {
+                            str += '<p></p><b>' + Messages.strChangeSettings + '</b>';
+                            str += '<div class="smallIndent">';
+                            str += Messages.strSettingsAppliedGlobal + '<br>';
 
-                    if (isSuperUser) {
-                        str += '<p></p><b>' + Messages.strChangeSettings + '</b>';
-                        str += '<div class="smallIndent">';
-                        str += Messages.strSettingsAppliedGlobal + '<br>';
+                            var varValue = 'TABLE';
+                            if (logVars.log_output === 'TABLE') {
+                                varValue = 'FILE';
+                            }
 
-                        var varValue = 'TABLE';
-                        if (logVars.log_output === 'TABLE') {
-                            varValue = 'FILE';
-                        }
+                            str += '- <a class="set" href="#log_output-' + varValue + '">';
+                            str += Functions.sprintf(Messages.strSetLogOutput, varValue);
+                            str += ' </a><br>';
 
-                        str += '- <a class="set" href="#log_output-' + varValue + '">';
-                        str += Functions.sprintf(Messages.strSetLogOutput, varValue);
-                        str += ' </a><br>';
+                            if (logVars.general_log !== 'ON') {
+                                str += '- <a class="set" href="#general_log-ON">';
+                                str += Functions.sprintf(Messages.strEnableVar, 'general_log');
+                                str += ' </a><br>';
+                            } else {
+                                str += '- <a class="set" href="#general_log-OFF">';
+                                str += Functions.sprintf(Messages.strDisableVar, 'general_log');
+                                str += ' </a><br>';
+                            }
 
-                        if (logVars.general_log !== 'ON') {
-                            str += '- <a class="set" href="#general_log-ON">';
-                            str += Functions.sprintf(Messages.strEnableVar, 'general_log');
+                            if (logVars.slow_query_log !== 'ON') {
+                                str += '- <a class="set" href="#slow_query_log-ON">';
+                                str += Functions.sprintf(Messages.strEnableVar, 'slow_query_log');
+                                str += ' </a><br>';
+                            } else {
+                                str += '- <a class="set" href="#slow_query_log-OFF">';
+                                str += Functions.sprintf(Messages.strDisableVar, 'slow_query_log');
+                                str += ' </a><br>';
+                            }
+
+                            varValue = 5;
+                            if (logVars.long_query_time > 2) {
+                                varValue = 1;
+                            }
+
+                            str += '- <a class="set" href="#long_query_time-' + varValue + '">';
+                            str += Functions.sprintf(Messages.setSetLongQueryTime, varValue);
                             str += ' </a><br>';
                         } else {
-                            str += '- <a class="set" href="#general_log-OFF">';
-                            str += Functions.sprintf(Messages.strDisableVar, 'general_log');
-                            str += ' </a><br>';
+                            str += Messages.strNoSuperUser + '<br>';
                         }
 
-                        if (logVars.slow_query_log !== 'ON') {
-                            str += '- <a class="set" href="#slow_query_log-ON">';
-                            str +=  Functions.sprintf(Messages.strEnableVar, 'slow_query_log');
-                            str += ' </a><br>';
-                        } else {
-                            str += '- <a class="set" href="#slow_query_log-OFF">';
-                            str +=  Functions.sprintf(Messages.strDisableVar, 'slow_query_log');
-                            str += ' </a><br>';
-                        }
+                        str += '</div>';
 
-                        varValue = 5;
-                        if (logVars.long_query_time > 2) {
-                            varValue = 1;
-                        }
+                        $dialog.find('div.monitorUse').toggle(
+                                logVars.log_output === 'TABLE' && (logVars.slow_query_log === 'ON' || logVars.general_log === 'ON')
+                                );
 
-                        str += '- <a class="set" href="#long_query_time-' + varValue + '">';
-                        str += Functions.sprintf(Messages.setSetLongQueryTime, varValue);
-                        str += ' </a><br>';
-                    } else {
-                        str += Messages.strNoSuperUser + '<br>';
+                        $dialog.find('div.ajaxContent').html(str);
+                        $dialog.find('img.ajaxIcon').hide();
+                        $dialog.find('a.set').on('click', function () {
+                            var nameValue = $(this).attr('href').split('-');
+                            loadLogVars({varName: nameValue[0].substr(1), varValue: nameValue[1]});
+                            $dialog.find('img.ajaxIcon').show();
+                        });
                     }
-
-                    str += '</div>';
-
-                    $dialog.find('div.monitorUse').toggle(
-                        logVars.log_output === 'TABLE' && (logVars.slow_query_log === 'ON' || logVars.general_log === 'ON')
-                    );
-
-                    $dialog.find('div.ajaxContent').html(str);
-                    $dialog.find('img.ajaxIcon').hide();
-                    $dialog.find('a.set').on('click', function () {
-                        var nameValue = $(this).attr('href').split('-');
-                        loadLogVars({ varName: nameValue[0].substr(1), varValue: nameValue[1] });
-                        $dialog.find('img.ajaxIcon').show();
-                    });
-                }
             );
         };
 
@@ -887,11 +887,11 @@ AJAX.registerOnload('server/status/monitor.js', function () {
         $('#chartVariableSettings').toggle(this.checked && this.value === 'variable');
         var title = $('input[name="chartTitle"]').val();
         if (title === Messages.strChartTitle ||
-            title === $('label[for="' + $('input[name="chartTitle"]').data('lastRadio') + '"]').text()
-        ) {
+                title === $('label[for="' + $('input[name="chartTitle"]').data('lastRadio') + '"]').text()
+                ) {
             $('input[name="chartTitle"]')
-                .data('lastRadio', $(this).attr('id'))
-                .val($('label[for="' + $(this).attr('id') + '"]').text());
+                    .data('lastRadio', $(this).attr('id'))
+                    .val($('label[for="' + $(this).attr('id') + '"]').text());
         }
     });
 
@@ -952,7 +952,7 @@ AJAX.registerOnload('server/status/monitor.js', function () {
         }
 
         var serie = {
-            dataPoints: [{ type: 'statusvar', name: $('#variableInput').val() }],
+            dataPoints: [{type: 'statusvar', name: $('#variableInput').val()}],
             display: $('input[name="differentialValue"]').prop('checked') ? 'differential' : ''
         };
 
@@ -996,7 +996,7 @@ AJAX.registerOnload('server/status/monitor.js', function () {
     });
 
     /* Initializes the monitor, called only once */
-    function initGrid () {
+    function initGrid() {
         var i;
 
         /* Apply default values & config */
@@ -1011,10 +1011,10 @@ AJAX.registerOnload('server/status/monitor.js', function () {
             $('a[href="#clearMonitorConfig"]').toggle(runtime.charts !== null);
 
             if (runtime.charts !== null
-                && typeof window.localStorage.monitorVersion !== 'undefined'
-                && monitorProtocolVersion !== window.localStorage.monitorVersion
-            ) {
-                $('#emptyDialog').dialog({ title: Messages.strIncompatibleMonitorConfig });
+                    && typeof window.localStorage.monitorVersion !== 'undefined'
+                    && monitorProtocolVersion !== window.localStorage.monitorVersion
+                    ) {
+                $('#emptyDialog').dialog({title: Messages.strIncompatibleMonitorConfig});
                 $('#emptyDialog').html(Messages.strIncompatibleMonitorConfigDescription);
 
                 var dlgBtns = {};
@@ -1052,9 +1052,9 @@ AJAX.registerOnload('server/status/monitor.js', function () {
         $('#chartGrid').html('<tr><td></td><td></td></tr><tr><td></td><td></td></tr>');
         chartSpacing = {
             width: $('#chartGrid').find('td').eq(1).offset().left -
-                $('#chartGrid').find('td').eq(0).offset().left,
+                    $('#chartGrid').find('td').eq(0).offset().left,
             height: $('#chartGrid').find('tr').eq(1).find('td').eq(1).offset().top -
-               $('#chartGrid').find('tr').eq(0).find('td').eq(0).offset().top
+                    $('#chartGrid').find('tr').eq(0).find('td').eq(0).offset().top
         };
         $('#chartGrid').html('');
 
@@ -1085,7 +1085,7 @@ AJAX.registerOnload('server/status/monitor.js', function () {
 
     /* Calls destroyGrid() and initGrid(), but before doing so it saves the chart
      * data from each chart and restores it after the monitor is initialized again */
-    function rebuildGrid () {
+    function rebuildGrid() {
         var oldData = null;
         if (runtime.charts) {
             oldData = {};
@@ -1104,7 +1104,7 @@ AJAX.registerOnload('server/status/monitor.js', function () {
     }
 
     /* Calculates the dynamic chart size that depends on the column width */
-    function calculateChartSize () {
+    function calculateChartSize() {
         var panelWidth;
         if ($('body').height() > $(window).height()) { // has vertical scroll bar
             panelWidth = $('#logTable').innerWidth();
@@ -1126,7 +1126,7 @@ AJAX.registerOnload('server/status/monitor.js', function () {
     }
 
     /* Adds a chart to the chart grid */
-    function addChart (chartObj, initialize) {
+    function addChart(chartObj, initialize) {
         var i;
         var settings = {
             title: Functions.escapeHtml(chartObj.title),
@@ -1167,14 +1167,14 @@ AJAX.registerOnload('server/status/monitor.js', function () {
         };
 
         if (settings.title === Messages.strSystemCPUUsage ||
-            settings.title === Messages.strQueryCacheEfficiency
-        ) {
+                settings.title === Messages.strQueryCacheEfficiency
+                ) {
             settings.axes.yaxis.tickOptions = {
                 formatString: '%d %%'
             };
         } else if (settings.title === Messages.strSystemMemory ||
-            settings.title === Messages.strSystemSwap
-        ) {
+                settings.title === Messages.strSystemSwap
+                ) {
             settings.stackSeries = true;
             settings.axes.yaxis.tickOptions = {
                 formatter: $.jqplot.byteFormatter(2) // MiB
@@ -1184,8 +1184,8 @@ AJAX.registerOnload('server/status/monitor.js', function () {
                 formatter: $.jqplot.byteFormatter(1) // KiB
             };
         } else if (settings.title === Messages.strQuestions ||
-            settings.title === Messages.strConnections
-        ) {
+                settings.title === Messages.strConnections
+                ) {
             settings.axes.yaxis.tickOptions = {
                 formatter: function (format, val) {
                     if (Math.abs(val) >= 1000000) {
@@ -1212,12 +1212,12 @@ AJAX.registerOnload('server/status/monitor.js', function () {
                 calculateChartSize();
             }
             $('#chartGrid').find('tr').last().append(
-                '<td><div id="gridChartContainer' + runtime.chartAI + '" class="">' +
-                '<div class="ui-state-default monitorChart"' +
-                ' id="gridchart' + runtime.chartAI + '"' +
-                ' style="width:' + chartSize.width + 'px; height:' + chartSize.height + 'px;"></div>' +
-                '</div></td>'
-            );
+                    '<td><div id="gridChartContainer' + runtime.chartAI + '" class="">' +
+                    '<div class="ui-state-default monitorChart"' +
+                    ' id="gridchart' + runtime.chartAI + '"' +
+                    ' style="width:' + chartSize.width + 'px; height:' + chartSize.height + 'px;"></div>' +
+                    '</div></td>'
+                    );
         }
 
         // Set series' data as [0,0], smooth lines won't plot with data array having null values.
@@ -1257,7 +1257,7 @@ AJAX.registerOnload('server/status/monitor.js', function () {
                     seriesValue = Functions.sprintf(plot.series[0]._yaxis.tickOptions.formatString, seriesValue);
                 }
                 tooltipHtml += '<br><span style="color:' + seriesColor + '">' +
-                    seriesLabel + ': ' + seriesValue + '</span>';
+                        seriesLabel + ': ' + seriesValue + '</span>';
             }
             tooltipHtml += '</span></div>';
             return tooltipHtml;
@@ -1280,24 +1280,24 @@ AJAX.registerOnload('server/status/monitor.js', function () {
         var $legend = $('<div></div>').css('padding', '0.5em');
         for (i in chartObj.chart.series) {
             $legend.append(
-                $('<div></div>').append(
+                    $('<div></div>').append(
                     $('<div>').css({
-                        width: '1em',
-                        height: '1em',
-                        background: chartObj.chart.seriesColors[i]
-                    }).addClass('floatleft')
-                ).append(
+                width: '1em',
+                height: '1em',
+                background: chartObj.chart.seriesColors[i]
+            }).addClass('floatleft')
+                    ).append(
                     $('<div>').text(
-                        chartObj.chart.series[i].label
+                    chartObj.chart.series[i].label
                     ).addClass('floatleft')
-                ).append(
+                    ).append(
                     $('<div class="clearfloat">')
-                ).addClass('floatleft')
-            );
+                    ).addClass('floatleft')
+                    );
         }
         $('#gridchart' + runtime.chartAI)
-            .parent()
-            .append($legend);
+                .parent()
+                .append($legend);
 
         if (initialize !== true) {
             runtime.charts['c' + runtime.chartAI] = chartObj;
@@ -1317,16 +1317,16 @@ AJAX.registerOnload('server/status/monitor.js', function () {
             selectionStartX = ev.pageX;
             selectionStartY = ev.pageY;
             selectionBox
-                .attr({ id: 'selection_box' })
-                .css({
-                    top: selectionStartY - gridpos.y,
-                    left: selectionStartX
-                })
-                .fadeIn();
+                    .attr({id: 'selection_box'})
+                    .css({
+                        top: selectionStartY - gridpos.y,
+                        left: selectionStartX
+                    })
+                    .fadeIn();
         });
 
         $('#gridchart' + runtime.chartAI).on('jqplotMouseUp', function (ev, gridpos, datapos) {
-            if (! drawTimeSpan || editMode) {
+            if (!drawTimeSpan || editMode) {
                 return;
             }
 
@@ -1345,15 +1345,15 @@ AJAX.registerOnload('server/status/monitor.js', function () {
         });
 
         $('#gridchart' + runtime.chartAI).on('jqplotMouseMove', function (ev) {
-            if (! drawTimeSpan || editMode) {
+            if (!drawTimeSpan || editMode) {
                 return;
             }
             if (selectionStartX !== undefined) {
                 $('#selection_box')
-                    .css({
-                        width: Math.ceil(ev.pageX - selectionStartX)
-                    })
-                    .fadeIn();
+                        .css({
+                            width: Math.ceil(ev.pageX - selectionStartX)
+                        })
+                        .fadeIn();
             }
         });
 
@@ -1374,14 +1374,14 @@ AJAX.registerOnload('server/status/monitor.js', function () {
         runtime.chartAI++;
     }
 
-    function getLogAnalyseDialog (min, max) {
+    function getLogAnalyseDialog(min, max) {
         var $logAnalyseDialog = $('#logAnalyseDialog');
         var $dateStart = $logAnalyseDialog.find('input[name="dateStart"]');
         var $dateEnd = $logAnalyseDialog.find('input[name="dateEnd"]');
         $dateStart.prop('readonly', true);
         $dateEnd.prop('readonly', true);
 
-        var dlgBtns = { };
+        var dlgBtns = {};
 
         dlgBtns[Messages.strFromSlowLog] = function () {
             loadLog('slow', min, max);
@@ -1415,7 +1415,7 @@ AJAX.registerOnload('server/status/monitor.js', function () {
         $dateEnd.datepicker('setDate', max);
     }
 
-    function loadLog (type, min, max) {
+    function loadLog(type, min, max) {
         var dateStart = Date.parse($('#logAnalyseDialog').find('input[name="dateStart"]').datepicker('getDate')) || min;
         var dateEnd = Date.parse($('#logAnalyseDialog').find('input[name="dateEnd"]').datepicker('getDate')) || max;
 
@@ -1429,7 +1429,7 @@ AJAX.registerOnload('server/status/monitor.js', function () {
     }
 
     /* Called in regular intervals, this function updates the values of each chart in the grid */
-    function refreshChartGrid () {
+    function refreshChartGrid() {
         /* Send to server */
         runtime.refreshRequest = $.post('index.php?route=/server/status/monitor/chart', {
             'ajax_request': true,
@@ -1451,7 +1451,7 @@ AJAX.registerOnload('server/status/monitor.js', function () {
             $.each(runtime.charts, function (orderKey, elem) {
                 var key = elem.chartID;
                 // If newly added chart, we have no data for it yet
-                if (! chartData[key]) {
+                if (!chartData[key]) {
                     return;
                 }
                 // Draw all series
@@ -1475,26 +1475,26 @@ AJAX.registerOnload('server/status/monitor.js', function () {
                     // If transform function given, use it
                     if (elem.nodes[j].transformFn) {
                         value = chartValueTransform(
-                            elem.nodes[j].transformFn,
-                            chartData[key][j],
-                            // Check if first iteration (oldChartData==null), or if newly added chart oldChartData[key]==null
-                            (
-                                oldChartData === null ||
-                                oldChartData[key] === null ||
-                                oldChartData[key] === undefined ? null : oldChartData[key][j]
-                            )
-                        );
+                                elem.nodes[j].transformFn,
+                                chartData[key][j],
+                                // Check if first iteration (oldChartData==null), or if newly added chart oldChartData[key]==null
+                                        (
+                                                oldChartData === null ||
+                                                oldChartData[key] === null ||
+                                                oldChartData[key] === undefined ? null : oldChartData[key][j]
+                                                )
+                                        );
 
-                    // Otherwise use original value and apply differential and divisor if given,
-                    // in this case we have only one data point per series - located at chartData[key][j][0]
+                        // Otherwise use original value and apply differential and divisor if given,
+                        // in this case we have only one data point per series - located at chartData[key][j][0]
                     } else {
                         value = parseFloat(chartData[key][j][0].value);
 
                         if (elem.nodes[j].display === 'differential') {
                             if (oldChartData === null ||
-                                oldChartData[key] === null ||
-                                oldChartData[key] === undefined
-                            ) {
+                                    oldChartData[key] === null ||
+                                    oldChartData[key] === undefined
+                                    ) {
                                 continue;
                             }
                             value -= oldChartData[key][j][0].value;
@@ -1515,8 +1515,8 @@ AJAX.registerOnload('server/status/monitor.js', function () {
                         }
                         // free old data point values and update maxYLabel
                         if (elem.chart.series[j].data.length > runtime.gridMaxPoints &&
-                            elem.chart.series[j].data[0][0] < runtime.xmin
-                        ) {
+                                elem.chart.series[j].data[0][0] < runtime.xmin
+                                ) {
                             // check if the next freeable point is highest
                             if (elem.maxYLabel <= elem.chart.series[j].data[0][1]) {
                                 elem.chart.series[j].data.splice(0, elem.chart.series[j].data.length - runtime.gridMaxPoints);
@@ -1526,8 +1526,8 @@ AJAX.registerOnload('server/status/monitor.js', function () {
                             }
                         }
                         if (elem.title === Messages.strSystemMemory ||
-                            elem.title === Messages.strSystemSwap
-                        ) {
+                                elem.title === Messages.strSystemSwap
+                                ) {
                             total += value;
                         }
                     }
@@ -1541,15 +1541,15 @@ AJAX.registerOnload('server/status/monitor.js', function () {
                     (runtime.xmax - tickInterval), runtime.xmax];
 
                 if (elem.title !== Messages.strSystemCPUUsage &&
-                    elem.title !== Messages.strQueryCacheEfficiency &&
-                    elem.title !== Messages.strSystemMemory &&
-                    elem.title !== Messages.strSystemSwap
-                ) {
+                        elem.title !== Messages.strQueryCacheEfficiency &&
+                        elem.title !== Messages.strSystemMemory &&
+                        elem.title !== Messages.strSystemSwap
+                        ) {
                     elem.chart.axes.yaxis.max = Math.ceil(elem.maxYLabel * 1.1);
                     elem.chart.axes.yaxis.tickInterval = Math.ceil(elem.maxYLabel * 1.1 / 5);
                 } else if (elem.title === Messages.strSystemMemory ||
-                    elem.title === Messages.strSystemSwap
-                ) {
+                        elem.title === Messages.strSystemSwap
+                        ) {
                     elem.chart.axes.yaxis.max = Math.ceil(total * 1.1 / 100) * 100;
                     elem.chart.axes.yaxis.tickInterval = Math.ceil(total * 1.1 / 5);
                 }
@@ -1569,7 +1569,7 @@ AJAX.registerOnload('server/status/monitor.js', function () {
     /* Function to get highest plotted point's y label, to scale the chart,
      * TODO: make jqplot's autoscale:true work here
      */
-    function getMaxYLabel (dataValues) {
+    function getMaxYLabel(dataValues) {
         var maxY = dataValues[0][1];
         $.each(dataValues, function (k, v) {
             maxY = (v[1] > maxY) ? v[1] : maxY;
@@ -1578,42 +1578,42 @@ AJAX.registerOnload('server/status/monitor.js', function () {
     }
 
     /* Function that supplies special value transform functions for chart values */
-    function chartValueTransform (name, cur, prev) {
+    function chartValueTransform(name, cur, prev) {
         switch (name) {
-        case 'cpu-linux':
-            if (prev === null) {
-                return undefined;
-            }
-            // cur and prev are datapoint arrays, but containing
-            // only 1 element for cpu-linux
-            var newCur = cur[0];
-            var newPrev = prev[0];
+            case 'cpu-linux':
+                if (prev === null) {
+                    return undefined;
+                }
+                // cur and prev are datapoint arrays, but containing
+                // only 1 element for cpu-linux
+                var newCur = cur[0];
+                var newPrev = prev[0];
 
-            var diffTotal = newCur.busy + newCur.idle - (newPrev.busy + newPrev.idle);
-            var diffIdle = newCur.idle - newPrev.idle;
-            return 100 * (diffTotal - diffIdle) / diffTotal;
+                var diffTotal = newCur.busy + newCur.idle - (newPrev.busy + newPrev.idle);
+                var diffIdle = newCur.idle - newPrev.idle;
+                return 100 * (diffTotal - diffIdle) / diffTotal;
 
-        // Query cache efficiency (%)
-        case 'qce':
-            if (prev === null) {
-                return undefined;
-            }
-            // cur[0].value is Qcache_hits, cur[1].value is Com_select
-            var diffQHits = cur[0].value - prev[0].value;
-            // No NaN please :-)
-            if (cur[1].value - prev[1].value === 0) {
-                return 0;
-            }
+                // Query cache efficiency (%)
+            case 'qce':
+                if (prev === null) {
+                    return undefined;
+                }
+                // cur[0].value is Qcache_hits, cur[1].value is Com_select
+                var diffQHits = cur[0].value - prev[0].value;
+                // No NaN please :-)
+                if (cur[1].value - prev[1].value === 0) {
+                    return 0;
+                }
 
-            return diffQHits / (cur[1].value - prev[1].value + diffQHits) * 100;
+                return diffQHits / (cur[1].value - prev[1].value + diffQHits) * 100;
 
-        // Query cache usage (%)
-        case 'qcu':
-            if (cur[1].value === 0) {
-                return 0;
-            }
-            // cur[0].value is Qcache_free_memory, cur[1].value is query_cache_size
-            return 100 - cur[0].value / cur[1].value * 100;
+                // Query cache usage (%)
+            case 'qcu':
+                if (cur[1].value === 0) {
+                    return 0;
+                }
+                // cur[0].value is Qcache_free_memory, cur[1].value is query_cache_size
+                return 100 - cur[0].value / cur[1].value * 100;
         }
         return undefined;
     }
@@ -1621,7 +1621,7 @@ AJAX.registerOnload('server/status/monitor.js', function () {
     /* Build list of nodes that need to be retrieved from server.
      * It creates something like a stripped down version of the runtime.charts object.
      */
-    function buildRequiredDataList () {
+    function buildRequiredDataList() {
         runtime.dataList = {};
         // Store an own id, because the property name is subject of reordering,
         // thus destroying our mapping with runtime.charts <=> runtime.dataList
@@ -1637,20 +1637,20 @@ AJAX.registerOnload('server/status/monitor.js', function () {
     }
 
     /* Loads the log table data, generates the table and handles the filters */
-    function loadLogStatistics (opts) {
+    function loadLogStatistics(opts) {
         var logRequest = null;
 
-        if (! opts.removeVariables) {
+        if (!opts.removeVariables) {
             opts.removeVariables = false;
         }
-        if (! opts.limitTypes) {
+        if (!opts.limitTypes) {
             opts.limitTypes = false;
         }
 
-        $('#emptyDialog').dialog({ title: Messages.strAnalysingLogsTitle });
+        $('#emptyDialog').dialog({title: Messages.strAnalysingLogsTitle});
         $('#emptyDialog').html(Messages.strAnalysingLogs +
-                                ' <img class="ajaxIcon" src="' + themeImagePath +
-                                'ajax_clock_small.gif" alt="">');
+                ' <img class="ajaxIcon" src="' + themeImagePath +
+                'ajax_clock_small.gif" alt="">');
         var dlgBtns = {};
 
         dlgBtns[Messages.strCancelRequest] = function () {
@@ -1672,84 +1672,84 @@ AJAX.registerOnload('server/status/monitor.js', function () {
             url = 'index.php?route=/server/status/monitor/general-log';
         }
         logRequest = $.post(
-            url,
-            {
-                'ajax_request': true,
-                'time_start': Math.round(opts.start / 1000),
-                'time_end': Math.round(opts.end / 1000),
-                'removeVariables': opts.removeVariables,
-                'limitTypes': opts.limitTypes,
-                'server': CommonParams.get('server')
-            },
-            function (data) {
-                var logData;
-                var dlgBtns = {};
-                if (typeof data !== 'undefined' && data.success === true) {
-                    logData = data.message;
-                } else {
-                    return serverResponseError();
-                }
+                url,
+                {
+                    'ajax_request': true,
+                    'time_start': Math.round(opts.start / 1000),
+                    'time_end': Math.round(opts.end / 1000),
+                    'removeVariables': opts.removeVariables,
+                    'limitTypes': opts.limitTypes,
+                    'server': CommonParams.get('server')
+                },
+                function (data) {
+                    var logData;
+                    var dlgBtns = {};
+                    if (typeof data !== 'undefined' && data.success === true) {
+                        logData = data.message;
+                    } else {
+                        return serverResponseError();
+                    }
 
-                if (logData.rows.length === 0) {
-                    $('#emptyDialog').dialog({ title: Messages.strNoDataFoundTitle });
-                    $('#emptyDialog').html('<p>' + Messages.strNoDataFound + '</p>');
+                    if (logData.rows.length === 0) {
+                        $('#emptyDialog').dialog({title: Messages.strNoDataFoundTitle});
+                        $('#emptyDialog').html('<p>' + Messages.strNoDataFound + '</p>');
 
-                    dlgBtns[Messages.strClose] = function () {
+                        dlgBtns[Messages.strClose] = function () {
+                            $(this).dialog('close');
+                        };
+
+                        $('#emptyDialog').dialog('option', 'buttons', dlgBtns);
+                        return;
+                    }
+
+                    runtime.logDataCols = buildLogTable(logData, opts.removeVariables);
+
+                    /* Show some stats in the dialog */
+                    $('#emptyDialog').dialog({title: Messages.strLoadingLogs});
+                    $('#emptyDialog').html('<p>' + Messages.strLogDataLoaded + '</p>');
+                    $.each(logData.sum, function (key, value) {
+                        var newKey = key.charAt(0).toUpperCase() + key.slice(1).toLowerCase();
+                        if (newKey === 'Total') {
+                            newKey = '<b>' + newKey + '</b>';
+                        }
+                        $('#emptyDialog').append(newKey + ': ' + value + '<br>');
+                    });
+
+                    /* Add filter options if more than a bunch of rows there to filter */
+                    if (logData.numRows > 12) {
+                        $('#logTable').prepend(
+                                '<fieldset id="logDataFilter">' +
+                                '    <legend>' + Messages.strFiltersForLogTable + '</legend>' +
+                                '    <div class="formelement">' +
+                                '        <label for="filterQueryText">' + Messages.strFilterByWordRegexp + '</label>' +
+                                '        <input name="filterQueryText" type="text" id="filterQueryText">' +
+                                '    </div>' +
+                                ((logData.numRows > 250) ? ' <div class="formelement"><button class="btn btn-secondary" name="startFilterQueryText" id="startFilterQueryText">' + Messages.strFilter + '</button></div>' : '') +
+                                '    <div class="formelement">' +
+                                '       <input type="checkbox" id="noWHEREData" name="noWHEREData" value="1"> ' +
+                                '       <label for="noWHEREData"> ' + Messages.strIgnoreWhereAndGroup + '</label>' +
+                                '   </div' +
+                                '</fieldset>'
+                                );
+
+                        $('#noWHEREData').on('change', function () {
+                            filterQueries(true);
+                        });
+
+                        if (logData.numRows > 250) {
+                            $('#startFilterQueryText').on('click', filterQueries);
+                        } else {
+                            $('#filterQueryText').on('keyup', filterQueries);
+                        }
+                    }
+
+                    dlgBtns[Messages.strJumpToTable] = function () {
                         $(this).dialog('close');
+                        $(document).scrollTop($('#logTable').offset().top);
                     };
 
                     $('#emptyDialog').dialog('option', 'buttons', dlgBtns);
-                    return;
                 }
-
-                runtime.logDataCols = buildLogTable(logData, opts.removeVariables);
-
-                /* Show some stats in the dialog */
-                $('#emptyDialog').dialog({ title: Messages.strLoadingLogs });
-                $('#emptyDialog').html('<p>' + Messages.strLogDataLoaded + '</p>');
-                $.each(logData.sum, function (key, value) {
-                    var newKey = key.charAt(0).toUpperCase() + key.slice(1).toLowerCase();
-                    if (newKey === 'Total') {
-                        newKey = '<b>' + newKey + '</b>';
-                    }
-                    $('#emptyDialog').append(newKey + ': ' + value + '<br>');
-                });
-
-                /* Add filter options if more than a bunch of rows there to filter */
-                if (logData.numRows > 12) {
-                    $('#logTable').prepend(
-                        '<fieldset id="logDataFilter">' +
-                        '    <legend>' + Messages.strFiltersForLogTable + '</legend>' +
-                        '    <div class="formelement">' +
-                        '        <label for="filterQueryText">' + Messages.strFilterByWordRegexp + '</label>' +
-                        '        <input name="filterQueryText" type="text" id="filterQueryText">' +
-                        '    </div>' +
-                        ((logData.numRows > 250) ? ' <div class="formelement"><button class="btn btn-secondary" name="startFilterQueryText" id="startFilterQueryText">' + Messages.strFilter + '</button></div>' : '') +
-                        '    <div class="formelement">' +
-                        '       <input type="checkbox" id="noWHEREData" name="noWHEREData" value="1"> ' +
-                        '       <label for="noWHEREData"> ' + Messages.strIgnoreWhereAndGroup + '</label>' +
-                        '   </div' +
-                        '</fieldset>'
-                    );
-
-                    $('#noWHEREData').on('change', function () {
-                        filterQueries(true);
-                    });
-
-                    if (logData.numRows > 250) {
-                        $('#startFilterQueryText').on('click', filterQueries);
-                    } else {
-                        $('#filterQueryText').on('keyup', filterQueries);
-                    }
-                }
-
-                dlgBtns[Messages.strJumpToTable] = function () {
-                    $(this).dialog('close');
-                    $(document).scrollTop($('#logTable').offset().top);
-                };
-
-                $('#emptyDialog').dialog('option', 'buttons', dlgBtns);
-            }
         );
 
         /* Handles the actions performed when the user uses any of the
@@ -1758,8 +1758,8 @@ AJAX.registerOnload('server/status/monitor.js', function () {
          *
          * @param boolean Should be true when the users enabled or disabled
          *                to group queries ignoring data in WHERE clauses
-        */
-        function filterQueries (varFilterChange) {
+         */
+        function filterQueries(varFilterChange) {
             var textFilter;
             var val = $('#filterQueryText').val();
 
@@ -1855,7 +1855,7 @@ AJAX.registerOnload('server/status/monitor.js', function () {
 
                 // If not required to be hidden, do we need
                 // to hide because of a not matching text filter?
-                if (! hide && (textFilter !== null && ! textFilter.exec($t.text()))) {
+                if (!hide && (textFilter !== null && !textFilter.exec($t.text()))) {
                     hide = true;
                 }
 
@@ -1883,7 +1883,7 @@ AJAX.registerOnload('server/status/monitor.js', function () {
                             return;
                         }
 
-                        row =  $table.children('tr').eq(value);
+                        row = $table.children('tr').eq(value);
                         numCol = row.children().eq(runtime.logDataCols.length - 1);
                         numCol.text(filteredQueries[key]);
 
@@ -1904,20 +1904,20 @@ AJAX.registerOnload('server/status/monitor.js', function () {
 
             // Display some stats at the bottom of the table
             $('#logTable').find('table tfoot tr')
-                .html('<th colspan="' + (runtime.logDataCols.length - 1) + '">' +
-                      Messages.strSumRows + ' ' + rowSum + '<span class="floatright">' +
-                      Messages.strTotal + '</span></th><th class="right">' + totalSum + '</th>');
+                    .html('<th colspan="' + (runtime.logDataCols.length - 1) + '">' +
+                            Messages.strSumRows + ' ' + rowSum + '<span class="floatright">' +
+                            Messages.strTotal + '</span></th><th class="right">' + totalSum + '</th>');
         }
     }
 
     /* Turns a timespan (12:12:12) into a number */
-    function timeToSec (timeStr) {
+    function timeToSec(timeStr) {
         var time = timeStr.split(':');
         return (parseInt(time[0], 10) * 3600) + (parseInt(time[1], 10) * 60) + parseInt(time[2], 10);
     }
 
     /* Turns a number into a timespan (100 into 00:01:40) */
-    function secToTime (timeInt) {
+    function secToTime(timeInt) {
         var time = timeInt;
         var hours = Math.floor(time / 3600);
         time -= hours * 3600;
@@ -1938,7 +1938,7 @@ AJAX.registerOnload('server/status/monitor.js', function () {
     }
 
     /* Constructs the log table out of the retrieved server data */
-    function buildLogTable (data, groupInserts) {
+    function buildLogTable(data, groupInserts) {
         var rows = data.rows;
         var cols = [];
         var $table = $('<table class="pma-table sortable"></table>');
@@ -1963,9 +1963,9 @@ AJAX.registerOnload('server/status/monitor.js', function () {
             if (i === 0) {
                 $.each(rows[0], tempPushKey);
                 $table.append('<thead>' +
-                              '<tr><th class="nowrap">' + cols.join('</th><th class="nowrap">') + '</th></tr>' +
-                              '</thead>'
-                );
+                        '<tr><th class="nowrap">' + cols.join('</th><th class="nowrap">') + '</th></tr>' +
+                        '</thead>'
+                        );
 
                 $table.append($tBody = $('<tbody></tbody>'));
             }
@@ -1985,13 +1985,13 @@ AJAX.registerOnload('server/status/monitor.js', function () {
         }
 
         $table.append('<tfoot>' +
-                    '<tr><th colspan="' + (cols.length - 1) + '">' + Messages.strSumRows +
-                    ' ' + data.numRows + '<span class="floatright">' + Messages.strTotal +
-                    '</span></th><th class="right">' + data.sum.TOTAL + '</th></tr></tfoot>');
+                '<tr><th colspan="' + (cols.length - 1) + '">' + Messages.strSumRows +
+                ' ' + data.numRows + '<span class="floatright">' + Messages.strTotal +
+                '</span></th><th class="right">' + data.sum.TOTAL + '</th></tr></tfoot>');
 
         // Append a tooltip to the count column, if there exist one
         if ($('#logTable').find('tr').first().find('th').last().text().indexOf('#') > -1) {
-            $('#logTable').find('tr').first().find('th').last().append('&nbsp;' + Functions.getImage('b_help', '', { 'class': 'qroupedQueryInfoIcon' }));
+            $('#logTable').find('tr').first().find('th').last().append('&nbsp;' + Functions.getImage('b_help', '', {'class': 'qroupedQueryInfoIcon'}));
 
             var tooltipContent = Messages.strCountColumnExplanation;
             if (groupInserts) {
@@ -1999,10 +1999,10 @@ AJAX.registerOnload('server/status/monitor.js', function () {
             }
 
             Functions.tooltip(
-                $('img.qroupedQueryInfoIcon'),
-                'img',
-                tooltipContent
-            );
+                    $('img.qroupedQueryInfoIcon'),
+                    'img',
+                    tooltipContent
+                    );
         }
 
         $('#logTable').find('table').tablesorter({
@@ -2011,13 +2011,13 @@ AJAX.registerOnload('server/status/monitor.js', function () {
         });
 
         $('#logTable').find('table thead th')
-            .append('<div class="sorticon"></div>');
+                .append('<div class="sorticon"></div>');
 
         return cols;
     }
 
     /* Opens the query analyzer dialog */
-    function openQueryAnalyzer () {
+    function openQueryAnalyzer() {
         var rowData = $(this).parent().data('query');
         var query = rowData.argument || rowData.sql_text;
 
@@ -2064,13 +2064,13 @@ AJAX.registerOnload('server/status/monitor.js', function () {
     }
 
     /* Loads and displays the analyzed query data */
-    function loadQueryAnalysis (rowData) {
+    function loadQueryAnalysis(rowData) {
         var db = rowData.db || '';
         var profilingChart = null;
 
         $('#queryAnalyzerDialog').find('div.placeHolder').html(
-            Messages.strAnalyzing + ' <img class="ajaxIcon" src="' +
-            themeImagePath + 'ajax_clock_small.gif" alt="">');
+                Messages.strAnalyzing + ' <img class="ajaxIcon" src="' +
+                themeImagePath + 'ajax_clock_small.gif" alt="">');
 
         $.post('index.php?route=/server/status/monitor/query', {
             'ajax_request': true,
@@ -2094,7 +2094,7 @@ AJAX.registerOnload('server/status/monitor.js', function () {
             var totalTime = 0;
             // Float sux, I'll use table :(
             $('#queryAnalyzerDialog').find('div.placeHolder')
-                .html('<table class="pma-table" width="100%" border="0"><tr><td class="explain"></td><td class="chart"></td></tr></table>');
+                    .html('<table class="pma-table" width="100%" border="0"><tr><td class="explain"></td><td class="chart"></td></tr></table>');
 
             var explain = '<b>' + Messages.strExplainOutput + '</b> ' + $('#explain_docu').html();
             if (data.explain.length > 1) {
@@ -2122,7 +2122,7 @@ AJAX.registerOnload('server/status/monitor.js', function () {
             };
 
             for (i = 0, l = data.explain.length; i < l; i++) {
-                explain += '<div class="explain-' + i + '"' + (i > 0 ?  'style="display:none;"' : '') + '>';
+                explain += '<div class="explain-' + i + '"' + (i > 0 ? 'style="display:none;"' : '') + '>';
                 $.each(data.explain[i], tempExplain);
                 explain += '</div>';
             }
@@ -2170,9 +2170,9 @@ AJAX.registerOnload('server/status/monitor.js', function () {
                 numberTable += '</tbody></table>';
 
                 $('#queryAnalyzerDialog').find('div.placeHolder td.chart').append(
-                    '<b>' + Messages.strProfilingResults + ' ' + $('#profiling_docu').html() + '</b> ' +
-                    '(<a href="#showNums">' + Messages.strTable + '</a>, <a href="#showChart">' + Messages.strChart + '</a>)<br>' +
-                    numberTable + ' <div id="queryProfiling"></div>');
+                        '<b>' + Messages.strProfilingResults + ' ' + $('#profiling_docu').html() + '</b> ' +
+                        '(<a href="#showNums">' + Messages.strTable + '</a>, <a href="#showChart">' + Messages.strChart + '</a>)<br>' +
+                        numberTable + ' <div id="queryProfiling"></div>');
 
                 $('#queryAnalyzerDialog').find('div.placeHolder a[href="#showNums"]').on('click', function () {
                     $('#queryAnalyzerDialog').find('#queryProfiling').hide();
@@ -2187,16 +2187,16 @@ AJAX.registerOnload('server/status/monitor.js', function () {
                 });
 
                 profilingChart = Functions.createProfilingChart(
-                    'queryProfiling',
-                    chartData
-                );
+                        'queryProfiling',
+                        chartData
+                        );
             }
         });
         return profilingChart;
     }
 
     /* Saves the monitor to localstorage */
-    function saveMonitor () {
+    function saveMonitor() {
         var gridCopy = {};
 
         $.each(runtime.charts, function (key, elem) {

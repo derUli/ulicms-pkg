@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Handles DB Multi-table query
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Database;
@@ -22,8 +22,8 @@ use function md5;
 /**
  * Class to handle database Multi-table querying
  */
-class MultiTableQuery
-{
+class MultiTableQuery {
+
     /**
      * DatabaseInterface instance
      *
@@ -66,10 +66,10 @@ class MultiTableQuery
      * @param int               $defaultNoOfColumns Default number of columns
      */
     public function __construct(
-        DatabaseInterface $dbi,
-        Template $template,
-        $dbName,
-        $defaultNoOfColumns = 3
+            DatabaseInterface $dbi,
+            Template $template,
+            $dbName,
+            $defaultNoOfColumns = 3
     ) {
         $this->dbi = $dbi;
         $this->db = $dbName;
@@ -85,20 +85,19 @@ class MultiTableQuery
      *
      * @return string Multi-Table query page HTML
      */
-    public function getFormHtml()
-    {
+    public function getFormHtml() {
         $tables = [];
         foreach ($this->tables as $table) {
             $tables[$table]['hash'] = md5($table);
             $tables[$table]['columns'] = array_keys(
-                $this->dbi->getColumns($this->db, $table)
+                    $this->dbi->getColumns($this->db, $table)
             );
         }
 
         return $this->template->render('database/multi_table_query/form', [
-            'db' => $this->db,
-            'tables' => $tables,
-            'default_no_of_columns' => $this->defaultNoOfColumns,
+                    'db' => $this->db,
+                    'tables' => $tables,
+                    'default_no_of_columns' => $this->defaultNoOfColumns,
         ]);
     }
 
@@ -109,8 +108,7 @@ class MultiTableQuery
      * @param string $db             The current database
      * @param string $themeImagePath Uri of the PMA theme image
      */
-    public static function displayResults($sqlQuery, $db, $themeImagePath): string
-    {
+    public static function displayResults($sqlQuery, $db, $themeImagePath): string {
         global $dbi;
 
         [, $db] = ParseAnalyze::sqlQuery($sqlQuery, $db);
@@ -119,30 +117,31 @@ class MultiTableQuery
 
         $relation = new Relation($dbi);
         $sql = new Sql(
-            $dbi,
-            $relation,
-            new RelationCleanup($dbi, $relation),
-            new Operations($dbi, $relation),
-            new Transformations(),
-            new Template()
+                $dbi,
+                $relation,
+                new RelationCleanup($dbi, $relation),
+                new Operations($dbi, $relation),
+                new Transformations(),
+                new Template()
         );
 
         return $sql->executeQueryAndSendQueryResponse(
-            null, // analyzed_sql_results
-            false, // is_gotofile
-            $db, // db
-            null, // table
-            null, // find_real_end
-            null, // sql_query_for_bookmark - see below
-            null, // extra_data
-            null, // message_to_show
-            null, // sql_data
-            $goto, // goto
-            $themeImagePath,
-            null, // disp_query
-            null, // disp_message
-            $sqlQuery, // sql_query
-            null // complete_query
+                        null, // analyzed_sql_results
+                        false, // is_gotofile
+                        $db, // db
+                        null, // table
+                        null, // find_real_end
+                        null, // sql_query_for_bookmark - see below
+                        null, // extra_data
+                        null, // message_to_show
+                        null, // sql_data
+                        $goto, // goto
+                        $themeImagePath,
+                        null, // disp_query
+                        null, // disp_message
+                        $sqlQuery, // sql_query
+                        null // complete_query
         );
     }
+
 }

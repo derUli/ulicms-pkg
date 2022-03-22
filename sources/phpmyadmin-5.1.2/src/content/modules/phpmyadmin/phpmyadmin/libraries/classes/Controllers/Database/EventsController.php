@@ -12,8 +12,8 @@ use PhpMyAdmin\Url;
 use PhpMyAdmin\Util;
 use function strlen;
 
-final class EventsController extends AbstractController
-{
+final class EventsController extends AbstractController {
+
     /** @var Events */
     private $events;
 
@@ -25,37 +25,35 @@ final class EventsController extends AbstractController
      * @param string            $db       Database name.
      * @param DatabaseInterface $dbi
      */
-    public function __construct($response, Template $template, $db, Events $events, $dbi)
-    {
+    public function __construct($response, Template $template, $db, Events $events, $dbi) {
         parent::__construct($response, $template, $db);
         $this->events = $events;
         $this->dbi = $dbi;
     }
 
-    public function index(): void
-    {
+    public function index(): void {
         global $db, $tables, $num_tables, $total_num_tables, $sub_part, $errors, $text_dir, $PMA_Theme;
         global $tooltip_truename, $tooltip_aliasname, $pos, $cfg, $err_url;
 
-        if (! $this->response->isAjax()) {
+        if (!$this->response->isAjax()) {
             Util::checkParameters(['db']);
 
             $err_url = Util::getScriptNameForOption($cfg['DefaultTabDatabase'], 'database');
             $err_url .= Url::getCommon(['db' => $db], '&');
 
-            if (! $this->hasDatabase()) {
+            if (!$this->hasDatabase()) {
                 return;
             }
 
             [
-                $tables,
-                $num_tables,
-                $total_num_tables,
-                $sub_part,,,
-                $tooltip_truename,
-                $tooltip_aliasname,
-                $pos,
-            ] = Util::getDbInfo($db, $sub_part ?? '');
+                    $tables,
+                    $num_tables,
+                    $total_num_tables,
+                    $sub_part,,,
+                    $tooltip_truename,
+                    $tooltip_aliasname,
+                    $pos,
+                    ] = Util::getDbInfo($db, $sub_part ?? '');
         } elseif (strlen($db) > 0) {
             $this->dbi->selectDb($db);
         }
@@ -82,4 +80,5 @@ final class EventsController extends AbstractController
             'is_ajax' => $this->response->isAjax() && empty($_REQUEST['ajax_page_request']),
         ]);
     }
+
 }

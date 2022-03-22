@@ -5,20 +5,20 @@ CodeMirror.sqlLint = function (text, updateLinting, options, cm) {
         return;
     }
 
-    function handleResponse (response) {
+    function handleResponse(response) {
         var found = [];
         for (var idx in response) {
             found.push({
                 // eslint-disable-next-line new-cap
                 from: CodeMirror.Pos(
-                    response[idx].fromLine, response[idx].fromColumn
-                ),
+                        response[idx].fromLine, response[idx].fromColumn
+                        ),
                 // eslint-disable-next-line new-cap
                 to: CodeMirror.Pos(
-                    response[idx].toLine, response[idx].toColumn
-                ),
+                        response[idx].toLine, response[idx].toColumn
+                        ),
                 messageHTML: response[idx].message,
-                severity : response[idx].severity
+                severity: response[idx].severity
             });
         }
 

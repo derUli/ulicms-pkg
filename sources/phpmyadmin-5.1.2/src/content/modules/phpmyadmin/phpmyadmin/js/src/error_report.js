@@ -20,7 +20,7 @@ var ErrorReport = {
         if (JSON.stringify(ErrorReport.lastException) === JSON.stringify(exception)) {
             return;
         }
-        if (exception.name === null || typeof(exception.name) === 'undefined') {
+        if (exception.name === null || typeof (exception.name) === 'undefined') {
             exception.name = ErrorReport.extractExceptionName(exception);
         }
         ErrorReport.lastException = exception;
@@ -101,16 +101,16 @@ var ErrorReport = {
             } else {
                 // Show dialog if the request was successful
                 $div
-                    .append(data.message)
-                    .dialog({
-                        title: Messages.strSubmitErrorReport,
-                        width: 650,
-                        modal: true,
-                        buttons: buttonOptions,
-                        close: function () {
-                            $(this).remove();
-                        }
-                    });
+                        .append(data.message)
+                        .dialog({
+                            title: Messages.strSubmitErrorReport,
+                            width: 650,
+                            modal: true,
+                            buttons: buttonOptions,
+                            close: function () {
+                                $(this).remove();
+                            }
+                        });
             }
         });
     },
@@ -123,14 +123,14 @@ var ErrorReport = {
         ErrorReport.removeErrorNotification();
 
         var $div = $(
-            '<div class="alert alert-danger userPermissionModal" role="alert" id="error_notification"></div>'
-        ).append(
-            Functions.getImage('s_error') + Messages.strErrorOccurred
-        );
+                '<div class="alert alert-danger userPermissionModal" role="alert" id="error_notification"></div>'
+                ).append(
+                Functions.getImage('s_error') + Messages.strErrorOccurred
+                );
 
         var $buttons = $('<div class="floatright"></div>');
 
-        var buttonHtml  = '<button class="btn btn-primary" id="show_error_report">';
+        var buttonHtml = '<button class="btn btn-primary" id="show_error_report">';
         buttonHtml += Messages.strShowReportDetails;
         buttonHtml += '</button>';
 
@@ -171,7 +171,7 @@ var ErrorReport = {
      * @return String
      */
     extractExceptionName: function (exception) {
-        if (exception.message === null || typeof(exception.message) === 'undefined') {
+        if (exception.message === null || typeof (exception.message) === 'undefined') {
             return '';
         }
 
@@ -214,7 +214,7 @@ var ErrorReport = {
                 var stack = exception.stack[i];
                 if (stack.context && stack.context.length) {
                     for (var j = 0; j < stack.context.length; j++) {
-                        if (stack.context[j].length >  80) {
+                        if (stack.context[j].length > 80) {
                             stack.context[j] = stack.context[j].substring(-1, 75) + '//...';
                         }
                     }
@@ -230,9 +230,9 @@ var ErrorReport = {
         };
         if (AJAX.scriptHandler.scripts.length > 0) {
             reportData.scripts = AJAX.scriptHandler.scripts.map(
-                function (script) {
-                    return script;
-                }
+                    function (script) {
+                        return script;
+                    }
             );
         }
         return reportData;
@@ -246,7 +246,7 @@ var ErrorReport = {
         for (var key in window) {
             if (key.indexOf('PMA_') === 0) {
                 var global = window[key];
-                if (typeof(global) === 'function') {
+                if (typeof (global) === 'function') {
                     window[key] = ErrorReport.wrapFunction(global);
                 }
             }
@@ -298,7 +298,7 @@ var ErrorReport = {
         var oldOn = $.fn.on;
         $.fn.on = function () {
             for (var i = 1; i <= 3; i++) {
-                if (typeof(arguments[i]) === 'function') {
+                if (typeof (arguments[i]) === 'function') {
                     arguments[i] = ErrorReport.wrapFunction(arguments[i]);
                     break;
                 }

@@ -16,16 +16,16 @@ use Symfony\Component\DependencyInjection\Alias;
 /**
  * @author Nicolas Grekas <p@tchwork.com>
  */
-class AliasConfigurator extends AbstractServiceConfigurator
-{
+class AliasConfigurator extends AbstractServiceConfigurator {
+
     use Traits\DeprecateTrait;
     use Traits\PublicTrait;
 
     public const FACTORY = 'alias';
 
-    public function __construct(ServicesConfigurator $parent, Alias $alias)
-    {
+    public function __construct(ServicesConfigurator $parent, Alias $alias) {
         $this->parent = $parent;
         $this->definition = $alias;
     }
+
 }

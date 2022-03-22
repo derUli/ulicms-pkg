@@ -1,8 +1,8 @@
 <?php
+
 /**
  * PDF schema export code
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Plugins\Schema;
@@ -17,10 +17,9 @@ use PhpMyAdmin\Properties\Plugins\SchemaPluginProperties;
 /**
  * Handles the schema export for the SVG format
  */
-class SchemaSvg extends SchemaPlugin
-{
-    public function __construct()
-    {
+class SchemaSvg extends SchemaPlugin {
+
+    public function __construct() {
         $this->setProperties();
     }
 
@@ -29,8 +28,7 @@ class SchemaSvg extends SchemaPlugin
      *
      * @return void
      */
-    protected function setProperties()
-    {
+    protected function setProperties() {
         $schemaPluginProperties = new SchemaPluginProperties();
         $schemaPluginProperties->setText('SVG');
         $schemaPluginProperties->setExtension('svg');
@@ -40,7 +38,7 @@ class SchemaSvg extends SchemaPlugin
         // $schemaPluginProperties
         // this will be shown as "Format specific options"
         $exportSpecificOptions = new OptionsPropertyRootGroup(
-            'Format Specific Options'
+                'Format Specific Options'
         );
 
         // specific options main group
@@ -50,8 +48,8 @@ class SchemaSvg extends SchemaPlugin
 
         // create leaf items and add them to the group
         $leaf = new BoolPropertyItem(
-            'all_tables_same_width',
-            __('Same width for all tables')
+                'all_tables_same_width',
+                __('Same width for all tables')
         );
         $specificOptions->addProperty($leaf);
 
@@ -70,11 +68,11 @@ class SchemaSvg extends SchemaPlugin
      *
      * @return bool Whether it succeeded
      */
-    public function exportSchema($db)
-    {
+    public function exportSchema($db) {
         $export = new SvgRelationSchema($db);
         $export->showOutput();
 
         return true;
     }
+
 }

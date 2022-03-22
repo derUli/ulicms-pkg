@@ -12,8 +12,8 @@ use function array_merge;
 use function str_replace;
 use function trim;
 
-class NodeTrans extends TransNode
-{
+class NodeTrans extends TransNode {
+
     /**
      * The nodes are automatically made available as properties ($this->node).
      * The attributes are automatically made available as array items ($this['name']).
@@ -27,13 +27,13 @@ class NodeTrans extends TransNode
      * @param string             $tag     The tag name associated with the Node
      */
     public function __construct(
-        Node $body,
-        ?Node $plural,
-        ?AbstractExpression $count,
-        ?Node $context,
-        ?Node $notes,
-        int $lineno,
-        string $tag
+            Node $body,
+            ?Node $plural,
+            ?AbstractExpression $count,
+            ?Node $context,
+            ?Node $notes,
+            int $lineno,
+            string $tag
     ) {
         $nodes = ['body' => $body];
         if ($count !== null) {
@@ -59,8 +59,7 @@ class NodeTrans extends TransNode
      *
      * @return void
      */
-    public function compile(Compiler $compiler)
-    {
+    public function compile(Compiler $compiler) {
         $compiler->addDebugInfo($this);
 
         [$msg, $vars] = $this->compileString($this->getNode('body'));
@@ -73,8 +72,8 @@ class NodeTrans extends TransNode
         }
 
         $function = $this->getTransFunction(
-            $this->hasNode('plural'),
-            $this->hasNode('context')
+                $this->hasNode('plural'),
+                $this->hasNode('context')
         );
 
         if ($this->hasNode('notes')) {
@@ -87,16 +86,16 @@ class NodeTrans extends TransNode
 
         if ($vars) {
             $compiler
-                ->write('echo strtr(' . $function . '(')
-                ->subcompile($msg);
+                    ->write('echo strtr(' . $function . '(')
+                    ->subcompile($msg);
 
             if ($this->hasNode('plural')) {
                 $compiler
-                    ->raw(', ')
-                    ->subcompile($msg1)
-                    ->raw(', abs(')
-                    ->subcompile($this->hasNode('count') ? $this->getNode('count') : null)
-                    ->raw(')');
+                        ->raw(', ')
+                        ->subcompile($msg1)
+                        ->raw(', abs(')
+                        ->subcompile($this->hasNode('count') ? $this->getNode('count') : null)
+                        ->raw(')');
             }
 
             $compiler->raw('), array(');
@@ -104,16 +103,16 @@ class NodeTrans extends TransNode
             foreach ($vars as $var) {
                 if ($var->getAttribute('name') === 'count') {
                     $compiler
-                        ->string('%count%')
-                        ->raw(' => abs(')
-                        ->subcompile($this->hasNode('count') ? $this->getNode('count') : null)
-                        ->raw('), ');
+                            ->string('%count%')
+                            ->raw(' => abs(')
+                            ->subcompile($this->hasNode('count') ? $this->getNode('count') : null)
+                            ->raw('), ');
                 } else {
                     $compiler
-                        ->string('%' . $var->getAttribute('name') . '%')
-                        ->raw(' => ')
-                        ->subcompile($var)
-                        ->raw(', ');
+                            ->string('%' . $var->getAttribute('name') . '%')
+                            ->raw(' => ')
+                            ->subcompile($var)
+                            ->raw(', ');
                 }
             }
 
@@ -130,11 +129,11 @@ class NodeTrans extends TransNode
 
             if ($this->hasNode('plural')) {
                 $compiler
-                    ->raw(', ')
-                    ->subcompile($msg1)
-                    ->raw(', abs(')
-                    ->subcompile($this->hasNode('count') ? $this->getNode('count') : null)
-                    ->raw(')');
+                        ->raw(', ')
+                        ->subcompile($msg1)
+                        ->raw(', abs(')
+                        ->subcompile($this->hasNode('count') ? $this->getNode('count') : null)
+                        ->raw(')');
             }
 
             $compiler->raw(");\n");
@@ -145,12 +144,12 @@ class NodeTrans extends TransNode
      * @param bool $plural        Return plural or singular function to use
      * @param bool $hasMsgContext It has message context?
      */
-    protected function getTransFunction($plural, bool $hasMsgContext = false): string
-    {
+    protected function getTransFunction($plural, bool $hasMsgContext = false): string {
         if ($hasMsgContext) {
             return $plural ? '_ngettext' : '_pgettext';
         }
 
         return $plural ? '_ngettext' : '_gettext';
     }
+
 }

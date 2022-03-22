@@ -11,8 +11,8 @@ use PhpMyAdmin\Template;
 use function count;
 use function is_array;
 
-final class MaintenanceController extends AbstractController
-{
+final class MaintenanceController extends AbstractController {
+
     /** @var Maintenance */
     private $model;
 
@@ -22,24 +22,23 @@ final class MaintenanceController extends AbstractController
      * @param string   $table
      */
     public function __construct(
-        $response,
-        Template $template,
-        $db,
-        $table,
-        Maintenance $model
+            $response,
+            Template $template,
+            $db,
+            $table,
+            Maintenance $model
     ) {
         parent::__construct($response, $template, $db, $table);
         $this->model = $model;
     }
 
-    public function analyze(): void
-    {
+    public function analyze(): void {
         global $cfg;
 
         /** @var string[] $selected */
         $selected = $_POST['selected_tbl'] ?? [];
 
-        if (empty($selected) || ! is_array($selected)) {
+        if (empty($selected) || !is_array($selected)) {
             $this->response->setRequestStatus(false);
             $this->response->addJSON('message', __('No table selected.'));
 
@@ -56,9 +55,9 @@ final class MaintenanceController extends AbstractController
         [$rows, $query] = $this->model->getAnalyzeTableRows($this->db, $selected);
 
         $message = Generator::getMessage(
-            __('Your SQL query has been executed successfully.'),
-            $query,
-            'success'
+                        __('Your SQL query has been executed successfully.'),
+                        $query,
+                        'success'
         );
 
         $this->render('table/maintenance/analyze', [
@@ -67,14 +66,13 @@ final class MaintenanceController extends AbstractController
         ]);
     }
 
-    public function check(): void
-    {
+    public function check(): void {
         global $cfg;
 
         /** @var string[] $selected */
         $selected = $_POST['selected_tbl'] ?? [];
 
-        if (empty($selected) || ! is_array($selected)) {
+        if (empty($selected) || !is_array($selected)) {
             $this->response->setRequestStatus(false);
             $this->response->addJSON('message', __('No table selected.'));
 
@@ -91,9 +89,9 @@ final class MaintenanceController extends AbstractController
         [$rows, $query] = $this->model->getCheckTableRows($this->db, $selected);
 
         $message = Generator::getMessage(
-            __('Your SQL query has been executed successfully.'),
-            $query,
-            'success'
+                        __('Your SQL query has been executed successfully.'),
+                        $query,
+                        'success'
         );
 
         $indexesProblems = $this->model->getIndexesProblems($this->db, $selected);
@@ -105,14 +103,13 @@ final class MaintenanceController extends AbstractController
         ]);
     }
 
-    public function checksum(): void
-    {
+    public function checksum(): void {
         global $cfg;
 
         /** @var string[] $selected */
         $selected = $_POST['selected_tbl'] ?? [];
 
-        if (empty($selected) || ! is_array($selected)) {
+        if (empty($selected) || !is_array($selected)) {
             $this->response->setRequestStatus(false);
             $this->response->addJSON('message', __('No table selected.'));
 
@@ -129,9 +126,9 @@ final class MaintenanceController extends AbstractController
         [$rows, $query, $warnings] = $this->model->getChecksumTableRows($this->db, $selected);
 
         $message = Generator::getMessage(
-            __('Your SQL query has been executed successfully.'),
-            $query,
-            'success'
+                        __('Your SQL query has been executed successfully.'),
+                        $query,
+                        'success'
         );
 
         $this->render('table/maintenance/checksum', [
@@ -141,14 +138,13 @@ final class MaintenanceController extends AbstractController
         ]);
     }
 
-    public function optimize(): void
-    {
+    public function optimize(): void {
         global $cfg;
 
         /** @var string[] $selected */
         $selected = $_POST['selected_tbl'] ?? [];
 
-        if (empty($selected) || ! is_array($selected)) {
+        if (empty($selected) || !is_array($selected)) {
             $this->response->setRequestStatus(false);
             $this->response->addJSON('message', __('No table selected.'));
 
@@ -165,9 +161,9 @@ final class MaintenanceController extends AbstractController
         [$rows, $query] = $this->model->getOptimizeTableRows($this->db, $selected);
 
         $message = Generator::getMessage(
-            __('Your SQL query has been executed successfully.'),
-            $query,
-            'success'
+                        __('Your SQL query has been executed successfully.'),
+                        $query,
+                        'success'
         );
 
         $this->render('table/maintenance/optimize', [
@@ -176,14 +172,13 @@ final class MaintenanceController extends AbstractController
         ]);
     }
 
-    public function repair(): void
-    {
+    public function repair(): void {
         global $cfg;
 
         /** @var string[] $selected */
         $selected = $_POST['selected_tbl'] ?? [];
 
-        if (empty($selected) || ! is_array($selected)) {
+        if (empty($selected) || !is_array($selected)) {
             $this->response->setRequestStatus(false);
             $this->response->addJSON('message', __('No table selected.'));
 
@@ -200,9 +195,9 @@ final class MaintenanceController extends AbstractController
         [$rows, $query] = $this->model->getRepairTableRows($this->db, $selected);
 
         $message = Generator::getMessage(
-            __('Your SQL query has been executed successfully.'),
-            $query,
-            'success'
+                        __('Your SQL query has been executed successfully.'),
+                        $query,
+                        'success'
         );
 
         $this->render('table/maintenance/repair', [
@@ -210,4 +205,5 @@ final class MaintenanceController extends AbstractController
             'rows' => $rows,
         ]);
     }
+
 }

@@ -1,5 +1,5 @@
 <?php
-function disable_rightclick_render()
-{
+
+function disable_rightclick_render() {
     return "";
 }

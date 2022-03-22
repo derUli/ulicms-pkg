@@ -18,8 +18,8 @@ use PhpMyAdmin\Util;
 use function is_array;
 use function sprintf;
 
-class DeleteController extends AbstractController
-{
+class DeleteController extends AbstractController {
+
     /** @var DatabaseInterface */
     private $dbi;
 
@@ -29,14 +29,12 @@ class DeleteController extends AbstractController
      * @param string            $table    Table name.
      * @param DatabaseInterface $dbi
      */
-    public function __construct($response, Template $template, $db, $table, $dbi)
-    {
+    public function __construct($response, Template $template, $db, $table, $dbi) {
         parent::__construct($response, $template, $db, $table);
         $this->dbi = $dbi;
     }
 
-    public function rows(): void
-    {
+    public function rows(): void {
         global $db, $goto, $sql_query, $table, $disp_message, $disp_query, $PMA_Theme, $active_page;
 
         $mult_btn = $_POST['mult_btn'] ?? '';
@@ -45,12 +43,12 @@ class DeleteController extends AbstractController
 
         $relation = new Relation($this->dbi);
         $sql = new Sql(
-            $this->dbi,
-            $relation,
-            new RelationCleanup($this->dbi, $relation),
-            new Operations($this->dbi, $relation),
-            new Transformations(),
-            $this->template
+                $this->dbi,
+                $relation,
+                new RelationCleanup($this->dbi, $relation),
+                new Operations($this->dbi, $relation),
+                new Transformations(),
+                $this->template
         );
 
         if ($mult_btn === __('Yes')) {
@@ -59,20 +57,20 @@ class DeleteController extends AbstractController
 
             foreach ($selected as $row) {
                 $query = sprintf(
-                    'DELETE FROM %s WHERE %s LIMIT 1;',
-                    Util::backquote($table),
-                    $row
+                        'DELETE FROM %s WHERE %s LIMIT 1;',
+                        Util::backquote($table),
+                        $row
                 );
                 $sql_query .= $query . "\n";
                 $this->dbi->selectDb($db);
                 $this->dbi->query($query);
             }
 
-            if (! empty($_REQUEST['pos'])) {
+            if (!empty($_REQUEST['pos'])) {
                 $_REQUEST['pos'] = $sql->calculatePosForLastPage(
-                    $db,
-                    $table,
-                    $_REQUEST['pos']
+                        $db,
+                        $table,
+                        $_REQUEST['pos']
                 );
             }
 
@@ -92,31 +90,30 @@ class DeleteController extends AbstractController
         $active_page = Url::getFromRoute('/sql');
 
         $this->response->addHTML($sql->executeQueryAndSendQueryResponse(
-            null,
-            false,
-            $db,
-            $table,
-            null,
-            null,
-            null,
-            null,
-            null,
-            $goto,
-            $PMA_Theme->getImgPath(),
-            null,
-            null,
-            $sql_query,
-            null
+                        null,
+                        false,
+                        $db,
+                        $table,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        $goto,
+                        $PMA_Theme->getImgPath(),
+                        null,
+                        null,
+                        $sql_query,
+                        null
         ));
     }
 
-    public function confirm(): void
-    {
+    public function confirm(): void {
         global $db, $table, $sql_query, $url_params, $err_url, $cfg;
 
         $selected = $_POST['rows_to_delete'] ?? null;
 
-        if (! isset($selected) || ! is_array($selected)) {
+        if (!isset($selected) || !is_array($selected)) {
             $this->response->setRequestStatus(false);
             $this->response->addJSON('message', __('No row selected.'));
 
@@ -139,4 +136,5 @@ class DeleteController extends AbstractController
             'is_foreign_key_check' => Util::isForeignKeyCheck(),
         ]);
     }
+
 }

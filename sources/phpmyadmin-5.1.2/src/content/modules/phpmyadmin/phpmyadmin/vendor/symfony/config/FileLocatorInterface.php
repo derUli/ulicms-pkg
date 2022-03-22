@@ -16,8 +16,8 @@ use Symfony\Component\Config\Exception\FileLocatorFileNotFoundException;
 /**
  * @author Fabien Potencier <fabien@symfony.com>
  */
-interface FileLocatorInterface
-{
+interface FileLocatorInterface {
+
     /**
      * Returns a full path for a given file name.
      *

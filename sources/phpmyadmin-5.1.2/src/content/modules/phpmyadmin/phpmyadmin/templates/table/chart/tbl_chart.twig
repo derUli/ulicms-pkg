@@ -36,8 +36,8 @@
                     <label for ="radio_timeline">{% trans %}Timeline{% context %}Chart type{% endtrans %}</label>
                 </span>
                 <span class="span_scatter hide">
-                <input type="radio" name="chartType" value="scatter" id="radio_scatter">
-                <label for ="radio_scatter">{% trans %}Scatter{% context %}Chart type{% endtrans %}</label>
+                    <input type="radio" name="chartType" value="scatter" id="radio_scatter">
+                    <label for ="radio_scatter">{% trans %}Scatter{% context %}Chart type{% endtrans %}</label>
                 </span>
                 <br><br>
                 <span class="barStacked hide">
@@ -79,18 +79,18 @@
                     {% endfor %}
                 </select>
                 <input type="hidden" name="dateTimeCols" value="
-                    {% set date_time_types = ['date', 'datetime', 'timestamp'] %}
-                    {% for idx, key in keys %}
-                        {% if fields_meta[idx].type in date_time_types %}
-                            {{ idx ~ ' ' }}
-                        {% endif %}
-                    {% endfor %}">
+                       {% set date_time_types = ['date', 'datetime', 'timestamp'] %}
+                       {% for idx, key in keys %}
+                           {% if fields_meta[idx].type in date_time_types %}
+                               {{ idx ~ ' ' }}
+                           {% endif %}
+                       {% endfor %}">
                 <input type="hidden" name="numericCols" value="
-                    {% for idx, key in keys %}
-                        {% if fields_meta[idx].type in numeric_types %}
-                            {{ idx ~ ' ' }}
-                        {% endif %}
-                    {% endfor %}">
+                       {% for idx, key in keys %}
+                           {% if fields_meta[idx].type in numeric_types %}
+                               {{ idx ~ ' ' }}
+                           {% endif %}
+                       {% endfor %}">
             </div>
             <div class="chartOption">
                 <label for="xaxis_panel">
@@ -115,10 +115,10 @@
                 <select name="chartSeriesColumn" id="select_seriesColumn" disabled>
                     {% for idx, key in keys %}
                         <option value="{{ idx }}"
-                            {% if idx == 1 %}
-                                selected="selected"
-                            {% endif %}>
-                                {{ key }}
+                                {% if idx == 1 %}
+                                    selected="selected"
+                                {% endif %}>
+                            {{ key }}
                         </option>
                         {% set series_column = idx %}
                     {% endfor %}

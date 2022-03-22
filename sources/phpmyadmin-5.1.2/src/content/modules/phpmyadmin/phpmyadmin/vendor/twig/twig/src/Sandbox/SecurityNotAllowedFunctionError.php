@@ -18,12 +18,11 @@ namespace Twig\Sandbox;
  *
  * @final
  */
-class SecurityNotAllowedFunctionError extends SecurityError
-{
+class SecurityNotAllowedFunctionError extends SecurityError {
+
     private $functionName;
 
-    public function __construct(string $message, string $functionName, int $lineno = -1, string $filename = null, \Exception $previous = null)
-    {
+    public function __construct(string $message, string $functionName, int $lineno = -1, string $filename = null, \Exception $previous = null) {
         if (-1 !== $lineno) {
             @trigger_error(sprintf('Passing $lineno as a 3th argument of the %s constructor is deprecated since Twig 2.8.1.', __CLASS__), \E_USER_DEPRECATED);
         }
@@ -37,10 +36,10 @@ class SecurityNotAllowedFunctionError extends SecurityError
         $this->functionName = $functionName;
     }
 
-    public function getFunctionName()
-    {
+    public function getFunctionName() {
         return $this->functionName;
     }
+
 }
 
 class_alias('Twig\Sandbox\SecurityNotAllowedFunctionError', 'Twig_Sandbox_SecurityNotAllowedFunctionError');

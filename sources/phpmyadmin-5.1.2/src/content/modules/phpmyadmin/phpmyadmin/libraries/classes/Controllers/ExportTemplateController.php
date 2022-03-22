@@ -12,8 +12,8 @@ use PhpMyAdmin\Template;
 use function is_array;
 use function is_string;
 
-final class ExportTemplateController extends AbstractController
-{
+final class ExportTemplateController extends AbstractController {
+
     /** @var TemplateModel */
     private $model;
 
@@ -24,31 +24,30 @@ final class ExportTemplateController extends AbstractController
      * @param Response $response
      */
     public function __construct(
-        $response,
-        Template $template,
-        TemplateModel $model,
-        Relation $relation
+            $response,
+            Template $template,
+            TemplateModel $model,
+            Relation $relation
     ) {
         parent::__construct($response, $template);
         $this->model = $model;
         $this->relation = $relation;
     }
 
-    public function create(): void
-    {
+    public function create(): void {
         global $cfg;
 
         $cfgRelation = $this->relation->getRelationsParam();
 
-        if (! $cfgRelation['exporttemplateswork']) {
+        if (!$cfgRelation['exporttemplateswork']) {
             return;
         }
 
         $template = ExportTemplate::fromArray([
-            'username' => $cfg['Server']['user'],
-            'exportType' => $_POST['exportType'] ?? '',
-            'name' => $_POST['templateName'] ?? '',
-            'data' => $_POST['templateData'] ?? '',
+                    'username' => $cfg['Server']['user'],
+                    'exportType' => $_POST['exportType'] ?? '',
+                    'name' => $_POST['templateName'] ?? '',
+                    'data' => $_POST['templateData'] ?? '',
         ]);
         $result = $this->model->create($cfgRelation['db'], $cfgRelation['export_templates'], $template);
 
@@ -60,37 +59,36 @@ final class ExportTemplateController extends AbstractController
         }
 
         $templates = $this->model->getAll(
-            $cfgRelation['db'],
-            $cfgRelation['export_templates'],
-            $template->getUsername(),
-            $template->getExportType()
+                $cfgRelation['db'],
+                $cfgRelation['export_templates'],
+                $template->getUsername(),
+                $template->getExportType()
         );
 
         $this->response->setRequestStatus(true);
         $this->response->addJSON(
-            'data',
-            $this->template->render('export/template_options', [
-                'templates' => is_array($templates) ? $templates : [],
-                'selected_template' => $_POST['template_id'] ?? null,
-            ])
+                'data',
+                $this->template->render('export/template_options', [
+                    'templates' => is_array($templates) ? $templates : [],
+                    'selected_template' => $_POST['template_id'] ?? null,
+                ])
         );
     }
 
-    public function delete(): void
-    {
+    public function delete(): void {
         global $cfg;
 
         $cfgRelation = $this->relation->getRelationsParam();
 
-        if (! $cfgRelation['exporttemplateswork']) {
+        if (!$cfgRelation['exporttemplateswork']) {
             return;
         }
 
         $result = $this->model->delete(
-            $cfgRelation['db'],
-            $cfgRelation['export_templates'],
-            $cfg['Server']['user'],
-            (int) $_POST['templateId']
+                $cfgRelation['db'],
+                $cfgRelation['export_templates'],
+                $cfg['Server']['user'],
+                (int) $_POST['templateId']
         );
 
         if (is_string($result)) {
@@ -103,24 +101,23 @@ final class ExportTemplateController extends AbstractController
         $this->response->setRequestStatus(true);
     }
 
-    public function load(): void
-    {
+    public function load(): void {
         global $cfg;
 
         $cfgRelation = $this->relation->getRelationsParam();
 
-        if (! $cfgRelation['exporttemplateswork']) {
+        if (!$cfgRelation['exporttemplateswork']) {
             return;
         }
 
         $template = $this->model->load(
-            $cfgRelation['db'],
-            $cfgRelation['export_templates'],
-            $cfg['Server']['user'],
-            (int) $_POST['templateId']
+                $cfgRelation['db'],
+                $cfgRelation['export_templates'],
+                $cfg['Server']['user'],
+                (int) $_POST['templateId']
         );
 
-        if (! $template instanceof ExportTemplate) {
+        if (!$template instanceof ExportTemplate) {
             $this->response->setRequestStatus(false);
             $this->response->addJSON('message', $template);
 
@@ -131,20 +128,19 @@ final class ExportTemplateController extends AbstractController
         $this->response->addJSON('data', $template->getData());
     }
 
-    public function update(): void
-    {
+    public function update(): void {
         global $cfg;
 
         $cfgRelation = $this->relation->getRelationsParam();
 
-        if (! $cfgRelation['exporttemplateswork']) {
+        if (!$cfgRelation['exporttemplateswork']) {
             return;
         }
 
         $template = ExportTemplate::fromArray([
-            'id' => (int) $_POST['templateId'],
-            'username' => $cfg['Server']['user'],
-            'data' => $_POST['templateData'],
+                    'id' => (int) $_POST['templateId'],
+                    'username' => $cfg['Server']['user'],
+                    'data' => $_POST['templateData'],
         ]);
         $result = $this->model->update($cfgRelation['db'], $cfgRelation['export_templates'], $template);
 
@@ -157,4 +153,5 @@ final class ExportTemplateController extends AbstractController
 
         $this->response->setRequestStatus(true);
     }
+
 }

@@ -29,8 +29,8 @@ use Symfony\Component\ExpressionLanguage\Expression;
  * @author Fabien Potencier <fabien@symfony.com>
  * @author Martin Hasoň <martin.hason@gmail.com>
  */
-class XmlDumper extends Dumper
-{
+class XmlDumper extends Dumper {
+
     /**
      * @var \DOMDocument
      */
@@ -41,8 +41,7 @@ class XmlDumper extends Dumper
      *
      * @return string An xml string representing of the service container
      */
-    public function dump(array $options = [])
-    {
+    public function dump(array $options = []) {
         $this->document = new \DOMDocument('1.0', 'utf-8');
         $this->document->formatOutput = true;
 
@@ -60,8 +59,7 @@ class XmlDumper extends Dumper
         return $this->container->resolveEnvPlaceholders($xml);
     }
 
-    private function addParameters(\DOMElement $parent)
-    {
+    private function addParameters(\DOMElement $parent) {
         $data = $this->container->getParameterBag()->all();
         if (!$data) {
             return;
@@ -76,8 +74,7 @@ class XmlDumper extends Dumper
         $this->convertParameters($data, 'parameter', $parameters);
     }
 
-    private function addMethodCalls(array $methodcalls, \DOMElement $parent)
-    {
+    private function addMethodCalls(array $methodcalls, \DOMElement $parent) {
         foreach ($methodcalls as $methodcall) {
             $call = $this->document->createElement('call');
             $call->setAttribute('method', $methodcall[0]);
@@ -91,8 +88,7 @@ class XmlDumper extends Dumper
         }
     }
 
-    private function addService(Definition $definition, ?string $id, \DOMElement $parent)
-    {
+    private function addService(Definition $definition, ?string $id, \DOMElement $parent) {
         $service = $this->document->createElement('service');
         if (null !== $id) {
             $service->setAttribute('id', $id);
@@ -214,8 +210,7 @@ class XmlDumper extends Dumper
         $parent->appendChild($service);
     }
 
-    private function addServiceAlias(string $alias, Alias $id, \DOMElement $parent)
-    {
+    private function addServiceAlias(string $alias, Alias $id, \DOMElement $parent) {
         $service = $this->document->createElement('service');
         $service->setAttribute('id', $alias);
         $service->setAttribute('alias', $id);
@@ -233,8 +228,7 @@ class XmlDumper extends Dumper
         $parent->appendChild($service);
     }
 
-    private function addServices(\DOMElement $parent)
-    {
+    private function addServices(\DOMElement $parent) {
         $definitions = $this->container->getDefinitions();
         if (!$definitions) {
             return;
@@ -255,8 +249,7 @@ class XmlDumper extends Dumper
         $parent->appendChild($services);
     }
 
-    private function convertParameters(array $parameters, string $type, \DOMElement $parent, string $keyAttribute = 'key')
-    {
+    private function convertParameters(array $parameters, string $type, \DOMElement $parent, string $keyAttribute = 'key') {
         $withKeys = array_keys($parameters) !== range(0, \count($parameters) - 1);
         foreach ($parameters as $key => $value) {
             $element = $this->document->createElement($type);
@@ -335,8 +328,7 @@ class XmlDumper extends Dumper
     /**
      * Escapes arguments.
      */
-    private function escape(array $arguments): array
-    {
+    private function escape(array $arguments): array {
         $args = [];
         foreach ($arguments as $k => $v) {
             if (\is_array($v)) {
@@ -358,8 +350,7 @@ class XmlDumper extends Dumper
      *
      * @throws RuntimeException When trying to dump object or resource
      */
-    public static function phpToXml($value): string
-    {
+    public static function phpToXml($value): string {
         switch (true) {
             case null === $value:
                 return 'null';
@@ -368,7 +359,7 @@ class XmlDumper extends Dumper
             case false === $value:
                 return 'false';
             case $value instanceof Parameter:
-                return '%'.$value.'%';
+                return '%' . $value . '%';
             case $value instanceof \UnitEnum:
                 return sprintf('%s::%s', \get_class($value), $value->name);
             case \is_object($value) || \is_resource($value):
@@ -377,4 +368,5 @@ class XmlDumper extends Dumper
                 return (string) $value;
         }
     }
+
 }

@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Abstract class for the import plugins
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Plugins;
@@ -16,8 +16,8 @@ use function strlen;
  * Provides a common interface that will have to be implemented by all of the
  * import plugins.
  */
-abstract class ImportPlugin
-{
+abstract class ImportPlugin {
+
     /**
      * ImportPluginProperties object containing the import plugin properties
      *
@@ -28,8 +28,7 @@ abstract class ImportPlugin
     /** @var Import */
     protected $import;
 
-    public function __construct()
-    {
+    public function __construct() {
         $this->import = new Import();
     }
 
@@ -49,8 +48,7 @@ abstract class ImportPlugin
      *
      * @return ImportPluginProperties
      */
-    public function getProperties()
-    {
+    public function getProperties() {
         return $this->properties;
     }
 
@@ -70,8 +68,7 @@ abstract class ImportPlugin
      *
      * @return array DB name and options (an associative array of options)
      */
-    protected function getDbnameAndOptions($currentDb, $defaultDb)
-    {
+    protected function getDbnameAndOptions($currentDb, $defaultDb) {
         if (strlen((string) $currentDb) > 0) {
             $db_name = $currentDb;
             $options = ['create_db' => false];
@@ -85,4 +82,5 @@ abstract class ImportPlugin
             $options,
         ];
     }
+
 }

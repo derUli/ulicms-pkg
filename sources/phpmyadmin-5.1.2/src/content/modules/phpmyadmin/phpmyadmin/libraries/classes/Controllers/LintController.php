@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Represents the interface between the linter and the query editor.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Controllers;
@@ -14,10 +14,9 @@ use function json_encode;
 /**
  * Represents the interface between the linter and the query editor.
  */
-class LintController extends AbstractController
-{
-    public function index(): void
-    {
+class LintController extends AbstractController {
+
+    public function index(): void {
         $params = [
             'sql_query' => $_POST['sql_query'] ?? null,
             'options' => $_POST['options'] ?? null,
@@ -34,7 +33,7 @@ class LintController extends AbstractController
          *
          * @var string
          */
-        $sqlQuery = ! empty($params['sql_query']) ? $params['sql_query'] : '';
+        $sqlQuery = !empty($params['sql_query']) ? $params['sql_query'] : '';
 
         $this->response->setAjax(true);
 
@@ -43,18 +42,19 @@ class LintController extends AbstractController
 
         Core::headerJSON();
 
-        if (! empty($params['options'])) {
+        if (!empty($params['options'])) {
             $options = $params['options'];
 
-            if (! empty($options['routine_editor'])) {
+            if (!empty($options['routine_editor'])) {
                 $sqlQuery = 'CREATE PROCEDURE `a`() ' . $sqlQuery;
-            } elseif (! empty($options['trigger_editor'])) {
+            } elseif (!empty($options['trigger_editor'])) {
                 $sqlQuery = 'CREATE TRIGGER `a` AFTER INSERT ON `b` FOR EACH ROW ' . $sqlQuery;
-            } elseif (! empty($options['event_editor'])) {
+            } elseif (!empty($options['event_editor'])) {
                 $sqlQuery = 'CREATE EVENT `a` ON SCHEDULE EVERY MINUTE DO ' . $sqlQuery;
             }
         }
 
         echo json_encode(Linter::lint($sqlQuery));
     }
+
 }

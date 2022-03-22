@@ -11,17 +11,17 @@
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator\Traits;
 
-trait AutowireTrait
-{
+trait AutowireTrait {
+
     /**
      * Enables/disables autowiring.
      *
      * @return $this
      */
-    final public function autowire(bool $autowired = true): self
-    {
+    final public function autowire(bool $autowired = true): self {
         $this->definition->setAutowired($autowired);
 
         return $this;
     }
+
 }

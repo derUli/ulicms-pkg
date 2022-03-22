@@ -14,7 +14,7 @@ var configScriptLoaded;
  *
  * @returns bool
  */
-function isStorageSupported (type, warn) {
+function isStorageSupported(type, warn) {
     try {
         window[type].setItem('PMATest', 'test');
         // Check whether key-value pair was set successfully
@@ -59,7 +59,7 @@ var defaultValues = {};
  *
  * @param {Element} field
  */
-function getFieldType (field) {
+function getFieldType(field) {
     var $field = $(field);
     var tagName = $field.prop('tagName');
     if (tagName === 'INPUT') {
@@ -78,7 +78,7 @@ function getFieldType (field) {
  * @param {Element} field
  * @param {boolean} display
  */
-function setRestoreDefaultBtn (field, display) {
+function setRestoreDefaultBtn(field, display) {
     var $el = $(field).closest('td').find('.restore-default img');
     $el[display ? 'show' : 'hide']();
 }
@@ -88,7 +88,7 @@ function setRestoreDefaultBtn (field, display) {
  *
  * @param {Element} field
  */
-function markField (field) {
+function markField(field) {
     var $field = $(field);
     var type = getFieldType($field);
     var isDefault = checkFieldDefault($field, type);
@@ -112,24 +112,24 @@ function markField (field) {
  * @param {String}  fieldType  see {@link #getFieldType}
  * @param {String|Boolean}  value
  */
-function setFieldValue (field, fieldType, value) {
+function setFieldValue(field, fieldType, value) {
     var $field = $(field);
     switch (fieldType) {
-    case 'text':
-    case 'number':
-        $field.val(value);
-        break;
-    case 'checkbox':
-        $field.prop('checked', value);
-        break;
-    case 'select':
-        var options = $field.prop('options');
-        var i;
-        var imax = options.length;
-        for (i = 0; i < imax; i++) {
-            options[i].selected = (value.indexOf(options[i].value) !== -1);
-        }
-        break;
+        case 'text':
+        case 'number':
+            $field.val(value);
+            break;
+        case 'checkbox':
+            $field.prop('checked', value);
+            break;
+        case 'select':
+            var options = $field.prop('options');
+            var i;
+            var imax = options.length;
+            for (i = 0; i < imax; i++) {
+                options[i].selected = (value.indexOf(options[i].value) !== -1);
+            }
+            break;
     }
     markField($field);
 }
@@ -146,25 +146,25 @@ function setFieldValue (field, fieldType, value) {
  * @param {String}  fieldType returned by {@link #getFieldType}
  * @type Boolean|String|String[]
  */
-function getFieldValue (field, fieldType) {
+function getFieldValue(field, fieldType) {
     var $field = $(field);
     switch (fieldType) {
-    case 'text':
-    case 'number':
-        return $field.prop('value');
-    case 'checkbox':
-        return $field.prop('checked');
-    case 'select':
-        var options = $field.prop('options');
-        var i;
-        var imax = options.length;
-        var items = [];
-        for (i = 0; i < imax; i++) {
-            if (options[i].selected) {
-                items.push(options[i].value);
+        case 'text':
+        case 'number':
+            return $field.prop('value');
+        case 'checkbox':
+            return $field.prop('checked');
+        case 'select':
+            var options = $field.prop('options');
+            var i;
+            var imax = options.length;
+            var items = [];
+            for (i = 0; i < imax; i++) {
+                if (options[i].selected) {
+                    items.push(options[i].value);
+                }
             }
-        }
-        return items;
+            return items;
     }
     return null;
 }
@@ -173,7 +173,7 @@ function getFieldValue (field, fieldType) {
  * Returns values for all fields in fieldsets
  */
 // eslint-disable-next-line no-unused-vars
-function getAllValues () {
+function getAllValues() {
     var $elements = $('fieldset input, fieldset select, fieldset textarea');
     var values = {};
     var type;
@@ -199,7 +199,7 @@ function getAllValues () {
  * @param {String}  type
  * @return boolean
  */
-function checkFieldDefault (field, type) {
+function checkFieldDefault(field, type) {
     var $field = $(field);
     var fieldId = $field.attr('id');
     if (typeof defaultValues[fieldId] === 'undefined') {
@@ -230,7 +230,7 @@ function checkFieldDefault (field, type) {
  * @param {Element} element
  */
 // eslint-disable-next-line no-unused-vars
-function getIdPrefix (element) {
+function getIdPrefix(element) {
     return $(element).attr('id').replace(/[^-]+$/, '');
 }
 
@@ -326,7 +326,7 @@ var validators = {
  * @param {Array}   params   validation function parameters
  */
 // eslint-disable-next-line no-unused-vars
-function registerFieldValidator (id, type, onKeyUp, params) {
+function registerFieldValidator(id, type, onKeyUp, params) {
     if (typeof validators[type] === 'undefined') {
         return;
     }
@@ -346,7 +346,7 @@ function registerFieldValidator (id, type, onKeyUp, params) {
  * @type Array
  * @return array of [function, parameters to be passed to function]
  */
-function getFieldValidators (fieldId, onKeyUpOnly) {
+function getFieldValidators(fieldId, onKeyUpOnly) {
     // look for field bound validator
     var name = fieldId && fieldId.match(/[^-]+$/)[0];
     if (typeof validators.field[name] !== 'undefined') {
@@ -376,7 +376,7 @@ function getFieldValidators (fieldId, onKeyUpOnly) {
  *
  * @param {Object} errorList list of errors in the form {field id: error array}
  */
-function displayErrors (errorList) {
+function displayErrors(errorList) {
     var tempIsEmpty = function (item) {
         return item !== '';
     };
@@ -429,7 +429,7 @@ function displayErrors (errorList) {
 /**
  * Validates fields and fieldsets and call displayError function as required
  */
-function setDisplayError () {
+function setDisplayError() {
     var elements = $('.optbox input[id], .optbox select[id], .optbox textarea[id]');
     // run all field validators
     var errors = {};
@@ -450,7 +450,7 @@ function setDisplayError () {
  * @param {boolean} isKeyUp
  * @param {Object}  errors
  */
-function validateFieldset (fieldset, isKeyUp, errors) {
+function validateFieldset(fieldset, isKeyUp, errors) {
     var $fieldset = $(fieldset);
     if ($fieldset.length && typeof validators.fieldset[$fieldset.attr('id')] !== 'undefined') {
         var fieldsetErrors = validators.fieldset[$fieldset.attr('id')].apply($fieldset[0], [isKeyUp]);
@@ -473,7 +473,7 @@ function validateFieldset (fieldset, isKeyUp, errors) {
  * @param {boolean} isKeyUp
  * @param {Object}  errors
  */
-function validateField (field, isKeyUp, errors) {
+function validateField(field, isKeyUp, errors) {
     var args;
     var result;
     var $field = $(field);
@@ -503,7 +503,7 @@ function validateField (field, isKeyUp, errors) {
  * @param {Element} field
  * @param {boolean} isKeyUp
  */
-function validateFieldAndFieldset (field, isKeyUp) {
+function validateFieldAndFieldset(field, isKeyUp) {
     var $field = $(field);
     var errors = {};
     validateField($field, isKeyUp, errors);
@@ -511,7 +511,7 @@ function validateFieldAndFieldset (field, isKeyUp) {
     displayErrors(errors);
 }
 
-function loadInlineConfig () {
+function loadInlineConfig() {
     if (!Array.isArray(configInlineParams)) {
         return;
     }
@@ -522,7 +522,7 @@ function loadInlineConfig () {
     }
 }
 
-function setupValidation () {
+function setupValidation() {
     validate = {};
     configScriptLoaded = true;
     if (configScriptLoaded && typeof configInlineParams !== 'undefined') {
@@ -588,7 +588,7 @@ AJAX.registerOnload('config.js', function () {
  *
  * @param {String} tabId
  */
-function setTab (tabId) {
+function setTab(tabId) {
     $('ul.tabs').each(function () {
         var $this = $(this);
         if (!$this.find('li a[href="#' + tabId + '"]').length) {
@@ -602,7 +602,7 @@ function setTab (tabId) {
     });
 }
 
-function setupConfigTabs () {
+function setupConfigTabs() {
     var forms = $('form.config-form');
     forms.each(function () {
         var $this = $(this);
@@ -613,18 +613,18 @@ function setupConfigTabs () {
         // add tabs events and activate one tab (the first one or indicated by location hash)
         $tabs.find('li').removeClass('active');
         $tabs.find('a')
-            .on('click', function (e) {
-                e.preventDefault();
-                setTab($(this).attr('href').substr(1));
-            })
-            .first()
-            .parent()
-            .addClass('active');
+                .on('click', function (e) {
+                    e.preventDefault();
+                    setTab($(this).attr('href').substr(1));
+                })
+                .first()
+                .parent()
+                .addClass('active');
         $this.find('div.tabs_contents fieldset').hide().first().show();
     });
 }
 
-function adjustPrefsNotification () {
+function adjustPrefsNotification() {
     var $prefsAutoLoad = $('#prefs_autoload');
     var $tableNameControl = $('#table_name_col_no');
     var $prefsAutoShowing = ($prefsAutoLoad.css('display') !== 'none');
@@ -683,7 +683,7 @@ AJAX.registerOnload('config.js', function () {
  *
  * @param {String} fieldId
  */
-function restoreField (fieldId) {
+function restoreField(fieldId) {
     var $field = $('#' + fieldId);
     if ($field.length === 0 || defaultValues[fieldId] === undefined) {
         return;
@@ -691,31 +691,31 @@ function restoreField (fieldId) {
     setFieldValue($field, getFieldType($field), defaultValues[fieldId]);
 }
 
-function setupRestoreField () {
+function setupRestoreField() {
     $('div.tabs_contents')
-        .on('mouseenter', '.restore-default, .set-value', function () {
-            $(this).css('opacity', 1);
-        })
-        .on('mouseleave', '.restore-default, .set-value', function () {
-            $(this).css('opacity', 0.25);
-        })
-        .on('click', '.restore-default, .set-value', function (e) {
-            e.preventDefault();
-            var href = $(this).attr('href');
-            var fieldSel;
-            if ($(this).hasClass('restore-default')) {
-                fieldSel = href;
-                restoreField(fieldSel.substr(1));
-            } else {
-                fieldSel = href.match(/^[^=]+/)[0];
-                var value = href.match(/=(.+)$/)[1];
-                setFieldValue($(fieldSel), 'text', value);
-            }
-            $(fieldSel).trigger('change');
-        })
-        .find('.restore-default, .set-value')
-        // inline-block for IE so opacity inheritance works
-        .css({ display: 'inline-block', opacity: 0.25 });
+            .on('mouseenter', '.restore-default, .set-value', function () {
+                $(this).css('opacity', 1);
+            })
+            .on('mouseleave', '.restore-default, .set-value', function () {
+                $(this).css('opacity', 0.25);
+            })
+            .on('click', '.restore-default, .set-value', function (e) {
+                e.preventDefault();
+                var href = $(this).attr('href');
+                var fieldSel;
+                if ($(this).hasClass('restore-default')) {
+                    fieldSel = href;
+                    restoreField(fieldSel.substr(1));
+                } else {
+                    fieldSel = href.match(/^[^=]+/)[0];
+                    var value = href.match(/=(.+)$/)[1];
+                    setFieldValue($(fieldSel), 'text', value);
+                }
+                $(fieldSel).trigger('change');
+            })
+            .find('.restore-default, .set-value')
+            // inline-block for IE so opacity inheritance works
+            .css({display: 'inline-block', opacity: 0.25});
 }
 
 AJAX.registerOnload('config.js', function () {
@@ -739,19 +739,19 @@ AJAX.registerOnload('config.js', function () {
 
     // enable JavaScript dependent fields
     $radios
-        .prop('disabled', false)
-        .add('#export_text_file, #import_text_file')
-        .on('click', function () {
-            var enableId = $(this).attr('id');
-            var disableId;
-            if (enableId.match(/local_storage$/)) {
-                disableId = enableId.replace(/local_storage$/, 'text_file');
-            } else {
-                disableId = enableId.replace(/text_file$/, 'local_storage');
-            }
-            $('#opts_' + disableId).addClass('disabled').find('input').prop('disabled', true);
-            $('#opts_' + enableId).removeClass('disabled').find('input').prop('disabled', false);
-        });
+            .prop('disabled', false)
+            .add('#export_text_file, #import_text_file')
+            .on('click', function () {
+                var enableId = $(this).attr('id');
+                var disableId;
+                if (enableId.match(/local_storage$/)) {
+                    disableId = enableId.replace(/local_storage$/, 'text_file');
+                } else {
+                    disableId = enableId.replace(/text_file$/, 'local_storage');
+                }
+                $('#opts_' + disableId).addClass('disabled').find('input').prop('disabled', true);
+                $('#opts_' + enableId).removeClass('disabled').find('input').prop('disabled', false);
+            });
 
     // detect localStorage state
     var lsSupported = isStorageSupported('localStorage', true);
@@ -767,8 +767,8 @@ AJAX.registerOnload('config.js', function () {
         if (!lsSupported) {
             disabled = $form.find('input[type=radio][value$=local_storage]').prop('checked');
         } else if (!lsExists && $form.attr('name') === 'prefs_import' &&
-            $('#import_local_storage')[0].checked
-        ) {
+                $('#import_local_storage')[0].checked
+                ) {
             disabled = true;
         }
         $form.find('input[type=submit]').prop('disabled', disabled);
@@ -786,11 +786,11 @@ AJAX.registerOnload('config.js', function () {
 
     $(document).on('click', 'div.click-hide-message', function () {
         $(this)
-            .hide()
-            .parent('.card-body')
-            .css('height', '')
-            .next('form')
-            .show();
+                .hide()
+                .parent('.card-body')
+                .css('height', '')
+                .next('form')
+                .show();
     });
 });
 
@@ -799,7 +799,7 @@ AJAX.registerOnload('config.js', function () {
  *
  * @param {Element} form
  */
-function savePrefsToLocalStorage (form) {
+function savePrefsToLocalStorage(form) {
     var $form = $(form);
     var submit = $form.find('input[type=submit]');
     submit.prop('disabled', true);
@@ -837,19 +837,19 @@ function savePrefsToLocalStorage (form) {
 /**
  * Updates preferences timestamp in Import form
  */
-function updatePrefsDate () {
+function updatePrefsDate() {
     var d = new Date(window.localStorage.configMtimeLocal);
     var msg = Messages.strSavedOn.replace(
-        '@DATE@',
-        Functions.formatDateTime(d)
-    );
+            '@DATE@',
+            Functions.formatDateTime(d)
+            );
     $('#opts_import_local_storage').find('div.localStorage-exists').html(msg);
 }
 
 /**
  * Prepares message which informs that localStorage preferences are available and can be imported or deleted
  */
-function offerPrefsAutoimport () {
+function offerPrefsAutoimport() {
     var hasConfig = (isStorageSupported('localStorage')) && (window.localStorage.config || false);
     var $cnt = $('#prefs_autoload');
     if (!$cnt.length || !hasConfig) {

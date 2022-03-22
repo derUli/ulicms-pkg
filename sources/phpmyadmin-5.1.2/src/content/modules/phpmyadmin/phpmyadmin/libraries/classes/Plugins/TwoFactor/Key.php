@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Second authentication factor handling
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Plugins\TwoFactor;
@@ -25,8 +25,8 @@ use function json_encode;
  *
  * Supports FIDO U2F tokens
  */
-class Key extends TwoFactorPlugin
-{
+class Key extends TwoFactorPlugin {
+
     /** @var string */
     public static $id = 'key';
 
@@ -35,8 +35,7 @@ class Key extends TwoFactorPlugin
      *
      * @param TwoFactor $twofactor TwoFactor instance
      */
-    public function __construct(TwoFactor $twofactor)
-    {
+    public function __construct(TwoFactor $twofactor) {
         parent::__construct($twofactor);
         if (isset($this->twofactor->config['settings']['registrations'])) {
             return;
@@ -50,8 +49,7 @@ class Key extends TwoFactorPlugin
      *
      * @return array
      */
-    public function getRegistrations()
-    {
+    public function getRegistrations() {
         $result = [];
         foreach ($this->twofactor->config['settings']['registrations'] as $index => $data) {
             $reg = new stdClass();
@@ -71,10 +69,9 @@ class Key extends TwoFactorPlugin
      *
      * @return bool
      */
-    public function check()
-    {
+    public function check() {
         $this->provided = false;
-        if (! isset($_POST['u2f_authentication_response'], $_SESSION['authenticationRequest'])) {
+        if (!isset($_POST['u2f_authentication_response'], $_SESSION['authenticationRequest'])) {
             return false;
         }
         $this->provided = true;
@@ -84,9 +81,9 @@ class Key extends TwoFactorPlugin
                 return false;
             }
             $auth = U2FServer::authenticate(
-                $_SESSION['authenticationRequest'],
-                $this->getRegistrations(),
-                $response
+                            $_SESSION['authenticationRequest'],
+                            $this->getRegistrations(),
+                            $response
             );
             $this->twofactor->config['settings']['registrations'][$auth->index]['counter'] = $auth->counter;
             $this->twofactor->save();
@@ -104,8 +101,7 @@ class Key extends TwoFactorPlugin
      *
      * @return void
      */
-    public function loadScripts()
-    {
+    public function loadScripts() {
         $response = Response::getInstance();
         $scripts = $response->getHeader()->getScripts();
         $scripts->addFile('vendor/u2f-api-polyfill.js');
@@ -117,18 +113,17 @@ class Key extends TwoFactorPlugin
      *
      * @return string HTML code
      */
-    public function render()
-    {
+    public function render() {
         $request = U2FServer::makeAuthentication(
-            $this->getRegistrations(),
-            $this->getAppId(true)
+                        $this->getRegistrations(),
+                        $this->getAppId(true)
         );
         $_SESSION['authenticationRequest'] = $request;
         $this->loadScripts();
 
         return $this->template->render('login/twofactor/key', [
-            'request' => json_encode($request),
-            'is_https' => $GLOBALS['PMA_Config']->isHttps(),
+                    'request' => json_encode($request),
+                    'is_https' => $GLOBALS['PMA_Config']->isHttps(),
         ]);
     }
 
@@ -143,20 +138,19 @@ class Key extends TwoFactorPlugin
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    public function setup()
-    {
+    public function setup() {
         $registrationData = U2FServer::makeRegistration(
-            $this->getAppId(true),
-            $this->getRegistrations()
+                        $this->getAppId(true),
+                        $this->getRegistrations()
         );
         $_SESSION['registrationRequest'] = $registrationData['request'];
 
         $this->loadScripts();
 
         return $this->template->render('login/twofactor/key_configure', [
-            'request' => json_encode($registrationData['request']),
-            'signatures' => json_encode($registrationData['signatures']),
-            'is_https' => $GLOBALS['PMA_Config']->isHttps(),
+                    'request' => json_encode($registrationData['request']),
+                    'signatures' => json_encode($registrationData['signatures']),
+                    'is_https' => $GLOBALS['PMA_Config']->isHttps(),
         ]);
     }
 
@@ -165,10 +159,9 @@ class Key extends TwoFactorPlugin
      *
      * @return bool
      */
-    public function configure()
-    {
+    public function configure() {
         $this->provided = false;
-        if (! isset($_POST['u2f_registration_response'], $_SESSION['registrationRequest'])) {
+        if (!isset($_POST['u2f_registration_response'], $_SESSION['registrationRequest'])) {
             return false;
         }
         $this->provided = true;
@@ -178,8 +171,8 @@ class Key extends TwoFactorPlugin
                 return false;
             }
             $registration = U2FServer::register(
-                $_SESSION['registrationRequest'],
-                $response
+                            $_SESSION['registrationRequest'],
+                            $response
             );
             $this->twofactor->config['settings']['registrations'][] = [
                 'keyHandle' => $registration->getKeyHandle(),
@@ -201,8 +194,7 @@ class Key extends TwoFactorPlugin
      *
      * @return string
      */
-    public static function getName()
-    {
+    public static function getName() {
         return __('Hardware Security Key (FIDO U2F)');
     }
 
@@ -211,8 +203,8 @@ class Key extends TwoFactorPlugin
      *
      * @return string
      */
-    public static function getDescription()
-    {
+    public static function getDescription() {
         return __('Provides authentication using hardware security tokens supporting FIDO U2F.');
     }
+
 }

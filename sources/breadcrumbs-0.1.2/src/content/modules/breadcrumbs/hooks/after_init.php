@@ -1,8 +1,8 @@
 <?php
 
 if (!function_exists("get_breadcrumbs")) {
-    function get_breadcrumbs()
-    {
+
+    function get_breadcrumbs() {
         if (!is_200()) {
             return "";
         }
@@ -22,11 +22,13 @@ if (!function_exists("get_breadcrumbs")) {
         $html = '<div class="breadcrumb_nav">' . $html . "</div>";
         return $html;
     }
+
 }
 
 if (!function_exists("breadcrumbs")) {
-    function breadcrumbs()
-    {
+
+    function breadcrumbs() {
         echo get_breadcrumbs();
     }
+
 }

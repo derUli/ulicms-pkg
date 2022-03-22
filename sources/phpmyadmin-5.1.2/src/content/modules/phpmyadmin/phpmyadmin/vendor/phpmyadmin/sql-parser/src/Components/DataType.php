@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Parses a data type.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\SqlParser\Components;
@@ -11,7 +11,6 @@ use PhpMyAdmin\SqlParser\Component;
 use PhpMyAdmin\SqlParser\Parser;
 use PhpMyAdmin\SqlParser\Token;
 use PhpMyAdmin\SqlParser\TokensList;
-
 use function implode;
 use function strtolower;
 use function strtoupper;
@@ -22,8 +21,8 @@ use function trim;
  *
  * @final
  */
-class DataType extends Component
-{
+class DataType extends Component {
+
     /**
      * All data type options.
      *
@@ -82,9 +81,9 @@ class DataType extends Component
      * @param OptionsArray $options    the options of this data type
      */
     public function __construct(
-        $name = null,
-        array $parameters = [],
-        $options = null
+            $name = null,
+            array $parameters = [],
+            $options = null
     ) {
         $this->name = $name;
         $this->parameters = $parameters;
@@ -98,8 +97,7 @@ class DataType extends Component
      *
      * @return DataType|null
      */
-    public static function parse(Parser $parser, TokensList $list, array $options = [])
-    {
+    public static function parse(Parser $parser, TokensList $list, array $options = []) {
         $ret = new static();
 
         /**
@@ -130,7 +128,7 @@ class DataType extends Component
 
             if ($state === 0) {
                 $ret->name = strtoupper((string) $token->value);
-                if (($token->type !== Token::TYPE_KEYWORD) || (! ($token->flags & Token::FLAG_KEYWORD_DATA_TYPE))) {
+                if (($token->type !== Token::TYPE_KEYWORD) || (!($token->flags & Token::FLAG_KEYWORD_DATA_TYPE))) {
                     $parser->error('Unrecognized data type.', $token);
                 }
 
@@ -140,7 +138,7 @@ class DataType extends Component
                     $parameters = ArrayObj::parse($parser, $list);
                     ++$list->idx;
                     $ret->parameters = ($ret->name === 'ENUM') || ($ret->name === 'SET') ?
-                        $parameters->raw : $parameters->values;
+                            $parameters->raw : $parameters->values;
                 }
 
                 $ret->options = OptionsArray::parse($parser, $list, static::$DATA_TYPE_OPTIONS);
@@ -164,16 +162,16 @@ class DataType extends Component
      *
      * @return string
      */
-    public static function build($component, array $options = [])
-    {
+    public static function build($component, array $options = []) {
         $name = empty($options['lowercase']) ?
-            $component->name : strtolower($component->name);
+                $component->name : strtolower($component->name);
 
         $parameters = '';
-        if (! empty($component->parameters)) {
+        if (!empty($component->parameters)) {
             $parameters = '(' . implode(',', $component->parameters) . ')';
         }
 
         return trim($name . $parameters . ' ' . $component->options);
     }
+
 }

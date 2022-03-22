@@ -1,5 +1,5 @@
 <?php
-function lessphp_render()
-{
+
+function lessphp_render() {
     return "";
 }

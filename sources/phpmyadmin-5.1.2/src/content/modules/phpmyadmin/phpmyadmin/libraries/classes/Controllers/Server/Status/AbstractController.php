@@ -9,8 +9,8 @@ use PhpMyAdmin\Response;
 use PhpMyAdmin\Server\Status\Data;
 use PhpMyAdmin\Template;
 
-abstract class AbstractController extends Controller
-{
+abstract class AbstractController extends Controller {
+
     /** @var Data */
     protected $data;
 
@@ -18,9 +18,9 @@ abstract class AbstractController extends Controller
      * @param Response $response
      * @param Data     $data
      */
-    public function __construct($response, Template $template, $data)
-    {
+    public function __construct($response, Template $template, $data) {
         parent::__construct($response, $template);
         $this->data = $data;
     }
+
 }

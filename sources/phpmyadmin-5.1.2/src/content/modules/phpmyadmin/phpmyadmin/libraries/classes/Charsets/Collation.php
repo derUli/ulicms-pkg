@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Value object class for a collation
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Charsets;
@@ -14,8 +14,8 @@ use function implode;
 /**
  * Value object class for a collation
  */
-final class Collation
-{
+final class Collation {
+
     /**
      * The collation name
      *
@@ -82,13 +82,13 @@ final class Collation
      * @param string $padAttribute Pad attribute
      */
     private function __construct(
-        string $name,
-        string $charset,
-        int $id,
-        bool $isDefault,
-        bool $isCompiled,
-        int $sortLength,
-        string $padAttribute
+            string $name,
+            string $charset,
+            int $id,
+            bool $isDefault,
+            bool $isCompiled,
+            int $sortLength,
+            string $padAttribute
     ) {
         $this->name = $name;
         $this->charset = $charset;
@@ -103,56 +103,47 @@ final class Collation
     /**
      * @param array $state State obtained from the database server
      */
-    public static function fromServer(array $state): self
-    {
+    public static function fromServer(array $state): self {
         return new self(
-            $state['Collation'] ?? '',
-            $state['Charset'] ?? '',
-            (int) ($state['Id'] ?? 0),
-            isset($state['Default']) && ($state['Default'] === 'Yes' || $state['Default'] === '1'),
-            isset($state['Compiled']) && ($state['Compiled'] === 'Yes' || $state['Compiled'] === '1'),
-            (int) ($state['Sortlen'] ?? 0),
-            $state['Pad_attribute'] ?? ''
+                $state['Collation'] ?? '',
+                $state['Charset'] ?? '',
+                (int) ($state['Id'] ?? 0),
+                isset($state['Default']) && ($state['Default'] === 'Yes' || $state['Default'] === '1'),
+                isset($state['Compiled']) && ($state['Compiled'] === 'Yes' || $state['Compiled'] === '1'),
+                (int) ($state['Sortlen'] ?? 0),
+                $state['Pad_attribute'] ?? ''
         );
     }
 
-    public function getName(): string
-    {
+    public function getName(): string {
         return $this->name;
     }
 
-    public function getDescription(): string
-    {
+    public function getDescription(): string {
         return $this->description;
     }
 
-    public function getCharset(): string
-    {
+    public function getCharset(): string {
         return $this->charset;
     }
 
-    public function getId(): int
-    {
+    public function getId(): int {
         return $this->id;
     }
 
-    public function isDefault(): bool
-    {
+    public function isDefault(): bool {
         return $this->isDefault;
     }
 
-    public function isCompiled(): bool
-    {
+    public function isCompiled(): bool {
         return $this->isCompiled;
     }
 
-    public function getSortLength(): int
-    {
+    public function getSortLength(): int {
         return $this->sortLength;
     }
 
-    public function getPadAttribute(): string
-    {
+    public function getPadAttribute(): string {
         return $this->padAttribute;
     }
 
@@ -161,8 +152,7 @@ final class Collation
      *
      * @return string collation description
      */
-    private function buildDescription(): string
-    {
+    private function buildDescription(): string {
         $parts = explode('_', $this->getName());
 
         $name = __('Unknown');
@@ -178,11 +168,11 @@ final class Collation
                 $level = 1;
                 /* First should be charset */
                 $this->getNameForLevel0(
-                    $unicode, // By reference
-                    $unknown, // Same
-                    $part,
-                    $name, // By reference
-                    $variant// Same
+                        $unicode, // By reference
+                        $unknown, // Same
+                        $part,
+                        $name, // By reference
+                        $variant// Same
                 );
                 continue;
             }
@@ -192,12 +182,12 @@ final class Collation
                 /* Locale name or code */
                 $found = true;
                 $this->getNameForLevel1(
-                    $unicode,
-                    $unknown,
-                    $part,
-                    $name, // By reference, will be changed
-                    $level, // Also
-                    $found// Same
+                        $unicode,
+                        $unknown,
+                        $part,
+                        $name, // By reference, will be changed
+                        $level, // Also
+                        $found// Same
                 );
                 if ($found) {
                     continue;
@@ -253,8 +243,7 @@ final class Collation
         return $this->buildName($name, $variant, $suffixes);
     }
 
-    private function buildName(string $result, ?string $variant, array $suffixes): string
-    {
+    private function buildName(string $result, ?string $variant, array $suffixes): string {
         if ($variant !== null) {
             $result .= ' (' . $variant . ')';
         }
@@ -265,8 +254,7 @@ final class Collation
         return $result;
     }
 
-    private function getVariant(string $part): ?string
-    {
+    private function getVariant(string $part): ?string {
         switch ($part) {
             case '0900':
                 return 'UCA 9.0.0';
@@ -281,8 +269,7 @@ final class Collation
         }
     }
 
-    private function addSuffixes(array $suffixes, string $part): array
-    {
+    private function addSuffixes(array $suffixes, string $part): array {
         switch ($part) {
             case 'ci':
                 $suffixes[] = _pgettext('Collation variant', 'case-insensitive');
@@ -315,11 +302,11 @@ final class Collation
     }
 
     private function getNameForLevel0(
-        bool &$unicode,
-        bool &$unknown,
-        string $part,
-        ?string &$name,
-        ?string &$variant
+            bool &$unicode,
+            bool &$unknown,
+            string $part,
+            ?string &$name,
+            ?string &$variant
     ): void {
         switch ($part) {
             case 'binary':
@@ -429,12 +416,12 @@ final class Collation
     }
 
     private function getNameForLevel1(
-        bool $unicode,
-        bool $unknown,
-        string $part,
-        ?string &$name,
-        int &$level,
-        bool &$found
+            bool $unicode,
+            bool $unknown,
+            string $part,
+            ?string &$name,
+            int &$level,
+            bool &$found
     ): void {
         switch ($part) {
             case 'general':
@@ -584,4 +571,5 @@ final class Collation
                 $found = false;
         }
     }
+
 }

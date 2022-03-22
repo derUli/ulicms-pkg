@@ -19,8 +19,8 @@ use Psr\Container\ContainerInterface;
  * @author Nicolas Grekas <p@tchwork.com>
  * @author Mateusz Sip <mateusz.sip@gmail.com>
  */
-interface ServiceProviderInterface extends ContainerInterface
-{
+interface ServiceProviderInterface extends ContainerInterface {
+
     /**
      * Returns an associative array of service types keyed by the identifiers provided by the current container.
      *

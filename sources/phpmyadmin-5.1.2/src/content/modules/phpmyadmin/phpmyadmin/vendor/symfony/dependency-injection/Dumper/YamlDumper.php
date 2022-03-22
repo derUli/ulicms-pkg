@@ -34,8 +34,8 @@ use Symfony\Component\Yaml\Yaml;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class YamlDumper extends Dumper
-{
+class YamlDumper extends Dumper {
+
     private $dumper;
 
     /**
@@ -43,8 +43,7 @@ class YamlDumper extends Dumper
      *
      * @return string A YAML string representing of the service container
      */
-    public function dump(array $options = [])
-    {
+    public function dump(array $options = []) {
         if (!class_exists(\Symfony\Component\Yaml\Dumper::class)) {
             throw new LogicException('Unable to dump the container as the Symfony Yaml Component is not installed.');
         }
@@ -53,11 +52,10 @@ class YamlDumper extends Dumper
             $this->dumper = new YmlDumper();
         }
 
-        return $this->container->resolveEnvPlaceholders($this->addParameters()."\n".$this->addServices());
+        return $this->container->resolveEnvPlaceholders($this->addParameters() . "\n" . $this->addServices());
     }
 
-    private function addService(string $id, Definition $definition): string
-    {
+    private function addService(string $id, Definition $definition): string {
         $code = "    $id:\n";
         if ($class = $definition->getClass()) {
             if ('\\' === substr($class, 0, 1)) {
@@ -78,13 +76,13 @@ class YamlDumper extends Dumper
                 foreach ($attributes as $key => $value) {
                     $att[] = sprintf('%s: %s', $this->dumper->dump($key), $this->dumper->dump($value));
                 }
-                $att = $att ? ', '.implode(', ', $att) : '';
+                $att = $att ? ', ' . implode(', ', $att) : '';
 
                 $tagsCode .= sprintf("            - { name: %s%s }\n", $this->dumper->dump($name), $att);
             }
         }
         if ($tagsCode) {
-            $code .= "        tags:\n".$tagsCode;
+            $code .= "        tags:\n" . $tagsCode;
         }
 
         if ($definition->getFile()) {
@@ -159,8 +157,7 @@ class YamlDumper extends Dumper
         return $code;
     }
 
-    private function addServiceAlias(string $alias, Alias $id): string
-    {
+    private function addServiceAlias(string $alias, Alias $id): string {
         $deprecated = $id->isDeprecated() ? sprintf("        deprecated: %s\n", $id->getDeprecationMessage('%alias_id%')) : '';
 
         if (!$id->isDeprecated() && $id->isPrivate()) {
@@ -170,8 +167,7 @@ class YamlDumper extends Dumper
         return sprintf("    %s:\n        alias: %s\n        public: %s\n%s", $alias, $id, $id->isPublic() ? 'true' : 'false', $deprecated);
     }
 
-    private function addServices(): string
-    {
+    private function addServices(): string {
         if (!$this->container->getDefinitions()) {
             return '';
         }
@@ -192,8 +188,7 @@ class YamlDumper extends Dumper
         return $code;
     }
 
-    private function addParameters(): string
-    {
+    private function addParameters(): string {
         if (!$this->container->getParameterBag()->all()) {
             return '';
         }
@@ -210,8 +205,7 @@ class YamlDumper extends Dumper
      *
      * @return mixed
      */
-    private function dumpCallable($callable)
-    {
+    private function dumpCallable($callable) {
         if (\is_array($callable)) {
             if ($callable[0] instanceof Reference) {
                 $callable = [$this->getServiceCall((string) $callable[0], $callable[0]), $callable[1]];
@@ -230,8 +224,7 @@ class YamlDumper extends Dumper
      *
      * @throws RuntimeException When trying to dump object or resource
      */
-    private function dumpValue($value)
-    {
+    private function dumpValue($value) {
         if ($value instanceof ServiceClosureArgument) {
             $value = $value->getValues()[0];
 
@@ -285,7 +278,7 @@ class YamlDumper extends Dumper
         } elseif ($value instanceof Expression) {
             return $this->getExpressionCall((string) $value);
         } elseif ($value instanceof Definition) {
-            return new TaggedValue('service', (new Parser())->parse("_:\n".$this->addService('_', $value), Yaml::PARSE_CUSTOM_TAGS)['_']['_']);
+            return new TaggedValue('service', (new Parser())->parse("_:\n" . $this->addService('_', $value), Yaml::PARSE_CUSTOM_TAGS)['_']['_']);
         } elseif ($value instanceof \UnitEnum) {
             return new TaggedValue('php/const', sprintf('%s::%s', \get_class($value), $value->name));
         } elseif (\is_object($value) || \is_resource($value)) {
@@ -295,8 +288,7 @@ class YamlDumper extends Dumper
         return $value;
     }
 
-    private function getServiceCall(string $id, Reference $reference = null): string
-    {
+    private function getServiceCall(string $id, Reference $reference = null): string {
         if (null !== $reference) {
             switch ($reference->getInvalidBehavior()) {
                 case ContainerInterface::RUNTIME_EXCEPTION_ON_INVALID_REFERENCE: break;
@@ -309,24 +301,21 @@ class YamlDumper extends Dumper
         return sprintf('@%s', $id);
     }
 
-    private function getParameterCall(string $id): string
-    {
+    private function getParameterCall(string $id): string {
         return sprintf('%%%s%%', $id);
     }
 
-    private function getExpressionCall(string $expression): string
-    {
+    private function getExpressionCall(string $expression): string {
         return sprintf('@=%s', $expression);
     }
 
-    private function prepareParameters(array $parameters, bool $escape = true): array
-    {
+    private function prepareParameters(array $parameters, bool $escape = true): array {
         $filtered = [];
         foreach ($parameters as $key => $value) {
             if (\is_array($value)) {
                 $value = $this->prepareParameters($value, $escape);
             } elseif ($value instanceof Reference || \is_string($value) && str_starts_with($value, '@')) {
-                $value = '@'.$value;
+                $value = '@' . $value;
             }
 
             $filtered[$key] = $value;
@@ -335,8 +324,7 @@ class YamlDumper extends Dumper
         return $escape ? $this->escape($filtered) : $filtered;
     }
 
-    private function escape(array $arguments): array
-    {
+    private function escape(array $arguments): array {
         $args = [];
         foreach ($arguments as $k => $v) {
             if (\is_array($v)) {
@@ -350,4 +338,5 @@ class YamlDumper extends Dumper
 
         return $args;
     }
+
 }

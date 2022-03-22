@@ -27,7 +27,7 @@ var map;
 /**
  * Zooms and pans the visualization.
  */
-function zoomAndPan () {
+function zoomAndPan() {
     var g = gisSvg.getElementById('groupPanel');
     if (!g) {
         return;
@@ -43,7 +43,7 @@ function zoomAndPan () {
 /**
  * Initially loads either SVG or OSM visualization based on the choice.
  */
-function selectVisualization () {
+function selectVisualization() {
     if ($('#choice').prop('checked') !== true) {
         $('#openlayersmap').hide();
     } else {
@@ -54,13 +54,13 @@ function selectVisualization () {
 /**
  * Adds necessary styles to the div that contains the openStreetMap.
  */
-function styleOSM () {
+function styleOSM() {
     var $placeholder = $('#placeholder');
     var cssObj = {
-        'border' : '1px solid #aaa',
-        'width' : $placeholder.width(),
-        'height' : $placeholder.height(),
-        'float' : 'right'
+        'border': '1px solid #aaa',
+        'width': $placeholder.width(),
+        'height': $placeholder.height(),
+        'float': 'right'
     };
     $('#openlayersmap').css(cssObj);
 }
@@ -68,35 +68,35 @@ function styleOSM () {
 /**
  * Store a reference to the gis svg element.
  */
-function storeGisSvgRef () {
+function storeGisSvgRef() {
     gisSvg = $('#placeholder').find('svg').get(0);
 }
 
 /**
  * Adds controls for zooming and panning.
  */
-function addZoomPanControllers () {
+function addZoomPanControllers() {
     if (!gisSvg) {
         return;
     }
     var themeImagePath = $('#themeImagePath').val();
     $('#placeholder').append(
-        // pan arrows
-        '<img class="button" id="left_arrow" src="' + themeImagePath + 'west-mini.png">',
-        '<img class="button" id="right_arrow" src="' + themeImagePath + 'east-mini.png">',
-        '<img class="button" id="up_arrow" src="' + themeImagePath + 'north-mini.png">',
-        '<img class="button" id="down_arrow" src="' + themeImagePath + 'south-mini.png">',
-        // zoom controls
-        '<img class="button" id="zoom_in" src="' + themeImagePath + 'zoom-plus-mini.png">',
-        '<img class="button" id="zoom_world" src="' + themeImagePath + 'zoom-world-mini.png">',
-        '<img class="button" id="zoom_out" src="' + themeImagePath + 'zoom-minus-mini.png">'
-    );
+            // pan arrows
+            '<img class="button" id="left_arrow" src="' + themeImagePath + 'west-mini.png">',
+            '<img class="button" id="right_arrow" src="' + themeImagePath + 'east-mini.png">',
+            '<img class="button" id="up_arrow" src="' + themeImagePath + 'north-mini.png">',
+            '<img class="button" id="down_arrow" src="' + themeImagePath + 'south-mini.png">',
+            // zoom controls
+            '<img class="button" id="zoom_in" src="' + themeImagePath + 'zoom-plus-mini.png">',
+            '<img class="button" id="zoom_world" src="' + themeImagePath + 'zoom-world-mini.png">',
+            '<img class="button" id="zoom_out" src="' + themeImagePath + 'zoom-minus-mini.png">'
+            );
 }
 
 /**
  * Resizes the GIS visualization to fit into the space available.
  */
-function resizeGISVisualization () {
+function resizeGISVisualization() {
     var $placeholder = $('#placeholder');
     var oldWidth = $placeholder.width();
     var visWidth = $('#div_view_options').width() - 48;
@@ -115,7 +115,7 @@ function resizeGISVisualization () {
 /**
  * Initialize the GIS visualization.
  */
-function initGISVisualization () {
+function initGISVisualization() {
     storeGisSvgRef();
     // Loads either SVG or OSM visualization based on the choice
     selectVisualization();
@@ -131,7 +131,7 @@ function initGISVisualization () {
     zoomAndPan();
 }
 
-function drawOpenLayerMap () {
+function drawOpenLayerMap() {
     $('#placeholder').hide();
     $('#openlayersmap').show();
     // Function doesn't work properly if #openlayersmap is hidden
@@ -141,15 +141,15 @@ function drawOpenLayerMap () {
     }
 }
 
-function getRelativeCoords (e) {
+function getRelativeCoords(e) {
     var position = $('#placeholder').offset();
     return {
-        x : e.pageX - position.left,
-        y : e.pageY - position.top
+        x: e.pageX - position.left,
+        y: e.pageY - position.top
     };
 }
 
-function onGisMouseWheel (event) {
+function onGisMouseWheel(event) {
     if (event.deltaY === 0) {
         return;
     }
@@ -196,10 +196,10 @@ AJAX.registerTeardown('table/gis_visualization.js', function () {
     $(document).off('click', '#down_arrow');
     $('.vector').off('mousemove').off('mouseout');
     $('#placeholder').get(0).removeEventListener(
-        'wheel',
-        onGisMouseWheel,
-        PASSIVE_EVENT_LISTENERS ? { passive: false } : undefined
-    );
+            'wheel',
+            onGisMouseWheel,
+            PASSIVE_EVENT_LISTENERS ? {passive: false} : undefined
+            );
     if (map) {
         // Removes ol.Map's resize listener from window
         map.setTarget(null);
@@ -231,10 +231,10 @@ AJAX.registerOnload('table/gis_visualization.js', function () {
     });
 
     $('#placeholder').get(0).addEventListener(
-        'wheel',
-        onGisMouseWheel,
-        PASSIVE_EVENT_LISTENERS ? { passive: false } : undefined
-    );
+            'wheel',
+            onGisMouseWheel,
+            PASSIVE_EVENT_LISTENERS ? {passive: false} : undefined
+            );
 
     var dragX = 0;
     var dragY = 0;
@@ -255,10 +255,10 @@ AJAX.registerOnload('table/gis_visualization.js', function () {
 
     $(document).on('drag', 'svg', function (event, dd) {
         var newX = Math.round(dd.offset.left);
-        x +=  newX - dragX;
+        x += newX - dragX;
         dragX = newX;
         var newY = Math.round(dd.offset.top);
-        y +=  newY - dragY;
+        y += newY - dragY;
         dragY = newY;
         zoomAndPan();
     });
@@ -341,13 +341,13 @@ AJAX.registerOnload('table/gis_visualization.js', function () {
         $('#tooltip').remove();
         if (contents !== '') {
             $('<div id="tooltip">' + contents + '</div>').css({
-                position : 'absolute',
-                top : event.pageY + 10,
-                left : event.pageX + 10,
-                border : '1px solid #fdd',
-                padding : '2px',
-                'background-color' : '#fee',
-                opacity : 0.90
+                position: 'absolute',
+                top: event.pageY + 10,
+                left: event.pageX + 10,
+                border: '1px solid #fdd',
+                padding: '2px',
+                'background-color': '#fee',
+                opacity: 0.90
             }).appendTo('body').fadeIn(200);
         }
     });

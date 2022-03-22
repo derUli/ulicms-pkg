@@ -18,8 +18,8 @@ use Psr\Cache\CacheItemInterface;
  *
  * @author Nicolas Grekas <p@tchwork.com>
  */
-interface CallbackInterface
-{
+interface CallbackInterface {
+
     /**
      * @param CacheItemInterface|ItemInterface $item  The item to compute the value for
      * @param bool                             &$save Should be set to false when the value should not be saved in the pool

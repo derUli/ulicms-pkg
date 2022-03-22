@@ -19,8 +19,8 @@ use Twig\Source;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-interface LoaderInterface
-{
+interface LoaderInterface {
+
     /**
      * Returns the source context for a given template logical name.
      *

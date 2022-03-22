@@ -14,8 +14,8 @@ use PhpMyAdmin\Util;
 use function is_array;
 use function str_replace;
 
-class DataDictionaryController extends AbstractController
-{
+class DataDictionaryController extends AbstractController {
+
     /** @var Relation */
     private $relation;
 
@@ -32,16 +32,14 @@ class DataDictionaryController extends AbstractController
      * @param Transformations   $transformations
      * @param DatabaseInterface $dbi
      */
-    public function __construct($response, Template $template, $db, $relation, $transformations, $dbi)
-    {
+    public function __construct($response, Template $template, $db, $relation, $transformations, $dbi) {
         parent::__construct($response, $template, $db);
         $this->relation = $relation;
         $this->transformations = $transformations;
         $this->dbi = $dbi;
     }
 
-    public function index(): void
-    {
+    public function index(): void {
         Util::checkParameters(['db'], true);
 
         $header = $this->response->getHeader();
@@ -57,18 +55,18 @@ class DataDictionaryController extends AbstractController
         $tables = [];
         foreach ($tablesNames as $tableName) {
             $showComment = (string) $this->dbi->getTable(
-                $this->db,
-                $tableName
-            )->getStatusInfo('TABLE_COMMENT');
+                            $this->db,
+                            $tableName
+                    )->getStatusInfo('TABLE_COMMENT');
 
             [, $primaryKeys] = Util::processIndexData(
-                $this->dbi->getTableIndexes($this->db, $tableName)
+                            $this->dbi->getTableIndexes($this->db, $tableName)
             );
 
             [$foreigners, $hasRelation] = $this->relation->getRelationsAndStatus(
-                ! empty($cfgRelation['relation']),
-                $this->db,
-                $tableName
+                    !empty($cfgRelation['relation']),
+                    $this->db,
+                    $tableName
             );
 
             $columnsComments = $this->relation->getComments($this->db, $tableName);
@@ -81,8 +79,8 @@ class DataDictionaryController extends AbstractController
                 $relation = '';
                 if ($hasRelation) {
                     $foreigner = $this->relation->searchColumnInForeigners(
-                        $foreigners,
-                        $row['Field']
+                            $foreigners,
+                            $row['Field']
                     );
                     if (is_array($foreigner) && isset($foreigner['foreign_table'], $foreigner['foreign_field'])) {
                         $relation = $foreigner['foreign_table'];
@@ -94,15 +92,15 @@ class DataDictionaryController extends AbstractController
                 $mime = '';
                 if ($cfgRelation['mimework']) {
                     $mimeMap = $this->transformations->getMime(
-                        $this->db,
-                        $tableName,
-                        true
+                            $this->db,
+                            $tableName,
+                            true
                     );
                     if (is_array($mimeMap) && isset($mimeMap[$row['Field']]['mimetype'])) {
                         $mime = str_replace(
-                            '_',
-                            '/',
-                            $mimeMap[$row['Field']]['mimetype']
+                                '_',
+                                '/',
+                                $mimeMap[$row['Field']]['mimetype']
                         );
                     }
                 }
@@ -136,4 +134,5 @@ class DataDictionaryController extends AbstractController
             'tables' => $tables,
         ]);
     }
+
 }

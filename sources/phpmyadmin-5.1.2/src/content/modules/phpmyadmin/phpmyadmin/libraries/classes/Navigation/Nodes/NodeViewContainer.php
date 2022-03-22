@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Functionality for the navigation tree
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Navigation\Nodes;
@@ -14,13 +14,12 @@ use PhpMyAdmin\Url;
 /**
  * Represents a container for view nodes in the navigation tree
  */
-class NodeViewContainer extends NodeDatabaseChildContainer
-{
+class NodeViewContainer extends NodeDatabaseChildContainer {
+
     /**
      * Initialises the class
      */
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct(__('Views'), Node::CONTAINER);
         $this->icon = Generator::getImage('b_views', __('Views'));
         $this->links = [
@@ -38,8 +37,8 @@ class NodeViewContainer extends NodeDatabaseChildContainer
 
         $newLabel = _pgettext('Create new view', 'New');
         $new = NodeFactory::getInstanceForNewNode(
-            $newLabel,
-            'new_view italics'
+                        $newLabel,
+                        'new_view italics'
         );
         $new->icon = Generator::getImage('b_view_add', $newLabel);
         $new->links = [
@@ -52,4 +51,5 @@ class NodeViewContainer extends NodeDatabaseChildContainer
         ];
         $this->addChild($new);
     }
+
 }

@@ -16,8 +16,8 @@ namespace Twig\Node;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-interface NodeOutputInterface
-{
+interface NodeOutputInterface {
+    
 }
 
 class_alias('Twig\Node\NodeOutputInterface', 'Twig_NodeOutputInterface');

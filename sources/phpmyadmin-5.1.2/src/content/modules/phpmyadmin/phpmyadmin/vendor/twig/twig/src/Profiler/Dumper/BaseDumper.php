@@ -16,12 +16,11 @@ use Twig\Profiler\Profile;
 /**
  * @author Fabien Potencier <fabien@symfony.com>
  */
-abstract class BaseDumper
-{
+abstract class BaseDumper {
+
     private $root;
 
-    public function dump(Profile $profile)
-    {
+    public function dump(Profile $profile) {
         return $this->dumpProfile($profile);
     }
 
@@ -31,8 +30,7 @@ abstract class BaseDumper
 
     abstract protected function formatTime(Profile $profile, $percent);
 
-    private function dumpProfile(Profile $profile, $prefix = '', $sibling = false): string
-    {
+    private function dumpProfile(Profile $profile, $prefix = '', $sibling = false): string {
         if ($profile->isRoot()) {
             $this->root = $profile->getDuration();
             $start = $profile->getName();
@@ -48,7 +46,7 @@ abstract class BaseDumper
         $percent = $this->root ? $profile->getDuration() / $this->root * 100 : 0;
 
         if ($profile->getDuration() * 1000 < 1) {
-            $str = $start."\n";
+            $str = $start . "\n";
         } else {
             $str = sprintf("%s %s\n", $start, $this->formatTime($profile, $percent));
         }
@@ -60,6 +58,7 @@ abstract class BaseDumper
 
         return $str;
     }
+
 }
 
 class_alias('Twig\Profiler\Dumper\BaseDumper', 'Twig_Profiler_Dumper_Base');

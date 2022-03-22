@@ -1,12 +1,13 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace BaconQrCode\Renderer\Color;
 
 use BaconQrCode\Exception;
 
-final class Cmyk implements ColorInterface
-{
+final class Cmyk implements ColorInterface {
+
     /**
      * @var int
      */
@@ -33,8 +34,7 @@ final class Cmyk implements ColorInterface
      * @param int $yellow the yellow amount, 0 to 100
      * @param int $black the black amount, 0 to 100
      */
-    public function __construct(int $cyan, int $magenta, int $yellow, int $black)
-    {
+    public function __construct(int $cyan, int $magenta, int $yellow, int $black) {
         if ($cyan < 0 || $cyan > 100) {
             throw new Exception\InvalidArgumentException('Cyan must be between 0 and 100');
         }
@@ -57,47 +57,41 @@ final class Cmyk implements ColorInterface
         $this->black = $black;
     }
 
-    public function getCyan() : int
-    {
+    public function getCyan(): int {
         return $this->cyan;
     }
 
-    public function getMagenta() : int
-    {
+    public function getMagenta(): int {
         return $this->magenta;
     }
 
-    public function getYellow() : int
-    {
+    public function getYellow(): int {
         return $this->yellow;
     }
 
-    public function getBlack() : int
-    {
+    public function getBlack(): int {
         return $this->black;
     }
 
-    public function toRgb() : Rgb
-    {
+    public function toRgb(): Rgb {
         $k = $this->black / 100;
         $c = (-$k * $this->cyan + $k * 100 + $this->cyan) / 100;
         $m = (-$k * $this->magenta + $k * 100 + $this->magenta) / 100;
         $y = (-$k * $this->yellow + $k * 100 + $this->yellow) / 100;
 
         return new Rgb(
-            (int) (-$c * 255 + 255),
-            (int) (-$m * 255 + 255),
-            (int) (-$y * 255 + 255)
+                (int) (-$c * 255 + 255),
+                (int) (-$m * 255 + 255),
+                (int) (-$y * 255 + 255)
         );
     }
 
-    public function toCmyk() : Cmyk
-    {
+    public function toCmyk(): Cmyk {
         return $this;
     }
 
-    public function toGray() : Gray
-    {
+    public function toGray(): Gray {
         return $this->toRgb()->toGray();
     }
+
 }

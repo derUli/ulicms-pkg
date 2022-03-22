@@ -12,8 +12,8 @@ use PhpMyAdmin\Template;
 /**
  * Display selection for relational field values
  */
-class BrowseForeignersController extends AbstractController
-{
+class BrowseForeignersController extends AbstractController {
+
     /** @var BrowseForeigners */
     private $browseForeigners;
 
@@ -25,15 +25,13 @@ class BrowseForeignersController extends AbstractController
      * @param BrowseForeigners $browseForeigners
      * @param Relation         $relation
      */
-    public function __construct($response, Template $template, $browseForeigners, $relation)
-    {
+    public function __construct($response, Template $template, $browseForeigners, $relation) {
         parent::__construct($response, $template);
         $this->browseForeigners = $browseForeigners;
         $this->relation = $relation;
     }
 
-    public function index(): void
-    {
+    public function index(): void {
         $params = [
             'db' => $_POST['db'] ?? null,
             'table' => $_POST['table'] ?? null,
@@ -44,7 +42,7 @@ class BrowseForeignersController extends AbstractController
             'foreign_filter' => $_POST['foreign_filter'] ?? null,
         ];
 
-        if (! isset($params['db'], $params['table'], $params['field'])) {
+        if (!isset($params['db'], $params['table'], $params['field'])) {
             return;
         }
 
@@ -54,28 +52,29 @@ class BrowseForeignersController extends AbstractController
         $header->setBodyId('body_browse_foreigners');
 
         $foreigners = $this->relation->getForeigners(
-            $params['db'],
-            $params['table']
+                $params['db'],
+                $params['table']
         );
         $foreignLimit = $this->browseForeigners->getForeignLimit(
-            $params['foreign_showAll']
+                $params['foreign_showAll']
         );
         $foreignData = $this->relation->getForeignData(
-            $foreigners,
-            $params['field'],
-            true,
-            $params['foreign_filter'] ?? '',
-            $foreignLimit ?? null,
-            true
+                $foreigners,
+                $params['field'],
+                true,
+                $params['foreign_filter'] ?? '',
+                $foreignLimit ?? null,
+                true
         );
 
         $this->response->addHTML($this->browseForeigners->getHtmlForRelationalFieldSelection(
-            $params['db'],
-            $params['table'],
-            $params['field'],
-            $foreignData,
-            $params['fieldkey'] ?? '',
-            $params['data'] ?? ''
+                        $params['db'],
+                        $params['table'],
+                        $params['field'],
+                        $foreignData,
+                        $params['fieldkey'] ?? '',
+                        $params['data'] ?? ''
         ));
     }
+
 }

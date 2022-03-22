@@ -11,13 +11,12 @@
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator\Traits;
 
-trait PublicTrait
-{
+trait PublicTrait {
+
     /**
      * @return $this
      */
-    final public function public(): self
-    {
+    final public function public(): self {
         $this->definition->setPublic(true);
 
         return $this;
@@ -26,10 +25,10 @@ trait PublicTrait
     /**
      * @return $this
      */
-    final public function private(): self
-    {
+    final public function private(): self {
         $this->definition->setPublic(false);
 
         return $this;
     }
+
 }

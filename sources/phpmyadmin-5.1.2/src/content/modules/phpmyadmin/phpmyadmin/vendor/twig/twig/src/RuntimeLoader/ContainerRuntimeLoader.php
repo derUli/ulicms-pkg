@@ -21,21 +21,20 @@ use Psr\Container\ContainerInterface;
  * @author Fabien Potencier <fabien@symfony.com>
  * @author Robin Chalas <robin.chalas@gmail.com>
  */
-class ContainerRuntimeLoader implements RuntimeLoaderInterface
-{
+class ContainerRuntimeLoader implements RuntimeLoaderInterface {
+
     private $container;
 
-    public function __construct(ContainerInterface $container)
-    {
+    public function __construct(ContainerInterface $container) {
         $this->container = $container;
     }
 
-    public function load($class)
-    {
+    public function load($class) {
         if ($this->container->has($class)) {
             return $this->container->get($class);
         }
     }
+
 }
 
 class_alias('Twig\RuntimeLoader\ContainerRuntimeLoader', 'Twig_ContainerRuntimeLoader');

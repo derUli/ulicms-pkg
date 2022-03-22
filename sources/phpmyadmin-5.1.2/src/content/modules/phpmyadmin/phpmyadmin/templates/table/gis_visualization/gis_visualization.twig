@@ -26,19 +26,19 @@
                     {% endfor %}
                 </select>
                 <input type="hidden" name="displayVisualization" value="redraw">
-                    <tr>
-                        <td class="choice" colspan="2">
-                            <input type="checkbox"
-                                   name="visualizationSettings[choice]"
-                                   id="choice" value="useBaseLayer"
-                                   {% if visualization_settings['choice'] is defined %}
-                                        checked="checked"
-                                   {% endif %}>
-                            <label for="choice" id="labelChoice">
-                                {% trans "Use OpenStreetMaps as Base Layer" %}
-                            </label>
-                        </td>
-                    </tr>
+                <tr>
+                    <td class="choice" colspan="2">
+                        <input type="checkbox"
+                               name="visualizationSettings[choice]"
+                               id="choice" value="useBaseLayer"
+                               {% if visualization_settings['choice'] is defined %}
+                                   checked="checked"
+                               {% endif %}>
+                        <label for="choice" id="labelChoice">
+                            {% trans "Use OpenStreetMaps as Base Layer" %}
+                        </label>
+                    </td>
+                </tr>
                 {{ get_start_and_number_of_rows_panel(sql_query) }}
             </form>
 

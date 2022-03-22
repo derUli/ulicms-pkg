@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Properties class for the import plug-in
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\Properties\Plugins;
@@ -10,8 +10,8 @@ namespace PhpMyAdmin\Properties\Plugins;
 /**
  * Defines possible options and getters and setters for them.
  */
-class ImportPluginProperties extends PluginPropertyItem
-{
+class ImportPluginProperties extends PluginPropertyItem {
+
     /**
      * Returns the property item type of either an instance of
      *  - PhpMyAdmin\Properties\Options\OptionsPropertyOneItem ( f.e. "bool",
@@ -22,8 +22,8 @@ class ImportPluginProperties extends PluginPropertyItem
      *
      * @return string
      */
-    public function getItemType()
-    {
+    public function getItemType() {
         return 'import';
     }
+
 }

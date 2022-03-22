@@ -1,5 +1,5 @@
 <?php
-function phpAntiVirus_render()
-{
+
+function phpAntiVirus_render() {
     return "";
 }

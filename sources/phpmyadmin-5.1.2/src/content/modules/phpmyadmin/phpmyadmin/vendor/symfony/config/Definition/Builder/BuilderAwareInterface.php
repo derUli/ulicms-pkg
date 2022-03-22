@@ -16,8 +16,8 @@ namespace Symfony\Component\Config\Definition\Builder;
  *
  * @author Roland Franssen <franssen.roland@gmail.com>
  */
-interface BuilderAwareInterface
-{
+interface BuilderAwareInterface {
+
     /**
      * Sets a custom children builder.
      */

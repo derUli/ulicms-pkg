@@ -18,8 +18,8 @@ use PhpMyAdmin\Url;
 use PhpMyAdmin\Util;
 use function stripos;
 
-class QueryByExampleController extends AbstractController
-{
+class QueryByExampleController extends AbstractController {
+
     /** @var Relation */
     private $relation;
 
@@ -31,15 +31,13 @@ class QueryByExampleController extends AbstractController
      * @param string            $db       Database name
      * @param DatabaseInterface $dbi
      */
-    public function __construct($response, Template $template, $db, Relation $relation, $dbi)
-    {
+    public function __construct($response, Template $template, $db, Relation $relation, $dbi) {
         parent::__construct($response, $template, $db);
         $this->relation = $relation;
         $this->dbi = $dbi;
     }
 
-    public function index(): void
-    {
+    public function index(): void {
         global $db, $savedSearchList, $savedSearch, $currentSearchId, $PMA_Theme;
         global $sql_query, $goto, $sub_part, $tables, $num_tables, $total_num_tables;
         global $tooltip_truename, $tooltip_aliasname, $pos, $url_params, $cfg, $err_url;
@@ -55,9 +53,9 @@ class QueryByExampleController extends AbstractController
             //Get saved search list.
             $savedSearch = new SavedSearches($GLOBALS, $this->relation);
             $savedSearch->setUsername($GLOBALS['cfg']['Server']['user'])
-                ->setDbname($db);
+                    ->setDbname($db);
 
-            if (! empty($_POST['searchId'])) {
+            if (!empty($_POST['searchId'])) {
                 $savedSearch->setId($_POST['searchId']);
             }
 
@@ -66,24 +64,24 @@ class QueryByExampleController extends AbstractController
                 $savedSearch->setSearchName($_POST['searchName']);
                 if ($_POST['action'] === 'create') {
                     $saveResult = $savedSearch->setId(null)
-                        ->setCriterias($_POST)
-                        ->save();
+                            ->setCriterias($_POST)
+                            ->save();
                 } elseif ($_POST['action'] === 'update') {
                     $saveResult = $savedSearch->setCriterias($_POST)
-                        ->save();
+                            ->save();
                 } elseif ($_POST['action'] === 'delete') {
                     $deleteResult = $savedSearch->delete();
                     //After deletion, reset search.
                     $savedSearch = new SavedSearches($GLOBALS, $this->relation);
                     $savedSearch->setUsername($GLOBALS['cfg']['Server']['user'])
-                        ->setDbname($db);
+                            ->setDbname($db);
                     $_POST = [];
                 } elseif ($_POST['action'] === 'load') {
                     if (empty($_POST['searchId'])) {
                         //when not loading a search, reset the object.
                         $savedSearch = new SavedSearches($GLOBALS, $this->relation);
                         $savedSearch->setUsername($GLOBALS['cfg']['Server']['user'])
-                            ->setDbname($db);
+                                ->setDbname($db);
                         $_POST = [];
                     } else {
                         $loadResult = $savedSearch->load();
@@ -100,63 +98,63 @@ class QueryByExampleController extends AbstractController
          * A query has been submitted -> (maybe) execute it
          */
         $hasMessageToDisplay = false;
-        if (isset($_POST['submit_sql']) && ! empty($sql_query)) {
+        if (isset($_POST['submit_sql']) && !empty($sql_query)) {
             if (stripos($sql_query, 'SELECT') !== 0) {
                 $hasMessageToDisplay = true;
             } else {
                 $goto = Url::getFromRoute('/database/sql');
 
                 $sql = new Sql(
-                    $this->dbi,
-                    $this->relation,
-                    new RelationCleanup($this->dbi, $this->relation),
-                    new Operations($this->dbi, $this->relation),
-                    new Transformations(),
-                    $this->template
+                        $this->dbi,
+                        $this->relation,
+                        new RelationCleanup($this->dbi, $this->relation),
+                        new Operations($this->dbi, $this->relation),
+                        new Transformations(),
+                        $this->template
                 );
 
                 $this->response->addHTML($sql->executeQueryAndSendQueryResponse(
-                    null, // analyzed_sql_results
-                    false, // is_gotofile
-                    $_POST['db'], // db
-                    null, // table
-                    false, // find_real_end
-                    null, // sql_query_for_bookmark
-                    null, // extra_data
-                    null, // message_to_show
-                    null, // sql_data
-                    $goto, // goto
-                    $PMA_Theme->getImgPath(),
-                    null, // disp_query
-                    null, // disp_message
-                    $sql_query, // sql_query
-                    null // complete_query
+                                null, // analyzed_sql_results
+                                false, // is_gotofile
+                                $_POST['db'], // db
+                                null, // table
+                                false, // find_real_end
+                                null, // sql_query_for_bookmark
+                                null, // extra_data
+                                null, // message_to_show
+                                null, // sql_data
+                                $goto, // goto
+                                $PMA_Theme->getImgPath(),
+                                null, // disp_query
+                                null, // disp_message
+                                $sql_query, // sql_query
+                                null // complete_query
                 ));
             }
         }
 
-        $sub_part  = '_qbe';
+        $sub_part = '_qbe';
 
         Util::checkParameters(['db']);
 
         $err_url = Util::getScriptNameForOption($cfg['DefaultTabDatabase'], 'database');
         $err_url .= Url::getCommon(['db' => $db], '&');
 
-        if (! $this->hasDatabase()) {
+        if (!$this->hasDatabase()) {
             return;
         }
 
         $url_params['goto'] = Url::getFromRoute('/database/qbe');
 
         [
-            $tables,
-            $num_tables,
-            $total_num_tables,
-            $sub_part,,,
-            $tooltip_truename,
-            $tooltip_aliasname,
-            $pos,
-        ] = Util::getDbInfo($db, $sub_part ?? '');
+                $tables,
+                $num_tables,
+                $total_num_tables,
+                $sub_part,,,
+                $tooltip_truename,
+                $tooltip_aliasname,
+                $pos,
+                ] = Util::getDbInfo($db, $sub_part ?? '');
 
         $databaseQbe = new Qbe($this->relation, $this->template, $this->dbi, $db, $savedSearchList, $savedSearch);
 
@@ -166,4 +164,5 @@ class QueryByExampleController extends AbstractController
             'selection_form_html' => $databaseQbe->getSelectionForm(),
         ]);
     }
+
 }

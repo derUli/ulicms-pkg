@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Defines a component that is later extended to parse specialized components or
  * keywords.
@@ -7,7 +8,6 @@
  * *Component parsers can be reused in multiple  situations and *Keyword parsers
  * count on the *Component classes to do their job.
  */
-
 declare(strict_types=1);
 
 namespace PhpMyAdmin\SqlParser;
@@ -18,8 +18,8 @@ use Exception;
  * A component (of a statement) is a part of a statement that is common to
  * multiple query types.
  */
-abstract class Component
-{
+abstract class Component {
+
     /**
      * Parses the tokens contained in the given list in the context of the given
      * parser.
@@ -33,9 +33,9 @@ abstract class Component
      * @throws Exception not implemented yet.
      */
     public static function parse(
-        Parser $parser,
-        TokensList $list,
-        array $options = []
+            Parser $parser,
+            TokensList $list,
+            array $options = []
     ) {
         // This method should be abstract, but it can't be both static and
         // abstract.
@@ -55,8 +55,7 @@ abstract class Component
      *
      * @throws Exception not implemented yet.
      */
-    public static function build($component, array $options = [])
-    {
+    public static function build($component, array $options = []) {
         // This method should be abstract, but it can't be both static and
         // abstract.
         throw new Exception(Translator::gettext('Not implemented yet.'));
@@ -69,8 +68,8 @@ abstract class Component
      *
      * @return string
      */
-    public function __toString()
-    {
+    public function __toString() {
         return static::build($this);
     }
+
 }

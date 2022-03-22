@@ -24,8 +24,8 @@ class_exists(NotFoundExceptionInterface::class);
  * @author Robin Chalas <robin.chalas@gmail.com>
  * @author Nicolas Grekas <p@tchwork.com>
  */
-trait ServiceLocatorTrait
-{
+trait ServiceLocatorTrait {
+
     private $factories;
     private $loading = [];
     private $providedTypes;
@@ -33,8 +33,7 @@ trait ServiceLocatorTrait
     /**
      * @param callable[] $factories
      */
-    public function __construct(array $factories)
-    {
+    public function __construct(array $factories) {
         $this->factories = $factories;
     }
 
@@ -43,8 +42,7 @@ trait ServiceLocatorTrait
      *
      * @return bool
      */
-    public function has($id)
-    {
+    public function has($id) {
         return isset($this->factories[$id]);
     }
 
@@ -53,8 +51,7 @@ trait ServiceLocatorTrait
      *
      * @return mixed
      */
-    public function get($id)
-    {
+    public function get($id) {
         if (!isset($this->factories[$id])) {
             throw $this->createNotFoundException($id);
         }
@@ -78,8 +75,7 @@ trait ServiceLocatorTrait
     /**
      * {@inheritdoc}
      */
-    public function getProvidedServices(): array
-    {
+    public function getProvidedServices(): array {
         if (null === $this->providedTypes) {
             $this->providedTypes = [];
 
@@ -89,7 +85,7 @@ trait ServiceLocatorTrait
                 } else {
                     $type = (new \ReflectionFunction($factory))->getReturnType();
 
-                    $this->providedTypes[$name] = $type ? ($type->allowsNull() ? '?' : '').($type instanceof \ReflectionNamedType ? $type->getName() : $type) : '?';
+                    $this->providedTypes[$name] = $type ? ($type->allowsNull() ? '?' : '') . ($type instanceof \ReflectionNamedType ? $type->getName() : $type) : '?';
                 }
             }
         }
@@ -97,8 +93,7 @@ trait ServiceLocatorTrait
         return $this->providedTypes;
     }
 
-    private function createNotFoundException(string $id): NotFoundExceptionInterface
-    {
+    private function createNotFoundException(string $id): NotFoundExceptionInterface {
         if (!$alternatives = array_keys($this->factories)) {
             $message = 'is empty...';
         } else {
@@ -117,12 +112,14 @@ trait ServiceLocatorTrait
         }
 
         return new class($message) extends \InvalidArgumentException implements NotFoundExceptionInterface {
+            
         };
     }
 
-    private function createCircularReferenceException(string $id, array $path): ContainerExceptionInterface
-    {
+    private function createCircularReferenceException(string $id, array $path): ContainerExceptionInterface {
         return new class(sprintf('Circular reference detected for service "%s", path: "%s".', $id, implode(' -> ', $path))) extends \RuntimeException implements ContainerExceptionInterface {
+            
         };
     }
+
 }

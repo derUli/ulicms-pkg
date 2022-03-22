@@ -166,7 +166,7 @@ AJAX.registerOnload('database/multi_table_query.js', function () {
         addNewColumnCallbacks();
     });
 
-    function addNewColumnCallbacks () {
+    function addNewColumnCallbacks() {
         $('.tableNameSelect').each(function () {
             $(this).on('change', function () {
                 var $sibs = $(this).siblings('.columnNameSelect');
@@ -191,7 +191,7 @@ AJAX.registerOnload('database/multi_table_query.js', function () {
                 }
                 var $criteriaColCount = $('.criteria_col:checked').length;
                 if ($criteriaColCount > 1) {
-                    $(this).siblings('.slide-wrapper').first().find('.logical_operator').first().css('display','table-row');
+                    $(this).siblings('.slide-wrapper').first().find('.logical_operator').first().css('display', 'table-row');
                 }
             });
         });

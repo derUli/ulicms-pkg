@@ -18,18 +18,16 @@ use Symfony\Component\VarExporter\Exception\ClassNotFoundException;
  *
  * @internal
  */
-class Hydrator
-{
-    public static $hydrators = [];
+class Hydrator {
 
+    public static $hydrators = [];
     public $registry;
     public $values;
     public $properties;
     public $value;
     public $wakeups;
 
-    public function __construct(?Registry $registry, ?Values $values, array $properties, $value, array $wakeups)
-    {
+    public function __construct(?Registry $registry, ?Values $values, array $properties, $value, array $wakeups) {
         $this->registry = $registry;
         $this->values = $values;
         $this->properties = $properties;
@@ -37,8 +35,7 @@ class Hydrator
         $this->wakeups = $wakeups;
     }
 
-    public static function hydrate($objects, $values, $properties, $value, $wakeups)
-    {
+    public static function hydrate($objects, $values, $properties, $value, $wakeups) {
         foreach ($properties as $class => $vars) {
             (self::$hydrators[$class] ?? self::getHydrator($class))($vars, $objects);
         }
@@ -53,16 +50,15 @@ class Hydrator
         return $value;
     }
 
-    public static function getHydrator($class)
-    {
+    public static function getHydrator($class) {
         if ('stdClass' === $class) {
             return self::$hydrators[$class] = static function ($properties, $objects) {
-                foreach ($properties as $name => $values) {
-                    foreach ($values as $i => $v) {
-                        $objects[$i]->$name = $v;
-                    }
-                }
-            };
+                        foreach ($properties as $name => $values) {
+                            foreach ($values as $i => $v) {
+                                $objects[$i]->$name = $v;
+                            }
+                        }
+                    };
         }
 
         if (!class_exists($class) && !interface_exists($class, false) && !trait_exists($class, false)) {
@@ -84,42 +80,44 @@ class Hydrator
                 $constructor = \Closure::fromCallable([$classReflector->getConstructor(), 'invokeArgs']);
 
                 return self::$hydrators[$class] = static function ($properties, $objects) use ($constructor) {
-                    foreach ($properties as $name => $values) {
-                        if ("\0" !== $name) {
-                            foreach ($values as $i => $v) {
-                                $objects[$i]->$name = $v;
+                            foreach ($properties as $name => $values) {
+                                if ("\0" !== $name) {
+                                    foreach ($values as $i => $v) {
+                                        $objects[$i]->$name = $v;
+                                    }
+                                }
                             }
-                        }
-                    }
-                    foreach ($properties["\0"] ?? [] as $i => $v) {
-                        $constructor($objects[$i], $v);
-                    }
-                };
+                            foreach ($properties["\0"] ?? [] as $i => $v) {
+                                $constructor($objects[$i], $v);
+                            }
+                        };
 
             case 'ErrorException':
                 return self::$hydrators[$class] = (self::$hydrators['stdClass'] ?? self::getHydrator('stdClass'))->bindTo(null, new class() extends \ErrorException {
-                });
+                            
+                        });
 
             case 'TypeError':
                 return self::$hydrators[$class] = (self::$hydrators['stdClass'] ?? self::getHydrator('stdClass'))->bindTo(null, new class() extends \Error {
-                });
+                            
+                        });
 
             case 'SplObjectStorage':
                 return self::$hydrators[$class] = static function ($properties, $objects) {
-                    foreach ($properties as $name => $values) {
-                        if ("\0" === $name) {
-                            foreach ($values as $i => $v) {
-                                for ($j = 0; $j < \count($v); ++$j) {
-                                    $objects[$i]->attach($v[$j], $v[++$j]);
+                            foreach ($properties as $name => $values) {
+                                if ("\0" === $name) {
+                                    foreach ($values as $i => $v) {
+                                        for ($j = 0; $j < \count($v); ++$j) {
+                                            $objects[$i]->attach($v[$j], $v[++$j]);
+                                        }
+                                    }
+                                    continue;
+                                }
+                                foreach ($values as $i => $v) {
+                                    $objects[$i]->$name = $v;
                                 }
                             }
-                            continue;
-                        }
-                        foreach ($values as $i => $v) {
-                            $objects[$i]->$name = $v;
-                        }
-                    }
-                };
+                        };
         }
 
         $propertySetters = [];
@@ -135,17 +133,18 @@ class Hydrator
         }
 
         return self::$hydrators[$class] = static function ($properties, $objects) use ($propertySetters) {
-            foreach ($properties as $name => $values) {
-                if ($setValue = $propertySetters[$name] ?? null) {
-                    foreach ($values as $i => $v) {
-                        $setValue($objects[$i], $v);
+                    foreach ($properties as $name => $values) {
+                        if ($setValue = $propertySetters[$name] ?? null) {
+                            foreach ($values as $i => $v) {
+                                $setValue($objects[$i], $v);
+                            }
+                            continue;
+                        }
+                        foreach ($values as $i => $v) {
+                            $objects[$i]->$name = $v;
+                        }
                     }
-                    continue;
-                }
-                foreach ($values as $i => $v) {
-                    $objects[$i]->$name = $v;
-                }
-            }
-        };
+                };
     }
+
 }

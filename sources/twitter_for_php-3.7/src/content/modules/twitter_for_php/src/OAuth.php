@@ -1,105 +1,96 @@
 <?php
 
 /*
-The MIT License
+  The MIT License
 
-Copyright (c) 2007 Andy Smith
+  Copyright (c) 2007 Andy Smith
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
 
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-*/
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+  THE SOFTWARE.
+ */
 
 /* Generic exception class
  */
-class Twitter_OAuthException extends Exception
-{
+
+class Twitter_OAuthException extends Exception {
     // pass
 }
 
-class Twitter_OAuthConsumer
-{
+class Twitter_OAuthConsumer {
+
     public $key;
     public $secret;
 
-
-    public function __construct($key, $secret, $callback_url = null)
-    {
+    public function __construct($key, $secret, $callback_url = null) {
         $this->key = $key;
         $this->secret = $secret;
         $this->callback_url = $callback_url;
     }
 
-
-    public function __toString()
-    {
+    public function __toString() {
         return "OAuthConsumer[key=$this->key,secret=$this->secret]";
     }
+
 }
 
-class Twitter_OAuthToken
-{
+class Twitter_OAuthToken {
+
     // access tokens and request tokens
     public $key;
     public $secret;
-
 
     /**
      * key = the token
      * secret = the token secret
      */
-    public function __construct($key, $secret)
-    {
+    public function __construct($key, $secret) {
         $this->key = $key;
         $this->secret = $secret;
     }
-
 
     /**
      * generates the basic string serialization of a token that a server
      * would respond to request_token and access_token calls with
      */
-    public function to_string()
-    {
+    public function to_string() {
         return 'oauth_token=' .
-                    Twitter_OAuthUtil::urlencode_rfc3986($this->key) .
-                    '&oauth_token_secret=' .
-                    Twitter_OAuthUtil::urlencode_rfc3986($this->secret);
+                Twitter_OAuthUtil::urlencode_rfc3986($this->key) .
+                '&oauth_token_secret=' .
+                Twitter_OAuthUtil::urlencode_rfc3986($this->secret);
     }
 
-
-    public function __toString()
-    {
+    public function __toString() {
         return $this->to_string();
     }
+
 }
 
 /**
  * A class for implementing a Signature Method
  * See section 9 ("Signing Requests") in the spec
  */
-abstract class Twitter_OAuthSignatureMethod
-{
+abstract class Twitter_OAuthSignatureMethod {
+
     /**
      * Needs to return the name of the Signature Method (ie HMAC-SHA1)
      * @return string
      */
     abstract public function get_name();
-
 
     /**
      * Build up the signature
@@ -113,7 +104,6 @@ abstract class Twitter_OAuthSignatureMethod
      */
     abstract public function build_signature($request, $consumer, $token);
 
-
     /**
      * Verifies that a given signature is correct
      * @param Twitter_OAuthRequest $request
@@ -122,11 +112,11 @@ abstract class Twitter_OAuthSignatureMethod
      * @param string $signature
      * @return bool
      */
-    public function check_signature($request, $consumer, $token, $signature)
-    {
+    public function check_signature($request, $consumer, $token, $signature) {
         $built = $this->build_signature($request, $consumer, $token);
         return $built == $signature;
     }
+
 }
 
 /**
@@ -136,16 +126,13 @@ abstract class Twitter_OAuthSignatureMethod
  * character (ASCII code 38) even if empty.
  *   - Chapter 9.2 ("HMAC-SHA1")
  */
-class Twitter_OAuthSignatureMethod_HMAC_SHA1 extends Twitter_OAuthSignatureMethod
-{
-    public function get_name()
-    {
+class Twitter_OAuthSignatureMethod_HMAC_SHA1 extends Twitter_OAuthSignatureMethod {
+
+    public function get_name() {
         return 'HMAC-SHA1';
     }
 
-
-    public function build_signature($request, $consumer, $token)
-    {
+    public function build_signature($request, $consumer, $token) {
         $base_string = $request->get_signature_base_string();
         $request->base_string = $base_string;
 
@@ -159,6 +146,7 @@ class Twitter_OAuthSignatureMethod_HMAC_SHA1 extends Twitter_OAuthSignatureMetho
 
         return base64_encode(hash_hmac('sha1', $base_string, $key, true));
     }
+
 }
 
 /**
@@ -166,13 +154,11 @@ class Twitter_OAuthSignatureMethod_HMAC_SHA1 extends Twitter_OAuthSignatureMetho
  * over a secure channel such as HTTPS. It does not use the Signature Base String.
  *   - Chapter 9.4 ("PLAINTEXT")
  */
-class Twitter_OAuthSignatureMethod_PLAINTEXT extends Twitter_OAuthSignatureMethod
-{
-    public function get_name()
-    {
+class Twitter_OAuthSignatureMethod_PLAINTEXT extends Twitter_OAuthSignatureMethod {
+
+    public function get_name() {
         return 'PLAINTEXT';
     }
-
 
     /**
      * oauth_signature is set to the concatenated encoded values of the Consumer Secret and
@@ -183,8 +169,7 @@ class Twitter_OAuthSignatureMethod_PLAINTEXT extends Twitter_OAuthSignatureMetho
      * Please note that the second encoding MUST NOT happen in the SignatureMethod, as
      * OAuthRequest handles this!
      */
-    public function build_signature($request, $consumer, $token)
-    {
+    public function build_signature($request, $consumer, $token) {
         $key_parts = [
             $consumer->secret,
             ($token) ? $token->secret : '',
@@ -196,6 +181,7 @@ class Twitter_OAuthSignatureMethod_PLAINTEXT extends Twitter_OAuthSignatureMetho
 
         return $key;
     }
+
 }
 
 /**
@@ -206,13 +192,11 @@ class Twitter_OAuthSignatureMethod_PLAINTEXT extends Twitter_OAuthSignatureMetho
  * specification.
  *   - Chapter 9.3 ("RSA-SHA1")
  */
-abstract class Twitter_OAuthSignatureMethod_RSA_SHA1 extends Twitter_OAuthSignatureMethod
-{
-    public function get_name()
-    {
+abstract class Twitter_OAuthSignatureMethod_RSA_SHA1 extends Twitter_OAuthSignatureMethod {
+
+    public function get_name() {
         return 'RSA-SHA1';
     }
-
 
     // Up to the SP to implement this lookup of keys. Possible ideas are:
     // (1) do a lookup in a table of trusted certs keyed off of consumer
@@ -222,16 +206,13 @@ abstract class Twitter_OAuthSignatureMethod_RSA_SHA1 extends Twitter_OAuthSignat
     // Either way should return a string representation of the certificate
     abstract protected function fetch_public_cert(&$request);
 
-
     // Up to the SP to implement this lookup of keys. Possible ideas are:
     // (1) do a lookup in a table of trusted certs keyed off of consumer
     //
     // Either way should return a string representation of the certificate
     abstract protected function fetch_private_cert(&$request);
 
-
-    public function build_signature($request, $consumer, $token)
-    {
+    public function build_signature($request, $consumer, $token) {
         $base_string = $request->get_signature_base_string();
         $request->base_string = $base_string;
 
@@ -250,9 +231,7 @@ abstract class Twitter_OAuthSignatureMethod_RSA_SHA1 extends Twitter_OAuthSignat
         return base64_encode($signature);
     }
 
-
-    public function check_signature($request, $consumer, $token, $signature)
-    {
+    public function check_signature($request, $consumer, $token, $signature) {
         $decoded_sig = base64_decode($signature, true);
 
         $base_string = $request->get_signature_base_string();
@@ -271,10 +250,11 @@ abstract class Twitter_OAuthSignatureMethod_RSA_SHA1 extends Twitter_OAuthSignat
 
         return $ok == 1;
     }
+
 }
 
-class Twitter_OAuthRequest
-{
+class Twitter_OAuthRequest {
+
     // for debug purposes
     public $base_string;
     public static $version = '1.0';
@@ -283,9 +263,7 @@ class Twitter_OAuthRequest
     protected $http_method;
     protected $http_url;
 
-
-    public function __construct($http_method, $http_url, $parameters = null)
-    {
+    public function __construct($http_method, $http_url, $parameters = null) {
         $parameters = ($parameters) ? $parameters : [];
         $parameters = array_merge(Twitter_OAuthUtil::parse_parameters(parse_url($http_url, PHP_URL_QUERY)), $parameters);
         $this->parameters = $parameters;
@@ -293,20 +271,16 @@ class Twitter_OAuthRequest
         $this->http_url = $http_url;
     }
 
-
     /**
      * attempt to build up a request from what was passed to the server
      */
-    public static function from_request($http_method = null, $http_url = null, $parameters = null)
-    {
-        $scheme = (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] != 'on')
-                            ? 'http'
-                            : 'https';
+    public static function from_request($http_method = null, $http_url = null, $parameters = null) {
+        $scheme = (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] != 'on') ? 'http' : 'https';
         $http_url = ($http_url) ? $http_url : $scheme .
-                                                            '://' . $_SERVER['HTTP_HOST'] .
-                                                            ':' .
-                                                            $_SERVER['SERVER_PORT'] .
-                                                            $_SERVER['REQUEST_URI'];
+                '://' . $_SERVER['HTTP_HOST'] .
+                ':' .
+                $_SERVER['SERVER_PORT'] .
+                $_SERVER['REQUEST_URI'];
         $http_method = ($http_method) ? $http_method : $_SERVER['REQUEST_METHOD'];
 
         // We weren't handed any parameters, so let's find the ones relevant to
@@ -322,15 +296,13 @@ class Twitter_OAuthRequest
 
             // It's a POST request of the proper content-type, so parse POST
             // parameters and add those overriding any duplicates from GET
-            if ($http_method == 'POST'
-                    && isset($request_headers['Content-Type'])
-                    && strstr(
-                        $request_headers['Content-Type'],
-                        'application/x-www-form-urlencoded'
+            if ($http_method == 'POST' && isset($request_headers['Content-Type']) && strstr(
+                            $request_headers['Content-Type'],
+                            'application/x-www-form-urlencoded'
                     )
-                    ) {
+            ) {
                 $post_data = Twitter_OAuthUtil::parse_parameters(
-                    file_get_contents(self::$POST_INPUT)
+                                file_get_contents(self::$POST_INPUT)
                 );
                 $parameters = array_merge($parameters, $post_data);
             }
@@ -339,7 +311,7 @@ class Twitter_OAuthRequest
             // and add those overriding any duplicates from GET or POST
             if (isset($request_headers['Authorization']) && substr($request_headers['Authorization'], 0, 6) == 'OAuth ') {
                 $header_parameters = Twitter_OAuthUtil::split_header(
-                    $request_headers['Authorization']
+                                $request_headers['Authorization']
                 );
                 $parameters = array_merge($parameters, $header_parameters);
             }
@@ -348,17 +320,15 @@ class Twitter_OAuthRequest
         return new self($http_method, $http_url, $parameters);
     }
 
-
     /**
      * pretty much a helper function to set up the request
      */
-    public static function from_consumer_and_token($consumer, $token, $http_method, $http_url, $parameters = null)
-    {
+    public static function from_consumer_and_token($consumer, $token, $http_method, $http_url, $parameters = null) {
         $parameters = ($parameters) ? $parameters : [];
         $defaults = ['oauth_version' => self::$version,
-                                            'oauth_nonce' => self::generate_nonce(),
-                                            'oauth_timestamp' => self::generate_timestamp(),
-                                            'oauth_consumer_key' => $consumer->key, ];
+            'oauth_nonce' => self::generate_nonce(),
+            'oauth_timestamp' => self::generate_timestamp(),
+            'oauth_consumer_key' => $consumer->key,];
         if ($token) {
             $defaults['oauth_token'] = $token->key;
         }
@@ -368,9 +338,7 @@ class Twitter_OAuthRequest
         return new self($http_method, $http_url, $parameters);
     }
 
-
-    public function set_parameter($name, $value, $allow_duplicates = true)
-    {
+    public function set_parameter($name, $value, $allow_duplicates = true) {
         if ($allow_duplicates && isset($this->parameters[$name])) {
             // We have already added parameter(s) with this name, so add to the list
             if (is_scalar($this->parameters[$name])) {
@@ -385,31 +353,23 @@ class Twitter_OAuthRequest
         }
     }
 
-
-    public function get_parameter($name)
-    {
+    public function get_parameter($name) {
         return isset($this->parameters[$name]) ? $this->parameters[$name] : null;
     }
 
-
-    public function get_parameters()
-    {
+    public function get_parameters() {
         return $this->parameters;
     }
 
-
-    public function unset_parameter($name)
-    {
+    public function unset_parameter($name) {
         unset($this->parameters[$name]);
     }
-
 
     /**
      * The request parameters, sorted and concatenated into a normalized string.
      * @return string
      */
-    public function get_signable_parameters()
-    {
+    public function get_signable_parameters() {
         // Grab all parameters
         $params = $this->parameters;
 
@@ -422,7 +382,6 @@ class Twitter_OAuthRequest
         return Twitter_OAuthUtil::build_http_query($params);
     }
 
-
     /**
      * Returns the base string of this request
      *
@@ -430,8 +389,7 @@ class Twitter_OAuthRequest
      * and the parameters (normalized), each urlencoded
      * and the concated with &.
      */
-    public function get_signature_base_string()
-    {
+    public function get_signature_base_string() {
         $parts = [
             $this->get_normalized_http_method(),
             $this->get_normalized_http_url(),
@@ -443,22 +401,18 @@ class Twitter_OAuthRequest
         return implode('&', $parts);
     }
 
-
     /**
      * just uppercases the http method
      */
-    public function get_normalized_http_method()
-    {
+    public function get_normalized_http_method() {
         return strtoupper($this->http_method);
     }
-
 
     /**
      * parses the url and rebuilds it to be
      * scheme://host/path
      */
-    public function get_normalized_http_url()
-    {
+    public function get_normalized_http_url() {
         $parts = parse_url($this->http_url);
 
         $scheme = (isset($parts['scheme'])) ? $parts['scheme'] : 'http';
@@ -466,19 +420,16 @@ class Twitter_OAuthRequest
         $host = (isset($parts['host'])) ? $parts['host'] : '';
         $path = (isset($parts['path'])) ? $parts['path'] : '';
 
-        if (($scheme == 'https' && $port != '443')
-                || ($scheme == 'http' && $port != '80')) {
+        if (($scheme == 'https' && $port != '443') || ($scheme == 'http' && $port != '80')) {
             $host = "$host:$port";
         }
         return "$scheme://$host$path";
     }
 
-
     /**
      * builds a url usable for a GET request
      */
-    public function to_url()
-    {
+    public function to_url() {
         $post_data = $this->to_postdata();
         $out = $this->get_normalized_http_url();
         if ($post_data) {
@@ -487,21 +438,17 @@ class Twitter_OAuthRequest
         return $out;
     }
 
-
     /**
      * builds the data one would send in a POST request
      */
-    public function to_postdata()
-    {
+    public function to_postdata() {
         return Twitter_OAuthUtil::build_http_query($this->parameters);
     }
-
 
     /**
      * builds the Authorization: header
      */
-    public function to_header($realm = null)
-    {
+    public function to_header($realm = null) {
         $first = true;
         if ($realm) {
             $out = 'Authorization: OAuth realm="' . Twitter_OAuthUtil::urlencode_rfc3986($realm) . '"';
@@ -520,92 +467,74 @@ class Twitter_OAuthRequest
             }
             $out .= ($first) ? ' ' : ',';
             $out .= Twitter_OAuthUtil::urlencode_rfc3986($k) .
-                            '="' .
-                            Twitter_OAuthUtil::urlencode_rfc3986($v) .
-                            '"';
+                    '="' .
+                    Twitter_OAuthUtil::urlencode_rfc3986($v) .
+                    '"';
             $first = false;
         }
         return $out;
     }
 
-
-    public function __toString()
-    {
+    public function __toString() {
         return $this->to_url();
     }
 
-
-    public function sign_request($signature_method, $consumer, $token)
-    {
+    public function sign_request($signature_method, $consumer, $token) {
         $this->set_parameter(
-            'oauth_signature_method',
-            $signature_method->get_name(),
-            false
+                'oauth_signature_method',
+                $signature_method->get_name(),
+                false
         );
         $signature = $this->build_signature($signature_method, $consumer, $token);
         $this->set_parameter('oauth_signature', $signature, false);
     }
 
-
-    public function build_signature($signature_method, $consumer, $token)
-    {
+    public function build_signature($signature_method, $consumer, $token) {
         $signature = $signature_method->build_signature($this, $consumer, $token);
         return $signature;
     }
 
-
     /**
      * util function: current timestamp
      */
-    private static function generate_timestamp()
-    {
+    private static function generate_timestamp() {
         return time();
     }
-
 
     /**
      * util function: current nonce
      */
-    private static function generate_nonce()
-    {
+    private static function generate_nonce() {
         $mt = microtime();
         $rand = mt_rand();
 
         return md5($mt . $rand); // md5s look nicer than numbers
     }
+
 }
 
-class Twitter_OAuthServer
-{
+class Twitter_OAuthServer {
+
     protected $timestamp_threshold = 300; // in seconds, five minutes
     protected $version = '1.0';             // hi blaine
     protected $signature_methods = [];
-
     protected $data_store;
 
-
-    public function __construct($data_store)
-    {
+    public function __construct($data_store) {
         $this->data_store = $data_store;
     }
 
-
-    public function add_signature_method($signature_method)
-    {
-        $this->signature_methods[$signature_method->get_name()] =
-            $signature_method;
+    public function add_signature_method($signature_method) {
+        $this->signature_methods[$signature_method->get_name()] = $signature_method;
     }
 
-
     // high level functions
-
 
     /**
      * process a request_token request
      * returns the request token on success
      */
-    public function fetch_request_token(&$request)
-    {
+    public function fetch_request_token(&$request) {
         $this->get_version($request);
 
         $consumer = $this->get_consumer($request);
@@ -622,13 +551,11 @@ class Twitter_OAuthServer
         return $new_token;
     }
 
-
     /**
      * process an access_token request
      * returns the access token on success
      */
-    public function fetch_access_token(&$request)
-    {
+    public function fetch_access_token(&$request) {
         $this->get_version($request);
 
         $consumer = $this->get_consumer($request);
@@ -645,12 +572,10 @@ class Twitter_OAuthServer
         return $new_token;
     }
 
-
     /**
      * verify an api call, checks all the parameters
      */
-    public function verify_request(&$request)
-    {
+    public function verify_request(&$request) {
         $this->get_version($request);
         $consumer = $this->get_consumer($request);
         $token = $this->get_token($request, $consumer, 'access');
@@ -658,15 +583,12 @@ class Twitter_OAuthServer
         return [$consumer, $token];
     }
 
-
     // Internals from here
-
 
     /**
      * version 1
      */
-    private function get_version(&$request)
-    {
+    private function get_version(&$request) {
         $version = $request->get_parameter('oauth_version');
         if (!$version) {
             // Service Providers MUST assume the protocol version to be 1.0 if this parameter is not present.
@@ -679,15 +601,11 @@ class Twitter_OAuthServer
         return $version;
     }
 
-
     /**
      * figure out the signature with some defaults
      */
-    private function get_signature_method($request)
-    {
-        $signature_method = $request instanceof Twitter_OAuthRequest
-                ? $request->get_parameter('oauth_signature_method')
-                : null;
+    private function get_signature_method($request) {
+        $signature_method = $request instanceof Twitter_OAuthRequest ? $request->get_parameter('oauth_signature_method') : null;
 
         if (!$signature_method) {
             // According to chapter 7 ("Accessing Protected Ressources") the signature-method
@@ -696,28 +614,24 @@ class Twitter_OAuthServer
         }
 
         if (!in_array(
-            $signature_method,
-            array_keys($this->signature_methods),
-            true
-        )) {
+                        $signature_method,
+                        array_keys($this->signature_methods),
+                        true
+                )) {
             throw new Twitter_OAuthException(
-                "Signature method '$signature_method' not supported " .
-                'try one of the following: ' .
-                implode(', ', array_keys($this->signature_methods))
+                            "Signature method '$signature_method' not supported " .
+                            'try one of the following: ' .
+                            implode(', ', array_keys($this->signature_methods))
             );
         }
         return $this->signature_methods[$signature_method];
     }
 
-
     /**
      * try to find the consumer for the provided request's consumer key
      */
-    private function get_consumer($request)
-    {
-        $consumer_key = $request instanceof Twitter_OAuthRequest
-                ? $request->get_parameter('oauth_consumer_key')
-                : null;
+    private function get_consumer($request) {
+        $consumer_key = $request instanceof Twitter_OAuthRequest ? $request->get_parameter('oauth_consumer_key') : null;
 
         if (!$consumer_key) {
             throw new Twitter_OAuthException('Invalid consumer key');
@@ -731,20 +645,16 @@ class Twitter_OAuthServer
         return $consumer;
     }
 
-
     /**
      * try to find the token for the provided request's token key
      */
-    private function get_token($request, $consumer, $token_type = 'access')
-    {
-        $token_field = $request instanceof Twitter_OAuthRequest
-                ? $request->get_parameter('oauth_token')
-                : null;
+    private function get_token($request, $consumer, $token_type = 'access') {
+        $token_field = $request instanceof Twitter_OAuthRequest ? $request->get_parameter('oauth_token') : null;
 
         $token = $this->data_store->lookup_token(
-            $consumer,
-            $token_type,
-            $token_field
+                $consumer,
+                $token_type,
+                $token_field
         );
         if (!$token) {
             throw new Twitter_OAuthException("Invalid $token_type token: $token_field");
@@ -752,20 +662,14 @@ class Twitter_OAuthServer
         return $token;
     }
 
-
     /**
      * all-in-one function to check the signature on a request
      * should guess the signature method appropriately
      */
-    private function check_signature($request, $consumer, $token)
-    {
+    private function check_signature($request, $consumer, $token) {
         // this should probably be in a different method
-        $timestamp = $request instanceof Twitter_OAuthRequest
-                ? $request->get_parameter('oauth_timestamp')
-                : null;
-        $nonce = $request instanceof Twitter_OAuthRequest
-                ? $request->get_parameter('oauth_nonce')
-                : null;
+        $timestamp = $request instanceof Twitter_OAuthRequest ? $request->get_parameter('oauth_timestamp') : null;
+        $nonce = $request instanceof Twitter_OAuthRequest ? $request->get_parameter('oauth_nonce') : null;
 
         $this->check_timestamp($timestamp);
         $this->check_nonce($consumer, $token, $nonce, $timestamp);
@@ -774,10 +678,10 @@ class Twitter_OAuthServer
 
         $signature = $request->get_parameter('oauth_signature');
         $valid_sig = $signature_method->check_signature(
-            $request,
-            $consumer,
-            $token,
-            $signature
+                $request,
+                $consumer,
+                $token,
+                $signature
         );
 
         if (!$valid_sig) {
@@ -785,15 +689,13 @@ class Twitter_OAuthServer
         }
     }
 
-
     /**
      * check that the timestamp is new enough
      */
-    private function check_timestamp($timestamp)
-    {
+    private function check_timestamp($timestamp) {
         if (!$timestamp) {
             throw new Twitter_OAuthException(
-                'Missing timestamp parameter. The parameter is required'
+                            'Missing timestamp parameter. The parameter is required'
             );
         }
 
@@ -801,83 +703,73 @@ class Twitter_OAuthServer
         $now = time();
         if (abs($now - $timestamp) > $this->timestamp_threshold) {
             throw new Twitter_OAuthException(
-                "Expired timestamp, yours $timestamp, ours $now"
+                            "Expired timestamp, yours $timestamp, ours $now"
             );
         }
     }
 
-
     /**
      * check that the nonce is not repeated
      */
-    private function check_nonce($consumer, $token, $nonce, $timestamp)
-    {
+    private function check_nonce($consumer, $token, $nonce, $timestamp) {
         if (!$nonce) {
             throw new Twitter_OAuthException(
-                'Missing nonce parameter. The parameter is required'
+                            'Missing nonce parameter. The parameter is required'
             );
         }
 
         // verify that the nonce is uniqueish
         $found = $this->data_store->lookup_nonce(
-            $consumer,
-            $token,
-            $nonce,
-            $timestamp
+                $consumer,
+                $token,
+                $nonce,
+                $timestamp
         );
         if ($found) {
             throw new Twitter_OAuthException("Nonce already used: $nonce");
         }
     }
+
 }
 
-class Twitter_OAuthDataStore
-{
-    public function lookup_consumer($consumer_key)
-    {
+class Twitter_OAuthDataStore {
+
+    public function lookup_consumer($consumer_key) {
         // implement me
     }
 
-
-    public function lookup_token($consumer, $token_type, $token)
-    {
+    public function lookup_token($consumer, $token_type, $token) {
         // implement me
     }
 
-
-    public function lookup_nonce($consumer, $token, $nonce, $timestamp)
-    {
+    public function lookup_nonce($consumer, $token, $nonce, $timestamp) {
         // implement me
     }
 
-
-    public function new_request_token($consumer, $callback = null)
-    {
+    public function new_request_token($consumer, $callback = null) {
         // return a new token attached to this consumer
     }
 
-
-    public function new_access_token($token, $consumer, $verifier = null)
-    {
+    public function new_access_token($token, $consumer, $verifier = null) {
         // return a new access token attached to this consumer
         // for the user associated with this token if the request token
         // is authorized
         // should also invalidate the request token
     }
+
 }
 
-class Twitter_OAuthUtil
-{
-    public static function urlencode_rfc3986($input)
-    {
+class Twitter_OAuthUtil {
+
+    public static function urlencode_rfc3986($input) {
         if (is_array($input)) {
             return array_map(['Twitter_OAuthUtil', 'urlencode_rfc3986'], $input);
         } else {
             if (is_scalar($input)) {
                 return str_replace(
-                    '+',
-                    ' ',
-                    str_replace('%7E', '~', rawurlencode($input))
+                        '+',
+                        ' ',
+                        str_replace('%7E', '~', rawurlencode($input))
                 );
             } else {
                 return '';
@@ -885,23 +777,19 @@ class Twitter_OAuthUtil
         }
     }
 
-
     // This decode function isn't taking into consideration the above
     // modifications to the encoding process. However, this method doesn't
     // seem to be used anywhere so leaving it as is.
-    public static function urldecode_rfc3986($string)
-    {
+    public static function urldecode_rfc3986($string) {
         return urldecode($string);
     }
-
 
     // Utility function for turning the Authorization: header into
     // parameters, has to do some unescaping
     // Can filter out any non-oauth parameters if needed (default behaviour)
     // May 28th, 2010 - method updated to tjerk.meesters for a speed improvement.
     //                  see http://code.google.com/p/oauth/issues/detail?id=163
-    public static function split_header($header, $only_allow_oauth_parameters = true)
-    {
+    public static function split_header($header, $only_allow_oauth_parameters = true) {
         $params = [];
         if (preg_match_all('/(' . ($only_allow_oauth_parameters ? 'oauth_' : '') . '[a-z_-]*)=(:?"([^"]*)"|([^,]*))/', $header, $matches)) {
             foreach ($matches[1] as $i => $h) {
@@ -914,10 +802,8 @@ class Twitter_OAuthUtil
         return $params;
     }
 
-
     // helper to try to sort out headers for people who aren't running apache
-    public static function get_headers()
-    {
+    public static function get_headers() {
         if (function_exists('apache_request_headers')) {
             // we need this to get the actual Authorization: header
             // because apache tends to tell us it doesn't exist
@@ -930,9 +816,9 @@ class Twitter_OAuthUtil
             $out = [];
             foreach ($headers as $key => $value) {
                 $key = str_replace(
-                    ' ',
-                    '-',
-                    ucwords(strtolower(str_replace('-', ' ', $key)))
+                        ' ',
+                        '-',
+                        ucwords(strtolower(str_replace('-', ' ', $key)))
                 );
                 $out[$key] = $value;
             }
@@ -953,9 +839,9 @@ class Twitter_OAuthUtil
                     // letter of every word that is not an initial HTTP and strip HTTP
                     // code from przemek
                     $key = str_replace(
-                        ' ',
-                        '-',
-                        ucwords(strtolower(str_replace('_', ' ', substr($key, 5))))
+                            ' ',
+                            '-',
+                            ucwords(strtolower(str_replace('_', ' ', substr($key, 5))))
                     );
                     $out[$key] = $value;
                 }
@@ -964,12 +850,10 @@ class Twitter_OAuthUtil
         return $out;
     }
 
-
     // This function takes a input like a=b&a=c&d=e and returns the parsed
     // parameters like this
     // ['a' => array('b','c'), 'd' => 'e']
-    public static function parse_parameters($input)
-    {
+    public static function parse_parameters($input) {
         if (!isset($input) || !$input) {
             return [];
         }
@@ -1000,9 +884,7 @@ class Twitter_OAuthUtil
         return $parsed_parameters;
     }
 
-
-    public static function build_http_query($params)
-    {
+    public static function build_http_query($params) {
         if (!$params) {
             return '';
         }
@@ -1034,4 +916,5 @@ class Twitter_OAuthUtil
         // Each name-value pair is separated by an '&' character (ASCII code 38)
         return implode('&', $pairs);
     }
+
 }

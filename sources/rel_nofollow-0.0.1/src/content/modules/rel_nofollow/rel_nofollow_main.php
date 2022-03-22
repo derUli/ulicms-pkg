@@ -1,5 +1,5 @@
 <?php
-function rel_nofollow_render()
-{
+
+function rel_nofollow_render() {
     return "";
 }

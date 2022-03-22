@@ -19,8 +19,8 @@ use Symfony\Contracts\Cache\ItemInterface;
 /**
  * @author Nicolas Grekas <p@tchwork.com>
  */
-final class CacheItem implements ItemInterface
-{
+final class CacheItem implements ItemInterface {
+
     private const METADATA_EXPIRY_OFFSET = 1527506807;
 
     protected $key;
@@ -36,8 +36,7 @@ final class CacheItem implements ItemInterface
     /**
      * {@inheritdoc}
      */
-    public function getKey(): string
-    {
+    public function getKey(): string {
         return $this->key;
     }
 
@@ -46,16 +45,14 @@ final class CacheItem implements ItemInterface
      *
      * @return mixed
      */
-    public function get()
-    {
+    public function get() {
         return $this->value;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function isHit(): bool
-    {
+    public function isHit(): bool {
         return $this->isHit;
     }
 
@@ -64,8 +61,7 @@ final class CacheItem implements ItemInterface
      *
      * @return $this
      */
-    public function set($value): self
-    {
+    public function set($value): self {
         $this->value = $value;
 
         return $this;
@@ -76,8 +72,7 @@ final class CacheItem implements ItemInterface
      *
      * @return $this
      */
-    public function expiresAt($expiration): self
-    {
+    public function expiresAt($expiration): self {
         if (null === $expiration) {
             $this->expiry = null;
         } elseif ($expiration instanceof \DateTimeInterface) {
@@ -94,8 +89,7 @@ final class CacheItem implements ItemInterface
      *
      * @return $this
      */
-    public function expiresAfter($time): self
-    {
+    public function expiresAfter($time): self {
         if (null === $time) {
             $this->expiry = null;
         } elseif ($time instanceof \DateInterval) {
@@ -112,8 +106,7 @@ final class CacheItem implements ItemInterface
     /**
      * {@inheritdoc}
      */
-    public function tag($tags): ItemInterface
-    {
+    public function tag($tags): ItemInterface {
         if (!$this->isTaggable) {
             throw new LogicException(sprintf('Cache item "%s" comes from a non tag-aware pool: you cannot tag it.', $this->key));
         }
@@ -143,8 +136,7 @@ final class CacheItem implements ItemInterface
     /**
      * {@inheritdoc}
      */
-    public function getMetadata(): array
-    {
+    public function getMetadata(): array {
         return $this->metadata;
     }
 
@@ -153,8 +145,7 @@ final class CacheItem implements ItemInterface
      *
      * @deprecated since Symfony 4.2, use the "getMetadata()" method instead.
      */
-    public function getPreviousTags(): array
-    {
+    public function getPreviousTags(): array {
         @trigger_error(sprintf('The "%s()" method is deprecated since Symfony 4.2, use the "getMetadata()" method instead.', __METHOD__), \E_USER_DEPRECATED);
 
         return $this->metadata[self::METADATA_TAGS] ?? [];
@@ -167,8 +158,7 @@ final class CacheItem implements ItemInterface
      *
      * @throws InvalidArgumentException When $key is not valid
      */
-    public static function validateKey($key): string
-    {
+    public static function validateKey($key): string {
         if (!\is_string($key)) {
             throw new InvalidArgumentException(sprintf('Cache key must be string, "%s" given.', \is_object($key) ? \get_class($key) : \gettype($key)));
         }
@@ -187,18 +177,18 @@ final class CacheItem implements ItemInterface
      *
      * @internal
      */
-    public static function log(?LoggerInterface $logger, string $message, array $context = [])
-    {
+    public static function log(?LoggerInterface $logger, string $message, array $context = []) {
         if ($logger) {
             $logger->warning($message, $context);
         } else {
             $replace = [];
             foreach ($context as $k => $v) {
                 if (is_scalar($v)) {
-                    $replace['{'.$k.'}'] = $v;
+                    $replace['{' . $k . '}'] = $v;
                 }
             }
             @trigger_error(strtr($message, $replace), \E_USER_WARNING);
         }
     }
+
 }

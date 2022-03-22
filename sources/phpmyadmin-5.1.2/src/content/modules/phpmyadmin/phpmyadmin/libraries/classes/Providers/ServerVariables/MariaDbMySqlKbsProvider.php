@@ -7,10 +7,9 @@ namespace PhpMyAdmin\Providers\ServerVariables;
 use Williamdes\MariaDBMySQLKBS\KBException;
 use Williamdes\MariaDBMySQLKBS\Search as KBSearch;
 
-class MariaDbMySqlKbsProvider implements ServerVariablesProviderInterface
-{
-    public function getVariableType(string $name): ?string
-    {
+class MariaDbMySqlKbsProvider implements ServerVariablesProviderInterface {
+
+    public function getVariableType(string $name): ?string {
         try {
             return KBSearch::getVariableType($name);
         } catch (KBException $e) {
@@ -18,13 +17,11 @@ class MariaDbMySqlKbsProvider implements ServerVariablesProviderInterface
         }
     }
 
-    public function getStaticVariables(): array
-    {
+    public function getStaticVariables(): array {
         return [];
     }
 
-    public function getDocLinkByNameMariaDb(string $name): ?string
-    {
+    public function getDocLinkByNameMariaDb(string $name): ?string {
         try {
             return KBSearch::getByName($name, KBSearch::MARIADB);
         } catch (KBException $e) {
@@ -32,12 +29,12 @@ class MariaDbMySqlKbsProvider implements ServerVariablesProviderInterface
         }
     }
 
-    public function getDocLinkByNameMysql(string $name): ?string
-    {
+    public function getDocLinkByNameMysql(string $name): ?string {
         try {
             return KBSearch::getByName($name, KBSearch::MYSQL);
         } catch (KBException $e) {
             return null;
         }
     }
+
 }

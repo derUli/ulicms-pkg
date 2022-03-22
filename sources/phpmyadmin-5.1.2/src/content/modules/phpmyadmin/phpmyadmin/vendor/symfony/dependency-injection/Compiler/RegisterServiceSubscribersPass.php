@@ -26,10 +26,9 @@ use Symfony\Contracts\Service\ServiceSubscriberInterface;
  *
  * @author Nicolas Grekas <p@tchwork.com>
  */
-class RegisterServiceSubscribersPass extends AbstractRecursivePass
-{
-    protected function processValue($value, $isRoot = false)
-    {
+class RegisterServiceSubscribersPass extends AbstractRecursivePass {
+
+    protected function processValue($value, $isRoot = false) {
         if (!$value instanceof Definition || $value->isAbstract() || $value->isSynthetic() || !$value->hasTag('container.service_subscriber')) {
             return parent::processValue($value, $isRoot);
         }
@@ -96,9 +95,9 @@ class RegisterServiceSubscribersPass extends AbstractRecursivePass
                 }
             }
 
-            if (null !== $name && !$this->container->has($name) && !$this->container->has($type.' $'.$name)) {
+            if (null !== $name && !$this->container->has($name) && !$this->container->has($type . ' $' . $name)) {
                 $camelCaseName = lcfirst(str_replace(' ', '', ucwords(preg_replace('/[^a-zA-Z0-9\x7f-\xff]++/', ' ', $name))));
-                $name = $this->container->has($type.' $'.$camelCaseName) ? $camelCaseName : $name;
+                $name = $this->container->has($type . ' $' . $camelCaseName) ? $camelCaseName : $name;
             }
 
             $subscriberMap[$key] = new TypedReference((string) $serviceMap[$key], $type, $optionalBehavior ?: ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE, $name);
@@ -117,8 +116,9 @@ class RegisterServiceSubscribersPass extends AbstractRecursivePass
         $value->setBindings([
             PsrContainerInterface::class => new BoundArgument($locatorRef, false),
             ServiceProviderInterface::class => new BoundArgument($locatorRef, false),
-        ] + $value->getBindings());
+                ] + $value->getBindings());
 
         return parent::processValue($value);
     }
+
 }

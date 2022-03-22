@@ -19,8 +19,8 @@ use Symfony\Component\DependencyInjection\Exception\ParameterNotFoundException;
  *
  * @author Nicolas Grekas <p@tchwork.com>
  */
-interface ContainerBagInterface extends ContainerInterface
-{
+interface ContainerBagInterface extends ContainerInterface {
+
     /**
      * Gets the service container parameters.
      *

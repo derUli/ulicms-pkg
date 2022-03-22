@@ -1,37 +1,38 @@
 <?php
-if (! function_exists("stringcontainsbadwords")) {
-    function stringcontainsbadwords($str)
-    {
+
+if (!function_exists("stringcontainsbadwords")) {
+
+    function stringcontainsbadwords($str) {
         $words_blacklist = getconfig("spamfilter_words_blacklist");
         $str = strtolower($str);
-        
+
         if ($words_blacklist !== false) {
             $words_blacklist = explode("||", $words_blacklist);
         } else {
             return false;
         }
-        
-        for ($i = 0; $i < count($words_blacklist); $i ++) {
+
+        for ($i = 0; $i < count($words_blacklist); $i++) {
             $word = strtolower($words_blacklist[$i]);
             if (strpos($str, $word) !== false) {
                 return true;
             }
         }
-        
+
         return false;
     }
+
 }
 
-function guestbook_render()
-{
+function guestbook_render() {
     check_installation();
-    
+
     if (empty($_GET["action"])) {
         $action = "list";
     } else {
         $action = $_GET["action"];
     }
-    
+
     switch ($action) {
         case "list":
             $html_output = guestbook_list();
@@ -66,7 +67,7 @@ function guestbook_render()
                         echo "<p class='ulicms-error'>Please enter a City.</p>";
                     }
                 }
-                
+
                 if (empty($_POST["gb_mail"])) {
                     $errors = true;
                     if ($_SESSION["language"] == "de") {
@@ -75,13 +76,13 @@ function guestbook_render()
                         $html_output .= "<p class='ulicms-error'>Please enter your mail adress.</p>";
                     }
                 }
-                
-                if (! empty($_POST["gb_homepage"])) {
-                    if (! startsWith($_POST["gb_homepage"], "http://")) {
+
+                if (!empty($_POST["gb_homepage"])) {
+                    if (!startsWith($_POST["gb_homepage"], "http://")) {
                         $_POST["gb_homepage"] = "http://" . $_POST["gb_homepage"];
                     }
                 }
-                
+
                 if (empty($_POST["gb_content"])) {
                     $errors = true;
                     if ($_SESSION["language"] == "de") {
@@ -90,11 +91,11 @@ function guestbook_render()
                         $html_output .= "<p class='ulicms-error'>Please enter a message.</p>";
                     }
                 }
-                
+
                 $badwords = file_get_contents(getModulePath("guestbook") . "badwords.txt");
                 $badwords = explode("\n", $badwords);
-                
-                for ($i = 0; $i < count($badwords); $i ++) {
+
+                for ($i = 0; $i < count($badwords); $i++) {
                     if (strpos($_POST["gb_content"], $badwords[$i]) !== false) {
                         if ($_SESSION["language"] == "de") {
                             $html_output .= "<p class='ulicms-error'>Sie haben ein nicht erlaubtes Wort in Ihrer Nachricht verwendet.</p>";
@@ -104,9 +105,9 @@ function guestbook_render()
                         break;
                     }
                 }
-                
+
                 $spamfilter_enabled = getconfig("spamfilter_enabled") == "yes";
-                
+
                 if ($spamfilter_enabled and (stringcontainsbadwords($_POST["gb_name"]) or stringcontainsbadwords($_POST["gb_content"]))) {
                     if ($_SESSION["language"] == "de") {
                         $errors = true;
@@ -116,11 +117,11 @@ function guestbook_render()
                         $html_output .= "<p class='ulicms-error'>" . "Your comment contains not allowed words.</p>";
                     }
                 }
-                
+
                 // Filter nach chinesisch
                 if (getconfig("disallow_chinese_chars") and $spamfilter_enabled and (AntispamHelper::isChinese($_POST["gb_content"]))) {
                     $errors = true;
-                    
+
                     if ($_SESSION["language"] == "de") {
                         $html_output .= "<p class='ulicms-error'>" . "Chinesische Schriftzeichen sind nicht erlaubt!</p>";
                     } else {
@@ -130,7 +131,7 @@ function guestbook_render()
                 // Filter nach chinesisch
                 if (getconfig("disallow_cyrillic_chars") and $spamfilter_enabled and (AntispamHelper::isCyrillic($_POST["gb_content"]))) {
                     $errors = true;
-                    
+
                     if ($_SESSION["language"] == "de") {
                         $html_output .= "<p class='ulicms-error'>" . "Kyrillische Schriftzeichen sind nicht erlaubt!</p>";
                     } else {
@@ -145,7 +146,7 @@ function guestbook_render()
                         $html_output .= "<p class='ulicms-error'>Please let the field for spam protection empty</p>";
                     }
                 }
-                
+
                 if (getconfig("spamfilter_enabled") == "yes" and AntiSpamHelper::isCountryBlocked()) {
                     $errors = true;
                     if ($_SESSION["language"] == "de") {
@@ -155,8 +156,8 @@ function guestbook_render()
 				       on this website.<br/>If you believe, this is an error, please contact the webmaster.</p>";
                     }
                 }
-                
-                if (! $errors) {
+
+                if (!$errors) {
                     $gb_name = db_escape(htmlspecialchars($_POST["gb_name"]));
                     $gb_city = db_escape(htmlspecialchars($_POST["gb_city"]));
                     $gb_mail = db_escape(htmlspecialchars($_POST["gb_mail"]));
@@ -166,7 +167,7 @@ function guestbook_render()
                     $sql = "INSERT INTO " . tbname("guestbook_entries") . " (name, ort, email, date, homepage, content)
 					VALUES ('$gb_name', '$gb_city', '$gb_mail', '$date', '$gb_homepage', '$gb_content');";
                     db_query($sql) or die(db_error());
-                    
+
                     $html_output .= guestbook_list();
                     return $html_output;
                 }
@@ -177,14 +178,13 @@ function guestbook_render()
             $html_output = "Invalid Action specified";
             break;
     }
-    
+
     // $html_output .= "<br/><br/><br/><center><small>Powered by Guestbook Module for UliCMS</small></center>";
-    
+
     return $html_output;
 }
 
-function guestbook_get_add_entry_link()
-{
+function guestbook_get_add_entry_link() {
     if ($_SESSION["language"] == "de") {
         return "<a href=\"" . "" . buildSEOUrl(get_slug()) . "?action=add" . "\">Eintrag hinzufügen</a><hr/>";
     } else {
@@ -192,8 +192,7 @@ function guestbook_get_add_entry_link()
     }
 }
 
-function get_add_entry_form()
-{
+function get_add_entry_form() {
     if ($_SESSION["language"] == "de") {
         $add_entry_form_template = file_get_contents(getModulePath("guestbook") . "templates/add_entry_from_german.tpl");
     } else {
@@ -204,8 +203,7 @@ function get_add_entry_form()
     return $add_entry_form_template;
 }
 
-function guestbook_list()
-{
+function guestbook_list() {
     $acl = new ACL();
     $html_output = "";
     if (empty($_GET["limit"])) {
@@ -213,55 +211,54 @@ function guestbook_list()
     } else {
         $limit = intval($_GET["limit"]);
     }
-    
+
     $html_output .= guestbook_get_add_entry_link();
     $html_output .= "";
     $entries_query = db_query("SELECT * FROM " . tbname("guestbook_entries") . " ORDER by date DESC LIMIT $limit");
-    
+
     while ($row = db_fetch_object($entries_query)) {
-        if (! empty($row->homepage)) {
+        if (!empty($row->homepage)) {
             $html_output .= "<a href=\"" . $row->homepage . "\" target=\"_blank\" rel=\"nofollow\">Homepage von " . $row->name . "</a>";
-            
+
             $html_output .= "<br/><br/>";
         }
-        
+
         $html_output .= "
 		
 		<small>" . $row->date . "</small>";
         if ($acl->hasPermission("guestbook")) {
             $html_output .= ' &nbsp;&nbsp;[<a href="' . buildSEOUrl(get_slug()) . "?action=delete&delete=" . $row->id . '" onclick="return confirm(\'Diesen Eintrag löschen?\');">Löschen</a>]';
         }
-        
+
         $html_output .= "
 		<br/><br/>
 		" . make_links_clickable($row->content) . "<br/><br/><em>von " . $row->name . " aus " . $row->ort;
-        
+
         $acl = new ACL();
-        
+
         if ($acl->hasPermission("guestbook")) {
             $html_output .= " (<a href='mailto:" . $row->email . "'>" . $row->email . "</a>)";
         }
-        
+
         $html_output .= "</em>";
         $html_output .= "<br/><br/><hr/>";
-        
+
         $last = $row->id;
     }
-    
+
     $html_output .= "<a id=\"gb_more\"></a>";
     if ($limit < $last) {
         $new_limit = $limit + 10;
-        
+
         $html_output .= "<br/><br/><a href='" . buildSEOUrl(get_slug()) . "?action=list&limit=$new_limit#gb_more'>" . "Mehr</a>";
     }
-    
+
     return $html_output;
 }
 
-function check_installation()
-{
+function check_installation() {
     $test = db_query("SELECT * FROM " . tbname("guestbook_entries"));
-    if (! $test) {
+    if (!$test) {
         require_once getModulePath("guestbook", true) . "guestbook_install.php";
         guestbook_install();
     }

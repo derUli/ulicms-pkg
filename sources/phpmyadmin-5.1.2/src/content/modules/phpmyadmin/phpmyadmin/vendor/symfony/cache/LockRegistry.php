@@ -24,8 +24,8 @@ use Symfony\Contracts\Cache\ItemInterface;
  *
  * @author Nicolas Grekas <p@tchwork.com>
  */
-final class LockRegistry
-{
+final class LockRegistry {
+
     private static $openedFiles = [];
     private static $lockedFiles;
 
@@ -33,29 +33,29 @@ final class LockRegistry
      * The number of items in this list controls the max number of concurrent processes.
      */
     private static $files = [
-        __DIR__.\DIRECTORY_SEPARATOR.'Adapter'.\DIRECTORY_SEPARATOR.'AbstractAdapter.php',
-        __DIR__.\DIRECTORY_SEPARATOR.'Adapter'.\DIRECTORY_SEPARATOR.'AbstractTagAwareAdapter.php',
-        __DIR__.\DIRECTORY_SEPARATOR.'Adapter'.\DIRECTORY_SEPARATOR.'AdapterInterface.php',
-        __DIR__.\DIRECTORY_SEPARATOR.'Adapter'.\DIRECTORY_SEPARATOR.'ApcuAdapter.php',
-        __DIR__.\DIRECTORY_SEPARATOR.'Adapter'.\DIRECTORY_SEPARATOR.'ArrayAdapter.php',
-        __DIR__.\DIRECTORY_SEPARATOR.'Adapter'.\DIRECTORY_SEPARATOR.'ChainAdapter.php',
-        __DIR__.\DIRECTORY_SEPARATOR.'Adapter'.\DIRECTORY_SEPARATOR.'DoctrineAdapter.php',
-        __DIR__.\DIRECTORY_SEPARATOR.'Adapter'.\DIRECTORY_SEPARATOR.'FilesystemAdapter.php',
-        __DIR__.\DIRECTORY_SEPARATOR.'Adapter'.\DIRECTORY_SEPARATOR.'FilesystemTagAwareAdapter.php',
-        __DIR__.\DIRECTORY_SEPARATOR.'Adapter'.\DIRECTORY_SEPARATOR.'MemcachedAdapter.php',
-        __DIR__.\DIRECTORY_SEPARATOR.'Adapter'.\DIRECTORY_SEPARATOR.'NullAdapter.php',
-        __DIR__.\DIRECTORY_SEPARATOR.'Adapter'.\DIRECTORY_SEPARATOR.'PdoAdapter.php',
-        __DIR__.\DIRECTORY_SEPARATOR.'Adapter'.\DIRECTORY_SEPARATOR.'PhpArrayAdapter.php',
-        __DIR__.\DIRECTORY_SEPARATOR.'Adapter'.\DIRECTORY_SEPARATOR.'PhpFilesAdapter.php',
-        __DIR__.\DIRECTORY_SEPARATOR.'Adapter'.\DIRECTORY_SEPARATOR.'ProxyAdapter.php',
-        __DIR__.\DIRECTORY_SEPARATOR.'Adapter'.\DIRECTORY_SEPARATOR.'Psr16Adapter.php',
-        __DIR__.\DIRECTORY_SEPARATOR.'Adapter'.\DIRECTORY_SEPARATOR.'RedisAdapter.php',
-        __DIR__.\DIRECTORY_SEPARATOR.'Adapter'.\DIRECTORY_SEPARATOR.'RedisTagAwareAdapter.php',
-        __DIR__.\DIRECTORY_SEPARATOR.'Adapter'.\DIRECTORY_SEPARATOR.'SimpleCacheAdapter.php',
-        __DIR__.\DIRECTORY_SEPARATOR.'Adapter'.\DIRECTORY_SEPARATOR.'TagAwareAdapter.php',
-        __DIR__.\DIRECTORY_SEPARATOR.'Adapter'.\DIRECTORY_SEPARATOR.'TagAwareAdapterInterface.php',
-        __DIR__.\DIRECTORY_SEPARATOR.'Adapter'.\DIRECTORY_SEPARATOR.'TraceableAdapter.php',
-        __DIR__.\DIRECTORY_SEPARATOR.'Adapter'.\DIRECTORY_SEPARATOR.'TraceableTagAwareAdapter.php',
+        __DIR__ . \DIRECTORY_SEPARATOR . 'Adapter' . \DIRECTORY_SEPARATOR . 'AbstractAdapter.php',
+        __DIR__ . \DIRECTORY_SEPARATOR . 'Adapter' . \DIRECTORY_SEPARATOR . 'AbstractTagAwareAdapter.php',
+        __DIR__ . \DIRECTORY_SEPARATOR . 'Adapter' . \DIRECTORY_SEPARATOR . 'AdapterInterface.php',
+        __DIR__ . \DIRECTORY_SEPARATOR . 'Adapter' . \DIRECTORY_SEPARATOR . 'ApcuAdapter.php',
+        __DIR__ . \DIRECTORY_SEPARATOR . 'Adapter' . \DIRECTORY_SEPARATOR . 'ArrayAdapter.php',
+        __DIR__ . \DIRECTORY_SEPARATOR . 'Adapter' . \DIRECTORY_SEPARATOR . 'ChainAdapter.php',
+        __DIR__ . \DIRECTORY_SEPARATOR . 'Adapter' . \DIRECTORY_SEPARATOR . 'DoctrineAdapter.php',
+        __DIR__ . \DIRECTORY_SEPARATOR . 'Adapter' . \DIRECTORY_SEPARATOR . 'FilesystemAdapter.php',
+        __DIR__ . \DIRECTORY_SEPARATOR . 'Adapter' . \DIRECTORY_SEPARATOR . 'FilesystemTagAwareAdapter.php',
+        __DIR__ . \DIRECTORY_SEPARATOR . 'Adapter' . \DIRECTORY_SEPARATOR . 'MemcachedAdapter.php',
+        __DIR__ . \DIRECTORY_SEPARATOR . 'Adapter' . \DIRECTORY_SEPARATOR . 'NullAdapter.php',
+        __DIR__ . \DIRECTORY_SEPARATOR . 'Adapter' . \DIRECTORY_SEPARATOR . 'PdoAdapter.php',
+        __DIR__ . \DIRECTORY_SEPARATOR . 'Adapter' . \DIRECTORY_SEPARATOR . 'PhpArrayAdapter.php',
+        __DIR__ . \DIRECTORY_SEPARATOR . 'Adapter' . \DIRECTORY_SEPARATOR . 'PhpFilesAdapter.php',
+        __DIR__ . \DIRECTORY_SEPARATOR . 'Adapter' . \DIRECTORY_SEPARATOR . 'ProxyAdapter.php',
+        __DIR__ . \DIRECTORY_SEPARATOR . 'Adapter' . \DIRECTORY_SEPARATOR . 'Psr16Adapter.php',
+        __DIR__ . \DIRECTORY_SEPARATOR . 'Adapter' . \DIRECTORY_SEPARATOR . 'RedisAdapter.php',
+        __DIR__ . \DIRECTORY_SEPARATOR . 'Adapter' . \DIRECTORY_SEPARATOR . 'RedisTagAwareAdapter.php',
+        __DIR__ . \DIRECTORY_SEPARATOR . 'Adapter' . \DIRECTORY_SEPARATOR . 'SimpleCacheAdapter.php',
+        __DIR__ . \DIRECTORY_SEPARATOR . 'Adapter' . \DIRECTORY_SEPARATOR . 'TagAwareAdapter.php',
+        __DIR__ . \DIRECTORY_SEPARATOR . 'Adapter' . \DIRECTORY_SEPARATOR . 'TagAwareAdapterInterface.php',
+        __DIR__ . \DIRECTORY_SEPARATOR . 'Adapter' . \DIRECTORY_SEPARATOR . 'TraceableAdapter.php',
+        __DIR__ . \DIRECTORY_SEPARATOR . 'Adapter' . \DIRECTORY_SEPARATOR . 'TraceableTagAwareAdapter.php',
     ];
 
     /**
@@ -63,8 +63,7 @@ final class LockRegistry
      *
      * @return array The previously defined set of files
      */
-    public static function setFiles(array $files): array
-    {
+    public static function setFiles(array $files): array {
         $previousFiles = self::$files;
         self::$files = $files;
 
@@ -79,8 +78,7 @@ final class LockRegistry
         return $previousFiles;
     }
 
-    public static function compute(callable $callback, ItemInterface $item, bool &$save, CacheInterface $pool, \Closure $setMetadata = null, LoggerInterface $logger = null)
-    {
+    public static function compute(callable $callback, ItemInterface $item, bool &$save, CacheInterface $pool, \Closure $setMetadata = null, LoggerInterface $logger = null) {
         if ('\\' === \DIRECTORY_SEPARATOR && null === self::$lockedFiles) {
             // disable locking on Windows by default
             self::$files = self::$lockedFiles = [];
@@ -123,7 +121,9 @@ final class LockRegistry
             }
             static $signalingException, $signalingCallback;
             $signalingException = $signalingException ?? unserialize("O:9:\"Exception\":1:{s:16:\"\0Exception\0trace\";a:0:{}}");
-            $signalingCallback = $signalingCallback ?? function () use ($signalingException) { throw $signalingException; };
+            $signalingCallback = $signalingCallback ?? function () use ($signalingException) {
+                        throw $signalingException;
+                    };
 
             try {
                 $value = $pool->get($item->getKey(), $signalingCallback, 0);
@@ -142,12 +142,13 @@ final class LockRegistry
         return null;
     }
 
-    private static function open(int $key)
-    {
+    private static function open(int $key) {
         if (null !== $h = self::$openedFiles[$key] ?? null) {
             return $h;
         }
-        set_error_handler(function () {});
+        set_error_handler(function () {
+            
+        });
         try {
             $h = fopen(self::$files[$key], 'r+');
         } finally {
@@ -156,4 +157,5 @@ final class LockRegistry
 
         return self::$openedFiles[$key] = $h ?: @fopen(self::$files[$key], 'r');
     }
+
 }

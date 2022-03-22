@@ -1,8 +1,8 @@
 <?php
 
 #[Attribute(Attribute::TARGET_CLASS)]
-final class Attribute
-{
+final class Attribute {
+
     public const TARGET_CLASS = 1;
     public const TARGET_FUNCTION = 2;
     public const TARGET_METHOD = 4;
@@ -15,8 +15,8 @@ final class Attribute
     /** @var int */
     public $flags;
 
-    public function __construct(int $flags = self::TARGET_ALL)
-    {
+    public function __construct(int $flags = self::TARGET_ALL) {
         $this->flags = $flags;
     }
+
 }

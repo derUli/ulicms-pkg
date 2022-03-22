@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This is a PHP library that handles calling reCAPTCHA.
  *
@@ -43,8 +44,8 @@ use ReCaptcha\RequestParameters;
  * Note: this requires the cURL extension to be enabled in PHP
  * @see http://php.net/manual/en/book.curl.php
  */
-class CurlPost implements RequestMethod
-{
+class CurlPost implements RequestMethod {
+
     /**
      * Curl connection to the reCAPTCHA service
      * @var Curl
@@ -63,8 +64,7 @@ class CurlPost implements RequestMethod
      * @param Curl $curl Curl resource
      * @param string $siteVerifyUrl URL for reCAPTCHA siteverify API
      */
-    public function __construct(Curl $curl = null, $siteVerifyUrl = null)
-    {
+    public function __construct(Curl $curl = null, $siteVerifyUrl = null) {
         $this->curl = (is_null($curl)) ? new Curl() : $curl;
         $this->siteVerifyUrl = (is_null($siteVerifyUrl)) ? ReCaptcha::SITE_VERIFY_URL : $siteVerifyUrl;
     }
@@ -75,8 +75,7 @@ class CurlPost implements RequestMethod
      * @param RequestParameters $params Request parameters
      * @return string Body of the reCAPTCHA response
      */
-    public function submit(RequestParameters $params)
-    {
+    public function submit(RequestParameters $params) {
         $handle = $this->curl->init($this->siteVerifyUrl);
 
         $options = array(
@@ -99,6 +98,7 @@ class CurlPost implements RequestMethod
             return $response;
         }
 
-        return '{"success": false, "error-codes": ["'.ReCaptcha::E_CONNECTION_FAILED.'"]}';
+        return '{"success": false, "error-codes": ["' . ReCaptcha::E_CONNECTION_FAILED . '"]}';
     }
+
 }

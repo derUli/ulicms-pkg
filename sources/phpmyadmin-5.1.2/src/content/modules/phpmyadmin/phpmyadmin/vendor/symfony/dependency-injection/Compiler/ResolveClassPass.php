@@ -18,13 +18,12 @@ use Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
 /**
  * @author Nicolas Grekas <p@tchwork.com>
  */
-class ResolveClassPass implements CompilerPassInterface
-{
+class ResolveClassPass implements CompilerPassInterface {
+
     /**
      * {@inheritdoc}
      */
-    public function process(ContainerBuilder $container)
-    {
+    public function process(ContainerBuilder $container) {
         foreach ($container->getDefinitions() as $id => $definition) {
             if ($definition->isSynthetic() || null !== $definition->getClass()) {
                 continue;
@@ -37,4 +36,5 @@ class ResolveClassPass implements CompilerPassInterface
             }
         }
     }
+
 }
