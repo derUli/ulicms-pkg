@@ -1,1 +1,0 @@
-Twitter for PHP is a very small and easy-to-use library for sending messages to Twitter and receiving status updates.

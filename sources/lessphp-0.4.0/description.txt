@@ -1,1 +1,0 @@
-lessphp is a compiler for LESS written in PHP.
