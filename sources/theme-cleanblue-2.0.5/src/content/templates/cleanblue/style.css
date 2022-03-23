@@ -22,7 +22,6 @@ p {
 
 main p, ol, ul, blockquote, pre, code {
     line-height: 18px;
-    margin-bottom 18px;
     /* 1.5em provides good vertical spacing ( = 150% of the font-size) */
     line-height: 1.5em;
     margin-bottom: 1.5em;
