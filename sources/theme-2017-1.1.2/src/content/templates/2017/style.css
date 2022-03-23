@@ -172,88 +172,87 @@ nav .menu_active_list_item, nav .menu_active_link {
 nav .sub_menu li a:hover {
     text-decoration: none;
     color: white !important;
-    '
-    }
+}
 
-    nav .sub_menu li:hover {
+nav .sub_menu li:hover {
     color: white !important;
-    }
+}
 
-    nav ul {
+nav ul {
     position: relative;
     padding: 0px;
     margin: 0px
-    }
+}
 
-    nav ul 
-    li:hover ul {
+nav ul
+li:hover ul {
     display: block;
-    }
+}
 
-    @media only screen and (max-width: 830px) {
+@media only screen and (max-width: 830px) {
     #mobile-nav {
-    display: block;
-    margin-top: 0px;
+        display: block;
+        margin-top: 0px;
     }
     nav ul {
-    display: none;
+        display: none;
     }
     .header h3 {
-    float: left;
-    margin-bottom: 8px;
-    width: 70%;
-    margin-top: 8px;
+        float: left;
+        margin-bottom: 8px;
+        width: 70%;
+        margin-top: 8px;
     }
     .slicknav_btn, .slicknav_nav {
-    margin: 0 !important;
+        margin: 0 !important;
     }
     .slicknav_nav {
-    font-size: 20px !important;
+        font-size: 20px !important;
     }
     .slicknav_nav li a {
-    padding-top: 15px !important;
-    padding-bottom: 15px !important;
+        padding-top: 15px !important;
+        padding-bottom: 15px !important;
     }
     .marketing {
-    overflow: auto;
+        overflow: auto;
     }
     .slicknav_nav ul {
-    margin: 0 !important;
+        margin: 0 !important;
     }
     .slicknav_nav .active>a, .slicknav_nav .menu_active_list_item a {
-    background: #ccc;
-    color: #fff;
+        background: #ccc;
+        color: #fff;
     }
     span.slicknav_icon-bar {
-    width: 0.75em !important;
+        width: 0.75em !important;
     }
     .slicknav_menu .sub_menu li a {
-    padding-left: 30px;
+        padding-left: 30px;
     }
-    }
+}
 
-    nav .sub_menu {
+nav .sub_menu {
     width: 100%;
-    }
+}
 
-    p {
+p {
     margin-bottom: 20px;
-    }
+}
 
-    main ul li, h1, h2, h3, h4, h5, h6 {
+main ul li, h1, h2, h3, h4, h5, h6 {
     margin-bottom: 20px;
-    }
+}
 
-    iframe {
+iframe {
     margin-top: 20px;
     margin-bottom: 20px;
-    }
+}
 
-    .socialshareprivacy {
+.socialshareprivacy {
     margin-top: 20px;
     margin-bottom: 20px;
-    }
+}
 
-    .header h3 {
+.header h3 {
     width: inherit;
-    }
+}

@@ -27,9 +27,7 @@ if (isset($data ["site_slogan"])) {
         {
             background: <?php
             echo getconfig("header-background-color");
-            ?>
-                !
-                important;
+            ?>!important;
         }
 
         h1, h2, h3, h4, h5, h6 {
