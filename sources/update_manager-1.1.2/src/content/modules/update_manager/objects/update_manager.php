@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use UliCMS\Packages\PackageManager;
+
 class UpdateManager {
 
     public static function getAllUpdateablePackages(): array {
