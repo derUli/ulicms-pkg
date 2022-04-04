@@ -1,5 +1,7 @@
 <?php
 
+use UliCMS\Packages\PackageManager;
+
 class UpdateManagerDashboard {
 
     public static function anyUpdateAvailable() {
