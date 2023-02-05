@@ -1,6 +1,0 @@
-{
-    "version": "0.0.8",
-    "admin_permission": "sql_console",
-    "custom_acl": ["sql_console"],
-    "embed": false
-}
