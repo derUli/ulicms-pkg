@@ -9,7 +9,7 @@ og_html_prefix();
     ?>
     <?php
     $modules = getAllModules();
-    $hasSearch = (faster_in_array("search", $modules) || faster_in_array("extended_search", $modules));
+    $hasSearch = (in_array("search", $modules) || in_array("extended_search", $modules));
     $searchPage = ModuleHelper::getFirstPageWithModule("extended_search");
     if (!$searchPage) {
         $searchPage = ModuleHelper::getFirstPageWithModule("search");
