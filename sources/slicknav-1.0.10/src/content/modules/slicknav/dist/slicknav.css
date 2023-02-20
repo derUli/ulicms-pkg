@@ -12,24 +12,28 @@
     line-height: 1.125em;
     cursor: pointer;
 }
-.slicknav_btn .slicknav_icon-bar + .slicknav_icon-bar {
+
+.slicknav_btn .slicknav_icon-bar+.slicknav_icon-bar {
     margin-top: 0.188em;
 }
 
 .slicknav_menu {
     *zoom: 1;
 }
+
 .slicknav_menu .slicknav_menutxt {
     display: block;
     line-height: 1.188em;
     float: left;
 }
+
 .slicknav_menu .slicknav_icon {
     float: left;
     width: 1.125em;
     height: 0.875em;
     margin: 0.188em 0 0 0.438em;
 }
+
 .slicknav_menu .slicknav_icon:before {
     background: transparent;
     width: 1.125em;
@@ -38,9 +42,11 @@
     content: "";
     position: absolute;
 }
+
 .slicknav_menu .slicknav_no-text {
     margin: 0;
 }
+
 .slicknav_menu .slicknav_icon-bar {
     display: block;
     width: 1.125em;
@@ -52,10 +58,12 @@
     -moz-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.25);
     box-shadow: 0 1px 0 rgba(0, 0, 0, 0.25);
 }
+
 .slicknav_menu:before {
     content: " ";
     display: table;
 }
+
 .slicknav_menu:after {
     content: " ";
     display: table;
@@ -65,28 +73,36 @@
 .slicknav_nav {
     clear: both;
 }
+
 .slicknav_nav ul {
     display: block;
 }
+
 .slicknav_nav li {
     display: block;
 }
+
 .slicknav_nav .slicknav_arrow {
     font-size: 0.8em;
     margin: 0 0 0 0.4em;
 }
+
 .slicknav_nav .slicknav_item {
     cursor: pointer;
 }
+
 .slicknav_nav .slicknav_item a {
     display: inline;
 }
+
 .slicknav_nav .slicknav_row {
     display: block;
 }
+
 .slicknav_nav a {
     display: block;
 }
+
 .slicknav_nav .slicknav_parent-link a {
     display: inline;
 }
@@ -101,14 +117,17 @@
     background: #4c4c4c;
     padding: 5px;
 }
+
 .slicknav_menu * {
     box-sizing: border-box;
 }
+
 .slicknav_menu .slicknav_menutxt {
     color: #fff;
     font-weight: bold;
     text-shadow: 0 1px 3px #000;
 }
+
 .slicknav_menu .slicknav_icon-bar {
     background-color: #fff;
 }
@@ -131,16 +150,19 @@
     list-style: none;
     overflow: hidden;
 }
+
 .slicknav_nav ul {
     list-style: none;
     overflow: hidden;
     padding: 0;
     margin: 0 0 0 20px;
 }
+
 .slicknav_nav .slicknav_row {
     padding: 5px 10px;
     margin: 2px 5px;
 }
+
 .slicknav_nav .slicknav_row:hover {
     -webkit-border-radius: 6px;
     -moz-border-radius: 6px;
@@ -148,12 +170,14 @@
     background: #ccc;
     color: #fff;
 }
+
 .slicknav_nav a {
     padding: 5px 10px;
     margin: 2px 5px;
     text-decoration: none;
     color: #fff;
 }
+
 .slicknav_nav a:hover {
     -webkit-border-radius: 6px;
     -moz-border-radius: 6px;
@@ -161,13 +185,16 @@
     background: #ccc;
     color: #222;
 }
+
 .slicknav_nav .slicknav_txtnode {
     margin-left: 15px;
 }
+
 .slicknav_nav .slicknav_item a {
     padding: 0;
     margin: 0;
 }
+
 .slicknav_nav .slicknav_parent-link a {
     padding: 0;
     margin: 0;
