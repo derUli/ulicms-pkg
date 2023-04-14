@@ -1,1 +1,0 @@
-Send notification email on user registration

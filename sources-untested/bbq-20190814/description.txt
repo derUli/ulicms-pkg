@@ -1,3 +1,0 @@
-Block Bad Queries (BBQ)
-Firewall for protection against attacks by manipulation of URLs.
-Protection against SQL Injection, XSS and other attack types.

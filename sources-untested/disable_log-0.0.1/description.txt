@@ -1,1 +1,0 @@
-Logging der HTTP Anfragen in der Datenbank ausschalten.

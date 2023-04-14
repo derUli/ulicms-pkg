@@ -1,2 +1,0 @@
-A jQuery plugin for responsive navigation menus
-Menutron transforms your navigation menus from a list to a select menu when resizing your browser. On mobile devices, the select menu pulls up a native control, making it easier to pick an item.

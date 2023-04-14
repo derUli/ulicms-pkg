@@ -1,2 +1,0 @@
-The anonymity check image shows your web site visitors some information about their IP address and their browser.
-For more details see http://ip-check.info/website-image.php?lang=en

@@ -1,1 +1,0 @@
-Last RSS Simple yet powerful PHP RSS parser

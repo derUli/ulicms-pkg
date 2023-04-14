@@ -1,1 +1,0 @@
-Seitenpositionen erhöhen, um Platz zu schaffen, für Einträge die Zwischen bereits vorhandenen Menüpunkten angelegt werden sollen.

@@ -1,1 +1,0 @@
-Generates a virtual humans.txt file that complies with the specifications at humanstxt.org. 

@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<buildpath>
-    <buildpathentry external="true" kind="lib" path="C:/Users/ulrich1992/Documents/GitHub/ulicms/ulicms"/>
-    <buildpathentry external="true" kind="lib" path="/Users/uschmidt/Documents/Projekte/ulicms/ulicms"/>
-    <buildpathentry kind="con" path="org.eclipse.php.core.LANGUAGE"/>
-    <buildpathentry kind="src" path=""/>
-</buildpath>

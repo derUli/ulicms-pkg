@@ -1,1 +1,0 @@
-This module changes Android Chromes and Windows Phones browser toolbar color.

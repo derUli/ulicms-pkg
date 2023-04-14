@@ -1,1 +1,0 @@
-﻿Prevents pages can be integrated into framesets

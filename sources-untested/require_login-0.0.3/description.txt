@@ -1,3 +1,0 @@
-Mit diesem Modul können Sie erzwingen, dass sich ein Besucher erst einloggen muss, bevor er eine Seite ansehen kann.
-Um dies nur auf eine Seite anzuwenden, fügen Sie einfach den Shortcode bzw. Embedcode in die zu schützende Seite ein.
-Wenn Sie Ihre <strong>gesamte Internetpräsenz</strong> mit einem Passwort schützen möchten, definieren Sie bitte in den Einstellungen im Expertenmodus die Variable require_login mit einem beliebigen Wert.

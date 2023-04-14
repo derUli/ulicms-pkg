@@ -1,1 +1,0 @@
-The plugin restores deprecated features and behaviors so that older jQuery code will still run properly on jQuery 1.9 and later. 

@@ -1,3 +1,0 @@
-﻿This module provides functions for integrating a breadcrumb navigation.
-Once you have this module installed, you just have to call 
-the function breadcrumbs() in a template at the point to where it will appear to insert.

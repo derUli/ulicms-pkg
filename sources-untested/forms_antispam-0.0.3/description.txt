@@ -1,2 +1,0 @@
-Anti spam for UliCMS built-in contact form builder
-Please see readme.txt in module folder for installation instructions.

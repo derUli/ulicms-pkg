@@ -1,1 +1,0 @@
-Counts visitors by crawler, tablet, mobile and desktop
