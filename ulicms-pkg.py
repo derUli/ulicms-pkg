@@ -1,4 +1,5 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
+
 import os, sys, tarfile, shutil, fnmatch, time
 
 def exclude_file(filename):
